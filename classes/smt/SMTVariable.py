@@ -1,6 +1,6 @@
 from pysmt.fnode import FNode
 
-from classes.SMTExpression import SMTExpression
+from classes.smt.SMTExpression import SMTExpression
 
 
 class SMTVariable(SMTExpression):

@@ -1,8 +1,7 @@
 from pysmt.shortcuts import Symbol
-from pysmt.typing import INT, REAL
+from pysmt.typing import REAL
 
-from classes.SMTExpression import SMTExpression
-from classes.SMTVariable import SMTVariable
+from classes.smt.SMTVariable import SMTVariable
 
 
 class SMTNumericVariable(SMTVariable):

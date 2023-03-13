@@ -1,9 +1,14 @@
 from __future__ import annotations
 
-from typing import Set
+from typing import Set, Dict
 
 from pysmt.fnode import FNode
 from pysmt.shortcuts import And, Or, Equals, LE, LT, GE, GT, Implies, Real, Times, Minus, Plus, Div
+
+from Atom import Atom
+from BinaryPredicate import BinaryPredicate
+from Constant import Constant
+from Literal import Literal
 
 
 def toRHS(other):
@@ -20,7 +25,7 @@ class SMTExpression:
         self.vars = set()
         self.lhs: SMTExpression
         self.rhs: SMTExpression
-        self.expression = None
+        self.expression = True
 
     def __str__(self):
         return str(self.expression)
@@ -45,10 +50,10 @@ class SMTExpression:
 
         return expr
 
-    def __and__(self, other: SMTExpression):
+    def AND(self, other: SMTExpression):
         return self.__binary(other, And(self.expression, other.expression))
 
-    def __or__(self, other: SMTExpression):
+    def OR(self, other: SMTExpression):
         return self.__binary(other, Or(self.expression, other.expression))
 
     def __eq__(self, other: SMTExpression or int):
@@ -95,3 +100,40 @@ class SMTExpression:
 
     def impliedBy(self, other):
         return self.__binary(other, Implies(other.expression, self.expression))
+
+    @staticmethod
+    def opByString(op: str, left: SMTExpression, right: SMTExpression):
+        if op == "and":
+            return left.AND(right)
+        if op == "or":
+            return left.OR(right)
+        if op == "+":
+            return left + right
+        if op == "-":
+            return left - right
+        if op == "*":
+            return left * right
+        if op == "/":
+            return left / right
+        if op == ">=":
+            return left >= right
+        if op == "<=":
+            return left <= right
+        if op == ">":
+            return left > right
+        if op == "<":
+            return left < right
+        if op == "=":
+            return left == right
+
+    @classmethod
+    def fromPddl(cls, predicate: BinaryPredicate or Literal or Constant,
+                 variables: Dict[Atom, SMTExpression]) -> SMTExpression or float:
+        if isinstance(predicate, BinaryPredicate):
+            lhs = SMTExpression.fromPddl(predicate.lhs, variables)
+            rhs = SMTExpression.fromPddl(predicate.rhs, variables)
+            return SMTExpression.opByString(predicate.operator, lhs, rhs)
+        if isinstance(predicate, Literal):
+            return variables[predicate.getAtom()]
+        if isinstance(predicate, Constant):
+            return predicate.value

@@ -1,6 +1,6 @@
 from pysmt.shortcuts import Symbol
 
-from classes.SMTVariable import SMTVariable
+from classes.smt.SMTVariable import SMTVariable
 
 
 class SMTBoolVariable(SMTVariable):

@@ -1,12 +1,11 @@
-from typing import Dict, Set
+from typing import Set
 
-from pysmt.logics import QF_LIA, get_logic
+from pysmt.logics import QF_LIA
 from pysmt.shortcuts import Portfolio
 
-from classes.SMTExpression import SMTExpression
-from classes.SMTBoolVariable import SMTBoolVariable
-from classes.SMTSolution import SMTSolution
-from classes.SMTVariable import SMTVariable
+from classes.smt.SMTExpression import SMTExpression
+from classes.smt.SMTSolution import SMTSolution
+from classes.smt.SMTVariable import SMTVariable
 
 
 class SMTSolver:

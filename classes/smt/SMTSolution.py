@@ -1,8 +1,8 @@
 from typing import Dict
 
-from classes.SMTBoolVariable import SMTBoolVariable
-from classes.SMTNumericVariable import SMTNumericVariable
-from classes.SMTVariable import SMTVariable
+from classes.smt.SMTBoolVariable import SMTBoolVariable
+from classes.smt.SMTNumericVariable import SMTNumericVariable
+from classes.smt.SMTVariable import SMTVariable
 
 
 class SMTSolution:

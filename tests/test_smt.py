@@ -1,16 +1,11 @@
 import unittest
 from unittest import TestCase
 
-from pysmt.oracles import get_logic
-from pysmt.shortcuts import Symbol, is_sat, And, Not, Equals, Implies, Int, Portfolio
-from pysmt.solvers.solver import Solver
-from pysmt.typing import INT
-
-from classes.SMTExpression import SMTExpression
-from classes.SMTBoolVariable import SMTBoolVariable
-from classes.SMTNumericVariable import SMTNumericVariable
-from classes.SMTSolution import SMTSolution
-from classes.SMTSolver import SMTSolver
+from classes.smt.SMTExpression import SMTExpression
+from classes.smt.SMTBoolVariable import SMTBoolVariable
+from classes.smt.SMTNumericVariable import SMTNumericVariable
+from classes.smt.SMTSolution import SMTSolution
+from classes.smt.SMTSolver import SMTSolver
 
 
 class TestSMT(TestCase):
@@ -26,10 +21,12 @@ class TestSMT(TestCase):
         self.assertIsInstance(self.a, SMTExpression)
 
     def test_andShouldBeAnExpression(self):
-        self.assertIsInstance(self.a and self.b, SMTExpression)
+        self.assertIsInstance(self.a.AND(self.b), SMTExpression)
+        self.assertEqual(str(self.a.AND(self.b)), "(a & b)")
 
     def test_orShouldBeAnExpression(self):
-        self.assertIsInstance(self.a or self.b, SMTExpression)
+        self.assertIsInstance(self.a.OR(self.b), SMTExpression)
+        self.assertEqual(str(self.a.OR(self.b)), "(a | b)")
 
     def test_impliesShouldBeAnExpression(self):
         self.assertIsInstance(self.a.implies(self.b), SMTExpression)
