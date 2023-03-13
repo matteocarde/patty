@@ -73,6 +73,18 @@ class TestSMT(TestCase):
     def test_divisionByConstantShouldBeAnExpression(self):
         self.assertIsInstance(self.x / 2.5, SMTExpression)
 
+    def test_sumOfConstantLeftShouldBeAnExpression(self):
+        self.assertIsInstance(2.5 + self.x, SMTExpression)
+
+    def test_subtractionOfConstantLeftShouldBeAnExpression(self):
+        self.assertIsInstance(2.5 - self.x, SMTExpression)
+
+    def test_multiplicationByConstantLeftShouldBeAnExpression(self):
+        self.assertIsInstance(2.5 * self.x, SMTExpression)
+
+    def test_divisionByConstantLeftShouldBeAnExpression(self):
+        self.assertIsInstance(2.5 / self.x, SMTExpression)
+
     def test_sumOfVariableShouldBeAnExpression(self):
         self.assertIsInstance(self.x + self.y, SMTExpression)
 
@@ -85,7 +97,7 @@ class TestSMT(TestCase):
     def test_divisionByVariableShouldBeAnExpression(self):
         self.assertIsInstance(self.x / self.y, SMTExpression)
 
-    def test_solver(self):
+    def test_solver_easy(self):
         solver: SMTSolver = SMTSolver()
         lhs: SMTExpression = self.x > 10
         rhs: SMTExpression = self.y == 5
@@ -96,6 +108,18 @@ class TestSMT(TestCase):
 
         self.assertEqual(solution.getVariable(self.x), 20.0)
         self.assertEqual(solution.getVariable(self.y), 5.0)
+
+    def test_solver_hard(self):
+        solver: SMTSolver = SMTSolver()
+        lhs: SMTExpression = self.x * 5 > 10
+        rhs: SMTExpression = self.y * 2 == 6
+        solver.addAssertion(lhs.implies(rhs))
+        solver.addAssertion(self.x == 2.0)
+
+        solution: SMTSolution = solver.solve()
+
+        self.assertEqual(solution.getVariable(self.x), 2.0)
+        self.assertNotEqual(solution.getVariable(self.y), 3.0)
 
 
 if __name__ == '__main__':

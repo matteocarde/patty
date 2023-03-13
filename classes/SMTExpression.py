@@ -69,13 +69,25 @@ class SMTExpression:
     def __sub__(self, other: SMTExpression or float):
         return self.__binary(other, Minus(self.expression, toRHS(other)))
 
+    def __rsub__(self, other: SMTExpression or float):
+        return self.__binary(other, Minus(self.expression, toRHS(other)))
+
     def __add__(self, other: SMTExpression or float):
+        return self.__binary(other, Plus(self.expression, toRHS(other)))
+
+    def __radd__(self, other: SMTExpression or float):
         return self.__binary(other, Plus(self.expression, toRHS(other)))
 
     def __mul__(self, other: SMTExpression or float):
         return self.__binary(other, Times(self.expression, toRHS(other)))
 
+    def __rmul__(self, other: SMTExpression or float):
+        return self.__binary(other, Times(self.expression, toRHS(other)))
+
     def __truediv__(self, other: SMTExpression or float):
+        return self.__binary(other, Div(self.expression, toRHS(other)))
+
+    def __rtruediv__(self, other: SMTExpression or float):
         return self.__binary(other, Div(self.expression, toRHS(other)))
 
     def implies(self, other: SMTExpression):

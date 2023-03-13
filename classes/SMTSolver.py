@@ -1,6 +1,6 @@
 from typing import Dict, Set
 
-from pysmt.logics import QF_LIA
+from pysmt.logics import QF_LIA, get_logic
 from pysmt.shortcuts import Portfolio
 
 from classes.SMTExpression import SMTExpression
