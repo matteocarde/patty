@@ -4,6 +4,8 @@ from unittest import TestCase
 from Domain import Domain, GroundedDomain
 from Problem import Problem
 from classes.plan.PDDL2SMT import PDDL2SMT
+from classes.smt.SMTSolution import SMTSolution
+from classes.smt.SMTSolver import SMTSolver
 
 
 class TestFarmland(TestCase):
@@ -17,7 +19,18 @@ class TestFarmland(TestCase):
         pass
 
     def test_transform(self):
-        self.assertEqual(1, 1)
+        self.assertGreater(len(self.pddl2smt.initial), 0)
+        self.assertGreater(len(self.pddl2smt.goal), 0)
+        self.assertGreater(len(self.pddl2smt.transitions), 0)
+        self.assertGreater(len(self.pddl2smt.rules), 0)
+
+    def test_solve(self):
+        solver: SMTSolver = SMTSolver()
+        solver.addAssertions(self.pddl2smt.rules)
+
+        solution: SMTSolution = solver.solve()
+
+        self.assertIsInstance(solution, SMTSolution)
 
 
 if __name__ == '__main__':

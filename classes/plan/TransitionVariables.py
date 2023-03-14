@@ -1,46 +1,46 @@
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Set
 
 from Action import Action
 from Atom import Atom
 from Domain import GroundedDomain
 from Problem import Problem
+from classes.plan.ActionOrder import ActionOrder
 from classes.smt.SMTNumericVariable import SMTNumericVariable
 from classes.smt.SMTVariable import SMTVariable
 
 
 class TransitionVariables:
 
-    def __init__(self, domain: GroundedDomain, problem: Problem, index: int):
-        self.domain = domain
-        self.problem = problem
-        self.valueVariables: Dict[Atom, SMTVariable] = self.getValueVariables(index)
-        self.actionVariables: Dict[Action, SMTVariable] = self.getActionVariables(index)
-        self.deltaVariables: Dict[Action, Dict[Atom, SMTVariable]] = self.getDeltaVariables(index)
+    def __init__(self, allAtoms: Set[Atom], order: ActionOrder, index: int):
+        self.allAtoms: Set[Atom] = allAtoms
+        self.order: ActionOrder = order
+        self.valueVariables: Dict[Atom, SMTVariable] = self.__computeValueVariables(index)
+        self.actionVariables: Dict[Action, SMTVariable] = self.__computeActionVariables(index)
+        self.deltaVariables: Dict[Action, Dict[Atom, SMTVariable]] = self.__computeDeltaVariables(index)
         self.auxVariables: Dict[Action, Dict[Atom, SMTVariable]] = dict()
 
-    def getValueVariables(self, index: int) -> Dict[Atom, SMTVariable]:
+    def __computeValueVariables(self, index: int) -> Dict[Atom, SMTVariable]:
         variables: Dict[Atom, SMTVariable] = dict()
 
-        for assignment in self.problem.init:
-            variables[assignment.getAtom()] = SMTNumericVariable(f"{assignment.getAtom()}_{index}")
+        for atom in self.allAtoms:
+            variables[atom] = SMTNumericVariable(f"{atom}_{index}")
 
         return variables
 
-    def getActionVariables(self, index: int) -> Dict[Action, SMTVariable]:
+    def __computeActionVariables(self, index: int) -> Dict[Action, SMTVariable]:
         variables: Dict[Action, SMTVariable] = dict()
 
-        for action in self.domain.actions:
+        for action in self.order:
             variables[action] = SMTNumericVariable(f"{action.name}_{index}")
 
         return variables
 
-    def getDeltaVariables(self, index: int) -> Dict[Action, Dict[Atom, SMTVariable]]:
+    def __computeDeltaVariables(self, index: int) -> Dict[Action, Dict[Atom, SMTVariable]]:
         variables: Dict[Action, Dict[Atom, SMTVariable]] = dict()
 
-        for action in self.domain.actions:
+        for action in self.order:
             variables[action] = dict()
-            for assignment in self.problem.init:
-                atom = assignment.getAtom()
+            for atom in self.allAtoms:
                 variables[action][atom] = SMTNumericVariable(f"delta_{{{action}}}({atom})_{index}")
 
         return variables

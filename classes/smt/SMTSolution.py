@@ -16,6 +16,6 @@ class SMTSolution:
     def getVariable(self, var: SMTVariable) -> float:
         node = self.__variables[var]
         if isinstance(var, SMTNumericVariable):
-            return float(str(node))
+            return node
         if isinstance(var, SMTBoolVariable):
             raise NotImplemented("TODO")

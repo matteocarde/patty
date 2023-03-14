@@ -1,9 +1,14 @@
+from fractions import Fraction
+
 import unittest
 from unittest import TestCase
 
+from pysmt.shortcuts import Real, Int
+from pysmt.typing import REAL, INT
+
 from classes.smt.SMTExpression import SMTExpression
 from classes.smt.SMTBoolVariable import SMTBoolVariable
-from classes.smt.SMTNumericVariable import SMTNumericVariable
+from classes.smt.SMTNumericVariable import SMTNumericVariable, SMTRealVariable, SMTIntVariable
 from classes.smt.SMTSolution import SMTSolution
 from classes.smt.SMTSolver import SMTSolver
 
@@ -13,8 +18,10 @@ class TestSMT(TestCase):
     def setUp(self) -> None:
         self.a: SMTBoolVariable = SMTBoolVariable("a")
         self.b: SMTBoolVariable = SMTBoolVariable("b")
-        self.x: SMTNumericVariable = SMTNumericVariable("x")
-        self.y: SMTNumericVariable = SMTNumericVariable("y")
+        self.x: SMTNumericVariable = SMTRealVariable("x")
+        self.y: SMTNumericVariable = SMTRealVariable("y")
+        self.p: SMTNumericVariable = SMTIntVariable("p")
+        self.q: SMTNumericVariable = SMTIntVariable("q")
         pass
 
     def test_variableShouldBeAnExpression(self):
@@ -48,6 +55,16 @@ class TestSMT(TestCase):
 
     def test_greaterWithFloatShouldBeAnExpression(self):
         self.assertIsInstance(self.x > 10.5, SMTExpression)
+
+    def test_intergerGreaterWithFloatShouldBeAnExpression(self):
+        expr = self.p > 10.5
+        self.assertIsInstance(expr, SMTExpression)
+        self.assertEqual(expr.type, REAL)
+
+    def test_integerGreaterWithIntergerShouldBeAnExpression(self):
+        expr = self.p > 10
+        self.assertIsInstance(expr, SMTExpression)
+        self.assertEqual(expr.type, INT)
 
     def test_lesserShouldBeAnExpression(self):
         self.assertIsInstance(self.x < 10.5, SMTExpression)
@@ -94,29 +111,49 @@ class TestSMT(TestCase):
     def test_divisionByVariableShouldBeAnExpression(self):
         self.assertIsInstance(self.x / self.y, SMTExpression)
 
-    def test_solver_easy(self):
+    def test_mixedIntRealExpression(self):
+        a = self.p + 10
+        b = 4.5 * a
+        self.assertIsInstance(a, SMTExpression)
+        self.assertIsInstance(b, SMTExpression)
+        self.assertEqual(a.type, INT)
+        self.assertEqual(b.type, REAL)
+
+    def test_solver_real_easy(self):
         solver: SMTSolver = SMTSolver()
         lhs: SMTExpression = self.x > 10
-        rhs: SMTExpression = self.y == 5
+        rhs: SMTExpression = self.y == 5.5
         solver.addAssertion(lhs.implies(rhs))
         solver.addAssertion(self.x == 20)
 
         solution: SMTSolution = solver.solve()
 
-        self.assertEqual(solution.getVariable(self.x), 20.0)
-        self.assertEqual(solution.getVariable(self.y), 5.0)
+        self.assertEqual(solution.getVariable(self.x), Real(20.0))
+        self.assertEqual(solution.getVariable(self.y), Real(5.5))
 
-    def test_solver_hard(self):
+    def test_solver_int_easy(self):
+        solver: SMTSolver = SMTSolver()
+        lhs: SMTExpression = self.x > 10.1
+        rhs: SMTExpression = (self.y > 4.5).AND(self.y < 5.6)
+        solver.addAssertion(lhs.implies(rhs))
+        solver.addAssertion(self.x == 20)
+
+        solution: SMTSolution = solver.solve()
+
+        self.assertEqual(solution.getVariable(self.x), Real(20))
+        self.assertEqual(solution.getVariable(self.y), Real(5))
+
+    def test_solver_real_hard(self):
         solver: SMTSolver = SMTSolver()
         lhs: SMTExpression = self.x * 5 > 10
-        rhs: SMTExpression = self.y * 2 == 6
+        rhs: SMTExpression = self.y * 2 == 6.2
         solver.addAssertion(lhs.implies(rhs))
         solver.addAssertion(self.x == 2.0)
 
         solution: SMTSolution = solver.solve()
 
-        self.assertEqual(solution.getVariable(self.x), 2.0)
-        self.assertNotEqual(solution.getVariable(self.y), 3.0)
+        self.assertEqual(solution.getVariable(self.x), Real(2.0))
+        self.assertNotEqual(solution.getVariable(self.y), Real(3.1))
 
 
 if __name__ == '__main__':

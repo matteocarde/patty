@@ -1,6 +1,6 @@
 from typing import Set
 
-from pysmt.logics import QF_LIA
+from pysmt.logics import QF_LIA, QF_LRA
 from pysmt.shortcuts import Portfolio
 
 from classes.smt.SMTExpression import SMTExpression
@@ -15,7 +15,7 @@ class SMTSolver:
     def __init__(self):
         self.variables: Set[SMTVariable] = set()
         self.solver = Portfolio(["z3"],
-                                logic=QF_LIA,
+                                logic=QF_LRA,
                                 incremental=False,
                                 generate_models=True)
 
