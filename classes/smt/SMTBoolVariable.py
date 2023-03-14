@@ -1,4 +1,5 @@
 from pysmt.shortcuts import Symbol
+from pysmt.typing import BOOL
 
 from classes.smt.SMTVariable import SMTVariable
 
@@ -8,6 +9,7 @@ class SMTBoolVariable(SMTVariable):
     def __init__(self, name: str):
         super().__init__()
         self.expression = Symbol(name)
+        self.type = BOOL
 
     def variables(self):
         return {self}

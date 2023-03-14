@@ -4,7 +4,7 @@ import unittest
 from unittest import TestCase
 
 from pysmt.shortcuts import Real, Int
-from pysmt.typing import REAL, INT
+from pysmt.typing import REAL, INT, BOOL
 
 from classes.smt.SMTExpression import SMTExpression
 from classes.smt.SMTBoolVariable import SMTBoolVariable
@@ -56,18 +56,20 @@ class TestSMT(TestCase):
     def test_greaterWithFloatShouldBeAnExpression(self):
         self.assertIsInstance(self.x > 10.5, SMTExpression)
 
-    def test_intergerGreaterWithFloatShouldBeAnExpression(self):
-        expr = self.p > 10.5
+    def test_integerSumWithFloatShouldBeAnExpression(self):
+        expr = self.p + 10.5
         self.assertIsInstance(expr, SMTExpression)
         self.assertEqual(expr.type, REAL)
 
-    def test_integerGreaterWithIntergerShouldBeAnExpression(self):
-        expr = self.p > 10
+    def test_integerSumWithIntegerShouldBeAnExpression(self):
+        expr = self.p + 10
         self.assertIsInstance(expr, SMTExpression)
         self.assertEqual(expr.type, INT)
 
     def test_lesserShouldBeAnExpression(self):
-        self.assertIsInstance(self.x < 10.5, SMTExpression)
+        expr = self.x < 10.5
+        self.assertIsInstance(expr, SMTExpression)
+        self.assertEqual(expr.type, BOOL)
 
     def test_lesserEqualShouldBeAnExpression(self):
         self.assertIsInstance(self.x <= 10.5, SMTExpression)

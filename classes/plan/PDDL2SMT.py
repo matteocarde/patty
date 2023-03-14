@@ -34,8 +34,8 @@ class PDDL2SMT:
         self.dummyAction.name = "g"
         self.order = ActionOrder(self.domain, self.problem, self.dummyAction)
 
-        for index in range(0, horizon + 2):
-            var = TransitionVariables(self.domain.allAtoms, self.order, index)
+        for index in range(0, horizon + 1):
+            var = TransitionVariables(self.domain.allAtoms, self.domain.assList, self.order, index)
             self.transitionVariables.append(var)
 
         self.initial: [SMTExpression] = self.getInitialExpression()
@@ -111,9 +111,9 @@ class PDDL2SMT:
                     k = SMTNumericVariable.fromPddl(funct, stepVars.deltaVariables[prevAction])
                     b_n = stepVars.actionVariables[prevAction]
                     rules.append(d_av == d_bv + (k * b_n) * sign)
-            # TODO: Case e
-            for v in prevAction.getAssignments().items():
-                raise NotImplemented("TODO: Assignment")
+            # Case e) Numeric assignment
+            for v in prevAction.getAssList():
+                rules.append(stepVars.deltaVariables[action][v] == stepVars.auxVariables[prevAction][v])
 
             prevAction = action
 
@@ -121,6 +121,9 @@ class PDDL2SMT:
 
     def getActStepRules(self, stepVars: TransitionVariables) -> List[SMTExpression]:
         rules: List[SMTExpression] = []
+
+        for a in self.order:
+            rules.append(stepVars.actionVariables[a] >= 0)
 
         return rules
 
@@ -158,13 +161,24 @@ class PDDL2SMT:
     def getEffStepRules(self, stepVars: TransitionVariables) -> List[SMTExpression]:
         rules: List[SMTExpression] = []
 
+        for a in self.order:
+            for var, rhs in a.getAssignments().items():
+                v_a = stepVars.auxVariables[a][var]
+                a_n = stepVars.actionVariables[a]
+                d_a_v = stepVars.deltaVariables[a][var]
+                if not isinstance(rhs, Constant):
+                    raise Exception("I cannot handle yet linear assignments")
+                k = rhs.value
+                rules.append((a_n > 0).implies(v_a == k))
+                rules.append((a_n == 0).implies(v_a == d_a_v))
+
         return rules
 
-    def getFrameStepRules(self, stepVars: TransitionVariables, nextVars: TransitionVariables) -> List[SMTExpression]:
+    def getFrameStepRules(self, stepVars: TransitionVariables) -> List[SMTExpression]:
         rules: List[SMTExpression] = []
 
         for v in self.domain.allAtoms:
-            v_first = nextVars.valueVariables[v]
+            v_first = stepVars.valueVariables[v]
             delta_g_v = stepVars.deltaVariables[self.dummyAction][v]
             rules.append(v_first == delta_g_v)
 
@@ -173,13 +187,12 @@ class PDDL2SMT:
     def getStepRules(self, index: int) -> List[SMTExpression]:
         prevVars = self.transitionVariables[index - 1]
         stepVars = self.transitionVariables[index]
-        nextVars = self.transitionVariables[index + 1]
 
         rules: List[SMTExpression] = []
         rules += self.getDeltaStepRules(prevVars, stepVars)
         rules += self.getActStepRules(stepVars)
         rules += self.getPreStepRules(stepVars)
         rules += self.getEffStepRules(stepVars)
-        rules += self.getFrameStepRules(stepVars, nextVars)
+        rules += self.getFrameStepRules(stepVars)
 
         return rules

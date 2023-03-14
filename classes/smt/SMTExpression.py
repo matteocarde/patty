@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from pysmt.typing import REAL, INT
+from pysmt.typing import REAL, INT, BOOL
 from typing import Set, Dict
 
 from pysmt.fnode import FNode
@@ -16,7 +16,7 @@ def toRHS(other):
     if isinstance(other, SMTExpression):
         return other.expression
     if type(other) == int or (type(other) == float and other.is_integer()):
-        return Int(other)
+        return Int(int(other))
     if type(other) == float:
         return Real(other)
 
@@ -53,6 +53,7 @@ class SMTExpression:
                  rhsExpression: FNode) -> SMTExpression:
         expr = SMTExpression()
         expr.lhs = self
+
         if isinstance(other, SMTExpression):
             rhsType = other.type
         elif type(other) == int or (type(other) == float and other.is_integer()):
@@ -63,12 +64,13 @@ class SMTExpression:
 
         expr.rhs = other
 
-        if expr.lhs.type != rhsType:
+        if expr.lhs.type == BOOL or expr.lhs.type == rhsType:
+            expr.type = expr.lhs.type
+        else:
             expr.type = REAL
             lhsExpression = ToReal(lhsExpression) if expr.lhs.type == INT else lhsExpression
             rhsExpression = ToReal(rhsExpression) if rhsType == INT else rhsExpression
-        else:
-            expr.type = expr.lhs.type
+
         expr.expression = operation(lhsExpression, rhsExpression)
 
         return expr
@@ -80,19 +82,29 @@ class SMTExpression:
         return self.__binary(other, Or, self.expression, other.expression)
 
     def __eq__(self, other: SMTExpression or int):
-        return self.__binary(other, Equals, self.expression, toRHS(other))
+        expr = self.__binary(other, Equals, self.expression, toRHS(other))
+        expr.type = BOOL
+        return expr
 
     def __le__(self, other: SMTExpression or float):
-        return self.__binary(other, LE, self.expression, toRHS(other))
+        expr = self.__binary(other, LE, self.expression, toRHS(other))
+        expr.type = BOOL
+        return expr
 
     def __lt__(self, other: SMTExpression or float):
-        return self.__binary(other, LT, self.expression, toRHS(other))
+        expr = self.__binary(other, LT, self.expression, toRHS(other))
+        expr.type = BOOL
+        return expr
 
     def __ge__(self, other: SMTExpression or float):
-        return self.__binary(other, GE, self.expression, toRHS(other))
+        expr = self.__binary(other, GE, self.expression, toRHS(other))
+        expr.type = BOOL
+        return expr
 
     def __gt__(self, other: SMTExpression or float):
-        return self.__binary(other, GT, self.expression, toRHS(other))
+        expr = self.__binary(other, GT, self.expression, toRHS(other))
+        expr.type = BOOL
+        return expr
 
     def __sub__(self, other: SMTExpression or float):
         return self.__binary(other, Minus, self.expression, toRHS(other))
@@ -119,10 +131,14 @@ class SMTExpression:
         return self.__binary(other, Div, self.expression, toRHS(other))
 
     def implies(self, other: SMTExpression):
-        return self.__binary(other, Implies, self.expression, other.expression)
+        expr = self.__binary(other, Implies, self.expression, other.expression)
+        expr.type = BOOL
+        return expr
 
-    def impliedBy(self, other):
-        return self.__binary(other, Implies, other.expression, self.expression)
+    def impliedBy(self, other: SMTExpression):
+        expr = self.__binary(other, Implies, other.expression, self.expression)
+        expr.type = BOOL
+        return expr
 
     @staticmethod
     def opByString(op: str, left: SMTExpression, right: SMTExpression):

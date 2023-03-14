@@ -3,27 +3,29 @@ from typing import Dict, Tuple, Set
 from Action import Action
 from Atom import Atom
 from Domain import GroundedDomain
+from Operation import Operation
 from Problem import Problem
 from classes.plan.ActionOrder import ActionOrder
-from classes.smt.SMTNumericVariable import SMTNumericVariable
+from classes.smt.SMTNumericVariable import SMTNumericVariable, SMTRealVariable, SMTIntVariable
 from classes.smt.SMTVariable import SMTVariable
 
 
 class TransitionVariables:
 
-    def __init__(self, allAtoms: Set[Atom], order: ActionOrder, index: int):
+    def __init__(self, allAtoms: Set[Atom], assList: Dict[Atom, Set[Operation]], order: ActionOrder, index: int):
         self.allAtoms: Set[Atom] = allAtoms
+        self.assList: Dict[Atom, Set[Operation]] = assList
         self.order: ActionOrder = order
         self.valueVariables: Dict[Atom, SMTVariable] = self.__computeValueVariables(index)
         self.actionVariables: Dict[Action, SMTVariable] = self.__computeActionVariables(index)
         self.deltaVariables: Dict[Action, Dict[Atom, SMTVariable]] = self.__computeDeltaVariables(index)
-        self.auxVariables: Dict[Action, Dict[Atom, SMTVariable]] = dict()
+        self.auxVariables: Dict[Action, Dict[Atom, SMTVariable]] = self.__computeAuxVariables(index)
 
     def __computeValueVariables(self, index: int) -> Dict[Atom, SMTVariable]:
         variables: Dict[Atom, SMTVariable] = dict()
 
         for atom in self.allAtoms:
-            variables[atom] = SMTNumericVariable(f"{atom}_{index}")
+            variables[atom] = SMTRealVariable(f"{atom}_{index}")
 
         return variables
 
@@ -31,7 +33,7 @@ class TransitionVariables:
         variables: Dict[Action, SMTVariable] = dict()
 
         for action in self.order:
-            variables[action] = SMTNumericVariable(f"{action.name}_{index}")
+            variables[action] = SMTIntVariable(f"{action.name}_{index}_n")
 
         return variables
 
@@ -41,6 +43,15 @@ class TransitionVariables:
         for action in self.order:
             variables[action] = dict()
             for atom in self.allAtoms:
-                variables[action][atom] = SMTNumericVariable(f"delta_{{{action}}}({atom})_{index}")
+                variables[action][atom] = SMTRealVariable(f"d_{{{action}}}_{index}({atom})")
+
+        return variables
+
+    def __computeAuxVariables(self, index) -> Dict[Action, Dict[Atom, SMTVariable]]:
+        variables: Dict[Action, Dict[Atom, SMTVariable]] = dict()
+        for (var, actions) in self.assList.items():
+            for a in actions:
+                variables.setdefault(a, dict())
+                variables[a][var] = SMTRealVariable(f"{var}_{a}_{index}")
 
         return variables
