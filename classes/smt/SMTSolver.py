@@ -1,3 +1,4 @@
+from pysmt.oracles import get_logic
 from typing import Set
 
 from pysmt.logics import QF_LIA, QF_LRA
@@ -26,6 +27,7 @@ class SMTSolver:
 
     def addAssertions(self, exprs: [SMTExpression]):
         for expr in exprs:
+            # print(expr, get_logic(expr.expression))
             self.addAssertion(expr)
 
     def solve(self) -> SMTSolution:
