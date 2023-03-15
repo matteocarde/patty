@@ -16,7 +16,7 @@ class SMTSolver:
         self.variables: Set[SMTVariable] = set()
         self.solver = Portfolio(["z3"],
                                 logic=QF_LRA,
-                                incremental=False,
+                                incremental=True,
                                 generate_models=True)
 
     def addAssertion(self, expr: SMTExpression):

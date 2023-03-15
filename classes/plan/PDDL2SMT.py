@@ -1,20 +1,19 @@
-import copy
-
-from typing import Dict, Tuple, List
+from typing import List
 
 from Action import Action
-from Atom import Atom
 from BinaryPredicate import BinaryPredicate
 from Constant import Constant
 from Domain import GroundedDomain
 from Literal import Literal
-from Operation import Operation
+from NumericPlan import NumericPlan
 from Problem import Problem
 from classes.plan.ActionOrder import ActionOrder
 from classes.plan.TransitionVariables import TransitionVariables
 from classes.smt.SMTExpression import SMTExpression
 from classes.smt.SMTNumericVariable import SMTNumericVariable
-from classes.smt.SMTVariable import SMTVariable
+from classes.smt.SMTSolution import SMTSolution
+
+BOUND = 100
 
 
 class PDDL2SMT:
@@ -110,7 +109,10 @@ class PDDL2SMT:
                     d_bv = stepVars.deltaVariables[prevAction][v]
                     k = SMTNumericVariable.fromPddl(funct, stepVars.deltaVariables[prevAction])
                     b_n = stepVars.actionVariables[prevAction]
-                    rules.append(d_av == d_bv + (k * b_n) * sign)
+                    if sign > 0:
+                        rules.append(d_av == d_bv + (k * b_n))
+                    else:
+                        rules.append(d_av == d_bv - (k * b_n))
             # Case e) Numeric assignment
             for v in prevAction.getAssList():
                 rules.append(stepVars.deltaVariables[action][v] == stepVars.auxVariables[prevAction][v])
@@ -124,6 +126,7 @@ class PDDL2SMT:
 
         for a in self.order:
             rules.append(stepVars.actionVariables[a] >= 0)
+            rules.append(stepVars.actionVariables[a] <= BOUND)
 
         return rules
 
@@ -151,8 +154,10 @@ class PDDL2SMT:
                 # c*(a_n - 1)
                 decrease = c * (stepVars.actionVariables[a] - 1)
 
+                preRhs = preRhs + decrease if c > 0 else preRhs
+
                 # preLhs {op} preRhs + c*(a_n - 1)
-                rhs = SMTNumericVariable.opByString(pre.operator, preLhs, preRhs + decrease)
+                rhs = SMTNumericVariable.opByString(pre.operator, preLhs, preRhs)
 
                 rules.append(lhs.implies(rhs))
 
@@ -196,3 +201,15 @@ class PDDL2SMT:
         rules += self.getFrameStepRules(stepVars)
 
         return rules
+
+    def getPlanFromSolution(self, solution: SMTSolution) -> NumericPlan:
+        plan = NumericPlan()
+
+        for i in range(1, self.horizon + 1):
+            stepVar = self.transitionVariables[i]
+            for a in self.order:
+                repetitions = int(str(solution.getVariable(stepVar.actionVariables[a])))
+                if repetitions > 0:
+                    plan.addRepeatedAction(a, repetitions)
+
+        return plan

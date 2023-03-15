@@ -2,6 +2,7 @@ import unittest
 from unittest import TestCase
 
 from Domain import Domain, GroundedDomain
+from NumericPlan import NumericPlan
 from Problem import Problem
 from classes.plan.PDDL2SMT import PDDL2SMT
 from classes.smt.SMTSolution import SMTSolution
@@ -31,6 +32,12 @@ class TestFarmland(TestCase):
         solution: SMTSolution = solver.solve()
 
         self.assertIsInstance(solution, SMTSolution)
+
+        plan: NumericPlan = self.pddl2smt.getPlanFromSolution(solution)
+        print("No repetitions:")
+        plan.print()
+        print("With repetitions:")
+        plan.printWithRepetitions()
 
 
 if __name__ == '__main__':
