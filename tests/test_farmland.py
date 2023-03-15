@@ -13,10 +13,11 @@ class TestFarmland(TestCase):
 
     def setUp(self) -> None:
         self.domain: Domain = Domain.fromFile("../files/farmland/domain.pddl")
-        self.problem: Problem = Problem.fromFile("../files/farmland/instances/instance_2_100_1229.pddl")
+        self.problem: Problem = Problem.fromFile("../files/farmland/instances/instance_6_100_1229.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
-        self.horizon = 5
+        self.horizon = 10
         self.pddl2smt: PDDL2SMT = PDDL2SMT(self.gDomain, self.problem, self.horizon)
+        print(self.pddl2smt.order)
         pass
 
     def test_transform(self):

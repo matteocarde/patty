@@ -3,6 +3,7 @@ from unittest import TestCase
 
 from Domain import Domain, GroundedDomain
 from NumericPlan import NumericPlan
+from PDDLException import PDDLException
 from Problem import Problem
 from classes.plan.PDDL2SMT import PDDL2SMT
 from classes.smt.SMTSolution import SMTSolution
@@ -14,6 +15,7 @@ class TestPaper(TestCase):
     def setUp(self) -> None:
         self.domain: Domain = Domain.fromFile("../files/paper_example/domain.pddl")
         self.problem: Problem = Problem.fromFile("../files/paper_example/problem.pddl")
+        self.unreachable: Problem = Problem.fromFile("../files/paper_example/unreachable.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.horizon = 2
         self.pddl2smt: PDDL2SMT = PDDL2SMT(self.gDomain, self.problem, self.horizon)
@@ -40,6 +42,15 @@ class TestPaper(TestCase):
         plan.print()
         print("With repetitions:")
         plan.printWithRepetitions()
+
+    def test_unreach(self):
+        raised = False
+        try:
+            PDDL2SMT(self.gDomain, self.unreachable, self.horizon)
+        except PDDLException.GoalNotReachable:
+            raised = True
+
+        self.assertTrue(raised)
 
 
 if __name__ == '__main__':

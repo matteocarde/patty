@@ -1,11 +1,10 @@
-from typing import List, Set
+from typing import List
 
 from ARPG import ARPG
 from Action import Action
 from Domain import GroundedDomain
 from Problem import Problem
-from RelaxedIntervalState import RelaxedIntervalState
-from Supporter import Supporter
+from RPG import RPG
 
 
 class ActionOrder:
@@ -18,7 +17,9 @@ class ActionOrder:
         self.__order.append(dummyAction)
 
     def __computeOrder(self) -> List[Action]:
-        arpg = ARPG(self.domain, self.problem)
+        rpg = RPG(self.domain, self.problem)
+        arpg = ARPG(rpg.getReachableActions(), self.problem)
+
         return arpg.getActionsOrder()
 
     def __iter__(self):
