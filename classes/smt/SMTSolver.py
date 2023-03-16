@@ -1,8 +1,8 @@
 from pysmt.oracles import get_logic
-from typing import Set
+from typing import Set, List
 
 from pysmt.logics import QF_LIA, QF_LRA
-from pysmt.shortcuts import Portfolio
+from pysmt.shortcuts import Portfolio, And, to_smtlib
 
 from classes.smt.SMTExpression import SMTExpression
 from classes.smt.SMTSolution import SMTSolution
@@ -19,10 +19,12 @@ class SMTSolver:
                                 logic=QF_LRA,
                                 incremental=True,
                                 generate_models=True)
+        self.assertions: List[SMTExpression] = list()
 
     def addAssertion(self, expr: SMTExpression):
-        self.solver.add_assertion(expr.expression)
-        self.solver.push()
+        # self.solver.add_assertion(expr.expression)
+        # self.solver.push()
+        self.assertions.append(expr)
         self.variables.update(expr.variables)
 
     def addAssertions(self, exprs: [SMTExpression]):
@@ -31,6 +33,13 @@ class SMTSolver:
             self.addAssertion(expr)
 
     def solve(self) -> SMTSolution:
+
+        totalAssertion = And([f.expression for f in self.assertions])
+        simplifiedAssertion = totalAssertion.simplify()
+
+        self.solver.add_assertion(simplifiedAssertion)
+        self.solver.push()
+
         self.solver.solve()
         solution = SMTSolution()
         for variable in self.variables:

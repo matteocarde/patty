@@ -43,6 +43,8 @@ class TestPaper(TestCase):
         print("With repetitions:")
         plan.printWithRepetitions()
 
+        self.assertTrue(plan.validate(self.problem))
+
     def test_unreach(self):
         raised = False
         try:
