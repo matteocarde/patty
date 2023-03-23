@@ -19,3 +19,6 @@ class SMTSolution:
             return node
         if isinstance(var, SMTBoolVariable):
             raise NotImplemented("TODO")
+
+    def __str__(self):
+        return str(self.__variables)

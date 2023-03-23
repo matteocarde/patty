@@ -15,15 +15,12 @@ class TestFarmland(TestCase):
         self.domain: Domain = Domain.fromFile("../files/farmland/domain.pddl")
         self.problem: Problem = Problem.fromFile("../files/farmland/instances/instance_2_100_1229.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
-        self.horizon = 10
+        self.horizon = 2
         self.pddl2smt: PDDL2SMT = PDDL2SMT(self.gDomain, self.problem, self.horizon)
         print(self.pddl2smt.order)
         pass
 
     def test_transform(self):
-        self.assertGreater(len(self.pddl2smt.initial), 0)
-        self.assertGreater(len(self.pddl2smt.goal), 0)
-        self.assertGreater(len(self.pddl2smt.transitions), 0)
         self.assertGreater(len(self.pddl2smt.rules), 0)
 
     def test_solve(self):

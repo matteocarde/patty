@@ -1,13 +1,12 @@
-from fractions import Fraction
-
-import unittest
 from unittest import TestCase
 
-from pysmt.shortcuts import Real, Int
+import unittest
+from pysmt.logics import QF_UFLIRA
+from pysmt.shortcuts import Real, Symbol, Portfolio, Not, TRUE, FALSE, Implies, get_model, And
 from pysmt.typing import REAL, INT, BOOL
 
-from classes.smt.SMTExpression import SMTExpression
 from classes.smt.SMTBoolVariable import SMTBoolVariable
+from classes.smt.SMTExpression import SMTExpression
 from classes.smt.SMTNumericVariable import SMTNumericVariable, SMTRealVariable, SMTIntVariable
 from classes.smt.SMTSolution import SMTSolution
 from classes.smt.SMTSolver import SMTSolver
@@ -156,6 +155,51 @@ class TestSMT(TestCase):
 
         self.assertEqual(solution.getVariable(self.x), Real(2.0))
         self.assertNotEqual(solution.getVariable(self.y), Real(3.1))
+
+    def test_z3(self):
+        x, y = Symbol("x1"), Symbol("y1")
+        f = Implies(x, y)
+
+        solvers_set = ["z3"]
+        with Portfolio(solvers_set,
+                       logic=QF_UFLIRA,
+                       incremental=True,
+                       generate_models=True) as s:
+            s.add_assertion(f)
+            s.push()
+            s.add_assertion(x)
+            res = s.solve()
+            v_y = s.get_value(y)
+            self.assertEqual(v_y, TRUE())
+
+            s.pop()
+            s.add_assertion(Not(y))
+            res = s.solve()
+            v_x = s.get_value(x)
+            self.assertEqual(v_x, FALSE())
+
+    def test_yices(self):
+        x, y = Symbol("x1"), Symbol("y1")
+        f = Implies(x, y)
+
+        solvers_set = ["yices"]
+        with Portfolio(solvers_set,
+                       logic=QF_UFLIRA,
+                       incremental=True,
+                       generate_models=True) as s:
+            s.add_assertion(f)
+            s.push()
+            s.add_assertion(x)
+
+            res = s.solve()
+            v_y = s.get_value(y)
+            self.assertEqual(v_y, TRUE())
+
+            s.pop()
+            s.add_assertion(Not(y))
+            res = s.solve()
+            v_x = s.get_value(x)
+            self.assertEqual(v_x, FALSE())
 
 
 if __name__ == '__main__':

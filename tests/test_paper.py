@@ -23,7 +23,6 @@ class TestPaper(TestCase):
 
     def test_transform(self):
         self.assertGreater(len(self.pddl2smt.initial), 0)
-        self.assertGreater(len(self.pddl2smt.goal), 0)
         self.assertGreater(len(self.pddl2smt.transitions), 0)
         self.assertGreater(len(self.pddl2smt.rules), 0)
 
@@ -32,9 +31,10 @@ class TestPaper(TestCase):
         solver.addAssertions(self.pddl2smt.rules)
 
         print(self.pddl2smt.order)
+        self.pddl2smt.printRules()
 
         solution: SMTSolution = solver.solve()
-
+        print(solution)
         self.assertIsInstance(solution, SMTSolution)
 
         plan: NumericPlan = self.pddl2smt.getPlanFromSolution(solution)

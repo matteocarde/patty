@@ -1,9 +1,12 @@
+from pysmt.shortcuts import to_smtlib, And
+from pysmt.typing import INT
 from typing import List
 
 from Action import Action
 from BinaryPredicate import BinaryPredicate
 from Constant import Constant
 from Domain import GroundedDomain
+from Formula import Formula
 from Literal import Literal
 from NumericPlan import NumericPlan
 from Problem import Problem
@@ -38,13 +41,13 @@ class PDDL2SMT:
             self.transitionVariables.append(var)
 
         self.initial: [SMTExpression] = self.getInitialExpression()
-        self.goal: [SMTExpression] = self.getGoalExpression()
+        self.goal: SMTExpression = self.getGoalExpression()
 
         for index in range(1, horizon + 1):
             stepRules = self.getStepRules(index)
             self.transitions.extend(stepRules)
 
-        self.rules = self.initial + self.transitions + self.goal
+        self.rules = self.initial + self.transitions + [self.goal]
 
     def getInitialExpression(self) -> List[SMTExpression]:
         tVars = self.transitionVariables[0]
@@ -60,11 +63,10 @@ class PDDL2SMT:
 
         return rules
 
-    def getGoalExpression(self) -> [SMTExpression]:
+    def getGoalRuleFromFormula(self, f: Formula) -> SMTExpression:
         tVars = self.transitionVariables[-1]
-        rules: [SMTExpression] = list()
-
-        for condition in self.problem.goal:
+        rules: [SMTExpression] = []
+        for condition in f.conditions:
             if isinstance(condition, BinaryPredicate):
                 expr = SMTExpression.fromPddl(condition, tVars.valueVariables)
                 rules.append(expr)
@@ -73,10 +75,18 @@ class PDDL2SMT:
                     rules.append(tVars.valueVariables[condition.getAtom()] > 0)
                 else:
                     rules.append(tVars.valueVariables[condition.getAtom()] < 0)
+            elif isinstance(condition, Formula):
+                rules.append(self.getGoalRuleFromFormula(condition))
             else:
                 raise NotImplemented("Shouldn't go here")
 
-        return rules
+        if f.type == "AND":
+            return SMTExpression.andOfExpressionsList(rules)
+        if f.type == "OR":
+            return SMTExpression.orOfExpressionsList(rules)
+
+    def getGoalExpression(self) -> SMTExpression:
+        return self.getGoalRuleFromFormula(self.problem.goal)
 
     def getDeltaStepRules(self, prevVars: TransitionVariables, stepVars: TransitionVariables) -> List[SMTExpression]:
         rules: List[SMTExpression] = []
@@ -135,8 +145,13 @@ class PDDL2SMT:
 
         for a in self.order:
             for pre in a.preconditions:
-                if not isinstance(pre, BinaryPredicate) or pre.operator != ">=":
+                if isinstance(pre, Literal):
+                    print("WARNING: There are some boolean preconditions which I am not yet able to deal with")
                     continue
+
+                if pre.operator != ">=" or not isinstance(pre.lhs, Literal) or not isinstance(pre.rhs, Constant):
+                    raise Exception("Preconditions are not of the form v >= k")
+
                 c = 0
                 # Searching for decrease effects
                 for eff in a.effects:
@@ -201,6 +216,10 @@ class PDDL2SMT:
         rules += self.getFrameStepRules(stepVars)
 
         return rules
+
+    def printRules(self):
+        for rule in self.rules:
+            print(rule)
 
     def getPlanFromSolution(self, solution: SMTSolution) -> NumericPlan:
         plan = NumericPlan()

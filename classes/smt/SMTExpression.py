@@ -4,7 +4,8 @@ from pysmt.typing import REAL, INT, BOOL
 from typing import Set, Dict
 
 from pysmt.fnode import FNode
-from pysmt.shortcuts import And, Or, Equals, LE, LT, GE, GT, Implies, Real, Times, Minus, Plus, Div, TRUE, ToReal, Int
+from pysmt.shortcuts import And, Or, Equals, LE, LT, GE, GT, Implies, Real, Times, Minus, Plus, Div, TRUE, ToReal, Int, \
+    NotEquals
 
 from Atom import Atom
 from BinaryPredicate import BinaryPredicate
@@ -86,6 +87,11 @@ class SMTExpression:
         expr.type = BOOL
         return expr
 
+    def __ne__(self, other: SMTExpression or int):
+        expr = self.__binary(other, NotEquals, self.expression, toRHS(other))
+        expr.type = BOOL
+        return expr
+
     def __le__(self, other: SMTExpression or float):
         expr = self.__binary(other, LE, self.expression, toRHS(other))
         expr.type = BOOL
@@ -164,6 +170,8 @@ class SMTExpression:
             return left < right
         if op == "=":
             return left == right
+        if op == "!=":
+            return left != right
 
     @classmethod
     def fromPddl(cls, predicate: BinaryPredicate or Literal or Constant,
@@ -176,3 +184,17 @@ class SMTExpression:
             return variables[predicate.getAtom()]
         if isinstance(predicate, Constant):
             return predicate.value
+
+    @classmethod
+    def andOfExpressionsList(cls, rules: [SMTExpression]):
+        final: SMTExpression = rules[0]
+        for rule in rules[1:]:
+            final = final.AND(rule)
+        return final
+
+    @classmethod
+    def orOfExpressionsList(cls, rules: [SMTExpression]):
+        final: SMTExpression = rules[0]
+        for rule in rules[1:]:
+            final = final.OR(rule)
+        return final

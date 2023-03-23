@@ -1,6 +1,8 @@
 from pysmt.oracles import get_logic
 from typing import Set, List
 
+import yicespy
+
 from pysmt.logics import QF_LIA, QF_LRA
 from pysmt.shortcuts import Portfolio, And, to_smtlib
 
@@ -15,9 +17,9 @@ class SMTSolver:
 
     def __init__(self):
         self.variables: Set[SMTVariable] = set()
-        self.solver = Portfolio(["z3"],
+        self.solver = Portfolio(["msat"],
                                 logic=QF_LRA,
-                                incremental=True,
+                                incremental=False,
                                 generate_models=True)
         self.assertions: List[SMTExpression] = list()
 
@@ -40,9 +42,10 @@ class SMTSolver:
         self.solver.add_assertion(simplifiedAssertion)
         self.solver.push()
 
-        self.solver.solve()
+        result = self.solver.solve()
         solution = SMTSolution()
         for variable in self.variables:
-            solution.addVariable(variable, self.solver.get_value(variable.expression))
+            value = self.solver.get_value(variable.expression)
+            solution.addVariable(variable, value)
 
         return solution
