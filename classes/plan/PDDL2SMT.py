@@ -178,11 +178,13 @@ class PDDL2SMT:
                 lhs = stepVars.actionVariables[a] > 0
                 # Transformed precondition
                 functSMT = SMTNumericVariable.fromPddl(function, stepVars.deltaVariables[a])
+                w0 = function.getLinearIncrement()
                 subsFunctSMT = SMTNumericVariable.fromPddl(subsFunction, dict())  # It should not contain literals
+                subsFunctSTM_w0 = subsFunctSMT - w0
                 prevTimes = (stepVars.actionVariables[a] - 1)
 
-                # f(x) + f(c)*(a_n - 1) {op} 0
-                condition = functSMT + subsFunctSMT * prevTimes
+                # f(x_1, ..., x_p) + [f(k_1, ..., k_p) - w_0]*(a_n - 1) {op} 0
+                condition = functSMT + subsFunctSTM_w0 * prevTimes
                 rhs = SMTNumericVariable.opByString(pre.operator, condition, 0)
 
                 rules.append(lhs.implies(rhs))
