@@ -1,8 +1,9 @@
 from pysmt.shortcuts import to_smtlib, And
 from pysmt.typing import INT
-from typing import List
+from typing import List, Dict
 
 from Action import Action
+from Atom import Atom
 from BinaryPredicate import BinaryPredicate
 from Constant import Constant
 from Domain import GroundedDomain
@@ -33,6 +34,7 @@ class PDDL2SMT:
         self.transitions: [SMTExpression] = []
 
         self.dummyAction = Action()
+        self.dummyAction.isFake = True
         self.dummyAction.name = "g"
         self.order = ActionOrder(self.domain, self.problem, self.dummyAction)
 
@@ -55,6 +57,9 @@ class PDDL2SMT:
 
         for assignment in self.problem.init:
             if isinstance(assignment, BinaryPredicate):
+                if assignment.getAtom() not in self.domain.allAtoms:
+                    print(f"Atom {assignment.getAtom()} was pruned since it's a constant")
+                    continue
                 rules.append(tVars.valueVariables[assignment.getAtom()] == float(str(assignment.rhs)))
             elif isinstance(assignment, Literal):
                 rules.append(tVars.valueVariables[assignment.getAtom()] == 1)
@@ -135,6 +140,8 @@ class PDDL2SMT:
         rules: List[SMTExpression] = []
 
         for a in self.order:
+            if a.isFake:
+                continue
             rules.append(stepVars.actionVariables[a] >= 0)
             rules.append(stepVars.actionVariables[a] <= BOUND)
 
@@ -146,33 +153,37 @@ class PDDL2SMT:
         for a in self.order:
             for pre in a.preconditions:
                 if isinstance(pre, Literal):
-                    print("WARNING: There are some boolean preconditions which I am not yet able to deal with")
+                    # print("WARNING: There are some boolean preconditions which I am not yet able to deal with")
                     continue
 
-                if pre.operator != ">=" or not isinstance(pre.lhs, Literal) or not isinstance(pre.rhs, Constant):
-                    raise Exception("Preconditions are not of the form v >= k")
+                function: BinaryPredicate = pre.lhs - pre.rhs
 
-                c = 0
+                # if pre.operator != ">=" or not isinstance(pre.lhs, Literal) or not isinstance(pre.rhs, Constant):
+                #     raise Exception("Preconditions are not of the form v >= k")
+
+                subs: Dict[Atom, float] = dict()
                 # Searching for decrease effects
                 for eff in a.effects:
-                    if not isinstance(eff, BinaryPredicate) or eff.operator != "decrease" or eff.lhs != pre.lhs:
+                    if not isinstance(eff, BinaryPredicate):
                         continue
                     if not isinstance(eff.rhs, Constant):
                         raise Exception("At the moment I cannot handle linear effects")
-                    c = eff.rhs.value
+
+                    sign = +1 if eff.operator == "increase" else -1
+                    subs[eff.lhs.getAtom()] = sign * eff.rhs.value
+
+                subsFunction = function.substitute(subs, default=0)
 
                 # a_n > 0
                 lhs = stepVars.actionVariables[a] > 0
                 # Transformed precondition
-                preLhs = SMTNumericVariable.fromPddl(pre.lhs, stepVars.deltaVariables[a])
-                preRhs = SMTNumericVariable.fromPddl(pre.rhs, stepVars.deltaVariables[a])
-                # c*(a_n - 1)
-                decrease = c * (stepVars.actionVariables[a] - 1)
+                functSMT = SMTNumericVariable.fromPddl(function, stepVars.deltaVariables[a])
+                subsFunctSMT = SMTNumericVariable.fromPddl(subsFunction, dict())  # It should not contain literals
+                prevTimes = (stepVars.actionVariables[a] - 1)
 
-                preRhs = preRhs + decrease if c > 0 else preRhs
-
-                # preLhs {op} preRhs + c*(a_n - 1)
-                rhs = SMTNumericVariable.opByString(pre.operator, preLhs, preRhs)
+                # f(x) + f(c)*(a_n - 1) {op} 0
+                condition = functSMT + subsFunctSMT * prevTimes
+                rhs = SMTNumericVariable.opByString(pre.operator, condition, 0)
 
                 rules.append(lhs.implies(rhs))
 
@@ -227,6 +238,8 @@ class PDDL2SMT:
         for i in range(1, self.horizon + 1):
             stepVar = self.transitionVariables[i]
             for a in self.order:
+                if a.isFake:
+                    continue
                 repetitions = int(str(solution.getVariable(stepVar.actionVariables[a])))
                 if repetitions > 0:
                     plan.addRepeatedAction(a, repetitions)

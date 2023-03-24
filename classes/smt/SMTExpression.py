@@ -147,7 +147,7 @@ class SMTExpression:
         return expr
 
     @staticmethod
-    def opByString(op: str, left: SMTExpression, right: SMTExpression):
+    def opByString(op: str, left: SMTExpression or float, right: SMTExpression or float):
         if op == "and":
             return left.AND(right)
         if op == "or":

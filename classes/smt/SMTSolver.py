@@ -17,10 +17,6 @@ class SMTSolver:
 
     def __init__(self):
         self.variables: Set[SMTVariable] = set()
-        self.solver = Portfolio(["msat"],
-                                logic=QF_LRA,
-                                incremental=False,
-                                generate_models=True)
         self.assertions: List[SMTExpression] = list()
 
     def addAssertion(self, expr: SMTExpression):
@@ -36,16 +32,20 @@ class SMTSolver:
 
     def solve(self) -> SMTSolution:
 
-        totalAssertion = And([f.expression for f in self.assertions])
-        simplifiedAssertion = totalAssertion.simplify()
+        with Portfolio(["yices"],
+                       logic=QF_LRA,
+                       incremental=False,
+                       generate_models=True) as solver:
+            totalAssertion = And([f.expression for f in self.assertions])
+            simplifiedAssertion = totalAssertion.simplify()
 
-        self.solver.add_assertion(simplifiedAssertion)
-        self.solver.push()
+            solver.add_assertion(simplifiedAssertion)
+            solver.push()
 
-        result = self.solver.solve()
-        solution = SMTSolution()
-        for variable in self.variables:
-            value = self.solver.get_value(variable.expression)
-            solution.addVariable(variable, value)
+            result = solver.solve()
+            solution = SMTSolution()
+            for variable in self.variables:
+                value = solver.get_value(variable.expression)
+                solution.addVariable(variable, value)
 
-        return solution
+            return solution

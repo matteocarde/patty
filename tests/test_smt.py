@@ -2,7 +2,7 @@ from unittest import TestCase
 
 import unittest
 from pysmt.logics import QF_UFLIRA
-from pysmt.shortcuts import Real, Symbol, Portfolio, Not, TRUE, FALSE, Implies, get_model, And
+from pysmt.shortcuts import Real, Symbol, Portfolio, Not, TRUE, FALSE, Implies, get_model, And, Int
 from pysmt.typing import REAL, INT, BOOL
 
 from classes.smt.SMTBoolVariable import SMTBoolVariable
@@ -134,15 +134,15 @@ class TestSMT(TestCase):
 
     def test_solver_int_easy(self):
         solver: SMTSolver = SMTSolver()
-        lhs: SMTExpression = self.x > 10.1
-        rhs: SMTExpression = (self.y > 4.5).AND(self.y < 5.6)
+        lhs: SMTExpression = self.q > 10.1
+        rhs: SMTExpression = (self.p > 4.5).AND(self.p < 5.6)
         solver.addAssertion(lhs.implies(rhs))
-        solver.addAssertion(self.x == 20)
+        solver.addAssertion(self.q == 20)
 
         solution: SMTSolution = solver.solve()
 
-        self.assertEqual(solution.getVariable(self.x), Real(20))
-        self.assertEqual(solution.getVariable(self.y), Real(5))
+        self.assertEqual(solution.getVariable(self.q), Int(20))
+        self.assertEqual(solution.getVariable(self.p), Int(5))
 
     def test_solver_real_hard(self):
         solver: SMTSolver = SMTSolver()

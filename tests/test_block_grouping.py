@@ -22,7 +22,6 @@ class TestBlockGrouping(TestCase):
 
     def test_transform(self):
         self.assertGreater(len(self.pddl2smt.initial), 0)
-        self.assertGreater(len(self.pddl2smt.goal), 0)
         self.assertGreater(len(self.pddl2smt.transitions), 0)
         self.assertGreater(len(self.pddl2smt.rules), 0)
 

@@ -33,6 +33,8 @@ class TransitionVariables:
         variables: Dict[Action, SMTVariable] = dict()
 
         for action in self.order:
+            if action.isFake:
+                continue
             variables[action] = SMTIntVariable(f"{action.name}_{index}_n")
 
         return variables
