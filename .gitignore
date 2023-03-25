@@ -6,3 +6,5 @@ classes/__pycache__/
 classes/plan/__pycache__/
 
 *.pyc
+
+experiments/

@@ -13,7 +13,7 @@ class TestBlockGrouping(TestCase):
 
     def setUp(self) -> None:
         self.domain: Domain = Domain.fromFile("../files/block-grouping/domain.pddl")
-        self.problem: Problem = Problem.fromFile("../files/block-grouping/instances/instance_5_5_2_1.pddl")
+        self.problem: Problem = Problem.fromFile("../files/block-grouping/instances/instance_5_5_2_2.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.horizon = 2
         self.pddl2smt: PDDL2SMT = PDDL2SMT(self.gDomain, self.problem, self.horizon)

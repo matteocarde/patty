@@ -1,4 +1,4 @@
-from typing import Dict, Tuple, Set
+from typing import Dict, Tuple, Set, List
 
 from Action import Action
 from Atom import Atom
@@ -12,10 +12,10 @@ from classes.smt.SMTVariable import SMTVariable
 
 class TransitionVariables:
 
-    def __init__(self, allAtoms: Set[Atom], assList: Dict[Atom, Set[Operation]], order: ActionOrder, index: int):
+    def __init__(self, allAtoms: Set[Atom], assList: Dict[Atom, Set[Operation]], order: List[Action], index: int):
         self.allAtoms: Set[Atom] = allAtoms
         self.assList: Dict[Atom, Set[Operation]] = assList
-        self.order: ActionOrder = order
+        self.order: List[Action] = order
         self.valueVariables: Dict[Atom, SMTVariable] = self.__computeValueVariables(index)
         self.actionVariables: Dict[Action, SMTVariable] = self.__computeActionVariables(index)
         self.deltaVariables: Dict[Action, Dict[Atom, SMTVariable]] = self.__computeDeltaVariables(index)

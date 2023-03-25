@@ -2,6 +2,7 @@ from pysmt.shortcuts import to_smtlib, And
 from pysmt.typing import INT
 from typing import List, Dict
 
+from ARPG import ARPG
 from Action import Action
 from Atom import Atom
 from BinaryPredicate import BinaryPredicate
@@ -36,7 +37,8 @@ class PDDL2SMT:
         self.dummyAction = Action()
         self.dummyAction.isFake = True
         self.dummyAction.name = "g"
-        self.order = ActionOrder(self.domain, self.problem, self.dummyAction)
+        self.order: List[Action] = self.domain.getARPG().getActionsOrder()
+        self.order.append(self.dummyAction)
 
         for index in range(0, horizon + 1):
             var = TransitionVariables(self.domain.allAtoms, self.domain.assList, self.order, index)
@@ -58,7 +60,7 @@ class PDDL2SMT:
         for assignment in self.problem.init:
             if isinstance(assignment, BinaryPredicate):
                 if assignment.getAtom() not in self.domain.allAtoms:
-                    print(f"Atom {assignment.getAtom()} was pruned since it's a constant")
+                    # print(f"Atom {assignment.getAtom()} was pruned since it's a constant")
                     continue
                 rules.append(tVars.valueVariables[assignment.getAtom()] == float(str(assignment.rhs)))
             elif isinstance(assignment, Literal):
@@ -144,6 +146,14 @@ class PDDL2SMT:
                 continue
             rules.append(stepVars.actionVariables[a] >= 0)
             rules.append(stepVars.actionVariables[a] <= BOUND)
+
+        for (atom, interval) in self.domain.arpg.stateLevels[-1].intervals.items():
+            if atom not in stepVars.valueVariables:
+                continue
+            if interval.lb != float("-inf"):
+                rules.append(stepVars.valueVariables[atom] >= interval.lb)
+            if interval.ub != float("+inf"):
+                rules.append(stepVars.valueVariables[atom] <= interval.ub)
 
         return rules
 

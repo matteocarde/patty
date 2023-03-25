@@ -13,9 +13,9 @@ from classes.smt.SMTSolver import SMTSolver
 class TestPaper(TestCase):
 
     def setUp(self) -> None:
-        self.domain: Domain = Domain.fromFile("../files/paper_example/domain.pddl")
-        self.problem: Problem = Problem.fromFile("../files/paper_example/problem.pddl")
-        self.unreachable: Problem = Problem.fromFile("../files/paper_example/unreachable.pddl")
+        self.domain: Domain = Domain.fromFile("../files/paper-example/domain.pddl")
+        self.problem: Problem = Problem.fromFile("../files/paper-example/problem.pddl")
+        self.unreachable: Problem = Problem.fromFile("../files/paper-example/unreachable.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.horizon = 2
         self.pddl2smt: PDDL2SMT = PDDL2SMT(self.gDomain, self.problem, self.horizon)
