@@ -9,18 +9,11 @@ from RPG import RPG
 
 class ActionOrder:
 
-    def __init__(self, domain: GroundedDomain, problem: Problem, dummyAction: Action):
-        self.domain = domain
-        self.problem = problem
+    def __init__(self):
+        self.__order: List[Action] = list()
 
-        self.__order: List[Action] = self.__computeOrder()
-        self.__order.append(dummyAction)
-
-    def __computeOrder(self) -> List[Action]:
-        rpg = RPG(self.domain, self.problem)
-        arpg = ARPG(rpg.getReachableActions(), self.problem)
-
-        return arpg.getActionsOrder()
+    def append(self, action: Action):
+        self.__order.append(action)
 
     def __iter__(self):
         return iter(self.__order)

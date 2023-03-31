@@ -15,7 +15,7 @@ from classes.smt.SMTSolver import SMTSolver
 
 
 def main():
-    experiment = "experiments/performances/1679754029.391995"
+    experiment = "experiments/performances/1679784995.57566"
 
     valid = 0
     total = 0

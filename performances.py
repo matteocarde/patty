@@ -1,5 +1,6 @@
 import os
 import pathlib
+import sys
 import time
 import traceback
 
@@ -19,17 +20,17 @@ domains = {
         "problems-folder": "instances/"
     },
     "fn-counters": {
-        "folder": "counters/fn-counters",
+        "folder": "fn-counters",
         "domain": "domain.pddl",
         "problems-folder": "instances/"
     },
     "fn-counters-inv": {
-        "folder": "counters/fn-counters-inv",
+        "folder": "fn-counters-inv",
         "domain": "domain.pddl",
         "problems-folder": "instances/"
     },
     "fn-counters-rnd": {
-        "folder": "counters/fn-counters-rnd",
+        "folder": "fn-counters-rnd",
         "domain": "domain.pddl",
         "problems-folder": "instances/"
     },
@@ -55,7 +56,7 @@ domains = {
     # }
 }
 
-HORIZON = 4
+HORIZON = 1
 
 
 def myRound(n: str or float):
@@ -113,13 +114,11 @@ def main():
                 gDomain: GroundedDomain = domain.ground(problem)
                 pddl2smt: PDDL2SMT = PDDL2SMT(gDomain, problem, HORIZON)
 
-                solver: SMTSolver = SMTSolver()
-                solver.addAssertions(pddl2smt.rules)
+                solver: SMTSolver = SMTSolver(pddl2smt)
 
                 tocPreprocessing = time.perf_counter()
-                solution: SMTSolution = solver.solve()
+                plan: NumericPlan = solver.optimizeBinary()
 
-                plan: NumericPlan = pddl2smt.getPlanFromSolution(solution)
                 plan.validate(problem)
                 tocSolving = time.perf_counter()
 
@@ -136,6 +135,7 @@ def main():
                 planFile = open(f"{domainResultsFolder}/{problemFile}", "w")
                 planFile.write(plan.toValString())
                 planFile.close()
+                solver.exit()
 
             except Exception:
                 printResults(
@@ -147,7 +147,7 @@ def main():
                     totalTime="ERROR",
                     planLength=0,
                 )
-
+                print(traceback.format_exc(), file=sys.stderr)
                 planFile = open(f"{domainResultsFolder}/ERRORED_{problemFile}", "w")
                 planFile.write(traceback.format_exc())
                 planFile.close()

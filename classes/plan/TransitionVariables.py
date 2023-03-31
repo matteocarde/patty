@@ -17,9 +17,10 @@ class TransitionVariables:
         self.assList: Dict[Atom, Set[Operation]] = assList
         self.order: List[Action] = order
         self.valueVariables: Dict[Atom, SMTVariable] = self.__computeValueVariables(index)
-        self.actionVariables: Dict[Action, SMTVariable] = self.__computeActionVariables(index)
         self.deltaVariables: Dict[Action, Dict[Atom, SMTVariable]] = self.__computeDeltaVariables(index)
-        self.auxVariables: Dict[Action, Dict[Atom, SMTVariable]] = self.__computeAuxVariables(index)
+        if index > 0:
+            self.actionVariables: Dict[Action, SMTVariable] = self.__computeActionVariables(index)
+            self.auxVariables: Dict[Action, Dict[Atom, SMTVariable]] = self.__computeAuxVariables(index)
 
     def __computeValueVariables(self, index: int) -> Dict[Atom, SMTVariable]:
         variables: Dict[Atom, SMTVariable] = dict()

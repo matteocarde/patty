@@ -1,8 +1,5 @@
-from pysmt.shortcuts import to_smtlib, And
-from pysmt.typing import INT
-from typing import List, Dict
+from typing import List, Dict, Set
 
-from ARPG import ARPG
 from Action import Action
 from Atom import Atom
 from BinaryPredicate import BinaryPredicate
@@ -12,7 +9,6 @@ from Formula import Formula
 from Literal import Literal
 from NumericPlan import NumericPlan
 from Problem import Problem
-from classes.plan.ActionOrder import ActionOrder
 from classes.plan.TransitionVariables import TransitionVariables
 from classes.smt.SMTExpression import SMTExpression
 from classes.smt.SMTNumericVariable import SMTNumericVariable
@@ -45,7 +41,7 @@ class PDDL2SMT:
             self.transitionVariables.append(var)
 
         self.initial: [SMTExpression] = self.getInitialExpression()
-        self.goal: SMTExpression = self.getGoalExpression()
+        self.goal: [SMTExpression] = self.getGoalExpression()
 
         for index in range(1, horizon + 1):
             stepRules = self.getStepRules(index)
@@ -60,7 +56,7 @@ class PDDL2SMT:
         for assignment in self.problem.init:
             if isinstance(assignment, BinaryPredicate):
                 if assignment.getAtom() not in self.domain.allAtoms:
-                    # print(f"Atom {assignment.getAtom()} was pruned since it's a constant")
+                    # print(f"Atom {assignments.getAtom()} was pruned since it's a constant")
                     continue
                 rules.append(tVars.valueVariables[assignment.getAtom()] == float(str(assignment.rhs)))
             elif isinstance(assignment, Literal):
@@ -94,6 +90,19 @@ class PDDL2SMT:
 
     def getGoalExpression(self) -> SMTExpression:
         return self.getGoalRuleFromFormula(self.problem.goal)
+
+    def getMetricExpression(self, metricBound: float) -> SMTExpression or None:
+
+        if self.problem.metric:
+            return SMTNumericVariable.fromPddl(self.problem.metric,
+                                               self.transitionVariables[-1].valueVariables) < metricBound
+
+        if not self.problem.metric:
+            sumOfActions = 0
+            for stepVar in self.transitionVariables[1:]:
+                for actionVar in stepVar.actionVariables.values():
+                    sumOfActions += actionVar
+            return sumOfActions < metricBound
 
     def getDeltaStepRules(self, prevVars: TransitionVariables, stepVars: TransitionVariables) -> List[SMTExpression]:
         rules: List[SMTExpression] = []
@@ -130,7 +139,7 @@ class PDDL2SMT:
                         rules.append(d_av == d_bv + (k * b_n))
                     else:
                         rules.append(d_av == d_bv - (k * b_n))
-            # Case e) Numeric assignment
+            # Case e) Numeric assignments
             for v in prevAction.getAssList():
                 rules.append(stepVars.deltaVariables[action][v] == stepVars.auxVariables[prevAction][v])
 
@@ -167,9 +176,6 @@ class PDDL2SMT:
                     continue
 
                 function: BinaryPredicate = pre.lhs - pre.rhs
-
-                # if pre.operator != ">=" or not isinstance(pre.lhs, Literal) or not isinstance(pre.rhs, Constant):
-                #     raise Exception("Preconditions are not of the form v >= k")
 
                 subs: Dict[Atom, float] = dict()
                 # Searching for decrease effects

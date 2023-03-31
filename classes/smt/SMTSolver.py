@@ -6,6 +6,8 @@ import yicespy
 from pysmt.logics import QF_LIA, QF_LRA
 from pysmt.shortcuts import Portfolio, And, to_smtlib
 
+from NumericPlan import NumericPlan
+from classes.plan.PDDL2SMT import PDDL2SMT
 from classes.smt.SMTExpression import SMTExpression
 from classes.smt.SMTSolution import SMTSolution
 from classes.smt.SMTVariable import SMTVariable
@@ -15,37 +17,103 @@ class SMTSolver:
     solver: Portfolio
     variables: Set[SMTVariable]
 
-    def __init__(self):
+    def __init__(self, pddl2smt: PDDL2SMT):
         self.variables: Set[SMTVariable] = set()
         self.assertions: List[SMTExpression] = list()
+        self.pddl2smt: PDDL2SMT = pddl2smt
 
-    def addAssertion(self, expr: SMTExpression):
-        # self.solver.add_assertion(expr.expression)
-        # self.solver.push()
+        self.solver: Portfolio = Portfolio(["yices"],
+                                           logic=QF_LRA,
+                                           incremental=True,
+                                           generate_models=True)
+
+        self.addAssertions(self.pddl2smt.rules)
+
+    def addAssertion(self, expr: SMTExpression, push=True):
         self.assertions.append(expr)
         self.variables.update(expr.variables)
+        self.solver.add_assertion(expr.expression)
 
-    def addAssertions(self, exprs: [SMTExpression]):
+        if push:
+            self.solver.push()
+
+    def addAssertions(self, exprs: [SMTExpression], push=True):
         for expr in exprs:
-            # print(expr, get_logic(expr.expression))
-            self.addAssertion(expr)
+            self.addAssertion(expr, push=False)
 
-    def solve(self) -> SMTSolution:
+        if push:
+            self.solver.push()
 
-        with Portfolio(["yices"],
-                       logic=QF_LRA,
-                       incremental=False,
-                       generate_models=True) as solver:
-            totalAssertion = And([f.expression for f in self.assertions])
-            simplifiedAssertion = totalAssertion.simplify()
+    def popLastAssertion(self):
+        self.assertions.pop()
+        self.solver.pop()
+        self.solver.push()  # I repush to keep the stack with the last actions
 
-            solver.add_assertion(simplifiedAssertion)
-            solver.push()
+    def exit(self):
+        self.solver.exit()
+        pass
 
-            result = solver.solve()
-            solution = SMTSolution()
-            for variable in self.variables:
-                value = solver.get_value(variable.expression)
-                solution.addVariable(variable, value)
+    def solve(self) -> NumericPlan or bool:
+        found = self.solver.solve()
+        if not found:
+            return False
 
-            return solution
+        solution = SMTSolution()
+        for variable in self.variables:
+            value = self.solver.get_value(variable.expression)
+            solution.addVariable(variable, value)
+
+        plan = self.pddl2smt.getPlanFromSolution(solution)
+        plan.quality = plan.getMetric(self.pddl2smt.problem)
+
+        return plan
+
+    # Linear Optimization
+    def optimize(self) -> NumericPlan or bool:
+
+        lastPlanFound: NumericPlan = self.solve()
+        if not lastPlanFound:
+            return False
+
+        while True:
+            assert lastPlanFound.validate(self.pddl2smt.problem)
+            print(f"Found plan with quality {lastPlanFound.quality}. Improving...")
+            self.addAssertion(self.pddl2smt.getMetricExpression(lastPlanFound.quality))
+
+            plan = self.solve()
+            if not plan:
+                lastPlanFound.optimal = True
+                return lastPlanFound
+
+            lastPlanFound = plan
+            self.popLastAssertion()
+
+    def __solveBelowQuality(self, quality: float):
+        print("Searching below", quality)
+        self.addAssertion(self.pddl2smt.getMetricExpression(quality), push=False)
+        plan = self.solve()
+        self.popLastAssertion()
+        return plan
+
+    def __searchBetween(self, ub: float, lb: float, error: float, lastPlan: NumericPlan) -> NumericPlan:
+        if abs(ub - lb) < error:
+            lastPlan.optimal = True
+            return lastPlan
+
+        half = lb + (ub - lb) / 2
+        print(f"Searching plan with quality {half}.")
+        plan = self.__solveBelowQuality(half)
+        if plan:
+            print(f"Plan FOUND with quality {plan.quality}.")
+            return self.__searchBetween(plan.quality, lb, error, plan)
+        if not plan:
+            print(f"Plan NOT FOUND with quality {half}.")
+            return self.__searchBetween(ub, half, error, lastPlan)
+
+    def optimizeBinary(self, error=1) -> NumericPlan or bool:
+
+        lastPlanFound: NumericPlan = self.solve()
+        if not lastPlanFound:
+            return False
+
+        return self.__searchBetween(lastPlanFound.quality, 0, error, lastPlanFound)

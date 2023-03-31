@@ -13,9 +13,9 @@ class TestBlockGrouping(TestCase):
 
     def setUp(self) -> None:
         self.domain: Domain = Domain.fromFile("../files/block-grouping/domain.pddl")
-        self.problem: Problem = Problem.fromFile("../files/block-grouping/instances/instance_5_5_2_2.pddl")
+        self.problem: Problem = Problem.fromFile("../files/block-grouping/instances/instance_7_15_3_1.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
-        self.horizon = 2
+        self.horizon = 1
         self.pddl2smt: PDDL2SMT = PDDL2SMT(self.gDomain, self.problem, self.horizon)
         print(self.pddl2smt.order)
         pass
@@ -26,20 +26,57 @@ class TestBlockGrouping(TestCase):
         self.assertGreater(len(self.pddl2smt.rules), 0)
 
     def test_solve(self):
-        solver: SMTSolver = SMTSolver()
-        solver.addAssertions(self.pddl2smt.rules)
+        solver: SMTSolver = SMTSolver(self.pddl2smt)
 
-        solution: SMTSolution = solver.solve()
+        plan: NumericPlan = solver.solve()
 
-        self.assertIsInstance(solution, SMTSolution)
+        self.assertIsInstance(plan, NumericPlan)
 
-        plan: NumericPlan = self.pddl2smt.getPlanFromSolution(solution)
+        print("Plan length: ", len(plan))
         print("No repetitions:")
         plan.print()
         print("With repetitions:")
         plan.printWithRepetitions()
 
         self.assertTrue(plan.validate(self.problem))
+
+        solver.exit()
+
+    def test_optimize(self):
+        solver: SMTSolver = SMTSolver(self.pddl2smt)
+
+        plan: NumericPlan = solver.optimize()
+
+        self.assertIsInstance(plan, NumericPlan)
+
+        print("Plan length: ", len(plan))
+        print("No repetitions:")
+        plan.print()
+        print("With repetitions:")
+        plan.printWithRepetitions()
+
+        self.assertTrue(plan.validate(self.problem))
+        self.assertTrue(plan.optimal)
+
+        solver.exit()
+
+    def test_optimize_binary(self):
+        solver: SMTSolver = SMTSolver(self.pddl2smt)
+
+        plan: NumericPlan = solver.optimizeBinary()
+
+        self.assertIsInstance(plan, NumericPlan)
+
+        print("Plan length: ", len(plan))
+        print("No repetitions:")
+        plan.print()
+        print("With repetitions:")
+        plan.printWithRepetitions()
+        solver.exit()
+
+        self.assertTrue(plan.validate(self.problem))
+        self.assertTrue(plan.optimal)
+
 
 
 if __name__ == '__main__':
