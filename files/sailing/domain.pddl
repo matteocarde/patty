@@ -50,7 +50,8 @@
      )
      (:action save_person
           :parameters(?b -boat ?t -person)
-          :precondition ( and (>= (+ (x ?b) (y ?b)) (d ?t))
+          :precondition ( and
+               (>= (+ (x ?b) (y ?b)) (d ?t))
                (>= (- (y ?b) (x ?b)) (d ?t))
                (<= (+ (x ?b) (y ?b)) (+ (d ?t) 25))
                (<= (- (y ?b) (x ?b)) (+ (d ?t) 25))

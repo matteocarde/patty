@@ -20,7 +20,6 @@
 	(:goal
 		(and
 			(saved p0)
-
 		)
 	)
 )

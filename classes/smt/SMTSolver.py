@@ -53,7 +53,7 @@ class SMTSolver:
         self.solver.exit()
         pass
 
-    def solve(self) -> NumericPlan or bool:
+    def getSolution(self) -> SMTSolution or bool:
         found = self.solver.solve()
         if not found:
             return False
@@ -63,6 +63,13 @@ class SMTSolver:
             value = self.solver.get_value(variable.expression)
             solution.addVariable(variable, value)
 
+        return solution
+
+    def solve(self) -> NumericPlan or bool:
+
+        solution = self.getSolution()
+        if not solution:
+            return False
         plan = self.pddl2smt.getPlanFromSolution(solution)
         plan.quality = plan.getMetric(self.pddl2smt.problem)
 

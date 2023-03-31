@@ -36,6 +36,8 @@ class PDDL2SMT:
         self.order: List[Action] = self.domain.getARPG().getActionsOrder()
         self.order.append(self.dummyAction)
 
+        self.sign: Dict[Action, Dict[Atom, int]] = self.getSign(self.order)
+
         for index in range(0, horizon + 1):
             var = TransitionVariables(self.domain.allAtoms, self.domain.assList, self.order, index)
             self.transitionVariables.append(var)
@@ -53,6 +55,7 @@ class PDDL2SMT:
         tVars = self.transitionVariables[0]
         rules: [SMTExpression] = list()
 
+        trueAtoms: Set[Atom] = set()
         for assignment in self.problem.init:
             if isinstance(assignment, BinaryPredicate):
                 if assignment.getAtom() not in self.domain.allAtoms:
@@ -61,8 +64,12 @@ class PDDL2SMT:
                 rules.append(tVars.valueVariables[assignment.getAtom()] == float(str(assignment.rhs)))
             elif isinstance(assignment, Literal):
                 rules.append(tVars.valueVariables[assignment.getAtom()] == 1)
+                trueAtoms.add(assignment.getAtom())
             else:
                 raise NotImplemented("Shouldn't go here")
+
+        for v in self.domain.predicates - trueAtoms:
+            rules.append(tVars.valueVariables[v] == -1)
 
         return rules
 
@@ -87,6 +94,24 @@ class PDDL2SMT:
             return SMTExpression.andOfExpressionsList(rules)
         if f.type == "OR":
             return SMTExpression.orOfExpressionsList(rules)
+
+    def getSign(self, order: List[Action]) -> Dict[Action, Dict[Atom, int]]:
+        sign: Dict[Action, Dict[Atom, int]] = dict()
+
+        for (i, a) in enumerate(order):
+            sign[a] = dict()
+            addList = a.getAddList()
+            delList = a.getDelList()
+            for v in addList | delList:
+                sA = 0
+                for b in order[:i]:
+                    if v not in b.getDelList() or v not in b.getAddList():
+                        continue
+                    sA -= sign[b][v]
+                sA += +2 if v in addList else -2
+                sign[a][v] = sA
+
+        return sign
 
     def getGoalExpression(self) -> SMTExpression:
         return self.getGoalRuleFromFormula(self.problem.goal)
@@ -121,13 +146,13 @@ class PDDL2SMT:
             notInfluenced = self.domain.allAtoms - (prevAction.getInfluencedAtoms())
             for v in notInfluenced:
                 rules.append(stepVars.deltaVariables[action][v] == stepVars.deltaVariables[prevAction][v])
-            # TODO: Case b
-            for v in prevAction.getAddList():
-                raise NotImplemented("TODO: Fibonacci function")
-            # TODO: Case c
-            for v in prevAction.getDelList():
-                raise NotImplemented("TODO: Fibonacci function")
-            # Case d
+            for v in prevAction.getAddList() | prevAction.getDelList():
+                d_av = stepVars.deltaVariables[action][v]
+                d_bv = stepVars.deltaVariables[prevAction][v]
+                s_bv = self.sign[prevAction][v]
+                b_b = stepVars.boolActionVariables[prevAction]
+                rules.append(d_av == d_bv + s_bv * b_b)
+            # Case c
             modifications = [(+1, prevAction.getIncreases()), (-1, prevAction.getDecreases())]
             for sign, modificationDict in modifications:
                 for v, funct in modificationDict.items():
@@ -139,7 +164,7 @@ class PDDL2SMT:
                         rules.append(d_av == d_bv + (k * b_n))
                     else:
                         rules.append(d_av == d_bv - (k * b_n))
-            # Case e) Numeric assignments
+            # Case d) Numeric assignments
             for v in prevAction.getAssList():
                 rules.append(stepVars.deltaVariables[action][v] == stepVars.auxVariables[prevAction][v])
 
@@ -153,16 +178,23 @@ class PDDL2SMT:
         for a in self.order:
             if a.isFake:
                 continue
-            rules.append(stepVars.actionVariables[a] >= 0)
-            rules.append(stepVars.actionVariables[a] <= BOUND)
+            a_n = stepVars.actionVariables[a]
+            a_b = stepVars.boolActionVariables[a]
+            rules.append(a_n >= 0)
+            rules.append(a_n <= BOUND)
+            if a.getPredicates():
+                active = (a_n > 0).AND(a_b == 1)
+                notActive = (a_n == 0).AND(a_b == 0)
+                rules.append(active.OR(notActive))
 
-        for (atom, interval) in self.domain.arpg.stateLevels[-1].intervals.items():
-            if atom not in stepVars.valueVariables:
-                continue
-            if interval.lb != float("-inf"):
-                rules.append(stepVars.valueVariables[atom] >= interval.lb)
-            if interval.ub != float("+inf"):
-                rules.append(stepVars.valueVariables[atom] <= interval.ub)
+        if len(self.domain.arpg.stateLevels) > 2:
+            for (atom, interval) in self.domain.arpg.stateLevels[-1].intervals.items():
+                if atom not in stepVars.valueVariables:
+                    continue
+                if interval.lb != float("-inf"):
+                    rules.append(stepVars.valueVariables[atom] >= interval.lb)
+                if interval.ub != float("+inf"):
+                    rules.append(stepVars.valueVariables[atom] <= interval.ub)
 
         return rules
 
@@ -172,7 +204,13 @@ class PDDL2SMT:
         for a in self.order:
             for pre in a.preconditions:
                 if isinstance(pre, Literal):
-                    # print("WARNING: There are some boolean preconditions which I am not yet able to deal with")
+                    v = pre.getAtom()
+                    d_av = stepVars.deltaVariables[a][v]
+                    a_b = stepVars.boolActionVariables[a]
+                    if pre.sign == "+":
+                        rules.append((a_b == 1).implies(d_av > 0))
+                    if pre.sign == "-":
+                        rules.append((a_b == 1).implies(d_av < 0))
                     continue
 
                 function: BinaryPredicate = pre.lhs - pre.rhs
@@ -226,10 +264,16 @@ class PDDL2SMT:
     def getFrameStepRules(self, stepVars: TransitionVariables) -> List[SMTExpression]:
         rules: List[SMTExpression] = []
 
-        for v in self.domain.allAtoms:
+        for v in self.domain.functions:
             v_first = stepVars.valueVariables[v]
             delta_g_v = stepVars.deltaVariables[self.dummyAction][v]
             rules.append(v_first == delta_g_v)
+
+        for v in self.domain.predicates:
+            v_first = stepVars.valueVariables[v]
+            delta_g_v = stepVars.deltaVariables[self.dummyAction][v]
+            rules.append((delta_g_v > 0).implies(v_first == 1))
+            rules.append((delta_g_v < 0).implies(v_first == -1))
 
         return rules
 

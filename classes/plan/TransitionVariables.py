@@ -20,6 +20,7 @@ class TransitionVariables:
         self.deltaVariables: Dict[Action, Dict[Atom, SMTVariable]] = self.__computeDeltaVariables(index)
         if index > 0:
             self.actionVariables: Dict[Action, SMTVariable] = self.__computeActionVariables(index)
+            self.boolActionVariables: Dict[Action, SMTVariable] = self.__computeBoolActionVariables(index)
             self.auxVariables: Dict[Action, Dict[Atom, SMTVariable]] = self.__computeAuxVariables(index)
 
     def __computeValueVariables(self, index: int) -> Dict[Atom, SMTVariable]:
@@ -37,6 +38,16 @@ class TransitionVariables:
             if action.isFake:
                 continue
             variables[action] = SMTIntVariable(f"{action.name}_{index}_n")
+
+        return variables
+
+    def __computeBoolActionVariables(self, index: int) -> Dict[Action, SMTVariable]:
+        variables: Dict[Action, SMTVariable] = dict()
+
+        for action in self.order:
+            if action.isFake:
+                continue
+            variables[action] = SMTIntVariable(f"{action.name}_{index}_b")
 
         return variables
 

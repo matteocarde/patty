@@ -14,6 +14,11 @@ from classes.smt.SMTSolution import SMTSolution
 from classes.smt.SMTSolver import SMTSolver
 
 domains = {
+    "sailing": {
+        "folder": "sailing",
+        "domain": "domain.pddl",
+        "problems-folder": "instances/"
+    },
     "block-grouping": {
         "folder": "block-grouping",
         "domain": "domain.pddl",
@@ -56,7 +61,7 @@ domains = {
     # }
 }
 
-HORIZON = 1
+HORIZON = 6
 
 
 def myRound(n: str or float):
