@@ -127,7 +127,7 @@ class TestSMT(TestCase):
         solver.addAssertion(lhs.implies(rhs))
         solver.addAssertion(self.x == 20)
 
-        solution: SMTSolution = solver.solve()
+        solution: SMTSolution = solver.getSolution()
 
         self.assertEqual(solution.getVariable(self.x), Real(20.0))
         self.assertEqual(solution.getVariable(self.y), Real(5.5))

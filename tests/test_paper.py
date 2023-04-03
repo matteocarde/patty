@@ -32,6 +32,7 @@ class TestPaper(TestCase):
         self.pddl2smt.printRules()
 
         plan: NumericPlan = solver.solve()
+        solver.exit()
         print(plan)
         self.assertIsInstance(plan, NumericPlan)
 
@@ -45,7 +46,8 @@ class TestPaper(TestCase):
     def test_unreach(self):
         raised = False
         try:
-            PDDL2SMT(self.gDomain, self.unreachable, self.horizon)
+            gUnreachDomain = self.domain.ground(self.unreachable)
+            PDDL2SMT(gUnreachDomain, self.unreachable, self.horizon)
         except PDDLException.GoalNotReachable:
             raised = True
 

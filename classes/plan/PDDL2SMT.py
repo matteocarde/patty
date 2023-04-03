@@ -9,6 +9,7 @@ from Formula import Formula
 from Literal import Literal
 from NumericPlan import NumericPlan
 from Problem import Problem
+from Utilities import Utilities
 from classes.plan.TransitionVariables import TransitionVariables
 from classes.smt.SMTExpression import SMTExpression
 from classes.smt.SMTNumericVariable import SMTNumericVariable
@@ -95,7 +96,8 @@ class PDDL2SMT:
         if f.type == "OR":
             return SMTExpression.orOfExpressionsList(rules)
 
-    def getSign(self, order: List[Action]) -> Dict[Action, Dict[Atom, int]]:
+    @staticmethod
+    def getSign(order: List[Action]) -> Dict[Action, Dict[Atom, int]]:
         sign: Dict[Action, Dict[Atom, int]] = dict()
 
         for (i, a) in enumerate(order):
@@ -237,8 +239,11 @@ class PDDL2SMT:
                 subsFunctSTM_w0 = subsFunctSMT - w0
                 prevTimes = (stepVars.actionVariables[a] - 1)
 
+                # Controlliamo se f(k_1, ..., k_n) contribuisce ad avvicinarsi al vincolo, se non è cosi la togliamo
+                aDecrease = 0 if Utilities.compare(pre.operator, subsFunctSTM_w0, 0) else subsFunctSTM_w0 * prevTimes
+
                 # f(x_1, ..., x_p) + [f(k_1, ..., k_p) - w_0]*(a_n - 1) {op} 0
-                condition = functSMT + subsFunctSTM_w0 * prevTimes
+                condition = functSMT + aDecrease
                 rhs = SMTNumericVariable.opByString(pre.operator, condition, 0)
 
                 rules.append(lhs.implies(rhs))
