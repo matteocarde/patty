@@ -5,7 +5,6 @@ from Domain import Domain, GroundedDomain
 from NumericPlan import NumericPlan
 from Problem import Problem
 from classes.plan.PDDL2SMT import PDDL2SMT
-from classes.smt.SMTSolution import SMTSolution
 from classes.smt.SMTSolver import SMTSolver
 
 
@@ -24,14 +23,11 @@ class TestFarmland(TestCase):
         self.assertGreater(len(self.pddl2smt.rules), 0)
 
     def test_solve(self):
-        solver: SMTSolver = SMTSolver()
-        solver.addAssertions(self.pddl2smt.rules)
+        solver: SMTSolver = SMTSolver(self.pddl2smt)
 
-        solution: SMTSolution = solver.solve()
+        plan: NumericPlan = solver.solve()
 
-        self.assertIsInstance(solution, SMTSolution)
-
-        plan: NumericPlan = self.pddl2smt.getPlanFromSolution(solution)
+        self.assertIsInstance(plan, NumericPlan)
         print("No repetitions:")
         plan.print()
         print("With repetitions:")

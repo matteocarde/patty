@@ -26,14 +26,12 @@ class TestPlantWatering(TestCase):
         self.assertGreater(len(self.pddl2smt.rules), 0)
 
     def test_solve(self):
-        solver: SMTSolver = SMTSolver()
-        solver.addAssertions(self.pddl2smt.rules)
+        solver: SMTSolver = SMTSolver(self.pddl2smt)
 
-        solution: SMTSolution = solver.solve()
+        plan: NumericPlan = solver.solve()
 
-        self.assertIsInstance(solution, SMTSolution)
+        self.assertIsInstance(plan, NumericPlan)
 
-        plan: NumericPlan = self.pddl2smt.getPlanFromSolution(solution)
         print("No repetitions:")
         plan.print()
         print("With repetitions:")

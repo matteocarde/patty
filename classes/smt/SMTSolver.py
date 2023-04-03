@@ -17,7 +17,7 @@ class SMTSolver:
     solver: Portfolio
     variables: Set[SMTVariable]
 
-    def __init__(self, pddl2smt: PDDL2SMT):
+    def __init__(self, pddl2smt: PDDL2SMT = None):
         self.variables: Set[SMTVariable] = set()
         self.assertions: List[SMTExpression] = list()
         self.pddl2smt: PDDL2SMT = pddl2smt
@@ -27,7 +27,8 @@ class SMTSolver:
                                            incremental=True,
                                            generate_models=True)
 
-        self.addAssertions(self.pddl2smt.rules)
+        if self.pddl2smt:
+            self.addAssertions(self.pddl2smt.rules)
 
     def addAssertion(self, expr: SMTExpression, push=True):
         self.assertions.append(expr)

@@ -6,7 +6,6 @@ from NumericPlan import NumericPlan
 from PDDLException import PDDLException
 from Problem import Problem
 from classes.plan.PDDL2SMT import PDDL2SMT
-from classes.smt.SMTSolution import SMTSolution
 from classes.smt.SMTSolver import SMTSolver
 
 
@@ -27,17 +26,15 @@ class TestPaper(TestCase):
         self.assertGreater(len(self.pddl2smt.rules), 0)
 
     def test_solve(self):
-        solver: SMTSolver = SMTSolver()
-        solver.addAssertions(self.pddl2smt.rules)
+        solver: SMTSolver = SMTSolver(self.pddl2smt)
 
         print(self.pddl2smt.order)
         self.pddl2smt.printRules()
 
-        solution: SMTSolution = solver.solve()
-        print(solution)
-        self.assertIsInstance(solution, SMTSolution)
+        plan: NumericPlan = solver.solve()
+        print(plan)
+        self.assertIsInstance(plan, NumericPlan)
 
-        plan: NumericPlan = self.pddl2smt.getPlanFromSolution(solution)
         print("No repetitions:")
         plan.print()
         print("With repetitions:")
