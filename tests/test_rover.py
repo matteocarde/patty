@@ -29,6 +29,7 @@ class TestRover(TestCase):
         solver: SMTSolver = SMTSolver(self.pddl2smt)
 
         plan: NumericPlan = solver.solve()
+        solver.exit()
 
         self.assertIsInstance(plan, NumericPlan)
 
@@ -40,7 +41,6 @@ class TestRover(TestCase):
 
         self.assertTrue(plan.validate(self.problem))
 
-        solver.exit()
 
 
 if __name__ == '__main__':

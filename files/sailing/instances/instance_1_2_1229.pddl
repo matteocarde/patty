@@ -5,28 +5,24 @@
 	(:domain sailing)
 
 	(:objects
-		b0  - boat
-		p0 p1  - person
+		b0 - boat
+		p0 p1 - person
 	)
 
-  (:init
+	(:init
 		(= (x b0) 7)
-(= (y b0) 0)
-
+		(= (y b0) 0)
 
 		(= (d p0) -370)
-(= (d p1) -58)
-
+		(= (d p1) -58)
 
 	)
 
 	(:goal
 		(and
 			(saved p0)
-(saved p1)
+			(saved p1)
 
 		)
 	)
 )
-
-

@@ -1,3 +1,4 @@
+import os
 import unittest
 from unittest import TestCase
 
@@ -12,8 +13,10 @@ from classes.smt.SMTSolver import SMTSolver
 class TestSailing(TestCase):
 
     def setUp(self) -> None:
-        self.domain: Domain = Domain.fromFile("../files/sailing/domain.pddl")
-        self.problem: Problem = Problem.fromFile("../files/sailing/instances/instance_1_2_1229.pddl")
+        self.domainFile = "../files/sailing/domain.pddl"
+        self.problemFile = "../files/sailing/instances/instance_1_2_1229.pddl"
+        self.domain: Domain = Domain.fromFile(self.domainFile)
+        self.problem: Problem = Problem.fromFile(self.problemFile)
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.horizon = 2
         self.pddl2smt: PDDL2SMT = PDDL2SMT(self.gDomain, self.problem, self.horizon)
@@ -29,9 +32,9 @@ class TestSailing(TestCase):
         solver: SMTSolver = SMTSolver(self.pddl2smt)
 
         solution = solver.getSolution()
+        solver.exit()
         print(solution)
         plan: NumericPlan = self.pddl2smt.getPlanFromSolution(solution)
-        solver.exit()
         print(plan)
 
         self.assertIsInstance(plan, NumericPlan)
@@ -44,10 +47,28 @@ class TestSailing(TestCase):
 
         self.assertTrue(plan.validate(self.problem))
 
+    def test_valValidation(self):
+        solver: SMTSolver = SMTSolver(self.pddl2smt)
+
+        solution = solver.getSolution()
+        plan: NumericPlan = self.pddl2smt.getPlanFromSolution(solution)
+        solver.exit()
+        planFile = "/tmp/sailing_plan.txt"
+        f = open(planFile, "w")
+        f.write(plan.toValString())
+        f.close()
+
+        val = "/Users/carde/Bin/VAL/Validate"
+        cmd = f"{val} {self.domainFile} {self.problemFile} {planFile}"
+        result = os.popen(cmd).read()
+
+        self.assertIn("Plan valid", result)
+
     def test_optimize(self):
         solver: SMTSolver = SMTSolver(self.pddl2smt)
 
         plan: NumericPlan = solver.optimize()
+        solver.exit()
 
         self.assertIsInstance(plan, NumericPlan)
 
@@ -60,12 +81,11 @@ class TestSailing(TestCase):
         self.assertTrue(plan.validate(self.problem))
         self.assertTrue(plan.optimal)
 
-        solver.exit()
-
     def test_optimize_binary(self):
         solver: SMTSolver = SMTSolver(self.pddl2smt)
 
         plan: NumericPlan = solver.optimizeBinary()
+        solver.exit()
 
         self.assertIsInstance(plan, NumericPlan)
 
@@ -74,7 +94,6 @@ class TestSailing(TestCase):
         plan.print()
         print("With repetitions:")
         plan.printWithRepetitions()
-        solver.exit()
 
         self.assertTrue(plan.validate(self.problem))
         self.assertTrue(plan.optimal)

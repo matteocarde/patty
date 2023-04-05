@@ -16,7 +16,7 @@ from classes.smt.SMTNumericVariable import SMTNumericVariable
 from classes.smt.SMTSolution import SMTSolution
 
 BOUND = 100
-EXPLICIT_DELTA = True
+EXPLICIT_DELTA = False
 
 
 class PDDL2SMT:

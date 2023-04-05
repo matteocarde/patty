@@ -44,6 +44,7 @@ class TestPlantWatering(TestCase):
         solver: SMTSolver = SMTSolver(self.pddl2smt)
 
         plan: NumericPlan = solver.optimize()
+        solver.exit()
 
         self.assertIsInstance(plan, NumericPlan)
 
@@ -56,12 +57,12 @@ class TestPlantWatering(TestCase):
         self.assertTrue(plan.validate(self.problem))
         self.assertTrue(plan.optimal)
 
-        solver.exit()
 
     def test_optimize_binary(self):
         solver: SMTSolver = SMTSolver(self.pddl2smt)
 
         plan: NumericPlan = solver.optimizeBinary()
+        solver.exit()
 
         self.assertIsInstance(plan, NumericPlan)
 
@@ -70,7 +71,6 @@ class TestPlantWatering(TestCase):
         plan.print()
         print("With repetitions:")
         plan.printWithRepetitions()
-        solver.exit()
 
         self.assertTrue(plan.validate(self.problem))
         self.assertTrue(plan.optimal)

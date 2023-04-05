@@ -21,7 +21,6 @@ class TestSMT(TestCase):
         self.y: SMTNumericVariable = SMTRealVariable("y")
         self.p: SMTNumericVariable = SMTIntVariable("p")
         self.q: SMTNumericVariable = SMTIntVariable("q")
-        pass
 
     def test_variableShouldBeAnExpression(self):
         self.assertIsInstance(self.a, SMTExpression)
@@ -128,11 +127,10 @@ class TestSMT(TestCase):
         solver.addAssertion(self.x == 20)
 
         solution: SMTSolution = solver.getSolution()
+        solver.exit()
 
         self.assertEqual(solution.getVariable(self.x), Real(20.0))
         self.assertEqual(solution.getVariable(self.y), Real(5.5))
-
-        solver.exit()
 
     def test_solver_int_easy(self):
         solver: SMTSolver = SMTSolver()
@@ -142,11 +140,10 @@ class TestSMT(TestCase):
         solver.addAssertion(self.q == 20)
 
         solution: SMTSolution = solver.getSolution()
+        solver.exit()
 
         self.assertEqual(solution.getVariable(self.q), Int(20))
         self.assertEqual(solution.getVariable(self.p), Int(5))
-
-        solver.exit()
 
     def test_solver_real_hard(self):
         solver: SMTSolver = SMTSolver()
@@ -156,11 +153,10 @@ class TestSMT(TestCase):
         solver.addAssertion(self.x == 2.0)
 
         solution: SMTSolution = solver.getSolution()
+        solver.exit()
 
         self.assertEqual(solution.getVariable(self.x), Real(2.0))
         self.assertNotEqual(solution.getVariable(self.y), Real(3.1))
-
-        solver.exit()
 
     def test_z3(self):
         x, y = Symbol("x1"), Symbol("y1")

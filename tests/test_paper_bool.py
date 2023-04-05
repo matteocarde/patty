@@ -32,9 +32,9 @@ class TestPaperBool(TestCase):
         self.pddl2smt.printRules()
 
         solution = solver.getSolution()
+        solver.exit()
         print(solution)
         plan: NumericPlan = self.pddl2smt.getPlanFromSolution(solution)
-        solver.exit()
         print(plan)
         self.assertIsInstance(plan, NumericPlan)
 

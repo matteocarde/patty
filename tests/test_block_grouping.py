@@ -29,6 +29,7 @@ class TestBlockGrouping(TestCase):
         solver: SMTSolver = SMTSolver(self.pddl2smt)
 
         plan: NumericPlan = solver.solve()
+        solver.exit()
 
         self.assertIsInstance(plan, NumericPlan)
 
@@ -39,14 +40,14 @@ class TestBlockGrouping(TestCase):
         plan.printWithRepetitions()
 
         self.assertTrue(plan.validate(self.problem))
-
-        solver.exit()
 
     def test_optimize(self):
         solver: SMTSolver = SMTSolver(self.pddl2smt)
 
         plan: NumericPlan = solver.optimize()
 
+        solver.exit()
+
         self.assertIsInstance(plan, NumericPlan)
 
         print("Plan length: ", len(plan))
@@ -57,13 +58,12 @@ class TestBlockGrouping(TestCase):
 
         self.assertTrue(plan.validate(self.problem))
         self.assertTrue(plan.optimal)
-
-        solver.exit()
 
     def test_optimize_binary(self):
         solver: SMTSolver = SMTSolver(self.pddl2smt)
 
         plan: NumericPlan = solver.optimizeBinary()
+        solver.exit()
 
         self.assertIsInstance(plan, NumericPlan)
 
@@ -72,11 +72,9 @@ class TestBlockGrouping(TestCase):
         plan.print()
         print("With repetitions:")
         plan.printWithRepetitions()
-        solver.exit()
 
         self.assertTrue(plan.validate(self.problem))
         self.assertTrue(plan.optimal)
-
 
 
 if __name__ == '__main__':

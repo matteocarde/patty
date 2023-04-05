@@ -32,6 +32,7 @@ class TestElevator(TestCase):
         tic = time.perf_counter()
         plan: NumericPlan = solver.solve()
         toc = time.perf_counter()
+        solver.exit()
         print("Time to solve:", toc - tic)
 
         self.assertIsInstance(plan, NumericPlan)
@@ -44,7 +45,6 @@ class TestElevator(TestCase):
 
         self.assertTrue(plan.validate(self.problem))
 
-        solver.exit()
 
 
 if __name__ == '__main__':

@@ -26,6 +26,7 @@ class TestFarmland(TestCase):
         solver: SMTSolver = SMTSolver(self.pddl2smt)
 
         plan: NumericPlan = solver.solve()
+        solver.exit()
 
         self.assertIsInstance(plan, NumericPlan)
         print("No repetitions:")
