@@ -15,12 +15,7 @@ from classes.smt.SMTSolution import SMTSolution
 from classes.smt.SMTSolver import SMTSolver
 
 domains = {
-    "sailing": {
-        "folder": "sailing",
-        "domain": "domain.pddl",
-        "problems-folder": "instances/",
-        "horizon": "CUSTOM"
-    },
+
     # "block-grouping": {
     #     "folder": "block-grouping",
     #     "domain": "domain.pddl",
@@ -51,21 +46,35 @@ domains = {
     #     "problems-folder": "instances/",
     #     "horizon": 5
     # },
+    # "gardening": {
+    #     "folder": "gardening",
+    #     "domain": "domain.pddl",
+    #     "problems-folder": "instances/",
+    #     "horizon": 10
+    # },
     # "plant-watering": {
     #     "folder": "plant-watering",
     #     "domain": "domain.pddl",
     #     "problems-folder": "instances/",
     #     "horizon": "CUSTOM"
     # },
-    # "gardening": {
-    #     "folder": "gardening",
+    # "sailing": {
+    #     "folder": "sailing",
     #     "domain": "domain.pddl",
     #     "problems-folder": "instances/",
-    #     "horizon": 10
-    # }
+    #     "horizon": "CUSTOM"
+    # },
+    "rover": {
+        "folder": "rover",
+        "domain": "domain.pddl",
+        "problems-folder": "instances/",
+        "horizon": 4
+    }
 }
 
 TIMEOUT = 60
+
+OPTIMIZE = False
 
 
 def myRound(n: str or float):
@@ -158,7 +167,11 @@ def main():
                         tocFirstSolution = time.perf_counter()
 
                 try:
-                    lastPlan = func_timeout.func_timeout(TIMEOUT, solver.optimizeBinary, args=(1, onSolutionFound))
+                    if OPTIMIZE:
+                        lastPlan = func_timeout.func_timeout(TIMEOUT, solver.optimizeBinary, args=(1, onSolutionFound))
+                    else:
+                        lastPlan = func_timeout.func_timeout(TIMEOUT, solver.solve)
+                        onSolutionFound(lastPlan)
                 except func_timeout.FunctionTimedOut:
                     pass
 

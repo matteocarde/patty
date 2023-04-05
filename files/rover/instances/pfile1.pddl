@@ -68,4 +68,8 @@
 		)
 	)
 
+	(:metric minimize
+		(recharges)
+	)
+
 )

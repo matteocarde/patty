@@ -57,7 +57,6 @@ class TestPlantWatering(TestCase):
         self.assertTrue(plan.validate(self.problem))
         self.assertTrue(plan.optimal)
 
-
     def test_optimize_binary(self):
         solver: SMTSolver = SMTSolver(self.pddl2smt)
 

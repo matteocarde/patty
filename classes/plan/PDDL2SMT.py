@@ -142,56 +142,38 @@ class PDDL2SMT:
         for action in self.order:
             if not prevAction:
                 # First action in the order copies the value from previous step
-                for v in prevVars.deltaVariables[action].keys():
-                    if EXPLICIT_DELTA:
-                        rules.append(stepVars.deltaVariables[action][v] == prevVars.valueVariables[v])
-                    else:
-                        stepVars.deltaVariables[action][v] = prevVars.valueVariables[v]
+                for v in self.domain.allAtoms:
+                    stepVars.deltaVariables[action][v] = prevVars.valueVariables[v]
                 prevAction = action
                 continue
 
-            # Not first action
-            # Case a)
+            # Case a) Not influenced
             notInfluenced = self.domain.allAtoms - (prevAction.getInfluencedAtoms())
             for v in notInfluenced:
-                if EXPLICIT_DELTA:
-                    rules.append(stepVars.deltaVariables[action][v] == stepVars.deltaVariables[prevAction][v])
-                else:
-                    stepVars.deltaVariables[action][v] = stepVars.deltaVariables[prevAction][v]
+                stepVars.deltaVariables[action][v] = stepVars.deltaVariables[prevAction][v]
+
+            # Case b) Boolean
             for v in prevAction.getAddList() | prevAction.getDelList():
-                d_av = stepVars.deltaVariables[action][v]
                 d_bv = stepVars.deltaVariables[prevAction][v]
                 s_bv = self.sign[prevAction][v]
                 b_b = stepVars.boolActionVariables[prevAction]
 
-                if EXPLICIT_DELTA:
-                    rules.append(d_av == d_bv + s_bv * b_b)
-                else:
-                    stepVars.deltaVariables[action][v] = d_bv + s_bv * b_b
-            # Case c
+                stepVars.deltaVariables[action][v] = d_bv + s_bv * b_b
+            # Case c) Numeric increases or decreases
             modifications = [(+1, prevAction.getIncreases()), (-1, prevAction.getDecreases())]
             for sign, modificationDict in modifications:
                 for v, funct in modificationDict.items():
-                    d_av = stepVars.deltaVariables[action][v]
+
                     d_bv = stepVars.deltaVariables[prevAction][v]
                     k = SMTNumericVariable.fromPddl(funct, stepVars.deltaVariables[prevAction])
                     b_n = stepVars.actionVariables[prevAction]
                     if sign > 0:
-                        if EXPLICIT_DELTA:
-                            rules.append(d_av == d_bv + (k * b_n))
-                        else:
-                            stepVars.deltaVariables[action][v] = d_bv + (k * b_n)
+                        stepVars.deltaVariables[action][v] = d_bv + (k * b_n)
                     else:
-                        if EXPLICIT_DELTA:
-                            rules.append(d_av == d_bv - (k * b_n))
-                        else:
-                            stepVars.deltaVariables[action][v] = d_bv - (k * b_n)
+                        stepVars.deltaVariables[action][v] = d_bv - (k * b_n)
             # Case d) Numeric assignments
             for v in prevAction.getAssList():
-                if EXPLICIT_DELTA:
-                    rules.append(stepVars.deltaVariables[action][v] == stepVars.auxVariables[prevAction][v])
-                else:
-                    stepVars.deltaVariables[action][v] = stepVars.auxVariables[prevAction][v]
+                stepVars.deltaVariables[action][v] = stepVars.auxVariables[prevAction][v]
 
             prevAction = action
 
@@ -228,15 +210,17 @@ class PDDL2SMT:
         rules: List[SMTExpression] = []
 
         for a in self.order:
+            if a.isFake:
+                continue
+            # a_n > 0
+            lhs = stepVars.actionVariables[a] > 0
+            preconditions = None
             for pre in a.preconditions:
                 if isinstance(pre, Literal):
                     v = pre.getAtom()
                     d_av = stepVars.deltaVariables[a][v]
-                    a_b = stepVars.boolActionVariables[a]
-                    if pre.sign == "+":
-                        rules.append((a_b == 1).implies(d_av > 0))
-                    if pre.sign == "-":
-                        rules.append((a_b == 1).implies(d_av < 0))
+                    rhs = d_av > 0 if pre.sign == "+" else d_av < 0
+                    preconditions = preconditions.AND(rhs) if preconditions else rhs
                     continue
 
                 function: BinaryPredicate = pre.lhs - pre.rhs
@@ -254,8 +238,6 @@ class PDDL2SMT:
 
                 subsFunction = function.substitute(subs, default=0)
 
-                # a_n > 0
-                lhs = stepVars.actionVariables[a] > 0
                 # Transformed precondition
                 functSMT = SMTNumericVariable.fromPddl(function, stepVars.deltaVariables[a])
                 w0 = function.getLinearIncrement()
@@ -270,8 +252,10 @@ class PDDL2SMT:
                 condition = functSMT + aDecrease
                 rhs = SMTNumericVariable.opByString(pre.operator, condition, 0)
 
-                rules.append(lhs.implies(rhs))
+                preconditions = preconditions.AND(rhs) if preconditions else rhs
 
+            if preconditions:
+                rules.append(lhs.implies(preconditions))
         return rules
 
     def getEffStepRules(self, stepVars: TransitionVariables) -> List[SMTExpression]:

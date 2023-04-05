@@ -57,8 +57,8 @@ class TransitionVariables:
 
         for action in self.order:
             variables[action] = dict()
-            for atom in self.allAtoms:
-                variables[action][atom] = SMTRealVariable(f"d_{{{action}}}_{index}({atom})")
+            # for atom in self.allAtoms:
+            #     variables[action][atom] = SMTRealVariable(f"d_{{{action}}}_{index}({atom})")
 
         return variables
 

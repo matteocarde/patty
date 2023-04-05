@@ -11,10 +11,6 @@ class SMTNumericVariable(SMTVariable):
         self.expression = Symbol(name, varType)
         self.type = varType
 
-    @property
-    def variables(self):
-        return {self}
-
     def __hash__(self):
         return hash(self.expression)
 

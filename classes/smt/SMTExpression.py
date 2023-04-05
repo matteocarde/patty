@@ -22,14 +22,20 @@ def toRHS(other):
         return Real(other)
 
 
+def getVars(obj):
+    if isinstance(obj, SMTExpression):
+        return obj.variables if obj.variables else {obj}
+    return set()
+
+
 class SMTExpression:
     expression: FNode
-    vars: Set
+    variables: Set
     lhs: SMTExpression
     rhs: SMTExpression
 
     def __init__(self):
-        self.vars = set()
+        self.variables = set()
         self.type = REAL
         self.lhs: SMTExpression
         self.rhs: SMTExpression
@@ -41,19 +47,11 @@ class SMTExpression:
     def __repr__(self):
         return str(self)
 
-    @property
-    def variables(self) -> Set:
-        variables = set()
-        if isinstance(self.lhs, SMTExpression):
-            variables = variables | self.lhs.variables
-        if isinstance(self.rhs, SMTExpression):
-            variables = variables | self.rhs.variables
-        return variables
-
     def __binary(self, other: SMTExpression or float, operation, lhsExpression: FNode,
                  rhsExpression: FNode) -> SMTExpression:
         expr = SMTExpression()
         expr.lhs = self
+        expr.variables = getVars(self) | getVars(other)
 
         if isinstance(other, SMTExpression):
             rhsType = other.type
