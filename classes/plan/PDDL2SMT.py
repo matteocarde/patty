@@ -16,6 +16,7 @@ from classes.smt.SMTNumericVariable import SMTNumericVariable
 from classes.smt.SMTSolution import SMTSolution
 
 BOUND = 100
+EXPLICIT_DELTA = True
 
 
 class PDDL2SMT:
@@ -33,7 +34,7 @@ class PDDL2SMT:
 
         self.dummyAction = Action()
         self.dummyAction.isFake = True
-        self.dummyAction.name = "g"
+        self.dummyAction.name = "dummy_action_do_not_use"
         self.order: List[Action] = self.domain.getARPG().getActionsOrder()
         self.order.append(self.dummyAction)
 
@@ -58,6 +59,10 @@ class PDDL2SMT:
 
         trueAtoms: Set[Atom] = set()
         for assignment in self.problem.init:
+            atom = assignment.getAtom()
+            if atom not in tVars.valueVariables:
+                # print(f"Atom {atom} in initial condition doesn't concur in achieving the goal. Pruned.")
+                continue
             if isinstance(assignment, BinaryPredicate):
                 if assignment.getAtom() not in self.domain.allAtoms:
                     # print(f"Atom {assignments.getAtom()} was pruned since it's a constant")
@@ -107,9 +112,8 @@ class PDDL2SMT:
             for v in addList | delList:
                 sA = 0
                 for b in order[:i]:
-                    if v not in b.getDelList() or v not in b.getAddList():
-                        continue
-                    sA -= sign[b][v]
+                    if (v in addList and v in b.getDelList()) or (v in delList and v in b.getAddList()):
+                        sA -= sign[b][v]
                 sA += +2 if v in addList else -2
                 sign[a][v] = sA
 
@@ -139,7 +143,10 @@ class PDDL2SMT:
             if not prevAction:
                 # First action in the order copies the value from previous step
                 for v in prevVars.deltaVariables[action].keys():
-                    rules.append(stepVars.deltaVariables[action][v] == prevVars.valueVariables[v])
+                    if EXPLICIT_DELTA:
+                        rules.append(stepVars.deltaVariables[action][v] == prevVars.valueVariables[v])
+                    else:
+                        stepVars.deltaVariables[action][v] = prevVars.valueVariables[v]
                 prevAction = action
                 continue
 
@@ -147,13 +154,20 @@ class PDDL2SMT:
             # Case a)
             notInfluenced = self.domain.allAtoms - (prevAction.getInfluencedAtoms())
             for v in notInfluenced:
-                rules.append(stepVars.deltaVariables[action][v] == stepVars.deltaVariables[prevAction][v])
+                if EXPLICIT_DELTA:
+                    rules.append(stepVars.deltaVariables[action][v] == stepVars.deltaVariables[prevAction][v])
+                else:
+                    stepVars.deltaVariables[action][v] = stepVars.deltaVariables[prevAction][v]
             for v in prevAction.getAddList() | prevAction.getDelList():
                 d_av = stepVars.deltaVariables[action][v]
                 d_bv = stepVars.deltaVariables[prevAction][v]
                 s_bv = self.sign[prevAction][v]
                 b_b = stepVars.boolActionVariables[prevAction]
-                rules.append(d_av == d_bv + s_bv * b_b)
+
+                if EXPLICIT_DELTA:
+                    rules.append(d_av == d_bv + s_bv * b_b)
+                else:
+                    stepVars.deltaVariables[action][v] = d_bv + s_bv * b_b
             # Case c
             modifications = [(+1, prevAction.getIncreases()), (-1, prevAction.getDecreases())]
             for sign, modificationDict in modifications:
@@ -163,12 +177,21 @@ class PDDL2SMT:
                     k = SMTNumericVariable.fromPddl(funct, stepVars.deltaVariables[prevAction])
                     b_n = stepVars.actionVariables[prevAction]
                     if sign > 0:
-                        rules.append(d_av == d_bv + (k * b_n))
+                        if EXPLICIT_DELTA:
+                            rules.append(d_av == d_bv + (k * b_n))
+                        else:
+                            stepVars.deltaVariables[action][v] = d_bv + (k * b_n)
                     else:
-                        rules.append(d_av == d_bv - (k * b_n))
+                        if EXPLICIT_DELTA:
+                            rules.append(d_av == d_bv - (k * b_n))
+                        else:
+                            stepVars.deltaVariables[action][v] = d_bv - (k * b_n)
             # Case d) Numeric assignments
             for v in prevAction.getAssList():
-                rules.append(stepVars.deltaVariables[action][v] == stepVars.auxVariables[prevAction][v])
+                if EXPLICIT_DELTA:
+                    rules.append(stepVars.deltaVariables[action][v] == stepVars.auxVariables[prevAction][v])
+                else:
+                    stepVars.deltaVariables[action][v] = stepVars.auxVariables[prevAction][v]
 
             prevAction = action
 
@@ -182,8 +205,9 @@ class PDDL2SMT:
                 continue
             a_n = stepVars.actionVariables[a]
             a_b = stepVars.boolActionVariables[a]
+            b = BOUND if a.couldBeRepeated() else 1
             rules.append(a_n >= 0)
-            rules.append(a_n <= BOUND)
+            rules.append(a_n <= b)
             if a.getPredicates():
                 active = (a_n > 0).AND(a_b == 1)
                 notActive = (a_n == 0).AND(a_b == 0)

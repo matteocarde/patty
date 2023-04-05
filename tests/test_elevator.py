@@ -1,3 +1,4 @@
+import time
 import unittest
 from unittest import TestCase
 
@@ -9,13 +10,13 @@ from classes.smt.SMTSolution import SMTSolution
 from classes.smt.SMTSolver import SMTSolver
 
 
-class TestRover(TestCase):
+class TestElevator(TestCase):
 
     def setUp(self) -> None:
-        self.domain: Domain = Domain.fromFile("../files/rover/domain.pddl")
-        self.problem: Problem = Problem.fromFile("../files/rover/instances/pfile1.pddl")
+        self.domain: Domain = Domain.fromFile("../files/elevator/domain.pddl")
+        self.problem: Problem = Problem.fromFile("../files/elevator/instances/problem-5-3-3.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
-        self.horizon = 3
+        self.horizon = 2
         self.pddl2smt: PDDL2SMT = PDDL2SMT(self.gDomain, self.problem, self.horizon)
         print(self.pddl2smt.order)
         pass
@@ -28,7 +29,10 @@ class TestRover(TestCase):
     def test_solve(self):
         solver: SMTSolver = SMTSolver(self.pddl2smt)
 
+        tic = time.perf_counter()
         plan: NumericPlan = solver.solve()
+        toc = time.perf_counter()
+        print("Time to solve:", toc - tic)
 
         self.assertIsInstance(plan, NumericPlan)
 

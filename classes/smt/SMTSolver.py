@@ -1,3 +1,5 @@
+import multiprocessing
+
 from pysmt.oracles import get_logic
 from typing import Set, List
 
@@ -85,7 +87,7 @@ class SMTSolver:
 
         while True:
             assert lastPlanFound.validate(self.pddl2smt.problem)
-            print(f"Found plan with quality {lastPlanFound.quality}. Improving...")
+            # print(f"Found plan with quality {lastPlanFound.quality}. Improving...")
             self.addAssertion(self.pddl2smt.getMetricExpression(lastPlanFound.quality))
 
             plan = self.solve()
@@ -97,31 +99,37 @@ class SMTSolver:
             self.popLastAssertion()
 
     def __solveBelowQuality(self, quality: float):
-        print("Searching below", quality)
+        # print("Searching below", quality)
         self.addAssertion(self.pddl2smt.getMetricExpression(quality), push=False)
         plan = self.solve()
         self.popLastAssertion()
         return plan
 
-    def __searchBetween(self, ub: float, lb: float, error: float, lastPlan: NumericPlan) -> NumericPlan:
+    def __searchBetween(self, ub: float, lb: float, error: float, lastPlan: NumericPlan,
+                        onSolutionFound=None) -> NumericPlan:
         if abs(ub - lb) < error:
             lastPlan.optimal = True
             return lastPlan
 
         half = lb + (ub - lb) / 2
-        print(f"Searching plan with quality {half}.")
+        # print(f"Searching plan with quality {half}.")
         plan = self.__solveBelowQuality(half)
         if plan:
-            print(f"Plan FOUND with quality {plan.quality}.")
-            return self.__searchBetween(plan.quality, lb, error, plan)
+            # print(f"Plan FOUND with quality {plan.quality}.")
+            if onSolutionFound:
+                onSolutionFound(plan)
+            return self.__searchBetween(plan.quality, lb, error, plan, onSolutionFound)
         if not plan:
-            print(f"Plan NOT FOUND with quality {half}.")
-            return self.__searchBetween(ub, half, error, lastPlan)
+            # print(f"Plan NOT FOUND with quality {half}.")
+            return self.__searchBetween(ub, half, error, lastPlan, onSolutionFound)
 
-    def optimizeBinary(self, error=1) -> NumericPlan or bool:
+    def optimizeBinary(self, error=1, onSolutionFound=None) -> NumericPlan or bool:
 
         lastPlanFound: NumericPlan = self.solve()
         if not lastPlanFound:
             return False
+        if onSolutionFound:
+            onSolutionFound(lastPlanFound)
 
-        return self.__searchBetween(lastPlanFound.quality, 0, error, lastPlanFound)
+        return self.__searchBetween(lastPlanFound.quality, 0, error, lastPlanFound, onSolutionFound)
+

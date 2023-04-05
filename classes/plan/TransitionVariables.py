@@ -6,6 +6,7 @@ from Domain import GroundedDomain
 from Operation import Operation
 from Problem import Problem
 from classes.plan.ActionOrder import ActionOrder
+from classes.smt.SMTExpression import SMTExpression
 from classes.smt.SMTNumericVariable import SMTNumericVariable, SMTRealVariable, SMTIntVariable
 from classes.smt.SMTVariable import SMTVariable
 
@@ -17,7 +18,7 @@ class TransitionVariables:
         self.assList: Dict[Atom, Set[Operation]] = assList
         self.order: List[Action] = order
         self.valueVariables: Dict[Atom, SMTVariable] = self.__computeValueVariables(index)
-        self.deltaVariables: Dict[Action, Dict[Atom, SMTVariable]] = self.__computeDeltaVariables(index)
+        self.deltaVariables: Dict[Action, Dict[Atom, SMTExpression]] = self.__computeDeltaVariables(index)
         if index > 0:
             self.actionVariables: Dict[Action, SMTVariable] = self.__computeActionVariables(index)
             self.boolActionVariables: Dict[Action, SMTVariable] = self.__computeBoolActionVariables(index)

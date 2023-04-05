@@ -15,7 +15,7 @@ from classes.smt.SMTSolver import SMTSolver
 
 
 def main():
-    experiment = "experiments/performances/1679784995.57566"
+    experiment = "experiments/performances/1680514712.829303"
 
     valid = 0
     total = 0
@@ -26,6 +26,13 @@ def main():
 
         for problem in os.listdir(f"{experiment}/{domain}"):
             if "ERRORED" in problem:
+                continue
+
+            f = open(f"{experiment}/{domain}/{problem}", "r")
+            plan = f.read()
+            f.close()
+
+            if len(plan) == 0:
                 continue
 
             val = "/Users/carde/Bin/VAL/Validate"
