@@ -10,13 +10,13 @@ from classes.smt.SMTSolution import SMTSolution
 from classes.smt.SMTSolver import SMTSolver
 
 
-class TestRover(TestCase):
+class TestLogistic(TestCase):
 
     def setUp(self) -> None:
         a = time.perf_counter()
-        self.domain: Domain = Domain.fromFile("../files/rover/domain.pddl")
+        self.domain: Domain = Domain.fromFile("../files/logistic-vans/domain.pddl")
         b = time.perf_counter()
-        self.problem: Problem = Problem.fromFile("../files/rover/instances/pfile1.pddl")
+        self.problem: Problem = Problem.fromFile("../files/logistic-vans/instances/problem1.pddl")
         c = time.perf_counter()
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         d = time.perf_counter()

@@ -68,13 +68,13 @@ domains = {
         "folder": "rover",
         "domain": "domain.pddl",
         "problems-folder": "instances/",
-        "horizon": 4
+        "horizon": 5
     }
 }
 
 TIMEOUT = 60
 
-OPTIMIZE = False
+OPTIMIZE = True
 
 
 def myRound(n: str or float):
