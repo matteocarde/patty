@@ -114,7 +114,7 @@ class SMTExpression:
         return self.__binary(other, Minus, self.expression, toRHS(other))
 
     def __rsub__(self, other: SMTExpression or float):
-        return self.__binary(other, Minus, self.expression, toRHS(other))
+        return self.__binary(other, Minus, self.expression * -1, toRHS(other) * -1)
 
     def __add__(self, other: SMTExpression or float):
         return self.__binary(other, Plus, self.expression, toRHS(other))
@@ -132,7 +132,7 @@ class SMTExpression:
         return self.__binary(other, Div, self.expression, toRHS(other))
 
     def __rtruediv__(self, other: SMTExpression or float):
-        return self.__binary(other, Div, self.expression, toRHS(other))
+        return self.__binary(other, Div, toRHS(other), self.expression)
 
     def implies(self, other: SMTExpression):
         expr = self.__binary(other, Implies, self.expression, other.expression)
@@ -177,7 +177,8 @@ class SMTExpression:
         if isinstance(predicate, BinaryPredicate):
             lhs = SMTExpression.fromPddl(predicate.lhs, variables)
             rhs = SMTExpression.fromPddl(predicate.rhs, variables)
-            return SMTExpression.opByString(predicate.operator, lhs, rhs)
+            result = SMTExpression.opByString(predicate.operator, lhs, rhs)
+            return result
         if isinstance(predicate, Literal):
             return variables[predicate.getAtom()]
         if isinstance(predicate, Constant):

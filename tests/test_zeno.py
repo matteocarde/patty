@@ -10,15 +10,16 @@ from classes.smt.SMTSolution import SMTSolution
 from classes.smt.SMTSolver import SMTSolver
 
 
-class TestElevator(TestCase):
+class TestZeno(TestCase):
 
     def setUp(self) -> None:
-        self.domain: Domain = Domain.fromFile("../files/elevator-num/domain.pddl")
-        self.problem: Problem = Problem.fromFile("../files/elevator-num/instances/problem-5-3-3.pddl")
+        self.domain: Domain = Domain.fromFile("../files/zeno-travel/domain.pddl")
+        self.problem: Problem = Problem.fromFile("../files/zeno-travel/instances/pfile6.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
-        self.horizon = 2
+        self.horizon = 3
         self.pddl2smt: PDDL2SMT = PDDL2SMT(self.gDomain, self.problem, self.horizon)
         print(self.pddl2smt.order)
+        print("Number of rules:", len(self.pddl2smt.rules))
         pass
 
     def test_transform(self):
@@ -27,13 +28,18 @@ class TestElevator(TestCase):
         self.assertGreater(len(self.pddl2smt.rules), 0)
 
     def test_solve(self):
+        tic = time.perf_counter()
         solver: SMTSolver = SMTSolver(self.pddl2smt)
 
-        tic = time.perf_counter()
-        plan: NumericPlan = solver.solve()
-        toc = time.perf_counter()
+        solution: SMTSolution = solver.getSolution()
         solver.exit()
-        print("Time to solve:", toc - tic)
+        toc = time.perf_counter()
+
+        print("Solution found in ", toc - tic)
+
+        self.assertIsInstance(solution, SMTSolution)
+
+        plan: NumericPlan = self.pddl2smt.getPlanFromSolution(solution)
 
         self.assertIsInstance(plan, NumericPlan)
 
@@ -43,7 +49,8 @@ class TestElevator(TestCase):
         print("With repetitions:")
         plan.printWithRepetitions()
 
-        self.assertTrue(plan.validate(self.problem))
+        valid = plan.validate(self.problem)
+        self.assertTrue(valid)
 
 
 if __name__ == '__main__':

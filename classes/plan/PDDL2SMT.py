@@ -232,6 +232,8 @@ class PDDL2SMT:
                         continue
                     if not isinstance(eff.rhs, Constant):
                         raise Exception("At the moment I cannot handle linear effects")
+                    if eff.operator == "assign":
+                        continue
 
                     sign = +1 if eff.operator == "increase" else -1
                     subs[eff.lhs.getAtom()] = sign * eff.rhs.value

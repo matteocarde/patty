@@ -48,7 +48,9 @@ class TransitionVariables:
         for action in self.order:
             if action.isFake:
                 continue
-            variables[action] = SMTIntVariable(f"{action.name}_{index}_b")
+            # They should be Integer, but in order to avoid always casting them with ToReal we relax them to float,
+            # since they are constrained in the encoding
+            variables[action] = SMTRealVariable(f"{action.name}_{index}_b")
 
         return variables
 

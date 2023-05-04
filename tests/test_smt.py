@@ -81,6 +81,11 @@ class TestSMT(TestCase):
     def test_subtractionOfConstantShouldBeAnExpression(self):
         self.assertIsInstance(self.x - 2.5, SMTExpression)
 
+    def test_subtractionShouldNotBeReflexive(self):
+        a = self.x - 2.5
+        b = 2.5 - self.x
+        self.assertNotEqual(str(a), str(b))
+
     def test_multiplicationByConstantShouldBeAnExpression(self):
         self.assertIsInstance(self.x * 2.5, SMTExpression)
 
