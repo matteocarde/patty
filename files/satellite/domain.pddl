@@ -30,10 +30,12 @@
 		:parameters (?s - satellite ?d_new - direction ?d_prev - direction)
 		:precondition (and
 			(pointing ?s ?d_prev)
-			(not (= ?d_new ?d_prev))
+			(not (pointing ?s ?d_new))
+			;(not (= ?d_new ?d_prev))
 			(>= (fuel ?s) (slew_time ?d_new ?d_prev))
 		)
-		:effect (and (pointing ?s ?d_new)
+		:effect (and
+			(pointing ?s ?d_new)
 			(not (pointing ?s ?d_prev))
 			(decrease (fuel ?s) (slew_time ?d_new ?d_prev))
 			(increase (fuel-used) (slew_time ?d_new ?d_prev))
