@@ -16,7 +16,6 @@
     (:action move-by-car
         :parameters (?f1 ?f2 -farm)
         :precondition (and
-            (not (= ?f1 ?f2))
             (>= (x ?f1) (* 4 (num-of-cars)))
             (adj ?f1 ?f2)
         )

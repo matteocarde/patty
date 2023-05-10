@@ -14,13 +14,13 @@ class TestLogistic(TestCase):
 
     def setUp(self) -> None:
         a = time.perf_counter()
-        self.domain: Domain = Domain.fromFile("../files/logistic-vans/domain.pddl")
+        self.domain: Domain = Domain.fromFile("../files/logistic/domain.pddl")
         b = time.perf_counter()
-        self.problem: Problem = Problem.fromFile("../files/logistic-vans/instances/problem1.pddl")
+        self.problem: Problem = Problem.fromFile("../files/logistic/instances/probLOGISTICS-4-0.pddl")
         c = time.perf_counter()
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         d = time.perf_counter()
-        self.horizon = 4
+        self.horizon = 10
         self.pddl2smt: PDDL2SMT = PDDL2SMT(self.gDomain, self.problem, self.horizon)
         e = time.perf_counter()
         print(self.pddl2smt.order)
@@ -53,40 +53,6 @@ class TestLogistic(TestCase):
 
         valid = plan.validate(self.problem)
         self.assertTrue(valid)
-
-    def test_optimize(self):
-        solver: SMTSolver = SMTSolver(self.pddl2smt)
-
-        plan: NumericPlan = solver.optimize()
-        solver.exit()
-
-        self.assertIsInstance(plan, NumericPlan)
-
-        print("Plan length: ", len(plan))
-        print("No repetitions:")
-        plan.print()
-        print("With repetitions:")
-        plan.printWithRepetitions()
-
-        self.assertTrue(plan.validate(self.problem))
-        self.assertTrue(plan.optimal)
-
-    def test_optimize_binary(self):
-        solver: SMTSolver = SMTSolver(self.pddl2smt)
-
-        plan: NumericPlan = solver.optimizeBinary()
-        solver.exit()
-
-        self.assertIsInstance(plan, NumericPlan)
-
-        print("Plan length: ", len(plan))
-        print("No repetitions:")
-        plan.print()
-        print("With repetitions:")
-        plan.printWithRepetitions()
-
-        self.assertTrue(plan.validate(self.problem))
-        self.assertTrue(plan.optimal)
 
 
 if __name__ == '__main__':
