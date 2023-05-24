@@ -1,2 +1,2 @@
-# smtnumericplanner
-A Numeric Planner made with SMT
+# Patty
+The Symbolic Pattern Planner

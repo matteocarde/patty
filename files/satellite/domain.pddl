@@ -61,7 +61,8 @@
 			(on_board ?i ?s)
 			(power_on ?i)
 		)
-		:effect (and (not (power_on ?i))
+		:effect (and 
+			(not (power_on ?i))
 			(power_avail ?s)
 		)
 	)
