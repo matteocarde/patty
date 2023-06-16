@@ -25,19 +25,31 @@ def main():
         ts.end("Grounding", console=console)
 
         ts.start("Conversion to SMT", console=console)
-        pddl2smt: PDDL2SMT = PDDL2SMT(gDomain, problem, args.horizon)
+        pddl2smt: PDDL2SMT = PDDL2SMT(gDomain, problem, args.bound)
         ts.end("Conversion to SMT", console=console)
 
         ts.start("Solving", console=console)
         solver: SMTSolver = SMTSolver(pddl2smt)
+
+        plan: NumericPlan
+        if args.deep:
+            plan = solver.optimizeBinary()
+        else:
+            plan = solver.solve()
+        solver.exit()
         ts.end("Solving", console=console)
 
-        plan: NumericPlan = solver.solve()
-        solver.exit()
         if not plan:
-            print("NO SOLUTION: A solution could not be found")
+            console.log(
+                f"NO SOLUTION: A solution could not be found with bound {args.bound}. Try to increase the bound",
+                LogPrintLevel.PLAN)
         else:
+            isValid = plan.validate(problem, avoidRaising=True)
             print(plan.toValString())
+            if isValid:
+                console.log("Plan is valid", LogPrintLevel.PLAN)
+            else:
+                console.log("Plan is NOT valid", LogPrintLevel.PLAN)
 
         ts.end("Overall")
 
