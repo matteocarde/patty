@@ -1,20 +1,13 @@
-import os
-import pathlib
-import sys
-import time
 import traceback
 
-from natsort import natsort
-
-from Domain import Domain, GroundedDomain
-from NumericPlan import NumericPlan
-from Problem import Problem
-from classes.plan.PDDL2SMT import PDDL2SMT
-from classes.smt.SMTSolution import SMTSolution
-from classes.smt.SMTSolver import SMTSolver
-from classes.utils.Arguments import Arguments
-from classes.utils.LogPrint import LogPrint, LogPrintLevel
-from classes.utils.TimeStat import TimeStat
+from src.plan.PDDL2SMT import PDDL2SMT
+from src.smt.SMTSolver import SMTSolver
+from src.utils.Arguments import Arguments
+from src.utils.LogPrint import LogPrint, LogPrintLevel
+from src.utils.TimeStat import TimeStat
+from src.pddl.Domain import Domain, GroundedDomain
+from src.pddl.NumericPlan import NumericPlan
+from src.pddl.Problem import Problem
 
 
 def main():

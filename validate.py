@@ -1,17 +1,5 @@
 import os
-import pathlib
 import sys
-import time
-import traceback
-
-from natsort import natsort
-
-from Domain import Domain, GroundedDomain
-from NumericPlan import NumericPlan
-from Problem import Problem
-from classes.plan.PDDL2SMT import PDDL2SMT
-from classes.smt.SMTSolution import SMTSolution
-from classes.smt.SMTSolver import SMTSolver
 
 
 def main():
