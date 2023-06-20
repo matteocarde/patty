@@ -43,7 +43,7 @@
     )
   )
 
-  (:action rgt_R
+  (:action rgt_L
     :parameters ()
     :precondition (and
       (< (xL) 0)

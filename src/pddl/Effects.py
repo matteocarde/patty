@@ -3,7 +3,7 @@ from __future__ import annotations
 import copy
 
 from itertools import chain
-from typing import Dict, List, cast
+from typing import Dict, List, cast, Iterable
 
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
@@ -60,7 +60,7 @@ class Effects:
         e.assignments = [predicate.substitute(sub, default) for predicate in self.assignments]
         return e
 
-    def __iter__(self):
+    def __iter__(self) -> Iterable[Literal or BinaryPredicate]:
         return iter(self.assignments)
 
     def __str__(self):

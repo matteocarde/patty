@@ -17,7 +17,7 @@ class Preconditions(Formula):
         m = {} if m is None else m
         p = copy.deepcopy(super(), m)
         p.__class__ = Preconditions
-        return cast(p, p)
+        return cast(Preconditions, p)
 
     @classmethod
     def fromNode(cls, node: pddlParser.PreconditionsContext) -> Preconditions:
@@ -26,8 +26,9 @@ class Preconditions(Formula):
         return cast(Preconditions, p)
 
     def ground(self, sub: Dict[str, str]) -> Preconditions:
-        return super().ground(sub)
+        f = super().ground(sub)
+        f.__class__ = Preconditions
+        return f
 
     def addPrecondition(self, param):
         self.addClause(param)
-

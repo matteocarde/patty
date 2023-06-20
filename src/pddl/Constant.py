@@ -70,6 +70,9 @@ class Constant(Predicate):
     def substitute(self, subs: Dict[Atom, float], default=None) -> Predicate:
         return self
 
+    def isLinearIncrement(self):
+        raise False
+
     def getLinearIncrement(self) -> float:
         return self.value
 

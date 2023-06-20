@@ -337,6 +337,7 @@ class Operation:
             for v in toChange:
                 vl = Literal.fromAtom(v, "+")
                 formula = vl + replaceWith[v] if replaceWithSign[v] > 0 else vl - replaceWith[v]
-                o_i.preconditions.addPrecondition(pre.replace(v, formula))
+                o_i.preconditions.addClause(pre.replace(v, formula))
 
+        o_i.name = f"{o_i.name}_{2 ** i}"
         return o_i

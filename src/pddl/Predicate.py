@@ -50,6 +50,9 @@ class Predicate:
     def __sub__(self, other):
         return self.__operation(other, "-")
 
+    def isLinearIncrement(self):
+        raise NotImplemented
+
     def __add__(self, other):
         return self.__operation(other, "+")
 

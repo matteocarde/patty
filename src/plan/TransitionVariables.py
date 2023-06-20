@@ -69,4 +69,14 @@ class TransitionVariables:
                 variables.setdefault(a, dict())
                 variables[a][var] = SMTRealVariable(f"{var}_{a}_{index}")
 
+        for a in self.order:
+            if not a.hasNonSimpleLinearIncrement():
+                continue
+            for eff in a.effects:
+                if not eff.isLinearIncrement():
+                    continue
+                var = eff.getAtom()
+                variables.setdefault(a, dict())
+                variables[a][var] = SMTRealVariable(f"{var}_{a}_{index}")
+
         return variables

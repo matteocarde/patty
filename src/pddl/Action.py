@@ -28,6 +28,7 @@ class Action(Operation):
         m = {} if m is None else m
         a = copy.deepcopy(super(), m)
         a.__class__ = Action
+        a.isFake = self.isFake
         return cast(Action, a)
 
     @classmethod

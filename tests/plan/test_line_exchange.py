@@ -6,6 +6,7 @@ from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
 
 from src.plan.PDDL2SMT import PDDL2SMT
+from src.smt.SMTSolution import SMTSolution
 from src.smt.SMTSolver import SMTSolver
 
 
@@ -15,9 +16,9 @@ class TestLineExchange(TestCase):
         self.domain: Domain = Domain.fromFile("../../files/line-exchange/domain.pddl")
         self.problem: Problem = Problem.fromFile("../../files/line-exchange/instances/prob01.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
-        self.horizon = 4
+        self.horizon = 3
         self.pddl2smt: PDDL2SMT = PDDL2SMT(self.gDomain, self.problem, self.horizon)
-        print(self.pddl2smt.order)
+        print(self.pddl2smt.pattern)
         pass
 
     def test_transform(self):
@@ -27,8 +28,9 @@ class TestLineExchange(TestCase):
 
     def test_solve(self):
         solver: SMTSolver = SMTSolver(self.pddl2smt)
-
-        plan: NumericPlan = solver.solve()
+        solution: SMTSolution = solver.getSolution()
+        print(solution)
+        plan: NumericPlan = self.pddl2smt.getPlanFromSolution(solution)
         solver.exit()
 
         self.assertIsInstance(plan, NumericPlan)

@@ -12,6 +12,9 @@ class Pattern:
         self.__order: List[Operation] = list()
         pass
 
+    def __getitem__(self, item):
+        return self.__order[item]
+
     @classmethod
     def fromOrder(cls, order: List[Operation]):
         p = cls()
@@ -22,6 +25,9 @@ class Pattern:
     def __iter__(self):
         return iter(self.__order)
 
+    def __str__(self):
+        return str(self.__order)
+
     def extendNonLinearities(self, nOfActions: int):
 
         newOrder = self.__order.copy()
@@ -29,8 +35,10 @@ class Pattern:
             if not operation.hasNonSimpleLinearIncrement():
                 continue
             rolledActions = list()
-            for i in range(1, nOfActions):
+            for i in range(0, nOfActions):
                 a_i = operation.getBinaryOperation(i)
                 rolledActions.append(a_i)
             index = newOrder.index(operation)
             newOrder = newOrder[:index] + rolledActions + newOrder[index + 1:]
+
+        self.__order = newOrder

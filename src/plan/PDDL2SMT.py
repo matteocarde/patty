@@ -41,6 +41,7 @@ class PDDL2SMT:
         order.append(self.dummyAction)
 
         self.pattern = Pattern.fromOrder(order)
+        self.pattern.extendNonLinearities(5)
 
         self.sign: Dict[Action, Dict[Atom, int]] = self.getSign(self.pattern)
 
@@ -106,16 +107,16 @@ class PDDL2SMT:
             return SMTExpression.orOfExpressionsList(rules)
 
     @staticmethod
-    def getSign(order: List[Action]) -> Dict[Action, Dict[Atom, int]]:
+    def getSign(pattern: Pattern) -> Dict[Action, Dict[Atom, int]]:
         sign: Dict[Action, Dict[Atom, int]] = dict()
 
-        for (i, a) in enumerate(order):
+        for (i, a) in enumerate(pattern):
             sign[a] = dict()
             addList = a.getAddList()
             delList = a.getDelList()
             for v in addList | delList:
                 sA = 0
-                for b in order[:i]:
+                for b in pattern[:i]:
                     if (v in addList and v in b.getDelList()) or (v in delList and v in b.getAddList()):
                         sA -= sign[b][v]
                 sA += +2 if v in addList else -2
@@ -164,20 +165,28 @@ class PDDL2SMT:
 
                 stepVars.deltaVariables[action][v] = d_bv + s_bv * b_b
             # Case c) Numeric increases or decreases
-            modifications = [(+1, prevAction.getIncreases()), (-1, prevAction.getDecreases())]
-            for sign, modificationDict in modifications:
-                for v, funct in modificationDict.items():
+            if not prevAction.hasNonSimpleLinearIncrement():
+                modifications = [(+1, prevAction.getIncreases()), (-1, prevAction.getDecreases())]
+                for sign, modificationDict in modifications:
+                    for v, funct in modificationDict.items():
 
-                    d_bv = stepVars.deltaVariables[prevAction][v]
-                    k = SMTNumericVariable.fromPddl(funct, stepVars.deltaVariables[prevAction])
-                    b_n = stepVars.actionVariables[prevAction]
-                    if sign > 0:
-                        stepVars.deltaVariables[action][v] = d_bv + (k * b_n)
-                    else:
-                        stepVars.deltaVariables[action][v] = d_bv - (k * b_n)
+                        d_bv = stepVars.deltaVariables[prevAction][v]
+                        k = SMTNumericVariable.fromPddl(funct, stepVars.deltaVariables[prevAction])
+                        b_n = stepVars.actionVariables[prevAction]
+                        if sign > 0:
+                            stepVars.deltaVariables[action][v] = d_bv + (k * b_n)
+                        else:
+                            stepVars.deltaVariables[action][v] = d_bv - (k * b_n)
             # Case d) Numeric assignments
             for v in prevAction.getAssList():
                 stepVars.deltaVariables[action][v] = stepVars.auxVariables[prevAction][v]
+
+            if prevAction.hasNonSimpleLinearIncrement():
+                for eff in prevAction.effects:
+                    if not eff.isLinearIncrement():
+                        continue
+                    v = eff.getAtom()
+                    stepVars.deltaVariables[action][v] = stepVars.auxVariables[prevAction][v]
 
             prevAction = action
 
@@ -191,7 +200,7 @@ class PDDL2SMT:
                 continue
             a_n = stepVars.actionVariables[a]
             a_b = stepVars.boolActionVariables[a]
-            b = BOUND if a.couldBeRepeated() else 1
+            b = BOUND if a.couldBeRepeated() and not a.hasNonSimpleLinearIncrement() else 1
             rules.append(a_n >= 0)
             rules.append(a_n <= b)
             if a.getPredicates():
@@ -235,7 +244,7 @@ class PDDL2SMT:
                     if not isinstance(eff, BinaryPredicate):
                         continue
                     if not isinstance(eff.rhs, Constant):
-                        raise Exception("Linear effects must be managed with multiple repetitions of the same action")
+                        continue
                     if eff.operator == "assign":
                         continue
 
@@ -278,6 +287,23 @@ class PDDL2SMT:
                 rules.append((a_n > 0).implies(v_a == k))
                 rules.append((a_n == 0).implies(v_a == d_a_v))
 
+            if not a.hasNonSimpleLinearIncrement():
+                continue
+
+            for eff in a.effects:
+                if not eff.isLinearIncrement():
+                    continue
+                var = eff.getAtom()
+                v_a = stepVars.auxVariables[a][var]
+                a_n = stepVars.actionVariables[a]
+                d_a_v = stepVars.deltaVariables[a][var]
+                d_a_phi = SMTNumericVariable.fromPddl(eff.rhs, stepVars.deltaVariables[a])
+                if eff.operator == "increase":
+                    rules.append((a_n > 0).implies(v_a == d_a_v + d_a_phi))
+                else:
+                    rules.append((a_n > 0).implies(v_a == d_a_v - d_a_phi))
+                rules.append((a_n == 0).implies(v_a == d_a_v))
+
         return rules
 
     def getFrameStepRules(self, stepVars: TransitionVariables) -> List[SMTExpression]:
@@ -315,6 +341,9 @@ class PDDL2SMT:
 
     def getPlanFromSolution(self, solution: SMTSolution) -> NumericPlan:
         plan = NumericPlan()
+
+        if not solution:
+            return plan
 
         for i in range(1, self.horizon + 1):
             stepVar = self.transitionVariables[i]

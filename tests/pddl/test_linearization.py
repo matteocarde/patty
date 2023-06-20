@@ -40,7 +40,5 @@ class TestAction(TestCase):
         self.assertIsInstance(linearize, Action)
 
 
-
-
 if __name__ == '__main__':
     unittest.main()

@@ -43,6 +43,9 @@ class Literal(Predicate):
             raise Exception(f"Cannot replace {atom} with {w} since it appears as negated")
         return copy.deepcopy(w)
 
+    def isLinearIncrement(self):
+        raise False
+
     @classmethod
     def fromNode(cls, node: p.PositiveLiteralContext or p.NegativeLiteralContext) -> Literal:
         literal = cls()
