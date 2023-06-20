@@ -307,5 +307,36 @@ class Operation:
                 return True
         return False
 
-    def getBinaryOperation(self, i: int):
-        raise NotImplemented()
+    def getBinaryOperation(self, i: int) -> Operation:
+        o_i = copy.deepcopy(self)
+
+        replaceWith: Dict[Atom, BinaryPredicate] = dict()
+        replaceWithSign: Dict[Atom, int] = dict()
+
+        effs = Effects()
+
+        for eff in self.effects:
+            if not isinstance(eff, BinaryPredicate) or not eff.isLinearIncrement():
+                effs.addEffect(copy.deepcopy(eff))
+                continue
+            binEff = copy.deepcopy(eff)
+            binEff.rhs = 2 ** i * binEff.rhs
+            preFormula = (2 ** i - 1) * copy.deepcopy(eff.rhs)
+            replaceWith[eff.getAtom()] = preFormula
+            replaceWithSign[eff.getAtom()] = +1 if eff.operator == "increase" else -1
+            effs.addEffect(binEff)
+
+        o_i.effects = effs
+
+        if self.preconditions.containsOrs():
+            raise Exception("""At the moment I cannot deal with ORs in preconditions when linearizing linear effects. 
+                Is trivial but requires some work. Please contact us.""")
+
+        for pre in self.preconditions:
+            toChange = set(replaceWith.keys()).intersection(pre.getFunctions())
+            for v in toChange:
+                vl = Literal.fromAtom(v, "+")
+                formula = vl + replaceWith[v] if replaceWithSign[v] > 0 else vl - replaceWith[v]
+                o_i.preconditions.addPrecondition(pre.replace(v, formula))
+
+        return o_i

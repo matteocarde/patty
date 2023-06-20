@@ -1,12 +1,12 @@
 from __future__ import annotations
 
+import copy
+from sympy import Expr
 from typing import Dict, Set
 
-from sympy import Expr
-
 from src.pddl.Atom import Atom
-from src.pddl.grammar.pddlParser import pddlParser
 from src.pddl.Predicate import Predicate
+from src.pddl.grammar.pddlParser import pddlParser
 
 
 class Constant(Predicate):
@@ -75,6 +75,9 @@ class Constant(Predicate):
 
     def toExpression(self) -> Expr or float:
         return self.value
+
+    def replace(self, atom: Atom, w):
+        return copy.deepcopy(self)
 
     def toLatex(self) -> str:
         return r"\delta_e" if self.isDelta else str(self.value)

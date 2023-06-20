@@ -27,3 +27,7 @@ class Preconditions(Formula):
 
     def ground(self, sub: Dict[str, str]) -> Preconditions:
         return super().ground(sub)
+
+    def addPrecondition(self, param):
+        self.addClause(param)
+

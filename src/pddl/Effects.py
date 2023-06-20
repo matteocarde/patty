@@ -75,3 +75,6 @@ class Effects:
     def toLatex(self):
         return ",".join([a.toLatex() for a in self.assignments])
         pass
+
+    def addEffect(self, ass: Literal or BinaryPredicate):
+        self.assignments.append(ass)

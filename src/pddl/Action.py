@@ -120,5 +120,6 @@ class Action(Operation):
         return action
 
     def getBinaryOperation(self, i: int) -> Action:
-        action = self.copy()
-        pass
+        a_i = super().getBinaryOperation(i)
+        a_i.__class__ = Action
+        return a_i

@@ -50,6 +50,15 @@ class Predicate:
     def __sub__(self, other):
         return self.__operation(other, "-")
 
+    def __add__(self, other):
+        return self.__operation(other, "+")
+
+    def __mul__(self, other):
+        return self.__operation(other, "*")
+
+    def __rmul__(self, other):
+        return self.__operation(other, "*")
+
     def __gt__(self, other):
         return self.__operation(other, ">")
 

@@ -86,6 +86,13 @@ class Formula:
         x.conditions = [c.substitute(subs, default) for c in self.conditions]
         return x
 
+    def replace(self, atom: Atom, w: BinaryPredicate) -> Formula:
+        f = Formula()
+        f.type = f.type
+        for el in self.conditions:
+            f.conditions.append(el.replace(atom, w))
+        return f
+
     def __iter__(self):
         return iter(self.conditions)
 
@@ -112,3 +119,14 @@ class Formula:
         symbol = r"\wedge" if self.type == "AND" else r"\vee"
         return "(" + symbol.join([c.toLatex() for c in self.conditions]) + ")"
         pass
+
+    def containsOrs(self):
+        if self.type == "OR":
+            return True
+        for c in self.conditions:
+            if isinstance(c, Formula) and c.containsOrs():
+                return True
+        return False
+
+    def addClause(self, clause: Formula or Predicate):
+        self.conditions.append(clause)

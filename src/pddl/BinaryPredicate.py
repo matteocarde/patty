@@ -93,6 +93,18 @@ class BinaryPredicate(Predicate):
 
         return bp
 
+    def replace(self, atom: Atom, w: BinaryPredicate):
+        bp = BinaryPredicate()
+        bp.operator = self.operator
+        bp.lhs = self.lhs.replace(atom, w)
+        bp.rhs = self.rhs.replace(atom, w)
+        bp.type = self.type
+
+        return bp
+
+    def isLinearIncrement(self):
+        return self.operator in {"increase", "decrease"} and self.rhs.getFunctions()
+
     def getAtom(self) -> Atom:
         if not isinstance(self.lhs, Literal):
             raise Exception("Cannot get atom from Binary Predicate", self)

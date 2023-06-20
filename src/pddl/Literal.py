@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import copy
-
 from sympy import Expr
 from typing import Dict, Set
 
@@ -33,7 +32,16 @@ class Literal(Predicate):
         lit = cls()
         lit.atom = atom
         lit.sign = sign
+        lit.funct = lit.atom.toFunctionName()
+        lit.alphaFunct = lit.atom.toAlphaFunctionName()
         return lit
+
+    def replace(self, atom: Atom, w):
+        if self.atom != atom:
+            return copy.deepcopy(self)
+        if self.sign != "+":
+            raise Exception(f"Cannot replace {atom} with {w} since it appears as negated")
+        return copy.deepcopy(w)
 
     @classmethod
     def fromNode(cls, node: p.PositiveLiteralContext or p.NegativeLiteralContext) -> Literal:
