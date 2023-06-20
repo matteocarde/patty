@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import copy
+
 from itertools import chain
 from typing import Dict, Set
 
@@ -18,6 +20,13 @@ class Formula:
     def __init__(self):
         self.type = "AND"
         self.conditions = list()
+
+    def __deepcopy__(self, m=None) -> Formula:
+        m = {} if m is None else m
+        f = Formula()
+        f.type = self.type
+        f.conditions = copy.deepcopy(self.conditions, m)
+        return f
 
     @classmethod
     def fromNode(cls, node) -> Formula:

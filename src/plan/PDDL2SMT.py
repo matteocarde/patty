@@ -10,6 +10,7 @@ from src.pddl.Literal import Literal
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
 from src.pddl.Utilities import Utilities
+from src.plan.Pattern import Pattern
 from src.plan.TransitionVariables import TransitionVariables
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTNumericVariable import SMTNumericVariable
@@ -35,13 +36,16 @@ class PDDL2SMT:
         self.dummyAction = Action()
         self.dummyAction.isFake = True
         self.dummyAction.name = "dummy_action_do_not_use"
-        self.order: List[Action] = self.domain.getARPG().getActionsOrder()
-        self.order.append(self.dummyAction)
 
-        self.sign: Dict[Action, Dict[Atom, int]] = self.getSign(self.order)
+        order: List[Action] = self.domain.getARPG().getActionsOrder()
+        order.append(self.dummyAction)
+
+        self.pattern = Pattern.fromOrder(order)
+
+        self.sign: Dict[Action, Dict[Atom, int]] = self.getSign(self.pattern)
 
         for index in range(0, horizon + 1):
-            var = TransitionVariables(self.domain.allAtoms, self.domain.assList, self.order, index)
+            var = TransitionVariables(self.domain.allAtoms, self.domain.assList, self.pattern, index)
             self.transitionVariables.append(var)
 
         self.initial: [SMTExpression] = self.getInitialExpression()
@@ -139,7 +143,7 @@ class PDDL2SMT:
         rules: List[SMTExpression] = []
 
         prevAction: Action or None = None
-        for action in self.order:
+        for action in self.pattern:
             if not prevAction:
                 # First action in the order copies the value from previous step
                 for v in self.domain.allAtoms:
@@ -182,7 +186,7 @@ class PDDL2SMT:
     def getActStepRules(self, stepVars: TransitionVariables) -> List[SMTExpression]:
         rules: List[SMTExpression] = []
 
-        for a in self.order:
+        for a in self.pattern:
             if a.isFake:
                 continue
             a_n = stepVars.actionVariables[a]
@@ -209,7 +213,7 @@ class PDDL2SMT:
     def getPreStepRules(self, stepVars: TransitionVariables) -> List[SMTExpression]:
         rules: List[SMTExpression] = []
 
-        for a in self.order:
+        for a in self.pattern:
             if a.isFake:
                 continue
             # a_n > 0
@@ -231,7 +235,7 @@ class PDDL2SMT:
                     if not isinstance(eff, BinaryPredicate):
                         continue
                     if not isinstance(eff.rhs, Constant):
-                        raise Exception("At the moment I cannot handle linear effects")
+                        raise Exception("Linear effects must be managed with multiple repetitions of the same action")
                     if eff.operator == "assign":
                         continue
 
@@ -263,7 +267,7 @@ class PDDL2SMT:
     def getEffStepRules(self, stepVars: TransitionVariables) -> List[SMTExpression]:
         rules: List[SMTExpression] = []
 
-        for a in self.order:
+        for a in self.pattern:
             for var, rhs in a.getAssignments().items():
                 v_a = stepVars.auxVariables[a][var]
                 a_n = stepVars.actionVariables[a]
@@ -314,7 +318,7 @@ class PDDL2SMT:
 
         for i in range(1, self.horizon + 1):
             stepVar = self.transitionVariables[i]
-            for a in self.order:
+            for a in self.pattern:
                 if a.isFake:
                     continue
                 repetitions = int(str(solution.getVariable(stepVar.actionVariables[a])))

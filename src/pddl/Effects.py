@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import copy
+
 from itertools import chain
-from typing import Dict, List
+from typing import Dict, List, cast
 
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
@@ -16,6 +18,12 @@ class Effects:
     def __init__(self):
         self.assignments = []
         pass
+
+    def __deepcopy__(self, m=None):
+        m = {} if m is None else m
+        eff = copy.deepcopy(super(), m)
+        eff.__class__ = Effects
+        return cast(Effects, eff)
 
     @classmethod
     def fromNode(cls, node: pddlParser.EffectsContext) -> Effects:

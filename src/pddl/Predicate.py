@@ -56,6 +56,9 @@ class Predicate:
     def __lt__(self, other):
         return self.__operation(other, "<")
 
+    def __deepcopy__(self, m=None):
+        raise NotImplemented()
+
     def substitute(self, subs: Dict[Atom, float], default=None) -> Predicate:
         raise NotImplemented()
 

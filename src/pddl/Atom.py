@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import copy
+
 from typing import Dict
 
 from sympy import Symbol, Expr
@@ -19,6 +21,16 @@ class Atom:
     def __init__(self):
         self.attributes = []
         pass
+
+    def __deepcopy__(self, m=None):
+        a = Atom()
+        a.name = self.name
+        a.__string = self.__string
+        a.__hash = self.__hash
+        a.__functionName = self.__functionName
+        a.__alphaFunctionName = self.__alphaFunctionName
+        a.attributes = copy.deepcopy(self.attributes)
+        return a
 
     @classmethod
     def fromNode(cls, node: p.AtomContext) -> Atom:

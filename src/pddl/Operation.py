@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+import copy
+
 import itertools
 from typing import Dict, List, Set
 
 from src.pddl.Atom import Atom
-from src.pddl.BinaryPredicate import BinaryPredicate
+from src.pddl.BinaryPredicate import BinaryPredicate, BinaryPredicateType
 from src.pddl.Effects import Effects
 from src.pddl.Literal import Literal
 from src.pddl.OperationType import OperationType
@@ -25,8 +27,8 @@ class Operation:
     effects: Effects
 
     def __init__(self):
-        self.name: str
-        self.valName: str
+        self.name: str = ""
+        self.valName: str = ""
         self.parameters = list()
         self.preconditions = Preconditions()
         self.effects = Effects()
@@ -42,6 +44,30 @@ class Operation:
         self.increases = dict()
         self.decreases = dict()
         self.assignments = dict()
+
+    def __deepcopy__(self, m=None) -> Operation:
+        m = {} if m is None else m
+
+        a = Operation()
+        a.name = self.name
+        a.valName = self.valName
+        a.parameters = copy.deepcopy(self.parameters, m)
+        a.preconditions = copy.deepcopy(self.preconditions, m)
+        a.effects = copy.deepcopy(self.effects, m)
+        a.functions = copy.deepcopy(self.functions, m)
+        a.predicates = copy.deepcopy(self.predicates, m)
+        a.preB = copy.deepcopy(self.preB, m)
+        a.addList = copy.deepcopy(self.addList, m)
+        a.delList = copy.deepcopy(self.delList, m)
+        a.assList = copy.deepcopy(self.assList, m)
+        a.incrList = copy.deepcopy(self.incrList, m)
+        a.decrList = copy.deepcopy(self.decrList, m)
+        a.influencedAtoms = copy.deepcopy(self.influencedAtoms, m)
+        a.increases = copy.deepcopy(self.increases, m)
+        a.decreases = copy.deepcopy(self.decreases, m)
+        a.assignments = copy.deepcopy(self.assignments, m)
+
+        return a
 
     @classmethod
     def fromNode(cls, node: p.ActionContext or p.EventContext or p.ProcessContext, types: Dict[str, Type]):
@@ -273,3 +299,13 @@ class Operation:
 
     def nameToLatex(self):
         return self.planName.replace("_", r"\_")
+
+    def hasNonSimpleLinearIncrement(self):
+        for e in self.effects:
+            if isinstance(e, BinaryPredicate) and e.type == BinaryPredicateType.MODIFICATION and \
+                    len(e.rhs.getFunctions()) > 0:
+                return True
+        return False
+
+    def getBinaryOperation(self, i: int):
+        raise NotImplemented()

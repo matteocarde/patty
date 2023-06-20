@@ -18,6 +18,13 @@ class Constant(Predicate):
         self.value = float(value)
         self.isDelta = False
 
+    def __deepcopy__(self, m=None) -> Constant:
+        m = {} if m is None else m
+        c = Constant()
+        c.value = self.value
+        c.isDelta = self.isDelta
+        return c
+
     @classmethod
     def fromValue(cls, value: float):
         c = cls()

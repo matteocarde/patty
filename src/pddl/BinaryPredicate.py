@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import copy
+
 from enum import Enum
 from sympy import Expr, diff
 from typing import Dict, Set
@@ -28,6 +30,15 @@ class BinaryPredicate(Predicate):
     def __init__(self):
         super().__init__()
         self.__functions = None
+
+    def __deepcopy__(self, m=None) -> BinaryPredicate:
+        m = {} if m is None else m
+        bp = BinaryPredicate()
+        bp.operator = self.operator
+        bp.lhs = copy.deepcopy(self.lhs, m)
+        bp.rhs = copy.deepcopy(self.rhs, m)
+        bp.type = copy.deepcopy(self.type, m)
+        return bp
 
     @classmethod
     def fromNode(cls, node: p.ModificationContext or p.ComparationContext or p.OperationContext) -> BinaryPredicate:

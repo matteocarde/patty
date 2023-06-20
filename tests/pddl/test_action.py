@@ -1,12 +1,15 @@
-from typing import List
 from unittest import TestCase
 
+import copy
 import unittest
 
-from Action import Action
-from Atom import Atom
-from BinaryPredicate import BinaryPredicate
-from Problem import Problem
+from src.pddl.Action import Action
+from src.pddl.Atom import Atom
+from src.pddl.BinaryPredicate import BinaryPredicate
+from src.pddl.Effects import Effects
+from src.pddl.Preconditions import Preconditions
+from src.pddl.Problem import Problem
+from src.pddl.Type import Type
 
 ACTION1 = """
 (:action move_block_down
@@ -69,8 +72,11 @@ PROBLEM = """
 class TestAction(TestCase):
 
     def setUp(self) -> None:
-        self.action1 = Action.fromString(ACTION1)
-        self.action2 = Action.fromString(ACTION2)
+        types = dict()
+        types["block"] = Type("block")
+        types["other"] = Type("other")
+        self.action1 = Action.fromString(ACTION1, types)
+        self.action2 = Action.fromString(ACTION2, types)
         self.problem = Problem.fromString(PROBLEM)
         pass
 
@@ -210,6 +216,13 @@ class TestAction(TestCase):
         self.assertIn(Atom.fromString("z b1"), subFunctions)
 
         pass
+
+    def test_copy(self):
+        action = copy.deepcopy(self.action1)
+        self.assertIsInstance(action, Action)
+        self.assertEqual(action.name, self.action1.name)
+        self.assertIsInstance(action.preconditions, Preconditions)
+        self.assertIsInstance(action.effects, Effects)
 
 
 if __name__ == '__main__':

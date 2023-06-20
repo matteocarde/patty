@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
-from typing import List, Dict, Set
+import copy
+
+from typing import List, Dict, Set, cast
 
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
@@ -22,6 +24,12 @@ class Action(Operation):
         self.isFake = False
         super().__init__()
 
+    def __deepcopy__(self, m=None):
+        m = {} if m is None else m
+        a = copy.deepcopy(super(), m)
+        a.__class__ = Action
+        return cast(Action, a)
+
     @classmethod
     def fromNode(cls, node: p.ActionContext, types: Dict[str, Type]):
         return super().fromNode(node, types)
@@ -31,8 +39,8 @@ class Action(Operation):
         return super().fromProperties(name, preconditions, effects, planName)
 
     @classmethod
-    def fromString(cls, string: str) -> Action:
-        return cls.fromNode(Utilities.getParseTree(string).action())
+    def fromString(cls, string: str, types: Dict[str, Type]) -> Action:
+        return cls.fromNode(Utilities.getParseTree(string).action(), types)
 
     @property
     def type(self):
@@ -110,3 +118,7 @@ class Action(Operation):
         planName = self.planName
         action = Action.fromProperties(name, preconditions, effects, planName)
         return action
+
+    def getBinaryOperation(self, i: int) -> Action:
+        action = self.copy()
+        pass

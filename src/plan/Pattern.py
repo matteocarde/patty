@@ -2,30 +2,35 @@ from __future__ import annotations
 
 from typing import Set, List
 
-from Action import Operation
-from Domain import GroundedDomain
-from Problem import Problem
-from RPG import RPG
+from src.pddl.Action import Operation
 
 
 class Pattern:
-    __domain: GroundedDomain
-    __problem: Problem
+    __order: List[Operation]
 
     def __init__(self):
-        self.__actions: Set[Operation] = set()
+        self.__order: List[Operation] = list()
         pass
 
     @classmethod
-    def fromPlanningTask(cls, domain: GroundedDomain, problem: Problem) -> Pattern:
+    def fromOrder(cls, order: List[Operation]):
         p = cls()
-        p.__actions = domain.actions
-        p.__domain = domain
-        p.__problem = problem
+        p.__order = order
 
         return p
 
-    def getPartialOrder(self) -> List[Set[Operation]]:
-        rpg = RPG(self.__domain, self.__problem)
+    def __iter__(self):
+        return iter(self.__order)
 
-        return rpg.getPartialOrder()
+    def extendNonLinearities(self, nOfActions: int):
+
+        newOrder = self.__order.copy()
+        for operation in self.__order:
+            if not operation.hasNonSimpleLinearIncrement():
+                continue
+            rolledActions = list()
+            for i in range(1, nOfActions):
+                a_i = operation.getBinaryOperation(i)
+                rolledActions.append(a_i)
+            index = newOrder.index(operation)
+            newOrder = newOrder[:index] + rolledActions + newOrder[index + 1:]

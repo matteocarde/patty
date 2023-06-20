@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import copy
+
 from sympy import Expr
 from typing import Dict, Set
 
@@ -17,6 +19,14 @@ class Literal(Predicate):
 
     def __init__(self):
         super().__init__()
+
+    def __deepcopy__(self, m=None) -> Literal:
+        m = {} if m is None else m
+        l = Literal()
+        l.sign = self.sign
+        l.atom = copy.deepcopy(self.atom, m)
+        l.funct = self.funct
+        return l
 
     @classmethod
     def fromAtom(cls, atom: Atom, sign: str):
