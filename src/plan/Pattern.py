@@ -37,6 +37,8 @@ class Pattern:
             rolledActions = list()
             for i in range(0, nOfActions):
                 a_i = operation.getBinaryOperation(i)
+                a_i.linearizationOf = operation
+                a_i.linearizationTimes = 2 ** i
                 rolledActions.append(a_i)
             index = newOrder.index(operation)
             newOrder = newOrder[:index] + rolledActions + newOrder[index + 1:]

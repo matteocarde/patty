@@ -44,6 +44,8 @@ class Operation:
         self.increases = dict()
         self.decreases = dict()
         self.assignments = dict()
+        self.linearizationOf = self
+        self.linearizationTimes = 1
 
     def __deepcopy__(self, m=None) -> Operation:
         m = {} if m is None else m
@@ -66,6 +68,8 @@ class Operation:
         a.increases = copy.deepcopy(self.increases, m)
         a.decreases = copy.deepcopy(self.decreases, m)
         a.assignments = copy.deepcopy(self.assignments, m)
+        a.linearizationOf = self.linearizationOf
+        a.linearizationTimes = self.linearizationTimes
 
         return a
 

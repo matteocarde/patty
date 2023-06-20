@@ -81,11 +81,11 @@ class SMTSolver:
 
         while True:
             assert lastPlanFound.validate(self.pddl2smt.problem)
-            # print(f"Found plan with quality {lastPlanFound.quality}. Improving...")
+            print(f"Found plan with quality {lastPlanFound.quality}. Improving...")
             self.addAssertion(self.pddl2smt.getMetricExpression(lastPlanFound.quality))
 
             plan = self.solve()
-            if not plan:
+            if not plan or plan.quality == lastPlanFound.quality:
                 lastPlanFound.optimal = True
                 return lastPlanFound
 
@@ -108,12 +108,12 @@ class SMTSolver:
         half = lb + (ub - lb) / 2
         # print(f"Searching plan with quality {half}.")
         plan = self.__solveBelowQuality(half)
-        if plan:
+        if plan and plan.quality != lastPlan.quality:
             # print(f"Plan FOUND with quality {plan.quality}.")
             if onSolutionFound:
                 onSolutionFound(plan)
             return self.__searchBetween(plan.quality, lb, error, plan, onSolutionFound)
-        if not plan:
+        if not plan or plan.quality == lastPlan.quality:
             # print(f"Plan NOT FOUND with quality {half}.")
             return self.__searchBetween(ub, half, error, lastPlan, onSolutionFound)
 

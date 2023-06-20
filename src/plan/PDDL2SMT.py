@@ -350,8 +350,8 @@ class PDDL2SMT:
             for a in self.pattern:
                 if a.isFake:
                     continue
-                repetitions = int(str(solution.getVariable(stepVar.actionVariables[a])))
+                repetitions = int(str(solution.getVariable(stepVar.actionVariables[a]))) * a.linearizationTimes
                 if repetitions > 0:
-                    plan.addRepeatedAction(a, repetitions)
+                    plan.addRepeatedAction(a.linearizationOf, repetitions)
 
         return plan
