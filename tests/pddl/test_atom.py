@@ -3,7 +3,7 @@ from unittest import TestCase
 
 from sympy import Symbol
 
-from Atom import Atom
+from src.pddl.Atom import Atom
 
 
 class TestAtom(TestCase):

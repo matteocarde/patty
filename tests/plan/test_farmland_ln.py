@@ -1,5 +1,6 @@
-import unittest
 from unittest import TestCase
+
+import unittest
 
 from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
@@ -35,6 +36,23 @@ class TestFarmlandLinear(TestCase):
         plan.printWithRepetitions()
 
         self.assertTrue(plan.validate(self.problem))
+
+    def test_optimize_binary(self):
+        solver: SMTSolver = SMTSolver(self.pddl2smt)
+
+        plan: NumericPlan = solver.optimizeBinary()
+        solver.exit()
+
+        self.assertIsInstance(plan, NumericPlan)
+
+        print("Plan length: ", len(plan))
+        print("No repetitions:")
+        plan.print()
+        print("With repetitions:")
+        plan.printWithRepetitions()
+
+        self.assertTrue(plan.validate(self.problem))
+        self.assertTrue(plan.optimal)
 
 
 if __name__ == '__main__':

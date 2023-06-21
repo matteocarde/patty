@@ -136,8 +136,10 @@ class PDDL2SMT:
         if not self.problem.metric:
             sumOfActions = 0
             for stepVar in self.transitionVariables[1:]:
-                for actionVar in stepVar.actionVariables.values():
-                    sumOfActions += actionVar
+                for action in self.pattern:
+                    if action.isFake:
+                        continue
+                    sumOfActions += stepVar.actionVariables[action] * action.linearizationTimes
             return sumOfActions < metricBound
 
     def getDeltaStepRules(self, prevVars: TransitionVariables, stepVars: TransitionVariables) -> List[SMTExpression]:

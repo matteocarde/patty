@@ -1,9 +1,8 @@
-import unittest
 from unittest import TestCase
 
-from BinaryPredicate import BinaryPredicate
-from MooreInterval import MooreInterval
-from Problem import Problem
+import unittest
+from src.pddl.BinaryPredicate import BinaryPredicate
+from src.pddl.Problem import Problem
 
 PROBLEM = """
 (define (problem instance_4_1_1)
@@ -65,7 +64,7 @@ class TestProblem(TestCase):
 
     def test_metric(self):
         self.assertEqual(self.problem1.metric,
-                         BinaryPredicate.fromOperationString("(+ (* 4 (poured plant2)) (* 5 (poured plant2)))"))
+                         BinaryPredicate.fromOperationString("(poured plant2)"))
 
 
 if __name__ == '__main__':

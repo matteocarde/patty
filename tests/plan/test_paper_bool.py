@@ -1,20 +1,19 @@
-import unittest
 from unittest import TestCase
 
-from Domain import Domain, GroundedDomain
-from NumericPlan import NumericPlan
-from PDDLException import PDDLException
-from Problem import Problem
+import unittest
+from src.pddl.Domain import Domain, GroundedDomain
+from src.pddl.NumericPlan import NumericPlan
+from src.pddl.Problem import Problem
+
 from src.plan.PDDL2SMT import PDDL2SMT
-from src.smt.SMTSolution import SMTSolution
 from src.smt.SMTSolver import SMTSolver
 
 
 class TestPaperBool(TestCase):
 
     def setUp(self) -> None:
-        self.domain: Domain = Domain.fromFile("../files/paper-example/domain-bool.pddl")
-        self.problem: Problem = Problem.fromFile("../files/paper-example/problem-bool.pddl")
+        self.domain: Domain = Domain.fromFile("../../files/paper-example/domain-bool.pddl")
+        self.problem: Problem = Problem.fromFile("../../files/paper-example/problem-bool.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.horizon = 1
         self.pddl2smt: PDDL2SMT = PDDL2SMT(self.gDomain, self.problem, self.horizon)
@@ -28,7 +27,7 @@ class TestPaperBool(TestCase):
     def test_solve(self):
         solver: SMTSolver = SMTSolver(self.pddl2smt)
 
-        print(self.pddl2smt.order)
+        print(self.pddl2smt.pattern)
         self.pddl2smt.printRules()
 
         solution = solver.getSolution()

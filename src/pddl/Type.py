@@ -21,3 +21,8 @@ class Type:
         for c in self.children:
             children += c.getMeAndMyChildren()
         return children
+
+    def __eq__(self, other):
+        if not isinstance(other, Type):
+            return False
+        return self.name == other.name and self.parent == other.parent

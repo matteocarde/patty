@@ -1,10 +1,8 @@
-import unittest
 from unittest import TestCase
 
-from sympy import Symbol
-
-from Atom import Atom
-from Formula import Formula
+import unittest
+from src.pddl.Atom import Atom
+from src.pddl.Formula import Formula
 
 
 class TestFormula(TestCase):

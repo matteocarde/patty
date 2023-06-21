@@ -12,8 +12,8 @@ from src.smt.SMTSolver import SMTSolver
 class TestSign(TestCase):
 
     def setUp(self) -> None:
-        self.domain: Domain = Domain.fromFile("../files/paper-example/domain-sign.pddl")
-        self.problem: Problem = Problem.fromFile("../files/paper-example/problem-sign.pddl")
+        self.domain: Domain = Domain.fromFile("../../files/paper-example/domain-sign.pddl")
+        self.problem: Problem = Problem.fromFile("../../files/paper-example/problem-sign.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.horizon = 1
         self.pddl2smt: PDDL2SMT = PDDL2SMT(self.gDomain, self.problem, self.horizon)
@@ -27,7 +27,7 @@ class TestSign(TestCase):
     def test_solve(self):
         solver: SMTSolver = SMTSolver(self.pddl2smt)
 
-        print(self.pddl2smt.order)
+        print(self.pddl2smt.pattern)
         self.pddl2smt.printRules()
 
         solution = solver.getSolution()

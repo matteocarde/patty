@@ -1,11 +1,11 @@
 import unittest
 from unittest import TestCase
 
-from Atom import Atom
-from BinaryPredicate import BinaryPredicate as BP, BinaryPredicateType
-from Constant import Constant
-from Literal import Literal
-from MooreInterval import MooreInterval
+from src.pddl.Atom import Atom
+from src.pddl.BinaryPredicate import BinaryPredicate as BP, BinaryPredicateType
+from src.pddl.Constant import Constant
+from src.pddl.Literal import Literal
+from src.pddl.MooreInterval import MooreInterval
 
 OPERATION = "(+ 5 (- (+ 20 10) (* 20 (/ (x ?a1) (x ?a2)))))"
 
@@ -100,7 +100,7 @@ class TestFormula(TestCase):
         self.assertEqual(len(bp.getFunctions()), 4)
         self.assertEqual(len(subBp.getFunctions()), 1)
 
-        self.assertEqual(subBp, BP.fromModificationString("(increase (x ?a) (+ 1.0 (- 10.0 (+ 10.0 5.0)))"))
+        self.assertEqual(subBp, BP.fromModificationString("(increase (x ?a) -4.0)"))
 
     def test_linearIncrement(self):
 

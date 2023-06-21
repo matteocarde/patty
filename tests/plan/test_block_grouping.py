@@ -2,9 +2,9 @@ from unittest import TestCase
 
 import unittest
 
-from Domain import Domain, GroundedDomain
-from NumericPlan import NumericPlan
-from Problem import Problem
+from src.pddl.Domain import Domain, GroundedDomain
+from src.pddl.NumericPlan import NumericPlan
+from src.pddl.Problem import Problem
 from src.plan.PDDL2SMT import PDDL2SMT
 from src.smt.SMTSolver import SMTSolver
 
@@ -12,12 +12,12 @@ from src.smt.SMTSolver import SMTSolver
 class TestBlockGrouping(TestCase):
 
     def setUp(self) -> None:
-        self.domain: Domain = Domain.fromFile("../files/block-grouping/domain.pddl")
-        self.problem: Problem = Problem.fromFile("../files/block-grouping/instances/instance_7_15_3_1.pddl")
+        self.domain: Domain = Domain.fromFile("../../files/block-grouping/domain.pddl")
+        self.problem: Problem = Problem.fromFile("../../files/block-grouping/instances/instance_7_15_3_1.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.horizon = 1
         self.pddl2smt: PDDL2SMT = PDDL2SMT(self.gDomain, self.problem, self.horizon)
-        print(self.pddl2smt.order)
+        print(self.pddl2smt.pattern)
         pass
 
     def test_transform(self):

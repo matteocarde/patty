@@ -1,11 +1,8 @@
-import unittest
 from unittest import TestCase
 
-from sympy import Symbol
-
-from Atom import Atom
-from Formula import Formula
-from InitialCondition import InitialCondition
+import unittest
+from src.pddl.Atom import Atom
+from src.pddl.InitialCondition import InitialCondition
 
 INITIAL_CONDITION = """
 (:init

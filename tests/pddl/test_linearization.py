@@ -1,15 +1,8 @@
 from unittest import TestCase
 
-import copy
 import unittest
 
 from src.pddl.Action import Action
-from src.pddl.Atom import Atom
-from src.pddl.BinaryPredicate import BinaryPredicate
-from src.pddl.Effects import Effects
-from src.pddl.Preconditions import Preconditions
-from src.pddl.Problem import Problem
-from src.pddl.Type import Type
 
 ACTION1 = """
 (:action exch

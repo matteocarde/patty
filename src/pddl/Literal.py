@@ -44,7 +44,7 @@ class Literal(Predicate):
         return copy.deepcopy(w)
 
     def isLinearIncrement(self):
-        raise False
+        return False
 
     @classmethod
     def fromNode(cls, node: p.PositiveLiteralContext or p.NegativeLiteralContext) -> Literal:

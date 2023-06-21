@@ -1,12 +1,7 @@
-import unittest
 from unittest import TestCase
 
-from sympy import Symbol
-
-from Atom import Atom
-from Formula import Formula
-from InitialCondition import InitialCondition
-from MooreInterval import MooreInterval
+import unittest
+from src.pddl.MooreInterval import MooreInterval
 
 
 class TestMooreInterval(TestCase):

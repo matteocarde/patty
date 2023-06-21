@@ -1,14 +1,11 @@
-import unittest
 from unittest import TestCase
 
-from sympy import Symbol
-
-from Action import Action
-from Atom import Atom
-from Formula import Formula
-from InitialCondition import InitialCondition
-from MooreInterval import MooreInterval
-from State import State
+import unittest
+from src.pddl.Action import Action
+from src.pddl.Atom import Atom
+from src.pddl.Formula import Formula
+from src.pddl.InitialCondition import InitialCondition
+from src.pddl.State import State
 
 INITIAL_CONDITION = """
 (:init
@@ -98,12 +95,12 @@ class TestState(TestCase):
 
     def setUp(self) -> None:
         self.init = InitialCondition.fromString(INITIAL_CONDITION)
-        self.action1 = Action.fromString(ACTION1)
-        self.action2 = Action.fromString(ACTION2)
-        self.action3 = Action.fromString(ACTION3)
-        self.actionAnd = Action.fromString(ACTION_AND)
-        self.actionOr = Action.fromString(ACTION_OR)
-        self.actionNot = Action.fromString(ACTION_NOT)
+        self.action1 = Action.fromString(ACTION1, dict())
+        self.action2 = Action.fromString(ACTION2, dict())
+        self.action3 = Action.fromString(ACTION3, dict())
+        self.actionAnd = Action.fromString(ACTION_AND, dict())
+        self.actionOr = Action.fromString(ACTION_OR, dict())
+        self.actionNot = Action.fromString(ACTION_NOT, dict())
 
     def test_shouldUpdateStatesCorrectly(self):
         state0 = State.fromInitialCondition(self.init)

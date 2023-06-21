@@ -89,7 +89,7 @@ class TestAction(TestCase):
         self.assertEqual(self.action1.name, "move_block_down")
         self.assertEqual(len(self.action1.parameters), 1)
         self.assertEqual(self.action1.parameters[0].name, "?b")
-        self.assertEqual(self.action1.parameters[0].type, "block")
+        self.assertEqual(self.action1.parameters[0].type, Type("block"))
         self.assertEqual(len(self.action1.preconditions), 3)
         self.assertEqual(len(self.action1.effects), 6)
 
