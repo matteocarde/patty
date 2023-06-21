@@ -31,13 +31,17 @@ class ARPG:
 
         fullBooleanGoal = len(problem.goal.getFunctions()) == 0
 
-        while activeSupporters and (fullBooleanGoal or not state.satisfies(problem.goal)):
+        isFixpoint = False
+        while activeSupporters and not isFixpoint:  # (fullBooleanGoal or not state.satisfies(problem.goal)):
             supporters = supporters - activeSupporters
-            state = state.applySupporters(activeSupporters)
-            activeSupporters = {s for s in supporters if s.isSatisfiedBy(state)}
+            newState = state.applySupporters(activeSupporters)
+            activeSupporters = {s for s in supporters if s.isSatisfiedBy(newState)}
 
             self.supporterLevels.append(activeSupporters)
-            self.stateLevels.append(state)
+            self.stateLevels.append(newState)
+
+            isFixpoint = state.coincide(newState)
+            state = newState
 
         if not fullBooleanGoal and not state.satisfies(problem.goal):
             raise PDDLException.GoalNotReachable()

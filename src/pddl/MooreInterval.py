@@ -38,6 +38,11 @@ class MooreInterval:
 
         return MooreInterval(lb, ub)
 
+    def __eq__(self, other):
+        if not isinstance(other, MooreInterval):
+            return False
+        return self.lb == other.lb and self.ub == other.ub
+
     def merge(self, other: MooreInterval):
         return MooreInterval(min(self.lb, other.lb), max(self.ub, other.ub))
 

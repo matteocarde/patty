@@ -1,3 +1,4 @@
+from __future__ import annotations
 from typing import Dict, Set
 
 from src.pddl.Atom import Atom
@@ -104,3 +105,12 @@ class RelaxedIntervalState:
             lhs = self.substituteInto(p.lhs)
             rhs = self.substituteInto(p.rhs)
             return Utilities.op(p.operator, lhs, rhs)
+
+    def coincide(self, newState: RelaxedIntervalState):
+        for (atom, interval) in self.__intervals.items():
+            if atom not in newState.__intervals:
+                return False
+
+            if newState.__intervals[atom] != self.__intervals[atom]:
+                return False
+        return True

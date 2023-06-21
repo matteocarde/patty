@@ -106,15 +106,15 @@ class SMTSolver:
             return lastPlan
 
         half = lb + (ub - lb) / 2
-        # print(f"Searching plan with quality {half}.")
+        print(f"Searching plan with quality {half}.")
         plan = self.__solveBelowQuality(half)
         if plan and plan.quality != lastPlan.quality:
-            # print(f"Plan FOUND with quality {plan.quality}.")
+            print(f"Plan FOUND with quality {plan.quality}.")
             if onSolutionFound:
                 onSolutionFound(plan)
             return self.__searchBetween(plan.quality, lb, error, plan, onSolutionFound)
         if not plan or plan.quality == lastPlan.quality:
-            # print(f"Plan NOT FOUND with quality {half}.")
+            print(f"Plan NOT FOUND with quality {half}.")
             return self.__searchBetween(ub, half, error, lastPlan, onSolutionFound)
 
     def optimizeBinary(self, error=1, onSolutionFound=None) -> NumericPlan or bool:
