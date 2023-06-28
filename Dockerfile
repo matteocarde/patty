@@ -58,13 +58,24 @@ RUN apt-get install -y swig autoconf gperf libgmp-dev
 RUN pysmt-install --yices --confirm-agreement
 RUN pysmt-install --check
 
+# Install java
+RUN apt-get install -y openjdk-8-jdk ant ca-certificates-java
+RUN update-ca-certificates -f;
 
+RUN add-apt-repository ppa:linuxuprising/java
+ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND teletype
+RUN yes | apt-get install -y oracle-java17-installer --install-recommends
+
+#Aliases
+RUN echo 'alias springroll="project/benchmarks/planners/SPRINGROLL/springroll"' >> ~/.bashrc
+
+# Copying
 COPY . .
 
-
+#Authorizations
 RUN chmod +x exes/*
 
-#Here are things that changes a lot
 
 
 #Execution
