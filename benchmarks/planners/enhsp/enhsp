@@ -1,0 +1,2 @@
+#!/bin/bash
+java -jar /var/enhsp/enhsp-dist/enhsp.jar $@

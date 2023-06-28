@@ -1,0 +1,9 @@
+/nbproject/private/
+/build/
+/dist/
+*.plan
+*.class
+build.xml
+manifest.mf
+nbproject
+*~

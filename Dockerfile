@@ -1,7 +1,6 @@
 #Here are things that probably never change so they will be cached
 FROM --platform=linux/amd64 ubuntu:18.04
 
-
 RUN apt-get update
 
 # Install Node
@@ -67,15 +66,84 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV DEBIAN_FRONTEND teletype
 RUN yes | apt-get install -y oracle-java17-installer --install-recommends
 
-#Aliases
-RUN echo 'alias springroll="project/benchmarks/planners/SPRINGROLL/springroll"' >> ~/.bashrc
+# Install CPLEX
+COPY benchmarks/planners/cplex/installer.bin /tmp/installer
+COPY benchmarks/planners/cplex/install.properties /tmp/install.properties
+WORKDIR /project/benchmarks/planners/cplex
+RUN ls -la
 
+ARG COSDIR=/opt/CPLEX
+ARG CPX_PYVERSION=3.7
+RUN chmod u+x /tmp/installer
+
+RUN /tmp/installer -f /tmp/install.properties
+RUN rm -f /tmp/installer /tmp/install.properties
+
+ENV PATH ${PATH}:${COSDIR}/cplex/bin/x86-64_linux
+ENV PATH ${PATH}:${COSDIR}/cpoptimizer/bin/x86-64_linux
+ENV PATH ${PATH}:${COSDIR}/opl/bin/x86-64_linux
+ENV LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:${COSDIR}/cplex/bin/x86-64_linux
+ENV LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:${COSDIR}/cpoptimizer/bin/x86-64_linux
+ENV LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:${COSDIR}/opl/bin/x86-64_linux
+
+ENV DOWNWARD_CPLEX_ROOT=${COSDIR}/cplex
+ENV DOWNWARD_CONCERT_ROOT=${COSDIR}/concert
+
+# Installing OSI
+WORKDIR /var
+RUN apt-get install zlib1g-dev 
+RUN wget http://www.coin-or.org/download/source/Osi/Osi-0.107.9.tgz
+RUN tar zxvf Osi-0.107.9.tgz
+WORKDIR /var/Osi-0.107.9
+RUN ls -la
+RUN ./configure CC="gcc"  CFLAGS="-pthread -Wno-long-long" \
+            CXX="g++" CXXFLAGS="-pthread -Wno-long-long" \
+            LDFLAGS="-L$DOWNWARD_CPLEX_ROOT/lib/x86-64_linux/static_pic" \
+            --without-lapack --enable-static=no \
+            --prefix="$DOWNWARD_COIN_ROOT" \
+            --disable-bzlib \
+            --with-cplex-incdir=$DOWNWARD_CPLEX_ROOT/include/ilcplex \
+            --with-cplex-lib="-lcplex -lm -ldl"
+
+RUN make
+RUN make install
+WORKDIR /var
+RUN rm -rf Osi-0.107.9
+RUN rm Osi-0.107.9.tgz
+
+# Install Numeric Fast Downward
+
+COPY /benchmarks/planners/nfd /var/nfd
+WORKDIR /var/nfd
+RUN apt-get install -y cmake
+# RUN ./build.py release64
+
+# Install Metric FF
+COPY /benchmarks/planners/metric-ff /var/metric-ff
+WORKDIR /var/metric-ff
+RUN apt-get install -y bison flex
+RUN make
+ENV PATH /var/metric-ff/:${PATH}
+
+# Install Springroll
+COPY /benchmarks/planners/springroll /var/springroll
+ENV PATH /var/springroll/:${PATH}
+RUN chmod +x /var/springroll/springroll
+
+# Install ENHSP
+COPY /benchmarks/planners/enhsp /var/enhsp
+WORKDIR /var/enhsp
+RUN ./compile
+ENV PATH /var/enhsp/:${PATH}
+RUN chmod +x /var/enhsp/enhsp
+
+
+WORKDIR /project
 # Copying
 COPY . .
 
 #Authorizations
 RUN chmod +x exes/*
-
 
 
 #Execution
