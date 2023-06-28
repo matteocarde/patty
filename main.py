@@ -50,7 +50,8 @@ def main():
                     LogPrintLevel.PLAN)
             else:
                 isValid = plan.validate(problem, avoidRaising=True)
-                print(plan.toValString())
+                console.log(plan.toValString(), LogPrintLevel.PLAN)
+                console.log(f"Bound: {bound}", LogPrintLevel.STATS)
                 if isValid:
                     console.log("Plan is valid", LogPrintLevel.PLAN)
                 else:
@@ -60,7 +61,6 @@ def main():
             bound += 1
 
         ts.end("Overall")
-
         console.log(str(ts), LogPrintLevel.TIMES)
 
     except:

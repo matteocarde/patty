@@ -97,13 +97,13 @@ RUN tar zxvf Osi-0.107.9.tgz
 WORKDIR /var/Osi-0.107.9
 RUN ls -la
 RUN ./configure CC="gcc"  CFLAGS="-pthread -Wno-long-long" \
-            CXX="g++" CXXFLAGS="-pthread -Wno-long-long" \
-            LDFLAGS="-L$DOWNWARD_CPLEX_ROOT/lib/x86-64_linux/static_pic" \
-            --without-lapack --enable-static=no \
-            --prefix="$DOWNWARD_COIN_ROOT" \
-            --disable-bzlib \
-            --with-cplex-incdir=$DOWNWARD_CPLEX_ROOT/include/ilcplex \
-            --with-cplex-lib="-lcplex -lm -ldl"
+  CXX="g++" CXXFLAGS="-pthread -Wno-long-long" \
+  LDFLAGS="-L$DOWNWARD_CPLEX_ROOT/lib/x86-64_linux/static_pic" \
+  --without-lapack --enable-static=no \
+  --prefix="$DOWNWARD_COIN_ROOT" \
+  --disable-bzlib \
+  --with-cplex-incdir=$DOWNWARD_CPLEX_ROOT/include/ilcplex \
+  --with-cplex-lib="-lcplex -lm -ldl"
 
 RUN make
 RUN make install
@@ -137,10 +137,17 @@ RUN ./compile
 ENV PATH /var/enhsp/:${PATH}
 RUN chmod +x /var/enhsp/enhsp
 
+# Install patty
+COPY /benchmarks/planners/patty /var/patty
+ENV PATH /var/patty/:${PATH}
+RUN chmod +x /var/patty/patty
+
 
 WORKDIR /project
 # Copying
 COPY . .
+
+RUN patty --help
 
 #Authorizations
 RUN chmod +x exes/*
