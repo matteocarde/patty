@@ -72,9 +72,7 @@
 
 	(:action refuel
 		:parameters (?a - aircraft)
-		:precondition (and (> (capacity ?a) (fuel ?a))
-
-		)
+		:precondition (and (> (capacity ?a) (fuel ?a)))
 		:effect (and (assign (fuel ?a) (capacity ?a)))
 	)
 

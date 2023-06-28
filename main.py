@@ -24,32 +24,40 @@ def main():
         gDomain: GroundedDomain = domain.ground(problem)
         ts.end("Grounding", console=console)
 
-        ts.start("Conversion to SMT", console=console)
-        pddl2smt: PDDL2SMT = PDDL2SMT(gDomain, problem, args.bound)
-        ts.end("Conversion to SMT", console=console)
+        bound = args.bound if args.bound else 1
+        bMax = args.bound if args.bound else len(gDomain.actions)
 
-        ts.start("Solving", console=console)
-        solver: SMTSolver = SMTSolver(pddl2smt)
+        while bound <= bMax:
 
-        plan: NumericPlan
-        if args.deep:
-            plan = solver.optimizeBinary()
-        else:
-            plan = solver.solve()
-        solver.exit()
-        ts.end("Solving", console=console)
+            ts.start("Conversion to SMT", console=console)
+            pddl2smt: PDDL2SMT = PDDL2SMT(gDomain, problem, bound)
+            ts.end("Conversion to SMT", console=console)
 
-        if not plan:
-            console.log(
-                f"NO SOLUTION: A solution could not be found with bound {args.bound}. Try to increase the bound",
-                LogPrintLevel.PLAN)
-        else:
-            isValid = plan.validate(problem, avoidRaising=True)
-            print(plan.toValString())
-            if isValid:
-                console.log("Plan is valid", LogPrintLevel.PLAN)
+            ts.start(f"Solving Bound {bound}", console=console)
+            solver: SMTSolver = SMTSolver(pddl2smt)
+
+            plan: NumericPlan
+            if args.deep:
+                plan = solver.optimizeBinary()
             else:
-                console.log("Plan is NOT valid", LogPrintLevel.PLAN)
+                plan = solver.solve()
+            solver.exit()
+            ts.end(f"Solving Bound {bound}", console=console)
+
+            if not plan:
+                console.log(
+                    f"NO SOLUTION: A solution could not be found with bound {bound}. Try to increase the bound",
+                    LogPrintLevel.PLAN)
+            else:
+                isValid = plan.validate(problem, avoidRaising=True)
+                print(plan.toValString())
+                if isValid:
+                    console.log("Plan is valid", LogPrintLevel.PLAN)
+                else:
+                    console.log("Plan is NOT valid", LogPrintLevel.PLAN)
+                break
+
+            bound += 1
 
         ts.end("Overall")
 

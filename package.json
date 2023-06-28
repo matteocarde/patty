@@ -1,0 +1,23 @@
+{
+  "name": "patty",
+  "version": "1.0.0",
+  "description": "Patty: The pattern planner",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "experiment": "./exes/experiment.sh",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matteocarde/smt-numeric-planner.git"
+  },
+  "author": "Matteo Cardellini, Enrico Giunchiglia, Marco Maratea",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/matteocarde/smt-numeric-planner/issues"
+  },
+  "homepage": "https://github.com/matteocarde/smt-numeric-planner#readme"
+}
