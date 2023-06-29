@@ -1,6 +1,10 @@
+from typing import List
+
 import traceback
 
+from src.pddl.Action import Action
 from src.plan.PDDL2SMT import PDDL2SMT
+from src.plan.Pattern import Pattern
 from src.smt.SMTSolver import SMTSolver
 from src.utils.Arguments import Arguments
 from src.utils.LogPrint import LogPrint, LogPrintLevel
@@ -27,10 +31,14 @@ def main():
         bound = args.bound if args.bound else 1
         bMax = args.bound if args.bound else len(gDomain.actions)
 
+        pattern: Pattern = Pattern.fromOrder(gDomain.getARPG().getActionsOrder())
+        if args.printPattern:
+            console.log("Pattern: " + str(pattern), LogPrintLevel.PLAN)
+
         while bound <= bMax:
 
             ts.start("Conversion to SMT", console=console)
-            pddl2smt: PDDL2SMT = PDDL2SMT(gDomain, problem, bound)
+            pddl2smt: PDDL2SMT = PDDL2SMT(gDomain, problem, pattern, bound)
             ts.end("Conversion to SMT", console=console)
 
             ts.start(f"Solving Bound {bound}", console=console)

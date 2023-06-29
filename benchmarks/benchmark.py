@@ -3,19 +3,22 @@ from typing import Dict
 import os
 import random
 
-from benchmarks.classes.ENHSP import ENHSP
-from benchmarks.classes.MetricFF import MetricFF
-from benchmarks.classes.Patty import Patty
-from benchmarks.classes.PattyRandom import PattyRandom
-from benchmarks.classes.Planner import Planner
-from benchmarks.classes.SpringRoll import SpringRoll
+from classes.ENHSP import ENHSP
+from classes.MetricFF import MetricFF
+from classes.Patty import Patty
+from classes.PattyRandom import PattyRandom
+from classes.Planner import Planner
+from classes.Result import Result
+from classes.SpringRoll import SpringRoll
+
+TIMEOUT = 30
 
 PLANNERS: Dict[str, Planner] = {
-    "PATTY": Patty(),
-    "PATTY-R": PattyRandom(),
-    "SPRINGROLL": SpringRoll(),
-    "ENHSP": ENHSP(),
-    "METRIC-FF": MetricFF(),
+    "PATTY": Patty(TIMEOUT),
+    "PATTY-R": PattyRandom(TIMEOUT),
+    "SPRINGROLL": SpringRoll(TIMEOUT),
+    "ENHSP": ENHSP(TIMEOUT),
+    "METRIC-FF": MetricFF(TIMEOUT),
 }
 
 
@@ -31,7 +34,7 @@ def createRandomList():
             if problem[-5:] != ".pddl":
                 continue
             domainFile = f"files/{domain}/domain.pddl"
-            problemFile = f"files/{domain}/instances/{problem}.pddl"
+            problemFile = f"files/{domain}/instances/{problem}"
             problems.append([domain, domainFile, problemFile])
 
     for planner in PLANNERS.keys():
@@ -39,24 +42,28 @@ def createRandomList():
 
     random.shuffle(instances)
     print(f"Listing {len(instances)} instances")
-    f = open("instances.csv", "w")
+    f = open("benchmarks/instances.csv", "w")
     f.write("\n".join([",".join(i) for i in instances]))
     f.close()
 
 
 def main():
-    f = open("./instances.csv", "r")
+    f = open("benchmarks/instances.csv", "r")
     csv = f.read()
     f.close()
     instances = [[v for v in line.split(",")] for line in csv.split("\n")]
 
     for el in instances[0:9]:
+
+        if el[0] not in {"PATTY"}:
+            continue
+
         planner = PLANNERS[el[0]]
         domain = el[1]
         domainFile = el[2]
         problemFile = el[3]
 
-    print(instances)
+        result: Result = planner.run(domainFile, problemFile)
 
 
 if __name__ == '__main__':

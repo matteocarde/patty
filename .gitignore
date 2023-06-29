@@ -8,3 +8,6 @@ src/plan/__pycache__/
 *.pyc
 
 experiments/
+
+**/smt_encoding_*
+*.plan

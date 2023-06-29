@@ -24,7 +24,7 @@ class PDDL2SMT:
     domain: GroundedDomain
     problem: Problem
 
-    def __init__(self, domain: GroundedDomain, problem: Problem, horizon: int):
+    def __init__(self, domain: GroundedDomain, problem: Problem, pattern: Pattern, horizon: int):
         self.domain = domain
         self.problem = problem
         self.horizon = horizon
@@ -33,14 +33,7 @@ class PDDL2SMT:
 
         self.transitions: [SMTExpression] = []
 
-        self.dummyAction = Action()
-        self.dummyAction.isFake = True
-        self.dummyAction.name = "dummy_action_do_not_use"
-
-        order: List[Action] = self.domain.getARPG().getActionsOrder()
-        order.append(self.dummyAction)
-
-        self.pattern = Pattern.fromOrder(order)
+        self.pattern = pattern
         self.pattern.extendNonLinearities(5)
 
         self.sign: Dict[Action, Dict[Atom, int]] = self.getSign(self.pattern)
@@ -313,12 +306,12 @@ class PDDL2SMT:
 
         for v in self.domain.functions:
             v_first = stepVars.valueVariables[v]
-            delta_g_v = stepVars.deltaVariables[self.dummyAction][v]
+            delta_g_v = stepVars.deltaVariables[self.pattern.dummyAction][v]
             rules.append(v_first == delta_g_v)
 
         for v in self.domain.predicates:
             v_first = stepVars.valueVariables[v]
-            delta_g_v = stepVars.deltaVariables[self.dummyAction][v]
+            delta_g_v = stepVars.deltaVariables[self.pattern.dummyAction][v]
             rules.append((delta_g_v > 0).implies(v_first == 1))
             rules.append((delta_g_v < 0).implies(v_first == -1))
 

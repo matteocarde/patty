@@ -2,11 +2,12 @@ from __future__ import annotations
 
 from typing import Set, List
 
-from src.pddl.Action import Operation
+from src.pddl.Action import Operation, Action
 
 
 class Pattern:
     __order: List[Operation]
+    dummyAction: Action
 
     def __init__(self):
         self.__order: List[Operation] = list()
@@ -18,6 +19,11 @@ class Pattern:
     @classmethod
     def fromOrder(cls, order: List[Operation]):
         p = cls()
+        p.dummyAction = Action()
+        p.dummyAction.isFake = True
+        p.dummyAction.name = "final_dummy_g"
+
+        order.append(p.dummyAction)
         p.__order = order
 
         return p
@@ -26,7 +32,7 @@ class Pattern:
         return iter(self.__order)
 
     def __str__(self):
-        return str(self.__order)
+        return "; ".join([str(x) for x in self.__order if not x.isFake])
 
     def extendNonLinearities(self, nOfActions: int):
 

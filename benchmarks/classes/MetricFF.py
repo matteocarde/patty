@@ -1,7 +1,7 @@
-from benchmarks.classes.Planner import Planner
+from classes.Planner import Planner
 
 
 class MetricFF(Planner):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, timeout: int):
+        super().__init__(timeout)
