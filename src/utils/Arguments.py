@@ -15,6 +15,7 @@ class Arguments:
                             default=LogPrintLevel.getDefault(), type=int)
         parser.add_argument('--deep', help="Iterative deepening approach to find the best plan (at the given bound)",
                             action="store_true")
+        parser.add_argument('--pattern', default="arpg", help="Method too compute the pattern: arpg, random")
         parser.add_argument('-pp', help="Print pattern", action="store_true")
 
         args = parser.parse_args()
@@ -24,3 +25,4 @@ class Arguments:
         self.verboseLevel = LogPrintLevel(args.verboseLevel)
         self.deep = args.deep
         self.printPattern = args.pp
+        self.pattern = args.pattern

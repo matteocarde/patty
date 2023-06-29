@@ -9,7 +9,9 @@ NAME = "PATTY"
 class Patty(Planner):
     name = NAME
 
-    def __init__(self):
+    def __init__(self, pattern):
+        self.pattern = pattern
+        self.name = NAME + "-" + pattern
         super().__init__()
 
     @staticmethod
@@ -23,4 +25,4 @@ class Patty(Planner):
         return r
 
     def getCommand(self, domain: str, problem: str):
-        return ["patty", "-o", domain, "-f", problem]
+        return ["patty", "-o", domain, "-f", problem, "-pp", "--pattern", self.pattern]

@@ -1,8 +1,11 @@
+import random
+
 from typing import List
 
 import traceback
 
 from src.pddl.Action import Action
+from src.pddl.Operation import Operation
 from src.plan.PDDL2SMT import PDDL2SMT
 from src.plan.Pattern import Pattern
 from src.smt.SMTSolver import SMTSolver
@@ -31,15 +34,24 @@ def main():
         bound = args.bound if args.bound else 1
         bMax = args.bound if args.bound else len(gDomain.actions)
 
-        pattern: Pattern = Pattern.fromOrder(gDomain.getARPG().getActionsOrder())
+        order: List[Operation]
+        if args.pattern == "arpg":
+            order = gDomain.getARPG().getActionsOrder()
+        elif args.pattern == "random":
+            order = list(gDomain.actions)
+            random.shuffle(order)
+        else:
+            raise Exception(f"Pattern generation method '{args.pattern}' unknown")
+        pattern: Pattern = Pattern.fromOrder(order)
+
         if args.printPattern:
             console.log("Pattern: " + str(pattern), LogPrintLevel.PLAN)
 
         while bound <= bMax:
 
-            ts.start("Conversion to SMT", console=console)
+            ts.start(f"Conversion to SMT at bound {bound}", console=console)
             pddl2smt: PDDL2SMT = PDDL2SMT(gDomain, problem, pattern, bound)
-            ts.end("Conversion to SMT", console=console)
+            ts.end(f"Conversion to SMT at bound {bound}", console=console)
 
             ts.start(f"Solving Bound {bound}", console=console)
             solver: SMTSolver = SMTSolver(pddl2smt)

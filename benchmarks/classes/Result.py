@@ -27,7 +27,7 @@ class Result:
 
     def __str__(self):
         row = [
-            (str(self.solver), 10),
+            (str(self.solver), 15),
             (str(self.domain), 20),
             (str(self.problem), 30),
             (str(self.solved), 6),
