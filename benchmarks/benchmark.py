@@ -11,14 +11,12 @@ from classes.Planner import Planner
 from classes.Result import Result
 from classes.SpringRoll import SpringRoll
 
-TIMEOUT = 30
-
 PLANNERS: Dict[str, Planner] = {
-    "PATTY": Patty(TIMEOUT),
-    "PATTY-R": PattyRandom(TIMEOUT),
-    "SPRINGROLL": SpringRoll(TIMEOUT),
-    "ENHSP": ENHSP(TIMEOUT),
-    "METRIC-FF": MetricFF(TIMEOUT),
+    "PATTY": Patty(),
+    "PATTY-R": PattyRandom(),
+    "SPRINGROLL": SpringRoll(),
+    "ENHSP": ENHSP(),
+    "METRIC-FF": MetricFF(),
 }
 
 
@@ -59,11 +57,13 @@ def main():
             continue
 
         planner = PLANNERS[el[0]]
-        domain = el[1]
+        benchmark = el[1]
         domainFile = el[2]
         problemFile = el[3]
 
-        result: Result = planner.run(domainFile, problemFile)
+        r: Result = planner.run(benchmark, domainFile, problemFile)
+
+        print(r)
 
 
 if __name__ == '__main__':
