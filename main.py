@@ -47,11 +47,17 @@ def main():
         while bound <= bMax:
 
             ts.start(f"Conversion to SMT at bound {bound}", console=console)
-            pddl2smt: PDDL2SMT = PDDL2SMT(gDomain, problem, pattern, bound)
+            pddl2smt: PDDL2SMT = PDDL2SMT(
+                domain=gDomain,
+                problem=problem,
+                pattern=pattern,
+                bound=bound,
+                encoding=args.encoding
+            )
             ts.end(f"Conversion to SMT at bound {bound}", console=console)
 
             ts.start(f"Solving Bound {bound}", console=console)
-            solver: SMTSolver = SMTSolver(pddl2smt)
+            solver: SMTSolver = SMTSolver(pddl2smt, solver=args.solver)
 
             plan: NumericPlan
             if args.deep:
@@ -66,13 +72,17 @@ def main():
                     f"NO SOLUTION: A solution could not be found with bound {bound}. Try to increase the bound",
                     LogPrintLevel.PLAN)
             else:
-                isValid = plan.validate(problem, avoidRaising=True)
                 console.log(plan.toValString(), LogPrintLevel.PLAN)
-                console.log(f"Bound: {bound}", LogPrintLevel.STATS)
+                isValid = plan.validate(problem, avoidRaising=True, logger=console)
                 if isValid:
                     console.log("Plan is valid", LogPrintLevel.PLAN)
                 else:
                     console.log("Plan is NOT valid", LogPrintLevel.PLAN)
+                console.log(f"Bound: {bound}", LogPrintLevel.STATS)
+
+                if args.save:
+                    with open(f"{args.save}-{bound}.smt", "w") as f:
+                        f.write(str(pddl2smt))
                 break
 
             bound += 1

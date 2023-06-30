@@ -10,7 +10,7 @@ from src.plan.Pattern import Pattern
 from src.smt.SMTSolver import SMTSolver
 
 
-class TestFarmlandLinear(TestCase):
+class TestFarmlandLinearZ3NonLinearEncoding(TestCase):
 
     def setUp(self) -> None:
         self.domain: Domain = Domain.fromFile("../../files/farmland_ln/domain.pddl")
@@ -18,7 +18,8 @@ class TestFarmlandLinear(TestCase):
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.horizon = 2
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
-        self.pddl2smt: PDDL2SMT = PDDL2SMT(self.gDomain, self.problem, self.pattern, self.horizon)
+        self.pddl2smt: PDDL2SMT = PDDL2SMT(self.gDomain, self.problem, self.pattern, self.horizon,
+                                           encoding="non-linear")
         print(self.pddl2smt.pattern)
         pass
 
@@ -26,7 +27,7 @@ class TestFarmlandLinear(TestCase):
         self.assertGreater(len(self.pddl2smt.rules), 0)
 
     def test_solve(self):
-        solver: SMTSolver = SMTSolver(self.pddl2smt)
+        solver: SMTSolver = SMTSolver(self.pddl2smt, solver="z3")
 
         plan: NumericPlan = solver.solve()
         solver.exit()
@@ -37,24 +38,10 @@ class TestFarmlandLinear(TestCase):
         print("With repetitions:")
         plan.printWithRepetitions()
 
-        self.assertTrue(plan.validate(self.problem))
-
-    def test_optimize_binary(self):
-        solver: SMTSolver = SMTSolver(self.pddl2smt)
-
-        plan: NumericPlan = solver.optimizeBinary()
-        solver.exit()
-
-        self.assertIsInstance(plan, NumericPlan)
-
-        print("Plan length: ", len(plan))
-        print("No repetitions:")
-        plan.print()
-        print("With repetitions:")
-        plan.printWithRepetitions()
+        if not plan.validate(self.problem, avoidRaising=True):
+            print("Not valid")
 
         self.assertTrue(plan.validate(self.problem))
-        self.assertTrue(plan.optimal)
 
 
 if __name__ == '__main__':

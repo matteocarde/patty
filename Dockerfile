@@ -143,7 +143,6 @@ RUN apt-get install -y time
 COPY environment.yml environment.yml
 RUN conda env update --file environment.yml
 
-RUN pysmt-install --yices --confirm-agreement
 RUN pysmt-install --check
 
 RUN conda env export

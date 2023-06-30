@@ -304,7 +304,9 @@ class Operation:
     def nameToLatex(self):
         return self.planName.replace("_", r"\_")
 
-    def hasNonSimpleLinearIncrement(self):
+    def hasNonSimpleLinearIncrement(self, encoding=""):
+        if encoding == "non-linear":
+            return False
         for e in self.effects:
             if isinstance(e, BinaryPredicate) and e.type == BinaryPredicateType.MODIFICATION and \
                     len(e.rhs.getFunctions()) > 0:

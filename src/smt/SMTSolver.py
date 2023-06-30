@@ -1,4 +1,4 @@
-from pysmt.logics import QF_LRA
+from pysmt.logics import QF_LRA, QF_NRA
 from pysmt.shortcuts import Portfolio
 from typing import Set, List
 
@@ -13,12 +13,12 @@ class SMTSolver:
     solver: Portfolio
     variables: Set[SMTVariable]
 
-    def __init__(self, pddl2smt: PDDL2SMT = None):
+    def __init__(self, pddl2smt: PDDL2SMT = None, solver="yices"):
         self.variables: Set[SMTVariable] = set()
         self.assertions: List[SMTExpression] = list()
         self.pddl2smt: PDDL2SMT = pddl2smt
 
-        self.solver: Portfolio = Portfolio(["yices"],
+        self.solver: Portfolio = Portfolio([solver],
                                            logic=QF_LRA,
                                            incremental=True,
                                            generate_models=True)

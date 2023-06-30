@@ -4,6 +4,7 @@ from src.pddl.Action import Action
 from src.pddl.PDDLException import PDDLException
 from src.pddl.Problem import Problem
 from src.pddl.State import State
+from src.utils.LogPrint import LogPrint, LogPrintLevel
 
 
 class NumericPlan:
@@ -23,18 +24,24 @@ class NumericPlan:
         for i in range(0, repetitions):
             self.__rolledPlan.append(action)
 
-    def validate(self, problem: Problem, avoidRaising=False) -> bool:
+    def validate(self, problem: Problem, avoidRaising=False, logger: LogPrint = None) -> bool:
 
         state = State.fromInitialCondition(problem.init)
         for action in self.__rolledPlan:
             if not state.satisfies(action.preconditions):
                 if avoidRaising:
+                    if logger:
+                        logger.log(
+                            f"Plan doesn't satisfies preconditions pre({action})={action.preconditions} at state {state}",
+                            LogPrintLevel.PLAN)
                     return False
                 raise PDDLException.InvalidPlan(f"Plan doesn't satisfies action {action}")
             state = state.applyAction(action)
 
         if not state.satisfies(problem.goal):
             if avoidRaising:
+                if logger:
+                    logger.log(f"Plan doesn't satisfies goal", LogPrintLevel.PLAN)
                 return False
             raise PDDLException.InvalidPlan(f"Plan doesn't satisfies goal")
 

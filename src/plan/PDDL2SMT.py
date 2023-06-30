@@ -24,28 +24,30 @@ class PDDL2SMT:
     domain: GroundedDomain
     problem: Problem
 
-    def __init__(self, domain: GroundedDomain, problem: Problem, pattern: Pattern, horizon: int):
+    def __init__(self, domain: GroundedDomain, problem: Problem, pattern: Pattern, bound: int, encoding="binary"):
         self.domain = domain
         self.problem = problem
-        self.horizon = horizon
+        self.bound = bound
+        self.encoding = encoding
 
         self.transitionVariables: [TransitionVariables] = list()
 
         self.transitions: [SMTExpression] = []
 
         self.pattern = pattern
-        self.pattern.extendNonLinearities(5)
+        if self.encoding == "binary":
+            self.pattern.extendNonLinearities(5)
 
         self.sign: Dict[Action, Dict[Atom, int]] = self.getSign(self.pattern)
 
-        for index in range(0, horizon + 1):
+        for index in range(0, bound + 1):
             var = TransitionVariables(self.domain.allAtoms, self.domain.assList, self.pattern, index)
             self.transitionVariables.append(var)
 
         self.initial: [SMTExpression] = self.getInitialExpression()
         self.goal: [SMTExpression] = self.getGoalExpression()
 
-        for index in range(1, horizon + 1):
+        for index in range(1, bound + 1):
             stepRules = self.getStepRules(index)
             self.transitions.extend(stepRules)
 
@@ -160,7 +162,7 @@ class PDDL2SMT:
 
                 stepVars.deltaVariables[action][v] = d_bv + s_bv * b_b
             # Case c) Numeric increases or decreases
-            if not prevAction.hasNonSimpleLinearIncrement():
+            if not prevAction.hasNonSimpleLinearIncrement(self.encoding):
                 modifications = [(+1, prevAction.getIncreases()), (-1, prevAction.getDecreases())]
                 for sign, modificationDict in modifications:
                     for v, funct in modificationDict.items():
@@ -176,7 +178,7 @@ class PDDL2SMT:
             for v in prevAction.getAssList():
                 stepVars.deltaVariables[action][v] = stepVars.auxVariables[prevAction][v]
 
-            if prevAction.hasNonSimpleLinearIncrement():
+            if prevAction.hasNonSimpleLinearIncrement(self.encoding):
                 for eff in prevAction.effects:
                     if not eff.isLinearIncrement():
                         continue
@@ -195,10 +197,8 @@ class PDDL2SMT:
                 continue
             a_n = stepVars.actionVariables[a]
             a_b = stepVars.boolActionVariables[a]
-            # b = BOUND if a.couldBeRepeated() and not a.hasNonSimpleLinearIncrement() else 1
-            # rules.append(a_n <= b)
             rules.append(a_n >= 0)
-            if not a.couldBeRepeated() or a.hasNonSimpleLinearIncrement():
+            if not a.couldBeRepeated() or (a.hasNonSimpleLinearIncrement(self.encoding)):
                 rules.append(a_n <= 1)
             if a.getPredicates():
                 active = (a_n > 0).AND(a_b == 1)
@@ -253,7 +253,8 @@ class PDDL2SMT:
                 # Transformed precondition
                 functSMT = SMTNumericVariable.fromPddl(function, stepVars.deltaVariables[a])
                 w0 = function.getLinearIncrement()
-                subsFunctSMT = SMTNumericVariable.fromPddl(subsFunction, dict())  # It should not contain literals
+                subsFunctSMT = SMTNumericVariable.fromPddl(subsFunction,
+                                                           stepVars.deltaVariables[a])  # It should not contain literals
                 subsFunctSTM_w0 = subsFunctSMT - w0
                 prevTimes = (stepVars.actionVariables[a] - 1)
 
@@ -284,7 +285,7 @@ class PDDL2SMT:
                 rules.append((a_n > 0).implies(v_a == k))
                 rules.append((a_n == 0).implies(v_a == d_a_v))
 
-            if not a.hasNonSimpleLinearIncrement():
+            if not a.hasNonSimpleLinearIncrement(self.encoding):
                 continue
 
             for eff in a.effects:
@@ -336,13 +337,19 @@ class PDDL2SMT:
         for rule in self.rules:
             print(rule)
 
+    def __str__(self):
+        string = ""
+        for rule in self.rules:
+            string += str(rule) + "\n"
+        return string
+
     def getPlanFromSolution(self, solution: SMTSolution) -> NumericPlan:
         plan = NumericPlan()
 
         if not solution:
             return plan
 
-        for i in range(1, self.horizon + 1):
+        for i in range(1, self.bound + 1):
             stepVar = self.transitionVariables[i]
             for a in self.pattern:
                 if a.isFake:
