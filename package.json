@@ -8,6 +8,7 @@
   },
   "scripts": {
     "experiment": "./exes/experiment.sh",
+    "build": "docker build -t patty -f Dockerfile . --progress='plain'",
     "start": "nodemon app.js"
   },
   "repository": {

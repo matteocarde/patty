@@ -1,18 +1,33 @@
-from typing import Dict
+import sys
+
+import traceback
 
 import os
-import random
 
+import boto3
+import time
+from botocore.config import Config
+from typing import Dict
+
+from classes.CloudLogger import CloudLogger
 from classes.ENHSP import ENHSP
+from classes.Envs import Envs
 from classes.MetricFF import MetricFF
 from classes.Patty import Patty
 from classes.Planner import Planner
 from classes.Result import Result
 from classes.SpringRoll import SpringRoll
 
+my_config = Config(
+    region_name='eu-central-1',
+)
+
 PLANNERS: Dict[str, Planner] = {
-    "PATTY": Patty("arpg"),
-    "PATTY-R": Patty("random"),
+    "PATTY": Patty(pattern="arpg", solver="yices", encoding="linear"),
+    "PATTY-Z3": Patty("random", solver="z3", encoding="linear"),
+    "PATTY-NL": Patty("random", solver="z3", encoding="non-linear"),
+    "PATTY-R-YICES": Patty("random", solver="yices", encoding="linear"),
+    "PATTY-R-Z3-NL": Patty("random", solver="z3", encoding="non-linear"),
     "SPRINGROLL": SpringRoll(),
     "ENHSP": ENHSP("WAStar", "aibr"),
     "METRIC-FF": MetricFF(),
@@ -20,49 +35,41 @@ PLANNERS: Dict[str, Planner] = {
 
 
 def main():
+    print("Started...")
+    s3 = boto3.client('s3', config=my_config)
+
+    envs = Envs()
+    logger = CloudLogger(envs.experiment)
+
     f = open("benchmarks/instances.csv", "r")
     csv = f.read()
     f.close()
     instances = [[v for v in line.split(",")] for line in csv.split("\n")]
 
-    for el in instances:
+    a = min(envs.startFrom + (envs.index * envs.instances), len(instances))
+    b = min(envs.startFrom + ((envs.index + 1) * envs.instances), len(instances))
 
-        if el[0] not in {"ENHSP"}:
-            continue
-
+    for el in instances[a:b]:
         planner = PLANNERS[el[0]]
         benchmark = el[1]
         domainFile = el[2]
         problemFile = el[3]
 
-        r: Result = planner.run(benchmark, domainFile, problemFile)
+        try:
+            r: Result = planner.run(benchmark, domainFile, problemFile, logger)
+            print(r)
+            print(r.stdout)
+            logger.log(r.toCSV())
 
-        print(r)
+            s3.put_object(
+                Key=f"{envs.experiment}/{r.solver}-{r.domain}-{r.problem}-{time.time_ns()}.txt",
+                Bucket="patty-benchmarks",
+                Body=bytes(r.stdout, 'utf-8')
+            )
 
-
-def createRandomList():
-    domains = ["block-grouping", "farmland", "farmland_ln", "fn-counters", "fn-counters-inv", "fn-counters-rnd",
-               "gardening", "plant-watering", "sailing", "sailing_ln"]
-
-    problems = list()
-    instances = list()
-
-    for domain in domains:
-        for problem in os.listdir(f"files/{domain}/instances"):
-            if problem[-5:] != ".pddl":
-                continue
-            domainFile = f"files/{domain}/domain.pddl"
-            problemFile = f"files/{domain}/instances/{problem}"
-            problems.append([domain, domainFile, problemFile])
-
-    for planner in PLANNERS.keys():
-        instances += [[planner] + i for i in problems]
-
-    random.shuffle(instances)
-    print(f"Listing {len(instances)} instances")
-    f = open("benchmarks/instances.csv", "w")
-    f.write("\n".join([",".join(i) for i in instances]))
-    f.close()
+        except:
+            logger.error(traceback.format_exc())
+            print(traceback.format_exc(), file=sys.stderr)
 
 
 if __name__ == '__main__':

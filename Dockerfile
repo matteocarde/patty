@@ -43,19 +43,16 @@ RUN bash Miniconda3-latest-Linux-x86_64.sh -b
 RUN rm -f Miniconda3-latest-Linux-x86_64.sh 
 RUN conda --version
 
-# Create conda env
 WORKDIR /project
-COPY environment.yml environment.yml
-RUN conda env create -f environment.yml
 
+# Create environment
+RUN conda create --name patty
 SHELL ["conda", "run", "--no-capture-output", "-n", "patty", "/bin/bash", "-c"]
 
 # Install yices
 RUN pip install pysmt
 RUN add-apt-repository ppa:sri-csl/formal-methods
 RUN apt-get install -y swig autoconf gperf libgmp-dev
-RUN pysmt-install --yices --confirm-agreement
-RUN pysmt-install --check
 
 # Install java
 RUN apt-get install -y openjdk-8-jdk ant ca-certificates-java
@@ -97,13 +94,13 @@ RUN tar zxvf Osi-0.107.9.tgz
 WORKDIR /var/Osi-0.107.9
 RUN ls -la
 RUN ./configure CC="gcc"  CFLAGS="-pthread -Wno-long-long" \
-            CXX="g++" CXXFLAGS="-pthread -Wno-long-long" \
-            LDFLAGS="-L$DOWNWARD_CPLEX_ROOT/lib/x86-64_linux/static_pic" \
-            --without-lapack --enable-static=no \
-            --prefix="$DOWNWARD_COIN_ROOT" \
-            --disable-bzlib \
-            --with-cplex-incdir=$DOWNWARD_CPLEX_ROOT/include/ilcplex \
-            --with-cplex-lib="-lcplex -lm -ldl"
+  CXX="g++" CXXFLAGS="-pthread -Wno-long-long" \
+  LDFLAGS="-L$DOWNWARD_CPLEX_ROOT/lib/x86-64_linux/static_pic" \
+  --without-lapack --enable-static=no \
+  --prefix="$DOWNWARD_COIN_ROOT" \
+  --disable-bzlib \
+  --with-cplex-incdir=$DOWNWARD_CPLEX_ROOT/include/ilcplex \
+  --with-cplex-lib="-lcplex -lm -ldl"
 
 RUN make
 RUN make install
@@ -132,8 +129,6 @@ RUN chmod +x /var/springroll/springroll
 
 # Install ENHSP
 COPY /benchmarks/planners/enhsp /var/enhsp
-WORKDIR /var/enhsp
-RUN ./compile
 ENV PATH /var/enhsp/:${PATH}
 RUN chmod +x /var/enhsp/enhsp
 
@@ -142,12 +137,22 @@ COPY /benchmarks/planners/patty /var/patty
 ENV PATH /var/patty/:${PATH}
 RUN chmod +x /var/patty/patty
 
+RUN apt-get install -y time
+
+# Create conda env
+COPY environment.yml environment.yml
+RUN conda env update --file environment.yml
+
+RUN pysmt-install --yices --confirm-agreement
+RUN pysmt-install --check
+
+RUN conda env export
+
+
 
 WORKDIR /project
 # Copying
 COPY . .
-
-RUN patty --help
 
 #Authorizations
 RUN chmod +x exes/*

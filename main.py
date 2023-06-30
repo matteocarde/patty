@@ -1,20 +1,17 @@
 import random
-
+import traceback
 from typing import List
 
-import traceback
-
-from src.pddl.Action import Action
+from src.pddl.Domain import Domain, GroundedDomain
+from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Operation import Operation
+from src.pddl.Problem import Problem
 from src.plan.PDDL2SMT import PDDL2SMT
 from src.plan.Pattern import Pattern
 from src.smt.SMTSolver import SMTSolver
 from src.utils.Arguments import Arguments
 from src.utils.LogPrint import LogPrint, LogPrintLevel
 from src.utils.TimeStat import TimeStat
-from src.pddl.Domain import Domain, GroundedDomain
-from src.pddl.NumericPlan import NumericPlan
-from src.pddl.Problem import Problem
 
 
 def main():

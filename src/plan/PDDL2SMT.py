@@ -16,7 +16,7 @@ from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTNumericVariable import SMTNumericVariable
 from src.smt.SMTSolution import SMTSolution
 
-BOUND = 100
+# BOUND = 1000
 EXPLICIT_DELTA = False
 
 
@@ -195,9 +195,11 @@ class PDDL2SMT:
                 continue
             a_n = stepVars.actionVariables[a]
             a_b = stepVars.boolActionVariables[a]
-            b = BOUND if a.couldBeRepeated() and not a.hasNonSimpleLinearIncrement() else 1
+            # b = BOUND if a.couldBeRepeated() and not a.hasNonSimpleLinearIncrement() else 1
+            # rules.append(a_n <= b)
             rules.append(a_n >= 0)
-            rules.append(a_n <= b)
+            if not a.couldBeRepeated() or a.hasNonSimpleLinearIncrement():
+                rules.append(a_n <= 1)
             if a.getPredicates():
                 active = (a_n > 0).AND(a_b == 1)
                 notActive = (a_n == 0).AND(a_b == 0)

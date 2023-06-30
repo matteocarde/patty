@@ -16,6 +16,7 @@ dependencies:
   - setuptools=67.6.0=pyhd8ed1ab_0
   - sympy=1.5.1=py37_0
   - wheel=0.40.0=pyhd8ed1ab_0
+  - boto3
   - pip:
     - z3-solver==4.12.2.0
 

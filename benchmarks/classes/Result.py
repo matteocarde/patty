@@ -1,3 +1,5 @@
+import json
+
 import re
 
 from typing import List
@@ -13,6 +15,8 @@ class Result:
     planLength: int = -1
     solved: bool = False
     timeout: bool = False
+    stdout: str = ""
+    cmd: str = ""
 
     def __init__(self, domain: str, problem: str):
         self.plan = list()
@@ -27,7 +31,7 @@ class Result:
 
     def __str__(self):
         row = [
-            (str(self.solver), 15),
+            (str(self.solver), 20),
             (str(self.domain), 20),
             (str(self.problem), 30),
             (str(self.solved), 6),
@@ -40,3 +44,18 @@ class Result:
         string = "|" + "|".join(["{:^" + str(n[1]) + "}" for n in row]) + "|"
         values = [n[0] for n in row]
         return string.format(*values)
+
+    def toJSON(self):
+        return json.dumps(self.__dict__)
+
+    def toCSV(self):
+        return ",".join([
+            str(self.solver),
+            str(self.domain),
+            str(self.problem),
+            str(self.solved),
+            str(self.timeout),
+            str(self.time),
+            str(self.bound),
+            str(self.planLength)
+        ])
