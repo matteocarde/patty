@@ -25,6 +25,7 @@ class Planner:
         r.stdout = stdout
         if not r.timeout and r.solved:
             self.parseOutput(r, stdout)
+            return r
         if not r.timeout and not r.solved:
             print(r.stdout)
             logger.error(r.toJSON())

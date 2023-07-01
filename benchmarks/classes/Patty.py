@@ -13,7 +13,7 @@ class Patty(Planner):
         self.pattern = pattern
         self.solver = solver
         self.encoding = encoding
-        self.name = NAME + "-" + pattern
+        self.name = '-'.join([NAME, self.pattern, self.solver, self.encoding])
         super().__init__()
 
     @staticmethod

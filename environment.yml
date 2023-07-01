@@ -19,5 +19,4 @@ dependencies:
   - boto3
   - pip:
     - z3-solver==4.12.2.0
-    - yicespy==2.5.1.230630
 

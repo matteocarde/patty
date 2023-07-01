@@ -41,33 +41,40 @@ def main():
     envs = Envs()
     logger = CloudLogger(envs.experiment)
 
-    f = open("benchmarks/instances.csv", "r")
+    f = open("benchmarks/instances-smt.csv", "r")
     csv = f.read()
     f.close()
     instances = [[v for v in line.split(",")] for line in csv.split("\n")]
 
-    a = min(envs.startFrom + (envs.index * envs.instances), len(instances))
-    b = min(envs.startFrom + ((envs.index + 1) * envs.instances), len(instances))
+    if envs.isInsideAWS:
+        a = min(envs.startFrom + (envs.index * envs.instances), len(instances))
+        b = min(envs.startFrom + ((envs.index + 1) * envs.instances), len(instances))
+        instances = instances[a:b]
 
-    for el in instances[a:b]:
+    for el in instances:
         planner = PLANNERS[el[0]]
         benchmark = el[1]
         domainFile = el[2]
         problemFile = el[3]
 
         try:
+            if envs.isInsideAWS:
+                print(f"Starting {planner} {benchmark} {domainFile} {problemFile}")
             r: Result = planner.run(benchmark, domainFile, problemFile, logger)
             print(r)
-            print(r.stdout)
+            if not r.solved:
+                print(r.stdout)
             logger.log(r.toCSV())
-
             s3.put_object(
                 Key=f"{envs.experiment}/{r.solver}-{r.domain}-{r.problem}-{time.time_ns()}.txt",
                 Bucket="patty-benchmarks",
                 Body=bytes(r.stdout, 'utf-8')
             )
 
-        except:
+        except Exception as error:
+            if isinstance(error, KeyboardInterrupt):
+                print("Interrupted by user...")
+                break
             logger.error(traceback.format_exc())
             print(traceback.format_exc(), file=sys.stderr)
 

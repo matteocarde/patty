@@ -1,0 +1,389 @@
+Started Grounding
+Ended Grounding
+Pattern: move_down_right agent1; move_down_left agent1; move_right agent1; move_up agent1; move_up_left agent1; move_left agent1; move_down agent1; 
+move_up_right agent1; load agent1 tap1; pour agent1 plant17; pour agent1 plant12; pour agent1 plant13; pour agent1 plant18; pour agent1 plant4; pour 
+agent1 plant15; pour agent1 plant6; pour agent1 plant1; pour agent1 plant5; pour agent1 plant11; pour agent1 plant3; pour agent1 plant19; pour agent1 
+plant2; pour agent1 plant8; pour agent1 plant14; pour agent1 plant10; pour agent1 plant7; pour agent1 plant16; pour agent1 plant9
+Started Conversion to SMT at bound 1
+Ended Conversion to SMT at bound 1
+Started Solving Bound 1
+Ended Solving Bound 1
+NO SOLUTION: A solution could not be found with bound 1. Try to increase the bound
+Started Conversion to SMT at bound 2
+Ended Conversion to SMT at bound 2
+Started Solving Bound 2
+Ended Solving Bound 2
+NO SOLUTION: A solution could not be found with bound 2. Try to increase the bound
+Started Conversion to SMT at bound 3
+Ended Conversion to SMT at bound 3
+Started Solving Bound 3
+Ended Solving Bound 3
+NO SOLUTION: A solution could not be found with bound 3. Try to increase the bound
+Started Conversion to SMT at bound 4
+Ended Conversion to SMT at bound 4
+Started Solving Bound 4
+Ended Solving Bound 4
+NO SOLUTION: A solution could not be found with bound 4. Try to increase the bound
+Started Conversion to SMT at bound 5
+Ended Conversion to SMT at bound 5
+Started Solving Bound 5
+Ended Solving Bound 5
+NO SOLUTION: A solution could not be found with bound 5. Try to increase the bound
+Started Conversion to SMT at bound 6
+Ended Conversion to SMT at bound 6
+Started Solving Bound 6
+Ended Solving Bound 6
+NO SOLUTION: A solution could not be found with bound 6. Try to increase the bound
+Started Conversion to SMT at bound 7
+Ended Conversion to SMT at bound 7
+Started Solving Bound 7
+Ended Solving Bound 7
+NO SOLUTION: A solution could not be found with bound 7. Try to increase the bound
+Started Conversion to SMT at bound 8
+Ended Conversion to SMT at bound 8
+Started Solving Bound 8
+Ended Solving Bound 8
+NO SOLUTION: A solution could not be found with bound 8. Try to increase the bound
+Started Conversion to SMT at bound 9
+Ended Conversion to SMT at bound 9
+Started Solving Bound 9
+Ended Solving Bound 9
+NO SOLUTION: A solution could not be found with bound 9. Try to increase the bound
+Started Conversion to SMT at bound 10
+Ended Conversion to SMT at bound 10
+Started Solving Bound 10
+Ended Solving Bound 10
+NO SOLUTION: A solution could not be found with bound 10. Try to increase the bound
+Started Conversion to SMT at bound 11
+Ended Conversion to SMT at bound 11
+Started Solving Bound 11
+Ended Solving Bound 11
+NO SOLUTION: A solution could not be found with bound 11. Try to increase the bound
+Started Conversion to SMT at bound 12
+Ended Conversion to SMT at bound 12
+Started Solving Bound 12
+Ended Solving Bound 12
+0: (move_right agent1)
+1: (move_right agent1)
+2: (move_right agent1)
+3: (move_right agent1)
+4: (move_right agent1)
+5: (move_up agent1)
+6: (move_up agent1)
+7: (move_up agent1)
+8: (move_up agent1)
+9: (move_up agent1)
+10: (move_up agent1)
+11: (load agent1 tap1)
+12: (load agent1 tap1)
+13: (load agent1 tap1)
+14: (load agent1 tap1)
+15: (load agent1 tap1)
+16: (load agent1 tap1)
+17: (load agent1 tap1)
+18: (load agent1 tap1)
+19: (load agent1 tap1)
+20: (load agent1 tap1)
+21: (load agent1 tap1)
+22: (load agent1 tap1)
+23: (load agent1 tap1)
+24: (load agent1 tap1)
+25: (load agent1 tap1)
+26: (load agent1 tap1)
+27: (load agent1 tap1)
+28: (load agent1 tap1)
+29: (load agent1 tap1)
+30: (load agent1 tap1)
+31: (load agent1 tap1)
+32: (load agent1 tap1)
+33: (load agent1 tap1)
+34: (load agent1 tap1)
+35: (load agent1 tap1)
+36: (load agent1 tap1)
+37: (load agent1 tap1)
+38: (load agent1 tap1)
+39: (load agent1 tap1)
+40: (load agent1 tap1)
+41: (load agent1 tap1)
+42: (load agent1 tap1)
+43: (load agent1 tap1)
+44: (load agent1 tap1)
+45: (load agent1 tap1)
+46: (load agent1 tap1)
+47: (load agent1 tap1)
+48: (load agent1 tap1)
+49: (load agent1 tap1)
+50: (load agent1 tap1)
+51: (load agent1 tap1)
+52: (load agent1 tap1)
+53: (load agent1 tap1)
+54: (load agent1 tap1)
+55: (load agent1 tap1)
+56: (load agent1 tap1)
+57: (load agent1 tap1)
+58: (load agent1 tap1)
+59: (load agent1 tap1)
+60: (load agent1 tap1)
+61: (load agent1 tap1)
+62: (load agent1 tap1)
+63: (load agent1 tap1)
+64: (load agent1 tap1)
+65: (load agent1 tap1)
+66: (load agent1 tap1)
+67: (load agent1 tap1)
+68: (load agent1 tap1)
+69: (load agent1 tap1)
+70: (load agent1 tap1)
+71: (load agent1 tap1)
+72: (load agent1 tap1)
+73: (load agent1 tap1)
+74: (load agent1 tap1)
+75: (load agent1 tap1)
+76: (load agent1 tap1)
+77: (load agent1 tap1)
+78: (load agent1 tap1)
+79: (load agent1 tap1)
+80: (load agent1 tap1)
+81: (load agent1 tap1)
+82: (load agent1 tap1)
+83: (load agent1 tap1)
+84: (load agent1 tap1)
+85: (load agent1 tap1)
+86: (load agent1 tap1)
+87: (load agent1 tap1)
+88: (load agent1 tap1)
+89: (load agent1 tap1)
+90: (load agent1 tap1)
+91: (load agent1 tap1)
+92: (load agent1 tap1)
+93: (load agent1 tap1)
+94: (load agent1 tap1)
+95: (load agent1 tap1)
+96: (load agent1 tap1)
+97: (load agent1 tap1)
+98: (load agent1 tap1)
+99: (load agent1 tap1)
+100: (load agent1 tap1)
+101: (load agent1 tap1)
+102: (load agent1 tap1)
+103: (load agent1 tap1)
+104: (load agent1 tap1)
+105: (load agent1 tap1)
+106: (load agent1 tap1)
+107: (load agent1 tap1)
+108: (load agent1 tap1)
+109: (load agent1 tap1)
+110: (load agent1 tap1)
+111: (load agent1 tap1)
+112: (move_left agent1)
+113: (move_left agent1)
+114: (move_left agent1)
+115: (move_left agent1)
+116: (move_left agent1)
+117: (move_left agent1)
+118: (move_left agent1)
+119: (move_left agent1)
+120: (move_down agent1)
+121: (move_down agent1)
+122: (move_down agent1)
+123: (move_down agent1)
+124: (move_down agent1)
+125: (move_down agent1)
+126: (move_down agent1)
+127: (move_down agent1)
+128: (pour agent1 plant17)
+129: (pour agent1 plant17)
+130: (pour agent1 plant8)
+131: (pour agent1 plant8)
+132: (pour agent1 plant8)
+133: (pour agent1 plant8)
+134: (pour agent1 plant8)
+135: (pour agent1 plant8)
+136: (pour agent1 plant8)
+137: (pour agent1 plant8)
+138: (pour agent1 plant8)
+139: (pour agent1 plant8)
+140: (move_left agent1)
+141: (move_down agent1)
+142: (pour agent1 plant1)
+143: (pour agent1 plant1)
+144: (pour agent1 plant1)
+145: (pour agent1 plant1)
+146: (pour agent1 plant1)
+147: (pour agent1 plant1)
+148: (pour agent1 plant1)
+149: (pour agent1 plant1)
+150: (move_right agent1)
+151: (move_right agent1)
+152: (move_up agent1)
+153: (move_up agent1)
+154: (pour agent1 plant13)
+155: (pour agent1 plant13)
+156: (pour agent1 plant13)
+157: (pour agent1 plant13)
+158: (pour agent1 plant13)
+159: (pour agent1 plant13)
+160: (pour agent1 plant13)
+161: (move_left agent1)
+162: (move_left agent1)
+163: (move_left agent1)
+164: (move_down agent1)
+165: (move_down agent1)
+166: (move_down agent1)
+167: (pour agent1 plant18)
+168: (pour agent1 plant4)
+169: (pour agent1 plant4)
+170: (pour agent1 plant4)
+171: (pour agent1 plant4)
+172: (pour agent1 plant15)
+173: (pour agent1 plant15)
+174: (pour agent1 plant15)
+175: (pour agent1 plant15)
+176: (pour agent1 plant15)
+177: (pour agent1 plant15)
+178: (pour agent1 plant15)
+179: (pour agent1 plant15)
+180: (move_right agent1)
+181: (move_right agent1)
+182: (move_right agent1)
+183: (move_right agent1)
+184: (move_up agent1)
+185: (move_up agent1)
+186: (move_up agent1)
+187: (move_up agent1)
+188: (pour agent1 plant10)
+189: (move_down_right agent1)
+190: (move_down_right agent1)
+191: (move_down_right agent1)
+192: (move_down_right agent1)
+193: (move_up agent1)
+194: (move_up agent1)
+195: (move_up agent1)
+196: (move_up agent1)
+197: (move_up agent1)
+198: (move_up agent1)
+199: (move_up agent1)
+200: (move_up agent1)
+201: (pour agent1 plant12)
+202: (pour agent1 plant12)
+203: (pour agent1 plant12)
+204: (pour agent1 plant12)
+205: (pour agent1 plant12)
+206: (pour agent1 plant12)
+207: (pour agent1 plant12)
+208: (pour agent1 plant12)
+209: (pour agent1 plant12)
+210: (pour agent1 plant12)
+211: (pour agent1 plant2)
+212: (pour agent1 plant2)
+213: (pour agent1 plant2)
+214: (pour agent1 plant2)
+215: (pour agent1 plant2)
+216: (pour agent1 plant2)
+217: (pour agent1 plant2)
+218: (move_right agent1)
+219: (move_right agent1)
+220: (move_right agent1)
+221: (move_right agent1)
+222: (move_up agent1)
+223: (move_up agent1)
+224: (move_up agent1)
+225: (move_up agent1)
+226: (pour agent1 plant5)
+227: (pour agent1 plant5)
+228: (pour agent1 plant5)
+229: (move_left agent1)
+230: (move_down agent1)
+231: (pour agent1 plant7)
+232: (move_left agent1)
+233: (move_left agent1)
+234: (move_left agent1)
+235: (move_left agent1)
+236: (move_left agent1)
+237: (move_down agent1)
+238: (move_down agent1)
+239: (move_down agent1)
+240: (move_down agent1)
+241: (move_down agent1)
+242: (pour agent1 plant6)
+243: (pour agent1 plant6)
+244: (pour agent1 plant6)
+245: (pour agent1 plant6)
+246: (pour agent1 plant6)
+247: (pour agent1 plant6)
+248: (pour agent1 plant11)
+249: (pour agent1 plant11)
+250: (pour agent1 plant11)
+251: (pour agent1 plant11)
+252: (pour agent1 plant11)
+253: (pour agent1 plant11)
+254: (pour agent1 plant11)
+255: (pour agent1 plant11)
+256: (pour agent1 plant11)
+257: (pour agent1 plant11)
+258: (pour agent1 plant14)
+259: (pour agent1 plant14)
+260: (move_right agent1)
+261: (move_right agent1)
+262: (move_right agent1)
+263: (move_up agent1)
+264: (move_up agent1)
+265: (move_up agent1)
+266: (pour agent1 plant3)
+267: (pour agent1 plant3)
+268: (pour agent1 plant3)
+269: (pour agent1 plant3)
+270: (pour agent1 plant9)
+271: (pour agent1 plant9)
+272: (pour agent1 plant9)
+273: (pour agent1 plant9)
+274: (pour agent1 plant9)
+275: (pour agent1 plant9)
+276: (pour agent1 plant9)
+277: (pour agent1 plant9)
+278: (pour agent1 plant9)
+279: (pour agent1 plant9)
+280: (move_right agent1)
+281: (move_right agent1)
+282: (move_right agent1)
+283: (move_right agent1)
+284: (move_up agent1)
+285: (move_up agent1)
+286: (move_up agent1)
+287: (move_up agent1)
+288: (pour agent1 plant19)
+289: (pour agent1 plant19)
+290: (pour agent1 plant19)
+291: (pour agent1 plant19)
+292: (pour agent1 plant19)
+293: (pour agent1 plant19)
+294: (pour agent1 plant16)
+
+Plan is valid
+Bound: 12
+Grounding: 61ms
+Conversion to SMT at bound 1: 18ms
+Solving Bound 1: 26ms
+Conversion to SMT at bound 2: 31ms
+Solving Bound 2: 20ms
+Conversion to SMT at bound 3: 42ms
+Solving Bound 3: 26ms
+Conversion to SMT at bound 4: 53ms
+Solving Bound 4: 32ms
+Conversion to SMT at bound 5: 91ms
+Solving Bound 5: 40ms
+Conversion to SMT at bound 6: 68ms
+Solving Bound 6: 59ms
+Conversion to SMT at bound 7: 83ms
+Solving Bound 7: 126ms
+Conversion to SMT at bound 8: 92ms
+Solving Bound 8: 266ms
+Conversion to SMT at bound 9: 124ms
+Solving Bound 9: 1058ms
+Conversion to SMT at bound 10: 115ms
+Solving Bound 10: 2405ms
+Conversion to SMT at bound 11: 125ms
+Solving Bound 11: 62404ms
+Conversion to SMT at bound 12: 167ms
+Solving Bound 12: 234ms
+Overall: 67845ms

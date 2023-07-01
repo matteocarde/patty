@@ -24,7 +24,7 @@ def main():
                 for i in range(0, n):
                     instances.append([planner, domain, domainFile, problemFile])
 
-    # random.shuffle(instances)
+    random.shuffle(instances)
     print(f"Listing {len(instances)} instances")
     f = open("benchmarks/instances-smt.csv", "w")
     f.write("\n".join([",".join(i) for i in instances]))

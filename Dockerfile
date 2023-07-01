@@ -139,15 +139,15 @@ RUN chmod +x /var/patty/patty
 
 RUN apt-get install -y time
 
+RUN conda env export
+
 # Create conda env
 COPY environment.yml environment.yml
 RUN conda env update --file environment.yml
 
 RUN pysmt-install --check
-
-RUN conda env export
-
-
+RUN pysmt-install --yices --confirm-agreement
+RUN pysmt-install --check
 
 WORKDIR /project
 # Copying
