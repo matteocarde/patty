@@ -52,7 +52,8 @@ def main():
                 problem=problem,
                 pattern=pattern,
                 bound=bound,
-                encoding=args.encoding
+                encoding=args.encoding,
+                binaryActions=args.binaryActions
             )
             ts.end(f"Conversion to SMT at bound {bound}", console=console)
 

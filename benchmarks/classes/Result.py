@@ -1,3 +1,7 @@
+from __future__ import annotations
+
+import statistics
+
 import json
 
 import re
@@ -23,6 +27,20 @@ class Result:
         self.domain = domain
         self.problem = problem.split("/")[-1]
         pass
+
+    @classmethod
+    def fromCSVLine(cls, csvLine: str):
+        r = cls("x", "x")
+        r.solver = csvLine[0]
+        r.domain = csvLine[1]
+        r.problem = csvLine[2]
+        r.solved = csvLine[3] == "True"
+        r.timeout = csvLine[4] == "True"
+        r.time = float(csvLine[5])
+        r.bound = int(csvLine[6])
+        r.planLength = float(csvLine[7])
+
+        return r
 
     @classmethod
     def parseTime(cls, stdout):
@@ -59,3 +77,16 @@ class Result:
             str(self.bound),
             str(self.planLength)
         ])
+
+    @classmethod
+    def average(cls, list: [Result]):
+        r = cls("x", "x")
+        r.solver = list[0].solver
+        r.domain = list[0].domain
+        r.problem = list[0].problem
+        r.solved = sum([1 if e.solved else 0 for e in list])
+        r.timeout = sum([1 if e.timeout else 0 for e in list])
+        r.time = statistics.mean([e.time for e in list])
+        r.bound = statistics.mean([e.bound for e in list])
+        r.planLength = statistics.mean([e.planLength for e in list])
+        return r

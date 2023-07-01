@@ -24,7 +24,8 @@ class PDDL2SMT:
     domain: GroundedDomain
     problem: Problem
 
-    def __init__(self, domain: GroundedDomain, problem: Problem, pattern: Pattern, bound: int, encoding="binary"):
+    def __init__(self, domain: GroundedDomain, problem: Problem, pattern: Pattern, bound: int, encoding="binary",
+                 binaryActions=10):
         self.domain = domain
         self.problem = problem
         self.bound = bound
@@ -36,7 +37,7 @@ class PDDL2SMT:
 
         self.pattern = pattern
         if self.encoding == "binary":
-            self.pattern.extendNonLinearities(5)
+            self.pattern.extendNonLinearities(binaryActions)
 
         self.sign: Dict[Action, Dict[Atom, int]] = self.getSign(self.pattern)
 

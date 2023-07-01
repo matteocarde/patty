@@ -24,7 +24,7 @@ my_config = Config(
 
 PLANNERS: Dict[str, Planner] = {
     "PATTY": Patty(pattern="arpg", solver="yices", encoding="binary"),
-    "PATTY-Z3": Patty("random", solver="z3", encoding="binary"),
+    "PATTY-Z3": Patty("arpg", solver="z3", encoding="binary"),
     "PATTY-NL": Patty("random", solver="z3", encoding="non-linear"),
     "PATTY-R-YICES": Patty("random", solver="yices", encoding="binary"),
     "PATTY-R-Z3-NL": Patty("random", solver="z3", encoding="non-linear"),
