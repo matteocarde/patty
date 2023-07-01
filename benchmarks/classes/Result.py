@@ -84,9 +84,10 @@ class Result:
         r.solver = list[0].solver
         r.domain = list[0].domain
         r.problem = list[0].problem
-        r.solved = sum([1 if e.solved else 0 for e in list])
-        r.timeout = sum([1 if e.timeout else 0 for e in list])
-        r.time = statistics.mean([e.time for e in list])
-        r.bound = statistics.mean([e.bound for e in list])
-        r.planLength = statistics.mean([e.planLength for e in list])
+        r.solved = statistics.mean([1 if e.solved else 0 for e in list])
+        r.timeout = statistics.mean([1 if e.timeout else 0 for e in list])
+        if r.solved > 0:
+            r.time = statistics.mean([e.time for e in list if e.solved])
+            r.bound = statistics.mean([e.bound for e in list if e.solved])
+            r.planLength = statistics.mean([e.planLength for e in list if e.solved])
         return r

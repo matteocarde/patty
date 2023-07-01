@@ -11,3 +11,5 @@ experiments/
 
 **/smt_encoding_*
 *.plan
+
+benchmarks/planners/cplex/installer.bin
