@@ -8,8 +8,7 @@
 ;; Adapted to do away with the grid (Enrico Scala & Miquel Ramirez, August 2015)
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(define (domain mt-plant-watering)
+(define (domain mt-plant-watering-constrained)
     (:types
         thing location - object
         agent plant tap - thing

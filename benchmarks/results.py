@@ -14,6 +14,22 @@ SOLVERS = {
     'PATTY-random-yices-binary': "P_{r}^{y,b}",
     'PATTY-random-z3-binary': "P_{r}^{z3,b}",
     'PATTY-random-z3-non-linear': "P_r^{z3,nl}",
+    'METRIC-FF': "FF",
+    'ENHSP-gbfs-hadd': r"E_{hadd}^{\text{gbfs}}",
+    'ENHSP-gbfs-hradd': r"E_{hradd}^{\text{gbfs}}"
+}
+
+DOMAINS = {
+    'block-grouping': r"\textsc{BlockGrouping} (S)",
+    'farmland': r"\textsc{Farmland} (S)",
+    'farmland_ln': r"\textsc{Farmland} (L)",
+    'fn-counters': r"\textsc{Counters} (S)",
+    'fn-counters-inv': r"\textsc{CountersInv} (S)",
+    'fn-counters-rnd': r"\textsc{CountersRnd} (S)",
+    'gardening': r"\textsc{Gardening} (S)",
+    'plant-watering': r"\textsc{PlantWatering} (S)",
+    'sailing': r"\textsc{Sailing} (S)",
+    'sailing_ln': r"\textsc{Sailing} (L)"
 }
 
 TOTALS = {
@@ -31,12 +47,13 @@ TOTALS = {
 
 
 def main():
-    file = "benchmarks/results/2023-07-01-SMT-v3.csv"
+    files = ["benchmarks/results/2023-07-01-SMT-v3.csv", "benchmarks/results/2023-07-02-SEARCH-v2.csv"]
     results: [Result] = []
-    with open(file, "r") as f:
-        reader = csv.reader(f, delimiter=",")
-        for i, line in enumerate(reader):
-            results.append(Result.fromCSVLine(line[0].split(",")))
+    for file in files:
+        with open(file, "r") as f:
+            reader = csv.reader(f, delimiter=",")
+            for i, line in enumerate(reader):
+                results.append(Result.fromCSVLine(line[0].split(",")))
 
     solvers = set()
     sorted(solvers)
@@ -78,46 +95,81 @@ def main():
         for solver in solvers:
             pResult = domainDict[solver]
             t[domain]["coverage"][solver] = round(sum([r.solved for r in pResult]) / TOTALS[domain] * 100, 2)
-            t[domain]["bound"][solver] = round(statistics.mean([r.bound for r in pResult if r.solved]), 2)
-            t[domain]["time"][solver] = round(statistics.mean([r.time for r in pResult if r.solved]) / 1000, 2)
-            t[domain]["length"][solver] = round(statistics.mean([r.planLength for r in pResult if r.solved]), 2)
-            stats = t[domain].keys()
+            t[domain]["bound"][solver] = round(statistics.mean([r.bound for r in pResult if r.solved]), 2) if \
+                t[domain]["coverage"][solver] > 0 else "-"
+            t[domain]["time"][solver] = round(statistics.mean([r.time for r in pResult if r.solved]) / 1000, 2) if \
+                t[domain]["coverage"][solver] > 0 else "-"
+            t[domain]["length"][solver] = round(statistics.mean([r.planLength for r in pResult if r.solved]), 2) if \
+                t[domain]["coverage"][solver] > 0 else "-"
 
-    STATS_TR = {
-        "coverage": "Coverage (\%)",
-        "bound": "Bound",
-        "time": "Time (s)",
-        "length": "Plan Length"
-    }
+    tables = [{
+        "name": "tab:exp-smt",
+        "columns": {
+            "coverage": "Coverage (\%)",
+            "bound": "Bound",
+            "time": "Time (s)",
+            "length": "Plan Length"
+        },
+        "solvers": ['PATTY-arpg-yices-binary',
+                    'PATTY-arpg-z3-binary',
+                    'PATTY-arpg-z3-non-linear',
+                    'PATTY-random-yices-binary',
+                    'PATTY-random-z3-non-linear',
+                    'SpringRoll'],
+        "caption": r"Comparative analysis between the two symbolic-based solvers \textsc{Patty} (P) and \textsc{"
+                   r"SpringRoll} (SR). $P_{\prec}^{s,e}$ represents the \textsc{Patty} solver with the pattern $\prec "
+                   r"\in \{r,arpg\}$ for random and ARPG, the solver $s \in \{y, z3\}$ for yices and z3, the encoding "
+                   r"$e \in \{b, nl\}$ for the binary and non-linear version of the encoding. The labels S and L "
+                   r"specifies if the domain presents simple or linear effects, respectively."
+    }, {
+        "name": "tab:exp-search",
+        "columns": {
+            "coverage": "Coverage (\%)",
+            "time": "Time (s)",
+            "length": "Plan Length"
+        },
+        "solvers": ['PATTY-arpg-yices-binary',
+                    'PATTY-arpg-z3-non-linear',
+                    'ENHSP-gbfs-hadd',
+                    'ENHSP-gbfs-hradd',
+                    'METRIC-FF'],
+        "caption": r"Comparative analysis between \textsc{Patty} and two search-based solvers \textsc{ENHSP} (E) and "
+                   r"\textsc{MetricFF} (FF). The solver \textsc{ENHSP} has been launched with the GBFS search "
+                   r"strategy and the two heuristics $hadd$ and $hradd$."
+    }]
 
-    print(r"""
-        \begin{table}[]
-        \centering
-        \resizebox{\columnwidth}{!}{""")
-    columns = f"|l|{len(stats) * ('|' + 'c' * len(solvers) + '|')}" + "|"
-    print(r"\begin{tabular}{" + columns + "}")
-    print(r"\hline")
-    print(fr" & " + "&".join(
-        [r"\multicolumn{" + str(len(solvers)) + "}{c||}{" + STATS_TR[s] + "}" for s in stats]) + r"\\")
-    print(fr"Domain & " + "&".join([f"${SOLVERS[p]}$" for s in stats for p in solvers]) + r"\\")
-    print(fr"\hline")
+    for table in tables:
+        stats = table["columns"].keys()
+        solvers = table["solvers"]
 
-    rows = []
-    for domain in domains:
-        row = [domain.replace(r"_", r"\_")]
-        for stat in stats:
-            for solver in solvers:
-                row.append(str(t[domain][stat][solver]))
-        rows.append("&".join(row))
-    print("\\\\\n".join(rows))
-    print(fr"\\\hline")
+        print(r"""
+            \begin{table}[]
+            \centering
+            \resizebox{\columnwidth}{!}{""")
+        columns = f"|l|{len(stats) * ('|' + 'c' * len(solvers) + '|')}" + "|"
+        print(r"\begin{tabular}{" + columns + "}")
+        print(r"\hline")
+        print(fr" & " + "&".join(
+            [r"\multicolumn{" + str(len(solvers)) + "}{c||}{" + table["columns"][s] + "}" for s in stats]) + r"\\")
+        print(fr"Domain & " + "&".join([f"${SOLVERS[p]}$" for s in stats for p in solvers]) + r"\\")
+        print(fr"\hline")
 
-    print(r"""
-    \end{tabular}}
-    \caption{Comparative analysis against the two symbolic-based solvers \textsc{Patty} (P) and \textsc{SpringRoll} (SR). $P_{\prec}^{s,e}$ represents the \textsc{Patty} solver with the pattern $\prec \in \{r,arpg\}$ for random and ARPG, the solver $s \in \{y, z3\}$ for yices and z3, the encoding $e \in \{b, nl\}$ for the binary and non-linear version of the encoding.}
-    \label{tab:my-table}
-    \end{table}
-    """)
+        rows = []
+        for domain in domains:
+            row = [DOMAINS[domain]]
+            for stat in stats:
+                for solver in solvers:
+                    row.append(str(t[domain][stat][solver]))
+            rows.append("&".join(row))
+        print("\\\\\n".join(rows))
+        print(fr"\\\hline")
+
+        print(r"""
+        \end{tabular}}
+        \caption{""" + table["caption"] + """}
+        \label{tab:""" + table["name"] + """}
+        \end{table}
+        """)
 
     pass
 

@@ -2,7 +2,7 @@ import random
 import os
 from natsort import natsort
 
-PLANNERS = ["PATTY", "PATTY-R", "SPRINGROLL", "ENHSP", "METRIC-FF"]
+PLANNERS = ["ENHSP-HADD", "ENHSP-HRADD", "METRIC-FF"]
 
 
 def main():

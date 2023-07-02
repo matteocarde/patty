@@ -13,3 +13,5 @@ experiments/
 *.plan
 
 benchmarks/planners/cplex/installer.bin
+
+..bfg-report/

@@ -4,6 +4,7 @@
 docker run \
   -v $(pwd)/exes:/project/exes \
   -v $(pwd)/benchmarks:/project/benchmarks \
+  -v $(pwd)/files:/project/files \
   -v $(pwd)/src:/project/src \
   -v $(pwd)/main.py:/project/main.py \
   -v $HOME/.aws/credentials:/root/.aws/credentials \

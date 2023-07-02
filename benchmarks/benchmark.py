@@ -29,7 +29,8 @@ PLANNERS: Dict[str, Planner] = {
     "PATTY-R-YICES": Patty("random", solver="yices", encoding="binary"),
     "PATTY-R-Z3-NL": Patty("random", solver="z3", encoding="non-linear"),
     "SPRINGROLL": SpringRoll(),
-    "ENHSP": ENHSP("WAStar", "aibr"),
+    "ENHSP-HADD": ENHSP("gbfs", "hadd"),
+    "ENHSP-HRADD": ENHSP("gbfs", "hradd"),
     "METRIC-FF": MetricFF(),
 }
 
@@ -41,7 +42,7 @@ def main():
     envs = Envs()
     logger = CloudLogger(envs.experiment)
 
-    f = open("benchmarks/instances-smt.csv", "r")
+    f = open(envs.file, "r")
     csv = f.read()
     f.close()
     instances = [[v for v in line.split(",")] for line in csv.split("\n")]
