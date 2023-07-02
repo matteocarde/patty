@@ -1,22 +1,19 @@
-import statistics
-
 import csv
-from pip._internal.utils.misc import tabulate
-from prettytable import PrettyTable
+import statistics
 
 from classes.Result import Result
 
 SOLVERS = {
     'SpringRoll': "SR",
-    'PATTY-arpg-yices-binary': "P_{arpg}^{y,b}",
-    'PATTY-arpg-z3-binary': "P_{arpg}^{z3,b}",
+    'PATTY-arpg-yices-binary': "P_{arpg}^{y,la}",
+    'PATTY-arpg-z3-binary': "P_{arpg}^{z3,la}",
     'PATTY-arpg-z3-non-linear': "P_{arpg}^{z3,nl}",
-    'PATTY-random-yices-binary': "P_{r}^{y,b}",
-    'PATTY-random-z3-binary': "P_{r}^{z3,b}",
+    'PATTY-random-yices-binary': "P_{r}^{y,la}",
+    'PATTY-random-z3-binary': "P_{r}^{z3,la}",
     'PATTY-random-z3-non-linear': "P_r^{z3,nl}",
     'METRIC-FF': "FF",
-    'ENHSP-gbfs-hadd': r"E_{hadd}^{\text{gbfs}}",
-    'ENHSP-gbfs-hradd': r"E_{hradd}^{\text{gbfs}}"
+    'ENHSP-gbfs-hadd': r"E_{hadd}^{\mathit{gbfs}}",
+    'ENHSP-gbfs-hradd': r"E_{hradd}^{\mathit{gbfs}}"
 }
 
 DOMAINS = {
@@ -47,7 +44,8 @@ TOTALS = {
 
 
 def main():
-    files = ["benchmarks/results/2023-07-01-SMT-v3.csv", "benchmarks/results/2023-07-02-SEARCH-v2.csv"]
+    files = ["benchmarks/results/2023-07-01-SMT-v3.csv", "benchmarks/results/2023-07-02-SEARCH-v2.csv",
+             "benchmarks/results/2023-07-02-SEARCH-v3.csv"]
     results: [Result] = []
     for file in files:
         with open(file, "r") as f:
@@ -81,6 +79,10 @@ def main():
                 problems.append(Result.average(d[domain][solver][problem]))
             d[domain][solver] = problems
 
+
+    def r(i, n):
+        return '{:.{n}f}'.format(i, n=n)
+
     t = dict()
     stats = set()
     for (domain, domainDict) in d.items():
@@ -94,13 +96,13 @@ def main():
         pResult: [Result]
         for solver in solvers:
             pResult = domainDict[solver]
-            t[domain]["coverage"][solver] = round(sum([r.solved for r in pResult]) / TOTALS[domain] * 100, 2)
-            t[domain]["bound"][solver] = round(statistics.mean([r.bound for r in pResult if r.solved]), 2) if \
-                t[domain]["coverage"][solver] > 0 else "-"
-            t[domain]["time"][solver] = round(statistics.mean([r.time for r in pResult if r.solved]) / 1000, 2) if \
-                t[domain]["coverage"][solver] > 0 else "-"
-            t[domain]["length"][solver] = round(statistics.mean([r.planLength for r in pResult if r.solved]), 2) if \
-                t[domain]["coverage"][solver] > 0 else "-"
+            t[domain]["coverage"][solver] = r(sum([r.solved for r in pResult]) / TOTALS[domain] * 100, 1)
+            t[domain]["bound"][solver] = r(statistics.mean([r.bound for r in pResult if r.solved]), 2) if \
+                t[domain]["coverage"][solver] != "0.0" else "-"
+            t[domain]["time"][solver] = r(statistics.mean([r.time for r in pResult if r.solved]) / 1000, 2) if \
+                t[domain]["coverage"][solver] != "0.0" else "-"
+            t[domain]["length"][solver] = r(statistics.mean([r.planLength for r in pResult if r.solved]), 0) if \
+                t[domain]["coverage"][solver] != "0.0" else "-"
 
     tables = [{
         "name": "tab:exp-smt",
@@ -108,7 +110,7 @@ def main():
             "coverage": "Coverage (\%)",
             "bound": "Bound",
             "time": "Time (s)",
-            "length": "Plan Length"
+            # "length": "Plan Length"
         },
         "solvers": ['PATTY-arpg-yices-binary',
                     'PATTY-arpg-z3-binary',
@@ -119,14 +121,14 @@ def main():
         "caption": r"Comparative analysis between the two symbolic-based solvers \textsc{Patty} (P) and \textsc{"
                    r"SpringRoll} (SR). $P_{\prec}^{s,e}$ represents the \textsc{Patty} solver with the pattern $\prec "
                    r"\in \{r,arpg\}$ for random and ARPG, the solver $s \in \{y, z3\}$ for yices and z3, the encoding "
-                   r"$e \in \{b, nl\}$ for the binary and non-linear version of the encoding. The labels S and L "
-                   r"specifies if the domain presents simple or linear effects, respectively."
+                   r"$e \in \{la, nl\}$ for the linear-arithmetic and non-linear version of the encoding. The labels "
+                   r"S and L specifies if the domain presents simple or linear effects, respectively."
     }, {
         "name": "tab:exp-search",
         "columns": {
             "coverage": "Coverage (\%)",
             "time": "Time (s)",
-            "length": "Plan Length"
+            # "length": "Plan Length"
         },
         "solvers": ['PATTY-arpg-yices-binary',
                     'PATTY-arpg-z3-non-linear',
@@ -143,9 +145,9 @@ def main():
         solvers = table["solvers"]
 
         print(r"""
-            \begin{table}[]
+            \begin{table*}[]
             \centering
-            \resizebox{\columnwidth}{!}{""")
+            \resizebox{\textwidth}{!}{""")
         columns = f"|l|{len(stats) * ('|' + 'c' * len(solvers) + '|')}" + "|"
         print(r"\begin{tabular}{" + columns + "}")
         print(r"\hline")
@@ -159,7 +161,7 @@ def main():
             row = [DOMAINS[domain]]
             for stat in stats:
                 for solver in solvers:
-                    row.append(str(t[domain][stat][solver]))
+                    row.append(t[domain][stat][solver])
             rows.append("&".join(row))
         print("\\\\\n".join(rows))
         print(fr"\\\hline")
@@ -168,7 +170,7 @@ def main():
         \end{tabular}}
         \caption{""" + table["caption"] + """}
         \label{tab:""" + table["name"] + """}
-        \end{table}
+        \end{table*}
         """)
 
     pass

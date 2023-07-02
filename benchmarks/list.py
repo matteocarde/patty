@@ -2,7 +2,8 @@ import random
 import os
 from natsort import natsort
 
-PLANNERS = ["ENHSP-HADD", "ENHSP-HRADD", "METRIC-FF"]
+#PLANNERS = ["ENHSP-HADD", "ENHSP-HRADD", "METRIC-FF"]
+PLANNERS = ["METRIC-FF"]
 
 
 def main():
@@ -24,7 +25,7 @@ def main():
 
     random.shuffle(instances)
     print(f"Listing {len(instances)} instances")
-    f = open("benchmarks/instances.csv", "w")
+    f = open("benchmarks/instances-ff.csv", "w")
     f.write("\n".join([",".join(i) for i in instances]))
     f.close()
 
