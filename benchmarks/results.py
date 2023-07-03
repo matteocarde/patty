@@ -79,9 +79,8 @@ def main():
                 problems.append(Result.average(d[domain][solver][problem]))
             d[domain][solver] = problems
 
-
-    def r(i, n):
-        return '{:.{n}f}'.format(i, n=n)
+    def r(fValue, n):
+        return '{:.{n}f}'.format(fValue, n=n)
 
     t = dict()
     stats = set()

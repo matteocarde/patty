@@ -7,6 +7,7 @@ from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
 
 from src.plan.PDDL2SMT import PDDL2SMT
+from src.plan.Pattern import Pattern
 from src.smt.SMTSolver import SMTSolver
 
 
@@ -17,7 +18,8 @@ class TestElevator(TestCase):
         self.problem: Problem = Problem.fromFile("../../files/elevator-num/instances/problem-5-3-3.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.horizon = 2
-        self.pddl2smt: PDDL2SMT = PDDL2SMT(self.gDomain, self.problem, self.horizon)
+        self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
+        self.pddl2smt: PDDL2SMT = PDDL2SMT(self.gDomain, self.problem, self.pattern, self.horizon)
         print(self.pddl2smt.pattern)
         pass
 

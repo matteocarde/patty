@@ -81,10 +81,13 @@ def main():
                     console.log("Plan is NOT valid", LogPrintLevel.PLAN)
                 console.log(f"Bound: {bound}", LogPrintLevel.STATS)
 
-                if args.save:
-                    with open(f"{args.save}-{bound}.smt", "w") as f:
-                        f.write(str(pddl2smt))
                 break
+
+            if args.save:
+                filename = f"{args.save}-{bound}.smt"
+                console.log(f"Saving to {filename}", LogPrintLevel.STATS)
+                with open(f"{args.save}-{bound}.smt", "w") as f:
+                    f.write(str(pddl2smt))
 
             bound += 1
 

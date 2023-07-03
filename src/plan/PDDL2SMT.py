@@ -1,3 +1,4 @@
+import copy
 from typing import List, Dict, Set
 
 from src.pddl.Action import Action
@@ -224,52 +225,43 @@ class PDDL2SMT:
             if a.isFake:
                 continue
             # a_n > 0
-            lhs = stepVars.actionVariables[a] > 0
-            preconditions = None
+            lhs0 = stepVars.actionVariables[a] > 0
+            lhs1 = stepVars.actionVariables[a] > 1
+            preconditions0 = None
+            preconditions1 = None
             for pre in a.preconditions:
                 if isinstance(pre, Literal):
                     v = pre.getAtom()
                     d_av = stepVars.deltaVariables[a][v]
                     rhs = d_av > 0 if pre.sign == "+" else d_av < 0
-                    preconditions = preconditions.AND(rhs) if preconditions else rhs
+                    preconditions0 = preconditions0.AND(rhs) if preconditions0 else rhs
                     continue
 
-                function: BinaryPredicate = pre.lhs - pre.rhs
+                precondition0 = SMTNumericVariable.fromPddl(pre, stepVars.deltaVariables[a])
+                preconditions0 = preconditions0.AND(precondition0) if preconditions0 else precondition0
 
-                subs: Dict[Atom, float] = dict()
+                subs: Dict[Atom, SMTExpression] = copy.copy(stepVars.deltaVariables[a])
                 # Searching for decrease effects
                 for eff in a.effects:
                     if not isinstance(eff, BinaryPredicate):
-                        continue
-                    if not isinstance(eff.rhs, Constant):
                         continue
                     if eff.operator == "assign":
                         continue
 
                     sign = +1 if eff.operator == "increase" else -1
-                    subs[eff.lhs.getAtom()] = sign * eff.rhs.value
-
-                subsFunction = function.substitute(subs, default=0)
+                    v = eff.lhs.getAtom()
+                    subs[v] = stepVars.deltaVariables[a][v] + sign * SMTNumericVariable.fromPddl(eff.rhs, stepVars.deltaVariables[a]) \
+                                              * (stepVars.actionVariables[a] - 1)
 
                 # Transformed precondition
-                functSMT = SMTNumericVariable.fromPddl(function, stepVars.deltaVariables[a])
-                w0 = function.getLinearIncrement()
-                subsFunctSMT = SMTNumericVariable.fromPddl(subsFunction,
-                                                           stepVars.deltaVariables[a])  # It should not contain literals
-                subsFunctSTM_w0 = subsFunctSMT - w0
-                prevTimes = (stepVars.actionVariables[a] - 1)
+                precondition1 = SMTNumericVariable.fromPddl(pre, subs)
+                preconditions1 = preconditions1.AND(precondition0) if preconditions1 else precondition1
 
-                # Controlliamo se f(k_1, ..., k_n) contribuisce ad avvicinarsi al vincolo, se non è cosi la togliamo
-                aDecrease = 0 if Utilities.compare(pre.operator, subsFunctSTM_w0, 0) else subsFunctSTM_w0 * prevTimes
+            if preconditions0:
+                rules.append(lhs0.implies(preconditions0))
 
-                # f(x_1, ..., x_p) + [f(k_1, ..., k_p) - w_0]*(a_n - 1) {op} 0
-                condition = functSMT + aDecrease
-                rhs = SMTNumericVariable.opByString(pre.operator, condition, 0)
-
-                preconditions = preconditions.AND(rhs) if preconditions else rhs
-
-            if preconditions:
-                rules.append(lhs.implies(preconditions))
+            if preconditions1:
+                rules.append(lhs1.implies(preconditions1))
         return rules
 
     def getEffStepRules(self, stepVars: TransitionVariables) -> List[SMTExpression]:

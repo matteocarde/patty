@@ -6,6 +6,7 @@ from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
 
 from src.plan.PDDL2SMT import PDDL2SMT
+from src.plan.Pattern import Pattern
 from src.smt.SMTSolver import SMTSolver
 
 
@@ -16,7 +17,8 @@ class TestPaperBool(TestCase):
         self.problem: Problem = Problem.fromFile("../../files/paper-example/problem-bool.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.horizon = 1
-        self.pddl2smt: PDDL2SMT = PDDL2SMT(self.gDomain, self.problem, self.horizon)
+        self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
+        self.pddl2smt: PDDL2SMT = PDDL2SMT(self.gDomain, self.problem, self.pattern, self.horizon)
         pass
 
     def test_transform(self):
