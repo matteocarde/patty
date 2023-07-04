@@ -1,102 +1,103 @@
 
 (define (domain line-exchange)
 
+  (:types
+    robot - object
+  )
+
   (:predicates
-    (p)
+    (pd ?r1 - robot ?r2 - robot)
+    (ps ?r - robot)
+    (next ?r1 ?r2 - robot)
   )
 
   (:functions
-    (xR)
-    (xL)
-    (qL)
-    (qR)
-    (q)
+    (D)
+    (i ?r - robot)
+    (x ?r - robot)
+    (q ?r - robot)
+    (e ?r1 - robot ?r2 - robot)
   )
 
-  (:action lft_R
-    :parameters ()
+  (:action lft
+    :parameters (?r - robot)
     :precondition (and
-      (> (xR) 0)
+      (not (ps ?r))
+      (> (x ?r) (* (D) (i ?r)))
     )
     :effect (and
-      (decrease (xR) 1)
+      (decrease (x ?r) 1)
     )
   )
 
-  (:action rgt_R
-    :parameters ()
+  (:action rgt
+    :parameters (?r - robot)
     :precondition (and
-      (not (p))
+      (not (ps ?r))
+      (< (x ?r) (* (D) (+ (i ?r) 1)))
     )
     :effect (and
-      (increase (xR) 1)
+      (increase (x ?r) 1)
     )
   )
 
-  (:action lft_L
-    :parameters ()
+  (:action conn
+    :parameters (?r1 ?r2 - robot)
     :precondition (and
-      (not (p))
+      (next ?r1 ?r2)
+      (= (x ?r1) (x ?r2))
     )
     :effect (and
-      (decrease (xL) 1)
+      (ps ?r1)
+      (ps ?r2)
+      (pd ?r1 ?r2)
     )
   )
 
-  (:action rgt_L
-    :parameters ()
+  (:action disc
+    :parameters (?r1 ?r2 - robot)
     :precondition (and
-      (< (xL) 0)
+      (pd ?r1 ?r2)
+      (next ?r1 ?r2)
     )
     :effect (and
-      (increase (xL) 1)
-    )
-  )
-
-  (:action pair
-    :parameters ()
-    :precondition (and
-      (= (xL) (xR))
-    )
-    :effect (and
-      (p)
-    )
-  )
-
-  (:action unpair
-    :parameters ()
-    :precondition ()
-    :effect (and
-      (not (p))
+      (not (ps ?r1))
+      (not (ps ?r2))
+      (not (pd ?r1 ?r2))
     )
   )
 
   (:action exch
-    :parameters ()
+    :parameters (?r1 ?r2 - robot)
     :precondition (and
-      (p)
-      (>= (qL) (q))
-      (>= (qR) (* -1 (q)))
+      (next ?r1 ?r2)
+      (pd ?r1 ?r2)
+      (>= (q ?r1) (e ?r1 ?r2))
+      (>= (q ?r2) (* -1 (e ?r1 ?r2)))
     )
     :effect (and
-      (decrease (qL) (q))
-      (increase (qR) (q))
+      (decrease (q ?r1) (e ?r1 ?r2))
+      (increase (q ?r2) (e ?r1 ?r2))
     )
   )
 
   (:action lre
-    :parameters ()
-    :precondition ()
+    :parameters (?r1 ?r2 - robot)
+    :precondition (and
+      (next ?r1 ?r2)
+    )
     :effect (and
-      (assign (q) 1)
+      (assign (e ?r1 ?r2) 1)
     )
   )
 
   (:action rle
-    :parameters ()
-    :precondition ()
+    :parameters (?r1 ?r2 - robot)
+    :precondition (and
+      (next ?r1 ?r2)
+    )
     :effect (and
-      (assign (q) -1)
+      (assign (e ?r1 ?r2) -1)
     )
   )
 

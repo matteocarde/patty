@@ -62,7 +62,7 @@ class Domain:
 
         rpg = RPG(gDomain, problem)
         orderedActions = rpg.getActionsOrder()
-        arpg = ARPG(orderedActions, problem)
+        arpg = ARPG(orderedActions, problem, gDomain)
 
         gDomain.actions = orderedActions
         constants: Dict[Atom, float] = arpg.getConstantAtoms()
@@ -76,7 +76,7 @@ class Domain:
         gDomain = gDomain.substitute(constants)
         orderedActions = [a.substitute(constants) for a in orderedActions]
 
-        gDomain.arpg = ARPG(orderedActions, problem)
+        gDomain.arpg = ARPG(orderedActions, problem, gDomain)
         return gDomain
 
     @classmethod

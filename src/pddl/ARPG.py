@@ -2,6 +2,7 @@ from typing import Set, List, Dict
 
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
+from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.PDDLException import PDDLException
 from src.pddl.Problem import Problem
 from src.pddl.RelaxedIntervalState import RelaxedIntervalState
@@ -12,7 +13,7 @@ class ARPG:
     supporterLevels: List[Set[Supporter]]
     stateLevels: List[RelaxedIntervalState]
 
-    def __init__(self, actions: List[Action], problem: Problem):
+    def __init__(self, actions: List[Action], problem: Problem, domain: GroundedDomain):
         self.supporterLevels = list()
         self.stateLevels = list()
         self.actions: List[Action] = actions
@@ -23,7 +24,7 @@ class ARPG:
         for a in actions:
             supporters |= a.getSupporters()
 
-        state: RelaxedIntervalState = RelaxedIntervalState.fromInitialCondition(problem.init)
+        state: RelaxedIntervalState = RelaxedIntervalState.fromInitialCondition(problem.init, domain.predicates)
         activeSupporters = {s for s in supporters if s.isSatisfiedBy(state)}
 
         self.supporterLevels.append(activeSupporters)
@@ -54,7 +55,7 @@ class ARPG:
         return order
 
     def getActionsOrder(self) -> List[Action]:
-        order: List[Action] = self.__getPurelyBoolean()
+        order: List[Action] = list()
         usedActions: Set[Action] = set(order)
         for supporters in self.supporterLevels:
             partialOrder = set()

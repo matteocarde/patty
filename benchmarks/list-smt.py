@@ -3,12 +3,14 @@ import os
 from natsort import natsort
 
 # PLANNERS = ["PATTY", "PATTY-R-YICES", "PATTY-R-Z3-NL", "PATTY-NL", "PATTY-Z3", "SPRINGROLL"]
-PLANNERS = ["PATTY", "PATTY-R-YICES", "PATTY-R-Z3-NL", "PATTY-NL", "PATTY-Z3"]
+PLANNERS = ["PATTY-NL", "PATTY-R-Z3-NL", "SPRINGROLL", "ENHSP-HADD", "ENHSP-HRADD", "METRIC-FF"]
 
 
 def main():
-    domains = ["block-grouping", "farmland", "farmland_ln", "fn-counters", "fn-counters-inv", "fn-counters-rnd",
-               "gardening", "plant-watering", "sailing", "sailing_ln"]
+    #domains = ["block-grouping", "farmland", "farmland_ln", "fn-counters", "fn-counters-inv", "fn-counters-rnd",
+    #           "gardening", "plant-watering", "sailing", "sailing_ln"]
+
+    domains = ["line-exchange"]
 
     instances = list()
 
@@ -27,7 +29,7 @@ def main():
 
     random.shuffle(instances)
     print(f"Listing {len(instances)} instances")
-    f = open("benchmarks/instances-smt.csv", "w")
+    f = open("benchmarks/instances-line.csv", "w")
     f.write("\n".join([",".join(i) for i in instances]))
     f.close()
 

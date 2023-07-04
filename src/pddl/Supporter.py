@@ -20,7 +20,7 @@ class Supporter:
     preconditions: Preconditions
     effect: SupporterEffect
 
-    def __init__(self, originatingAction, preconditions: Preconditions, effect: SupporterEffect):
+    def __init__(self, originatingAction, preconditions: Preconditions, effect: SupporterEffect or None):
         self.preconditions = preconditions
         self.effect = effect
         self.originatingAction = originatingAction
@@ -30,7 +30,7 @@ class Supporter:
         return state.satisfies(self.preconditions)
 
     def __str__(self):
-        return f"<{self.preconditions}, {self.effect}>"
+        return f"<{self.preconditions}, {self.effect}, {self.originatingAction.name}>"
 
     def __repr__(self):
         return str(self)

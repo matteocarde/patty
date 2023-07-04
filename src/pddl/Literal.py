@@ -106,6 +106,11 @@ class Literal(Predicate):
     def __hash__(self):
         return hash(self.sign + str(self.atom))
 
+    def __eq__(self, other):
+        if not isinstance(other, Literal):
+            return False
+        return self.sign == other.sign and self.atom == other.atom
+
     def substitute(self, subs: Dict[Atom, float], default=None) -> Predicate:
         if self.atom not in subs and default is None:
             return self

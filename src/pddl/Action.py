@@ -61,6 +61,9 @@ class Action(Operation):
     def getSupporters(self) -> Set[Supporter]:
         supporters: Set[Supporter] = set()
 
+        if not self.effects.getFunctions():
+            supporters.add(Supporter(self, self.preconditions, None))
+
         simpleIntervals: Dict[Atom, MooreInterval] = dict()
         for c in self.preconditions:
             if not isinstance(c, BinaryPredicate) or len(c.getFunctions()) > 1:

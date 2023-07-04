@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import List, Dict
+from typing import List, Dict, Set
 
 from src.pddl.Atom import Atom
 from src.pddl.Utilities import Utilities
@@ -12,7 +12,6 @@ from src.pddl.grammar.pddlParser import pddlParser
 
 class InitialCondition:
     assignments: List[Predicate]
-
     numericAssignments: Dict[Atom, float]
 
     def __init__(self):
@@ -34,7 +33,8 @@ class InitialCondition:
         ic.assignments = []
         for child in node.children:
             if isinstance(child, pddlParser.PositiveLiteralContext):
-                ic.assignments.append(Literal.fromNode(child))
+                lit = Literal.fromNode(child)
+                ic.assignments.append(lit)
             if isinstance(child, pddlParser.AssignmentContext):
                 assignment = BinaryPredicate.fromNode(child)
                 ic.assignments.append(assignment)

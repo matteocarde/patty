@@ -13,7 +13,7 @@ class SMTSolver:
     solver: Portfolio
     variables: Set[SMTVariable]
 
-    def __init__(self, pddl2smt: PDDL2SMT = None, solver="yices"):
+    def __init__(self, pddl2smt: PDDL2SMT = None, solver="z3"):
         self.variables: Set[SMTVariable] = set()
         self.assertions: List[SMTExpression] = list()
         self.pddl2smt: PDDL2SMT = pddl2smt

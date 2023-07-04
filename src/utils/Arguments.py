@@ -16,8 +16,8 @@ class Arguments:
         parser.add_argument('--deep', help="Iterative deepening approach to find the best plan (at the given bound)",
                             action="store_true")
         parser.add_argument('--pattern', default="arpg", help="Method too compute the pattern: arpg, random")
-        parser.add_argument('--solver', default="yices", help="The solver used to compute a solution: yices, z3")
-        parser.add_argument('--encoding', default="binary",
+        parser.add_argument('--solver', default="z3", help="The solver used to compute a solution: yices, z3")
+        parser.add_argument('--encoding', default="non-linear",
                             help="The way linear numeric effect are dealt with: binary, non-linear")
         parser.add_argument('-pp', help="Print pattern", action="store_true")
         parser.add_argument('--binary-actions', help="Number of binary actions allowed (default=10)", default=10)

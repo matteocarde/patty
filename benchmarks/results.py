@@ -7,10 +7,10 @@ SOLVERS = {
     'SpringRoll': "SR",
     'PATTY-arpg-yices-binary': "P_{arpg}^{y,la}",
     'PATTY-arpg-z3-binary': "P_{arpg}^{z3,la}",
-    'PATTY-arpg-z3-non-linear': "P_{arpg}^{z3,nl}",
+    'PATTY-arpg-z3-non-linear': "P_{arpg}",
     'PATTY-random-yices-binary': "P_{r}^{y,la}",
     'PATTY-random-z3-binary': "P_{r}^{z3,la}",
-    'PATTY-random-z3-non-linear': "P_r^{z3,nl}",
+    'PATTY-random-z3-non-linear': "P_r",
     'METRIC-FF': "\mathrm{FF}",
     'ENHSP-gbfs-hadd': r"E_{hadd}^{\mathrm{gbfs}}",
     'ENHSP-gbfs-hradd': r"E_{hradd}^{\mathrm{gbfs}}"
@@ -26,7 +26,8 @@ DOMAINS = {
     'gardening': r"\textsc{Gardening} (S)",
     'plant-watering': r"\textsc{PlantWatering} (S)",
     'sailing': r"\textsc{Sailing} (S)",
-    'sailing_ln': r"\textsc{Sailing} (L)"
+    'sailing_ln': r"\textsc{Sailing} (L)",
+    'line-exchange': r"\textsc{LineExchange} (L)",
 }
 
 TOTALS = {
@@ -39,13 +40,15 @@ TOTALS = {
     'gardening': 63,
     'plant-watering': 51,
     'sailing': 40,
-    'sailing_ln': 20
+    'sailing_ln': 20,
+    'line-exchange': 108
 }
 
 
 def main():
-    files = ["benchmarks/results/2023-07-03-SMT-v7.csv", "benchmarks/results/2023-07-03-SPRINGROLL.csv",
-             "benchmarks/results/2023-07-02-SEARCH-v2.csv", "benchmarks/results/2023-07-02-SEARCH-v3.csv"]
+    files = ["benchmarks/results/2023-07-04-LINE-v1.csv", "benchmarks/results/2023-07-03-SMT-v7.csv",
+             "benchmarks/results/2023-07-03-SPRINGROLL.csv", "benchmarks/results/2023-07-02-SEARCH-v2.csv",
+             "benchmarks/results/2023-07-02-SEARCH-v3.csv"]
     results: [Result] = []
     for file in files:
         with open(file, "r") as f:
@@ -75,6 +78,8 @@ def main():
     for domain in domains:
         for solver in solvers:
             problems = list()
+            if solver not in d[domain]:
+                continue
             for problem in d[domain][solver].keys():
                 problems.append(Result.average(d[domain][solver][problem]))
             d[domain][solver] = problems
@@ -94,6 +99,8 @@ def main():
 
         pResult: [Result]
         for solver in solvers:
+            if solver not in domainDict:
+                continue
             pResult = domainDict[solver]
             t[domain]["coverage"][solver] = r(sum([r.solved for r in pResult]) / TOTALS[domain] * 100, 1)
             t[domain]["bound"][solver] = r(statistics.mean([r.bound for r in pResult if r.solved]), 2) if \
@@ -111,12 +118,14 @@ def main():
             "time": "Time (s)",
             # "length": "Plan Length"
         },
-        "solvers": ['PATTY-arpg-yices-binary',
-                    'PATTY-arpg-z3-binary',
-                    'PATTY-arpg-z3-non-linear',
-                    'PATTY-random-yices-binary',
-                    'PATTY-random-z3-non-linear',
-                    'SpringRoll'],
+        "solvers": [
+            # 'PATTY-arpg-yices-binary',
+            # 'PATTY-arpg-z3-binary',
+            'PATTY-arpg-z3-non-linear',
+            # 'PATTY-random-yices-binary',
+            'PATTY-random-z3-non-linear',
+            'SpringRoll'
+        ],
         "caption": r"Comparative analysis between the two symbolic-based solvers \textsc{Patty} (P) and \textsc{"
                    r"SpringRoll} (SR). $P_{\prec}^{s,e}$ represents the \textsc{Patty} solver with the pattern $\prec "
                    r"\in \{r,arpg\}$ for random and ARPG, the solver $s \in \{y, z3\}$ for yices and z3, the encoding "
@@ -129,11 +138,13 @@ def main():
             "time": "Time (s)",
             # "length": "Plan Length"
         },
-        "solvers": ['PATTY-arpg-yices-binary',
-                    'PATTY-arpg-z3-non-linear',
-                    'ENHSP-gbfs-hadd',
-                    'ENHSP-gbfs-hradd',
-                    'METRIC-FF'],
+        "solvers": [
+            # 'PATTY-arpg-yices-binary',
+            'PATTY-arpg-z3-non-linear',
+            'ENHSP-gbfs-hadd',
+            'ENHSP-gbfs-hradd',
+            'METRIC-FF'
+        ],
         "caption": r"Comparative analysis between \textsc{Patty} and two search-based solvers \textsc{ENHSP} (E) and "
                    r"\textsc{MetricFF} (FF). The solver \textsc{ENHSP} has been launched with the GBFS search "
                    r"strategy and the two heuristics $hadd$ and $hradd$."
@@ -160,6 +171,9 @@ def main():
             row = [DOMAINS[domain]]
             for stat in stats:
                 for solver in solvers:
+                    if solver not in t[domain][stat]:
+                        row.append("-")
+                        continue
                     row.append(t[domain][stat][solver])
             rows.append("&".join(row))
         print("\\\\\n".join(rows))

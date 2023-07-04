@@ -25,7 +25,7 @@ class PDDL2SMT:
     domain: GroundedDomain
     problem: Problem
 
-    def __init__(self, domain: GroundedDomain, problem: Problem, pattern: Pattern, bound: int, encoding="binary",
+    def __init__(self, domain: GroundedDomain, problem: Problem, pattern: Pattern, bound: int, encoding="non-linear",
                  binaryActions=10):
         self.domain = domain
         self.problem = problem
