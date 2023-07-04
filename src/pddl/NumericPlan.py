@@ -27,12 +27,12 @@ class NumericPlan:
     def validate(self, problem: Problem, avoidRaising=False, logger: LogPrint = None) -> bool:
 
         state = State.fromInitialCondition(problem.init)
-        for action in self.__rolledPlan:
+        for i, action in enumerate(self.__rolledPlan):
             if not state.satisfies(action.preconditions):
                 if avoidRaising:
                     if logger:
                         logger.log(
-                            f"Plan doesn't satisfies preconditions pre({action})={action.preconditions} at state {state}",
+                            f"Plan doesn't satisfies preconditions of {action}@{i}. pre({action})={action.preconditions} at state {state}",
                             LogPrintLevel.PLAN)
                     return False
                 raise PDDLException.InvalidPlan(f"Plan doesn't satisfies action {action}")

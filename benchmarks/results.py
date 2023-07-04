@@ -11,9 +11,9 @@ SOLVERS = {
     'PATTY-random-yices-binary': "P_{r}^{y,la}",
     'PATTY-random-z3-binary': "P_{r}^{z3,la}",
     'PATTY-random-z3-non-linear': "P_r^{z3,nl}",
-    'METRIC-FF': "FF",
-    'ENHSP-gbfs-hadd': r"E_{hadd}^{\mathit{gbfs}}",
-    'ENHSP-gbfs-hradd': r"E_{hradd}^{\mathit{gbfs}}"
+    'METRIC-FF': "\mathrm{FF}",
+    'ENHSP-gbfs-hadd': r"E_{hadd}^{\mathrm{gbfs}}",
+    'ENHSP-gbfs-hradd': r"E_{hradd}^{\mathrm{gbfs}}"
 }
 
 DOMAINS = {
@@ -44,8 +44,8 @@ TOTALS = {
 
 
 def main():
-    files = ["benchmarks/results/2023-07-01-SMT-v3.csv", "benchmarks/results/2023-07-02-SEARCH-v2.csv",
-             "benchmarks/results/2023-07-02-SEARCH-v3.csv"]
+    files = ["benchmarks/results/2023-07-03-SMT-v7.csv", "benchmarks/results/2023-07-03-SPRINGROLL.csv",
+             "benchmarks/results/2023-07-02-SEARCH-v2.csv", "benchmarks/results/2023-07-02-SEARCH-v3.csv"]
     results: [Result] = []
     for file in files:
         with open(file, "r") as f:

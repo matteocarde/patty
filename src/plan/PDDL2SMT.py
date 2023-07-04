@@ -240,7 +240,7 @@ class PDDL2SMT:
                 precondition0 = SMTNumericVariable.fromPddl(pre, stepVars.deltaVariables[a])
                 preconditions0 = preconditions0.AND(precondition0) if preconditions0 else precondition0
 
-                subs: Dict[Atom, SMTExpression] = copy.copy(stepVars.deltaVariables[a])
+                subs: Dict[Atom, SMTExpression] = dict()
                 # Searching for decrease effects
                 for eff in a.effects:
                     if not isinstance(eff, BinaryPredicate):
@@ -253,9 +253,12 @@ class PDDL2SMT:
                     subs[v] = stepVars.deltaVariables[a][v] + sign * SMTNumericVariable.fromPddl(eff.rhs, stepVars.deltaVariables[a]) \
                                               * (stepVars.actionVariables[a] - 1)
 
+                for v in stepVars.deltaVariables[a].keys():
+                    subs[v] = subs[v] if v in subs else stepVars.deltaVariables[a][v]
+
                 # Transformed precondition
                 precondition1 = SMTNumericVariable.fromPddl(pre, subs)
-                preconditions1 = preconditions1.AND(precondition0) if preconditions1 else precondition1
+                preconditions1 = preconditions1.AND(precondition1) if preconditions1 else precondition1
 
             if preconditions0:
                 rules.append(lhs0.implies(preconditions0))

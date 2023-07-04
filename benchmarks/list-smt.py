@@ -2,7 +2,8 @@ import random
 import os
 from natsort import natsort
 
-PLANNERS = ["PATTY", "PATTY-R-YICES", "PATTY-R-Z3-NL", "PATTY-NL", "PATTY-Z3", "SPRINGROLL"]
+# PLANNERS = ["PATTY", "PATTY-R-YICES", "PATTY-R-Z3-NL", "PATTY-NL", "PATTY-Z3", "SPRINGROLL"]
+PLANNERS = ["PATTY", "PATTY-R-YICES", "PATTY-R-Z3-NL", "PATTY-NL", "PATTY-Z3"]
 
 
 def main():
@@ -20,7 +21,7 @@ def main():
             problemFile = f"files/{domain}/instances/{problem}"
 
             for planner in PLANNERS:
-                n = 1 if "PATTY-R" not in planner else 3
+                n = 1 if "PATTY-R" not in planner else 5
                 for i in range(0, n):
                     instances.append([planner, domain, domainFile, problemFile])
 

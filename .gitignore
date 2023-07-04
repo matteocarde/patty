@@ -15,3 +15,5 @@ experiments/
 benchmarks/planners/cplex/installer.bin
 
 ..bfg-report/
+
+*.smt

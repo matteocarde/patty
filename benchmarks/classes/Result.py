@@ -88,6 +88,6 @@ class Result:
         r.timeout = statistics.mean([1 if e.timeout else 0 for e in list])
         if r.solved > 0:
             r.time = statistics.mean([e.time for e in list if e.solved])
-            r.bound = statistics.mean([e.bound for e in list if e.solved])
+            r.bound = max([e.bound for e in list if e.solved])
             r.planLength = statistics.mean([e.planLength for e in list if e.solved])
         return r
