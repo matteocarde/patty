@@ -235,6 +235,7 @@ class PDDL2SMT:
                     d_av = stepVars.deltaVariables[a][v]
                     rhs = d_av > 0 if pre.sign == "+" else d_av < 0
                     preconditions0 = preconditions0.AND(rhs) if preconditions0 else rhs
+                    preconditions1 = preconditions1.AND(rhs) if preconditions1 else rhs
                     continue
 
                 precondition0 = SMTNumericVariable.fromPddl(pre, stepVars.deltaVariables[a])
@@ -243,17 +244,20 @@ class PDDL2SMT:
                 subs: Dict[Atom, SMTExpression] = dict()
                 # Searching for decrease effects
                 for eff in a.effects:
+                    v = eff.lhs.getAtom()
                     if not isinstance(eff, BinaryPredicate):
                         continue
                     if eff.operator == "assign":
+                        subs[v] = stepVars.valueVariables[v]
                         continue
-
-                    sign = +1 if eff.operator == "increase" else -1
-                    v = eff.lhs.getAtom()
-                    subs[v] = stepVars.deltaVariables[a][v] + sign * SMTNumericVariable.fromPddl(eff.rhs,
-                                                                                                 stepVars.deltaVariables[
-                                                                                                     a]) \
-                              * (stepVars.actionVariables[a] - 1)
+                    if eff.operator == "increase":
+                        subs[v] = stepVars.deltaVariables[a][v] + \
+                                  SMTNumericVariable.fromPddl(eff.rhs, stepVars.deltaVariables[a]) * \
+                                  (stepVars.actionVariables[a] - 1)
+                    else:
+                        subs[v] = stepVars.deltaVariables[a][v] - \
+                                  SMTNumericVariable.fromPddl(eff.rhs, stepVars.deltaVariables[a]) * \
+                                  (stepVars.actionVariables[a] - 1)
 
                 for v in stepVars.deltaVariables[a].keys():
                     subs[v] = subs[v] if v in subs else stepVars.deltaVariables[a][v]

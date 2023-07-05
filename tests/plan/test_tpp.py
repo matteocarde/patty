@@ -17,7 +17,7 @@ class TestTPP(TestCase):
         self.domain: Domain = Domain.fromFile("../../files/tpp/domain.pddl")
         self.problem: Problem = Problem.fromFile("../../files/tpp/instances/p01.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
-        self.horizon = 4
+        self.horizon = 1
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
         self.pddl2smt: PDDL2SMT = PDDL2SMT(self.gDomain, self.problem, self.pattern, self.horizon)
         print(self.pddl2smt.pattern)

@@ -68,6 +68,12 @@ def main():
             solver.exit()
             ts.end(f"Solving Bound {bound}", console=console)
 
+            if args.saveSMT:
+                filename = f"{args.saveSMT}-{bound}.smt"
+                console.log(f"Saving to {filename}", LogPrintLevel.STATS)
+                with open(f"{args.saveSMT}-{bound}.smt", "w") as f:
+                    f.write(str(pddl2smt))
+
             if not plan:
                 console.log(
                     f"NO SOLUTION: A solution could not be found with bound {bound}. Try to increase the bound",
@@ -86,12 +92,6 @@ def main():
                 console.log(f"Bound: {bound}", LogPrintLevel.STATS)
 
                 break
-
-            if args.saveSMT:
-                filename = f"{args.saveSMT}-{bound}.smt"
-                console.log(f"Saving to {filename}", LogPrintLevel.STATS)
-                with open(f"{args.saveSMT}-{bound}.smt", "w") as f:
-                    f.write(str(pddl2smt))
 
             bound += 1
 

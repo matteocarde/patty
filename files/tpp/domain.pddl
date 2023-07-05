@@ -34,7 +34,8 @@
 		:parameters (?t - truck ?g - goods ?m - market)
 		:precondition (and (loc ?t ?m) (> (on-sale ?g ?m) 0)
 			(> (on-sale ?g ?m) (- (request ?g) (bought ?g))))
-		:effect (and (decrease
+		:effect (and
+			(decrease
 				(on-sale ?g ?m)
 				(- (request ?g) (bought ?g)))
 			(increase
@@ -46,7 +47,9 @@
 
 	(:action buy-all
 		:parameters (?t - truck ?g - goods ?m - market)
-		:precondition (and (loc ?t ?m) (> (on-sale ?g ?m) 0)
+		:precondition (and
+			(loc ?t ?m)
+			(> (on-sale ?g ?m) 0)
 			(<= (on-sale ?g ?m) (- (request ?g) (bought ?g))))
 		:effect (and (assign (on-sale ?g ?m) 0)
 			(increase
