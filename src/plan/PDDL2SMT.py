@@ -250,8 +250,10 @@ class PDDL2SMT:
 
                     sign = +1 if eff.operator == "increase" else -1
                     v = eff.lhs.getAtom()
-                    subs[v] = stepVars.deltaVariables[a][v] + sign * SMTNumericVariable.fromPddl(eff.rhs, stepVars.deltaVariables[a]) \
-                                              * (stepVars.actionVariables[a] - 1)
+                    subs[v] = stepVars.deltaVariables[a][v] + sign * SMTNumericVariable.fromPddl(eff.rhs,
+                                                                                                 stepVars.deltaVariables[
+                                                                                                     a]) \
+                              * (stepVars.actionVariables[a] - 1)
 
                 for v in stepVars.deltaVariables[a].keys():
                     subs[v] = subs[v] if v in subs else stepVars.deltaVariables[a][v]

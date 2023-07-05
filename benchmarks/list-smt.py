@@ -7,10 +7,12 @@ PLANNERS = ["PATTY-NL", "PATTY-R-Z3-NL", "SPRINGROLL", "ENHSP-HADD", "ENHSP-HRAD
 
 
 def main():
-    #domains = ["block-grouping", "farmland", "farmland_ln", "fn-counters", "fn-counters-inv", "fn-counters-rnd",
+    # domains = ["block-grouping", "farmland", "farmland_ln", "fn-counters", "fn-counters-inv", "fn-counters-rnd",
     #           "gardening", "plant-watering", "sailing", "sailing_ln"]
 
-    domains = ["line-exchange"]
+    # domains = ["line-exchange"]
+
+    domains = ["zeno-travel", "rover", "depots", "satellite", "tpp"]
 
     instances = list()
 
@@ -29,7 +31,7 @@ def main():
 
     random.shuffle(instances)
     print(f"Listing {len(instances)} instances")
-    f = open("benchmarks/instances-line.csv", "w")
+    f = open("benchmarks/instances-extra-domains.csv", "w")
     f.write("\n".join([",".join(i) for i in instances]))
     f.close()
 

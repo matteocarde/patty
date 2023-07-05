@@ -21,7 +21,8 @@ class Arguments:
                             help="The way linear numeric effect are dealt with: binary, non-linear")
         parser.add_argument('-pp', help="Print pattern", action="store_true")
         parser.add_argument('--binary-actions', help="Number of binary actions allowed (default=10)", default=10)
-        parser.add_argument('--save', help="Where to save the smt rules")
+        parser.add_argument('--save-smt', help="Where to save the smt rules")
+        parser.add_argument('--save-plan', help="Where to save the plan", nargs='?', const="PROBLEM")
 
         args = parser.parse_args()
         self.domain = args.domain
@@ -33,5 +34,6 @@ class Arguments:
         self.pattern = args.pattern
         self.solver = args.solver
         self.encoding = args.encoding
-        self.save = args.save
+        self.saveSMT = args.save_smt
+        self.savePlan = args.save_plan
         self.binaryActions = int(args.binary_actions)

@@ -28,6 +28,11 @@ DOMAINS = {
     'sailing': r"\textsc{Sailing} (S)",
     'sailing_ln': r"\textsc{Sailing} (L)",
     'line-exchange': r"\textsc{LineExchange} (L)",
+    'zeno-travel': r"\textsc{ZenoTravel} (S)",
+    'rover': r"\textsc{Rovers} (S)",
+    'depots': r"\textsc{Depots} (S)",
+    'satellite': r"\textsc{Satellite} (S)",
+    'tpp': r"\textsc{TPP} (L)",
 }
 
 TOTALS = {
@@ -41,14 +46,23 @@ TOTALS = {
     'plant-watering': 51,
     'sailing': 40,
     'sailing_ln': 20,
-    'line-exchange': 108
+    'line-exchange': 108,
+    'zeno-travel': 24,
+    'rover': 20,
+    'depots': 22,
+    'satellite': 20,
+    'tpp': 40,
 }
 
 
 def main():
-    files = ["benchmarks/results/2023-07-04-LINE-v1.csv", "benchmarks/results/2023-07-03-SMT-v7.csv",
-             "benchmarks/results/2023-07-03-SPRINGROLL.csv", "benchmarks/results/2023-07-02-SEARCH-v2.csv",
-             "benchmarks/results/2023-07-02-SEARCH-v3.csv"]
+    files = [
+        "benchmarks/results/2023-07-04-LINE-v1.csv",
+        "benchmarks/results/2023-07-03-SMT-v7.csv",
+        "benchmarks/results/2023-07-03-SPRINGROLL.csv",
+        "benchmarks/results/2023-07-02-SEARCH-v2.csv",
+        "benchmarks/results/2023-07-02-SEARCH-v3.csv"
+    ]
     results: [Result] = []
     for file in files:
         with open(file, "r") as f:

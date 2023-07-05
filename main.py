@@ -77,16 +77,20 @@ def main():
                 isValid = plan.validate(problem, avoidRaising=True, logger=console)
                 if isValid:
                     console.log("Plan is valid", LogPrintLevel.PLAN)
+                    if args.savePlan:
+                        fn = args.savePlan if args.savePlan != "PROBLEM" else args.problem + ".plan"
+                        with open(fn, "w") as f:
+                            f.write(plan.toValString())
                 else:
                     console.log("Plan is NOT valid", LogPrintLevel.PLAN)
                 console.log(f"Bound: {bound}", LogPrintLevel.STATS)
 
                 break
 
-            if args.save:
-                filename = f"{args.save}-{bound}.smt"
+            if args.saveSMT:
+                filename = f"{args.saveSMT}-{bound}.smt"
                 console.log(f"Saving to {filename}", LogPrintLevel.STATS)
-                with open(f"{args.save}-{bound}.smt", "w") as f:
+                with open(f"{args.saveSMT}-{bound}.smt", "w") as f:
                     f.write(str(pddl2smt))
 
             bound += 1

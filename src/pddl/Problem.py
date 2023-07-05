@@ -84,3 +84,7 @@ class Problem:
         # else:
         #     self.metric = Literal.fromNode(predicate)
         # return
+
+    def substitute(self, substitutions):
+        self.goal = self.goal.substitute(substitutions)
+        pass
