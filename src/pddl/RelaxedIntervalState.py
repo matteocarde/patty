@@ -25,6 +25,14 @@ class RelaxedIntervalState:
     def __repr__(self):
         return repr(self.__intervals)
 
+    def __str__(self):
+        strSet = []
+        for key, item in self.__intervals.items():
+            strSet.append(f"{key} = {item}")
+        for item in self.__boolean:
+            strSet.append(("¬" if item.sign == "-" else "") + str(item.getAtom()))
+        return "{" + ",".join(strSet) + "}"
+
     @property
     def intervals(self) -> Dict[Atom, MooreInterval]:
         return self.__intervals

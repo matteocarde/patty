@@ -77,3 +77,14 @@ class ARPG:
             if interval.lb == interval.ub:
                 subs[atom] = interval.lb
         return subs
+
+    def __str__(self):
+        string = ""
+        n = len(self.supporterLevels)
+        prevActions = set()
+        for layer in range(0, n):
+            string += f"S_{layer} = {self.stateLevels[layer]}\n"
+            actionLayer = {s.originatingAction for s in self.supporterLevels[layer]} - prevActions
+            string += f"A_{layer} = {actionLayer}\n"
+
+        return string

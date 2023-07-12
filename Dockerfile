@@ -149,6 +149,22 @@ RUN pysmt-install --check
 RUN pysmt-install --yices --confirm-agreement
 RUN pysmt-install --check
 
+# Install RanTanPlan
+RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test
+RUN apt install -y g++-11
+COPY /benchmarks/planners/libantlr3 /var/libantlr3
+WORKDIR /var/libantlr3
+RUN ./configure
+RUN mv antlr3config.h.in include/antlr3config.h
+COPY /benchmarks/planners/rantanplan /var/rantanplan
+# WORKDIR /var/rantanplan
+# RUN chmod +x ./antlr_generate_files.sh
+# RUN ./antlr_generate_files.sh
+WORKDIR /var/rantanplan/src
+RUN apt install -y libc6-dev libc6-dev-i386
+RUN make
+
+
 WORKDIR /project
 # Copying
 COPY . .

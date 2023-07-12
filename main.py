@@ -44,6 +44,9 @@ def main():
         if args.printPattern:
             console.log("Pattern: " + str(pattern), LogPrintLevel.PLAN)
 
+        if args.printARPG:
+            console.log(str(gDomain.arpg), LogPrintLevel.PLAN)
+
         while bound <= bMax:
 
             ts.start(f"Conversion to SMT at bound {bound}", console=console)

@@ -20,6 +20,7 @@ class Arguments:
         parser.add_argument('--encoding', default="non-linear",
                             help="The way linear numeric effect are dealt with: binary, non-linear")
         parser.add_argument('-pp', help="Print pattern", action="store_true")
+        parser.add_argument('--arpg', help="Prints the arpg", action="store_true")
         parser.add_argument('--binary-actions', help="Number of binary actions allowed (default=10)", default=10)
         parser.add_argument('--save-smt', help="Where to save the smt rules")
         parser.add_argument('--save-plan', help="Where to save the plan", nargs='?', const="PROBLEM")
@@ -31,6 +32,7 @@ class Arguments:
         self.verboseLevel = LogPrintLevel(args.verboseLevel)
         self.deep = args.deep
         self.printPattern = args.pp
+        self.printARPG = args.arpg
         self.pattern = args.pattern
         self.solver = args.solver
         self.encoding = args.encoding

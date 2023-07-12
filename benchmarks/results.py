@@ -140,11 +140,10 @@ def main():
             'PATTY-random-z3-non-linear',
             'SpringRoll'
         ],
-        "caption": r"Comparative analysis between the two symbolic-based solvers \textsc{Patty} (P) and \textsc{"
-                   r"SpringRoll} (SR). $P_{\prec}^{s,e}$ represents the \textsc{Patty} solver with the pattern $\prec "
-                   r"\in \{r,arpg\}$ for random and ARPG, the solver $s \in \{y, z3\}$ for yices and z3, the encoding "
-                   r"$e \in \{la, nl\}$ for the linear-arithmetic and non-linear version of the encoding. The labels "
-                   r"S and L specifies if the domain presents simple or linear effects, respectively."
+        "caption": r"Comparative analysis between the two symbolic-based solvers \textsc{Patty} (P) and "
+                   r"\textsc{SpringRoll} (SR). $P_{\prec}$ represents the \textsc{Patty} solver with a pattern built "
+                   r"randomly (r) or with the ARPG (arpg). The labels S and L specifies if the domain presents simple "
+                   r"or linear effects, respectively."
     }, {
         "name": "tab:exp-search",
         "columns": {
@@ -160,7 +159,7 @@ def main():
             'METRIC-FF'
         ],
         "caption": r"Comparative analysis between \textsc{Patty} and two search-based solvers \textsc{ENHSP} (E) and "
-                   r"\textsc{MetricFF} (FF). The solver \textsc{ENHSP} has been launched with the GBFS search "
+                   r"\textsc{MetricFF} (FF). The \textsc{ENHSP} solver has been launched with the GBFS search "
                    r"strategy and the two heuristics $hadd$ and $hradd$."
     }]
 
@@ -169,9 +168,9 @@ def main():
         solvers = table["solvers"]
 
         print(r"""
-            \begin{table*}[]
+            \begin{table}[]
             \centering
-            \resizebox{\textwidth}{!}{""")
+            \resizebox{\columnwidth}{!}{""")
         columns = f"|l|{len(stats) * ('|' + 'c' * len(solvers) + '|')}" + "|"
         print(r"\begin{tabular}{" + columns + "}")
         print(r"\hline")
@@ -197,7 +196,7 @@ def main():
         \end{tabular}}
         \caption{""" + table["caption"] + """}
         \label{tab:""" + table["name"] + """}
-        \end{table*}
+        \end{table}
         """)
 
     pass

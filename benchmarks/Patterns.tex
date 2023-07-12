@@ -1,0 +1,15 @@
+\documentclass[11pt]{scrartcl}
+
+\newcommand{\tuple}[1]{\langle #1 \rangle}
+\newcommand{\set}[1]{\{ #1 \}}
+\newcommand{\op}[1]{\mathrm{#1}}
+
+\begin{document}
+
+\title{Finding Patterns for Classical Symbolic Pattern Planning}
+\author{Matteo Cardellini}
+\maketitle
+
+\section{Formal setting}
+We restrict ourself in the setting of \emph{Classical Planning}. Let $\Pi = \tuple{V,A,I,G}$ be a planning task where: $V$ is a set of variables with domain in $\set{\top, \bot}$ the initial condition $I$ is a total assignment which maps all the boolean atoms $v \in V$ to $\set{\top, \bot}$, $G$ is the goal state represented as a propositional formula over the atoms in $V$ and $A$ is the set of actions $a = \tuple{\op{pre}(a), \op{add}(a), \op{del}(a)}$. The precondition $\op{pre}(a)$ of the action $a$ is a propositional formula over $V$. The \emph{add and delete effects} of $a$, $\op{add}(a)$ and $\op{del}(a)$ are (partial) assignments to the variables in $V$ to $\top$ and $\bot$, respectively. A \emph{state} $s$ consists in a total assignment of the variables in $V$ to $\set{\top, \bot}$. We indicate that a state $s$ satisfies 
+\end{document}

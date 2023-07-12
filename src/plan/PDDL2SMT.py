@@ -244,9 +244,9 @@ class PDDL2SMT:
                 subs: Dict[Atom, SMTExpression] = dict()
                 # Searching for decrease effects
                 for eff in a.effects:
-                    v = eff.lhs.getAtom()
                     if not isinstance(eff, BinaryPredicate):
                         continue
+                    v = eff.lhs.getAtom()
                     if eff.operator == "assign":
                         subs[v] = stepVars.valueVariables[v]
                         continue

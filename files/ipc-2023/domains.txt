@@ -1,0 +1,21 @@
+block-grouping OK
+counters OK
+delivery NZOMMA
+drone NZOMMA
+expedition NZOMMA
+ext-plant-watering
+farmland
+fo-farmland
+fo-sailing
+fo_counters
+hydropower
+markettrader
+mprime
+pathwaysmetric
+rover
+sailing
+satellite
+settlers
+sugar
+tpp
+zenotravel
