@@ -138,31 +138,57 @@ ENV PATH /var/patty/:${PATH}
 RUN chmod +x /var/patty/patty
 
 RUN apt-get install -y time
-
 RUN conda env export
+
+# Install Z3-4.6.0
+COPY /benchmarks/planners/z3-4.6.0 /var/z3-4.6.0
+WORKDIR /var/z3-4.6.0
+RUN python scripts/mk_make.py --prefix=/var/z3-4.6.0
+WORKDIR /var/z3-4.6.0/build
+RUN make
+RUN make install
+
 
 # Create conda env
 COPY environment.yml environment.yml
 RUN conda env update --file environment.yml
 
-RUN pysmt-install --check
+WORKDIR /project
+RUN which z3
+RUN z3 --version
+# RUN pysmt-install --check
 RUN pysmt-install --yices --confirm-agreement
-RUN pysmt-install --check
+# RUN pysmt-install --check
 
 # Install RanTanPlan
 RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test
 RUN apt install -y g++-11
+RUN apt-get install -y gcc-multilib
+RUN apt-get install -y gcc-arm-none-eabi
 COPY /benchmarks/planners/libantlr3 /var/libantlr3
 WORKDIR /var/libantlr3
-RUN ./configure
+RUN ./configure --enable-64bit
 RUN mv antlr3config.h.in include/antlr3config.h
+WORKDIR /var/libantlr3/src
+RUN cc -c -O -I.. -I../include *.c
+WORKDIR /var/libantlr3
+RUN ls -la
+RUN make
+RUN make install
 COPY /benchmarks/planners/rantanplan /var/rantanplan
-# WORKDIR /var/rantanplan
+WORKDIR /var/z3-4.6.0
+RUN find / -name z3.h
 # RUN chmod +x ./antlr_generate_files.sh
 # RUN ./antlr_generate_files.sh
 WORKDIR /var/rantanplan/src
-RUN apt install -y libc6-dev libc6-dev-i386
+
+RUN find / -name libyices.so
+
 RUN make
+
+
+
+
 
 
 WORKDIR /project

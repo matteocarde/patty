@@ -478,8 +478,6 @@ typedef ANTLR3_UINT32		ANTLR3_INTKEY;
 /// antlr3.h if you wish to use your own implementation.
 ///
 
-#include <cstdlib>
-
 #define	ANTLR3_FREE(ptr)		free    ((void *)(ptr))
 #endif
 #ifndef ANTLR3_FREE_FUNC						

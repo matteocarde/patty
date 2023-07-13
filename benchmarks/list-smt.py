@@ -7,12 +7,29 @@ PLANNERS = ["PATTY-NL", "PATTY-R-Z3-NL", "SPRINGROLL", "ENHSP-HADD", "ENHSP-HRAD
 
 
 def main():
-    # domains = ["block-grouping", "farmland", "farmland_ln", "fn-counters", "fn-counters-inv", "fn-counters-rnd",
-    #           "gardening", "plant-watering", "sailing", "sailing_ln"]
-
-    # domains = ["line-exchange"]
-
-    domains = ["zeno-travel", "rover", "depots", "satellite", "tpp"]
+    domains = [
+        "ipc-2023/block-grouping",
+        "ipc-2023/counters",
+        "ipc-2023/delivery",
+        "ipc-2023/drone",
+        "ipc-2023/expedition",
+        "ipc-2023/ext-plant-watering",
+        "ipc-2023/farmland",
+        "ipc-2023/fo-farmland",
+        "ipc-2023/fo-sailing",
+        "ipc-2023/fo_counters",
+        "ipc-2023/hydropower",
+        "ipc-2023/markettrader",
+        "ipc-2023/mprime",
+        "ipc-2023/pathwaysmetric",
+        "ipc-2023/rover",
+        "ipc-2023/sailing",
+        "ipc-2023/satellite",
+        "ipc-2023/settlers",
+        "ipc-2023/sugar",
+        "ipc-2023/tpp",
+        "ipc-2023/zenotravel"
+    ]
 
     instances = list()
 
@@ -31,7 +48,7 @@ def main():
 
     random.shuffle(instances)
     print(f"Listing {len(instances)} instances")
-    f = open("benchmarks/instances-extra-domains.csv", "w")
+    f = open("benchmarks/instances-ipc.csv", "w")
     f.write("\n".join([",".join(i) for i in instances]))
     f.close()
 

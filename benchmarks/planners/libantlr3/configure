@@ -10618,6 +10618,7 @@ gcc*)
  if test x"$enable_64bit" = xyes; then
   GCCABIFLAGS="-m64"
  else
+  #GCCABIFLAGS="-m32"
   GCCABIFLAGS="-m32"
  fi
  if test x"$enable_abiflags" = xyes; then
