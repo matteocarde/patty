@@ -160,7 +160,7 @@ RUN z3 --version
 RUN pysmt-install --yices --confirm-agreement
 # RUN pysmt-install --check
 
-# Install RanTanPlan
+# Install LibAntlr3
 RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test
 RUN apt install -y g++-11
 RUN apt-get install -y gcc-multilib
@@ -175,21 +175,18 @@ WORKDIR /var/libantlr3
 RUN ls -la
 RUN make
 RUN make install
+
+# Install RanTanPlan
 COPY /benchmarks/planners/rantanplan /var/rantanplan
-WORKDIR /var/z3-4.6.0
-RUN find / -name z3.h
-# RUN chmod +x ./antlr_generate_files.sh
-# RUN ./antlr_generate_files.sh
 WORKDIR /var/rantanplan/src
-
-RUN find / -name libyices.so
-
 RUN make
 
-
-
-
-
+RUN mv ./parser ./rantanplan
+RUN chmod +x ./rantanplan
+ENV PATH /var/rantanplan/src/:${PATH}
+ENV LD_LIBRARY_PATH /usr/local/lib/:/var/z3-4.6.0/lib/:/root/miniconda3/envs/patty/lib/python3.7/site-packages/yices_bin/lib/:${LD_LIBRARY_PATH}
+RUN find / -name libantlr3c.so
+RUN which rantanplan
 
 WORKDIR /project
 # Copying
@@ -197,6 +194,8 @@ COPY . .
 
 #Authorizations
 RUN chmod +x exes/*
+
+# RUN rantanplan -d files/satellite/domain.pddl -p files/satellite/instances/pfile1.pddl -s /tmp/output.plan -i h -t c -v -k
 
 
 #Execution

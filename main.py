@@ -56,7 +56,9 @@ def main():
                 pattern=pattern,
                 bound=bound,
                 encoding=args.encoding,
-                binaryActions=args.binaryActions
+                binaryActions=args.binaryActions,
+                rollBound=args.rollBound,
+                hasEffectAxioms=args.hasEffectAxioms
             )
             ts.end(f"Conversion to SMT at bound {bound}", console=console)
 

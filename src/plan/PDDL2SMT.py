@@ -1,4 +1,3 @@
-import copy
 from typing import List, Dict, Set
 
 from src.pddl.Action import Action
@@ -10,7 +9,6 @@ from src.pddl.Formula import Formula
 from src.pddl.Literal import Literal
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
-from src.pddl.Utilities import Utilities
 from src.plan.Pattern import Pattern
 from src.plan.TransitionVariables import TransitionVariables
 from src.smt.SMTExpression import SMTExpression
@@ -26,11 +24,13 @@ class PDDL2SMT:
     problem: Problem
 
     def __init__(self, domain: GroundedDomain, problem: Problem, pattern: Pattern, bound: int, encoding="non-linear",
-                 binaryActions=10):
+                 binaryActions=10, rollBound=0, hasEffectAxioms=False):
         self.domain = domain
         self.problem = problem
         self.bound = bound
         self.encoding = encoding
+        self.rollBound = rollBound
+        self.hasEffectAxioms = hasEffectAxioms
 
         self.transitionVariables: [TransitionVariables] = list()
 
@@ -43,7 +43,7 @@ class PDDL2SMT:
         self.sign: Dict[Action, Dict[Atom, int]] = self.getSign(self.pattern)
 
         for index in range(0, bound + 1):
-            var = TransitionVariables(self.domain.allAtoms, self.domain.assList, self.pattern, index)
+            var = TransitionVariables(self.domain.allAtoms, self.domain.assList, self.pattern, index, hasEffectAxioms)
             self.transitionVariables.append(var)
 
         self.initial: [SMTExpression] = self.getInitialExpression()
@@ -147,14 +147,20 @@ class PDDL2SMT:
             if not prevAction:
                 # First action in the order copies the value from previous step
                 for v in self.domain.allAtoms:
-                    stepVars.deltaVariables[action][v] = prevVars.valueVariables[v]
+                    if self.hasEffectAxioms:
+                        rules.append(stepVars.deltaVariables[action][v] == prevVars.valueVariables[v])
+                    else:
+                        stepVars.deltaVariables[action][v] = prevVars.valueVariables[v]
                 prevAction = action
                 continue
 
             # Case a) Not influenced
             notInfluenced = self.domain.allAtoms - (prevAction.getInfluencedAtoms())
             for v in notInfluenced:
-                stepVars.deltaVariables[action][v] = stepVars.deltaVariables[prevAction][v]
+                if self.hasEffectAxioms:
+                    rules.append(stepVars.deltaVariables[action][v] == stepVars.deltaVariables[prevAction][v])
+                else:
+                    stepVars.deltaVariables[action][v] = stepVars.deltaVariables[prevAction][v]
 
             # Case b) Boolean
             for v in prevAction.getAddList() | prevAction.getDelList():
@@ -162,7 +168,10 @@ class PDDL2SMT:
                 s_bv = self.sign[prevAction][v]
                 b_b = stepVars.boolActionVariables[prevAction]
 
-                stepVars.deltaVariables[action][v] = d_bv + s_bv * b_b
+                if self.hasEffectAxioms:
+                    rules.append(stepVars.deltaVariables[action][v] == d_bv + s_bv * b_b)
+                else:
+                    stepVars.deltaVariables[action][v] = d_bv + s_bv * b_b
             # Case c) Numeric increases or decreases
             if not prevAction.hasNonSimpleLinearIncrement(self.encoding):
                 modifications = [(+1, prevAction.getIncreases()), (-1, prevAction.getDecreases())]
@@ -173,19 +182,31 @@ class PDDL2SMT:
                         k = SMTNumericVariable.fromPddl(funct, stepVars.deltaVariables[prevAction])
                         b_n = stepVars.actionVariables[prevAction]
                         if sign > 0:
-                            stepVars.deltaVariables[action][v] = d_bv + (k * b_n)
+                            if self.hasEffectAxioms:
+                                rules.append(stepVars.deltaVariables[action][v] == d_bv + (k * b_n))
+                            else:
+                                stepVars.deltaVariables[action][v] = d_bv + (k * b_n)
                         else:
-                            stepVars.deltaVariables[action][v] = d_bv - (k * b_n)
+                            if self.hasEffectAxioms:
+                                rules.append(stepVars.deltaVariables[action][v] == d_bv - (k * b_n))
+                            else:
+                                stepVars.deltaVariables[action][v] = d_bv - (k * b_n)
             # Case d) Numeric assignments
             for v in prevAction.getAssList():
-                stepVars.deltaVariables[action][v] = stepVars.auxVariables[prevAction][v]
+                if self.hasEffectAxioms:
+                    rules.append(stepVars.deltaVariables[action][v] == stepVars.auxVariables[prevAction][v])
+                else:
+                    stepVars.deltaVariables[action][v] = stepVars.auxVariables[prevAction][v]
 
             if prevAction.hasNonSimpleLinearIncrement(self.encoding):
                 for eff in prevAction.effects:
                     if not eff.isLinearIncrement():
                         continue
                     v = eff.getAtom()
-                    stepVars.deltaVariables[action][v] = stepVars.auxVariables[prevAction][v]
+                    if self.hasEffectAxioms:
+                        rules.append(stepVars.deltaVariables[action][v] == stepVars.auxVariables[prevAction][v])
+                    else:
+                        stepVars.deltaVariables[action][v] = stepVars.auxVariables[prevAction][v]
 
             prevAction = action
 
@@ -202,6 +223,9 @@ class PDDL2SMT:
             rules.append(a_n >= 0)
             if not a.couldBeRepeated() or (a.hasNonSimpleLinearIncrement(self.encoding)):
                 rules.append(a_n <= 1)
+            elif self.rollBound:
+                rules.append(a_n <= self.rollBound)
+
             if a.getPredicates():
                 active = (a_n > 0).AND(a_b == 1)
                 notActive = (a_n == 0).AND(a_b == 0)

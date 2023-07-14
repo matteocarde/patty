@@ -21,9 +21,16 @@ class Arguments:
                             help="The way linear numeric effect are dealt with: binary, non-linear")
         parser.add_argument('-pp', help="Print pattern", action="store_true")
         parser.add_argument('--arpg', help="Prints the arpg", action="store_true")
-        parser.add_argument('--binary-actions', help="Number of binary actions allowed (default=10)", default=10)
+        parser.add_argument('--binary-actions',
+                            help="Number of binary actions allowed in the binary encoding (default=10)", default=10,
+                            type=int)
         parser.add_argument('--save-smt', help="Where to save the smt rules")
         parser.add_argument('--save-plan', help="Where to save the plan", nargs='?', const="PROBLEM")
+        parser.add_argument('--effect-axioms',
+                            help="If the encoding has effect axioms for each action (quadratic, RanTanPlan's Like)",
+                            action="store_true", default=False)
+        parser.add_argument('--roll-bound', help="The maximum amount of time an action can be rolled at each step",
+                            type=int, default=0)
 
         args = parser.parse_args()
         self.domain = args.domain
@@ -39,3 +46,5 @@ class Arguments:
         self.saveSMT = args.save_smt
         self.savePlan = args.save_plan
         self.binaryActions = int(args.binary_actions)
+        self.hasEffectAxioms = args.effect_axioms
+        self.rollBound = args.roll_bound

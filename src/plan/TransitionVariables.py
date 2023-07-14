@@ -12,12 +12,14 @@ from src.smt.SMTVariable import SMTVariable
 
 class TransitionVariables:
 
-    def __init__(self, allAtoms: Set[Atom], assList: Dict[Atom, Set[Operation]], pattern: Pattern, index: int):
+    def __init__(self, allAtoms: Set[Atom], assList: Dict[Atom, Set[Operation]], pattern: Pattern, index: int,
+                 hasPlaceholders: bool):
         self.allAtoms: Set[Atom] = allAtoms
         self.assList: Dict[Atom, Set[Operation]] = assList
         self.pattern: Pattern = pattern
         self.valueVariables: Dict[Atom, SMTVariable] = self.__computeValueVariables(index)
-        self.deltaVariables: Dict[Action, Dict[Atom, SMTExpression]] = self.__computeDeltaVariables(index)
+        self.deltaVariables: Dict[Action, Dict[Atom, SMTExpression]] = self.__computeDeltaVariables(index,
+                                                                                                    hasPlaceholders)
         if index > 0:
             self.actionVariables: Dict[Action, SMTVariable] = self.__computeActionVariables(index)
             self.boolActionVariables: Dict[Action, SMTVariable] = self.__computeBoolActionVariables(index)
@@ -53,13 +55,14 @@ class TransitionVariables:
 
         return variables
 
-    def __computeDeltaVariables(self, index: int) -> Dict[Action, Dict[Atom, SMTVariable]]:
+    def __computeDeltaVariables(self, index: int, hasPlaceholders: bool) -> Dict[Action, Dict[Atom, SMTVariable]]:
         variables: Dict[Action, Dict[Atom, SMTVariable]] = dict()
 
         for action in self.pattern:
             variables[action] = dict()
-            # for atom in self.allAtoms:
-            #     variables[action][atom] = SMTRealVariable(f"d_{{{action}}}_{index}({atom})")
+            if hasPlaceholders:
+                for atom in self.allAtoms:
+                    variables[action][atom] = SMTRealVariable(f"d_{{{action}}}_{index}({atom})")
 
         return variables
 
