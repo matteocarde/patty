@@ -73,6 +73,9 @@ def main():
             solver.exit()
             ts.end(f"Solving Bound {bound}", console=console)
 
+            console.log(f"Bound {bound} - Vars = {pddl2smt.getNVars()}", LogPrintLevel.STATS)
+            console.log(f"Bound {bound} - Rules = {pddl2smt.getNRules()}", LogPrintLevel.STATS)
+
             if args.saveSMT:
                 filename = f"{args.saveSMT}-{bound}.smt"
                 console.log(f"Saving to {filename}", LogPrintLevel.STATS)

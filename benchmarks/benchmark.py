@@ -23,14 +23,13 @@ my_config = Config(
 )
 
 PLANNERS: Dict[str, Planner] = {
-    "PATTY": Patty(pattern="arpg", solver="yices", encoding="binary"),
-    "PATTY-Z3": Patty("arpg", solver="z3", encoding="binary"),
-    "PATTY-NL": Patty("arpg", solver="z3", encoding="non-linear"),
-    "PATTY-R-YICES": Patty("random", solver="yices", encoding="binary"),
-    "PATTY-R-Z3-NL": Patty("random", solver="z3", encoding="non-linear"),
+    "PATTY": Patty("PATTY", "arpg", solver="z3", encoding="non-linear"),
+    "PATTY-R": Patty("PATTY-R", "random", solver="z3", encoding="non-linear"),
     "SPRINGROLL": SpringRoll(),
-    "ENHSP-HADD": ENHSP("gbfs", "hadd"),
-    "ENHSP-HRADD": ENHSP("gbfs", "hradd"),
+    "RANTANPLAN": Patty("RANTANPLAN", "arpg", solver="z3", encoding="non-linear", rollBound=1, hasEffectAxioms=True),
+    "ENHSP-HADD": ENHSP("sat-hadd"),
+    "ENHSP-HRADD": ENHSP("sat-hradd"),
+    "ENHSP-HMRP": ENHSP("sat-hmrphj"),
     "METRIC-FF": MetricFF(),
 }
 
@@ -40,6 +39,9 @@ def main():
     s3 = boto3.client('s3', config=my_config)
 
     envs = Envs()
+    if envs.isInsideAWS:
+        time.sleep(envs.index / 4)
+
     logger = CloudLogger(envs.experiment)
 
     f = open(envs.file, "r")

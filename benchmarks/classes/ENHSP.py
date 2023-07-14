@@ -9,10 +9,9 @@ NAME = "ENHSP"
 class ENHSP(Planner):
     name = NAME
 
-    def __init__(self, s: str, h: str):
-        self.s = s
-        self.h = h
-        self.name = f"{NAME}-{s}-{h}"
+    def __init__(self, p: str):
+        self.p = p
+        self.name = f"{NAME}-{p}"
         super().__init__()
 
     @staticmethod
@@ -25,4 +24,4 @@ class ENHSP(Planner):
         return r
 
     def getCommand(self, domain: str, problem: str):
-        return ["enhsp", "-o", domain, "-f", problem, "-s", self.s, "-h", self.h]
+        return ["enhsp", "-o", domain, "-f", problem, "-planner", self.p]

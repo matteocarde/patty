@@ -21,6 +21,10 @@ class SpringRoll(Planner):
         r.bound = -1 if not reBound else reBound[0]
         r.plan = re.findall(r"Action Name:(.*?)$", stdout, re.MULTILINE)
         r.planLength = len(r.plan)
+        reNOfVars = re.findall(r"Vars at Horizon 1: (.*?)$", stdout, re.MULTILINE)
+        r.nOfVars = -1 if not reNOfVars else int(reNOfVars[0])
+        reNOfRules = re.findall(r"Rules at Horizon 1: (.*?)$", stdout, re.MULTILINE)
+        r.nOfRules = -1 if not reNOfRules else int(reNOfRules[0])
 
         return r
 

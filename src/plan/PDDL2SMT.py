@@ -385,3 +385,12 @@ class PDDL2SMT:
                     plan.addRepeatedAction(a.linearizationOf, repetitions)
 
         return plan
+
+    def getNVars(self):
+        variables = set()
+        for rule in self.rules:
+            variables |= rule.variables
+        return len(variables)
+
+    def getNRules(self):
+        return len(self.rules)

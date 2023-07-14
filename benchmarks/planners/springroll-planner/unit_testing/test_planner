@@ -1,0 +1,6 @@
+../springroll -o task_motion_planning/domain.pddl -f task_motion_planning/v3_1234_num_obstacles_10_001.pddl -s 3
+
+../springroll   -o hbw/domain5_1.pddl -f hbw/problem5_1v8.pddl -s 3
+
+../springroll   -o psr/domainInv1_10.pddl -f psr/problem1_10.pddl -s 3
+

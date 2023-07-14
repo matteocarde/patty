@@ -38,6 +38,7 @@ class Planner:
         cmd: [str] = self.getCommand(domain, problem)
         output = ""
         command = ["timeout", str(TIMEOUT)] + ["time", "-p"] + cmd
+        print(" ".join(command))
         with Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT) as p:
             for line in iter(p.stdout.readline, b''):
                 output += line.decode('utf-8').rstrip() + "\n"

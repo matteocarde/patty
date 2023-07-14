@@ -122,11 +122,6 @@ RUN apt-get install -y bison flex
 RUN make
 ENV PATH /var/metric-ff/:${PATH}
 
-# Install Springroll
-COPY /benchmarks/planners/springroll /var/springroll
-ENV PATH /var/springroll/:${PATH}
-RUN chmod +x /var/springroll/springroll
-
 # Install ENHSP
 COPY /benchmarks/planners/enhsp /var/enhsp
 ENV PATH /var/enhsp/:${PATH}
@@ -138,55 +133,25 @@ ENV PATH /var/patty/:${PATH}
 RUN chmod +x /var/patty/patty
 
 RUN apt-get install -y time
+
 RUN conda env export
-
-# Install Z3-4.6.0
-COPY /benchmarks/planners/z3-4.6.0 /var/z3-4.6.0
-WORKDIR /var/z3-4.6.0
-RUN python scripts/mk_make.py --prefix=/var/z3-4.6.0
-WORKDIR /var/z3-4.6.0/build
-RUN make
-RUN make install
-
 
 # Create conda env
 COPY environment.yml environment.yml
 RUN conda env update --file environment.yml
 
-WORKDIR /project
-RUN which z3
-RUN z3 --version
-# RUN pysmt-install --check
+RUN pysmt-install --check
 RUN pysmt-install --yices --confirm-agreement
-# RUN pysmt-install --check
+RUN pysmt-install --check
 
-# Install LibAntlr3
-RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test
-RUN apt install -y g++-11
-RUN apt-get install -y gcc-multilib
-RUN apt-get install -y gcc-arm-none-eabi
-COPY /benchmarks/planners/libantlr3 /var/libantlr3
-WORKDIR /var/libantlr3
-RUN ./configure --enable-64bit
-RUN mv antlr3config.h.in include/antlr3config.h
-WORKDIR /var/libantlr3/src
-RUN cc -c -O -I.. -I../include *.c
-WORKDIR /var/libantlr3
-RUN ls -la
-RUN make
-RUN make install
 
-# Install RanTanPlan
-COPY /benchmarks/planners/rantanplan /var/rantanplan
-WORKDIR /var/rantanplan/src
-RUN make
-
-RUN mv ./parser ./rantanplan
-RUN chmod +x ./rantanplan
-ENV PATH /var/rantanplan/src/:${PATH}
-ENV LD_LIBRARY_PATH /usr/local/lib/:/var/z3-4.6.0/lib/:/root/miniconda3/envs/patty/lib/python3.7/site-packages/yices_bin/lib/:${LD_LIBRARY_PATH}
-RUN find / -name libantlr3c.so
-RUN which rantanplan
+# Install Springroll
+COPY /benchmarks/planners/springroll-planner /var/springroll
+ENV PATH /var/springroll/:${PATH}
+WORKDIR /var/springroll
+RUN ant dist
+RUN ./install
+RUN chmod +x /var/springroll/springroll
 
 WORKDIR /project
 # Copying
@@ -194,9 +159,6 @@ COPY . .
 
 #Authorizations
 RUN chmod +x exes/*
-
-# RUN rantanplan -d files/satellite/domain.pddl -p files/satellite/instances/pfile1.pddl -s /tmp/output.plan -i h -t c -v -k
-
 
 #Execution
 ENTRYPOINT ["conda", "run", "--no-capture-output", "-n", "patty", "./exes/run.sh"]

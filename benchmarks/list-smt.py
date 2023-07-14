@@ -3,7 +3,16 @@ import os
 from natsort import natsort
 
 # PLANNERS = ["PATTY", "PATTY-R-YICES", "PATTY-R-Z3-NL", "PATTY-NL", "PATTY-Z3", "SPRINGROLL"]
-PLANNERS = ["PATTY-NL", "PATTY-R-Z3-NL", "SPRINGROLL", "ENHSP-HADD", "ENHSP-HRADD", "METRIC-FF"]
+PLANNERS = [
+    "PATTY",
+    "PATTY-R",
+    "SPRINGROLL",
+    "RANTANPLAN",
+    "ENHSP-HADD",
+    "ENHSP-HRADD",
+    "ENHSP-HMRP",
+     "METRIC-FF"
+]
 
 
 def main():
@@ -28,7 +37,8 @@ def main():
         "ipc-2023/settlers",
         "ipc-2023/sugar",
         "ipc-2023/tpp",
-        "ipc-2023/zenotravel"
+        "ipc-2023/zenotravel",
+        "line-exchange"
     ]
 
     instances = list()

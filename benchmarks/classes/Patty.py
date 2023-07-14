@@ -9,11 +9,13 @@ NAME = "PATTY"
 class Patty(Planner):
     name = NAME
 
-    def __init__(self, pattern, solver, encoding):
+    def __init__(self, name, pattern, solver, encoding, rollBound=0, hasEffectAxioms=False):
         self.pattern = pattern
         self.solver = solver
         self.encoding = encoding
-        self.name = '-'.join([NAME, self.pattern, self.solver, self.encoding])
+        self.rollBound = rollBound
+        self.hasEffectAxioms = hasEffectAxioms
+        self.name = name
         super().__init__()
 
     @staticmethod
@@ -24,9 +26,16 @@ class Patty(Planner):
         r.bound = -1 if not reBound else int(reBound[0])
         r.plan = re.findall(r"^\d*?: (\(.*?\))$", stdout, re.MULTILINE)
         r.planLength = len(r.plan)
+        reNOfVars = re.findall(r"Bound 1 - Vars = (.*?)$", stdout, re.MULTILINE)
+        r.nOfVars = -1 if not reNOfVars else int(reNOfVars[0])
+        reNOfRules = re.findall(r"Bound 1 - Rules = (.*?)$", stdout, re.MULTILINE)
+        r.nOfRules = -1 if not reNOfRules else int(reNOfRules[0])
 
         return r
 
     def getCommand(self, domain: str, problem: str):
-        return ["patty", "-o", domain, "-f", problem, "-pp", "--pattern", self.pattern, "--solver", self.solver,
-                "--encoding", self.encoding]
+        cmd = ["patty", "-o", domain, "-f", problem, "-pp", "--pattern", self.pattern, "--solver", self.solver,
+               "--encoding", self.encoding, "--roll-bound", str(self.rollBound)]
+        if self.hasEffectAxioms:
+            cmd += ["--effect-axioms"]
+        return cmd
