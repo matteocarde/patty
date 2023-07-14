@@ -48,7 +48,8 @@ class Result:
 
     @classmethod
     def parseTime(cls, stdout):
-        time = re.findall(r"^real (.*?)$", stdout, re.MULTILINE)[0]
+        reTime = re.findall(r"^real (.*?)$", stdout, re.MULTILINE)
+        time = reTime[0] if len(reTime) > 0 else 0
         return float(time) * 1000
 
     def __str__(self):

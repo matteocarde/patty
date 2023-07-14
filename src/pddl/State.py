@@ -104,18 +104,19 @@ class State:
                 raise Exception(f"Operator {p.operator} not allowed in effects")
 
             lhs = self.substituteInto(p.rhs)
+            value = self.__assignments[p.getAtom()] if p.getAtom() in self.__assignments else 0
             if p.operator == "assign" or p.operator == "=":
                 return lhs
             if p.operator == "increase":
-                return self.__assignments[p.getAtom()] + lhs
+                return value + lhs
             if p.operator == "decrease":
-                return self.__assignments[p.getAtom()] - lhs
+                return value - lhs
 
     def substituteInto(self, p: Predicate) -> bool or float:
         if isinstance(p, Constant):
             return p.value
         if isinstance(p, Literal):
-            return self.__assignments[p.getAtom()]
+            return self.__assignments[p.getAtom()] if p.getAtom() in self.__assignments else 0
         if isinstance(p, BinaryPredicate):
             lhs = self.substituteInto(p.lhs)
             rhs = self.substituteInto(p.rhs)

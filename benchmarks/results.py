@@ -5,63 +5,69 @@ from classes.Result import Result
 
 SOLVERS = {
     'SpringRoll': "SR",
-    'PATTY-arpg-yices-binary': "P_{arpg}^{y,la}",
-    'PATTY-arpg-z3-binary': "P_{arpg}^{z3,la}",
-    'PATTY-arpg-z3-non-linear': "P_{arpg}",
-    'PATTY-random-yices-binary': "P_{r}^{y,la}",
-    'PATTY-random-z3-binary': "P_{r}^{z3,la}",
-    'PATTY-random-z3-non-linear': "P_r",
+    'PATTY': "P_{arpg}",
+    'PATTY-R': "P_r",
+    'RANTANPLAN': "\mathrm{RTP}",
     'METRIC-FF': "\mathrm{FF}",
-    'ENHSP-gbfs-hadd': r"E_{hadd}^{\mathrm{gbfs}}",
-    'ENHSP-gbfs-hradd': r"E_{hradd}^{\mathrm{gbfs}}"
+    'ENHSP-sat-hadd': r"E_{hadd}",
+    'ENHSP-sat-hradd': r"E_{hradd}",
+    'ENHSP-sat-hmrphj': r"E_{hmrphj}"
 }
 
 DOMAINS = {
-    'block-grouping': r"\textsc{BlockGrouping} (S)",
-    'farmland': r"\textsc{Farmland} (S)",
-    'farmland_ln': r"\textsc{Farmland} (L)",
-    'fn-counters': r"\textsc{Counters} (S)",
-    'fn-counters-inv': r"\textsc{CountersInv} (S)",
-    'fn-counters-rnd': r"\textsc{CountersRnd} (S)",
-    'gardening': r"\textsc{Gardening} (S)",
-    'plant-watering': r"\textsc{PlantWatering} (S)",
-    'sailing': r"\textsc{Sailing} (S)",
-    'sailing_ln': r"\textsc{Sailing} (L)",
-    'line-exchange': r"\textsc{LineExchange} (L)",
-    'zeno-travel': r"\textsc{ZenoTravel} (S)",
-    'rover': r"\textsc{Rovers} (S)",
-    'depots': r"\textsc{Depots} (S)",
-    'satellite': r"\textsc{Satellite} (S)",
-    'tpp': r"\textsc{TPP} (L)",
+    "ipc-2023/block-grouping": r"\textsc{BlockGrouping} (S)",
+    "ipc-2023/counters": r"\textsc{Counters} (S)",
+    "ipc-2023/delivery": r"\textsc{Delivery}",
+    "ipc-2023/drone": r"\textsc{Drone}",
+    "ipc-2023/expedition": r"\textsc{Expedition}",
+    "ipc-2023/ext-plant-watering": r"\textsc{PlantWatering} (S)",
+    "ipc-2023/farmland": r"\textsc{Farmland} (S)",
+    "ipc-2023/fo-farmland": r"\textsc{Farmland} (L)",
+    "ipc-2023/fo-sailing": r"\textsc{Sailing} (L)",
+    "ipc-2023/fo_counters": r"\textsc{Counters} (L)",
+    "ipc-2023/hydropower": r"\textsc{HydroPower}",
+    # "ipc-2023/markettrader": r"\textsc{MarketTrader}",
+    "ipc-2023/mprime": r"\textsc{MPrime}",
+    "ipc-2023/pathwaysmetric": r"\textsc{PathwaysMetric}",
+    "ipc-2023/rover": r"\textsc{Rover} (S)",
+    "ipc-2023/sailing": r"\textsc{Sailing} (S)",
+    "ipc-2023/satellite": r"\textsc{Satellite} (S)",
+    "ipc-2023/settlers": r"\textsc{Settlers}",
+    "ipc-2023/sugar": r"\textsc{Sugar}",
+    "ipc-2023/tpp": r"\textsc{TPP} (L)",
+    "ipc-2023/zenotravel": r"\textsc{ZenoTravel} (S)",
+    "line-exchange": r"\textsc{LineExchange} (L)"
 }
 
 TOTALS = {
-    'block-grouping': 192,
-    'farmland': 50,
-    'farmland_ln': 50,
-    'fn-counters': 11,
-    'fn-counters-inv': 11,
-    'fn-counters-rnd': 33,
-    'gardening': 63,
-    'plant-watering': 51,
-    'sailing': 40,
-    'sailing_ln': 20,
-    'line-exchange': 108,
-    'zeno-travel': 24,
-    'rover': 20,
-    'depots': 22,
-    'satellite': 20,
-    'tpp': 40,
+    "ipc-2023/block-grouping": 20,
+    "ipc-2023/counters": 20,
+    "ipc-2023/delivery": 20,
+    "ipc-2023/drone": 20,
+    "ipc-2023/expedition": 20,
+    "ipc-2023/ext-plant-watering": 20,
+    "ipc-2023/farmland": 20,
+    "ipc-2023/fo-farmland": 20,
+    "ipc-2023/fo-sailing": 20,
+    "ipc-2023/fo_counters": 20,
+    "ipc-2023/hydropower": 20,
+    "ipc-2023/markettrader": 20,
+    "ipc-2023/mprime": 20,
+    "ipc-2023/pathwaysmetric": 20,
+    "ipc-2023/rover": 20,
+    "ipc-2023/sailing": 20,
+    "ipc-2023/satellite": 20,
+    "ipc-2023/settlers": 20,
+    "ipc-2023/sugar": 20,
+    "ipc-2023/tpp": 20,
+    "ipc-2023/zenotravel": 20,
+    "line-exchange": 108
 }
 
 
 def main():
     files = [
-        "benchmarks/results/2023-07-04-LINE-v1.csv",
-        "benchmarks/results/2023-07-03-SMT-v7.csv",
-        "benchmarks/results/2023-07-03-SPRINGROLL.csv",
-        "benchmarks/results/2023-07-02-SEARCH-v2.csv",
-        "benchmarks/results/2023-07-02-SEARCH-v3.csv"
+        "benchmarks/results/2023-07-14-IPC-v2.csv"
     ]
     results: [Result] = []
     for file in files:
@@ -109,6 +115,8 @@ def main():
             "bound": dict(),
             "time": dict(),
             "length": dict(),
+            "nOfVars": dict(),
+            "nOfRules": dict(),
         }
 
         pResult: [Result]
@@ -117,12 +125,55 @@ def main():
                 continue
             pResult = domainDict[solver]
             t[domain]["coverage"][solver] = r(sum([r.solved for r in pResult]) / TOTALS[domain] * 100, 1)
+            t[domain]["coverage"][solver] = "-" if t[domain]["coverage"][solver] == "0.0" else t[domain]["coverage"][
+                solver]
             t[domain]["bound"][solver] = r(statistics.mean([r.bound for r in pResult if r.solved]), 2) if \
-                t[domain]["coverage"][solver] != "0.0" else "-"
-            t[domain]["time"][solver] = r(statistics.mean([r.time for r in pResult if r.solved]) / 1000, 2) if \
-                t[domain]["coverage"][solver] != "0.0" else "-"
+                t[domain]["coverage"][solver] != "-" else "-"
+            t[domain]["time"][solver] = r(statistics.mean([r.time if r.solved else 300000 for r in pResult]) / 1000, 2) if \
+                t[domain]["coverage"][solver] != "-" else "-"
             t[domain]["length"][solver] = r(statistics.mean([r.planLength for r in pResult if r.solved]), 0) if \
-                t[domain]["coverage"][solver] != "0.0" else "-"
+                t[domain]["coverage"][solver] != "-" else "-"
+            t[domain]["nOfVars"][solver] = r(statistics.mean([r.nOfVars for r in pResult if r.solved]), 0) if \
+                t[domain]["coverage"][solver] != "-" else "-"
+            t[domain]["nOfRules"][solver] = r(statistics.mean([r.nOfRules for r in pResult if r.solved]), 0) if \
+                t[domain]["coverage"][solver] != "-" else "-"
+
+    domainsClusters = {
+        "Purely Numeric": [
+            "ipc-2023/block-grouping",
+            "ipc-2023/counters",
+            "ipc-2023/drone",
+            "ipc-2023/ext-plant-watering",
+            "ipc-2023/farmland",
+            "ipc-2023/fo-farmland",
+            "ipc-2023/fo-sailing",
+            "ipc-2023/fo_counters",
+            "ipc-2023/sailing",
+            "ipc-2023/satellite",
+            "line-exchange"
+        ],
+        "Scarcely Numeric": [
+            "ipc-2023/delivery",
+            "ipc-2023/expedition",
+            "ipc-2023/hydropower",
+            "ipc-2023/markettrader",
+            "ipc-2023/mprime",
+            "ipc-2023/pathwaysmetric",
+            "ipc-2023/rover",
+            "ipc-2023/settlers",
+            "ipc-2023/sugar",
+            "ipc-2023/tpp",
+            "ipc-2023/zenotravel"
+        ]
+    }
+
+    winners = {
+        "coverage": +1,
+        "bound": -1,
+        "time": -1,
+        "nOfVars": -1,
+        "nOfRules": -1,
+    }
 
     tables = [{
         "name": "tab:exp-smt",
@@ -130,19 +181,18 @@ def main():
             "coverage": "Coverage (\%)",
             "bound": "Bound",
             "time": "Time (s)",
-            # "length": "Plan Length"
+            "nOfVars": "Vars $n=1$",
+            "nOfRules": "Rules $n=1$",
         },
         "solvers": [
-            # 'PATTY-arpg-yices-binary',
-            # 'PATTY-arpg-z3-binary',
-            'PATTY-arpg-z3-non-linear',
-            # 'PATTY-random-yices-binary',
-            'PATTY-random-z3-non-linear',
+            'PATTY',
+            'PATTY-R',
+            'RANTANPLAN',
             'SpringRoll'
         ],
-        "caption": r"Comparative analysis between the two symbolic-based solvers \textsc{Patty} (P) and "
-                   r"\textsc{SpringRoll} (SR). $P_{\prec}$ represents the \textsc{Patty} solver with a pattern built "
-                   r"randomly (r) or with the ARPG (arpg). The labels S and L specifies if the domain presents simple "
+        "caption": r"Comparative analysis between the SMT-based solvers \textsc{Patty} (P), "
+                   r"\textsc{SpringRoll} (SR) and \textsc{RanTanPlan} (RTP). $P_{\prec}$ represents the \textsc{Patty} "
+                   r"solver with a pattern built randomly (r) or with the ARPG (arpg). The labels S and L specifies if the domain presents simple "
                    r"or linear effects, respectively."
     }, {
         "name": "tab:exp-search",
@@ -153,9 +203,12 @@ def main():
         },
         "solvers": [
             # 'PATTY-arpg-yices-binary',
-            'PATTY-arpg-z3-non-linear',
-            'ENHSP-gbfs-hadd',
-            'ENHSP-gbfs-hradd',
+            'PATTY',
+            'RANTANPLAN',
+            'SpringRoll',
+            'ENHSP-sat-hradd',
+            'ENHSP-sat-hadd',
+            'ENHSP-sat-hmrphj',
             'METRIC-FF'
         ],
         "caption": r"Comparative analysis between \textsc{Patty} and two search-based solvers \textsc{ENHSP} (E) and "
@@ -166,6 +219,23 @@ def main():
     for table in tables:
         stats = table["columns"].keys()
         solvers = table["solvers"]
+
+        best = dict()
+        for (domain, domainDict) in d.items():
+            best[domain] = dict()
+            for stat in table["columns"].keys():
+                better = {}
+                betterValue = float("-inf") if winners[stat] > 0 else float("+inf")
+                for solver in solvers:
+                    value = t[domain][stat][solver]
+                    if value == "-":
+                        continue
+                    if float(value) * winners[stat] > betterValue * winners[stat]:
+                        betterValue = float(value)
+                        better = {solver}
+                    elif float(value) == betterValue:
+                        better |= {solver}
+                best[domain][stat] = better
 
         print(r"""
             \begin{table}[]
@@ -179,18 +249,24 @@ def main():
         print(fr"Domain & " + "&".join([f"${SOLVERS[p]}$" for s in stats for p in solvers]) + r"\\")
         print(fr"\hline")
 
-        rows = []
-        for domain in domains:
-            row = [DOMAINS[domain]]
-            for stat in stats:
-                for solver in solvers:
-                    if solver not in t[domain][stat]:
-                        row.append("-")
-                        continue
-                    row.append(t[domain][stat][solver])
-            rows.append("&".join(row))
-        print("\\\\\n".join(rows))
-        print(fr"\\\hline")
+        for (cluster, clusterDomains) in domainsClusters.items():
+            rows = []
+            row = [cluster] + [" "] * len(stats) * len(solvers)
+            print("&".join(row) + r"\\\hline")
+            for domain in clusterDomains:
+                row = [DOMAINS[domain]]
+                for stat in stats:
+                    for solver in solvers:
+                        if solver not in t[domain][stat]:
+                            row.append("-")
+                            continue
+                        if solver in best[domain][stat]:
+                            row.append(r"\textbf{" + t[domain][stat][solver] + "}")
+                        else:
+                            row.append(t[domain][stat][solver])
+                rows.append("&".join(row))
+            print("\\\\\n".join(rows))
+            print(fr"\\\hline")
 
         print(r"""
         \end{tabular}}

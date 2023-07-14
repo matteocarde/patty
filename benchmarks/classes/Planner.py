@@ -23,8 +23,8 @@ class Planner:
         r.timeout = r.code == 124
         r.solved = r.code == 0
         r.stdout = stdout
+        self.parseOutput(r, stdout)
         if not r.timeout and r.solved:
-            self.parseOutput(r, stdout)
             return r
         if not r.timeout and not r.solved:
             print(r.stdout)
