@@ -11,7 +11,8 @@ PLANNERS = [
     "ENHSP-HADD",
     "ENHSP-HRADD",
     "ENHSP-HMRP",
-     "METRIC-FF"
+     "METRIC-FF",
+     "NFD"
 ]
 
 
@@ -38,7 +39,8 @@ def main():
         "ipc-2023/sugar",
         "ipc-2023/tpp",
         "ipc-2023/zenotravel",
-        "line-exchange"
+        "line-exchange",
+        "line-exchange-quantity"
     ]
 
     instances = list()

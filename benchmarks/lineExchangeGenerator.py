@@ -5,7 +5,7 @@ from classes.LineExchange import LineExchange
 
 
 def main():
-    folder = f"files/line-exchange/instances/{time.time_ns()}/"
+    folder = f"./instances/{time.time_ns()}/"
     os.makedirs(folder)
 
     robots = range(2, 6)

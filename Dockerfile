@@ -110,10 +110,20 @@ RUN rm Osi-0.107.9.tgz
 
 # Install Numeric Fast Downward
 
-COPY /benchmarks/planners/nfd /var/nfd
-WORKDIR /var/nfd
 RUN apt-get install -y cmake
-# RUN ./build.py release64
+COPY /benchmarks/planners/nfd /var/nfd
+WORKDIR /var/nfd/src/search/bliss-0.73
+RUN make
+WORKDIR /var/nfd
+RUN ./build.py release64
+
+# Install Springroll
+COPY /benchmarks/planners/springroll-planner /var/springroll
+ENV PATH /var/springroll/:${PATH}
+WORKDIR /var/springroll
+RUN ant dist
+RUN ./install
+RUN chmod +x /var/springroll/springroll
 
 # Install Metric FF
 COPY /benchmarks/planners/metric-ff /var/metric-ff
@@ -144,14 +154,6 @@ RUN pysmt-install --check
 RUN pysmt-install --yices --confirm-agreement
 RUN pysmt-install --check
 
-
-# Install Springroll
-COPY /benchmarks/planners/springroll-planner /var/springroll
-ENV PATH /var/springroll/:${PATH}
-WORKDIR /var/springroll
-RUN ant dist
-RUN ./install
-RUN chmod +x /var/springroll/springroll
 
 WORKDIR /project
 # Copying

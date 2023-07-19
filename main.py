@@ -32,7 +32,7 @@ def main():
         ts.end("Grounding", console=console)
 
         bound = args.bound if args.bound else 1
-        bMax = args.bound if args.bound else len(gDomain.actions)
+        bMax = args.bound if args.bound else 1000
 
         order: List[Operation]
         if args.pattern == "arpg":
