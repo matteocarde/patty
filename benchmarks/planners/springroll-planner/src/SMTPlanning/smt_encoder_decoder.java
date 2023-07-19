@@ -1194,7 +1194,7 @@ public class smt_encoder_decoder {
                 nOfRules = nOfRules + 1;
             }
             if(smtLine.contains("(declare-const")){
-                nOfVars = nOfRules + 1;
+                nOfVars = nOfVars + 1;
             }
         }
         System.out.println("Vars at Horizon " + i + ": " + nOfVars);

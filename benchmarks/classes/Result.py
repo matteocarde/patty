@@ -23,6 +23,7 @@ class Result:
     cmd: str = ""
     nOfVars: int = -1
     nOfRules: int = -1
+    lastSearchedBound: int = -1
 
     def __init__(self, domain: str, problem: str):
         self.plan = list()
@@ -43,6 +44,7 @@ class Result:
         r.planLength = float(csvLine[7])
         r.nOfVars = int(csvLine[8])
         r.nOfRules = int(csvLine[9])
+        r.lastSearchedBound = int(csvLine[10])
 
         return r
 
@@ -63,7 +65,8 @@ class Result:
             (str(self.bound), 5),
             (str(self.planLength), 5),
             (str(self.nOfVars), 5),
-            (str(self.nOfRules), 5)
+            (str(self.nOfRules), 5),
+            (str(self.lastSearchedBound), 5)
         ]
 
         string = "|" + "|".join(["{:^" + str(n[1]) + "}" for n in row]) + "|"
@@ -84,7 +87,8 @@ class Result:
             str(self.bound),
             str(self.planLength),
             str(self.nOfVars),
-            str(self.nOfRules)
+            str(self.nOfRules),
+            str(self.lastSearchedBound),
         ])
 
     @classmethod
@@ -95,10 +99,11 @@ class Result:
         r.problem = list[0].problem
         r.solved = statistics.mean([1 if e.solved else 0 for e in list])
         r.timeout = statistics.mean([1 if e.timeout else 0 for e in list])
+        r.nOfVars = max([e.nOfVars for e in list])
+        r.nOfRules = max([e.nOfRules for e in list])
+        r.lastSearchedBound = max([e.lastSearchedBound for e in list])
         if r.solved > 0:
             r.time = max([e.time for e in list if e.solved])
             r.bound = max([e.bound for e in list if e.solved])
             r.planLength = statistics.mean([e.planLength for e in list if e.solved])
-            r.nOfVars = max([e.nOfVars for e in list if e.solved])
-            r.nOfRules = max([e.nOfRules for e in list if e.solved])
         return r

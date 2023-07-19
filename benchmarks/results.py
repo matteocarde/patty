@@ -17,23 +17,23 @@ SOLVERS = {
 DOMAINS = {
     "ipc-2023/block-grouping": r"\textsc{BlockGrouping} (S)",
     "ipc-2023/counters": r"\textsc{Counters} (S)",
-    "ipc-2023/delivery": r"\textsc{Delivery}",
-    "ipc-2023/drone": r"\textsc{Drone}",
-    "ipc-2023/expedition": r"\textsc{Expedition}",
+    "ipc-2023/delivery": r"\textsc{Delivery} (S)",
+    "ipc-2023/drone": r"\textsc{Drone} (S)",
+    "ipc-2023/expedition": r"\textsc{Expedition} (S)",
     "ipc-2023/ext-plant-watering": r"\textsc{PlantWatering} (S)",
     "ipc-2023/farmland": r"\textsc{Farmland} (S)",
     "ipc-2023/fo-farmland": r"\textsc{Farmland} (L)",
     "ipc-2023/fo-sailing": r"\textsc{Sailing} (L)",
     "ipc-2023/fo_counters": r"\textsc{Counters} (L)",
-    "ipc-2023/hydropower": r"\textsc{HydroPower}",
+    "ipc-2023/hydropower": r"\textsc{HydroPower} (S)",
     # "ipc-2023/markettrader": r"\textsc{MarketTrader}",
-    "ipc-2023/mprime": r"\textsc{MPrime}",
-    "ipc-2023/pathwaysmetric": r"\textsc{PathwaysMetric}",
+    "ipc-2023/mprime": r"\textsc{MPrime} (S)",
+    "ipc-2023/pathwaysmetric": r"\textsc{PathwaysMetric} (S)",
     "ipc-2023/rover": r"\textsc{Rover} (S)",
     "ipc-2023/sailing": r"\textsc{Sailing} (S)",
     "ipc-2023/satellite": r"\textsc{Satellite} (S)",
-    "ipc-2023/settlers": r"\textsc{Settlers}",
-    "ipc-2023/sugar": r"\textsc{Sugar}",
+    "ipc-2023/settlers": r"\textsc{Settlers} (S)",
+    "ipc-2023/sugar": r"\textsc{Sugar} (S)",
     "ipc-2023/tpp": r"\textsc{TPP} (L)",
     "ipc-2023/zenotravel": r"\textsc{ZenoTravel} (S)",
     "line-exchange": r"\textsc{LineExchange} (L)"
@@ -67,7 +67,7 @@ TOTALS = {
 
 def main():
     files = [
-        "benchmarks/results/2023-07-14-IPC-v2.csv"
+        "benchmarks/results/2023-07-15-IPC-v3.csv"
     ]
     results: [Result] = []
     for file in files:
@@ -129,38 +129,39 @@ def main():
                 solver]
             t[domain]["bound"][solver] = r(statistics.mean([r.bound for r in pResult if r.solved]), 2) if \
                 t[domain]["coverage"][solver] != "-" else "-"
-            t[domain]["time"][solver] = r(statistics.mean([r.time if r.solved else 300000 for r in pResult]) / 1000, 2) if \
+            t[domain]["time"][solver] = r(statistics.mean([r.time if r.solved else 300000 for r in pResult]) / 1000,
+                                          2) if \
                 t[domain]["coverage"][solver] != "-" else "-"
             t[domain]["length"][solver] = r(statistics.mean([r.planLength for r in pResult if r.solved]), 0) if \
                 t[domain]["coverage"][solver] != "-" else "-"
-            t[domain]["nOfVars"][solver] = r(statistics.mean([r.nOfVars for r in pResult if r.solved]), 0) if \
-                t[domain]["coverage"][solver] != "-" else "-"
-            t[domain]["nOfRules"][solver] = r(statistics.mean([r.nOfRules for r in pResult if r.solved]), 0) if \
-                t[domain]["coverage"][solver] != "-" else "-"
+            v = [r.nOfVars for r in pResult if r.nOfVars > 0]
+            t[domain]["nOfVars"][solver] = r(statistics.mean(v), 0) if len(v) else "G"
+            v = [r.nOfRules for r in pResult if r.nOfRules > 0]
+            t[domain]["nOfRules"][solver] = r(statistics.mean(v), 0) if len(v) else "G"
 
     domainsClusters = {
         "Purely Numeric": [
             "ipc-2023/block-grouping",
             "ipc-2023/counters",
+            "ipc-2023/fo_counters",
             "ipc-2023/drone",
             "ipc-2023/ext-plant-watering",
             "ipc-2023/farmland",
             "ipc-2023/fo-farmland",
-            "ipc-2023/fo-sailing",
-            "ipc-2023/fo_counters",
+            "ipc-2023/hydropower",
             "ipc-2023/sailing",
+            "ipc-2023/fo-sailing",
             "ipc-2023/satellite",
             "line-exchange"
         ],
         "Scarcely Numeric": [
             "ipc-2023/delivery",
             "ipc-2023/expedition",
-            "ipc-2023/hydropower",
-            "ipc-2023/markettrader",
+            # "ipc-2023/markettrader",
             "ipc-2023/mprime",
             "ipc-2023/pathwaysmetric",
             "ipc-2023/rover",
-            "ipc-2023/settlers",
+            # "ipc-2023/settlers",
             "ipc-2023/sugar",
             "ipc-2023/tpp",
             "ipc-2023/zenotravel"
@@ -193,7 +194,7 @@ def main():
         "caption": r"Comparative analysis between the SMT-based solvers \textsc{Patty} (P), "
                    r"\textsc{SpringRoll} (SR) and \textsc{RanTanPlan} (RTP). $P_{\prec}$ represents the \textsc{Patty} "
                    r"solver with a pattern built randomly (r) or with the ARPG (arpg). The labels S and L specifies if the domain presents simple "
-                   r"or linear effects, respectively."
+                   r"or linear effects, respectively. $G$ signifies all the instances couldn't be grounded."
     }, {
         "name": "tab:exp-search",
         "columns": {
@@ -228,7 +229,7 @@ def main():
                 betterValue = float("-inf") if winners[stat] > 0 else float("+inf")
                 for solver in solvers:
                     value = t[domain][stat][solver]
-                    if value == "-":
+                    if value in {"-", "G"}:
                         continue
                     if float(value) * winners[stat] > betterValue * winners[stat]:
                         betterValue = float(value)

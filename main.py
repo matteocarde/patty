@@ -15,8 +15,11 @@ from src.utils.TimeStat import TimeStat
 
 
 def main():
+    args = Arguments()
+    if args.isHelp:
+        exit(0)
+
     try:
-        args = Arguments()
 
         console: LogPrint = LogPrint(args.verboseLevel)
         ts: TimeStat = TimeStat()

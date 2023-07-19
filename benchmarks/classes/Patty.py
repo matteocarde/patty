@@ -30,6 +30,8 @@ class Patty(Planner):
         r.nOfVars = -1 if not reNOfVars else int(reNOfVars[0])
         reNOfRules = re.findall(r"Bound 1 - Rules = (.*?)$", stdout, re.MULTILINE)
         r.nOfRules = -1 if not reNOfRules else int(reNOfRules[0])
+        reLastSearchedBound = re.findall(r"Started Solving Bound (\d*?)$", stdout, re.MULTILINE)
+        r.lastSearchedBound = -1 if not reLastSearchedBound else int(reLastSearchedBound[-1])
 
         return r
 

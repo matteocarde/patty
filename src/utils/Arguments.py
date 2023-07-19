@@ -8,6 +8,7 @@ class Arguments:
     def __init__(self):
         parser = argparse.ArgumentParser(
             description='Patty - The Symbolic Numeric Planner using Patterns')
+        #parser.add_argument('-h', '--help', dest='help', help='Print this message', action="store_true")
         parser.add_argument('-o', '--domain', dest='domain', help='The .pddl domain file', required=True)
         parser.add_argument('-f', '--problem', dest='problem', help='The .pddl problem file', required=True)
         parser.add_argument('-n', '--bound', help='The number of steps of the SMT encoding')
@@ -33,6 +34,7 @@ class Arguments:
                             type=int, default=0)
 
         args = parser.parse_args()
+        self.isHelp = "help" in args
         self.domain = args.domain
         self.problem = args.problem
         self.bound = args.bound
