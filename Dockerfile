@@ -154,6 +154,15 @@ RUN pysmt-install --check
 RUN pysmt-install --yices --confirm-agreement
 RUN pysmt-install --check
 
+# Install python 2.7
+RUN apt-get install python2.7 -y
+RUN which python2.7
+
+# Add nfd executable
+COPY /benchmarks/planners/nfd-runner/nfd /var/nfd/nfd
+ENV PATH /var/nfd/:${PATH}
+RUN chmod +x /var/nfd/nfd
+
 
 WORKDIR /project
 # Copying

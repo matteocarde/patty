@@ -13,6 +13,7 @@ from classes.CloudLogger import CloudLogger
 from classes.ENHSP import ENHSP
 from classes.Envs import Envs
 from classes.MetricFF import MetricFF
+from classes.NFD import NFD
 from classes.Patty import Patty
 from classes.Planner import Planner
 from classes.Result import Result
@@ -31,6 +32,7 @@ PLANNERS: Dict[str, Planner] = {
     "ENHSP-HRADD": ENHSP("sat-hradd"),
     "ENHSP-HMRP": ENHSP("sat-hmrphj"),
     "METRIC-FF": MetricFF(),
+    "NFD": NFD(),
 }
 
 

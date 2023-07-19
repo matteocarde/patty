@@ -1,5 +1,4 @@
-
-(define;Header and description (domain domain_name)
+(define (domain drone)
 
     ;remove requirements that are not needed
     ;(:requirements :strips)
