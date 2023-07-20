@@ -154,7 +154,6 @@ def main():
             "ipc-2023/hydropower",
             "ipc-2023/sailing",
             "ipc-2023/fo-sailing",
-            "ipc-2023/satellite",
             "line-exchange",
             "line-exchange-quantity"
         ],
@@ -165,6 +164,7 @@ def main():
             "ipc-2023/mprime",
             "ipc-2023/pathwaysmetric",
             "ipc-2023/rover",
+            "ipc-2023/satellite",
             # "ipc-2023/settlers",
             "ipc-2023/sugar",
             "ipc-2023/tpp",
