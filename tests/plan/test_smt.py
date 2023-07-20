@@ -33,6 +33,10 @@ class TestSMT(TestCase):
         self.assertIsInstance(self.a.OR(self.b), SMTExpression)
         self.assertEqual(str(self.a.OR(self.b)), "(a | b)")
 
+    def test_notShouldBeAnExpression(self):
+        self.assertIsInstance(self.a.NOT(), SMTExpression)
+        self.assertEqual(str(self.a.NOT()), "(! a)")
+
     def test_impliesShouldBeAnExpression(self):
         self.assertIsInstance(self.a.implies(self.b), SMTExpression)
 

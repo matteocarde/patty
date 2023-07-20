@@ -11,7 +11,8 @@ SOLVERS = {
     'METRIC-FF': "\mathrm{FF}",
     'ENHSP-sat-hadd': r"E_{hadd}",
     'ENHSP-sat-hradd': r"E_{hradd}",
-    'ENHSP-sat-hmrphj': r"E_{hmrphj}"
+    'ENHSP-sat-hmrphj': r"E_{hmrphj}",
+    'NFD': "\mathrm{NFD}",
 }
 
 DOMAINS = {
@@ -36,7 +37,8 @@ DOMAINS = {
     "ipc-2023/sugar": r"\textsc{Sugar} (S)",
     "ipc-2023/tpp": r"\textsc{TPP} (L)",
     "ipc-2023/zenotravel": r"\textsc{ZenoTravel} (S)",
-    "line-exchange": r"\textsc{LineExchange} (L)"
+    "line-exchange": r"\textsc{LineExchange} (L)",
+    "line-exchange-quantity": r"\textsc{LineExchange-QTY} (L)"
 }
 
 TOTALS = {
@@ -61,13 +63,14 @@ TOTALS = {
     "ipc-2023/sugar": 20,
     "ipc-2023/tpp": 20,
     "ipc-2023/zenotravel": 20,
-    "line-exchange": 108
+    "line-exchange": 108,
+    "line-exchange-quantity": 20
 }
 
 
 def main():
     files = [
-        "benchmarks/results/2023-07-15-IPC-v3.csv"
+        "benchmarks/results/2023-07-19-IPC-v4.csv"
     ]
     results: [Result] = []
     for file in files:
@@ -127,7 +130,7 @@ def main():
             t[domain]["coverage"][solver] = r(sum([r.solved for r in pResult]) / TOTALS[domain] * 100, 1)
             t[domain]["coverage"][solver] = "-" if t[domain]["coverage"][solver] == "0.0" else t[domain]["coverage"][
                 solver]
-            t[domain]["bound"][solver] = r(statistics.mean([r.bound for r in pResult if r.solved]), 2) if \
+            t[domain]["bound"][solver] = r(statistics.mean([r.lastSearchedBound for r in pResult if r.solved]), 2) if \
                 t[domain]["coverage"][solver] != "-" else "-"
             t[domain]["time"][solver] = r(statistics.mean([r.time if r.solved else 300000 for r in pResult]) / 1000,
                                           2) if \
@@ -152,7 +155,8 @@ def main():
             "ipc-2023/sailing",
             "ipc-2023/fo-sailing",
             "ipc-2023/satellite",
-            "line-exchange"
+            "line-exchange",
+            "line-exchange-quantity"
         ],
         "Scarcely Numeric": [
             "ipc-2023/delivery",
@@ -210,7 +214,8 @@ def main():
             'ENHSP-sat-hradd',
             'ENHSP-sat-hadd',
             'ENHSP-sat-hmrphj',
-            'METRIC-FF'
+            'METRIC-FF',
+            "NFD"
         ],
         "caption": r"Comparative analysis between \textsc{Patty} and two search-based solvers \textsc{ENHSP} (E) and "
                    r"\textsc{MetricFF} (FF). The \textsc{ENHSP} solver has been launched with the GBFS search "

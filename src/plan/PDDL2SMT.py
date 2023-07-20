@@ -1,5 +1,7 @@
 from typing import List, Dict, Set
 
+from pysmt.shortcuts import TRUE, FALSE
+
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
@@ -40,10 +42,9 @@ class PDDL2SMT:
         if self.encoding == "binary":
             self.pattern.extendNonLinearities(binaryActions)
 
-        self.sign: Dict[Action, Dict[Atom, int]] = self.getSign(self.pattern)
-
         for index in range(0, bound + 1):
-            var = TransitionVariables(self.domain.allAtoms, self.domain.assList, self.pattern, index, hasEffectAxioms)
+            var = TransitionVariables(self.domain.predicates, self.domain.functions, self.domain.assList, self.pattern,
+                                      index, hasEffectAxioms)
             self.transitionVariables.append(var)
 
         self.initial: [SMTExpression] = self.getInitialExpression()
@@ -71,13 +72,13 @@ class PDDL2SMT:
                     continue
                 rules.append(tVars.valueVariables[assignment.getAtom()] == float(str(assignment.rhs)))
             elif isinstance(assignment, Literal):
-                rules.append(tVars.valueVariables[assignment.getAtom()] == 1)
+                rules.append(tVars.valueVariables[assignment.getAtom()])
                 trueAtoms.add(assignment.getAtom())
             else:
                 raise NotImplemented("Shouldn't go here")
 
         for v in self.domain.predicates - trueAtoms:
-            rules.append(tVars.valueVariables[v] == -1)
+            rules.append(tVars.valueVariables[v].NOT())
 
         return rules
 
@@ -90,9 +91,9 @@ class PDDL2SMT:
                 rules.append(expr)
             elif isinstance(condition, Literal):
                 if condition.sign == "+":
-                    rules.append(tVars.valueVariables[condition.getAtom()] > 0)
+                    rules.append(tVars.valueVariables[condition.getAtom()])
                 else:
-                    rules.append(tVars.valueVariables[condition.getAtom()] < 0)
+                    rules.append(tVars.valueVariables[condition.getAtom()].NOT())
             elif isinstance(condition, Formula):
                 rules.append(self.getGoalRuleFromFormula(condition))
             else:
@@ -102,24 +103,6 @@ class PDDL2SMT:
             return SMTExpression.andOfExpressionsList(rules)
         if f.type == "OR":
             return SMTExpression.orOfExpressionsList(rules)
-
-    @staticmethod
-    def getSign(pattern: Pattern) -> Dict[Action, Dict[Atom, int]]:
-        sign: Dict[Action, Dict[Atom, int]] = dict()
-
-        for (i, a) in enumerate(pattern):
-            sign[a] = dict()
-            addList = a.getAddList()
-            delList = a.getDelList()
-            for v in addList | delList:
-                sA = 0
-                for b in pattern[:i]:
-                    if (v in addList and v in b.getDelList()) or (v in delList and v in b.getAddList()):
-                        sA -= sign[b][v]
-                sA += +2 if v in addList else -2
-                sign[a][v] = sA
-
-        return sign
 
     def getGoalExpression(self) -> SMTExpression:
         return self.getGoalRuleFromFormula(self.problem.goal)
@@ -165,13 +148,20 @@ class PDDL2SMT:
             # Case b) Boolean
             for v in prevAction.getAddList() | prevAction.getDelList():
                 d_bv = stepVars.deltaVariables[prevAction][v]
-                s_bv = self.sign[prevAction][v]
-                b_b = stepVars.boolActionVariables[prevAction]
+                b_n = stepVars.actionVariables[prevAction]
 
-                if self.hasEffectAxioms:
-                    rules.append(stepVars.deltaVariables[action][v] == d_bv + s_bv * b_b)
-                else:
-                    stepVars.deltaVariables[action][v] = d_bv + s_bv * b_b
+                if v in prevAction.getAddList():
+                    if self.hasEffectAxioms:
+                        rules.append(stepVars.deltaVariables[action][v] == d_bv.OR(b_n > 0))
+                    else:
+                        stepVars.deltaVariables[action][v] = d_bv.OR(b_n > 0)
+
+                if v in prevAction.getDelList():
+                    if self.hasEffectAxioms:
+                        rules.append(stepVars.deltaVariables[action][v] == d_bv.AND(b_n == 0))
+                    else:
+                        stepVars.deltaVariables[action][v] = d_bv.AND(b_n == 0)
+
             # Case c) Numeric increases or decreases
             if not prevAction.hasNonSimpleLinearIncrement(self.encoding):
                 modifications = [(+1, prevAction.getIncreases()), (-1, prevAction.getDecreases())]
@@ -219,17 +209,11 @@ class PDDL2SMT:
             if a.isFake:
                 continue
             a_n = stepVars.actionVariables[a]
-            a_b = stepVars.boolActionVariables[a]
             rules.append(a_n >= 0)
             if not a.couldBeRepeated() or (a.hasNonSimpleLinearIncrement(self.encoding)):
                 rules.append(a_n <= 1)
             elif self.rollBound:
                 rules.append(a_n <= self.rollBound)
-
-            if a.getPredicates():
-                active = (a_n > 0).AND(a_b == 1)
-                notActive = (a_n == 0).AND(a_b == 0)
-                rules.append(active.OR(notActive))
 
         if len(self.domain.arpg.stateLevels) > 2:
             for (atom, interval) in self.domain.arpg.stateLevels[-1].intervals.items():
@@ -257,7 +241,7 @@ class PDDL2SMT:
                 if isinstance(pre, Literal):
                     v = pre.getAtom()
                     d_av = stepVars.deltaVariables[a][v]
-                    rhs = d_av > 0 if pre.sign == "+" else d_av < 0
+                    rhs = d_av if pre.sign == "+" else d_av.NOT()
                     preconditions0 = preconditions0.AND(rhs) if preconditions0 else rhs
                     preconditions1 = preconditions1.AND(rhs) if preconditions1 else rhs
                     continue
@@ -341,8 +325,7 @@ class PDDL2SMT:
         for v in self.domain.predicates:
             v_first = stepVars.valueVariables[v]
             delta_g_v = stepVars.deltaVariables[self.pattern.dummyAction][v]
-            rules.append((delta_g_v > 0).implies(v_first == 1))
-            rules.append((delta_g_v < 0).implies(v_first == -1))
+            rules.append(delta_g_v.coimplies(v_first))
 
         return rules
 

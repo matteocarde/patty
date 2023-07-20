@@ -150,7 +150,7 @@ class BinaryPredicate(Predicate):
     def substitute(self, subs: Dict[Atom, float], default=None) -> Predicate:
         x = BinaryPredicate()
         x.type = self.type
-        x.lhs = self.lhs.substitute(subs, default) if x.type == BinaryPredicateType.OPERATION else self.lhs
+        x.lhs = self.lhs.substitute(subs, default) if x.type != BinaryPredicateType.MODIFICATION else self.lhs
         x.operator = self.operator
         x.rhs = self.rhs.substitute(subs, default)
 

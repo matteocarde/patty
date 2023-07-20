@@ -11,8 +11,8 @@ PLANNERS = [
     "ENHSP-HADD",
     "ENHSP-HRADD",
     "ENHSP-HMRP",
-     "METRIC-FF",
-     "NFD"
+    "METRIC-FF",
+    "NFD"
 ]
 
 

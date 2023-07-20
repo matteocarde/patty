@@ -15,9 +15,9 @@ class TestZeno(TestCase):
 
     def setUp(self) -> None:
         self.domain: Domain = Domain.fromFile("../../files/zeno-travel/domain.pddl")
-        self.problem: Problem = Problem.fromFile("../../files/zeno-travel/instances/pfile10.pddl")
+        self.problem: Problem = Problem.fromFile("../../files/zeno-travel/instances/pfile1.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
-        self.horizon = 4
+        self.horizon = 5
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
         self.pddl2smt: PDDL2SMT = PDDL2SMT(self.gDomain, self.problem, self.pattern, self.horizon)
         print(self.pddl2smt.pattern)

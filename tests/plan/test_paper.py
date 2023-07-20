@@ -30,9 +30,6 @@ class TestPaper(TestCase):
     def test_solve(self):
         solver: SMTSolver = SMTSolver(self.pddl2smt)
 
-        print(self.pddl2smt.pattern)
-        self.pddl2smt.printRules()
-
         plan: NumericPlan = solver.solve()
         solver.exit()
         print(plan)

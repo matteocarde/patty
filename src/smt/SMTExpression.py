@@ -6,7 +6,7 @@ from src.pddl.Constant import Constant
 from src.pddl.Literal import Literal
 from pysmt.fnode import FNode
 from pysmt.shortcuts import And, Or, Equals, LE, LT, GE, GT, Implies, Real, Times, Minus, Plus, Div, TRUE, ToReal, Int, \
-    NotEquals
+    NotEquals, Iff
 from pysmt.typing import REAL, INT, BOOL
 from typing import Set, Dict
 
@@ -78,6 +78,10 @@ class SMTExpression:
     def OR(self, other: SMTExpression):
         return self.__binary(other, Or, self.expression, other.expression)
 
+    def NOT(self):
+        from src.smt.SMTNegation import SMTNegation
+        return SMTNegation(self)
+
     def __eq__(self, other: SMTExpression or int):
         expr = self.__binary(other, Equals, self.expression, toRHS(other))
         expr.type = BOOL
@@ -134,6 +138,11 @@ class SMTExpression:
 
     def implies(self, other: SMTExpression):
         expr = self.__binary(other, Implies, self.expression, other.expression)
+        expr.type = BOOL
+        return expr
+
+    def coimplies(self, other: SMTExpression):
+        expr = self.__binary(other, Iff, self.expression, other.expression)
         expr.type = BOOL
         return expr
 

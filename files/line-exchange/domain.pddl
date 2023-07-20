@@ -16,7 +16,6 @@
     (i ?r - robot)
     (x ?r - robot)
     (q ?r - robot)
-    (max_q)
     (e ?r1 - robot ?r2 - robot)
   )
 
@@ -75,8 +74,6 @@
       (pd ?r1 ?r2)
       (>= (q ?r1) (e ?r1 ?r2))
       (>= (q ?r2) (* -1 (e ?r1 ?r2)))
-      (<= (q ?r1) (max_q))
-      (<= (q ?r2) (max_q))
     )
     :effect (and
       (decrease (q ?r1) (e ?r1 ?r2))
