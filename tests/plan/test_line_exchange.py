@@ -20,7 +20,7 @@ class TestLineExchange(TestCase):
         self.horizon = 3
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
         self.pddl2smt: PDDL2SMT = PDDL2SMT(self.gDomain, self.problem, self.pattern, self.horizon)
-        print(self.pddl2smt.pattern)
+        # print(self.pddl2smt.pattern)
         pass
 
     def test_transform(self):

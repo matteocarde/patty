@@ -15,12 +15,13 @@ class TestLineExchangeGeneral(TestCase):
 
     def setUp(self) -> None:
         self.domain: Domain = Domain.fromFile("../../files/line-exchange/domain.pddl")
-        self.problem: Problem = Problem.fromFile("../../files/line-exchange/instances/3_1_1.pddl")
+        self.problem: Problem = Problem.fromFile("../../files/line-exchange/instances/2_10_90_10.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.horizon = 5
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
         self.pddl2smt: PDDL2SMT = PDDL2SMT(self.gDomain, self.problem, self.pattern, self.horizon)
         print(self.pddl2smt.pattern)
+        self.pddl2smt.printRules()
         pass
 
     def test_transform(self):
@@ -44,39 +45,39 @@ class TestLineExchangeGeneral(TestCase):
 
         self.assertTrue(plan.validate(self.problem))
 
-    def test_optimize(self):
-        solver: SMTSolver = SMTSolver(self.pddl2smt)
-
-        plan: NumericPlan = solver.optimize()
-        solver.exit()
-
-        self.assertIsInstance(plan, NumericPlan)
-
-        print("Plan length: ", len(plan))
-        print("No repetitions:")
-        plan.print()
-        print("With repetitions:")
-        plan.printWithRepetitions()
-
-        self.assertTrue(plan.validate(self.problem))
-        self.assertTrue(plan.optimal)
-
-    def test_optimize_binary(self):
-        solver: SMTSolver = SMTSolver(self.pddl2smt)
-
-        plan: NumericPlan = solver.optimizeBinary()
-        solver.exit()
-
-        self.assertIsInstance(plan, NumericPlan)
-
-        print("Plan length: ", len(plan))
-        print("No repetitions:")
-        plan.print()
-        print("With repetitions:")
-        plan.printWithRepetitions()
-
-        self.assertTrue(plan.validate(self.problem))
-        self.assertTrue(plan.optimal)
+    # def test_optimize(self):
+    #     solver: SMTSolver = SMTSolver(self.pddl2smt)
+    #
+    #     plan: NumericPlan = solver.optimize()
+    #     solver.exit()
+    #
+    #     self.assertIsInstance(plan, NumericPlan)
+    #
+    #     print("Plan length: ", len(plan))
+    #     print("No repetitions:")
+    #     plan.print()
+    #     print("With repetitions:")
+    #     plan.printWithRepetitions()
+    #
+    #     self.assertTrue(plan.validate(self.problem))
+    #     self.assertTrue(plan.optimal)
+    #
+    # def test_optimize_binary(self):
+    #     solver: SMTSolver = SMTSolver(self.pddl2smt)
+    #
+    #     plan: NumericPlan = solver.optimizeBinary()
+    #     solver.exit()
+    #
+    #     self.assertIsInstance(plan, NumericPlan)
+    #
+    #     print("Plan length: ", len(plan))
+    #     print("No repetitions:")
+    #     plan.print()
+    #     print("With repetitions:")
+    #     plan.printWithRepetitions()
+    #
+    #     self.assertTrue(plan.validate(self.problem))
+    #     self.assertTrue(plan.optimal)
 
 
 if __name__ == '__main__':

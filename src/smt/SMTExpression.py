@@ -21,8 +21,9 @@ def toRHS(other):
 
 
 def getVars(obj):
+    from src.smt.SMTNegation import SMTNegation
     if isinstance(obj, SMTExpression):
-        return obj.variables if obj.variables else {obj}
+        return obj.variables if obj.variables else {obj} if not isinstance(obj, SMTNegation) else {obj.positive}
     return set()
 
 
@@ -83,6 +84,8 @@ class SMTExpression:
         return SMTNegation(self)
 
     def __eq__(self, other: SMTExpression or int):
+        if self.type == BOOL:
+            return self.coimplies(other)
         expr = self.__binary(other, Equals, self.expression, toRHS(other))
         expr.type = BOOL
         return expr

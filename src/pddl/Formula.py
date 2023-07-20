@@ -86,6 +86,10 @@ class Formula:
         x.conditions = [c.substitute(subs, default) for c in self.conditions]
         return x
 
+    def canHappen(self, subs: Dict[Atom, float], default=None) -> bool:
+        canHappen = [c.canHappen(subs, default) for c in self.conditions]
+        return all(canHappen)
+
     def replace(self, atom: Atom, w: BinaryPredicate) -> Formula:
         f = Formula()
         f.type = f.type

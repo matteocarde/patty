@@ -161,9 +161,24 @@ class BinaryPredicate(Predicate):
 
         return x
 
+    def canHappen(self, subs: Dict[Atom, float], default=None) -> bool:
+        x = BinaryPredicate()
+        x.type = self.type
+        x.lhs = self.lhs.substitute(subs, default) if x.type != BinaryPredicateType.MODIFICATION else self.lhs
+        x.operator = self.operator
+        x.rhs = self.rhs.substitute(subs, default)
+
+        x.__functions = x.getFunctionsOverwrite()
+
+        if x.getFunctions() or x.getPredicates():
+            return True
+        else:
+            result = Utilities.compare(x.operator, x.lhs.value, x.rhs.value)
+            return result
+
     def toConstant(self) -> Constant:
         if self.getFunctions():
-            raise Exception(f"Cannot transform {self} into a Consant")
+            raise Exception(f"Cannot transform {self} into a Constant")
         c = Constant(float(self.toExpression()))
         return c
 
@@ -191,7 +206,7 @@ class BinaryPredicate(Predicate):
 
     def toExpression(self) -> Expr:
         if self.type != BinaryPredicateType.OPERATION:
-            raise Exception("Cannot transform to expression ", self.type)
+            raise Exception("Cannot transform", self, " to expression ", self.type)
         return Utilities.op(self.operator, self.lhs.toExpression(), self.rhs.toExpression())
 
     def getIntervalFromSimpleCondition(self) -> MooreInterval or None:

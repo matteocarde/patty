@@ -70,7 +70,7 @@ TOTALS = {
 
 def main():
     files = [
-        "benchmarks/results/2023-07-19-IPC-v4.csv"
+        "benchmarks/results/2023-07-20-IPC-v8.csv"
     ]
     results: [Result] = []
     for file in files:

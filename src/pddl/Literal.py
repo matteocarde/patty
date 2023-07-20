@@ -119,6 +119,9 @@ class Literal(Predicate):
         if self.atom in subs:
             return Constant(subs[self.atom])
 
+    def canHappen(self, subs: Dict[Atom, float], default=None) -> bool:
+        return True
+
     def getLinearIncrement(self) -> float:
         return 0
 

@@ -32,3 +32,4 @@ class Preconditions(Formula):
 
     def addPrecondition(self, param):
         self.addClause(param)
+

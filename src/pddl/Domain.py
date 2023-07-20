@@ -74,7 +74,7 @@ class Domain:
                     constants[fun] = 0
 
         gDomain = gDomain.substitute(constants)
-        orderedActions = [a.substitute(constants) for a in orderedActions]
+        orderedActions = [a.substitute(constants) for a in orderedActions if a.canHappen(constants)]
         problem.substitute(constants)
 
         gDomain.arpg = ARPG(orderedActions, problem, gDomain)
@@ -218,9 +218,10 @@ class GroundedDomain(Domain):
         return self.__operationsDict[planName]
 
     def substitute(self, sub: Dict[Atom, float], default=None) -> GroundedDomain:
-        subActions: Set[Action] = {a.substitute(sub, default) for a in self.actions}
+        subActions: Set[Action] = {a.substitute(sub, default) for a in self.actions if a.canHappen(sub, default)}
 
         return GroundedDomain(self.name, subActions, self.events, self.processes)
+
 
     def getARPG(self):
         return self.arpg

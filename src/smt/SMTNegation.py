@@ -8,6 +8,7 @@ class SMTNegation(SMTExpression):
     def __init__(self, expr: SMTExpression):
         super().__init__()
         self.variables = expr.variables
+        self.positive = expr
         self.type = BOOL
         self.expression = Not(expr.expression)
 

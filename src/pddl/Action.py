@@ -123,6 +123,9 @@ class Action(Operation):
         action = Action.fromProperties(name, preconditions, effects, planName)
         return action
 
+    def canHappen(self, sub: Dict[Atom, float], default=None) -> bool:
+        return self.preconditions.canHappen(sub, default)
+
     def getBinaryOperation(self, i: int) -> Action:
         a_i = super().getBinaryOperation(i)
         a_i.__class__ = Action
