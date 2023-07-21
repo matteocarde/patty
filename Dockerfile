@@ -163,10 +163,20 @@ COPY /benchmarks/planners/nfd-runner/nfd /var/nfd/nfd
 ENV PATH /var/nfd/:${PATH}
 RUN chmod +x /var/nfd/nfd
 
+# Install OMTPlan
+#RUN pip install networkx
+#RUN pip install numpy
+#COPY /benchmarks/planners/OMTPlan /var/omtplan
+#ENV PATH /var/omtplan/:${PATH}
+#RUN chmod +x /var/omtplan/omtplan
+
 
 WORKDIR /project
 # Copying
 COPY . .
+
+
+#RUN omtplan -omt -parallel -domain files/ipc-2023/counters/domain.pddl files/ipc-2023/counters/instances/fz_instance_4.pddl
 
 #Authorizations
 RUN chmod +x exes/*

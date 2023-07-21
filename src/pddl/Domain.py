@@ -55,7 +55,7 @@ class Domain:
         for op in gActions | gEvents | gProcess:
             for fun in op.getFunctions():
                 if fun not in problem.init.numericAssignments:
-                    print(f"WARNING: {fun} was not initialized. Substituting it with 0")
+                    # print(f"WARNING: {fun} was not initialized. Substituting it with 0")
                     constants[fun] = 0
 
         gDomain = gDomain.substitute(constants)

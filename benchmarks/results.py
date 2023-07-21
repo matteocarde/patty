@@ -3,6 +3,8 @@ import statistics
 
 from classes.Result import Result
 
+SMT_SOLVERS = {'SpringRoll', 'PATTY', 'PATTY-R', 'RANTANPLAN'}
+
 SOLVERS = {
     'SpringRoll': "SR",
     'PATTY': "P_{arpg}",
@@ -122,7 +124,17 @@ def main():
             "nOfRules": dict(),
         }
 
-        pResult: [Result]
+        commonlySolved = {}
+        commonlyGrounded = {}
+        for solver in SMT_SOLVERS:
+            solved = {r.problem for r in domainDict[solver] if r.solved}
+            grounded = {r.problem for r in domainDict[solver] if r.bound > 0}
+            if solved:
+                commonlySolved = solved if not commonlySolved else commonlySolved.intersection(solved)
+            if grounded:
+                commonlyGrounded = solved if not commonlyGrounded else commonlyGrounded.intersection(grounded)
+
+        pResult: [Result] = None
         for solver in solvers:
             if solver not in domainDict:
                 continue
@@ -130,20 +142,22 @@ def main():
             t[domain]["coverage"][solver] = r(sum([r.solved for r in pResult]) / TOTALS[domain] * 100, 1)
             t[domain]["coverage"][solver] = "-" if t[domain]["coverage"][solver] == "0.0" else t[domain]["coverage"][
                 solver]
-            t[domain]["bound"][solver] = r(statistics.mean([r.lastSearchedBound for r in pResult if r.solved]), 2) if \
-                t[domain]["coverage"][solver] != "-" else "-"
+            bounds = [r.bound for r in pResult if r.solved if r.problem in commonlySolved]
+            t[domain]["bound"][solver] = r(statistics.mean(bounds), 2) if t[domain]["coverage"][
+                                                                              solver] != "-" and bounds else "-"
             t[domain]["time"][solver] = r(statistics.mean([r.time if r.solved else 300000 for r in pResult]) / 1000,
                                           2) if \
                 t[domain]["coverage"][solver] != "-" else "-"
             t[domain]["length"][solver] = r(statistics.mean([r.planLength for r in pResult if r.solved]), 0) if \
                 t[domain]["coverage"][solver] != "-" else "-"
-            v = [r.nOfVars for r in pResult if r.nOfVars > 0]
+
+            v = [r.nOfVars for r in pResult if r.nOfVars > 0 and r.problem in commonlyGrounded]
             t[domain]["nOfVars"][solver] = r(statistics.mean(v), 0) if len(v) else "G"
-            v = [r.nOfRules for r in pResult if r.nOfRules > 0]
+            v = [r.nOfRules for r in pResult if r.nOfRules > 0 and r.problem in commonlyGrounded]
             t[domain]["nOfRules"][solver] = r(statistics.mean(v), 0) if len(v) else "G"
 
     domainsClusters = {
-        "Purely Numeric": [
+        r"\textit{Purely Numeric}": [
             "ipc-2023/block-grouping",
             "ipc-2023/counters",
             "ipc-2023/fo_counters",
@@ -157,7 +171,7 @@ def main():
             "line-exchange",
             "line-exchange-quantity"
         ],
-        "Scarcely Numeric": [
+        r"\textit{Scarcely Numeric}": [
             "ipc-2023/delivery",
             "ipc-2023/expedition",
             # "ipc-2023/markettrader",
@@ -184,7 +198,7 @@ def main():
         "name": "tab:exp-smt",
         "columns": {
             "coverage": "Coverage (\%)",
-            "bound": "Bound",
+            "bound": "Bound (Common)",
             "time": "Time (s)",
             "nOfVars": "Vars $n=1$",
             "nOfRules": "Rules $n=1$",
@@ -217,9 +231,8 @@ def main():
             'METRIC-FF',
             "NFD"
         ],
-        "caption": r"Comparative analysis between \textsc{Patty} and two search-based solvers \textsc{ENHSP} (E) and "
-                   r"\textsc{MetricFF} (FF). The \textsc{ENHSP} solver has been launched with the GBFS search "
-                   r"strategy and the two heuristics $hadd$ and $hradd$."
+        "caption": r"Comparative analysis between \textsc{Patty} and the search-based solvers \textsc{ENHSP} (E), "
+                   r"\textsc{MetricFF} (FF) and \textsc{NumericFastDownward} (NFD)."
     }]
 
     for table in tables:
