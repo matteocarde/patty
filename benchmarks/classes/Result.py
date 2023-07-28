@@ -6,7 +6,7 @@ import json
 
 import re
 
-from typing import List
+from typing import List, Dict
 
 
 class Result:
@@ -92,18 +92,55 @@ class Result:
         ])
 
     @classmethod
-    def average(cls, list: [Result]):
+    def average(cls, results: [Result]):
         r = cls("x", "x")
-        r.solver = list[0].solver
-        r.domain = list[0].domain
-        r.problem = list[0].problem
-        r.solved = statistics.mean([1 if e.solved else 0 for e in list])
-        r.timeout = statistics.mean([1 if e.timeout else 0 for e in list])
-        r.nOfVars = max([e.nOfVars for e in list])
-        r.nOfRules = max([e.nOfRules for e in list])
-        r.lastSearchedBound = max([e.lastSearchedBound for e in list])
+        r.solver = results[0].solver
+        r.domain = results[0].domain
+        r.problem = results[0].problem
+        r.solved = statistics.mean([1 if e.solved else 0 for e in results])
+        r.timeout = statistics.mean([1 if e.timeout else 0 for e in results])
+        r.nOfVars = max([e.nOfVars for e in results])
+        r.nOfRules = max([e.nOfRules for e in results])
+        r.lastSearchedBound = max([e.lastSearchedBound for e in results])
         if r.solved > 0:
-            r.time = max([e.time for e in list if e.solved])
-            r.bound = max([e.bound for e in list if e.solved])
-            r.planLength = statistics.mean([e.planLength for e in list if e.solved])
+            r.time = max([e.time for e in results if e.solved])
+            r.bound = max([e.bound for e in results if e.solved])
+            r.planLength = statistics.mean([e.planLength for e in results if e.solved])
         return r
+
+    @classmethod
+    def portfolio(cls, portfolio: [Result], solver: str) -> Result:
+        solved = [r for r in portfolio if r.solved]
+        if not solved:
+            result = portfolio[0]
+            result.solver = solver
+            return result
+
+        minResult: Result = solved[0]
+        for r in solved:
+            if r.time < minResult.time:
+                minResult = r
+
+        minResult.solver = solver
+        return minResult
+
+    @classmethod
+    def joinPorfolios(cls, aResults: List[Result], PORTFOLIOS: Dict[str, str]):
+        results = list()
+        pResults: Dict[str, Dict[str, Dict[str, List[Result]]]] = dict()
+
+        for r in aResults:
+            if r.solver not in PORTFOLIOS:
+                results.append(r)
+                continue
+            solver = PORTFOLIOS[r.solver]
+            pResults.setdefault(solver, dict())
+            pResults[solver].setdefault(r.domain, dict())
+            pResults[solver][r.domain].setdefault(r.problem, list())
+            pResults[solver][r.domain][r.problem].append(r)
+
+        for (solver, solverDict) in pResults.items():
+            for (domain, domainDict) in solverDict.items():
+                for (problem, portfolio) in domainDict.items():
+                    results.append(Result.portfolio(portfolio, solver))
+        return results

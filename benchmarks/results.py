@@ -1,5 +1,6 @@
 import csv
 import statistics
+from typing import Dict, List
 
 from classes.Result import Result
 
@@ -7,14 +8,14 @@ SMT_SOLVERS = {'SpringRoll', 'PATTY', 'PATTY-R', 'RANTANPLAN'}
 
 SOLVERS = {
     'SpringRoll': "SR",
-    'PATTY': "P_{arpg}",
+    'PATTY': "P",
     'PATTY-R': "P_r",
     'RANTANPLAN': "\mathrm{RTP}",
     'METRIC-FF': "\mathrm{FF}",
-    'ENHSP-sat-hadd': r"E_{hadd}",
-    'ENHSP-sat-hradd': r"E_{hradd}",
-    'ENHSP-sat-hmrphj': r"E_{hmrphj}",
+    'ENHSP': r"\mathrm{ENHSP}",
     'NFD': "\mathrm{NFD}",
+    'SMTPLAN+': "\mathrm{SMTP}^+",
+    'OMTPLAN': "\mathrm{OMT}",
 }
 
 DOMAINS = {
@@ -71,21 +72,27 @@ TOTALS = {
 
 
 def main():
+    ## Parsing the results
     files = [
         "benchmarks/results/2023-07-20-IPC-v8.csv"
     ]
-    results: [Result] = []
+
+    aResults: [Result] = []
     for file in files:
         with open(file, "r") as f:
             reader = csv.reader(f, delimiter=",")
             for i, line in enumerate(reader):
-                results.append(Result.fromCSVLine(line[0].split(",")))
+                aResults.append(Result.fromCSVLine(line[0].split(",")))
+
+    ## Joining together portfolios
+    results = Result.joinPorfolios(aResults, {
+        "ENHSP-sat-hadd": "ENHSP",
+        "ENHSP-sat-hradd": "ENHSP",
+        "ENHSP-sat-hmrphj": "ENHSP",
+    })
 
     solvers = set()
-    sorted(solvers)
     domains = set()
-    sorted(domains)
-
     d = dict()
     for r in results:
         d[r.domain] = d.setdefault(r.domain, dict())
@@ -134,7 +141,6 @@ def main():
             if grounded:
                 commonlyGrounded = solved if not commonlyGrounded else commonlyGrounded.intersection(grounded)
 
-        pResult: [Result] = None
         for solver in solvers:
             if solver not in domainDict:
                 continue
@@ -152,9 +158,9 @@ def main():
                 t[domain]["coverage"][solver] != "-" else "-"
 
             v = [r.nOfVars for r in pResult if r.nOfVars > 0 and r.problem in commonlyGrounded]
-            t[domain]["nOfVars"][solver] = r(statistics.mean(v), 0) if len(v) else "G"
+            t[domain]["nOfVars"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
             v = [r.nOfRules for r in pResult if r.nOfRules > 0 and r.problem in commonlyGrounded]
-            t[domain]["nOfRules"][solver] = r(statistics.mean(v), 0) if len(v) else "G"
+            t[domain]["nOfRules"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
 
     domainsClusters = {
         r"\textit{Purely Numeric}": [
@@ -168,8 +174,8 @@ def main():
             "ipc-2023/hydropower",
             "ipc-2023/sailing",
             "ipc-2023/fo-sailing",
-            "line-exchange",
-            "line-exchange-quantity"
+            # "line-exchange",
+            # "line-exchange-quantity"
         ],
         r"\textit{Scarcely Numeric}": [
             "ipc-2023/delivery",
@@ -195,49 +201,57 @@ def main():
     }
 
     tables = [{
-        "name": "tab:exp-smt",
+        "name": "tab:experiments",
+        "type": "table*",
+        "width": r"\textwidth",
         "columns": {
-            "coverage": "Coverage (\%)",
-            "bound": "Bound (Common)",
-            "time": "Time (s)",
-            "nOfVars": "Vars $n=1$",
-            "nOfRules": "Rules $n=1$",
+            "coverage": ("Coverage (\%)", {"SMT", "SEARCH"}),
+            "time": ("Time (s)", {"SMT", "SEARCH"}),
+            "bound": ("Bound (Common)", {"SMT"}),
+            "nOfVars": ("Vars $n=1$", {"SMT"}),
+            "nOfRules": ("Rules $n=1$", {"SMT"}),
         },
-        "solvers": [
-            'PATTY',
-            'PATTY-R',
-            'RANTANPLAN',
-            'SpringRoll'
-        ],
-        "caption": r"Comparative analysis between the SMT-based solvers \textsc{Patty} (P), "
-                   r"\textsc{SpringRoll} (SR) and \textsc{RanTanPlan} (RTP). $P_{\prec}$ represents the \textsc{Patty} "
-                   r"solver with a pattern built randomly (r) or with the ARPG (arpg). The labels S and L specifies if the domain presents simple "
-                   r"or linear effects, respectively. $G$ signifies all the instances couldn't be grounded."
-    }, {
-        "name": "tab:exp-search",
-        "columns": {
-            "coverage": "Coverage (\%)",
-            "time": "Time (s)",
-            # "length": "Plan Length"
+        "solvers": {
+            'PATTY': "SMT",
+            # 'PATTY-R',
+            'RANTANPLAN': "SMT",
+            'SpringRoll': "SMT",
+            "OMTPLAN": "SMT",
+            'ENHSP': "SEARCH",
+            'METRIC-FF': "SEARCH",
+            "NFD": "SEARCH"
         },
-        "solvers": [
-            # 'PATTY-arpg-yices-binary',
-            'PATTY',
-            'RANTANPLAN',
-            'SpringRoll',
-            'ENHSP-sat-hradd',
-            'ENHSP-sat-hadd',
-            'ENHSP-sat-hmrphj',
-            'METRIC-FF',
-            "NFD"
-        ],
-        "caption": r"Comparative analysis between \textsc{Patty} and the search-based solvers \textsc{ENHSP} (E), "
-                   r"\textsc{MetricFF} (FF) and \textsc{NumericFastDownward} (NFD)."
-    }]
+        "caption": r"Comparative analysis between the \textsc{Patty} (P) solver, the SMT-based solvers \textsc{"
+                   r"RanTanPlan} (RTP), \textsc{SpringRoll} (SR) and \textsc{OMTPlan} (OMT) and the search-based "
+                   r"solvers \textsc{ENHSP} (E), \textsc{MetricFF} (FF) and \textsc{NumericFastDownward} (NFD). The "
+                   r"labels S and L specify if the domain presents simple or linear effects, respectively."
+    },
+        #     {
+        #     "name": "tab:exp-search",
+        #     "type": "table",
+        #     "width": r"\columnwidth",
+        #     "columns": {
+        #         "coverage": "Coverage (\%)",
+        #         "time": "Time (s)",
+        #         # "length": "Plan Length"
+        #     },
+        #     "solvers": [
+        #         # 'PATTY-arpg-yices-binary',
+        #         'PATTY',
+        #         # 'RANTANPLAN',
+        #         # 'SpringRoll',
+        #         'ENHSP',
+        #         'METRIC-FF',
+        #         "NFD"
+        #     ],
+        #     "caption": r"Comparative analysis between \textsc{Patty} and the search-based solvers \textsc{ENHSP} (E), "
+        #                r"\textsc{MetricFF} (FF) and \textsc{NumericFastDownward} (NFD)."
+        # }
+    ]
 
     for table in tables:
         stats = table["columns"].keys()
-        solvers = table["solvers"]
+        solvers = table["solvers"].keys()
 
         best = dict()
         for (domain, domainDict) in d.items():
@@ -246,8 +260,10 @@ def main():
                 better = {}
                 betterValue = float("-inf") if winners[stat] > 0 else float("+inf")
                 for solver in solvers:
+                    if solver not in t[domain][stat]:
+                        continue
                     value = t[domain][stat][solver]
-                    if value in {"-", "G"}:
+                    if value in {"-", "G", "-1.00"}:
                         continue
                     if float(value) * winners[stat] > betterValue * winners[stat]:
                         betterValue = float(value)
@@ -257,27 +273,43 @@ def main():
                 best[domain][stat] = better
 
         print(r"""
-            \begin{table}[]
+            \begin{""" + table["type"] + r"""}[tb]
             \centering
-            \resizebox{\columnwidth}{!}{""")
-        columns = f"|l|{len(stats) * ('|' + 'c' * len(solvers) + '|')}" + "|"
+            \resizebox{""" + table["width"] + r"""}{!}{""")
+
+        solversHeader = []
+        mString = []
+        cString = ""
+        for (stat, (name, statTypes)) in table["columns"].items():
+            nCells = 0
+            for (solver, type) in table["solvers"].items():
+                if type not in statTypes:
+                    continue
+                solversHeader.append(f"${SOLVERS[solver]}$")
+                nCells += 1
+            mString.append(r"\multicolumn{" + str(nCells) + "}{c||}{" + name + "}")
+            cString += f"|{nCells * 'c'}|"
+
+        columns = f"|l|{cString}" + "|"
+
         print(r"\begin{tabular}{" + columns + "}")
         print(r"\hline")
-        print(fr" & " + "&".join(
-            [r"\multicolumn{" + str(len(solvers)) + "}{c||}{" + table["columns"][s] + "}" for s in stats]) + r"\\")
-        print(fr"Domain & " + "&".join([f"${SOLVERS[p]}$" for s in stats for p in solvers]) + r"\\")
+        print(fr" & " + "&".join(mString) + r"\\")
+        print(fr"Domain & " + "&".join(solversHeader) + r"\\")
         print(fr"\hline")
 
         for (cluster, clusterDomains) in domainsClusters.items():
             rows = []
-            row = [cluster] + [" "] * len(stats) * len(solvers)
+            row = [cluster] + [" "] * len(solversHeader)
             print("&".join(row) + r"\\\hline")
             for domain in clusterDomains:
                 row = [DOMAINS[domain]]
-                for stat in stats:
-                    for solver in solvers:
+                for (stat, (name, statTypes)) in table["columns"].items():
+                    for (solver, type) in table["solvers"].items():
+                        if type not in statTypes:
+                            continue
                         if solver not in t[domain][stat]:
-                            row.append("-")
+                            row.append("TBD")
                             continue
                         if solver in best[domain][stat]:
                             row.append(r"\textbf{" + t[domain][stat][solver] + "}")
@@ -290,8 +322,8 @@ def main():
         print(r"""
         \end{tabular}}
         \caption{""" + table["caption"] + """}
-        \label{tab:""" + table["name"] + """}
-        \end{table}
+        \label{""" + table["name"] + """}
+        \end{""" + table["type"] + """}
         """)
 
     pass

@@ -15,9 +15,7 @@ SOLVERS = {
     'PATTY-R': "P_r",
     'RANTANPLAN': "\mathrm{RTP}",
     'METRIC-FF': "\mathrm{FF}",
-    'ENHSP-sat-hadd': r"E_{hadd}",
-    'ENHSP-sat-hradd': r"E_{hradd}",
-    'ENHSP-sat-hmrphj': r"E_{hmrphj}",
+    'ENHSP': r"\mathrm{ENHSP}",
     'NFD': "\mathrm{NFD}",
 }
 
@@ -78,14 +76,21 @@ def main():
     files = [
         "benchmarks/results/2023-07-20-IPC-v8.csv"
     ]
-    results: [Result] = []
+    aResults: [Result] = []
     for file in files:
         with open(file, "r") as f:
             reader = csv.reader(f, delimiter=",")
             for i, line in enumerate(reader):
-                results.append(Result.fromCSVLine(line[0].split(",")))
+                aResults.append(Result.fromCSVLine(line[0].split(",")))
 
     rDomain: Dict[str, Dict[str, Dict[str, Result]]] = dict()
+
+    ## Joining together portfolios
+    results = Result.joinPorfolios(aResults, {
+        "ENHSP-sat-hadd": "ENHSP",
+        "ENHSP-sat-hradd": "ENHSP",
+        "ENHSP-sat-hmrphj": "ENHSP",
+    })
 
     xAxes: Dict[str, Set[str]] = dict()
     for result in results:
