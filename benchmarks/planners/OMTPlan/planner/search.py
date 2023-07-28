@@ -22,18 +22,17 @@ import utils
 import numpy as np
 
 
-class Search():
+class Search:
     """
     Base class defining search schemes.
     """
 
-    def __init__(self, encoder,ub):
+    def __init__(self, encoder, ub):
         self.encoder = encoder
         self.found = False
         self.solution = None
         self.solver = None
         self.ub = ub
-
 
 
 class SearchSMT(Search):
@@ -59,13 +58,19 @@ class SearchSMT(Search):
         while not self.found and self.horizon < self.ub:
             # Create SMT solver instance
             self.solver = Solver()
+            print(f"Current Horizon: {self.horizon}")
 
             # Build planning subformulas
-            formula =  self.encoder.encode(self.horizon)
-
+            formula = self.encoder.encode(self.horizon)
             # Assert subformulas in solver
-            for k,v in list(formula.items()):
+            for k, v in list(formula.items()):
                 self.solver.add(v)
+
+            encodingString = self.solver.to_smt2()
+            nOfVars = encodingString.count("(declare")
+            nOfRules = encodingString.count("(assert")
+            print(f"Number of vars at bound {self.horizon}: {nOfVars}")
+            print(f"Number of rules at bound {self.horizon}: {nOfRules}")
 
             # Check for satisfiability
             res = self.solver.check()
@@ -76,14 +81,13 @@ class SearchSMT(Search):
                 # Increment horizon until we find a solution
                 self.horizon = self.horizon + 1
 
-
         if self.found:
             # Extract plan from model
             model = self.solver.model()
             self.solution = plan.Plan(model, self.encoder)
         else:
             print('Problem not solvable')
-            
+
         return self.solution
 
 
@@ -99,16 +103,15 @@ class SearchOMT(Search):
         """
 
         schedule = []
-        percentages = [10,15,25,35,50,75,100]
+        percentages = [10, 15, 25, 35, 50, 75, 100]
 
         def percentage(percent, whole):
             return (percent * whole) / 100
 
         for p in percentages:
-            schedule.append(percentage(p,self.ub))
+            schedule.append(percentage(p, self.ub))
 
         return schedule
-
 
     def do_search(self):
         """
@@ -139,7 +142,7 @@ class SearchOMT(Search):
                     # objective function requires different handling
                     # as per Z3 API
                     objective = self.solver.minimize(sub_formula)
-                elif label ==  'real_goal':
+                elif label == 'real_goal':
                     # we don't want to assert goal formula at horizon
                     # see construction described in related paper
                     pass
@@ -165,7 +168,7 @@ class SearchOMT(Search):
                 # see Theorem 2 in related paper
 
                 if opt:
-                    self.solution =  plan.Plan(model, self.encoder, objective)
+                    self.solution = plan.Plan(model, self.encoder, objective)
                     break
 
         return self.solution

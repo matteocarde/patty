@@ -1,0 +1,7 @@
+#! /bin/bash
+
+DOMAIN=$1
+PROBLEM=$2
+PLAN=$3
+
+python2 fast-downward.py --build release64 --plan-file $PLAN $DOMAIN $PROBLEM --search 'astar(lmcutnumeric(use_second_order_simple=true, bound_iterations=10, ceiling_less_than_one=true))'

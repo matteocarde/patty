@@ -18,13 +18,14 @@
 ##    along with OMTPlan.  If not, see <https://www.gnu.org/licenses/>.
 ############################################################################
 
-import networkx as nx
-import utils
-import translate.pddl as pddl
-from collections import defaultdict
-from z3 import *
 import itertools
+from collections import defaultdict
 
+import networkx as nx
+from z3 import *
+
+import translate.pddl as pddl
+import utils
 
 
 def buildDTables(encoder):
@@ -36,7 +37,6 @@ def buildDTables(encoder):
     @return table: datastructure containing info to build loop formula.
     """
 
-
     # Edges of dependency graph
     edges = []
 
@@ -46,7 +46,7 @@ def buildDTables(encoder):
 
     table = defaultdict(dict)
 
-    step = encoder.horizon+1
+    step = encoder.horizon + 1
 
     for action in encoder.actions:
         # preconditions of action
@@ -65,36 +65,34 @@ def buildDTables(encoder):
                 var_name = utils.varNameFromBFluent(pre)
                 tpre.append(encoder.touched_variables[var_name])
                 if pre.negated:
-                    tmp = [Not(encoder.boolean_variables[step-1][var_name]),encoder.touched_variables[var_name]]
+                    tmp = [Not(encoder.boolean_variables[step - 1][var_name]), encoder.touched_variables[var_name]]
                 else:
-                    tmp = [encoder.boolean_variables[step-1][var_name],encoder.touched_variables[var_name]]
+                    tmp = [encoder.boolean_variables[step - 1][var_name], encoder.touched_variables[var_name]]
 
                 tpre_rel.append(tuple(tmp))
 
             # numeric precondition
             elif isinstance(pre, pddl.conditions.FunctionComparison):
-                expr = utils.inorderTraversalFC(encoder,pre,encoder.numeric_variables[step-1])
+                expr = utils.inorderTraversalFC(encoder, pre, encoder.numeric_variables[step - 1])
 
                 tmp = [expr]
 
-                for var_name in utils.extractVariablesFC(encoder,pre):
+                for var_name in utils.extractVariablesFC(encoder, pre):
                     tpre.append(encoder.touched_variables[var_name])
                     tmp.append(encoder.touched_variables[var_name])
 
                 tpre_rel.append(tuple(tmp))
             else:
-                raise Exception('Precondition \'{}\' of type \'{}\' not supported'.format(pre,type(pre)))
-
+                raise Exception('Precondition \'{}\' of type \'{}\' not supported'.format(pre, type(pre)))
 
         # Store add effects
         for add in action.add_effects:
             # check if effect is conditional
-            if len(add[0])==0:
+            if len(add[0]) == 0:
                 var_name = utils.varNameFromBFluent(add[1])
                 teff.append(encoder.touched_variables[var_name])
             else:
                 raise Exception('Conditional effects not supported')
-
 
         # Store delete effects
         for de in action.del_effects:
@@ -128,11 +126,10 @@ def buildDTables(encoder):
             else:
                 raise Exception('Conditional effects not supported')
 
-
         ## Pupulate edges
         for p in tpre:
             for e in teff:
-                edges.append((e,p))
+                edges.append((e, p))
 
         ## Fill lookup table
 
@@ -160,7 +157,7 @@ def computeSCC(edges):
 
     scc_original = nx.strongly_connected_components(g)
 
-    self_loops = set([n for n in g.nodes_with_selfloops()])
+    self_loops = set([n for n in nx.nodes_with_selfloops(g)])
 
     scc_purged = []
 
@@ -205,7 +202,7 @@ def encodeLoopFormulas(encoder):
         for variable in list(loop):
 
             # first build set L containing loop atoms
-            z3_var = inv_touched_variables.get(variable,None)
+            z3_var = inv_touched_variables.get(variable, None)
             if z3_var is not None:
                 L.append(encoder.touched_variables[z3_var])
             else:
@@ -246,6 +243,5 @@ def encodeLoopFormulas(encoder):
                             R.append(And(combo))
 
         lf.append(Implies(Or(L), Or(set(R))))
-
 
     return lf

@@ -19,17 +19,18 @@
 ############################################################################
 
 import sys
-from . import arguments
+
 import translate
-import subprocess
 import utils
 from planner import encoder
 from planner import modifier
 from planner import search
+from translate.pddl import open_pddl_file
+from . import arguments
 
 val_path = '/bin/validate'
 
-    
+
 def main(BASE_DIR):
     """
     Main planning routine
@@ -38,21 +39,19 @@ def main(BASE_DIR):
     # Parse planner args
     args = arguments.parse_args()
 
-
     # Run PDDL translator (from TFD)
     prb = args.problem
     if args.domain:
         domain = args.domain
-        task = translate.pddl.open(prb, domain)
+        task = open_pddl_file(prb, domain)
     else:
-        task = translate.pddl.open(prb)
+        task = open_pddl_file(prb)
         domain = utils.getDomainName(prb)
 
-
     # Fetch upper bound for bounded search
-    
+
     ub = args.b
-    
+
     # Compose encoder and search
     # according to user flags
 
@@ -64,15 +63,14 @@ def main(BASE_DIR):
 
             # Build SMT-LIB encoding and dump (no solving)
             if args.translate:
-               formula = e.encode(args.translate)
+                formula = e.encode(args.translate)
 
-               # Print SMT planning formula (linear) to file
-               utils.printSMTFormula(formula,task.task_name)
+                # Print SMT planning formula (linear) to file
+                utils.printSMTFormula(formula, task.task_name)
 
             else:
-
                 # Ramp-up search for optimal planning with unit costs
-                s = search.SearchSMT(e,ub)
+                s = search.SearchSMT(e, ub)
                 plan = s.do_linear_search()
 
         elif args.parallel:
@@ -82,15 +80,14 @@ def main(BASE_DIR):
             # Parallel encodings, no optimal reasoning here!
 
             e = encoder.EncoderSMT(task, modifier.ParallelModifier())
-
             # Build SMT-LIB encoding and dump (no solving)
             if args.translate:
                 formula = e.encode(args.translate)
 
                 # Print SMT planning formula (parallel) to file
-                utils.printSMTFormula(formula,task.task_name)
+                utils.printSMTFormula(formula, task.task_name)
             else:
-                s = search.SearchSMT(e,ub)
+                s = search.SearchSMT(e, ub)
                 plan = s.do_linear_search()
 
         else:
@@ -106,15 +103,15 @@ def main(BASE_DIR):
 
             # Build SMT-LIB encoding and dump (no solving)
             if args.translate:
-                
+
                 formula = e.encode(args.translate)
 
                 # Print OMT planning formula (linear) to file
 
-                utils.printOMTFormula(formula,task.task_name)
-                
+                utils.printOMTFormula(formula, task.task_name)
+
             else:
-                s = search.SearchOMT(e,ub)
+                s = search.SearchOMT(e, ub)
                 plan = s.do_search()
 
         elif args.parallel:
@@ -122,15 +119,15 @@ def main(BASE_DIR):
 
             # Build SMT-LIB encoding and dump (no solving)
             if args.translate:
-                
+
                 formula = e.encode(args.translate)
 
                 # Print OMT planning formula (parallel) to file
 
-                utils.printOMTFormula(formula,task.task_name)
-                
+                utils.printOMTFormula(formula, task.task_name)
+
             else:
-                s = search.SearchOMT(e,ub)
+                s = search.SearchOMT(e, ub)
                 plan = s.do_search()
 
 
@@ -139,25 +136,27 @@ def main(BASE_DIR):
             print('Exiting now...')
             sys.exit()
 
-        
+
     else:
         print('No solving technique specified, choose between SMT or OMT.')
         print('Exiting now...')
         sys.exit()
 
-
     # VALidate and print plan
     # Uses VAL, see https://github.com/KCL-Planning/VAL
 
-    val = BASE_DIR+val_path
+    val = BASE_DIR + val_path
 
+    print(f"Found solution at bound: {s.horizon}")
+    # print(f"Number of variables: {}")
+    # print(f"Number of rules: {s.horizon}")
     if not args.translate:
 
         try:
             if plan.validate(val, domain, prb):
                 print('\nPlan found!')
                 print(('\nCost: {}\n'.format(plan.cost)))
-                for k,v in list(plan.plan.items()):
+                for k, v in list(plan.plan.items()):
                     print(('Step {}: {}'.format(k, v)))
             else:
                 print('Plan not valid, exiting now...')
@@ -165,8 +164,9 @@ def main(BASE_DIR):
         except:
             print('\nThe following plan could not be validated.')
             if plan is not None:
+                print('\nPlan found!')
                 print(('\nCost: {}\n'.format(plan.cost)))
-                for k,v in list(plan.plan.items()):
+                for k, v in list(plan.plan.items()):
                     print(('Step {}: {}'.format(k, v)))
 
         # Printing plan to file
@@ -177,6 +177,6 @@ def main(BASE_DIR):
             else:
                 plan.pprint(BASE_DIR)
 
- 
+
 if __name__ == '__main__':
     main()

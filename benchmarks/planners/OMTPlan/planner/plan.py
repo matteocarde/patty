@@ -16,18 +16,18 @@
 ############################################################################
 
 
-from z3 import *
 import subprocess
 
+from z3 import *
 
 
-class Plan():
+class Plan:
     """
     Plan objects are instances of this class.
     Defines methods to extract, validate and print plans.
     """
 
-    def __init__(self,model, encoder, objective=None):
+    def __init__(self, model, encoder, objective=None):
         self.plan = self._extractPlan(model, encoder)
         self.cost = self._extractCost(objective)
 
@@ -49,11 +49,10 @@ class Plan():
         for step in range(encoder.horizon):
             for action in encoder.actions:
                 if is_true(model[encoder.action_variables[step][action.name]]):
-                    plan[index] =  action.name
+                    plan[index] = action.name
                     index = index + 1
 
         return plan
-
 
     def _extractCost(self, objective=None):
         """!
@@ -112,12 +111,11 @@ class Plan():
 
         plan = None
 
-        if 'Plan valid' in output:
+        if "Plan valid" in output:
             plan = plan_to_str
             return plan
         else:
             return plan
-
 
     def pprint(self, dest):
         """!
@@ -127,7 +125,7 @@ class Plan():
         """
 
         # Default destination
-        dest = dest+'/plan_file.txt'
+        dest = dest + '/plan_file.txt'
 
         print(('Printing plan to {}'.format(dest)))
 
@@ -135,5 +133,5 @@ class Plan():
 
         plan_to_str = '\n'.join('{}: {}'.format(key, val) for key, val in list(self.plan.items()))
 
-        with open(dest,'w') as f:
+        with open(dest, 'w') as f:
             f.write(plan_to_str)

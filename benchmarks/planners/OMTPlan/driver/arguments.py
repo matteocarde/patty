@@ -21,10 +21,10 @@
 import argparse
 import os
 
-
 DESCRIPTION = """Planner driver script."""
 
 bound = 100
+
 
 def _is_valid_file(arg):
     """
@@ -44,7 +44,7 @@ def parse_args():
     Specifies valid arguments for OMTPlan
     """
 
-    parser = argparse.ArgumentParser(description = DESCRIPTION,formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser = argparse.ArgumentParser(description=DESCRIPTION, formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     parser.add_argument('problem', metavar='problem.pddl', help='Path to PDDL problem file', type=_is_valid_file)
 
@@ -65,7 +65,6 @@ def parse_args():
     parser.add_argument('-smt', action='store_true', help='Enables SMT encoding.')
 
     parser.add_argument('-b', type=int, default=bound, help='Upper bound for OMTPlan search.')
-
 
     args = parser.parse_args()
 

@@ -1,0 +1,7 @@
+#! /bin/bash
+
+DOMAIN=$1
+PROBLEM=$2
+PLAN=$3
+
+python2 fast-downward.py --build release64 --plan-file $PLAN $DOMAIN $PROBLEM --search 'orbit_astar(operatorcounting([lmcutnumeric_constraints(ceiling_less_than_one=true),state_equation_constraints],cplex,lp), symmetry=symmetry_state_pruning(goal_only))'

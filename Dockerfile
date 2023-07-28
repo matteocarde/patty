@@ -108,15 +108,6 @@ WORKDIR /var
 RUN rm -rf Osi-0.107.9
 RUN rm Osi-0.107.9.tgz
 
-# Install Numeric Fast Downward
-
-RUN apt-get install -y cmake
-COPY /benchmarks/planners/nfd /var/nfd
-WORKDIR /var/nfd/src/search/bliss-0.73
-RUN make
-WORKDIR /var/nfd
-RUN ./build.py release64
-
 # Install Springroll
 COPY /benchmarks/planners/springroll-planner /var/springroll
 ENV PATH /var/springroll/:${PATH}
@@ -141,9 +132,7 @@ RUN chmod +x /var/enhsp/enhsp
 COPY /benchmarks/planners/patty /var/patty
 ENV PATH /var/patty/:${PATH}
 RUN chmod +x /var/patty/patty
-
 RUN apt-get install -y time
-
 RUN conda env export
 
 # Create conda env
@@ -158,25 +147,26 @@ RUN pysmt-install --check
 RUN apt-get install python2.7 -y
 RUN which python2.7
 
-# Add nfd executable
-COPY /benchmarks/planners/nfd-runner/nfd /var/nfd/nfd
+# Install Numeric Fast Downward
+RUN apt-get install -y cmake
+COPY /benchmarks/planners/nfd /var/nfd
+WORKDIR /var/nfd/src/search/bliss-0.73
+RUN make
+WORKDIR /var/nfd
+RUN ./build.py release64
 ENV PATH /var/nfd/:${PATH}
 RUN chmod +x /var/nfd/nfd
 
 # Install OMTPlan
-#RUN pip install networkx
-#RUN pip install numpy
-#COPY /benchmarks/planners/OMTPlan /var/omtplan
-#ENV PATH /var/omtplan/:${PATH}
-#RUN chmod +x /var/omtplan/omtplan
-
+RUN pip install networkx
+RUN pip install numpy
+COPY /benchmarks/planners/omtplan /var/omtplan
+ENV PATH /var/omtplan/:${PATH}
+RUN chmod +x /var/omtplan/omtplan
 
 WORKDIR /project
 # Copying
 COPY . .
-
-
-#RUN omtplan -omt -parallel -domain files/ipc-2023/counters/domain.pddl files/ipc-2023/counters/instances/fz_instance_4.pddl
 
 #Authorizations
 RUN chmod +x exes/*
