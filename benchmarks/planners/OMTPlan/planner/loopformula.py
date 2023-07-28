@@ -186,7 +186,7 @@ def encodeLoopFormulas(encoder):
     lf = []
 
     ## reverse map touched vars
-    inv_touched_variables = {v: k for k, v in encoder.touched_variables.iteritems()}
+    inv_touched_variables = {v: k for k, v in encoder.touched_variables.items()}
 
     ## compute data to build loop formulas
     edges, table = buildDTables(encoder)
@@ -212,7 +212,7 @@ def encodeLoopFormulas(encoder):
                 raise Exception("Could not find key to build loop formula")
 
         # for each action check if conditions to build R are met
-        for action in table.keys():
+        for action in list(table.keys()):
 
             # variables appears in effect of action at step n
 

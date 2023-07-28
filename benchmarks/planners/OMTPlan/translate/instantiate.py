@@ -3,10 +3,10 @@
 
 from collections import defaultdict
 
-import build_model
-import pddl_to_prolog
-import normalize #because of "get_function_predicate" 
-import pddl
+from . import build_model
+from . import pddl_to_prolog
+from . import normalize #because of "get_function_predicate" 
+from . import pddl
 
 def get_fluent_facts(task, model):
   fluent_predicates = normalize.get_fluent_predicates(task)
@@ -136,36 +136,36 @@ def explore(task):
   return instantiate(task, model)
 
 if __name__ == "__main__":
-  import pddl
+  from . import pddl
 
   task = pddl.open()
   (relaxed_reachable, atoms, num_fluents, actions,durative_actions, 
         axioms, num_axioms,
         reachable_action_params) = explore(task)
 
-  print "goal relaxed reachable: %s" % relaxed_reachable
-  print "%d atoms:" % len(atoms)
+  print("goal relaxed reachable: %s" % relaxed_reachable)
+  print("%d atoms:" % len(atoms))
   for atom in atoms:
-    print " ", atom
-  print
-  print "%d actions:" % len(actions)
+    print(" ", atom)
+  print()
+  print("%d actions:" % len(actions))
   for action in actions:
     action.dump()
-    print
-  print
-  print "%d durative actions:" % len(durative_actions)
+    print()
+  print()
+  print("%d durative actions:" % len(durative_actions))
   for action in durative_actions:
     action.dump()
-    print
-  print
-  print "%d axioms:" % len(axioms)
+    print()
+  print()
+  print("%d axioms:" % len(axioms))
   for axiom in axioms:
     axiom.dump()
-    print
-  print "%d numeric axioms:" % len(num_axioms)
+    print()
+  print("%d numeric axioms:" % len(num_axioms))
   for axiom in num_axioms:
     axiom.dump()
-    print
-  print "%d reachable_action_params:" % len(reachable_action_params)
+    print()
+  print("%d reachable_action_params:" % len(reachable_action_params))
   for rap in reachable_action_params:
-      print rap
+      print(rap)

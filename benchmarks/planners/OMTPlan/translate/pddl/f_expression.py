@@ -1,5 +1,5 @@
 import string
-import conditions
+from . import conditions
 
 def isFloat(astring):
     try:
@@ -71,7 +71,7 @@ class FunctionalExpression(object):
             result |= part.free_variables()
         return result
     def dump(self, indent="  "):
-        print "%s%s" % (indent, self._dump())
+        print("%s%s" % (indent, self._dump()))
         for part in self.parts:
             part.dump(indent + "  ")
     def _dump(self):
@@ -101,7 +101,7 @@ class FunctionalExpression(object):
         return (typed_vars,conjunction_parts,self.__class__(new_parts))
     def  instantiate(self, var_mapping, fluent_functions, 
                         init_function_vals, task, new_axioms=[]):
-        print self.__class__.__name__
+        print(self.__class__.__name__)
         raise ValueError("Cannot instantiate condition: not normalized")
         
 
@@ -218,7 +218,7 @@ class PrimitiveNumericExpression(FunctionalExpression):
                 self.symbol == other.symbol and 
                 self.args == other.args) 
     def dump(self, indent="  "):
-        print "%s%s" % (indent, self._dump())
+        print("%s%s" % (indent, self._dump()))
         for arg in self.args:
             arg.dump(indent + "  ")
     def _dump(self):
@@ -277,7 +277,7 @@ class FunctionAssignment(object):
                 self.fluent == other.fluent and
                 self.expression == other.expression)
     def dump(self, indent="  "):
-        print "%s%s" % (indent, self._dump())
+        print("%s%s" % (indent, self._dump()))
         self.fluent.dump(indent + "  ")
         self.expression.dump(indent + "  ")
     def _dump(self):

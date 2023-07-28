@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import pddl
+from . import pddl
 
 if __name__ == "__main__":
   task = pddl.open()

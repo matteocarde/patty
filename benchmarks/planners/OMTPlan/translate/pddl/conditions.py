@@ -1,8 +1,8 @@
 import itertools
 
-import pddl_types
-import f_expression
-import tasks
+from . import pddl_types
+from . import f_expression
+from . import tasks
 
 def parse_condition(alist):
     condition = parse_condition_aux(alist, False)
@@ -27,8 +27,8 @@ def parse_condition_aux(alist, negated):
             assert len(args) == 1
             return parse_condition_aux(args[0], not negated)
     elif tag in ("forall", "exists"):
-        import __builtin__
-        __builtin__.containsQuantifiedConditions = True
+        import builtins
+        builtins.containsQuantifiedConditions = True
         parameters = pddl_types.parse_typed_list(alist[1])
         args = alist[2:]
         assert len(args) == 1
@@ -131,13 +131,13 @@ def parse_term(term):
 def dump_temporal_condition(condition,indent="  "):
     assert len(condition)==3
     if not isinstance(condition[0],Truth):
-        print "%sat start:" % indent
+        print("%sat start:" % indent)
         condition[0].dump(indent+"  ")
     if not isinstance(condition[1],Truth):
-        print "%sover all:" % indent
+        print("%sover all:" % indent)
         condition[1].dump(indent+"  ")
     if not isinstance(condition[2],Truth):
-        print "%sat end:" % indent
+        print("%sat end:" % indent)
         condition[2].dump(indent+"  ")
 
 
@@ -156,7 +156,7 @@ class Condition(object):
     def __ne__(self, other):
         return not self == other
     def dump(self, indent="  "):
-        print "%s%s" % (indent, self._dump())
+        print("%s%s" % (indent, self._dump()))
         for part in self.parts:
             part.dump(indent + "  ")
     def _dump(self):
@@ -370,7 +370,7 @@ class Literal(Condition):
         return "%s(%s)" % (self.predicate,
                               ", ".join(map(str, self.args)))
     def dump(self, indent="  "):
-        print "%s%s %s" % (indent, self._dump(), self.predicate)
+        print("%s%s %s" % (indent, self._dump(), self.predicate))
         for arg in self.args:
             arg.dump(indent + "  ")
     def change_parts(self, parts):
@@ -483,7 +483,7 @@ class NegatedFunctionComparison(FunctionComparison):
 
 class Term(object):
     def dump(self, indent="  "):
-        print "%s%s %s" % (indent, self._dump(), self.name)
+        print("%s%s %s" % (indent, self._dump(), self.name))
         for arg in self.args:
             arg.dump(indent + "  ")
     def _dump(self):

@@ -87,7 +87,7 @@ class Plan():
         print('Validating plan...')
 
         # Create string containing plan
-        plan_to_str = '\n'.join('{}: {}'.format(key, val) for key, val in self.plan.items())
+        plan_to_str = '\n'.join('{}: {}'.format(key, val) for key, val in list(self.plan.items()))
 
         # Create temporary file that contains plan to be
         # fed to VAL
@@ -129,11 +129,11 @@ class Plan():
         # Default destination
         dest = dest+'/plan_file.txt'
 
-        print('Printing plan to {}'.format(dest))
+        print(('Printing plan to {}'.format(dest)))
 
         # Create string containing plan
 
-        plan_to_str = '\n'.join('{}: {}'.format(key, val) for key, val in self.plan.items())
+        plan_to_str = '\n'.join('{}: {}'.format(key, val) for key, val in list(self.plan.items()))
 
         with open(dest,'w') as f:
             f.write(plan_to_str)

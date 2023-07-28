@@ -22,7 +22,7 @@ import utils
 from translate import instantiate
 from translate import numeric_axiom_rules
 import numpy as np
-import loopformula
+from . import loopformula
 
 
 
@@ -283,7 +283,7 @@ class Encoder():
         # Close-world assumption: facts not asserted in init formula
         # are assumed to be false
 
-        for variable in self.boolean_variables[0].values():
+        for variable in list(self.boolean_variables[0].values()):
             if not variable in initial:
                 initial.append(Not(variable))
 
@@ -631,7 +631,7 @@ class EncoderOMT(Encoder):
         else:
             objective = []
             for step in range(self.horizon):
-                for action in self.action_variables[step].values():
+                for action in list(self.action_variables[step].values()):
                     objective.append(If(action,1.0,0.0))
 
             objective = sum(objective)
@@ -649,10 +649,10 @@ class EncoderOMT(Encoder):
 
         step = self.horizon + 1
 
-        for var_name in self.boolean_variables[0].keys():
+        for var_name in list(self.boolean_variables[0].keys()):
             self.touched_variables[var_name] = Bool('t{}_{}'.format(var_name,self.horizon+1))
 
-        for var_name in self.numeric_variables[0].keys():
+        for var_name in list(self.numeric_variables[0].keys()):
             if not var_name in self.var_objective:
                 self.touched_variables[var_name] = Bool('t{}_{}'.format(var_name,self.horizon+1))
 
@@ -1010,7 +1010,7 @@ class EncoderOMT(Encoder):
         for step in range(self.horizon,self.horizon+2):
             cost = Real('add_cost_{}'.format(step))
             total = []
-            for a,v in self.auxiliary_actions[step].items():
+            for a,v in list(self.auxiliary_actions[step].items()):
                 if self.task.metric:
                     total.append(If(v,1.0*sum(self.final_costs[a]),0.0))
                 else:
@@ -1090,10 +1090,10 @@ class EncoderOMT(Encoder):
         c = []
 
         for step in range(self.horizon,self.horizon+2):
-            rel_a = self.auxiliary_actions[step].values()
+            rel_a = list(self.auxiliary_actions[step].values())
             actions = []
             for index in range(self.horizon):
-                actions.append(Or(self.action_variables[index].values()))
+                actions.append(Or(list(self.action_variables[index].values())))
             c.append(Implies(Or(rel_a), And(actions)))
 
         return c

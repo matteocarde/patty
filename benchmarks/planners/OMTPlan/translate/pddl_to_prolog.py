@@ -3,8 +3,8 @@
 
 import itertools
 
-import normalize
-import pddl
+from . import normalize
+from . import pddl
 
 class PrologProgram:
   def __init__(self):
@@ -22,9 +22,9 @@ class PrologProgram:
     self.rules.append(rule)
   def dump(self):
     for fact in self.facts:
-      print fact
+      print(fact)
     for rule in self.rules:
-      print getattr(rule, "type", "none"), rule
+      print(getattr(rule, "type", "none"), rule)
   def normalize(self):
     # Normalized prolog programs have the following properties:
     # 1. Each variable that occurs in the effect of a rule also occurs in its
@@ -35,7 +35,7 @@ class PrologProgram:
     self.split_duplicate_arguments()
     self.convert_trivial_rules()
   def split_rules(self):
-    import split_rules
+    from . import split_rules
     # Splits rules whose conditions can be partitioned in such a way that
     # the parts have disjoint variable sets, then split n-ary joins into
     # a number of binary joins, introducing new pseudo-predicates for the
@@ -63,7 +63,7 @@ class PrologProgram:
         for var in eff_vars:
           rule.add_condition(pddl.Atom("@object", [var]))
     if must_add_predicate:
-      print "Unbound effect variables: Adding @object predicate."
+      print("Unbound effect variables: Adding @object predicate.")
       self.facts += [Fact(pddl.Atom("@object", [obj])) for obj in self.objects]
   def split_duplicate_arguments(self):
     """Make sure that no variable occurs twice within the same symbolic fact,

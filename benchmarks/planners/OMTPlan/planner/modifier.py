@@ -47,7 +47,7 @@ class LinearModifier(Modifier):
         c = []
 
         for step in range(bound):
-            pbc = [(var,1) for var in variables[step].values()]
+            pbc = [(var,1) for var in list(variables[step].values())]
             c.append(PbLe(pbc,1))
 
         return c

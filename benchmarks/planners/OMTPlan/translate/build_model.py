@@ -3,7 +3,8 @@
 
 import sys
 
-import pddl
+from . import pddl
+from functools import reduce
 
 def convert_rules(prog):
   RULE_TYPES = {"join": JoinRule, "product": ProductRule, "project": ProjectRule}
@@ -154,16 +155,16 @@ class Unifier:
     newroot = root._insert(constant_arguments, (rule, cond_index))
     self.predicate_to_rule_generator[condition.predicate] = newroot
   def dump(self):
-    predicates = self.predicate_to_rule_generator.keys()
+    predicates = list(self.predicate_to_rule_generator.keys())
     predicates.sort()
-    print "Unifier:"
+    print("Unifier:")
     for pred in predicates:
-      print "  %s:" % pred
+      print("  %s:" % pred)
       rule_gen = self.predicate_to_rule_generator[pred]
       rule_gen.dump(())
 
 class LeafGenerator:
-  index = sys.maxint
+  index = sys.maxsize
   def __init__(self):
     self.matches = []
   def generate(self, atom, result):
@@ -184,9 +185,9 @@ class LeafGenerator:
   def dump(self, conditions):
     spaces = "  " + "  " * len(conditions)
     if conditions:
-      print "%s%s" % (spaces, ", ".join(conditions))
+      print("%s%s" % (spaces, ", ".join(conditions)))
     for match in self.matches:
-      print "%s  %s" % (spaces, match)
+      print("%s  %s" % (spaces, match))
 
 class MatchGenerator:
   def __init__(self, index, next):
@@ -222,11 +223,11 @@ class MatchGenerator:
   def dump(self, conditions):
     spaces = "  " + "  " * len(conditions)
     if conditions:
-      print "%s%s" % (spaces, ", ".join(conditions))
+      print("%s%s" % (spaces, ", ".join(conditions)))
     for match in self.matches:
-      print "%s  %s" % (spaces, match)
+      print("%s  %s" % (spaces, match))
     self.next.dump(conditions)
-    keys = self.match_generator.keys()
+    keys = list(self.match_generator.keys())
     keys.sort()
     for key in keys:
       condition = "%s: %s" % (self.index, key)
@@ -238,7 +239,7 @@ class Queue:
     self.queue_pos = 0
     self.enqueued = set([(atom.predicate,) + tuple(atom.args)
                          for atom in self.queue])
-  def __nonzero__(self):
+  def __bool__(self):
     return self.queue_pos < len(self.queue)
   def push(self, predicate, args):
     eff_tuple = (predicate,) + tuple(args)
@@ -267,11 +268,11 @@ def compute_model(prog):
   return queue.queue
 
 if __name__ == "__main__":
-  import pddl_to_prolog
-  print "Parsing..."
+  from . import pddl_to_prolog
+  print("Parsing...")
   task = pddl.open()
-  print "Writing rules..."
+  print("Writing rules...")
   prog = pddl_to_prolog.translate(task)
-  print "Computing model..."
+  print("Computing model...")
   for atom in compute_model(prog):
-    print atom
+    print(atom)

@@ -3,7 +3,7 @@
 
 import copy
 
-import pddl
+from . import pddl
 
 class ConditionProxy(object):
   def clone_owner(self):

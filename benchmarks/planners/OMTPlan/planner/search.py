@@ -64,7 +64,7 @@ class SearchSMT(Search):
             formula =  self.encoder.encode(self.horizon)
 
             # Assert subformulas in solver
-            for k,v in formula.items():
+            for k,v in list(formula.items()):
                 self.solver.add(v)
 
             # Check for satisfiability
@@ -124,7 +124,7 @@ class SearchOMT(Search):
         # Start building formulae
 
         for horizon in horizon_schedule:
-            print('Try horizon {}'.format(horizon))
+            print(('Try horizon {}'.format(horizon)))
 
             # Create OMT solver instance
             self.solver = Optimize()
@@ -133,7 +133,7 @@ class SearchOMT(Search):
             formula = self.encoder.encode(horizon)
 
             # Assert subformulas in solver
-            for label, sub_formula in formula.items():
+            for label, sub_formula in list(formula.items()):
 
                 if label == 'objective':
                     # objective function requires different handling

@@ -138,7 +138,7 @@ def inorderTraversal(encoder,nax, numeric_variables):
         @return Z3 arithmetic expression (simple expression).
         """
 
-        for layer, lst in encoder.axioms_by_layer.items():
+        for layer, lst in list(encoder.axioms_by_layer.items()):
             if nax in lst:
                 break
 
@@ -285,7 +285,7 @@ def extractVariables(encoder,nax,variables):
         @return variables: list of Z3 variables.
         """
 
-        for layer, lst in encoder.axioms_by_layer.items():
+        for layer, lst in list(encoder.axioms_by_layer.items()):
             if nax in lst:
                 break
 
@@ -393,7 +393,7 @@ def parseMetric(encoder):
 
             return
         else:
-            if isinstance(metric,basestring):
+            if isinstance(metric,str):
                 return float(metric)
 
             else:
@@ -440,7 +440,7 @@ def buildMetricExpr(encoder):
             else:
                 raise Exception('Operator not recognized')
         else:
-            if isinstance(metric,basestring):
+            if isinstance(metric,str):
                 return float(metric)
 
             else:
@@ -463,12 +463,12 @@ def printSMTFormula(formula,problem_name):
         @param problem_name
         """
 
-        print('Printing SMT formula to {}.smt2'.format(problem_name))
+        print(('Printing SMT formula to {}.smt2'.format(problem_name)))
 
         solver = Solver()
 
         # Assert subformulas in solver
-        for _, sub_formula in formula.items():
+        for _, sub_formula in list(formula.items()):
             solver.add(sub_formula)
 
         with open('{}.smt2'.format(problem_name),'w') as fo:
@@ -482,12 +482,12 @@ def printOMTFormula(formula,problem_name):
         @param problem_name
         """
 
-        print('Printing OMT formula to {}.smt2'.format(problem_name))
+        print(('Printing OMT formula to {}.smt2'.format(problem_name)))
 
         solver = Optimize()
 
         # Assert subformulas in solver
-        for label, sub_formula in formula.items():
+        for label, sub_formula in list(formula.items()):
             if label == 'objective':
                 solver.minimize(sub_formula)
             else:

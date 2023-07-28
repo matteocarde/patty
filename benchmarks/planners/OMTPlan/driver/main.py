@@ -156,18 +156,18 @@ def main(BASE_DIR):
         try:
             if plan.validate(val, domain, prb):
                 print('\nPlan found!')
-                print('\nCost: {}\n'.format(plan.cost))
-                for k,v in plan.plan.items():
-                    print('Step {}: {}'.format(k, v))
+                print(('\nCost: {}\n'.format(plan.cost)))
+                for k,v in list(plan.plan.items()):
+                    print(('Step {}: {}'.format(k, v)))
             else:
                 print('Plan not valid, exiting now...')
                 sys.exit()
         except:
             print('\nThe following plan could not be validated.')
             if plan is not None:
-                print('\nCost: {}\n'.format(plan.cost))
-                for k,v in plan.plan.items():
-                    print('Step {}: {}'.format(k, v))
+                print(('\nCost: {}\n'.format(plan.cost)))
+                for k,v in list(plan.plan.items()):
+                    print(('Step {}: {}'.format(k, v)))
 
         # Printing plan to file
 

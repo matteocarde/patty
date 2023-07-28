@@ -2,9 +2,9 @@
 # In the future, use explicitly relative imports or absolute
 # imports as a better solution.
 
-import conditions
+from . import conditions
 
-import graph
+from . import graph
 
 import itertools
 
