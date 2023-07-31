@@ -67,7 +67,7 @@ def main(BASE_DIR):
 
                 # Print SMT planning formula (linear) to file
                 utils.printSMTFormula(formula, task.task_name)
-
+                exit(0)
             else:
                 # Ramp-up search for optimal planning with unit costs
                 s = search.SearchSMT(e, ub)
@@ -86,6 +86,7 @@ def main(BASE_DIR):
 
                 # Print SMT planning formula (parallel) to file
                 utils.printSMTFormula(formula, task.task_name)
+                exit(0)
             else:
                 s = search.SearchSMT(e, ub)
                 plan = s.do_linear_search()
@@ -147,7 +148,6 @@ def main(BASE_DIR):
 
     val = BASE_DIR + val_path
 
-    print(f"Found solution at bound: {s.horizon}")
     # print(f"Number of variables: {}")
     # print(f"Number of rules: {s.horizon}")
     if not args.translate:
@@ -155,6 +155,7 @@ def main(BASE_DIR):
         try:
             if plan.validate(val, domain, prb):
                 print('\nPlan found!')
+                print(f"Found solution at bound: {s.horizon}")
                 print(('\nCost: {}\n'.format(plan.cost)))
                 for k, v in list(plan.plan.items()):
                     print(('Step {}: {}'.format(k, v)))
@@ -165,6 +166,7 @@ def main(BASE_DIR):
             print('\nThe following plan could not be validated.')
             if plan is not None:
                 print('\nPlan found!')
+                print(f"Found solution at bound: {s.horizon}")
                 print(('\nCost: {}\n'.format(plan.cost)))
                 for k, v in list(plan.plan.items()):
                     print(('Step {}: {}'.format(k, v)))

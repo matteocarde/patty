@@ -15,12 +15,14 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define (domain ext-plant-watering)
-    (:types thing location - object
-        agent plant tap - thing)
+    (:types
+        thing location - object
+        agent plant tap - thing
+    )
 
     (:functions
         ;; constant bounds
-        (maxx) 
+        (maxx)
         (maxy)
         (miny)
         (minx)
@@ -40,74 +42,83 @@
 
     ;; Move an agent to a neighboring location
     (:action move_up
-     :parameters (?a - agent)
-     :precondition (and (<= (+ (y ?a) 1) (maxy)))
-     :effect (and
-    		(increase (y ?a) 1)))
+        :parameters (?a - agent)
+        :precondition (and (<= (+ (y ?a) 1) (maxy)))
+        :effect (and
+            (increase (y ?a) 1))
+    )
 
     (:action move_down
-     :parameters (?a - agent)
-     :precondition (and (>= (- (y ?a) 1) (miny)))
-     :effect (and
-    		(decrease (y ?a) 1)))
+        :parameters (?a - agent)
+        :precondition (and (>= (- (y ?a) 1) (miny)))
+        :effect (and
+            (decrease (y ?a) 1))
+    )
 
     (:action move_right
-     :parameters (?a - agent)
-     :precondition (and (<= (+ (x ?a) 1) (maxx)))
-     :effect (and
-    		(increase (x ?a) 1)))
+        :parameters (?a - agent)
+        :precondition (and (<= (+ (x ?a) 1) (maxx)))
+        :effect (and
+            (increase (x ?a) 1))
+    )
 
     (:action move_left
-     :parameters (?a - agent)
-     :precondition (and (>= (- (x ?a) 1) (minx)))
-     :effect (and
-    		(decrease (x ?a) 1)))
+        :parameters (?a - agent)
+        :precondition (and (>= (- (x ?a) 1) (minx)))
+        :effect (and
+            (decrease (x ?a) 1))
+    )
 
     ;; move diagonals
     (:action move_up_left
-     :parameters (?a - agent)
-     :precondition (and (>= (- (x ?a) 1) (minx)) (<= (+ (y ?a) 1) (maxy)))
-     :effect (and
-        (increase (y ?a) 1) (decrease (x ?a) 1)))
+        :parameters (?a - agent)
+        :precondition (and (>= (- (x ?a) 1) (minx)) (<= (+ (y ?a) 1) (maxy)))
+        :effect (and
+            (increase (y ?a) 1) (decrease (x ?a) 1))
+    )
 
     (:action move_up_right
-     :parameters (?a - agent)
-     :precondition (and (<= (+ (x ?a) 1) (maxx)) (<= (+ (y ?a) 1) (maxy)))
-     :effect (and
-        (increase (y ?a) 1) (increase (x ?a) 1)))
+        :parameters (?a - agent)
+        :precondition (and (<= (+ (x ?a) 1) (maxx)) (<= (+ (y ?a) 1) (maxy)))
+        :effect (and
+            (increase (y ?a) 1) (increase (x ?a) 1))
+    )
 
     (:action move_down_left
-     :parameters (?a - agent)
-     :precondition (and (>= (- (x ?a) 1) (minx)) (>= (- (y ?a) 1) (miny)))
-     :effect (and
-        (decrease (x ?a) 1) (decrease (y ?a) 1) )
+        :parameters (?a - agent)
+        :precondition (and (>= (- (x ?a) 1) (minx)) (>= (- (y ?a) 1) (miny)))
+        :effect (and
+            (decrease (x ?a) 1) (decrease (y ?a) 1))
     )
 
     (:action move_down_right
-     :parameters (?a - agent)
-     :precondition (and (<= (+ (x ?a) 1) (maxx)) (>= (- (y ?a) 1) (miny)))
-     :effect (and
-        (decrease (y ?a) 1) (increase (x ?a) 1)))
+        :parameters (?a - agent)
+        :precondition (and (<= (+ (x ?a) 1) (maxx)) (>= (- (y ?a) 1) (miny)))
+        :effect (and
+            (decrease (y ?a) 1) (increase (x ?a) 1))
+    )
 
     ;; Load one unit of water from a tap into the agent's bucket.
     (:action load
-    :parameters (?a - agent ?t - tap)
-    :precondition (and
-                       (= (x ?a) (x ?t)) (=(y ?a) (y ?t)) ; we are on the tap
-                       (<= (+ (carrying ?a) 1) (max_carry ?a)) ; we have space to carry
-                       (>= (- (water_reserve) 1) 0)) ; there is some water left
-    :effect       (and
-                       (decrease (water_reserve) 1)
-                       (increase (carrying ?a) 1)
-                       (increase (total_loaded) 1)))
+        :parameters (?a - agent ?t - tap)
+        :precondition (and
+            (= (x ?a) (x ?t)) (=(y ?a) (y ?t)) ; we are on the tap
+            (<= (+ (carrying ?a) 1) (max_carry ?a)) ; we have space to carry
+            (>= (- (water_reserve) 1) 0)) ; there is some water left
+        :effect (and
+            (decrease (water_reserve) 1)
+            (increase (carrying ?a) 1)
+            (increase (total_loaded) 1))
+    )
 
     ;; Pours one unit of water from the agent's bucket into a plant.
     (:action pour
-    :parameters (?a - agent ?p - plant)
-    :precondition (and (= (x ?a) (x ?p)) (=(y ?a) (y ?p)) ; we are on the plant
-                       (>= (carrying ?a) 1)) ; we are carrying some water
-    :effect       (and
-                    (decrease (carrying ?a) 1)
-                    (increase (poured ?p) 1)
-                    (increase (total_poured) 1)))
+        :parameters (?a - agent ?p - plant)
+        :precondition (and (= (x ?a) (x ?p)) (=(y ?a) (y ?p)) ; we are on the plant
+            (>= (carrying ?a) 1)) ; we are carrying some water
+        :effect (and
+            (decrease (carrying ?a) 1)
+            (increase (poured ?p) 1)
+            (increase (total_poured) 1))
+    )
 )

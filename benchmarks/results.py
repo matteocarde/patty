@@ -10,7 +10,7 @@ SOLVERS = {
     'SpringRoll': "SR",
     'PATTY': "P",
     # 'PATTY-R': "P_r",
-    'RANTANPLAN': "R^2E",
+    'RANTANPLAN': "\mathrm{R^2\exists}",
     'METRIC-FF': "\mathrm{FF}",
     'ENHSP': r"\mathrm{ENHSP}",
     'NFD': "\mathrm{NFD}",
@@ -74,7 +74,7 @@ TOTALS = {
 def main():
     ## Parsing the results
     files = [
-        "benchmarks/results/2023-07-28-FINAL-v2.csv"
+        "benchmarks/results/FINAL.csv"
     ]
 
     aResults: [Result] = []
@@ -135,11 +135,13 @@ def main():
         commonlyGrounded = {}
         for solver in SMT_SOLVERS:
             solved = {r.problem for r in domainDict[solver] if r.solved}
-            grounded = {r.problem for r in domainDict[solver] if r.bound > 0}
+            grounded = {r.problem for r in domainDict[solver] if r.nOfVars > 0}
             if solved:
                 commonlySolved = solved if not commonlySolved else commonlySolved.intersection(solved)
             if grounded:
                 commonlyGrounded = solved if not commonlyGrounded else commonlyGrounded.intersection(grounded)
+
+        a = 1 + 1
 
         for solver in solvers:
             if solver not in domainDict:
@@ -163,7 +165,7 @@ def main():
             t[domain]["nOfRules"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
 
     domainsClusters = {
-        r"\textit{Purely Numeric}": [
+        r"\textit{Highly Numeric}": [
             "ipc-2023/block-grouping",
             "ipc-2023/counters",
             "ipc-2023/fo_counters",
@@ -177,7 +179,7 @@ def main():
             # "line-exchange",
             # "line-exchange-quantity"
         ],
-        r"\textit{Scarcely Numeric}": [
+        r"\textit{Lowly Numeric}": [
             "ipc-2023/delivery",
             "ipc-2023/expedition",
             # "ipc-2023/markettrader",
@@ -208,8 +210,8 @@ def main():
             "coverage": ("Coverage (\%)", {"SMT", "SEARCH"}),
             "time": ("Time (s)", {"SMT", "SEARCH"}),
             "bound": ("Bound (Common)", {"SMT"}),
-            "nOfVars": ("Vars $n=1$", {"SMT"}),
-            "nOfRules": ("Rules $n=1$", {"SMT"}),
+            "nOfVars": ("$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$", {"SMT"}),
+            "nOfRules": ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}),
         },
         "solvers": {
             'PATTY': "SMT",
@@ -221,10 +223,12 @@ def main():
             'METRIC-FF': "SEARCH",
             "NFD": "SEARCH"
         },
-        "caption": r"Comparative analysis between the \textsc{Patty} (P) solver, the SMT-based solvers \textsc{"
-                   r"RanTanPlan} (RTP), \textsc{SpringRoll} (SR) and \textsc{OMTPlan} (OMT) and the search-based "
-                   r"solvers \textsc{ENHSP} (E), \textsc{MetricFF} (FF) and \textsc{NumericFastDownward} (NFD). The "
-                   r"labels S and L specify if the domain presents simple or linear effects, respectively."
+        "caption": r"Comparative analysis between the \textsc{Patty} (P) planner, the symbolic planners \textsc{\re{"
+                   r"}} (\re), \textsc{SpringRoll} (SR), \textsc{OMTPlan} (OMT) and the search-based planners "
+                   r"\textsc{ENHSP} (E), \textsc{MetricFF} (FF) and \textsc{NumericFastDownward} (NFD). The labels S "
+                   r"and L specify if the domain presents simple or linear effects, respectively, see \cite{ipc2023}. "
+                   r"''Best numbers'' are in bold. The numbers in the Highly and Lowly Numeric rows are the number of "
+                   r"bolds in the subcolumn."
     },
         #     {
         #     "name": "tab:exp-search",
@@ -300,7 +304,16 @@ def main():
 
         for (cluster, clusterDomains) in domainsClusters.items():
             rows = []
-            row = [cluster] + [" "] * len(solversHeader)
+            row = [cluster]
+            for (stat, (name, statTypes)) in table["columns"].items():
+                for (solver, type) in table["solvers"].items():
+                    if type not in statTypes:
+                        continue
+                    nOfBest = 0
+                    for domain in clusterDomains:
+                        if solver in best[domain][stat]:
+                            nOfBest += 1
+                    row.append(r"\textbf{" + str(nOfBest) + "}")
             print("&".join(row) + r"\\\hline")
             for domain in clusterDomains:
                 row = [DOMAINS[domain]]

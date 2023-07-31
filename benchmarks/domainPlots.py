@@ -11,7 +11,7 @@ from classes.Result import Result
 
 SOLVERS = {
     'SpringRoll': "\mathrm{SR}",
-    'PATTY': "P_{arpg}",
+    'PATTY': "P",
     # 'PATTY-R': "P_r",
     'RANTANPLAN': "\mathrm{R^2E}",
     'METRIC-FF': "\mathrm{FF}",
@@ -75,7 +75,7 @@ TOTALS = {
 
 def main():
     files = [
-        "benchmarks/results/2023-07-28-FINAL-v2.csv"
+        "benchmarks/results/FINAL.csv"
     ]
     aResults: [Result] = []
     for file in files:
@@ -122,12 +122,13 @@ def main():
         for solver in SOLVERS:
             tuple = rDomain[domain][solver]
             x = np.linspace(1, len(xAxes[domain]), len(xAxes[domain]))
-            y = [tuple[prob].time / 1000 if prob in tuple and tuple[prob].solved else None for prob in xAxes[domain]]
+            y = [tuple[prob].time / 1000 if prob in tuple and tuple[prob].solved else 300 for prob in xAxes[domain]]
             ticks = [tick.replace(".pddl", "").replace("_", "\_") for tick in xAxes[domain]]
 
             plt.xticks(x, ticks)
             plt.plot(x, y, label=rf"${SOLVERS[solver]}$")
 
+        plt.ylim([0, 100])
         plt.legend(loc="upper right")
         plt.savefig(f'benchmarks/figures/{domain}-{time.time_ns()}.pdf')
         plt.show()

@@ -11,7 +11,7 @@ def main():
     robots = [4]
     distance = [2]
     distribution = "all-in-first"
-    maxQuantity = range(1, 21)
+    maxQuantity = range(1, 41)
 
     for r in robots:
         for d in distance:
