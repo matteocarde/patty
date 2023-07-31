@@ -24,4 +24,4 @@ class NFD(Planner):
 
     def getCommand(self, domain: str, problem: str):
         return ["nfd", domain, problem, "--search",
-                "astar(lmcutnumeric(use_linear_effects=true,use_second_order_simple=true))"]
+                "lazy_greedy([lmcutnumeric(use_second_order_simple=true,bound_iterations=10,ceiling_less_than_one=true)])"]

@@ -12,11 +12,12 @@ from classes.Result import Result
 SOLVERS = {
     'SpringRoll': "\mathrm{SR}",
     'PATTY': "P_{arpg}",
-    'PATTY-R': "P_r",
-    'RANTANPLAN': "\mathrm{RTP}",
+    # 'PATTY-R': "P_r",
+    'RANTANPLAN': "\mathrm{R^2E}",
     'METRIC-FF': "\mathrm{FF}",
     'ENHSP': r"\mathrm{ENHSP}",
     'NFD': "\mathrm{NFD}",
+    'OMT': "\mathrm{OMT}",
 }
 
 DOMAINS = {
@@ -74,7 +75,7 @@ TOTALS = {
 
 def main():
     files = [
-        "benchmarks/results/2023-07-20-IPC-v8.csv"
+        "benchmarks/results/2023-07-28-FINAL-v2.csv"
     ]
     aResults: [Result] = []
     for file in files:
@@ -121,7 +122,7 @@ def main():
         for solver in SOLVERS:
             tuple = rDomain[domain][solver]
             x = np.linspace(1, len(xAxes[domain]), len(xAxes[domain]))
-            y = [tuple[prob].time / 1000 if prob in tuple and tuple[prob].solved else 30 for prob in xAxes[domain]]
+            y = [tuple[prob].time / 1000 if prob in tuple and tuple[prob].solved else None for prob in xAxes[domain]]
             ticks = [tick.replace(".pddl", "").replace("_", "\_") for tick in xAxes[domain]]
 
             plt.xticks(x, ticks)

@@ -4,18 +4,18 @@ from typing import Dict, List
 
 from classes.Result import Result
 
-SMT_SOLVERS = {'SpringRoll', 'PATTY', 'PATTY-R', 'RANTANPLAN'}
+SMT_SOLVERS = {'SpringRoll', 'PATTY', 'RANTANPLAN', "OMT"}
 
 SOLVERS = {
     'SpringRoll': "SR",
     'PATTY': "P",
-    'PATTY-R': "P_r",
-    'RANTANPLAN': "\mathrm{RTP}",
+    # 'PATTY-R': "P_r",
+    'RANTANPLAN': "R^2E",
     'METRIC-FF': "\mathrm{FF}",
     'ENHSP': r"\mathrm{ENHSP}",
     'NFD': "\mathrm{NFD}",
     'SMTPLAN+': "\mathrm{SMTP}^+",
-    'OMTPLAN': "\mathrm{OMT}",
+    'OMT': "\mathrm{OMT}",
 }
 
 DOMAINS = {
@@ -74,7 +74,7 @@ TOTALS = {
 def main():
     ## Parsing the results
     files = [
-        "benchmarks/results/2023-07-20-IPC-v8.csv"
+        "benchmarks/results/2023-07-28-FINAL-v2.csv"
     ]
 
     aResults: [Result] = []
@@ -216,7 +216,7 @@ def main():
             # 'PATTY-R',
             'RANTANPLAN': "SMT",
             'SpringRoll': "SMT",
-            "OMTPLAN": "SMT",
+            "OMT": "SMT",
             'ENHSP': "SEARCH",
             'METRIC-FF': "SEARCH",
             "NFD": "SEARCH"

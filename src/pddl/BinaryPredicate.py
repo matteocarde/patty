@@ -157,7 +157,10 @@ class BinaryPredicate(Predicate):
         x.__functions = x.getFunctionsOverwrite()
 
         if not x.__functions:
-            return x.toConstant()
+            if x.type == BinaryPredicateType.OPERATION:
+                return x.toConstant()
+            else:
+                return None
 
         return x
 

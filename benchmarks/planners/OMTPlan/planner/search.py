@@ -67,6 +67,7 @@ class SearchSMT(Search):
                 self.solver.add(v)
 
             encodingString = self.solver.to_smt2()
+            print(encodingString)
             nOfVars = encodingString.count("(declare")
             nOfRules = encodingString.count("(assert")
             print(f"Number of vars at bound {self.horizon}: {nOfVars}")

@@ -1,5 +1,5 @@
 ;;Instance with 2x9x1 points
-(define (problem name) (:domain domain_name)
+(define (problem name) (:domain drone)
 (:objects 
 x0y0z0 - location
 x0y1z0 - location

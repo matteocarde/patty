@@ -5,8 +5,6 @@ from subprocess import Popen
 from classes.CloudLogger import CloudLogger
 from classes.Result import Result
 
-TIMEOUT = 30
-
 
 class Planner:
     name: str
@@ -14,8 +12,8 @@ class Planner:
     def __init__(self):
         pass
 
-    def run(self, benchmark: str, domainFile: str, problemFile: str, logger: CloudLogger) -> Result:
-        stdout, code, cmd = self.exec(domainFile, problemFile)
+    def run(self, benchmark: str, domainFile: str, problemFile: str, logger: CloudLogger, timeout: int) -> Result:
+        stdout, code, cmd = self.exec(domainFile, problemFile, timeout)
         r = Result(benchmark, problemFile)
         r.solver = self.name
         r.code = code
@@ -31,13 +29,13 @@ class Planner:
             logger.error(r.toJSON())
         else:
             r.solved = False
-            r.time = TIMEOUT * 1000
+            r.time = timeout * 1000
         return r
 
-    def exec(self, domain: str, problem: str) -> (str, int):
+    def exec(self, domain: str, problem: str, timeout: int) -> (str, int):
         cmd: [str] = self.getCommand(domain, problem)
         output = ""
-        command = ["timeout", str(TIMEOUT)] + ["time", "-p"] + cmd
+        command = ["timeout", str(timeout)] + ["time", "-p"] + cmd
         print(" ".join(command))
         with Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT) as p:
             for line in iter(p.stdout.readline, b''):

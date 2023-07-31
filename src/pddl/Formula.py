@@ -84,6 +84,7 @@ class Formula:
         x = Formula()
         x.type = self.type
         x.conditions = [c.substitute(subs, default) for c in self.conditions]
+        x.conditions = [c for c in x.conditions if c]
         return x
 
     def canHappen(self, subs: Dict[Atom, float], default=None) -> bool:

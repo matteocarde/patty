@@ -67,7 +67,7 @@ def main():
         try:
             if envs.isInsideAWS:
                 print(f"Starting {planner} {benchmark} {domainFile} {problemFile}")
-            r: Result = planner.run(benchmark, domainFile, problemFile, logger)
+            r: Result = planner.run(benchmark, domainFile, problemFile, logger, envs.timeout)
             print(r)
             if not r.solved:
                 print(r.stdout)

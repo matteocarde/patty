@@ -1,6 +1,6 @@
 ;;Instance with 1x1x2 points
 (define (problem name)
-  (:domain domain_name)
+  (:domain drone)
   (:objects
     x0y0z0 - location
     x0y0z1 - location
