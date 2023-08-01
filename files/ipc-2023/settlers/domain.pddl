@@ -2,7 +2,6 @@
   (:requirements :fluents :typing :conditional-effects)
   (:types
     place vehicle - store
-    resource
   )
   (:constants
     timber wood coal stone iron ore - resource

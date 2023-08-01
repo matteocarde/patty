@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo "#!/bin/bash
+      python $(pwd)/main.py \$@" > patty
+
+chmod +x ./patty
