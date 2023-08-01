@@ -249,7 +249,7 @@
 #define MAX_STATE 800
 
 
-#define MAX_PLAN_LENGTH 500
+#define MAX_PLAN_LENGTH 1000
 
 
 
