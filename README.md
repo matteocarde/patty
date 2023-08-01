@@ -7,7 +7,7 @@ The Symbolic Pattern Planner
 * Python 3.7
 * Conda 4.14.0
 
-##¶ Install
+### Install
 1. Download this repository
 2. Run ```conda env create --name patty --file=environment.yml```
 3. Run ```./install```
