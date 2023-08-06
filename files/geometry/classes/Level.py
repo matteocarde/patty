@@ -12,7 +12,6 @@ from classes.LevelType import LevelType
 class Level:
 
     def __init__(self, levelType: LevelType, gridSize: int = 50, nOfObstacles: int = 1):
-        random.seed(20121996)
         self.levelType: LevelType = levelType
         self.gridSize: int = gridSize
         self.obstacles: [Obstacle] = [Obstacle.fromType(levelType, gridSize) for i in range(0, nOfObstacles)]
@@ -30,7 +29,6 @@ class Level:
         plt.xlim([0, self.gridSize])
         plt.ylim([0, self.gridSize])
 
-
         for obstacle in self.obstacles:
             for segment in obstacle.segments:
                 p1, p2 = segment.points
@@ -42,8 +40,9 @@ class Level:
         plt.show()
 
     def findPointNotInsideObstacles(self) -> Point:
+        # return Point(random.uniform(0, self.gridSize), random.uniform(0, self.gridSize))
         while True:
-            point = Point(random.uniform(0, self.gridSize), random.uniform(0, self.gridSize))
+            point = Point(random.randint(0, self.gridSize), random.randint(0, self.gridSize))
             isInside = False
             for obstacle in self.obstacles:
                 isInside = obstacle.isInside(point)

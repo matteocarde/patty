@@ -9,8 +9,8 @@ class Obstacle:
 
     def __init__(self, gridSize: int):
         self.gridSize = gridSize
-        self.MIN_RADIUS = 2
-        self.MAX_RADIUS = 5
+        self.MIN_RADIUS = 1
+        self.MAX_RADIUS = 3
         self.x, self.y = symbols("x y")
         self.segments: List[Segment] = list()
         self.conditions: List[Expr] = list()
