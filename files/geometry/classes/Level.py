@@ -8,6 +8,8 @@ from sympy import Point
 from classes.Obstacle import Obstacle
 from classes.LevelType import LevelType
 
+MAX_NUM_CONDITIONS = 4
+
 
 class Level:
 
@@ -19,13 +21,18 @@ class Level:
         self.goal = self.findPointNotInsideObstacles()
         pass
 
-    def draw(self):
+    def draw(self, filename: None or str = None):
         plt.rcParams.update({
             "text.usetex": True,
+            "figure.figsize": [7.50, 7.50],
             "figure.autolayout": True
         })
         plt.figure(1, figsize=(5, 5))
         plt.axes()
+        ticks = np.arange(0, self.gridSize, 1)
+        plt.xticks(ticks, labels=["" if t % 5 else str(t) for t in ticks])
+        plt.yticks(ticks, labels=["" if t % 5 else str(t) for t in ticks])
+        plt.grid()
         plt.xlim([0, self.gridSize])
         plt.ylim([0, self.gridSize])
 
@@ -36,6 +43,9 @@ class Level:
                 plt.gca().add_line(line)
         plt.plot(self.init.x, self.init.y, marker="o", markersize=10, markerfacecolor="green")
         plt.plot(self.goal.x, self.goal.y, marker="o", markersize=10, markeredgecolor="green", markerfacecolor="white")
+
+        if filename:
+            plt.savefig(f'{filename}')
 
         plt.show()
 
@@ -53,7 +63,40 @@ class Level:
                 return point
 
     def getProblem(self) -> str:
-        return ""
 
-    def getDomain(self) -> str:
-        return ""
+        obstaclesName = [f"ob_{i}" for i in range(0, len(self.obstacles))]
+        coordinates = []
+        for index, ob in enumerate(self.obstacles):
+            if len(ob.conditions) > 4:
+                raise Exception("Obstacles with more than 4 conditions are, at the moment not supported")
+
+            for j in range(0, MAX_NUM_CONDITIONS):
+                coeff = ob.coefficients[j] if j < len(ob.coefficients) else [0, 0, 0]
+                row = f"(= (a{j + 1} ob_{index}) {coeff[0]}) (= (b{j + 1} ob_{index}) {coeff[1]}) (= (c{j + 1} ob_{index}) {coeff[2]})"
+                coordinates.append(row)
+
+        coordinates = "\n".join(coordinates)
+
+        return f"""
+        (define
+            (problem geometry)
+            (:domain {self.levelType.domainName})
+
+            (:objects {" ".join(obstaclesName)} - obstacle)
+
+            (:init
+
+                (= (x) {self.init.x}) (= (y) {self.init.y})
+
+                (= (maxx) {self.gridSize}) 
+                (= (maxy) {self.gridSize}) 
+                (= (minx) 0) 
+                (= (miny) 0)
+                {coordinates}
+    
+            )
+            (:goal (and
+                (= (x) {self.goal.x}) (= (y) {self.goal.y})
+            ))
+        )        
+        """
