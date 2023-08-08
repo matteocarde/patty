@@ -22,7 +22,7 @@ pddlDoc : domain | problem;
 
 /************* DOMAINS ****************************/
 
-domain : LP 'define' domainName requirements? types? predicates? functions? (action | event | process)* RP;
+domain : LP 'define' domainName requirements? types? predicates? functions? (action | event | process)* constraint? RP;
 
 //DOMAIN NAME
 domainName: LP 'domain' NAME RP;
@@ -91,6 +91,7 @@ parameters: LP typedAtomParameter* RP;
 opName: NAME;
 opParameters: ':parameters' parameters;
 opPrecondition: ':precondition' preconditions;
+opCondition: ':condition' preconditions;
 opEffect: ':effect' effects;
 
 //ACTION
@@ -111,6 +112,11 @@ process:  LP ':process' opName
 	        opParameters?
             opPrecondition?
             opEffect
+		    RP;
+
+constraint:  LP ':constraint' opName
+	        opParameters?
+            opCondition?
 		    RP;
 
 /************* PROBLEM ****************************/

@@ -26,4 +26,5 @@ class Obstacle2DPoly(Obstacle):
         self.points = [Point(center.x + radius * math.cos(theta), center.y + radius * math.sin(theta)) for theta in
                        angles]
 
+        self.computeCoefficients()
         pass

@@ -422,6 +422,15 @@ class pddlListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by pddlParser#opCondition.
+    def enterOpCondition(self, ctx:pddlParser.OpConditionContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#opCondition.
+    def exitOpCondition(self, ctx:pddlParser.OpConditionContext):
+        pass
+
+
     # Enter a parse tree produced by pddlParser#opEffect.
     def enterOpEffect(self, ctx:pddlParser.OpEffectContext):
         pass
@@ -455,6 +464,15 @@ class pddlListener(ParseTreeListener):
 
     # Exit a parse tree produced by pddlParser#process.
     def exitProcess(self, ctx:pddlParser.ProcessContext):
+        pass
+
+
+    # Enter a parse tree produced by pddlParser#constraint.
+    def enterConstraint(self, ctx:pddlParser.ConstraintContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#constraint.
+    def exitConstraint(self, ctx:pddlParser.ConstraintContext):
         pass
 
 

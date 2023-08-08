@@ -1,5 +1,5 @@
 
-(define (domain geometry_2_TOWER_RECT)
+(define (domain geometry_2_TOWER_POLY)
 
     (:types
         obstacle - object
@@ -29,10 +29,10 @@
     (:action move_1_0
         :parameters ()
         :precondition (and
-            (> (+ (x) 1) (minx))
-            (< (+ (x) 1) (maxx))
-            (> (+ (y) 0) (miny))
-            (< (+ (y) 0) (maxy))
+            (>= (+ (x) 1) (minx))
+            (<= (+ (x) 1) (maxx))
+            (>= (+ (y) 0) (miny))
+            (<= (+ (y) 0) (maxy))
         )
         :effect (and
             (increase (x) 1)
@@ -43,10 +43,10 @@
     (:action move_0_1
         :parameters ()
         :precondition (and
-            (> (+ (x) 0) (minx))
-            (< (+ (x) 0) (maxx))
-            (> (+ (y) 1) (miny))
-            (< (+ (y) 1) (maxy))
+            (>= (+ (x) 0) (minx))
+            (<= (+ (x) 0) (maxx))
+            (>= (+ (y) 1) (miny))
+            (<= (+ (y) 1) (maxy))
         )
         :effect (and
             (increase (x) 0)
@@ -57,10 +57,10 @@
     (:action move_-1_0
         :parameters ()
         :precondition (and
-            (> (+ (x) -1) (minx))
-            (< (+ (x) -1) (maxx))
-            (> (+ (y) 0) (miny))
-            (< (+ (y) 0) (maxy))
+            (>= (+ (x) -1) (minx))
+            (<= (+ (x) -1) (maxx))
+            (>= (+ (y) 0) (miny))
+            (<= (+ (y) 0) (maxy))
         )
         :effect (and
             (increase (x) -1)
@@ -71,10 +71,10 @@
     (:action move_0_-1
         :parameters ()
         :precondition (and
-            (> (+ (x) 0) (minx))
-            (< (+ (x) 0) (maxx))
-            (> (+ (y) -1) (miny))
-            (< (+ (y) -1) (maxy))
+            (>= (+ (x) 0) (minx))
+            (<= (+ (x) 0) (maxx))
+            (>= (+ (y) -1) (miny))
+            (<= (+ (y) -1) (maxy))
         )
         :effect (and
             (increase (x) 0)

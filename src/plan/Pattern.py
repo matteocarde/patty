@@ -31,6 +31,9 @@ class Pattern:
     def __iter__(self):
         return iter(self.__order)
 
+    def __len__(self):
+        return len(self.__order)
+
     def __str__(self):
         return "; ".join([str(x) for x in self.__order if not x.isFake])
 

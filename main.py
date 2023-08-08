@@ -61,7 +61,8 @@ def main():
                 encoding=args.encoding,
                 binaryActions=args.binaryActions,
                 rollBound=args.rollBound,
-                hasEffectAxioms=args.hasEffectAxioms
+                hasEffectAxioms=args.hasEffectAxioms,
+                hasMutexes=args.hasMutexes
             )
             ts.end(f"Conversion to SMT at bound {bound}", console=console)
 

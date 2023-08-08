@@ -26,13 +26,14 @@ class PDDL2SMT:
     problem: Problem
 
     def __init__(self, domain: GroundedDomain, problem: Problem, pattern: Pattern, bound: int, encoding="non-linear",
-                 binaryActions=10, rollBound=0, hasEffectAxioms=False):
+                 binaryActions=10, rollBound=0, hasEffectAxioms=False, hasMutexes=False):
         self.domain = domain
         self.problem = problem
         self.bound = bound
         self.encoding = encoding
         self.rollBound = rollBound
         self.hasEffectAxioms = hasEffectAxioms
+        self.hasMutexes = hasMutexes
 
         self.transitionVariables: [TransitionVariables] = list()
 
@@ -329,6 +330,26 @@ class PDDL2SMT:
 
         return rules
 
+    def getMutexesStepRules(self, stepVars: TransitionVariables) -> List[SMTExpression]:
+        rules: List[SMTExpression] = []
+
+        nOfActions = len(self.pattern) - 1
+        for i in range(0, nOfActions):
+            for j in range(i + 1, nOfActions):
+                a = self.pattern[i]
+                b = self.pattern[j]
+                preA = a.preconditions.getPredicates() | a.preconditions.getFunctions()
+                preB = b.preconditions.getPredicates() | b.preconditions.getFunctions()
+                effA = a.getInfluencedAtoms()
+                effB = b.getInfluencedAtoms()
+                an = stepVars.actionVariables[a]
+                bn = stepVars.actionVariables[b]
+
+                if effA.intersection(effB) or preA.intersection(effB) or preB.intersection(effA):
+                    rules.append((an == 0).OR(bn == 0))
+
+        return rules
+
     def getStepRules(self, index: int) -> List[SMTExpression]:
         prevVars = self.transitionVariables[index - 1]
         stepVars = self.transitionVariables[index]
@@ -339,6 +360,8 @@ class PDDL2SMT:
         rules += self.getPreStepRules(stepVars)
         rules += self.getEffStepRules(stepVars)
         rules += self.getFrameStepRules(stepVars)
+        if self.hasMutexes:
+            rules += self.getMutexesStepRules(stepVars)
 
         return rules
 

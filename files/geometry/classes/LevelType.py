@@ -36,10 +36,10 @@ class LevelType:
             (:action move_{"_".join([str(e) for e in versor])}
                 :parameters ()
                 :precondition (and 
-                    (> (+ (x) {versor[0]}) (minx))
-                    (< (+ (x) {versor[0]}) (maxx))
-                    (> (+ (y) {versor[1]}) (miny))
-                    (< (+ (y) {versor[1]}) (maxy))
+                    (>= (+ (x) {versor[0]}) (minx))
+                    (<= (+ (x) {versor[0]}) (maxx))
+                    (>= (+ (y) {versor[1]}) (miny))
+                    (<= (+ (y) {versor[1]}) (maxy))
                 )
                 :effect (and
                     (increase (x) {versor[0]})
