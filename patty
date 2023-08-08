@@ -1,2 +1,2 @@
 #!/bin/bash
-      python /Users/carde/Documents/Workspace/patty/main.py $@
+      conda run -n patty python /Users/carde/Documents/Workspace/patty/main.py $@
