@@ -1,6 +1,6 @@
 #!/bin/bash
 
 echo "#!/bin/bash
-      python $(pwd)/main.py \$@" > patty
+      conda run -n patty python $(pwd)/main.py \$@" > patty
 
 chmod +x ./patty
