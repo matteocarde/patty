@@ -26,6 +26,8 @@ my_config = Config(
 
 PLANNERS: Dict[str, Planner] = {
     "PATTY": Patty("PATTY", "arpg", solver="z3", encoding="non-linear"),
+    "PATTY-EXPLICIT": Patty("PATTY-EXPLICIT", "arpg", solver="z3", encoding="non-linear", hasEffectAxioms=True),
+    "PATTY-CONCAT": Patty("PATTY-CONCAT", "arpg", solver="z3", encoding="non-linear", concatPatterns=True),
     "PATTY-R": Patty("PATTY-R", "random", solver="z3", encoding="non-linear"),
     "SPRINGROLL": SpringRoll(),
     "RANTANPLAN": Patty("RANTANPLAN", "arpg", solver="z3", encoding="non-linear", rollBound=1, hasEffectAxioms=True),
@@ -73,7 +75,7 @@ def main():
                 print(r.stdout)
             logger.log(r.toCSV())
             s3.put_object(
-                Key=f"{envs.experiment}/{r.solver}-{r.domain}-{r.problem}-{time.time_ns()}.txt",
+                Key=f"{envs.experiment}/{r.solver}/{r.domain.replace('/', '_')}/{r.problem.replace('/', '_')}/{time.time_ns()}.txt",
                 Bucket="patty-benchmarks",
                 Body=bytes(r.stdout, 'utf-8')
             )

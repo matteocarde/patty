@@ -9,12 +9,13 @@ NAME = "PATTY"
 class Patty(Planner):
     name = NAME
 
-    def __init__(self, name, pattern, solver, encoding, rollBound=0, hasEffectAxioms=False):
+    def __init__(self, name, pattern, solver, encoding, rollBound=0, hasEffectAxioms=False, concatPatterns=False):
         self.pattern = pattern
         self.solver = solver
         self.encoding = encoding
         self.rollBound = rollBound
         self.hasEffectAxioms = hasEffectAxioms
+        self.concatPatterns = concatPatterns
         self.name = name
         super().__init__()
 
@@ -36,8 +37,18 @@ class Patty(Planner):
         return r
 
     def getCommand(self, domain: str, problem: str):
-        cmd = ["patty", "-o", domain, "-f", problem, "-pp", "--pattern", self.pattern, "--solver", self.solver,
-               "--encoding", self.encoding, "--roll-bound", str(self.rollBound)]
+        cmd = [
+            "patty",
+            "-o", domain,
+            "-f", problem,
+            "-pp",
+            "--pattern", self.pattern,
+            "--solver", self.solver,
+            "--encoding", self.encoding,
+            "--roll-bound", str(self.rollBound)
+        ]
         if self.hasEffectAxioms:
             cmd += ["--effect-axioms"]
+        if self.concatPatterns:
+            cmd += ["--concat"]
         return cmd

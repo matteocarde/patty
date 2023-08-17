@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 from typing import Set, List
 
 from src.pddl.Action import Operation, Action
@@ -50,3 +51,14 @@ class Pattern:
             newOrder = newOrder[:index] + rolledActions + newOrder[index + 1:]
 
         self.__order = newOrder
+
+    def multiply(self, times: int) -> Pattern:
+
+        order = []
+        for i in range(0, times):
+            for item in self.__order[:-1]:
+                a = copy.deepcopy(item)
+                a.name = f"{a.name}_{i}"
+                order.append(a)
+
+        return Pattern.fromOrder(order)

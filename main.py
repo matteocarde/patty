@@ -52,12 +52,14 @@ def main():
 
         while bound <= bMax:
 
+            fPattern = pattern.multiply(bound) if args.concatPattern else pattern
+
             ts.start(f"Conversion to SMT at bound {bound}", console=console)
             pddl2smt: PDDL2SMT = PDDL2SMT(
                 domain=gDomain,
                 problem=problem,
-                pattern=pattern,
-                bound=bound,
+                pattern=fPattern,
+                bound=bound if not args.concatPattern else 1,
                 encoding=args.encoding,
                 binaryActions=args.binaryActions,
                 rollBound=args.rollBound,

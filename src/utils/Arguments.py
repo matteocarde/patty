@@ -8,7 +8,7 @@ class Arguments:
     def __init__(self):
         parser = argparse.ArgumentParser(
             description='Patty - The Symbolic Numeric Planner using Patterns')
-        #parser.add_argument('-h', '--help', dest='help', help='Print this message', action="store_true")
+        # parser.add_argument('-h', '--help', dest='help', help='Print this message', action="store_true")
         parser.add_argument('-o', '--domain', dest='domain', help='The .pddl domain file', required=True)
         parser.add_argument('-f', '--problem', dest='problem', help='The .pddl problem file', required=True)
         parser.add_argument('-n', '--bound', help='The number of steps of the SMT encoding')
@@ -32,6 +32,9 @@ class Arguments:
                             action="store_true", default=False)
         parser.add_argument('--roll-bound', help="The maximum amount of time an action can be rolled at each step",
                             type=int, default=0)
+        parser.add_argument('--concat', help="Enabling this action instead of increasing the bound n, it will "
+                                             "concatenate multiple copies of the pattern",
+                            action="store_true", default=False)
 
         args = parser.parse_args()
         self.isHelp = "help" in args
@@ -50,3 +53,4 @@ class Arguments:
         self.binaryActions = int(args.binary_actions)
         self.hasEffectAxioms = args.effect_axioms
         self.rollBound = args.roll_bound
+        self.concatPattern = args.concat

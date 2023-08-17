@@ -4,17 +4,20 @@ from natsort import natsort
 
 # PLANNERS = ["PATTY", "PATTY-R-YICES", "PATTY-R-Z3-NL", "PATTY-NL", "PATTY-Z3", "SPRINGROLL"]
 PLANNERS = [
-    # "PATTY",
+    "PATTY-EXPLICIT",
+    "PATTY",
+    "PATTY-CONCAT",
     # # "PATTY-R",
     # "SPRINGROLL",
     # "RANTANPLAN",
     # "ENHSP-HADD",
     # "ENHSP-HRADD",
     # "ENHSP-HMRP",
-    "METRIC-FF",
+    # "METRIC-FF",
     # "NFD",
     # "OMT"
 ]
+NAME = "instances-concat.csv"
 
 
 def main():
@@ -28,20 +31,18 @@ def main():
         # "ipc-2023/farmland",
         # "ipc-2023/fo-farmland",
         # "ipc-2023/fo-sailing",
-        # "ipc-2023/fo_counters",
+        "ipc-2023/fo_counters",
         # "ipc-2023/hydropower",
-        # # "ipc-2023/markettrader",
         # "ipc-2023/mprime",
         # "ipc-2023/pathwaysmetric",
         # "ipc-2023/rover",
         # "ipc-2023/sailing",
         # "ipc-2023/satellite",
-        # # "ipc-2023/settlers",
         # "ipc-2023/sugar",
         # "ipc-2023/tpp",
         # "ipc-2023/zenotravel",
         # "line-exchange",
-        "line-exchange-quantity"
+        # "line-exchange-quantity"
     ]
 
     instances = list()
@@ -61,7 +62,7 @@ def main():
 
     random.shuffle(instances)
     print(f"Listing {len(instances)} instances")
-    f = open("benchmarks/instances-line.csv", "w")
+    f = open(f"benchmarks/{NAME}", "w")
     f.write("\n".join([",".join(i) for i in instances]))
     f.close()
 

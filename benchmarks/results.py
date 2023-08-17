@@ -5,10 +5,13 @@ from typing import Dict, List
 from classes.Result import Result
 
 SMT_SOLVERS = {'SpringRoll', 'PATTY', 'RANTANPLAN', "OMT"}
+TIME_LIMIT = 30 * 1000
 
 SOLVERS = {
     'SpringRoll': "SR",
     'PATTY': "P",
+    'PATTY-EXPLICIT': "P_{exp}",
+    'PATTY-CONCAT': "P_{cat}",
     # 'PATTY-R': "P_r",
     'RANTANPLAN': "\mathrm{R^2\exists}",
     'METRIC-FF': "\mathrm{FF}",
@@ -74,7 +77,7 @@ TOTALS = {
 def main():
     ## Parsing the results
     files = [
-        "benchmarks/results/FINAL.csv"
+        "benchmarks/results/2023-08-17-CONCAT-v2.csv"
     ]
 
     aResults: [Result] = []
@@ -134,6 +137,8 @@ def main():
         commonlySolved = {}
         commonlyGrounded = {}
         for solver in SMT_SOLVERS:
+            if solver not in domainDict:
+                continue
             solved = {r.problem for r in domainDict[solver] if r.solved}
             grounded = {r.problem for r in domainDict[solver] if r.nOfVars > 0}
             if solved:
@@ -153,7 +158,7 @@ def main():
             bounds = [r.bound for r in pResult if r.solved if r.problem in commonlySolved]
             t[domain]["bound"][solver] = r(statistics.mean(bounds), 2) if t[domain]["coverage"][
                                                                               solver] != "-" and bounds else "-"
-            t[domain]["time"][solver] = r(statistics.mean([r.time if r.solved else 300000 for r in pResult]) / 1000,
+            t[domain]["time"][solver] = r(statistics.mean([r.time if r.solved else TIME_LIMIT for r in pResult]) / 1000,
                                           2) if \
                 t[domain]["coverage"][solver] != "-" else "-"
             t[domain]["length"][solver] = r(statistics.mean([r.planLength for r in pResult if r.solved]), 0) if \
@@ -215,13 +220,15 @@ def main():
         },
         "solvers": {
             'PATTY': "SMT",
+            'PATTY-EXPLICIT': "SMT",
+            'PATTY-CONCAT': "SMT",
             # 'PATTY-R',
-            'RANTANPLAN': "SMT",
-            'SpringRoll': "SMT",
-            "OMT": "SMT",
-            'ENHSP': "SEARCH",
-            'METRIC-FF': "SEARCH",
-            "NFD": "SEARCH"
+            # 'RANTANPLAN': "SMT",
+            # 'SpringRoll': "SMT",
+            # "OMT": "SMT",
+            # 'ENHSP': "SEARCH",
+            # 'METRIC-FF': "SEARCH",
+            # "NFD": "SEARCH"
         },
         "caption": r"Comparative analysis between the \textsc{Patty} (P) planner, the symbolic planners \textsc{\re{"
                    r"}} (\re), \textsc{SpringRoll} (SR), \textsc{OMTPlan} (OMT) and the search-based planners "
