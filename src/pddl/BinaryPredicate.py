@@ -125,6 +125,9 @@ class BinaryPredicate(Predicate):
     def __str__(self):
         return f"({self.operator} {self.lhs} {self.rhs})"
 
+    def __hash__(self):
+        return hash(str(self))
+
     def __repr__(self):
         return str(self)
 

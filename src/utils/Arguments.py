@@ -16,6 +16,8 @@ class Arguments:
                             action="store_true")
         parser.add_argument('--pattern', default="arpg", help="Method too compute the pattern: arpg, random")
         parser.add_argument('--solver', default="z3", help="The solver used to compute a solution: yices, z3")
+        parser.add_argument('-s', '--search', default="static",
+                            help="The search strategy used to compute the solution: static, gbfs, astar")
         parser.add_argument('--encoding', default="non-linear",
                             help="The way linear numeric effect are dealt with: binary, non-linear")
         parser.add_argument('-pp', help="Print pattern", action="store_true")
@@ -38,6 +40,7 @@ class Arguments:
         self.isHelp = "help" in args
         self.domain = args.domain
         self.problem = args.problem
+        self.search = args.search
         self.bound = args.bound
         self.verboseLevel = LogPrintLevel(args.verboseLevel)
         self.deep = args.deep

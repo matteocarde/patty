@@ -3129,7 +3129,7 @@ sig
 end
 
 (** Solvers *)
-module Solver :
+module Search :
 sig
   type solver
   type status = UNSATISFIABLE | UNKNOWN | SATISFIABLE
@@ -3159,7 +3159,7 @@ sig
       {!push} *)
   val pop : solver -> int -> unit
 
-  (** Resets the Solver.
+  (** Resets the Search.
       This removes all assertions from the solver. *)
   val reset : solver -> unit
 
@@ -3219,7 +3219,7 @@ sig
   (** A brief justification of why the last call to [Check] returned [UNKNOWN]. *)
   val get_reason_unknown : solver -> string
 
-  (** Solver statistics. *)
+  (** Search statistics. *)
   val get_statistics : solver -> Statistics.statistics
 
   (** Creates a new (incremental) solver.
@@ -3279,13 +3279,13 @@ sig
       A query is a conjunction of constraints. The constraints may include the recursively defined relations.
       The query is satisfiable if there is an instance of the query variables and a derivation for it.
       The query is unsatisfiable if there are no derivations satisfying the query variables.  *)
-  val query : fixedpoint -> Expr.expr -> Solver.status
+  val query : fixedpoint -> Expr.expr -> Search.status
 
   (** Query the fixedpoint solver.
       A query is an array of relations.
       The query is satisfiable if there is an instance of some relation that is non-empty.
       The query is unsatisfiable if there are no derivations satisfying any of the relations. *)
-  val query_r : fixedpoint -> FuncDecl.func_decl list -> Solver.status
+  val query_r : fixedpoint -> FuncDecl.func_decl list -> Search.status
 
   (** Creates a backtracking point.
       {!pop} *)
@@ -3382,7 +3382,7 @@ sig
   val minimize : optimize -> Expr.expr -> handle
 
   (** Checks whether the assertions in the context are satisfiable and solves objectives. *)
-  val check : optimize -> Solver.status
+  val check : optimize -> Search.status
 
   (** Retrieve model from satisfiable context *)
   val get_model : optimize -> Model.model option

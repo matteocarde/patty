@@ -25,14 +25,22 @@ class PDDL2SMT:
     domain: GroundedDomain
     problem: Problem
 
-    def __init__(self, domain: GroundedDomain, problem: Problem, pattern: Pattern, bound: int, encoding="non-linear",
-                 binaryActions=10, rollBound=0, hasEffectAxioms=False):
+    def __init__(self, domain: GroundedDomain, problem: Problem, pattern: Pattern, bound: int,
+                 encoding="non-linear",
+                 binaryActions=10,
+                 rollBound=0,
+                 hasEffectAxioms=False,
+                 relaxGoal=False,
+                 subgoalsAchieved: Set[Formula] = None):
+
         self.domain = domain
         self.problem = problem
         self.bound = bound
         self.encoding = encoding
         self.rollBound = rollBound
         self.hasEffectAxioms = hasEffectAxioms
+        self.relaxGoal = relaxGoal
+        self.subgoalsAchieved = subgoalsAchieved
 
         self.transitionVariables: [TransitionVariables] = list()
 
@@ -82,30 +90,52 @@ class PDDL2SMT:
 
         return rules
 
-    def getGoalRuleFromFormula(self, f: Formula) -> SMTExpression:
+    def getGoalRuleFromFormula(self, f: Formula, level: int) -> SMTExpression:
         tVars = self.transitionVariables[-1]
-        rules: [SMTExpression] = []
+
+        andRules: [SMTExpression] = []
+        orRules: [SMTExpression] = []
+
         for condition in f.conditions:
+            rule: SMTExpression
+
             if isinstance(condition, BinaryPredicate):
-                expr = SMTExpression.fromPddl(condition, tVars.valueVariables)
-                rules.append(expr)
+                rule = SMTExpression.fromPddl(condition, tVars.valueVariables)
             elif isinstance(condition, Literal):
                 if condition.sign == "+":
-                    rules.append(tVars.valueVariables[condition.getAtom()])
+                    rule = tVars.valueVariables[condition.getAtom()]
                 else:
-                    rules.append(tVars.valueVariables[condition.getAtom()].NOT())
+                    rule = tVars.valueVariables[condition.getAtom()].NOT()
             elif isinstance(condition, Formula):
-                rules.append(self.getGoalRuleFromFormula(condition))
+                rule = self.getGoalRuleFromFormula(condition, level + 1)
             else:
                 raise NotImplemented("Shouldn't go here")
 
-        if f.type == "AND":
-            return SMTExpression.andOfExpressionsList(rules)
-        if f.type == "OR":
-            return SMTExpression.orOfExpressionsList(rules)
+            if level == 0 and self.relaxGoal:
+                if condition in self.subgoalsAchieved:
+                    andRules.append(rule)
+                else:
+                    orRules.append(rule)
+            else:
+                if f.type == "AND":
+                    andRules.append(rule)
+                elif f.type == "OR":
+                    orRules.append(rule)
+
+        rules = []
+        if andRules:
+            rules.append(SMTExpression.andOfExpressionsList(andRules))
+        if orRules:
+            rules.append(SMTExpression.orOfExpressionsList(orRules))
+
+        return SMTExpression.andOfExpressionsList(rules)
 
     def getGoalExpression(self) -> SMTExpression:
-        return self.getGoalRuleFromFormula(self.problem.goal)
+
+        if self.relaxGoal and self.problem.goal.type != "AND":
+            raise Exception("At the moment I cannot relax the goal if it is not expressed as a conjunction of formulas")
+
+        return self.getGoalRuleFromFormula(self.problem.goal, 0)
 
     def getMetricExpression(self, metricBound: float) -> SMTExpression or None:
 

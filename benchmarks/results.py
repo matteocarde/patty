@@ -218,7 +218,7 @@ def main():
             "nOfVars": ("$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$", {"SMT"}),
             "nOfRules": ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}),
         },
-        "solvers": {
+        "search": {
             'PATTY': "SMT",
             'PATTY-EXPLICIT': "SMT",
             'PATTY-CONCAT': "SMT",
@@ -246,7 +246,7 @@ def main():
         #         "time": "Time (s)",
         #         # "length": "Plan Length"
         #     },
-        #     "solvers": [
+        #     "search": [
         #         # 'PATTY-arpg-yices-binary',
         #         'PATTY',
         #         # 'RANTANPLAN',
@@ -255,14 +255,14 @@ def main():
         #         'METRIC-FF',
         #         "NFD"
         #     ],
-        #     "caption": r"Comparative analysis between \textsc{Patty} and the search-based solvers \textsc{ENHSP} (E), "
+        #     "caption": r"Comparative analysis between \textsc{Patty} and the search-based search \textsc{ENHSP} (E), "
         #                r"\textsc{MetricFF} (FF) and \textsc{NumericFastDownward} (NFD)."
         # }
     ]
 
     for table in tables:
         stats = table["columns"].keys()
-        solvers = table["solvers"].keys()
+        solvers = table["search"].keys()
 
         best = dict()
         for (domain, domainDict) in d.items():
@@ -293,7 +293,7 @@ def main():
         cString = ""
         for (stat, (name, statTypes)) in table["columns"].items():
             nCells = 0
-            for (solver, type) in table["solvers"].items():
+            for (solver, type) in table["search"].items():
                 if type not in statTypes:
                     continue
                 solversHeader.append(f"${SOLVERS[solver]}$")
@@ -313,7 +313,7 @@ def main():
             rows = []
             row = [cluster]
             for (stat, (name, statTypes)) in table["columns"].items():
-                for (solver, type) in table["solvers"].items():
+                for (solver, type) in table["search"].items():
                     if type not in statTypes:
                         continue
                     nOfBest = 0
@@ -325,7 +325,7 @@ def main():
             for domain in clusterDomains:
                 row = [DOMAINS[domain]]
                 for (stat, (name, statTypes)) in table["columns"].items():
-                    for (solver, type) in table["solvers"].items():
+                    for (solver, type) in table["search"].items():
                         if type not in statTypes:
                             continue
                         if solver not in t[domain][stat]:

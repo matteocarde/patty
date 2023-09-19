@@ -4,6 +4,7 @@ from typing import Dict, List, Set
 from src.pddl.Atom import Atom
 from src.pddl.Operation import Operation
 from src.pddl.Problem import Problem
+from src.pddl.State import State
 from src.pddl.Utilities import Utilities
 from src.pddl.Action import Action
 from src.pddl.Event import Event
@@ -62,9 +63,10 @@ class Domain:
 
         rpg = RPG(gDomain, problem)
         orderedActions = rpg.getActionsOrder()
-        arpg = ARPG(orderedActions, problem, gDomain)
+        initialState = State.fromInitialCondition(problem.init)
+        gDomain.actions = set(orderedActions)
 
-        gDomain.actions = orderedActions
+        arpg = ARPG(gDomain, initialState, problem.goal)
         constants: Dict[Atom, float] = arpg.getConstantAtoms()
 
         for op in gActions | gEvents | gProcess:
@@ -76,8 +78,9 @@ class Domain:
         gDomain = gDomain.substitute(constants)
         orderedActions = [a.substitute(constants) for a in orderedActions if a.canHappen(constants)]
         problem.substitute(constants)
+        gDomain.actions = set(orderedActions)
 
-        gDomain.arpg = ARPG(orderedActions, problem, gDomain)
+        gDomain.arpg = ARPG(gDomain, initialState, problem.goal)
         return gDomain
 
     @classmethod
@@ -221,7 +224,6 @@ class GroundedDomain(Domain):
         subActions: Set[Action] = {a.substitute(sub, default) for a in self.actions if a.canHappen(sub, default)}
 
         return GroundedDomain(self.name, subActions, self.events, self.processes)
-
 
     def getARPG(self):
         return self.arpg

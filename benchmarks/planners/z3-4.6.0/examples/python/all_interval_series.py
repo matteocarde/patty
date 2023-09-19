@@ -21,7 +21,7 @@ def ais(n):
 # Optionally replace by (slower) default solver if using
 # more then just finite domains (Booleans, Bit-vectors, enumeration types
 # and bounded integers)
-#   s = Solver() 
+#   s = Search()
     for i in range(n):
         s.add(AtMost(xij[i] + [1]))
         s.add(Or(xij[i]))

@@ -103,8 +103,8 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Solver.Foundation">
-      <HintPath>..\Microsoft.Solver.Foundation.dll</HintPath>
+    <Reference Include="Microsoft.Search.Foundation">
+      <HintPath>..\Microsoft.Search.Foundation.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Z3, Version=4.3.2.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>

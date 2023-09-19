@@ -10,6 +10,7 @@ from src.pddl.InitialCondition import InitialCondition
 from src.pddl.Literal import Literal
 from src.pddl.MooreInterval import MooreInterval
 from src.pddl.Predicate import Predicate
+from src.pddl.State import State
 from src.pddl.Supporter import Supporter
 from src.pddl.Utilities import Utilities
 
@@ -42,21 +43,22 @@ class RelaxedIntervalState:
         return self.__boolean
 
     @classmethod
-    def fromInitialCondition(cls, init: InitialCondition, atoms: Set[Atom]):
+    def fromState(cls, state: State, atoms: Set[Atom]):
         ris = cls()
-        for (atom, value) in init.numericAssignments.items():
-            ris.__intervals[atom] = MooreInterval(value, value)
+        for (atom, value) in state.assignments.items():
+            if type(value) is not bool:
+                ris.__intervals[atom] = MooreInterval(value, value)
 
         posLit = set()
         negLit = set()
-        for lit in init.assignments:
-            if not isinstance(lit, Literal):
+        for (atom, value) in state.assignments.items():
+            if type(value) is not bool:
                 continue
-            ris.__boolean.add(lit)
-            if lit.sign == "+":
-                posLit.add(lit.getAtom())
+            ris.__boolean.add(Literal.fromAtom(atom, "+" if value else "-"))
+            if value:
+                posLit.add(atom)
             else:
-                negLit.add(lit.getAtom())
+                negLit.add(atom)
 
         for a in atoms:
             if a in posLit or a in negLit:
@@ -64,6 +66,30 @@ class RelaxedIntervalState:
             ris.__boolean.add(Literal.fromAtom(a, "-"))
 
         return ris
+
+    # @classmethod
+    # def fromInitialCondition(cls, init: InitialCondition, atoms: Set[Atom]):
+    #     ris = cls()
+    #     for (atom, value) in init.numericAssignments.items():
+    #         ris.__intervals[atom] = MooreInterval(value, value)
+    #
+    #     posLit = set()
+    #     negLit = set()
+    #     for lit in init.assignments:
+    #         if not isinstance(lit, Literal):
+    #             continue
+    #         ris.__boolean.add(lit)
+    #         if lit.sign == "+":
+    #             posLit.add(lit.getAtom())
+    #         else:
+    #             negLit.add(lit.getAtom())
+    #
+    #     for a in atoms:
+    #         if a in posLit or a in negLit:
+    #             continue
+    #         ris.__boolean.add(Literal.fromAtom(a, "-"))
+    #
+    #     return ris
 
     def getAtom(self, atom: Atom) -> MooreInterval:
         if not atom in self.__intervals:

@@ -6,7 +6,7 @@ from src.utils.LogPrint import LogPrint, LogPrintLevel
 from src.utils.TimeStat import TimeStat
 
 
-class Solver:
+class Search:
 
     def __init__(self, domain: GroundedDomain, problem: Problem, args: Arguments):
         self.domain = domain
@@ -22,7 +22,6 @@ class Solver:
 
         pass
 
-    @staticmethod
     def solve(self):
         raise NotImplementedError
 

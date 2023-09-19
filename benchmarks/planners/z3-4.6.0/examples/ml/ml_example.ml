@@ -13,7 +13,7 @@ open Z3.Goal
 open Z3.Tactic
 open Z3.Tactic.ApplyResult
 open Z3.Probe
-open Z3.Solver
+open Z3.Search
 open Z3.Arithmetic
 open Z3.Arithmetic.Integer
 open Z3.Arithmetic.Real
@@ -54,7 +54,7 @@ let  model_converter_test ( ctx : context ) =
       Printf.printf "Test passed.\n"
     ;
     let solver = (mk_solver ctx None) in
-    let f e = (Solver.add solver [ e ]) in
+    let f e = (Search.add solver [ e ]) in
     ignore (List.map f (get_formulas (get_subgoal ar 0))) ;
     let q = (check solver []) in
     if q != SATISFIABLE then 
@@ -64,7 +64,7 @@ let  model_converter_test ( ctx : context ) =
       match m with 
 	| None -> raise (TestFailedException "")
 	| Some (m) -> 
-	  Printf.printf "Solver says: %s\n" (string_of_status q) ;
+	  Printf.printf "Search says: %s\n" (string_of_status q) ;
 	  Printf.printf "Model: \n%s\n" (Model.to_string m) ;
 	  Printf.printf "Converted Model: \n%s\n" (Model.to_string (convert_model ar 0 m))
   )
@@ -93,7 +93,7 @@ let basic_tests ( ctx : context ) =
   Printf.printf "%s\n" ("Goal: " ^ (Goal.to_string g)) ;
   (
     let solver = (mk_solver ctx None) in
-    (List.iter (fun a -> (Solver.add solver [ a ])) (get_formulas g)) ;
+    (List.iter (fun a -> (Search.add solver [ a ])) (get_formulas g)) ;
     if (check solver []) != SATISFIABLE then
       raise (TestFailedException "")
     else
@@ -276,7 +276,7 @@ let fpa_example ( ctx : context ) =
   (Printf.printf "c4: %s\n" (Expr.to_string c4)) ;
   (
     let solver = (mk_solver ctx None) in
-	(Solver.add solver [ c4 ]) ;
+	(Search.add solver [ c4 ]) ;
     if (check solver []) != SATISFIABLE then
       raise (TestFailedException "")
     else
@@ -309,7 +309,7 @@ let fpa_example ( ctx : context ) =
   (Printf.printf "c5: %s\n" (Expr.to_string c5)) ;
   (
     let solver = (mk_solver ctx None) in
-	(Solver.add solver [ c5 ]) ;
+	(Search.add solver [ c5 ]) ;
     if (check solver []) != SATISFIABLE then
 	  raise (TestFailedException "")
     else

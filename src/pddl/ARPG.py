@@ -3,9 +3,11 @@ from typing import Set, List, Dict
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.Domain import Domain, GroundedDomain
+from src.pddl.Goal import Goal
 from src.pddl.PDDLException import PDDLException
 from src.pddl.Problem import Problem
 from src.pddl.RelaxedIntervalState import RelaxedIntervalState
+from src.pddl.State import State
 from src.pddl.Supporter import Supporter
 
 
@@ -13,27 +15,27 @@ class ARPG:
     supporterLevels: List[Set[Supporter]]
     stateLevels: List[RelaxedIntervalState]
 
-    def __init__(self, actions: List[Action], problem: Problem, domain: GroundedDomain):
+    def __init__(self, domain: GroundedDomain, state: State, goal: Goal):
         self.supporterLevels = list()
         self.stateLevels = list()
-        self.actions: List[Action] = actions
+        self.actions: List[Action] = list(domain.actions)
 
         self.originalOrder = dict([(action, i) for (i, action) in enumerate(self.actions)])
 
         supporters: Set[Supporter] = set()
-        for a in actions:
+        for a in self.actions:
             supporters |= a.getSupporters()
 
-        state: RelaxedIntervalState = RelaxedIntervalState.fromInitialCondition(problem.init, domain.predicates)
+        state: RelaxedIntervalState = RelaxedIntervalState.fromState(state, domain.predicates)
         activeSupporters = {s for s in supporters if s.isSatisfiedBy(state)}
 
         self.supporterLevels.append(activeSupporters)
         self.stateLevels.append(state)
 
-        fullBooleanGoal = len(problem.goal.getFunctions()) == 0
+        fullBooleanGoal = len(goal.getFunctions()) == 0
 
         isFixpoint = False
-        while activeSupporters and not isFixpoint:  # (fullBooleanGoal or not state.satisfies(problem.goal)):
+        while activeSupporters and not isFixpoint:  # (fullBooleanGoal or not state.satisfies(goal)):
             supporters = supporters - activeSupporters
             newState = state.applySupporters(activeSupporters)
             activeSupporters = {s for s in supporters if s.isSatisfiedBy(newState)}
@@ -44,7 +46,7 @@ class ARPG:
             isFixpoint = state.coincide(newState)
             state = newState
 
-        if not fullBooleanGoal and not state.satisfies(problem.goal):
+        if not fullBooleanGoal and not state.satisfies(goal):
             raise PDDLException.GoalNotReachable()
 
     def __getPurelyBoolean(self) -> List[Action]:

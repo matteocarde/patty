@@ -4,15 +4,15 @@ from unittest import TestCase
 from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
-from src.solvers.StaticSolver import StaticSolver
+from src.search.GBFSSearch import GBFSSearch
 from src.utils.Arguments import Arguments
 
 
-class TestStaticSolver(TestCase):
+class TestGBFSSearch(TestCase):
 
     def setUp(self) -> None:
-        domainFile = "../../files/block-grouping/domain.pddl"
-        problemFile = "../../files/block-grouping/instances/instance_7_15_3_1.pddl"
+        domainFile = "../../files/plant-watering/domain.pddl"
+        problemFile = "../../files/plant-watering/instances/instance_4_1.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)
@@ -21,7 +21,7 @@ class TestStaticSolver(TestCase):
         pass
 
     def test_solve(self):
-        solver = StaticSolver(self.gDomain, self.problem, self.args)
+        solver = GBFSSearch(self.gDomain, self.problem, self.args)
         plan: NumericPlan = solver.solve()
 
         self.assertIsInstance(plan, NumericPlan)

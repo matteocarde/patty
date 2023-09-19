@@ -85,8 +85,8 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Solver.Foundation">
-      <HintPath>..\Microsoft.Solver.Foundation.dll</HintPath>
+    <Reference Include="Microsoft.Search.Foundation">
+      <HintPath>..\Microsoft.Search.Foundation.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">      

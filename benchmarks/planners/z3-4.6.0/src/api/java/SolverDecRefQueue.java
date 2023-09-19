@@ -17,7 +17,7 @@ Notes:
 
 package com.microsoft.z3;
 
-class SolverDecRefQueue extends IDecRefQueue<Solver> {
+class SolverDecRefQueue extends IDecRefQueue<Search> {
     public SolverDecRefQueue() { super(); }
     
     @Override

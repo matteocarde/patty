@@ -4,8 +4,11 @@ import copy
 import random
 from typing import List
 
+from src.pddl.ARPG import ARPG
 from src.pddl.Action import Operation, Action
 from src.pddl.Domain import GroundedDomain
+from src.pddl.Goal import Goal
+from src.pddl.State import State
 
 
 class Pattern:
@@ -15,6 +18,13 @@ class Pattern:
     def __init__(self):
         self.__order: List[Operation] = list()
         pass
+
+    def __deepcopy__(self, m=None) -> Pattern:
+        m = {} if m is None else m
+        p = Pattern()
+        p.__order = copy.copy(self.__order)
+        p.dummyAction = copy.copy(self.dummyAction)
+        return p
 
     def __getitem__(self, item):
         return self.__order[item]
@@ -33,6 +43,16 @@ class Pattern:
 
     def __iter__(self):
         return iter(self.__order)
+
+    def __add__(self, other):
+        if not isinstance(other, Pattern):
+            raise Exception("Cannot concatenate Pattern with element not of type Pattern")
+        catPattern: Pattern = Pattern()
+        catPattern.__order = [a for a in self.__order if not a.isFake] + [b for b in other.__order if not b.isFake]
+        catPattern.dummyAction = other.dummyAction
+        catPattern.__order.append(catPattern.dummyAction)
+
+        return catPattern
 
     def __str__(self):
         return "\n".join([str(x) for x in self.__order if not x.isFake])
@@ -75,3 +95,18 @@ class Pattern:
         order = list(gDomain.actions)
         random.shuffle(order)
         return Pattern.fromOrder(order)
+
+    @classmethod
+    def fromState(cls, state: State, goal: Goal, domain: GroundedDomain):
+        arpg: ARPG = ARPG(domain, state, goal)
+        order = arpg.getActionsOrder()
+        return Pattern.fromOrder(order)
+
+    def addPostfix(self, postfix: int or str):
+        order = []
+        for item in self.__order[:-1]:
+            a = copy.deepcopy(item)
+            a.name = f"{a.name}_{postfix}"
+            order.append(a)
+        order.append(self.dummyAction)
+        self.__order = order

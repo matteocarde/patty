@@ -44,7 +44,7 @@ if (PLUGIN_SYMMETRIES_ENABLED)
 endif()
 
 # If any enabled plugin requires an LP solver, compile with all
-# available LP solvers. If no solvers are installed, the planner will
+# available LP search. If no search are installed, the planner will
 # still compile, but using heuristics that depend on an LP solver will
 # cause an error.
 if(PLUGIN_LP_SOLVER_ENABLED)

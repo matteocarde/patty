@@ -1,3 +1,4 @@
+import copy
 from typing import Dict
 
 from src.pddl.Action import Action
@@ -17,6 +18,12 @@ class State:
     def __init__(self):
         self.__assignments: Dict[Atom, bool or float] = dict()
 
+    def __deepcopy__(self, m=None) -> Literal:
+        m = {} if m is None else m
+        s = State()
+        s.__assignments = copy.deepcopy(self.__assignments, m)
+        return s
+
     @classmethod
     def fromInitialCondition(cls, init: InitialCondition):
         state = cls()
@@ -27,6 +34,10 @@ class State:
             state.__assignments[atom] = state.getRealization(assignment)
 
         return state
+
+    @property
+    def assignments(self):
+        return self.__assignments
 
     def getAtom(self, atom: Atom) -> bool or float:
         if atom not in self.__assignments:
@@ -48,6 +59,12 @@ class State:
         for effect in action.effects:
             state.__assignments[effect.getAtom()] = self.getRealization(effect)
 
+        return state
+
+    def applyPlan(self, plan):
+        state = self
+        for action in plan:
+            state = state.applyAction(action)
         return state
 
     def __satisfiesAnd(self, formula: Formula):
@@ -74,7 +91,9 @@ class State:
 
         return satisfied
 
-    def satisfies(self, c: Formula) -> bool:
+    def satisfies(self, c: Formula or Predicate) -> bool:
+        if isinstance(c, Predicate):
+            return self.satisfiesPredicate(c)
         return self.__satisfiesAnd(c) if c.type == "AND" else self.__satisfiesOr(c)
 
     def satisfiesPredicate(self, p: Predicate):

@@ -46,6 +46,7 @@ class Operation:
         self.assignments = dict()
         self.linearizationOf = self
         self.linearizationTimes = 1
+        self.isFake = False
 
     def __deepcopy__(self, m=None) -> Operation:
         m = {} if m is None else m

@@ -8,7 +8,7 @@ from src.pddl.Problem import Problem
 from src.plan.PDDL2SMT import PDDL2SMT
 from src.plan.Pattern import Pattern
 from src.smt.SMTSolver import SMTSolver
-from src.solvers.StaticSolver import StaticSolver
+from src.solvers.StaticSearch import StaticSearch
 
 
 class TestBlockGrouping(TestCase):

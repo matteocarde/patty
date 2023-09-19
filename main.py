@@ -1,15 +1,11 @@
-import random
 import traceback
-from typing import List
 
 from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
-from src.pddl.Operation import Operation
 from src.pddl.Problem import Problem
-from src.plan.PDDL2SMT import PDDL2SMT
-from src.plan.Pattern import Pattern
-from src.smt.SMTSolver import SMTSolver
-from src.solvers.StaticSolver import StaticSolver
+from src.search.GBFSSearch import GBFSSearch
+from src.search.Search import Search
+from src.search.StaticSearch import StaticSearch
 from src.utils.Arguments import Arguments
 from src.utils.LogPrint import LogPrint, LogPrintLevel
 from src.utils.TimeStat import TimeStat
@@ -32,7 +28,11 @@ def main():
         gDomain: GroundedDomain = domain.ground(problem)
         ts.end("Grounding", console=console)
 
-        solver = StaticSolver(gDomain, problem, args)
+        solver: Search
+        if args.search == "gbfs":
+            solver = GBFSSearch(gDomain, problem, args)
+        else:
+            solver = StaticSearch(gDomain, problem, args)
         plan: NumericPlan = solver.solve()
 
         console.log(plan.toValString(), LogPrintLevel.PLAN)
