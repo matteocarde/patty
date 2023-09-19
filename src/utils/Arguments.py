@@ -5,12 +5,10 @@ from src.utils.LogPrint import LogPrintLevel
 
 class Arguments:
 
-    def __init__(self):
-        parser = argparse.ArgumentParser(
-            description='Patty - The Symbolic Numeric Planner using Patterns')
-        # parser.add_argument('-h', '--help', dest='help', help='Print this message', action="store_true")
-        parser.add_argument('-o', '--domain', dest='domain', help='The .pddl domain file', required=True)
-        parser.add_argument('-f', '--problem', dest='problem', help='The .pddl problem file', required=True)
+    def __init__(self, keepRequired=True):
+        parser = argparse.ArgumentParser(description='Patty - The Symbolic Numeric Planner using Patterns')
+        parser.add_argument('-o', '--domain', dest='domain', help='The .pddl domain file', required=keepRequired)
+        parser.add_argument('-f', '--problem', dest='problem', help='The .pddl problem file', required=keepRequired)
         parser.add_argument('-n', '--bound', help='The number of steps of the SMT encoding')
         parser.add_argument('-v', '--verboseLevel', help=f'The level of verbosity: {LogPrintLevel.getLevels()} ',
                             default=LogPrintLevel.getDefault(), type=int)

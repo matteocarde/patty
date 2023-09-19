@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import copy
-from typing import Set, List
+import random
+from typing import List
 
 from src.pddl.Action import Operation, Action
+from src.pddl.Domain import GroundedDomain
 
 
 class Pattern:
@@ -33,7 +35,7 @@ class Pattern:
         return iter(self.__order)
 
     def __str__(self):
-        return "; ".join([str(x) for x in self.__order if not x.isFake])
+        return "\n".join([str(x) for x in self.__order if not x.isFake])
 
     def extendNonLinearities(self, nOfActions: int):
 
@@ -61,4 +63,15 @@ class Pattern:
                 a.name = f"{a.name}_{i}"
                 order.append(a)
 
+        return Pattern.fromOrder(order)
+
+    @classmethod
+    def fromARPG(cls, gDomain: GroundedDomain) -> Pattern:
+        order = gDomain.getARPG().getActionsOrder()
+        return Pattern.fromOrder(order)
+
+    @classmethod
+    def fromRandom(cls, gDomain: GroundedDomain) -> Pattern:
+        order = list(gDomain.actions)
+        random.shuffle(order)
         return Pattern.fromOrder(order)
