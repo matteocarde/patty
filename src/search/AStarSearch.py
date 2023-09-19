@@ -18,7 +18,7 @@ class AStarSearch(Search):
         super().__init__(domain, problem, args)
 
     def solve(self) -> NumericPlan:
-        callsToSolve = 0
+        callsToSolver = 0
         totalSubgoals = self.problem.goal.conditions
         subgoalsAchieved = set()
         bound = self.startBound
@@ -50,7 +50,7 @@ class AStarSearch(Search):
 
             self.ts.start(f"Solving Bound {bound}", console=self.console)
             solver: SMTSolver = SMTSolver(pddl2smt, solver=self.args.solver)
-            callsToSolve += 1
+            callsToSolver += 1
             plan: NumericPlan = solver.solve()
             solver.exit()
             self.ts.end(f"Solving Bound {bound}", console=self.console)
@@ -70,8 +70,7 @@ class AStarSearch(Search):
                 patG = Pattern.fromPlan(plan)
                 patG.addPostfix("G")
                 patH = Pattern.fromOrder([])
-                self.console.log(f"Calls to solve: {callsToSolve}",
-                                 LogPrintLevel.STATS)
+                self.console.log(f"Calls to Solver: {callsToSolver}", LogPrintLevel.STATS)
                 if len(subgoalsAchieved) == len(self.problem.goal.conditions):
                     return plan
                 pass

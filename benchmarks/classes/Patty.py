@@ -9,13 +9,15 @@ NAME = "PATTY"
 class Patty(Planner):
     name = NAME
 
-    def __init__(self, name, pattern, solver, encoding, rollBound=0, hasEffectAxioms=False, concatPatterns=False):
+    def __init__(self, name, pattern, solver, encoding, rollBound=0, hasEffectAxioms=False, concatPatterns=False,
+                 search="static"):
         self.pattern = pattern
         self.solver = solver
         self.encoding = encoding
         self.rollBound = rollBound
         self.hasEffectAxioms = hasEffectAxioms
         self.concatPatterns = concatPatterns
+        self.search = search
         self.name = name
         super().__init__()
 
@@ -34,6 +36,9 @@ class Patty(Planner):
         reLastSearchedBound = re.findall(r"Started Solving Bound (\d*?)$", stdout, re.MULTILINE)
         r.lastSearchedBound = -1 if not reLastSearchedBound else int(reLastSearchedBound[-1])
 
+        lastCallsToSolver = re.findall(r"Calls to Solver: (\d*?)$", stdout, re.MULTILINE)
+        r.lastCallsToSolver = -1 if not lastCallsToSolver else int(lastCallsToSolver[-1])
+
         return r
 
     def getCommand(self, domain: str, problem: str):
@@ -41,6 +46,7 @@ class Patty(Planner):
             "patty",
             "-o", domain,
             "-f", problem,
+            "-s", self.search,
             "-pp",
             "--pattern", self.pattern,
             "--solver", self.solver,

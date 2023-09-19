@@ -23,7 +23,7 @@ class StaticSearch(Search):
         raise Exception(f"Pattern generation method '{self.args.pattern}' unknown")
 
     def solve(self) -> NumericPlan:
-
+        callsToSolver = 0
         pattern: Pattern = self.getPattern()
 
         if self.args.printPattern:
@@ -56,11 +56,13 @@ class StaticSearch(Search):
 
             plan: NumericPlan
             plan = solver.solve()
+            callsToSolver += 1
             solver.exit()
             self.ts.end(f"Solving Bound {bound}", console=self.console)
 
             self.console.log(f"Bound {bound} - Vars = {pddl2smt.getNVars()}", LogPrintLevel.STATS)
             self.console.log(f"Bound {bound} - Rules = {pddl2smt.getNRules()}", LogPrintLevel.STATS)
+            self.console.log(f"Calls to Solver: {callsToSolver}", LogPrintLevel.STATS)
 
             if self.args.saveSMT:
                 self.saveSMT(bound, pddl2smt)

@@ -19,6 +19,7 @@ class GBFSSearch(Search):
 
     def solve(self) -> NumericPlan:
 
+        callsToSolver = 0
         totalSubgoals = self.problem.goal.conditions
         subgoalsAchieved = set()
         bound = self.startBound
@@ -48,6 +49,7 @@ class GBFSSearch(Search):
 
             self.ts.start(f"Solving Bound {bound}", console=self.console)
             solver: SMTSolver = SMTSolver(pddl2smt, solver=self.args.solver)
+            callsToSolver += 1
             plan: NumericPlan = solver.solve()
             solver.exit()
             self.ts.end(f"Solving Bound {bound}", console=self.console)
@@ -64,6 +66,7 @@ class GBFSSearch(Search):
                 subgoalsAchieved = {g for g in self.problem.goal.conditions if sprime.satisfies(g)}
                 self.console.log(f"Subgoals achieved: {len(subgoalsAchieved)}/{len(totalSubgoals)}",
                                  LogPrintLevel.STATS)
+                self.console.log(f"Calls to Solver: {callsToSolver}", LogPrintLevel.STATS)
                 if len(subgoalsAchieved) == len(self.problem.goal.conditions):
                     return plan
                 pass

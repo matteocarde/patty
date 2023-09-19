@@ -24,6 +24,7 @@ class Result:
     nOfVars: int = -1
     nOfRules: int = -1
     lastSearchedBound: int = -1
+    lastCallsToSolver: int = -1
 
     def __init__(self, domain: str, problem: str):
         self.plan = list()
@@ -45,6 +46,7 @@ class Result:
         r.nOfVars = int(csvLine[8])
         r.nOfRules = int(csvLine[9])
         r.lastSearchedBound = int(csvLine[10])
+        r.lastCallsToSolver = int(csvLine[11])
 
         return r
 
@@ -66,7 +68,8 @@ class Result:
             (str(self.planLength), 5),
             (str(self.nOfVars), 5),
             (str(self.nOfRules), 5),
-            (str(self.lastSearchedBound), 5)
+            (str(self.lastSearchedBound), 5),
+            (str(self.lastCallsToSolver), 5)
         ]
 
         string = "|" + "|".join(["{:^" + str(n[1]) + "}" for n in row]) + "|"
@@ -89,6 +92,7 @@ class Result:
             str(self.nOfVars),
             str(self.nOfRules),
             str(self.lastSearchedBound),
+            str(self.lastCallsToSolver),
         ])
 
     @classmethod
@@ -102,6 +106,7 @@ class Result:
         r.nOfVars = max([e.nOfVars for e in results])
         r.nOfRules = max([e.nOfRules for e in results])
         r.lastSearchedBound = max([e.lastSearchedBound for e in results])
+        r.lastCallsToSolver = max([e.lastCallsToSolver for e in results])
         if r.solved > 0:
             r.time = max([e.time for e in results if e.solved])
             r.bound = max([e.bound for e in results if e.solved])
