@@ -3,6 +3,7 @@ import traceback
 from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
+from src.search.AStarSearch import AStarSearch
 from src.search.GBFSSearch import GBFSSearch
 from src.search.Search import Search
 from src.search.StaticSearch import StaticSearch
@@ -31,6 +32,8 @@ def main():
         solver: Search
         if args.search == "gbfs":
             solver = GBFSSearch(gDomain, problem, args)
+        elif args.search == "astar":
+            solver = AStarSearch(gDomain, problem, args)
         else:
             solver = StaticSearch(gDomain, problem, args)
         plan: NumericPlan = solver.solve()

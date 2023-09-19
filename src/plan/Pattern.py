@@ -8,6 +8,7 @@ from src.pddl.ARPG import ARPG
 from src.pddl.Action import Operation, Action
 from src.pddl.Domain import GroundedDomain
 from src.pddl.Goal import Goal
+from src.pddl.NumericPlan import NumericPlan
 from src.pddl.State import State
 
 
@@ -110,3 +111,7 @@ class Pattern:
             order.append(a)
         order.append(self.dummyAction)
         self.__order = order
+
+    @classmethod
+    def fromPlan(cls, plan: NumericPlan) -> Pattern:
+        return Pattern.fromOrder(plan.rolledPlan)

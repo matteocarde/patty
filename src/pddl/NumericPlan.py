@@ -19,6 +19,10 @@ class NumericPlan:
     def __len__(self):
         return len(self.__rolledPlan)
 
+    @property
+    def rolledPlan(self):
+        return self.__rolledPlan
+
     def addRepeatedAction(self, action: Action, repetitions: int):
         self.__plan.append((action, repetitions))
         for i in range(0, repetitions):

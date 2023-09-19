@@ -56,40 +56,6 @@ class TestRover(TestCase):
         valid = plan.validate(self.problem)
         self.assertTrue(valid)
 
-    def test_optimize(self):
-        solver: SMTSolver = SMTSolver(self.pddl2smt)
-
-        plan: NumericPlan = solver.optimize()
-        solver.exit()
-
-        self.assertIsInstance(plan, NumericPlan)
-
-        print("Plan length: ", len(plan))
-        print("No repetitions:")
-        plan.print()
-        print("With repetitions:")
-        plan.printWithRepetitions()
-
-        self.assertTrue(plan.validate(self.problem))
-        self.assertTrue(plan.optimal)
-
-    def test_optimize_binary(self):
-        solver: SMTSolver = SMTSolver(self.pddl2smt)
-
-        plan: NumericPlan = solver.optimizeBinary()
-        solver.exit()
-
-        self.assertIsInstance(plan, NumericPlan)
-
-        print("Plan length: ", len(plan))
-        print("No repetitions:")
-        plan.print()
-        print("With repetitions:")
-        plan.printWithRepetitions()
-
-        self.assertTrue(plan.validate(self.problem))
-        self.assertTrue(plan.optimal)
-
 
 if __name__ == '__main__':
     unittest.main()

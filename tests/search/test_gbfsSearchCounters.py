@@ -8,11 +8,11 @@ from src.search.GBFSSearch import GBFSSearch
 from src.utils.Arguments import Arguments
 
 
-class TestGBFSSearch(TestCase):
+class TestGBFSCounters(TestCase):
 
     def setUp(self) -> None:
-        domainFile = "../../files/plant-watering/domain.pddl"
-        problemFile = "../../files/plant-watering/instances/instance_4_1.pddl"
+        domainFile = "../../files/ipc-2023/counters/domain.pddl"
+        problemFile = "../../files/ipc-2023/counters/instances/rnd_instance_40_3.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)
