@@ -70,8 +70,9 @@ class AStarSearch(Search):
                 patG = Pattern.fromPlan(plan)
                 patG.addPostfix("G")
                 patH = Pattern.fromOrder([])
-                self.console.log(f"Calls to Solver: {callsToSolver}", LogPrintLevel.STATS)
                 if len(subgoalsAchieved) == len(self.problem.goal.conditions):
+                    self.console.log(f"Calls to Solver: {callsToSolver}", LogPrintLevel.STATS)
+                    self.console.log(f"Bound: {bound}", LogPrintLevel.STATS)
                     return plan
                 pass
 

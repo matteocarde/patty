@@ -66,8 +66,9 @@ class GBFSSearch(Search):
                 subgoalsAchieved = {g for g in self.problem.goal.conditions if sprime.satisfies(g)}
                 self.console.log(f"Subgoals achieved: {len(subgoalsAchieved)}/{len(totalSubgoals)}",
                                  LogPrintLevel.STATS)
-                self.console.log(f"Calls to Solver: {callsToSolver}", LogPrintLevel.STATS)
                 if len(subgoalsAchieved) == len(self.problem.goal.conditions):
+                    self.console.log(f"Calls to Solver: {callsToSolver}", LogPrintLevel.STATS)
+                    self.console.log(f"Bound: {bound}", LogPrintLevel.STATS)
                     return plan
                 pass
 

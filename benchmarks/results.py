@@ -4,21 +4,24 @@ from typing import Dict, List
 
 from classes.Result import Result
 
-SMT_SOLVERS = {'SpringRoll', 'PATTY', 'RANTANPLAN', "OMT"}
+SMT_SOLVERS = {'SpringRoll', "PATTY-STATIC", "PATTY-GBFS", "PATTY-ASTAR", 'RANTANPLAN', "OMT"}
 TIME_LIMIT = 30 * 1000
 
 SOLVERS = {
-    'SpringRoll': "SR",
-    'PATTY': "P",
-    'PATTY-EXPLICIT': "P_{exp}",
-    'PATTY-CONCAT': "P_{cat}",
-    # 'PATTY-R': "P_r",
-    'RANTANPLAN': "\mathrm{R^2\exists}",
-    'METRIC-FF': "\mathrm{FF}",
-    'ENHSP': r"\mathrm{ENHSP}",
-    'NFD': "\mathrm{NFD}",
-    'SMTPLAN+': "\mathrm{SMTP}^+",
-    'OMT': "\mathrm{OMT}",
+    # 'SpringRoll': "SR",
+    # 'PATTY': "P",
+    # 'PATTY-EXPLICIT': "P_{exp}",
+    # 'PATTY-CONCAT': "P_{cat}",
+    # # 'PATTY-R': "P_r",
+    # 'RANTANPLAN': "\mathrm{R^2\exists}",
+    # 'METRIC-FF': "\mathrm{FF}",
+    # 'ENHSP': r"\mathrm{ENHSP}",
+    # 'NFD': "\mathrm{NFD}",
+    # 'SMTPLAN+': "\mathrm{SMTP}^+",
+    # 'OMT': "\mathrm{OMT}",
+    "PATTY-STATIC": "P_{s}",
+    "PATTY-GBFS": r"P_{\text{gbfs}}",
+    "PATTY-ASTAR": "P_{A^*}",
 }
 
 DOMAINS = {
@@ -77,7 +80,7 @@ TOTALS = {
 def main():
     ## Parsing the results
     files = [
-        "benchmarks/results/2023-08-17-CONCAT-v2.csv"
+        "benchmarks/results/2023-09-19-SEARCH-v2.csv"
     ]
 
     aResults: [Result] = []
@@ -132,6 +135,7 @@ def main():
             "length": dict(),
             "nOfVars": dict(),
             "nOfRules": dict(),
+            "lastCallsToSolver": dict(),
         }
 
         commonlySolved = {}
@@ -168,6 +172,8 @@ def main():
             t[domain]["nOfVars"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
             v = [r.nOfRules for r in pResult if r.nOfRules > 0 and r.problem in commonlyGrounded]
             t[domain]["nOfRules"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
+            v = [r.lastCallsToSolver for r in pResult if r.lastCallsToSolver > 0 and r.problem in commonlySolved]
+            t[domain]["lastCallsToSolver"][solver] = r(statistics.mean(v), 2) if len(v) else "-"
 
     domainsClusters = {
         r"\textit{Highly Numeric}": [
@@ -205,6 +211,7 @@ def main():
         "time": -1,
         "nOfVars": -1,
         "nOfRules": -1,
+        "lastCallsToSolver": -1,
     }
 
     tables = [{
@@ -215,13 +222,14 @@ def main():
             "coverage": ("Coverage (\%)", {"SMT", "SEARCH"}),
             "time": ("Time (s)", {"SMT", "SEARCH"}),
             "bound": ("Bound (Common)", {"SMT"}),
-            "nOfVars": ("$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$", {"SMT"}),
-            "nOfRules": ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}),
+            # "nOfVars": ("$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$", {"SMT"}),
+            # "nOfRules": ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}),
+            "lastCallsToSolver": (r"$\textsc{Solve}(\Pi^\prec)$ calls", {"SMT"}),
         },
         "search": {
-            'PATTY': "SMT",
-            'PATTY-EXPLICIT': "SMT",
-            'PATTY-CONCAT': "SMT",
+            'PATTY-STATIC': "SMT",
+            'PATTY-GBFS': "SMT",
+            'PATTY-ASTAR': "SMT",
             # 'PATTY-R',
             # 'RANTANPLAN': "SMT",
             # 'SpringRoll': "SMT",
@@ -230,10 +238,9 @@ def main():
             # 'METRIC-FF': "SEARCH",
             # "NFD": "SEARCH"
         },
-        "caption": r"Comparative analysis between the \textsc{Patty} (P) planner, the symbolic planners \textsc{\re{"
-                   r"}} (\re), \textsc{SpringRoll} (SR), \textsc{OMTPlan} (OMT) and the search-based planners "
-                   r"\textsc{ENHSP} (E), \textsc{MetricFF} (FF) and \textsc{NumericFastDownward} (NFD). The labels S "
-                   r"and L specify if the domain presents simple or linear effects, respectively, see \cite{ipc2023}. "
+        "caption": r"Comparative analysis between the solver $\textsc{Patty}$ run with the three algoritms"
+                   r" $\textsc{SolveStatic}$ ($P_s$), \textsc{SolveGBFS} ($P_\text{gbfs}$) and"
+                   r" \textsc{SolveA}$^*$ ($P_{A^*}$)."
                    r"''Best numbers'' are in bold. The numbers in the Highly and Lowly Numeric rows are the number of "
                    r"bolds in the subcolumn."
     },

@@ -1,11 +1,13 @@
+from __future__ import annotations
+
 import copy
 from typing import Dict
 
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
-from src.pddl.Formula import Formula
 from src.pddl.Constant import Constant
+from src.pddl.Formula import Formula
 from src.pddl.InitialCondition import InitialCondition
 from src.pddl.Literal import Literal
 from src.pddl.Predicate import Predicate
@@ -18,7 +20,7 @@ class State:
     def __init__(self):
         self.__assignments: Dict[Atom, bool or float] = dict()
 
-    def __deepcopy__(self, m=None) -> Literal:
+    def __deepcopy__(self, m=None) -> State:
         m = {} if m is None else m
         s = State()
         s.__assignments = copy.deepcopy(self.__assignments, m)
@@ -53,7 +55,8 @@ class State:
         state.__assignments = self.__assignments.copy()
 
         if not state.satisfies(action.preconditions):
-            raise Exception(f"Tried to apply action {action} to a state in which its preconditions are note satisfied")
+            raise Exception(
+                f"Tried to apply action {action} to a state {state} in which its preconditions {action.preconditions} are not satisfied")
 
         effect: Predicate
         for effect in action.effects:
@@ -63,7 +66,7 @@ class State:
 
     def applyPlan(self, plan):
         state = self
-        for action in plan:
+        for (i, action) in enumerate(plan):
             state = state.applyAction(action)
         return state
 

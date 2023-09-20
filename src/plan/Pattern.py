@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 import random
-from typing import List
+from typing import List, Dict
 
 from src.pddl.ARPG import ARPG
 from src.pddl.Action import Operation, Action
@@ -114,4 +114,12 @@ class Pattern:
 
     @classmethod
     def fromPlan(cls, plan: NumericPlan) -> Pattern:
-        return Pattern.fromOrder(plan.rolledPlan)
+        names: Dict[str, int] = dict()
+        order = []
+        for item in plan.unrolledPlan:
+            a = copy.deepcopy(item)
+            names[a.name] = names.setdefault(a.name, 0) + 1
+            a.name = f"{a.name}_{names[a.name]}"
+            order.append(a)
+
+        return Pattern.fromOrder(order)
