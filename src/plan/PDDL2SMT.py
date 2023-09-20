@@ -1,6 +1,6 @@
 from typing import List, Dict, Set
 
-from pysmt.shortcuts import TRUE, FALSE
+from pysmt.shortcuts import write_smtlib
 
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
@@ -16,6 +16,8 @@ from src.plan.TransitionVariables import TransitionVariables
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTNumericVariable import SMTNumericVariable
 from src.smt.SMTSolution import SMTSolution
+
+import pysmt.smtlib.script
 
 # BOUND = 1000
 EXPLICIT_DELTA = False
@@ -55,6 +57,7 @@ class PDDL2SMT:
                                       index, hasEffectAxioms)
             self.transitionVariables.append(var)
 
+        self.softRules = []
         self.initial: [SMTExpression] = self.getInitialExpression()
         self.goal: [SMTExpression] = self.getGoalExpression()
 
@@ -115,6 +118,7 @@ class PDDL2SMT:
                 if condition in self.subgoalsAchieved:
                     andRules.append(rule)
                 else:
+                    self.softRules.append(rule)
                     orRules.append(rule)
             else:
                 if f.type == "AND":
@@ -375,6 +379,12 @@ class PDDL2SMT:
     def printRules(self):
         for rule in self.rules:
             print(rule)
+
+    def writeSMTLIB(self, filename: str):
+        formula = SMTExpression.andOfExpressionsList(self.rules)
+        with open(filename, "w") as fout:
+            script = pysmt.smtlib.script.smtlibscript_from_formula(formula.expression)
+            script.serialize(fout, daggify=False)
 
     def __str__(self):
         string = ""

@@ -59,9 +59,9 @@ class AStarSearch(Search):
             self.console.log(f"Bound {bound} - Rules = {pddl2smt.getNRules()}", LogPrintLevel.STATS)
 
             if self.args.saveSMT:
-                self.saveSMT(bound, pddl2smt)
+                self.saveSMT(bound, pddl2smt, callsToSolver=callsToSolver)
 
-            if plan:
+            if isinstance(plan, NumericPlan):
                 # IF SAT
                 sprime = initialState.applyPlan(plan)
                 subgoalsAchieved = {g for g in self.problem.goal.conditions if sprime.satisfies(g)}
@@ -69,7 +69,9 @@ class AStarSearch(Search):
                                  LogPrintLevel.STATS)
                 patG = Pattern.fromPlan(plan)
                 patG.addPostfix("G")
-                patH = Pattern.fromOrder([])
+                patHPrime = Pattern.fromState(sprime, self.problem.goal, self.domain)
+                patH = copy.deepcopy(patHPrime)
+                patF = patG + patH
                 if len(subgoalsAchieved) == len(self.problem.goal.conditions):
                     self.console.log(f"Calls to Solver: {callsToSolver}", LogPrintLevel.STATS)
                     self.console.log(f"Bound: {bound}", LogPrintLevel.STATS)

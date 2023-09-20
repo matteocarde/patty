@@ -25,8 +25,9 @@ class Search:
     def solve(self):
         raise NotImplementedError
 
-    def saveSMT(self, bound: int, pddl2smt: PDDL2SMT):
-        filename = f"{self.args.saveSMT}-{bound}.smt"
+    def saveSMT(self, bound: int, pddl2smt: PDDL2SMT, callsToSolver=0):
+        filename = f"{self.args.saveSMT}-{bound}-{callsToSolver}.smt"
         self.console.log(f"Saving to {filename}", LogPrintLevel.STATS)
-        with open(f"{self.args.saveSMT}-{bound}.smt", "w") as f:
-            f.write(str(pddl2smt))
+        pddl2smt.writeSMTLIB(filename)
+        # with open(f"{self.args.saveSMT}-{bound}.smt", "w") as f:
+        #     f.write(str(pddl2smt))

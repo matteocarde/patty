@@ -1,6 +1,8 @@
 from pysmt.logics import QF_LRA, QF_NRA
-from pysmt.shortcuts import Portfolio
-from typing import Set, List
+from pysmt.shortcuts import Portfolio, write_smtlib, Solver
+from typing import Set, List, Dict
+
+from z3 import Optimize
 
 from src.pddl.NumericPlan import NumericPlan
 from src.plan.PDDL2SMT import PDDL2SMT
@@ -15,21 +17,28 @@ class SMTSolver:
 
     def __init__(self, pddl2smt: PDDL2SMT = None, solver="z3"):
         self.variables: Set[SMTVariable] = set()
+        self.variablesByName: Dict[str, SMTVariable] = dict()
         self.assertions: List[SMTExpression] = list()
+        self.softAssertions: List[SMTExpression] = list()
         self.pddl2smt: PDDL2SMT = pddl2smt
 
-        self.solver: Portfolio = Portfolio([solver],
-                                           logic=QF_LRA,
-                                           incremental=True,
-                                           generate_models=True)
+        self.z3: Solver = Solver(solver,
+                                 logic=QF_LRA,
+                                 incremental=True,
+                                 generate_models=True)
+        self.solver = Optimize()
 
         if self.pddl2smt:
             self.addAssertions(self.pddl2smt.rules)
+            self.addSoftAssertions(self.pddl2smt.softRules)
 
     def addAssertion(self, expr: SMTExpression, push=True):
         self.assertions.append(expr)
         self.variables.update(expr.variables)
-        self.solver.add_assertion(expr.expression)
+        for v in expr.variables:
+            self.variablesByName[str(v).replace("'", "")] = v
+        z3Expr = self.z3.converter.convert(expr.expression)
+        self.solver.add(z3Expr)
 
         if push:
             self.solver.push()
@@ -41,24 +50,45 @@ class SMTSolver:
         if push:
             self.solver.push()
 
+    def addSoftAssertion(self, expr: SMTExpression, push=True):
+        self.softAssertions.append(expr)
+        self.variables.update(expr.variables)
+        for v in expr.variables:
+            self.variablesByName[str(v)] = v
+        z3Expr = self.z3.converter.convert(expr.expression)
+        self.solver.add_soft(z3Expr)
+
+        if push:
+            self.solver.push()
+
+    def addSoftAssertions(self, exprs: [SMTExpression], push=True):
+        for expr in exprs:
+            self.addSoftAssertion(expr, push=False)
+
+        if push:
+            self.solver.push()
+
     def popLastAssertion(self):
         self.assertions.pop()
         self.solver.pop()
         self.solver.push()  # I repush to keep the stack with the last actions
 
     def exit(self):
-        self.solver.exit()
+        self.z3.exit()
         pass
 
     def getSolution(self) -> SMTSolution or bool:
-        found = self.solver.solve()
-        if not found:
+
+        res = self.solver.check()
+        model = self.solver.model()
+
+        if str(res) != "sat":
             return False
 
         solution = SMTSolution()
-        for variable in self.variables:
-            value = self.solver.get_value(variable.expression)
-            solution.addVariable(variable, value)
+        for v in model:
+            varName = str(v)
+            solution.addVariable(self.variablesByName[varName], model[v])
 
         return solution
 
