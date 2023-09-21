@@ -8,11 +8,11 @@ from src.search.StaticSearch import StaticSearch
 from src.utils.Arguments import Arguments
 
 
-class TestStaticSearchCounters(TestCase):
+class TestStaticSearch(TestCase):
 
     def setUp(self) -> None:
-        domainFile = "../../files/ipc-2023/fo_counters/domain.pddl"
-        problemFile = "../../files/ipc-2023/fo_counters/instances/instance_16.pddl"
+        domainFile = "../../files/block-grouping/domain.pddl"
+        problemFile = "../../files/block-grouping/instances/instance_7_15_3_1.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)
