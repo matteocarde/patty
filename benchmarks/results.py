@@ -4,7 +4,8 @@ from typing import Dict, List
 
 from classes.Result import Result
 
-SMT_SOLVERS = {'SpringRoll', "PATTY-STATIC", "PATTY-GBFS", "PATTY-ASTAR", 'RANTANPLAN', "OMT"}
+SMT_SOLVERS = {'SpringRoll', "PATTY-STATIC", "PATTY-GBFS", "PATTY-ASTAR", "PATTY-GBFS-MAX", "PATTY-ASTAR-MAX",
+               'RANTANPLAN', "OMT"}
 TIME_LIMIT = 30 * 1000
 
 SOLVERS = {
@@ -22,6 +23,8 @@ SOLVERS = {
     "PATTY-STATIC": "P_{s}",
     "PATTY-GBFS": r"P_{\text{gbfs}}",
     "PATTY-ASTAR": "P_{A^*}",
+    "PATTY-GBFS-MAX": r"P_{\text{gbfs}}^{max}",
+    "PATTY-ASTAR-MAX": "P_{A^*}^{max}",
 }
 
 DOMAINS = {
@@ -80,7 +83,7 @@ TOTALS = {
 def main():
     ## Parsing the results
     files = [
-        "benchmarks/results/2023-09-19-SEARCH-v4.csv"
+        "benchmarks/results/2023-09-19-SEARCH-v5.csv"
     ]
 
     aResults: [Result] = []
@@ -230,6 +233,8 @@ def main():
             'PATTY-STATIC': "SMT",
             'PATTY-GBFS': "SMT",
             'PATTY-ASTAR': "SMT",
+            'PATTY-GBFS-MAX': "SMT",
+            'PATTY-ASTAR-MAX': "SMT",
             # 'PATTY-R',
             # 'RANTANPLAN': "SMT",
             # 'SpringRoll': "SMT",

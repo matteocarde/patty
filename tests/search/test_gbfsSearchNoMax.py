@@ -8,7 +8,7 @@ from src.search.GBFSSearch import GBFSSearch
 from src.utils.Arguments import Arguments
 
 
-class TestGBFSCounters(TestCase):
+class TestGBFSNoMax(TestCase):
 
     def setUp(self) -> None:
         domainFile = "../../files/ipc-2023/counters/domain.pddl"
@@ -21,7 +21,7 @@ class TestGBFSCounters(TestCase):
         pass
 
     def test_solve(self):
-        solver = GBFSSearch(self.gDomain, self.problem, self.args, maximize=True)
+        solver = GBFSSearch(self.gDomain, self.problem, self.args, maximize=False)
         plan: NumericPlan = solver.solve()
 
         self.assertIsInstance(plan, NumericPlan)

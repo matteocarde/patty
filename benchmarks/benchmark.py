@@ -25,11 +25,12 @@ my_config = Config(
 )
 
 PLANNERS: Dict[str, Planner] = {
+    "PATTY": Patty("PATTY", "arpg", solver="z3", encoding="non-linear", search="step"),
     "PATTY-STATIC": Patty("PATTY-STATIC", "arpg", solver="z3", encoding="non-linear", search="static"),
     "PATTY-GBFS": Patty("PATTY-GBFS", "arpg", solver="z3", encoding="non-linear", search="gbfs-nomax"),
     "PATTY-ASTAR": Patty("PATTY-ASTAR", "arpg", solver="z3", encoding="non-linear", search="astar-nomax"),
-    "PATTY-GBFS-MAX": Patty("PATTY-GBFS", "arpg", solver="z3", encoding="non-linear", search="gbfs"),
-    "PATTY-ASTAR-MAX": Patty("PATTY-ASTAR", "arpg", solver="z3", encoding="non-linear", search="astar"),
+    "PATTY-GBFS-MAX": Patty("PATTY-GBFS-MAX", "arpg", solver="z3", encoding="non-linear", search="gbfs"),
+    "PATTY-ASTAR-MAX": Patty("PATTY-ASTAR-MAX", "arpg", solver="z3", encoding="non-linear", search="astar"),
     # "PATTY-EXPLICIT": Patty("PATTY-EXPLICIT", "arpg", solver="z3", encoding="non-linear", hasEffectAxioms=True),
     # "PATTY-CONCAT": Patty("PATTY-CONCAT", "arpg", solver="z3", encoding="non-linear", concatPatterns=True),
     # "PATTY-R": Patty("PATTY-R", "random", solver="z3", encoding="non-linear"),

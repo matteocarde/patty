@@ -9,7 +9,7 @@ from src.search.GBFSSearch import GBFSSearch
 from src.utils.Arguments import Arguments
 
 
-class TestAStarSearch(TestCase):
+class TestAStarSearchNoMax(TestCase):
 
     def setUp(self) -> None:
         domainFile = "../../files/plant-watering/domain.pddl"
@@ -22,7 +22,7 @@ class TestAStarSearch(TestCase):
         pass
 
     def test_solve(self):
-        solver = AStarSearch(self.gDomain, self.problem, self.args)
+        solver = AStarSearch(self.gDomain, self.problem, self.args, maximize=False)
         plan: NumericPlan = solver.solve()
 
         self.assertIsInstance(plan, NumericPlan)

@@ -4,11 +4,11 @@ from unittest import TestCase
 from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
-from src.search.StaticSearch import StaticSearch
+from src.search.StepSearch import StepSearch
 from src.utils.Arguments import Arguments
 
 
-class TestStaticSearch(TestCase):
+class TestStepSearch(TestCase):
 
     def setUp(self) -> None:
         domainFile = "../../files/block-grouping/domain.pddl"
@@ -21,7 +21,7 @@ class TestStaticSearch(TestCase):
         pass
 
     def test_solve(self):
-        solver = StaticSearch(self.gDomain, self.problem, self.args)
+        solver = StepSearch(self.gDomain, self.problem, self.args)
         plan: NumericPlan = solver.solve()
 
         self.assertIsInstance(plan, NumericPlan)

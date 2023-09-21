@@ -22,7 +22,7 @@ class TestAStarCounters(TestCase):
         pass
 
     def test_solve(self):
-        solver = AStarSearch(self.gDomain, self.problem, self.args)
+        solver = AStarSearch(self.gDomain, self.problem, self.args, maximize=True)
         plan: NumericPlan = solver.solve()
 
         self.assertIsInstance(plan, NumericPlan)
