@@ -47,7 +47,7 @@ class Patty(Planner):
             "-o", domain,
             "-f", problem,
             "-s", self.search,
-            "-pp",
+            # "-pp",
             "--pattern", self.pattern,
             "--solver", self.solver,
             "--encoding", self.encoding,

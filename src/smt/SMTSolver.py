@@ -69,7 +69,7 @@ class SMTSolver:
 
         with Portfolio(["z3"],
                        logic=QF_LRA,
-                       incremental=True,
+                       incremental=False,
                        generate_models=True) as solver:
 
             for ass in self.assertions:

@@ -73,9 +73,7 @@ class AStarSearch(Search):
                                  LogPrintLevel.STATS)
                 patG = Pattern.fromPlan(plan)
                 patG.addPostfix("G")
-                patHPrime = Pattern.fromState(sprime, self.problem.goal, self.domain)
-                patH = copy.deepcopy(patHPrime)
-                patF = patG + patH
+                patH = Pattern.fromOrder([])
                 if len(subgoalsAchieved) == len(self.problem.goal.conditions):
                     self.console.log(f"Calls to Solver: {callsToSolver}", LogPrintLevel.STATS)
                     self.console.log(f"Bound: {bound}", LogPrintLevel.STATS)
