@@ -14,7 +14,8 @@ from src.utils.LogPrint import LogPrintLevel
 
 class AStarSearch(Search):
 
-    def __init__(self, domain: GroundedDomain, problem: Problem, args: Arguments):
+    def __init__(self, domain: GroundedDomain, problem: Problem, args: Arguments, maximize=False):
+        self.maximize = maximize
         super().__init__(domain, problem, args)
 
     def solve(self) -> NumericPlan:
@@ -33,6 +34,9 @@ class AStarSearch(Search):
 
         while bound <= self.maxBound:
 
+            if self.args.printPattern:
+                self.console.log("Pattern: " + str(patF), LogPrintLevel.PLAN)
+
             self.ts.start(f"Conversion to SMT at bound {bound}", console=self.console)
             pddl2smt: PDDL2SMT = PDDL2SMT(
                 domain=self.domain,
@@ -49,7 +53,7 @@ class AStarSearch(Search):
             self.ts.end(f"Conversion to SMT at bound {bound}", console=self.console)
 
             self.ts.start(f"Solving Bound {bound}", console=self.console)
-            solver: SMTSolver = SMTSolver(pddl2smt, solver=self.args.solver)
+            solver: SMTSolver = SMTSolver(pddl2smt, maximize=self.maximize)
             callsToSolver += 1
             plan: NumericPlan = solver.solve()
             solver.exit()
@@ -78,7 +82,7 @@ class AStarSearch(Search):
                     return plan
                 pass
 
-            else:
+            if not isinstance(plan, NumericPlan) or self.maximize:
                 if s != sprime:
                     patHPrime = Pattern.fromState(sprime, self.problem.goal, self.domain)
                     sprime = s

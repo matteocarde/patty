@@ -7,6 +7,7 @@ from src.search.AStarSearch import AStarSearch
 from src.search.GBFSSearch import GBFSSearch
 from src.search.Search import Search
 from src.search.StaticSearch import StaticSearch
+from src.search.StepSearch import StepSearch
 from src.utils.Arguments import Arguments
 from src.utils.LogPrint import LogPrint, LogPrintLevel
 from src.utils.TimeStat import TimeStat
@@ -30,10 +31,16 @@ def main():
         ts.end("Grounding", console=console)
 
         solver: Search
-        if args.search == "gbfs":
-            solver = GBFSSearch(gDomain, problem, args)
+        if args.search == "gbfs-nomax":
+            solver = GBFSSearch(gDomain, problem, args, maximize=False)
+        elif args.search == "astar-nomax":
+            solver = AStarSearch(gDomain, problem, args, maximize=False)
+        elif args.search == "gbfs":
+            solver = GBFSSearch(gDomain, problem, args, maximize=True)
         elif args.search == "astar":
-            solver = AStarSearch(gDomain, problem, args)
+            solver = AStarSearch(gDomain, problem, args, maximize=True)
+        elif args.search == "step":
+            solver = StepSearch(gDomain, problem, args)
         else:
             solver = StaticSearch(gDomain, problem, args)
         plan: NumericPlan = solver.solve()

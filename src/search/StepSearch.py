@@ -9,7 +9,7 @@ from src.utils.Arguments import Arguments
 from src.utils.LogPrint import LogPrintLevel
 
 
-class StaticSearch(Search):
+class StepSearch(Search):
 
     def __init__(self, domain: GroundedDomain, problem: Problem, args: Arguments):
         super().__init__(domain, problem, args)
@@ -36,14 +36,12 @@ class StaticSearch(Search):
 
         while bound <= self.maxBound:
 
-            fPattern = pattern.multiply(bound)
-
             self.ts.start(f"Conversion to SMT at bound {bound}", console=self.console)
             pddl2smt: PDDL2SMT = PDDL2SMT(
                 domain=self.domain,
                 problem=self.problem,
-                pattern=fPattern,
-                bound=1,
+                pattern=pattern,
+                bound=bound,
                 encoding=self.args.encoding,
                 binaryActions=self.args.binaryActions,
                 rollBound=self.args.rollBound,

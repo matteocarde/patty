@@ -30,6 +30,10 @@ class Pattern:
     def __getitem__(self, item):
         return self.__order[item]
 
+    @property
+    def order(self):
+        return self.__order
+
     @classmethod
     def fromOrder(cls, order: List[Operation]):
         p = cls()

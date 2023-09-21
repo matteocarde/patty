@@ -15,18 +15,23 @@ class SMTSolver:
     solver: Portfolio
     variables: Set[SMTVariable]
 
-    def __init__(self, pddl2smt: PDDL2SMT = None, solver="z3"):
+    def __init__(self, pddl2smt: PDDL2SMT = None, maximize=False):
         self.variables: Set[SMTVariable] = set()
         self.variablesByName: Dict[str, SMTVariable] = dict()
         self.assertions: List[SMTExpression] = list()
         self.softAssertions: List[SMTExpression] = list()
         self.pddl2smt: PDDL2SMT = pddl2smt
+        self.maximize = maximize
 
-        self.z3: Solver = Solver(solver,
+        self.z3: Solver = Solver("z3",
                                  logic=QF_LRA,
                                  incremental=True,
                                  generate_models=True)
-        self.solver = Optimize()
+        self.portfolio: Portfolio = Portfolio(["z3"],
+                                              logic=QF_LRA,
+                                              incremental=True,
+                                              generate_models=True)
+        self.solver = Optimize() if self.maximize else self.portfolio
 
         if self.pddl2smt:
             self.addAssertions(self.pddl2smt.rules)
@@ -37,8 +42,13 @@ class SMTSolver:
         self.variables.update(expr.variables)
         for v in expr.variables:
             self.variablesByName[str(v).replace("'", "")] = v
-        z3Expr = self.z3.converter.convert(expr.expression)
-        self.solver.add(z3Expr)
+
+        z3Expr = self.z3.converter.convert(expr.expression) if self.maximize else expr.expression
+
+        if self.maximize:
+            self.solver.add(z3Expr)
+        else:
+            self.solver.add_assertion(z3Expr)
 
         if push:
             self.solver.push()
@@ -51,6 +61,10 @@ class SMTSolver:
             self.solver.push()
 
     def addSoftAssertion(self, expr: SMTExpression, push=True):
+
+        if not self.maximize:
+            return
+
         self.softAssertions.append(expr)
         self.variables.update(expr.variables)
         for v in expr.variables:
@@ -62,6 +76,9 @@ class SMTSolver:
             self.solver.push()
 
     def addSoftAssertions(self, exprs: [SMTExpression], push=True):
+        if not self.maximize:
+            return
+
         for expr in exprs:
             self.addSoftAssertion(expr, push=False)
 
@@ -75,20 +92,33 @@ class SMTSolver:
 
     def exit(self):
         self.z3.exit()
+        self.portfolio.exit()
         pass
 
     def getSolution(self) -> SMTSolution or bool:
 
-        res = self.solver.check()
-        model = self.solver.model()
+        if self.maximize:
+            res = self.solver.check()
 
-        if str(res) != "sat":
-            return False
+            if str(res) != "sat":
+                return False
+        else:
+            found = self.solver.solve()
+            if not found:
+                return False
 
         solution = SMTSolution()
-        for v in model:
-            varName = str(v)
-            solution.addVariable(self.variablesByName[varName], model[v])
+        if self.maximize:
+            model = self.solver.model()
+            for v in model:
+                varName = str(v)
+                if varName not in self.variablesByName:
+                    continue
+                solution.addVariable(self.variablesByName[varName], model[v])
+        else:
+            for variable in self.variables:
+                value = self.solver.get_value(variable.expression)
+                solution.addVariable(variable, value)
 
         return solution
 
