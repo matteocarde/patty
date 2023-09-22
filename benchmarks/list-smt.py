@@ -13,9 +13,9 @@ PLANNERS = [
     # # "PATTY-R",
     # "SPRINGROLL",
     # "RANTANPLAN",
-    # "ENHSP-HADD",
-    # "ENHSP-HRADD",
-    # "ENHSP-HMRP",
+    "ENHSP-HADD",
+    "ENHSP-HRADD",
+    "ENHSP-HMRP",
     # "METRIC-FF",
     # "NFD",
     # "OMT"

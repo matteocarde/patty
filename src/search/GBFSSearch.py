@@ -78,8 +78,10 @@ class GBFSSearch(Search):
 
             if not isinstance(plan, NumericPlan) or self.maximize:
                 if s != sprime:
-                    patHPrime = Pattern.fromState(sprime, self.problem.goal, self.domain)
-                    sprime = s
+                    newPat = Pattern.fromState(sprime, self.problem.goal, self.domain)
+                    if newPat:
+                        patHPrime = newPat
+                        sprime = s
                 bound += 1
                 patHPrime.addPostfix(bound)
                 patH += patHPrime

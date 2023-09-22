@@ -16,7 +16,7 @@ SOLVERS = {
     # # 'PATTY-R': "P_r",
     # 'RANTANPLAN': "\mathrm{R^2\exists}",
     # 'METRIC-FF': "\mathrm{FF}",
-    # 'ENHSP': r"\mathrm{ENHSP}",
+    'ENHSP': r"\mathrm{ENHSP}",
     # 'NFD': "\mathrm{NFD}",
     # 'SMTPLAN+': "\mathrm{SMTP}^+",
     # 'OMT': "\mathrm{OMT}",
@@ -84,7 +84,7 @@ TOTALS = {
 def main():
     ## Parsing the results
     files = [
-        "benchmarks/results/2023-09-19-SEARCH-v10.csv"
+        "benchmarks/results/2023-09-19-SEARCH-v11.csv"
     ]
 
     aResults: [Result] = []
@@ -228,7 +228,7 @@ def main():
             "bound": ("Bound (Common)", {"SMT"}),
             # "nOfVars": ("$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$", {"SMT"}),
             # "nOfRules": ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}),
-            "lastCallsToSolver": (r"$\textsc{Solve}(\Pi^\prec)$ calls", {"SMT"}),
+            # "lastCallsToSolver": (r"$\textsc{Solve}(\Pi^\prec)$ calls", {"SMT"}),
         },
         "search": {
             'PATTY': "SMT",
@@ -241,15 +241,15 @@ def main():
             # 'RANTANPLAN': "SMT",
             # 'SpringRoll': "SMT",
             # "OMT": "SMT",
-            # 'ENHSP': "SEARCH",
+            'ENHSP': "SEARCH",
             # 'METRIC-FF': "SEARCH",
             # "NFD": "SEARCH"
         },
-        "caption": r"Comparative analysis between the solver $\textsc{Patty}$ run with the three algoritms"
-                   r" $\textsc{SolveStatic}$ ($P_s$), \textsc{SolveGBFS} ($P_\text{gbfs}$) and"
-                   r" \textsc{SolveA}$^*$ ($P_{A^*}$)."
-                   r"''Best numbers'' are in bold. The numbers in the Highly and Lowly Numeric rows are the number of "
-                   r"bolds in the subcolumn."
+        "caption": r"Comparative analysis between the search-based solver $\textsc{ENHSP}$ and  $\textsc{Patty}$ run "
+                   r"with the standard algorithm ($P$),  $\textsc{SolveConcat}$ ($P_{cat}$), \textsc{SolveGBFS} ("
+                   r"$P_\text{gbfs}$), \textsc{SolveA}$^*$ ($P_{A^*}$), \textsc{SolveGBFSMax} ($P_\text{gbfs}^{"
+                   r"max}$), \textsc{SolveA*Max} ($P_{A^*}^{max}$). ''Best numbers'' are in bold.  The numbers in the "
+                   r"Highly and Lowly Numeric rows are the number of bolds in the subcolumn."
     },
         #     {
         #     "name": "tab:exp-search",

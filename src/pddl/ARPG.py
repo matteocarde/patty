@@ -15,7 +15,8 @@ class ARPG:
     supporterLevels: List[Set[Supporter]]
     stateLevels: List[RelaxedIntervalState]
 
-    def __init__(self, domain: GroundedDomain, state: State, goal: Goal):
+    def __init__(self, domain: GroundedDomain, state: State, goal: Goal, avoidRaising=False):
+        self.goalNotReachable = False
         self.supporterLevels = list()
         self.stateLevels = list()
         self.actions: List[Action] = list(domain.actions)
@@ -47,7 +48,9 @@ class ARPG:
             state = newState
 
         if not fullBooleanGoal and not state.satisfies(goal):
-            raise PDDLException.GoalNotReachable()
+            self.goalNotReachable = True
+            if not avoidRaising:
+                raise PDDLException.GoalNotReachable()
 
     def __getPurelyBoolean(self) -> List[Action]:
         order: List[Action] = list()
@@ -56,7 +59,11 @@ class ARPG:
                 order.append(action)
         return order
 
-    def getActionsOrder(self) -> List[Action]:
+    def getActionsOrder(self) -> List[Action] or bool:
+
+        if self.goalNotReachable:
+            return False
+
         order: List[Action] = list()
         usedActions: Set[Action] = set(order)
         for supporters in self.supporterLevels:
