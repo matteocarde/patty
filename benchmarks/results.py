@@ -84,7 +84,7 @@ TOTALS = {
 def main():
     ## Parsing the results
     files = [
-        "benchmarks/results/2023-09-19-SEARCH-v7.csv"
+        "benchmarks/results/2023-09-19-SEARCH-v10.csv"
     ]
 
     aResults: [Result] = []
