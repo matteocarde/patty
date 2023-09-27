@@ -15,9 +15,9 @@ class TestLogistic(TestCase):
 
     def setUp(self) -> None:
         a = time.perf_counter()
-        self.domain: Domain = Domain.fromFile("../../files/logistic/domain.pddl")
+        self.domain: Domain = Domain.fromFile("../../files/classical/logistic/domain.pddl")
         b = time.perf_counter()
-        self.problem: Problem = Problem.fromFile("../../files/logistic/instances/probLOGISTICS-4-0.pddl")
+        self.problem: Problem = Problem.fromFile("../../files/classical/logistic/instances/probLOGISTICS-4-0.pddl")
         c = time.perf_counter()
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         d = time.perf_counter()

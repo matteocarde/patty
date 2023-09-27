@@ -15,9 +15,9 @@ class TestSugar(TestCase):
 
     def setUp(self) -> None:
         a = time.perf_counter()
-        self.domain: Domain = Domain.fromFile("../../files/ipc-2023/sugar/domain.pddl")
+        self.domain: Domain = Domain.fromFile("../../files/numerical/ipc-2023/sugar/domain.pddl")
         b = time.perf_counter()
-        self.problem: Problem = Problem.fromFile("../../files/ipc-2023/sugar/instances/pfile01.pddl")
+        self.problem: Problem = Problem.fromFile("../../files/numerical/ipc-2023/sugar/instances/pfile01.pddl")
         c = time.perf_counter()
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         d = time.perf_counter()
