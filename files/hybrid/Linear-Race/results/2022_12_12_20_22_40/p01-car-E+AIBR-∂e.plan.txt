@@ -1,0 +1,51 @@
+$ timeout 300 java -jar ~/Bin/ENHSP-22/enhsp.jar --domain Linear-Race/no-delta/domain.pddl --problem Linear-Race/no-delta/p01-car.pddl -de 10  -dh 10 -dp 10 -h aibr -s WAStar -wh 1 -silent
+STDOUT
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 7
+Aibr Preprocessing
+|F|:3
+|X|:3
+Aibr Preprocessing
+|A|:5
+|P|:2
+|E|:2
+Delta time heuristic model:10
+Delta time planning model:10
+Delta time search-execution model:10
+Delta time validation model:1
+AIBR selected
+w_h set to be 1
+Setting horizon to:NaN
+Running WA-STAR
+Extracting plan with execution delta: 10
+Problem Solved
+
+Found Plan:
+0: (on car)
+0: (full-gas car)
+0: -----waiting---- [10]
+10: (keep-velocity car)
+10: -----waiting---- [170]
+170: (full-brake car)
+170: -----waiting---- [180]
+180: (full-gas car)
+180: -----waiting---- [190]
+190: (full-brake car)
+190: -----waiting---- [200]
+200: (off car)
+
+Plan-Length:29
+Elapsed Time: 200
+Metric (Search):27.0
+Planning Time (msec): 131
+Heuristic Time (msec): 14
+Search Time (msec): 26
+Expanded Nodes:84
+States Evaluated:131
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:20
+Number of Duplicates detected:196
+
+STDERR
