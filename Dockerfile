@@ -2,6 +2,7 @@
 FROM 775013819650.dkr.ecr.eu-south-1.amazonaws.com/patty:latest
 
 WORKDIR /project
+RUN rm -rf *
 # Copying
 COPY . .
 
