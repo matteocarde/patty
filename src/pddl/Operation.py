@@ -119,6 +119,10 @@ class Operation:
     def __addEffects(self, node: p.OpEffectContext):
         self.effects = Effects.fromNode(node.getChild(1))
 
+    def getSignature(self):
+        params = [p.name for p in self.parameters]
+        return f"{self.name}({','.join(params)})"
+
     def getCombinations(self, problem: Problem) -> List[Dict[str, str]]:
         subs: List[List[str]] = list()
         for parameter in self.parameters:

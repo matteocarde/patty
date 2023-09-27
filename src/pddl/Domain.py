@@ -1,4 +1,6 @@
 from __future__ import annotations
+
+import copy
 from typing import Dict, List, Set
 
 from src.pddl.Atom import Atom
@@ -35,6 +37,19 @@ class Domain:
         self.requirements = list()
         self.constants = set()
         pass
+
+    def __deepcopy__(self, m):
+        m = {} if m is None else m
+        domain = Domain()
+        domain.name = self.name
+        domain.requirements = copy.deepcopy(self.requirements, m)
+        domain.types = copy.deepcopy(self.requirements, m)
+        domain.predicates = copy.deepcopy(self.predicates, m)
+        domain.actions = copy.deepcopy(self.actions, m)
+        domain.events = copy.deepcopy(self.events, m)
+        domain.processes = copy.deepcopy(self.processes, m)
+        domain.constants = copy.deepcopy(self.constants, m)
+        return domain
 
     def ground(self, problem: Problem, avoidSimplification=False) -> GroundedDomain:
 
@@ -148,15 +163,21 @@ class Domain:
 
     def __setPredicates(self, node: pddlParser.PredicatesContext):
         for child in node.children:
-            if not isinstance(child, pddlParser.PositiveLiteralContext):
+            if not isinstance(child, pddlParser.TypedPositiveLiteralContext):
                 continue
             self.predicates.add(TypedPredicate.fromNode(child, self.types))
 
     def __setFunctions(self, node: pddlParser.FunctionsContext):
         for child in node.children:
-            if not isinstance(child, pddlParser.PositiveLiteralContext):
+            if not isinstance(child, pddlParser.TypedPositiveLiteralContext):
                 continue
             self.functions.add(TypedPredicate.fromNode(child, self.types))
+
+    def getSignatures(self) -> Dict[str, Operation]:
+        signatures: Dict[str, Operation] = dict()
+        for h in self.actions | self.events | self.processes:
+            signatures[h.getSignature()] = h
+        return signatures
 
 
 class GroundedDomain(Domain):
@@ -221,7 +242,6 @@ class GroundedDomain(Domain):
         subActions: Set[Action] = {a.substitute(sub, default) for a in self.actions if a.canHappen(sub, default)}
 
         return GroundedDomain(self.name, subActions, self.events, self.processes)
-
 
     def getARPG(self):
         return self.arpg

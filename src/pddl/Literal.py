@@ -7,6 +7,7 @@ from typing import Dict, Set
 from src.pddl.Atom import Atom
 from src.pddl.Constant import Constant
 from src.pddl.Predicate import Predicate
+from src.pddl.TypedPredicate import TypedPredicate
 from src.pddl.Utilities import Utilities
 from src.pddl.grammar.pddlParser import pddlParser as p
 
@@ -127,3 +128,6 @@ class Literal(Predicate):
 
     def toExpression(self) -> Expr:
         return self.atom.toExpression()
+
+    def comesFromTypedPredicate(self, tp: TypedPredicate) -> bool:
+        return tp.name == self.atom.name and len(tp.parameters) == len(self.atom.attributes)

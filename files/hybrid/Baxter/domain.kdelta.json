@@ -1,0 +1,22 @@
+{
+  "vars": {
+    "(ck)": 0,
+    "(delta)": 1,
+    "(tk)": 0
+  },
+  "J": {
+    "start_movement_increase(?l1, ?l2, ?x)": ["(tk)", "(delta)"],
+    "stop_movement_increase(?l1, ?l2, ?x)": ["(tk)", "(delta)"],
+    "move_angle_increase(?l2, ?x)": ["(tk)", "(delta)"],
+    "start_movement_decrease(?l1, ?l2, ?x)": ["(tk)", "(delta)"],
+    "stop_movement_decrease(?l1, ?l2, ?x)": ["(tk)", "(delta)"],
+    "move_angle_decrease(?l2, ?x)": ["(tk)", "(delta)"],
+    "propagate_move_angle_decrease(?l2, ?l3, ?x)": ["(tk)", "(delta)"],
+    "propagate_move_angle_increase(?l2, ?l3, ?x)": ["(tk)", "(delta)"],
+    "back-to-zero(?l3, ?x)": ["(tk)", "(delta)"],
+    "back-to-360(?l3, ?x)": ["(tk)", "(delta)"]
+  },
+  "Nabla": {
+
+  }
+}
