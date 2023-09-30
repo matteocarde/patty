@@ -45,6 +45,7 @@
       (inMovement ?r)
       (assign (distanceRun ?r ?a ?b) 0)
       (assign (d ?r) (deltaMovement ?r))
+      (assign (tk ?r) (ck))
       (assign (charges ?r) 0)
     )
   )
@@ -92,6 +93,7 @@
       (not (inMovement ?r))
       (charging ?r)
       (assign (d ?r) (deltaCharging ?r))
+      (assign (tk ?r) (ck))
     )
   )
 
@@ -130,6 +132,7 @@
       (not (charging ?r))
       (inMovement ?r)
       (assign (d ?r) (deltaMovement ?r))
+      (assign (tk ?r) (ck))
     )
   )
 
@@ -181,7 +184,6 @@
       (exists
         (?r - robot ?a - room ?b - room)
         (and
-
           (link ?a ?b)
           (moving ?r ?a ?b)
           (inMovement ?r)

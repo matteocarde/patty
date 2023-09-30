@@ -41,6 +41,5 @@
   (:goal
     (and
       (atObject ball1 roomC))
-    )
   )
 )
