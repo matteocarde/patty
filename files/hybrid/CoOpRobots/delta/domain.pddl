@@ -24,7 +24,7 @@
     (distanceRun ?r - robot ?a - room ?b - room)
     (d ?r - robot)
     (tk ?r - robot)
-    (ck)
+    (time)
     (deltaMovement ?r - robot)
     (deltaCharging ?r - robot)
   )
@@ -32,7 +32,7 @@
   (:action startMoving
     :parameters (?r - robot ?a - room ?b - room)
     :precondition (and
-      (= (ck) (tk ?r))
+      (= (time) (tk ?r))
       (link ?a ?b)
       (not (inMovement ?r))
       (atRobot ?r ?a)
@@ -45,7 +45,7 @@
       (inMovement ?r)
       (assign (distanceRun ?r ?a ?b) 0)
       (assign (d ?r) (deltaMovement ?r))
-      (assign (tk ?r) (ck))
+      (assign (tk ?r) (time))
       (assign (charges ?r) 0)
     )
   )
@@ -85,7 +85,7 @@
   (:action startCharging
     :parameters (?r - robot)
     :precondition (and
-      (= (ck) (tk ?r))
+      (= (time) (tk ?r))
       (>= (battery ?r) 20)
       (inMovement ?r)
     )
@@ -93,7 +93,7 @@
       (not (inMovement ?r))
       (charging ?r)
       (assign (d ?r) (deltaCharging ?r))
-      (assign (tk ?r) (ck))
+      (assign (tk ?r) (time))
     )
   )
 
@@ -125,21 +125,21 @@
   (:action stopCharging
     :parameters (?r - robot)
     :precondition (and
-      (= (ck) (tk ?r))
+      (= (time) (tk ?r))
       (charging ?r)
     )
     :effect (and
       (not (charging ?r))
       (inMovement ?r)
       (assign (d ?r) (deltaMovement ?r))
-      (assign (tk ?r) (ck))
+      (assign (tk ?r) (time))
     )
   )
 
   (:action pick
     :parameters (?o - obj ?r - robot ?l - room)
     :precondition (and
-      (= (ck) (tk ?r))
+      (= (time) (tk ?r))
       (>= (battery ?r) 20)
       (atRobot ?r ?l)
       (atObject ?o ?l)
@@ -155,7 +155,7 @@
   (:action drop
     :parameters (?o - obj ?r - robot ?l - room)
     :precondition (and
-      (= (ck) (tk ?r))
+      (= (time) (tk ?r))
       (>= (battery ?r) 20)
       (atRobot ?r ?l)
       (holding ?r ?o)
@@ -171,10 +171,10 @@
     :parameters (?r - robot)
     :precondition (and
       (> (d ?r) 0)
-      (= (ck) (+ (tk ?r) #t))
+      (= (time) (+ (tk ?r) #t))
     )
     :effect (and
-      (assign (tk ?r) (- (+ (ck) (d ?r)) #t))
+      (assign (tk ?r) (- (+ (time) (d ?r)) #t))
     )
   )
 
@@ -208,7 +208,7 @@
       )
     )
     :effect (and
-      (increase (ck) (* #t 1.0))
+      (increase (time) (* #t 1.0))
     )
   )
 

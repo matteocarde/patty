@@ -31,7 +31,7 @@
     (= (battery robot2) 100)
     (= (dischargeRate robot1) 20.0)
     (= (dischargeRate robot2) 0.005)
-    (= (ck) 0.0)
+    (= (time) 0.0)
     (= (d robot1) 3.0)
     (= (tk robot1) 0.0)
     (= (d robot2) 12000.0)
@@ -41,6 +41,5 @@
   (:goal
     (and
       (atObject ball1 roomC))
-    )
   )
-)
+))
