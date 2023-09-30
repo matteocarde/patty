@@ -177,7 +177,33 @@
 
   (:process ticking
     :parameters ()
-    :precondition (and
+    :precondition (or
+      (exists
+        (?r - robot ?a - room ?b - room)
+        (and
+
+          (link ?a ?b)
+          (moving ?r ?a ?b)
+          (inMovement ?r)
+          (< (distanceRun ?r ?a ?b) (distance ?a ?b))
+          (>= (battery ?r) 20)
+        )
+      )
+      (exists
+        (?r - robot)
+        (and
+          (charging ?r)
+          (< (battery ?r) 100)
+        )
+      )
+      (exists
+        (?r - robot)
+        (and
+          (handsFull ?r)
+          (not (charging ?r))
+          (>= (battery ?r) 0)
+        )
+      )
     )
     :effect (and
       (increase (ck) (* #t 1.0))

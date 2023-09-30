@@ -1,5 +1,5 @@
 #Here are things that probably never change so they will be cached
-FROM 775013819650.dkr.ecr.eu-south-1.amazonaws.com/patty:latest
+FROM 775013819650.dkr.ecr.eu-south-1.amazonaws.com/patty:stable
 
 WORKDIR /project
 RUN rm -rf *
