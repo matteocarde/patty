@@ -1,0 +1,47 @@
+
+        \documentclass[11pt,landscape]{article}
+        \usepackage{graphicx}
+        \usepackage{lscape}
+        \usepackage{multirow}
+        \usepackage[a4paper,margin=1in,landscape]{geometry}
+        
+        \begin{document}
+    
+        \begin{table*}[tb]
+        \centering
+        \resizebox{\textwidth}{!}{
+\begin{tabular}{cc|ccc|ccc|ccc|ccc|ccc|ccc|ccc}
+ & & \multicolumn{3}{|c}{Baxter}&\multicolumn{3}{|c}{Descent}&\multicolumn{3}{|c}{HVAC}&\multicolumn{3}{|c}{Linear-Car}&\multicolumn{3}{|c}{Linear-Car-2}&\multicolumn{3}{|c}{Linear-Generator}&\multicolumn{3}{|c}{Solar-Rover}\\
+& & $1\delta$&$2\delta$&$K\delta$&$1\delta$&$2\delta$&$K\delta$&$1\delta$&$2\delta$&$K\delta$&$1\delta$&$2\delta$&$K\delta$&$1\delta$&$2\delta$&$K\delta$&$1\delta$&$2\delta$&$K\delta$&$1\delta$&$2\delta$&$K\delta$\\
+\hline
+\multirow{2}{*}{ENHSP-SAT-HMRP}&RT (s)&4.59&1.63&\textbf{1.42}&-&-&-&18.76&16.25&\textbf{4.47}&\textbf{6.52}&16.61&-&\textbf{11.98}&18.69&-&-&-&-&2.65&\textbf{2.38}&3.00\\
+&Cov. (\%)&89.47&\textbf{100.00}&\textbf{100.00}&-&-&-&45.00&55.00&\textbf{100.00}&\textbf{88.89}&50.00&-&\textbf{79.17}&50.00&-&-&-&-&\textbf{100.00}&\textbf{100.00}&\textbf{100.00}\\
+\hline
+\multirow{2}{*}{ENHSP-SAT-HADD}&RT (s)&4.43&4.29&\textbf{1.38}&-&-&-&22.28&11.26&\textbf{4.13}&\textbf{11.11}&13.86&-&\textbf{16.83}&20.80&-&-&-&-&1.20&\textbf{1.12}&1.27\\
+&Cov. (\%)&89.47&89.47&\textbf{100.00}&-&-&-&30.00&73.68&\textbf{100.00}&\textbf{70.00}&60.00&-&\textbf{56.52}&39.13&-&-&-&-&\textbf{100.00}&\textbf{100.00}&\textbf{100.00}\\
+\hline
+\multirow{2}{*}{ENHSP-SAT-AIBR}&RT (s)&21.23&18.48&\textbf{11.15}&20.60&\textbf{14.86}&20.95&26.06&\textbf{23.01}&23.09&15.90&\textbf{15.86}&17.20&22.80&\textbf{14.87}&23.77&-&-&-&3.31&\textbf{2.97}&6.51\\
+&Cov. (\%)&31.58&44.44&\textbf{68.42}&35.00&\textbf{55.00}&33.33&15.79&35.00&\textbf{40.00}&\textbf{50.00}&\textbf{50.00}&44.44&25.00&\textbf{52.17}&21.74&-&-&-&\textbf{100.00}&\textbf{100.00}&\textbf{100.00}\\
+\hline
+\multirow{2}{*}{ENHSP-SAT-BLIND}&RT (s)&15.18&\textbf{13.94}&19.33&27.69&\textbf{25.70}&26.62&28.58&\textbf{28.57}&-&27.35&-&\textbf{15.59}&26.91&27.87&\textbf{24.16}&-&-&-&1.03&\textbf{0.98}&1.19\\
+&Cov. (\%)&57.89&\textbf{63.16}&36.84&10.00&15.00&\textbf{18.18}&\textbf{5.00}&\textbf{5.00}&-&10.00&-&\textbf{50.00}&13.04&8.33&\textbf{20.83}&-&-&-&\textbf{100.00}&\textbf{100.00}&\textbf{100.00}\\
+\hline
+\multirow{2}{*}{ENHSP-OPT-HMRP}&RT (s)&11.94&\textbf{4.36}&5.08&\textbf{28.11}&28.64&-&-&-&-&-&-&-&-&-&-&-&-&-&28.48&\textbf{27.55}&29.55\\
+&Cov. (\%)&68.42&\textbf{89.47}&\textbf{89.47}&\textbf{10.00}&5.00&-&-&-&-&-&-&-&-&-&-&-&-&-&10.00&\textbf{15.00}&5.00\\
+\hline
+\multirow{2}{*}{ENHSP-OPT-HADD}&RT (s)&10.36&10.71&\textbf{3.20}&\textbf{27.32}&27.34&27.93&26.54&23.09&\textbf{17.47}&-&-&-&-&-&-&-&-&-&-&\textbf{28.59}&29.20\\
+&Cov. (\%)&68.42&68.42&\textbf{94.74}&\textbf{10.00}&\textbf{10.00}&8.33&20.00&45.00&\textbf{75.00}&-&-&-&-&-&-&-&-&-&-&\textbf{5.00}&\textbf{5.00}\\
+\hline
+\multirow{2}{*}{ENHSP-OPT-AIBR}&RT (s)&13.37&12.34&\textbf{6.71}&20.31&\textbf{17.47}&18.03&28.30&25.71&\textbf{25.30}&9.95&\textbf{9.90}&12.94&22.79&19.25&\textbf{18.05}&-&-&-&27.40&27.98&\textbf{25.53}\\
+&Cov. (\%)&63.16&68.42&\textbf{89.47}&35.00&\textbf{45.00}&41.67&10.00&\textbf{25.00}&\textbf{25.00}&\textbf{70.00}&\textbf{70.00}&\textbf{70.00}&25.00&\textbf{41.67}&\textbf{41.67}&-&-&-&10.00&10.00&\textbf{20.00}\\
+\hline
+\multirow{2}{*}{ENHSP-OPT-BLIND}&RT (s)&22.80&22.69&\textbf{22.56}&27.30&\textbf{26.02}&27.62&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+&Cov. (\%)&26.32&26.32&\textbf{31.58}&10.00&\textbf{15.00}&8.33&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+
+        \end{tabular}} \caption{Average runtime (RT, CPU-time seconds) and coverage (Cov.) achieved by 
+    informed and uninformed search approaches implemented in ENHSP (E) and UPMurphi (U) while relying on different 
+    discretisation approaches on well-known benchmark domains. Average runtime (RT) considers unsolved instances as 
+    cut-off time (300 seconds).} 
+        \label{tab:single-static} 
+        \end{table*}  
+        \end{document}
