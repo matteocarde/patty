@@ -1,3 +1,8 @@
+ENHSP-SAT-HMRP[-de 0.1 -dp 0.1 -dh 0.1],Linear-Car-2-DELTA,files/hybrid/Linear-Car-2/delta/domain.pddl,files/hybrid/Linear-Car-2/delta/instances/p01.pddl
+ENHSP-OPT-HMRP[-de 0.1 -dp 0.1 -dh 0.1],Linear-Car-2-DELTA,files/hybrid/Linear-Car-2/delta/domain.pddl,files/hybrid/Linear-Car-2/delta/instances/p01.pddl
+ENHSP-OPT-HADD[-de 0.1 -dp 0.1 -dh 0.1],Baxter-NODELTA,files/hybrid/Baxter/domain.pddl,files/hybrid/Baxter/instances/P7_i1.pddl
+ENHSP-OPT-HADD[-de 0.1 -dp 1 -dh 1],Baxter-NODELTA,files/hybrid/Baxter/domain.pddl,files/hybrid/Baxter/instances/P7_i1.pddl
+ENHSP-OPT-HADD[-de 0.1 -dp 0.1 -dh 0.1],Baxter-DELTA,files/hybrid/Baxter/delta/domain.pddl,files/hybrid/Baxter/delta/instances/P7_i1.pddl
 ENHSP-SAT-AIBR[-de 0.1 -dp 1 -dh 1],Linear-Car-2-NODELTA,files/hybrid/Linear-Car-2/domain.pddl,files/hybrid/Linear-Car-2/instances/p23.pddl
 ENHSP-SAT-HMRP[-de 0.1 -dp 0.1 -dh 0.1],HVAC-DELTA,files/hybrid/HVAC/delta/domain.pddl,files/hybrid/HVAC/delta/instances/instance_1_19.pddl
 ENHSP-OPT-AIBR[-de 0.1 -dp 0.1 -dh 0.1],Linear-Generator-DELTA,files/hybrid/Linear-Generator/delta/domain.pddl,files/hybrid/Linear-Generator/delta/instances/instance_4.pddl
@@ -189,7 +194,6 @@ ENHSP-SAT-HMRP[-de 0.1 -dp 0.1 -dh 0.1],Solar-Rover-NODELTA,files/hybrid/Solar-R
 ENHSP-OPT-HMRP[-de 0.1 -dp 0.1 -dh 0.1],Linear-Car-2-NODELTA,files/hybrid/Linear-Car-2/domain.pddl,files/hybrid/Linear-Car-2/instances/p23.pddl
 ENHSP-OPT-AIBR[-de 0.1 -dp 0.1 -dh 0.1],Linear-Car-2-NODELTA,files/hybrid/Linear-Car-2/domain.pddl,files/hybrid/Linear-Car-2/instances/p13.pddl
 ENHSP-OPT-BLIND[-de 0.1 -dp 1 -dh 1],Solar-Rover-NODELTA,files/hybrid/Solar-Rover/domain.pddl,files/hybrid/Solar-Rover/instances/prob17.pddl
-ENHSP-OPT-HADD[-de 0.1 -dp 0.1 -dh 0.1],Baxter-NODELTA,files/hybrid/Baxter/domain.pddl,files/hybrid/Baxter/instances/P7_i1.pddl
 ENHSP-SAT-HMRP[-de 0.1 -dp 0.1 -dh 0.1],HVAC-DELTA,files/hybrid/HVAC/delta/domain.pddl,files/hybrid/HVAC/delta/instances/instance_1_10.pddl
 ENHSP-OPT-BLIND[-de 0.1 -dp 1 -dh 1],Linear-Generator-NODELTA,files/hybrid/Linear-Generator/domain.pddl,files/hybrid/Linear-Generator/instances/instance_1.pddl
 ENHSP-SAT-HMRP[-de 0.1 -dp 0.1 -dh 0.1],Linear-Car-NODELTA,files/hybrid/Linear-Car/domain.pddl,files/hybrid/Linear-Car/instances/instance_1_30.0_0.1_10.0.pddl
@@ -449,7 +453,6 @@ ENHSP-OPT-HMRP[-de 0.1 -dp 1 -dh 1],Linear-Car-2-NODELTA,files/hybrid/Linear-Car
 ENHSP-SAT-AIBR[-de 0.1 -dp 0.1 -dh 0.1],HVAC-DELTA,files/hybrid/HVAC/delta/domain.pddl,files/hybrid/HVAC/delta/instances/instance_1_3.pddl
 ENHSP-OPT-AIBR[-de 0.1 -dp 1 -dh 1],Solar-Rover-NODELTA,files/hybrid/Solar-Rover/domain.pddl,files/hybrid/Solar-Rover/instances/prob03.pddl
 ENHSP-SAT-BLIND[-de 0.1 -dp 0.1 -dh 0.1],Solar-Rover-NODELTA,files/hybrid/Solar-Rover/domain.pddl,files/hybrid/Solar-Rover/instances/prob06.pddl
-ENHSP-OPT-HADD[-de 0.1 -dp 1 -dh 1],Baxter-NODELTA,files/hybrid/Baxter/domain.pddl,files/hybrid/Baxter/instances/P7_i1.pddl
 ENHSP-OPT-AIBR[-de 0.1 -dp 0.1 -dh 0.1],Linear-Car-2-DELTA,files/hybrid/Linear-Car-2/delta/domain.pddl,files/hybrid/Linear-Car-2/delta/instances/p13.pddl
 ENHSP-SAT-BLIND[-de 0.1 -dp 0.1 -dh 0.1],Descent-DELTA,files/hybrid/Descent/delta/domain.pddl,files/hybrid/Descent/delta/instances/prob_earth07.pddl
 ENHSP-SAT-BLIND[-de 0.1 -dp 1 -dh 1],Linear-Car-2-NODELTA,files/hybrid/Linear-Car-2/domain.pddl,files/hybrid/Linear-Car-2/instances/p13.pddl
@@ -887,7 +890,6 @@ ENHSP-SAT-HADD[-de 0.1 -dp 1 -dh 1],Baxter-NODELTA,files/hybrid/Baxter/domain.pd
 ENHSP-OPT-HADD[-de 0.1 -dp 0.1 -dh 0.1],Descent-NODELTA,files/hybrid/Descent/domain.pddl,files/hybrid/Descent/instances/prob_earth11.pddl
 ENHSP-OPT-AIBR[-de 0.1 -dp 0.1 -dh 0.1],Solar-Rover-NODELTA,files/hybrid/Solar-Rover/domain.pddl,files/hybrid/Solar-Rover/instances/prob07.pddl
 ENHSP-OPT-HMRP[-de 0.1 -dp 1 -dh 1],HVAC-NODELTA,files/hybrid/HVAC/domain.pddl,files/hybrid/HVAC/instances/instance_1_19.pddl
-ENHSP-OPT-HADD[-de 0.1 -dp 0.1 -dh 0.1],Baxter-DELTA,files/hybrid/Baxter/delta/domain.pddl,files/hybrid/Baxter/delta/instances/P7_i1.pddl
 ENHSP-SAT-BLIND[-de 0.1 -dp 0.1 -dh 0.1],Descent-DELTA,files/hybrid/Descent/delta/domain.pddl,files/hybrid/Descent/delta/instances/prob_earth08.pddl
 ENHSP-SAT-HMRP[-de 0.1 -dp 0.1 -dh 0.1],Linear-Car-2-NODELTA,files/hybrid/Linear-Car-2/domain.pddl,files/hybrid/Linear-Car-2/instances/p01.pddl
 ENHSP-SAT-HADD[-de 0.1 -dp 0.1 -dh 0.1],Baxter-DELTA,files/hybrid/Baxter/delta/domain.pddl,files/hybrid/Baxter/delta/instances/P6_i4.pddl
@@ -1333,7 +1335,6 @@ ENHSP-OPT-HMRP[-de 0.1 -dp 0.1 -dh 0.1],HVAC-NODELTA,files/hybrid/HVAC/domain.pd
 ENHSP-SAT-AIBR[-de 0.1 -dp 0.1 -dh 0.1],HVAC-NODELTA,files/hybrid/HVAC/domain.pddl,files/hybrid/HVAC/instances/instance_1_13.pddl
 ENHSP-OPT-HADD[-de 0.1 -dp 0.1 -dh 0.1],Linear-Car-2-NODELTA,files/hybrid/Linear-Car-2/domain.pddl,files/hybrid/Linear-Car-2/instances/p10.pddl
 ENHSP-SAT-AIBR[-de 0.1 -dp 0.1 -dh 0.1],Linear-Car-DELTA,files/hybrid/Linear-Car/delta/domain.pddl,files/hybrid/Linear-Car/delta/instances/instance_4_30.0_0.1_10.0.pddl
-ENHSP-SAT-HMRP[-de 0.1 -dp 0.1 -dh 0.1],Linear-Car-2-DELTA,files/hybrid/Linear-Car-2/delta/domain.pddl,files/hybrid/Linear-Car-2/delta/instances/p01.pddl
 ENHSP-OPT-HMRP[-de 0.1 -dp 0.1 -dh 0.1],Baxter-NODELTA,files/hybrid/Baxter/domain.pddl,files/hybrid/Baxter/instances/P6_i4.pddl
 ENHSP-SAT-BLIND[-de 0.1 -dp 0.1 -dh 0.1],Baxter-NODELTA,files/hybrid/Baxter/domain.pddl,files/hybrid/Baxter/instances/P7_i2.pddl
 ENHSP-OPT-HADD[-de 0.1 -dp 0.1 -dh 0.1],Solar-Rover-NODELTA,files/hybrid/Solar-Rover/domain.pddl,files/hybrid/Solar-Rover/instances/prob16.pddl
@@ -2284,7 +2285,6 @@ ENHSP-SAT-HMRP[-de 0.1 -dp 1 -dh 1],Linear-Car-2-NODELTA,files/hybrid/Linear-Car
 ENHSP-OPT-BLIND[-de 0.1 -dp 0.1 -dh 0.1],Linear-Generator-NODELTA,files/hybrid/Linear-Generator/domain.pddl,files/hybrid/Linear-Generator/instances/instance_4.pddl
 ENHSP-SAT-AIBR[-de 0.1 -dp 0.1 -dh 0.1],HVAC-NODELTA,files/hybrid/HVAC/domain.pddl,files/hybrid/HVAC/instances/instance_1_9.pddl
 ENHSP-SAT-HADD[-de 0.1 -dp 1 -dh 1],Linear-Car-2-NODELTA,files/hybrid/Linear-Car-2/domain.pddl,files/hybrid/Linear-Car-2/instances/p22.pddl
-ENHSP-OPT-HMRP[-de 0.1 -dp 0.1 -dh 0.1],Linear-Car-2-DELTA,files/hybrid/Linear-Car-2/delta/domain.pddl,files/hybrid/Linear-Car-2/delta/instances/p01.pddl
 ENHSP-OPT-HADD[-de 0.1 -dp 0.1 -dh 0.1],Linear-Generator-NODELTA,files/hybrid/Linear-Generator/domain.pddl,files/hybrid/Linear-Generator/instances/instance_7.pddl
 ENHSP-SAT-HADD[-de 0.1 -dp 0.1 -dh 0.1],Baxter-DELTA,files/hybrid/Baxter/delta/domain.pddl,files/hybrid/Baxter/delta/instances/P6_i2.pddl
 ENHSP-SAT-HADD[-de 0.1 -dp 1 -dh 1],Linear-Car-2-NODELTA,files/hybrid/Linear-Car-2/domain.pddl,files/hybrid/Linear-Car-2/instances/p12.pddl

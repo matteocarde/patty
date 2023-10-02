@@ -58,7 +58,7 @@ DELTAS = {
 
 
 def main():
-    filename = "2023-09-30-WELLKNOWN-v3.csv"
+    filename = "2023-09-30-WELLKNOWN-v4.csv"
     file = f"benchmarks/results/{filename}"
 
     exp = filename.replace(".csv", "")

@@ -1,3 +1,4 @@
+import copy
 import sys
 import time
 import traceback
@@ -27,19 +28,19 @@ PLANNERS: Dict[str, Planner] = {
     "SPRINGROLL": SpringRoll(),
     "RANTANPLAN": Patty("RANTANPLAN", "arpg", solver="z3", encoding="non-linear", rollBound=1, hasEffectAxioms=True),
 
-    "ENHSP-SAT-HMRP": ENHSP(False, settings="-h hmrp -s gbfs", name="ENHSP-SAT-HMRP"),
-    "ENHSP-SAT-HADD": ENHSP(False, settings="-h hadd -s gbfs", name="ENHSP-SAT-HADD"),
-    "ENHSP-SAT-HMAX": ENHSP(False, settings="-h hmax -s gbfs", name="ENHSP-SAT-HMAX"),
-    "ENHSP-SAT-AIBR": ENHSP(False, settings="-h aibr -s gbfs", name="ENHSP-SAT-AIBR"),
-    "ENHSP-SAT-HRADD": ENHSP(False, settings="-h hradd -s gbfs", name="ENHSP-SAT-HRADD"),
-    "ENHSP-SAT-BLIND": ENHSP(False, settings="-h blind -s gbfs", name="ENHSP-SAT-BLIND"),
+    "ENHSP-SAT-HMRP": ENHSP(False, settings="-h hmrp -s gbfs -silent", name="ENHSP-SAT-HMRP"),
+    "ENHSP-SAT-HADD": ENHSP(False, settings="-h hadd -s gbfs -silent", name="ENHSP-SAT-HADD"),
+    "ENHSP-SAT-HMAX": ENHSP(False, settings="-h hmax -s gbfs -silent", name="ENHSP-SAT-HMAX"),
+    "ENHSP-SAT-AIBR": ENHSP(False, settings="-h aibr -s gbfs -silent", name="ENHSP-SAT-AIBR"),
+    "ENHSP-SAT-HRADD": ENHSP(False, settings="-h hradd -s gbfs -silent", name="ENHSP-SAT-HRADD"),
+    "ENHSP-SAT-BLIND": ENHSP(False, settings="-h blind -s gbfs -silent", name="ENHSP-SAT-BLIND"),
 
-    "ENHSP-OPT-HMRP": ENHSP(False, settings="-h hmrp -s WAStar", name="ENHSP-OPT-HMRP"),
-    "ENHSP-OPT-HADD": ENHSP(False, settings="-h hadd -s WAStar", name="ENHSP-OPT-HADD"),
-    "ENHSP-OPT-HMAX": ENHSP(False, settings="-h hadd -s WAStar", name="ENHSP-OPT-HMAX"),
-    "ENHSP-OPT-AIBR": ENHSP(False, settings="-h aibr -s WAStar", name="ENHSP-OPT-AIBR"),
-    "ENHSP-OPT-HRADD": ENHSP(False, settings="-h hradd -s WAStar", name="ENHSP-OPT-HRADD"),
-    "ENHSP-OPT-BLIND": ENHSP(False, settings="-h blind -s WAStar", name="ENHSP-OPT-BLIND"),
+    "ENHSP-OPT-HMRP": ENHSP(False, settings="-h hmrp -s WAStar -silent", name="ENHSP-OPT-HMRP"),
+    "ENHSP-OPT-HADD": ENHSP(False, settings="-h hadd -s WAStar -silent", name="ENHSP-OPT-HADD"),
+    "ENHSP-OPT-HMAX": ENHSP(False, settings="-h hadd -s WAStar -silent", name="ENHSP-OPT-HMAX"),
+    "ENHSP-OPT-AIBR": ENHSP(False, settings="-h aibr -s WAStar -silent", name="ENHSP-OPT-AIBR"),
+    "ENHSP-OPT-HRADD": ENHSP(False, settings="-h hradd -s WAStar -silent", name="ENHSP-OPT-HRADD"),
+    "ENHSP-OPT-BLIND": ENHSP(False, settings="-h blind -s WAStar -silent", name="ENHSP-OPT-BLIND"),
 
     "METRIC-FF": MetricFF(),
     "NFD": NFD(),
@@ -73,7 +74,7 @@ def main():
         if "[" in el[0]:
             plName = el[0].split("[")[0]
             plSettings = el[0].split("[")[1][:-1]
-        planner = PLANNERS[plName]
+        planner = copy.copy(PLANNERS[plName])
         planner.name = el[0]
         planner.addSettings(plSettings)
         benchmark = el[1]
@@ -89,7 +90,7 @@ def main():
                 print(r.stdout)
             logger.log(r.toCSV())
             s3.put_object(
-                Key=f"{envs.experiment}/{r.solver}-{r.domain}-{r.problem}-{time.time_ns()}.txt",
+                Key=f"{envs.experiment}/{r.solver}/{r.domain}/{r.problem}/{time.time_ns()}.txt",
                 Bucket="patty-benchmarks",
                 Body=bytes(r.stdout, 'utf-8')
             )
