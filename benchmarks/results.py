@@ -1,4 +1,6 @@
 import csv
+import os
+import shutil
 import statistics
 from typing import Dict, List
 
@@ -82,19 +84,22 @@ TOTALS = {
 
 
 def main():
-    ## Parsing the results
-    files = [
-        "benchmarks/results/2023-09-19-SEARCH-v11.csv"
-    ]
+    # Parsing the results
+    exp = "2023-10-02-CIRCUIT-v1"
+    file = f"benchmarks/results/{exp}.csv"
+
+    folder = f'benchmarks/latex/{exp}'
+    if os.path.exists(folder):
+        shutil.rmtree(folder)
+    os.mkdir(folder)
 
     aResults: [Result] = []
-    for file in files:
-        with open(file, "r") as f:
-            reader = csv.reader(f, delimiter=",")
-            for i, line in enumerate(reader):
-                aResults.append(Result.fromCSVLine(line[0].split(",")))
+    with open(file, "r") as f:
+        reader = csv.reader(f, delimiter=",")
+        for i, line in enumerate(reader):
+            aResults.append(Result.fromCSVLine(line[0].split(",")))
 
-    ## Joining together portfolios
+    # Joining together portfolios
     results = Result.joinPorfolios(aResults, {
         "ENHSP-sat-hadd": "ENHSP",
         "ENHSP-sat-hradd": "ENHSP",
@@ -274,6 +279,16 @@ def main():
         # }
     ]
 
+    latex = []
+    latex.append(r"""
+           \documentclass[11pt,landscape]{article}
+           \usepackage{graphicx}
+           \usepackage{lscape}
+           \usepackage{multirow}
+           \usepackage[a4paper,margin=1in,landscape]{geometry}
+
+           \begin{document}""")
+
     for table in tables:
         stats = table["columns"].keys()
         solvers = table["search"].keys()
@@ -297,7 +312,7 @@ def main():
                         better |= {solver}
                 best[domain][stat] = better
 
-        print(r"""
+        latex.append(r"""
             \begin{""" + table["type"] + r"""}[tb]
             \centering
             \resizebox{""" + table["width"] + r"""}{!}{""")
@@ -317,11 +332,11 @@ def main():
 
         columns = f"|l|{cString}" + "|"
 
-        print(r"\begin{tabular}{" + columns + "}")
-        print(r"\hline")
-        print(fr" & " + "&".join(mString) + r"\\")
-        print(fr"Domain & " + "&".join(solversHeader) + r"\\")
-        print(fr"\hline")
+        latex.append(r"\begin{tabular}{" + columns + "}")
+        latex.append(r"\hline")
+        latex.append(fr" & " + "&".join(mString) + r"\\")
+        latex.append(fr"Domain & " + "&".join(solversHeader) + r"\\")
+        latex.append(fr"\hline")
 
         for (cluster, clusterDomains) in domainsClusters.items():
             rows = []
@@ -335,7 +350,7 @@ def main():
                         if solver in best[domain][stat]:
                             nOfBest += 1
                     row.append(r"\textbf{" + str(nOfBest) + "}")
-            print("&".join(row) + r"\\\hline")
+            latex.append("&".join(row) + r"\\\hline")
             for domain in clusterDomains:
                 row = [DOMAINS[domain]]
                 for (stat, (name, statTypes)) in table["columns"].items():
@@ -350,10 +365,10 @@ def main():
                         else:
                             row.append(t[domain][stat][solver])
                 rows.append("&".join(row))
-            print("\\\\\n".join(rows))
-            print(fr"\\\hline")
+            latex.append("\\\\\n".join(rows))
+            latex.append(fr"\\\hline")
 
-        print(r"""
+        latex.append(r"""
         \end{tabular}}
         \caption{""" + table["caption"] + """}
         \label{""" + table["name"] + """}
@@ -361,6 +376,20 @@ def main():
         """)
 
     pass
+
+    latex.append("\end{document}")
+
+    latexStr = "\n".join(latex)
+    folder = f'benchmarks/latex/{exp}'
+    if os.path.exists(folder):
+        shutil.rmtree(folder)
+    os.mkdir(folder)
+    with open(f"{folder}/{exp}.tex", "w") as f:
+        f.write(latexStr)
+    os.system(f"pdflatex -interaction=nonstopmode --output-directory='{folder}' {folder}/{exp}.tex ")
+
+    os.remove(f"{folder}/{exp}.aux")
+    os.remove(f"{folder}/{exp}.log")
 
 
 if __name__ == '__main__':
