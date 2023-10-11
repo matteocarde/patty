@@ -32,9 +32,9 @@ def main():
 
         solver: Search
         if args.search == "gbfs-nomax":
-            solver = GBFSSearch(gDomain, problem, args, maximize=False)
+            solver = GBFSSearch(gDomain, problem, args, maximize=False, avoidP=args.avoidP)
         elif args.search == "astar-nomax":
-            solver = AStarSearch(gDomain, problem, args, maximize=False)
+            solver = AStarSearch(gDomain, problem, args, maximize=False, avoidP=args.avoidP)
         elif args.search == "gbfs":
             solver = GBFSSearch(gDomain, problem, args, maximize=True)
         elif args.search == "astar":

@@ -10,7 +10,7 @@ class Patty(Planner):
     name = NAME
 
     def __init__(self, name, pattern, solver, encoding, rollBound=0, hasEffectAxioms=False, concatPatterns=False,
-                 search="static"):
+                 search="static", avoidP=False):
         self.pattern = pattern
         self.solver = solver
         self.encoding = encoding
@@ -18,6 +18,7 @@ class Patty(Planner):
         self.hasEffectAxioms = hasEffectAxioms
         self.concatPatterns = concatPatterns
         self.search = search
+        self.avoidP = avoidP
         self.name = name
         super().__init__()
 
@@ -55,6 +56,8 @@ class Patty(Planner):
         ]
         if self.hasEffectAxioms:
             cmd += ["--effect-axioms"]
+        if self.avoidP:
+            cmd += ["--avoid-p"]
         if self.concatPatterns:
             cmd += ["--concat"]
         return cmd

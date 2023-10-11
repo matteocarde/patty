@@ -10,6 +10,8 @@ PLANNERS = [
     "PATTY-ASTAR",
     "PATTY-GBFS-MAX",
     "PATTY-ASTAR-MAX",
+    "PATTY-GBFS-MAX-NO-P",
+    "PATTY-ASTAR-MAX-NO-P",
     # # "PATTY-R",
     # "SPRINGROLL",
     # "RANTANPLAN",

@@ -7,6 +7,7 @@ from typing import Dict, List
 from classes.Result import Result
 
 SMT_SOLVERS = {'SpringRoll', "PATTY", "PATTY-STATIC", "PATTY-GBFS", "PATTY-ASTAR", "PATTY-GBFS-MAX", "PATTY-ASTAR-MAX",
+               "PATTY-GBFS-MAX-NO-P", "PATTY-ASTAR-MAX-NO-P",
                'RANTANPLAN', "OMT"}
 TIME_LIMIT = 30 * 1000
 
@@ -28,6 +29,8 @@ SOLVERS = {
     "PATTY-ASTAR": "P_{A^*}",
     "PATTY-GBFS-MAX": r"P_{\text{gbfs}}^{max}",
     "PATTY-ASTAR-MAX": "P_{A^*}^{max}",
+    "PATTY-GBFS-MAX-NO-P": r"P_{\text{gbfs}}^{max+}",
+    "PATTY-ASTAR-MAX-NO-P": "P_{A^*}^{max+}",
 }
 
 DOMAINS = {
@@ -85,7 +88,7 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2023-10-02-CIRCUIT-v1"
+    exp = "2023-10-03-NOP-v1"
     file = f"benchmarks/results/{exp}.csv"
 
     folder = f'benchmarks/latex/{exp}'
@@ -238,15 +241,17 @@ def main():
         "search": {
             'PATTY': "SMT",
             'PATTY-STATIC': "SMT",
-            'PATTY-GBFS': "SMT",
+            # 'PATTY-GBFS': "SMT",
             'PATTY-ASTAR': "SMT",
-            'PATTY-GBFS-MAX': "SMT",
+            # 'PATTY-GBFS-MAX': "SMT",
             'PATTY-ASTAR-MAX': "SMT",
+            # 'PATTY-GBFS-MAX-NO-P': "SMT",
+            'PATTY-ASTAR-MAX-NO-P': "SMT",
             # 'PATTY-R',
             # 'RANTANPLAN': "SMT",
             # 'SpringRoll': "SMT",
             # "OMT": "SMT",
-            'ENHSP': "SEARCH",
+            # 'ENHSP': "SEARCH",
             # 'METRIC-FF': "SEARCH",
             # "NFD": "SEARCH"
         },

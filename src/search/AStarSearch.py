@@ -14,8 +14,9 @@ from src.utils.LogPrint import LogPrintLevel
 
 class AStarSearch(Search):
 
-    def __init__(self, domain: GroundedDomain, problem: Problem, args: Arguments, maximize=False):
+    def __init__(self, domain: GroundedDomain, problem: Problem, args: Arguments, maximize=False, avoidP=False):
         self.maximize = maximize
+        self.avoidP = avoidP
         super().__init__(domain, problem, args)
 
     def solve(self) -> NumericPlan:
@@ -44,7 +45,7 @@ class AStarSearch(Search):
                 pattern=patF,
                 bound=1,
                 relaxGoal=True,
-                subgoalsAchieved=subgoalsAchieved,
+                subgoalsAchieved=subgoalsAchieved if not self.avoidP else set(),
                 encoding=self.args.encoding,
                 binaryActions=self.args.binaryActions,
                 rollBound=self.args.rollBound,
