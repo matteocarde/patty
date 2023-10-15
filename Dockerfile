@@ -2,6 +2,7 @@
 FROM 775013819650.dkr.ecr.eu-south-1.amazonaws.com/patty:stable
 
 WORKDIR /project
+RUN pip install tarjan
 # Copying
 COPY . .
 

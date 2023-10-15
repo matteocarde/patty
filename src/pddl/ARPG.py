@@ -9,6 +9,7 @@ from src.pddl.Problem import Problem
 from src.pddl.RelaxedIntervalState import RelaxedIntervalState
 from src.pddl.State import State
 from src.pddl.Supporter import Supporter
+from src.plan.AffectedGraph import AffectedGraph
 
 
 class ARPG:
@@ -72,9 +73,13 @@ class ARPG:
                 if supporter.originatingAction not in usedActions:
                     partialOrder.add(supporter.originatingAction)
                 usedActions.add(supporter.originatingAction)
-            order += sorted(partialOrder, key=lambda x: self.originalOrder[x])
+            ag = AffectedGraph(partialOrder)
+            graphOrder = ag.getOrderFromGraph()
+            order += graphOrder
         leftActions = set(self.actions) - usedActions
-        order += sorted(leftActions, key=lambda x: self.originalOrder[x])
+        ag = AffectedGraph(leftActions)
+        graphOrder = ag.getOrderFromGraph()
+        order += graphOrder
         return order
 
     def getConstantAtoms(self) -> Dict[Atom, float]:

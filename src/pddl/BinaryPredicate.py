@@ -117,6 +117,9 @@ class BinaryPredicate(Predicate):
         if not self.__functions:
             self.__functions = self.lhs.getFunctions() | self.rhs.getFunctions()
         return self.__functions
+    
+    def getLiterals(self) -> Set[Predicate]:
+        return {self}
 
     def getFunctionsOverwrite(self) -> Set[Atom]:
         self.__functions = self.lhs.getFunctions() | self.rhs.getFunctions()

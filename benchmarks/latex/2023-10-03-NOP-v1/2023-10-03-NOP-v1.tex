@@ -10,33 +10,33 @@
             \begin{table*}[tb]
             \centering
             \resizebox{\textwidth}{!}{
-\begin{tabular}{|l||ccccc||ccccc||ccccc||}
+\begin{tabular}{|l||cccccc||cccccc||ccccc||}
 \hline
- & \multicolumn{5}{c||}{Coverage (\%)}&\multicolumn{5}{c||}{Time (s)}&\multicolumn{5}{c||}{Bound (Common)}\\
-Domain & $P$&$P_{cat}$&$P_{A^*}$&$P_{A^*}^{max}$&$P_{A^*}^{max+}$&$P$&$P_{cat}$&$P_{A^*}$&$P_{A^*}^{max}$&$P_{A^*}^{max+}$&$P$&$P_{cat}$&$P_{A^*}$&$P_{A^*}^{max}$&$P_{A^*}^{max+}$\\
+ & \multicolumn{6}{c||}{Coverage (\%)}&\multicolumn{6}{c||}{Time (s)}&\multicolumn{5}{c||}{Bound (Common)}\\
+Domain & $P$&$P_{cat}$&$P_{A^*}$&$P_{A^*}^{max}$&$P_{A^*}^{max+}$&$\mathrm{ENHSP}$&$P$&$P_{cat}$&$P_{A^*}$&$P_{A^*}^{max}$&$P_{A^*}^{max+}$&$\mathrm{ENHSP}$&$P$&$P_{cat}$&$P_{A^*}$&$P_{A^*}^{max}$&$P_{A^*}^{max+}$\\
 \hline
-\textit{Highly Numeric}&\textbf{6}&\textbf{5}&\textbf{7}&\textbf{7}&\textbf{8}&\textbf{4}&\textbf{0}&\textbf{1}&\textbf{4}&\textbf{3}&\textbf{9}&\textbf{10}&\textbf{8}&\textbf{7}&\textbf{8}\\\hline
-\textsc{BlockGrouping} (S)&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{1.49}&1.51&4.88&1.71&1.74&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}\\
-\textsc{Counters} (S)&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{0.84}&0.85&4.25&0.94&0.94&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}\\
-\textsc{Counters} (L)&\textbf{100.0}&65.0&25.0&35.0&45.0&\textbf{5.74}&15.63&23.18&20.91&19.62&\textbf{1.80}&\textbf{1.80}&\textbf{1.80}&2.00&2.00\\
-\textsc{Drone} (S)&15.0&15.0&45.0&65.0&\textbf{70.0}&25.98&25.67&21.12&18.27&\textbf{17.50}&5.33&\textbf{4.67}&5.67&6.33&\textbf{4.67}\\
-\textsc{PlantWatering} (S)&25.0&25.0&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&24.81&24.59&14.91&\textbf{11.27}&11.87&\textbf{7.67}&\textbf{7.67}&8.67&9.00&8.67\\
-\textsc{Farmland} (S)&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&0.86&0.86&1.34&\textbf{0.81}&\textbf{0.81}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}\\
-\textsc{Farmland} (L)&\textbf{100.0}&\textbf{100.0}&90.0&95.0&\textbf{100.0}&\textbf{1.64}&2.16&6.47&2.83&1.85&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}\\
-\textsc{HydroPower} (S)&75.0&90.0&\textbf{100.0}&\textbf{100.0}&95.0&14.88&11.91&\textbf{8.87}&15.81&17.26&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}\\
-\textsc{Sailing} (S)&\textbf{100.0}&95.0&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&1.00&1.06&1.38&\textbf{0.85}&0.88&\textbf{3.37}&\textbf{3.37}&\textbf{3.37}&\textbf{3.37}&\textbf{3.37}\\
-\textsc{Sailing} (L)&95.0&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&2.35&0.94&1.05&\textbf{0.85}&\textbf{0.85}&\textbf{1.22}&\textbf{1.22}&\textbf{1.22}&\textbf{1.22}&\textbf{1.22}
+\textit{Highly Numeric}&\textbf{6}&\textbf{5}&\textbf{7}&\textbf{7}&\textbf{7}&\textbf{3}&\textbf{4}&\textbf{0}&\textbf{1}&\textbf{2}&\textbf{1}&\textbf{3}&\textbf{9}&\textbf{10}&\textbf{8}&\textbf{7}&\textbf{8}\\\hline
+\textsc{BlockGrouping} (S)&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&75.0&\textbf{1.49}&1.51&4.88&1.71&1.74&11.42&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}\\
+\textsc{Counters} (S)&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&95.0&\textbf{0.84}&0.85&4.25&0.94&0.94&4.96&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}\\
+\textsc{Counters} (L)&\textbf{100.0}&65.0&25.0&35.0&45.0&35.0&\textbf{5.74}&15.63&23.18&20.91&19.62&20.07&\textbf{1.80}&\textbf{1.80}&\textbf{1.80}&2.00&2.00\\
+\textsc{Drone} (S)&15.0&15.0&45.0&65.0&70.0&\textbf{80.0}&25.98&25.67&21.12&18.27&17.50&\textbf{8.21}&5.33&\textbf{4.67}&5.67&6.33&\textbf{4.67}\\
+\textsc{PlantWatering} (S)&25.0&25.0&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&90.0&24.81&24.59&14.91&11.27&11.87&\textbf{9.04}&\textbf{7.67}&\textbf{7.67}&8.67&9.00&8.67\\
+\textsc{Farmland} (S)&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&0.86&0.86&1.34&0.81&0.81&\textbf{0.69}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}\\
+\textsc{Farmland} (L)&\textbf{100.0}&\textbf{100.0}&90.0&95.0&\textbf{100.0}&50.0&\textbf{1.64}&2.16&6.47&2.83&1.85&17.50&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}\\
+\textsc{HydroPower} (S)&75.0&90.0&\textbf{100.0}&\textbf{100.0}&95.0&10.0&14.88&11.91&\textbf{8.87}&15.81&17.26&27.42&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}\\
+\textsc{Sailing} (S)&\textbf{100.0}&95.0&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&1.00&1.06&1.38&\textbf{0.85}&0.88&1.45&\textbf{3.37}&\textbf{3.37}&\textbf{3.37}&\textbf{3.37}&\textbf{3.37}\\
+\textsc{Sailing} (L)&95.0&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&20.0&2.35&0.94&1.05&\textbf{0.85}&\textbf{0.85}&25.19&\textbf{1.22}&\textbf{1.22}&\textbf{1.22}&\textbf{1.22}&\textbf{1.22}
 \\\hline
-\textit{Lowly Numeric}&\textbf{7}&\textbf{4}&\textbf{3}&\textbf{4}&\textbf{5}&\textbf{4}&\textbf{1}&\textbf{1}&\textbf{2}&\textbf{1}&\textbf{5}&\textbf{3}&\textbf{1}&\textbf{3}&\textbf{2}\\\hline
-\textsc{Delivery} (S)&20.0&15.0&20.0&\textbf{40.0}&\textbf{40.0}&25.10&26.06&25.30&\textbf{21.65}&22.48&2.00&2.50&3.50&3.50&\textbf{1.50}\\
-\textsc{Expedition} (S)&\textbf{15.0}&\textbf{15.0}&\textbf{15.0}&10.0&10.0&\textbf{26.06}&26.69&26.94&27.54&28.25&\textbf{5.00}&\textbf{5.00}&9.00&9.00&6.00\\
-\textsc{MPrime} (S)&\textbf{55.0}&45.0&45.0&45.0&45.0&\textbf{18.13}&18.68&19.67&19.28&19.16&1.86&\textbf{1.43}&1.57&1.86&2.14\\
-\textsc{PathwaysMetric} (S)&\textbf{5.0}&\textbf{5.0}&\textbf{5.0}&\textbf{5.0}&\textbf{5.0}&29.04&29.04&\textbf{29.02}&29.03&29.06&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}\\
-\textsc{Rover} (S)&\textbf{55.0}&\textbf{55.0}&40.0&45.0&50.0&\textbf{17.46}&17.83&20.67&18.79&18.95&\textbf{1.75}&1.88&2.00&2.25&2.75\\
-\textsc{Satellite} (S)&-&-&20.0&15.0&\textbf{30.0}&-&-&27.48&26.16&\textbf{24.47}&-&-&5.50&\textbf{3.50}&5.50\\
-\textsc{Sugar} (S)&\textbf{100.0}&95.0&95.0&\textbf{100.0}&\textbf{100.0}&5.41&4.75&8.43&\textbf{4.23}&5.59&\textbf{2.50}&2.56&3.69&3.06&3.44\\
-\textsc{TPP} (L)&\textbf{5.0}&-&-&-&-&\textbf{28.64}&-&-&-&-&\textbf{3.00}&-&-&-&-\\
-\textsc{ZenoTravel} (S)&\textbf{55.0}&\textbf{55.0}&\textbf{55.0}&\textbf{55.0}&\textbf{55.0}&15.70&\textbf{14.68}&16.50&16.07&17.14&2.22&2.22&2.22&\textbf{2.11}&2.33
+\textit{Lowly Numeric}&\textbf{3}&\textbf{2}&\textbf{1}&\textbf{1}&\textbf{2}&\textbf{5}&\textbf{2}&\textbf{0}&\textbf{0}&\textbf{1}&\textbf{1}&\textbf{5}&\textbf{5}&\textbf{3}&\textbf{1}&\textbf{3}&\textbf{2}\\\hline
+\textsc{Delivery} (S)&20.0&15.0&20.0&40.0&40.0&\textbf{55.0}&25.10&26.06&25.30&21.65&22.48&\textbf{15.77}&2.00&2.50&3.50&3.50&\textbf{1.50}\\
+\textsc{Expedition} (S)&\textbf{15.0}&\textbf{15.0}&\textbf{15.0}&10.0&10.0&10.0&\textbf{26.06}&26.69&26.94&27.54&28.25&27.32&\textbf{5.00}&\textbf{5.00}&9.00&9.00&6.00\\
+\textsc{MPrime} (S)&55.0&45.0&45.0&45.0&45.0&\textbf{80.0}&18.13&18.68&19.67&19.28&19.16&\textbf{8.89}&1.86&\textbf{1.43}&1.57&1.86&2.14\\
+\textsc{PathwaysMetric} (S)&5.0&5.0&5.0&5.0&5.0&\textbf{50.0}&29.04&29.04&29.02&29.03&29.06&\textbf{19.89}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}\\
+\textsc{Rover} (S)&\textbf{55.0}&\textbf{55.0}&40.0&45.0&50.0&30.0&\textbf{17.46}&17.83&20.67&18.79&18.95&22.17&\textbf{1.75}&1.88&2.00&2.25&2.75\\
+\textsc{Satellite} (S)&-&-&20.0&15.0&\textbf{30.0}&15.0&-&-&27.48&26.16&\textbf{24.47}&26.82&-&-&5.50&\textbf{3.50}&5.50\\
+\textsc{Sugar} (S)&\textbf{100.0}&95.0&95.0&\textbf{100.0}&\textbf{100.0}&85.0&5.41&4.75&8.43&\textbf{4.23}&5.59&6.63&\textbf{2.50}&2.56&3.69&3.06&3.44\\
+\textsc{TPP} (L)&5.0&-&-&-&-&\textbf{15.0}&28.64&-&-&-&-&\textbf{25.85}&\textbf{3.00}&-&-&-&-\\
+\textsc{ZenoTravel} (S)&55.0&55.0&55.0&55.0&55.0&\textbf{85.0}&15.70&14.68&16.50&16.07&17.14&\textbf{9.46}&2.22&2.22&2.22&\textbf{2.11}&2.33
 \\\hline
 
         \end{tabular}}

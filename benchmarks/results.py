@@ -251,7 +251,7 @@ def main():
             # 'RANTANPLAN': "SMT",
             # 'SpringRoll': "SMT",
             # "OMT": "SMT",
-            # 'ENHSP': "SEARCH",
+            'ENHSP': "SEARCH",
             # 'METRIC-FF': "SEARCH",
             # "NFD": "SEARCH"
         },

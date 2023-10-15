@@ -70,6 +70,9 @@ class Literal(Predicate):
     def getAtom(self) -> Atom:
         return self.atom
 
+    def getLiterals(self) -> Set[Predicate]:
+        return {self}
+
     def ground(self, subs: Dict[str, str]) -> Literal:
 
         literal = Literal()
