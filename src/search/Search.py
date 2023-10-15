@@ -14,7 +14,7 @@ class Search:
 
         self.args = args
 
-        self.startBound = args.bound if args.bound else 1
+        self.startBound = 1
         self.maxBound = args.bound if args.bound else 1000
 
         self.console: LogPrint = LogPrint(self.args.verboseLevel)

@@ -88,19 +88,19 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2023-10-03-NOP-v1"
+    exp = "2023-10-15-SCC-v2"
     file = f"benchmarks/results/{exp}.csv"
-
-    folder = f'benchmarks/latex/{exp}'
-    if os.path.exists(folder):
-        shutil.rmtree(folder)
-    os.mkdir(folder)
 
     aResults: [Result] = []
     with open(file, "r") as f:
         reader = csv.reader(f, delimiter=",")
         for i, line in enumerate(reader):
             aResults.append(Result.fromCSVLine(line[0].split(",")))
+
+    folder = f'benchmarks/latex/{exp}'
+    if os.path.exists(folder):
+        shutil.rmtree(folder)
+    os.mkdir(folder)
 
     # Joining together portfolios
     results = Result.joinPorfolios(aResults, {

@@ -68,7 +68,7 @@ class Atom:
         return str(self)
 
     def __hash__(self):
-        return hash(str(self))
+        return self.__hash
 
     def __eq__(self, other: Atom):
         if not isinstance(other, Atom):

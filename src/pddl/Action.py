@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import copy
-
 from typing import List, Dict, Set, cast
 
 from src.pddl.Atom import Atom

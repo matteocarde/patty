@@ -9,7 +9,7 @@ class Arguments:
         parser = argparse.ArgumentParser(description='Patty - The Symbolic Numeric Planner using Patterns')
         parser.add_argument('-o', '--domain', dest='domain', help='The .pddl domain file', required=keepRequired)
         parser.add_argument('-f', '--problem', dest='problem', help='The .pddl problem file', required=keepRequired)
-        parser.add_argument('-n', '--bound', help='The number of steps of the SMT encoding')
+        parser.add_argument('-n', '--bound', help='The number of steps of the SMT encoding', type=int)
         parser.add_argument('-v', '--verboseLevel', help=f'The level of verbosity: {LogPrintLevel.getLevels()} ',
                             default=LogPrintLevel.getDefault(), type=int)
         parser.add_argument('--deep', help="Iterative deepening approach to find the best plan (at the given bound)",

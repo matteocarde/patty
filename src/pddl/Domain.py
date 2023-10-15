@@ -80,6 +80,8 @@ class Domain:
         problem.substitute(constants)
         gDomain.actions = set(orderedActions)
 
+        from src.plan.AffectedGraph import AffectedGraph
+        gDomain.affectedGraph = AffectedGraph.fromActions(gDomain.actions)
         gDomain.arpg = ARPG(gDomain, initialState, problem.goal)
         return gDomain
 
@@ -173,7 +175,7 @@ class GroundedDomain(Domain):
     delList: Dict[Atom, Set[Operation]]
     assList: Dict[Atom, Set[Operation]]
 
-    def __init__(self, name: str, actions: Set[Action], events: Set[Event], process: Set[Process]):
+    def __init__(self, name: str, actions: Set[Action], events: Set[Event], process: Set[Process], affectedGraph=None):
         super().__init__()
 
         self.name = name
@@ -217,13 +219,16 @@ class GroundedDomain(Domain):
         self.allAtoms = self.functions | self.predicates
         self.arpg = None
 
+        from src.plan.AffectedGraph import AffectedGraph
+        self.affectedGraph: AffectedGraph = affectedGraph
+
     def getOperationByPlanName(self, planName) -> Operation:
         return self.__operationsDict[planName]
 
     def substitute(self, sub: Dict[Atom, float], default=None) -> GroundedDomain:
         subActions: Set[Action] = {a.substitute(sub, default) for a in self.actions if a.canHappen(sub, default)}
 
-        return GroundedDomain(self.name, subActions, self.events, self.processes)
+        return GroundedDomain(self.name, subActions, self.events, self.processes, self.affectedGraph)
 
     def getARPG(self):
         return self.arpg

@@ -2,10 +2,9 @@ from typing import Set, List, Dict
 
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
-from src.pddl.Domain import Domain, GroundedDomain
+from src.pddl.Domain import GroundedDomain
 from src.pddl.Goal import Goal
 from src.pddl.PDDLException import PDDLException
-from src.pddl.Problem import Problem
 from src.pddl.RelaxedIntervalState import RelaxedIntervalState
 from src.pddl.State import State
 from src.pddl.Supporter import Supporter
@@ -21,6 +20,7 @@ class ARPG:
         self.supporterLevels = list()
         self.stateLevels = list()
         self.actions: List[Action] = list(domain.actions)
+        self.affectedGraph: AffectedGraph = domain.affectedGraph
 
         self.originalOrder = dict([(action, i) for (i, action) in enumerate(self.actions)])
 
@@ -37,7 +37,7 @@ class ARPG:
         fullBooleanGoal = len(goal.getFunctions()) == 0
 
         isFixpoint = False
-        while activeSupporters and not isFixpoint:  # (fullBooleanGoal or not state.satisfies(goal)):
+        while activeSupporters and not isFixpoint and not state.satisfies(goal):
             supporters = supporters - activeSupporters
             newState = state.applySupporters(activeSupporters)
             activeSupporters = {s for s in supporters if s.isSatisfiedBy(newState)}
@@ -73,12 +73,10 @@ class ARPG:
                 if supporter.originatingAction not in usedActions:
                     partialOrder.add(supporter.originatingAction)
                 usedActions.add(supporter.originatingAction)
-            ag = AffectedGraph(partialOrder)
-            graphOrder = ag.getOrderFromGraph()
+            graphOrder = self.affectedGraph.getSubGraph(partialOrder).getOrderFromGraph()
             order += graphOrder
         leftActions = set(self.actions) - usedActions
-        ag = AffectedGraph(leftActions)
-        graphOrder = ag.getOrderFromGraph()
+        graphOrder = self.affectedGraph.getSubGraph(leftActions).getOrderFromGraph()
         order += graphOrder
         return order
 

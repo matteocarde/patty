@@ -70,7 +70,7 @@ class AStarSearch(Search):
                 # IF SAT
                 sprime = initialState.applyPlan(plan)
                 subgoalsAchieved = {g for g in self.problem.goal.conditions if sprime.satisfies(g)}
-                self.console.log(f"Subgoals achieved: {len(subgoalsAchieved)}/{len(totalSubgoals)}",
+                self.console.log(f"Subgoals achieved: {len(subgoalsAchieved)}/{len(totalSubgoals)}: {subgoalsAchieved}",
                                  LogPrintLevel.STATS)
                 patG = Pattern.fromPlan(plan)
                 patG.addPostfix("G")
