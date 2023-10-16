@@ -1,7 +1,7 @@
 import re
 
-from benchmarks.classes.Planner import Planner
-from benchmarks.classes.Result import Result
+from classes.Planner import Planner
+from classes.Result import Result
 
 NAME = "PATTY"
 
