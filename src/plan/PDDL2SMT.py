@@ -67,6 +67,8 @@ class PDDL2SMT:
 
         self.rules = self.initial + self.transitions + [self.goal]
 
+        pass
+
     def getInitialExpression(self) -> List[SMTExpression]:
         tVars = self.transitionVariables[0]
         rules: [SMTExpression] = list()
@@ -271,6 +273,7 @@ class PDDL2SMT:
             lhs1 = stepVars.actionVariables[a] > 1
             preconditions0 = None
             preconditions1 = None
+            isPre1Impossible = False
             for pre in a.preconditions:
                 if isinstance(pre, Literal):
                     v = pre.getAtom()
@@ -290,7 +293,7 @@ class PDDL2SMT:
                         continue
                     v = eff.lhs.getAtom()
                     if eff.operator == "assign":
-                        subs[v] = stepVars.valueVariables[v]
+                        subs[v] = SMTNumericVariable.fromPddl(eff.rhs, stepVars.deltaVariables[a])
                         continue
                     if eff.operator == "increase":
                         subs[v] = stepVars.deltaVariables[a][v] + \
@@ -306,13 +309,20 @@ class PDDL2SMT:
 
                 # Transformed precondition
                 precondition1 = SMTNumericVariable.fromPddl(pre, subs)
-                preconditions1 = preconditions1.AND(precondition1) if preconditions1 else precondition1
+                if not precondition1:
+                    isPre1Impossible = True
+                else:
+                    preconditions1 = preconditions1.AND(precondition1) if preconditions1 else precondition1
 
             if preconditions0:
                 rules.append(lhs0.implies(preconditions0))
 
-            if preconditions1:
+            if preconditions1 and not isPre1Impossible:
                 rules.append(lhs1.implies(preconditions1))
+
+            if isPre1Impossible:
+                rules.append(lhs1.NOT())
+
         return rules
 
     def getEffStepRules(self, stepVars: TransitionVariables) -> List[SMTExpression]:

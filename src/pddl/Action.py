@@ -48,7 +48,8 @@ class Action(Operation):
 
     def ground(self, problem) -> List[Action]:
         groundOps: List = []
-        for op in self.getGroundedOperations(problem):
+        toGroundOps = self.getGroundedOperations(problem)
+        for op in toGroundOps:
             name = op.name
             preconditions = op.preconditions
             effects = op.effects

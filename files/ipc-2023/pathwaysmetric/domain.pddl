@@ -20,10 +20,6 @@
 
 	(:functions
 		(available ?x - molecule)
-		(duration-association-reaction ?x1 ?x2 - molecule ?x3 - complex)
-		(duration-catalyzed-association-reaction ?x1 ?x2 - molecule ?x3 - complex)
-		(duration-catalyzed-self-association-reaction ?x1 - molecule ?x3 - complex)
-		(duration-synthesis-reaction ?x1 ?x2 - molecule)
 		(need-for-association ?x1 ?x2 - molecule ?x3 - complex)
 		(need-for-catalyzed-association ?x1 ?x2 - molecule ?x3 - complex)
 		(need-for-catalyzed-self-association ?x1 - molecule ?x3 - complex)
