@@ -85,7 +85,7 @@ class AStarSearchMax(Search):
                                  LogPrintLevel.STATS)
                 patG = Pattern.fromPlan(plan)
                 patG.addPostfix("G")
-                patH = Pattern.fromState(state, self.problem.goal, self.domain)
+                patH = Pattern.fromState(state, self.problem.goal, self.domain, useSCCs=self.useSCCs)
             else:
                 patF.addPostfix(bound)
                 patG = patF

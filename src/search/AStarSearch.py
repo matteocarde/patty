@@ -85,7 +85,7 @@ class AStarSearch(Search):
 
             if not isinstance(plan, NumericPlan) or self.maximize:
                 if s != sprime:
-                    newPat = Pattern.fromState(sprime, self.problem.goal, self.domain)
+                    newPat = Pattern.fromState(sprime, self.problem.goal, self.domain, useSCCs=self.useSCCs)
                     if newPat:
                         patHPrime = newPat
                         sprime = s

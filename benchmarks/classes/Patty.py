@@ -1,7 +1,7 @@
 import re
 
-from classes.Planner import Planner
-from classes.Result import Result
+from benchmarks.classes.Planner import Planner
+from benchmarks.classes.Result import Result
 
 NAME = "PATTY"
 
@@ -9,14 +9,7 @@ NAME = "PATTY"
 class Patty(Planner):
     name = NAME
 
-    def __init__(self, name, pattern, solver, encoding, rollBound=0, hasEffectAxioms=False, concatPatterns=False,
-                 search="static", avoidP=False, useSCCs=False):
-        self.pattern = pattern
-        self.solver = solver
-        self.encoding = encoding
-        self.rollBound = rollBound
-        self.hasEffectAxioms = hasEffectAxioms
-        self.concatPatterns = concatPatterns
+    def __init__(self, name, search="static", avoidP=False, useSCCs=False):
         self.search = search
         self.avoidP = avoidP
         self.useSCCs = useSCCs
@@ -50,17 +43,17 @@ class Patty(Planner):
             "-f", problem,
             "-s", self.search,
             # "-pp",
-            "--pattern", self.pattern,
-            "--solver", self.solver,
-            "--encoding", self.encoding,
-            "--roll-bound", str(self.rollBound)
+            # "--pattern", self.pattern,
+            # "--solver", self.solver,
+            # "--encoding", self.encoding,
+            # "--roll-bound", str(self.rollBound)
         ]
-        if self.hasEffectAxioms:
-            cmd += ["--effect-axioms"]
+        # if self.hasEffectAxioms:
+        #     cmd += ["--effect-axioms"]
         if self.avoidP:
             cmd += ["--avoid-p"]
         if self.useSCCs:
             cmd += ["--use-sccs"]
-        if self.concatPatterns:
-            cmd += ["--concat"]
+        # if self.concatPatterns:
+        #     cmd += ["--concat"]
         return cmd
