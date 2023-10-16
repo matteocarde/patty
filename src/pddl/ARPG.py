@@ -37,7 +37,7 @@ class ARPG:
         fullBooleanGoal = len(goal.getFunctions()) == 0
 
         isFixpoint = False
-        while activeSupporters and not isFixpoint and not state.satisfies(goal):
+        while activeSupporters and not isFixpoint:
             supporters = supporters - activeSupporters
             newState = state.applySupporters(activeSupporters)
             activeSupporters = {s for s in supporters if s.isSatisfiedBy(newState)}

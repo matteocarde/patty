@@ -8,23 +8,9 @@
 
 	(:predicates
 
-		(fewerturns ?n1 - turnvalue ?n2 - turnvalue)
 		(timenow ?t - time)
 		(before ?t1 - time ?t2 - time)
 		(demand ?t - time ?n - turnvalue)
-
-		;		(faulthappened ?t - time ?c - circuit)
-		;		(needfault ?c - circuit ?t - time)
-
-		;		(sundonfaulthappened ?t - time)
-		;		(needsundonfault ?t - time)
-
-		(faultrepair ?t - time)
-		(faultrepaired ?t - time)
-
-		;		(okayfault ?c - circuit ?t - time)
-
-		(transitive-later-than ?t1 - time ?t2 - time)
 	)
 
 	(:functions
