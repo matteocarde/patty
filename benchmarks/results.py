@@ -89,7 +89,7 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2023-10-15-SCC-v5"
+    exp = "2023-10-15-SCC-v6"
     file = f"benchmarks/results/{exp}.csv"
 
     aResults: [Result] = []

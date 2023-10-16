@@ -48,7 +48,7 @@ class AStarSearchMax(Search):
                 pattern=patF,
                 bound=1,
                 relaxGoal=True,
-                subgoalsAchieved=subgoalsAchieved if not self.avoidP else set(),
+                subgoalsAchieved=set(),
                 encoding=self.args.encoding,
                 binaryActions=self.args.binaryActions,
                 rollBound=self.args.rollBound,
@@ -57,7 +57,7 @@ class AStarSearchMax(Search):
             self.ts.end(f"Conversion to SMT at bound {bound}", console=self.console)
 
             self.ts.start(f"Solving Bound {bound}", console=self.console)
-            solver: SMTSolver = SMTSolver(pddl2smt, maximize=self.maximize)
+            solver: SMTSolver = SMTSolver(pddl2smt, maximize=True)
             callsToSolver += 1
             plan: NumericPlan = solver.solve()
             solver.exit()
