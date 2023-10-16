@@ -22,7 +22,7 @@ PLANNERS: Dict[str, Planner] = {
     "PATTY-STATIC": Patty("PATTY-STATIC", search="static"),
     "PATTY-ASTAR": Patty("PATTY-ASTAR", search="astar-nomax"),
     "PATTY-ASTAR-MAX": Patty("PATTY-ASTAR-MAX", search="astar"),
-    "PATTY-ASTAR-MAX-SCCS": Patty("PATTY-ASTAR-MAX", search="astar", useSCCs=True),
+    "PATTY-ASTAR-MAX-SCCS": Patty("PATTY-ASTAR-MAX-SCCS", search="astar", useSCCs=True),
     "PATTY-ASTAR-MAX-NO-P": Patty("PATTY-ASTAR-MAX-NO-P", search="astar", avoidP=True),
     "PATTY-ASTAR-MAX-NO-P-SCCS": Patty("PATTY-ASTAR-MAX-NO-P-SCCS", search="astar", avoidP=True, useSCCs=True),
     # "PATTY-EXPLICIT": Patty("PATTY-EXPLICIT", "arpg", solver="z3" hasEffectAxioms=True),

@@ -25,11 +25,9 @@ SOLVERS = {
     # 'OMT': "\mathrm{OMT}",
     "PATTY": "P",
     "PATTY-STATIC": "P_{cat}",
-    "PATTY-GBFS": r"P_{\text{gbfs}}",
     "PATTY-ASTAR": "P_{A^*}",
-    "PATTY-GBFS-MAX": r"P_{\text{gbfs}}^{max}",
     "PATTY-ASTAR-MAX": "P_{A^*}^{max}",
-    "PATTY-GBFS-MAX-NO-P": r"P_{\text{gbfs}}^{max+}",
+    "PATTY-ASTAR-MAX-SCCS": "P_{A^* - SCC}^{max}",
     "PATTY-ASTAR-MAX-NO-P": "P_{A^*}^{max+}",
     "PATTY-ASTAR-MAX-NO-P-SCCS": "P_{A^* - SCC}^{max+}",
 }
@@ -89,7 +87,7 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2023-10-15-SCC-v8"
+    exp = "2023-10-15-SCC-v9"
     file = f"benchmarks/results/{exp}.csv"
 
     aResults: [Result] = []
@@ -247,6 +245,7 @@ def main():
             # 'PATTY-GBFS-MAX': "SMT",
             'PATTY-ASTAR-MAX': "SMT",
             # 'PATTY-GBFS-MAX-NO-P': "SMT",
+            "PATTY-ASTAR-MAX-SCCS": "SMT",
             'PATTY-ASTAR-MAX-NO-P': "SMT",
             'PATTY-ASTAR-MAX-NO-P-SCCS': 'SMT',
             # 'PATTY-R',
