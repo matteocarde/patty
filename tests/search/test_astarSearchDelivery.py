@@ -5,6 +5,7 @@ from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
 from src.search.AStarSearch import AStarSearch
+from src.search.AStarSearchMax import AStarSearchMax
 from src.search.GBFSSearch import GBFSSearch
 from src.utils.Arguments import Arguments
 
@@ -22,7 +23,7 @@ class TestAStarDelivery(TestCase):
         pass
 
     def test_solve(self):
-        solver = AStarSearch(self.gDomain, self.problem, self.args, maximize=True)
+        solver = AStarSearchMax(self.gDomain, self.problem, self.args, maximize=True)
         plan: NumericPlan = solver.solve()
 
         self.assertIsInstance(plan, NumericPlan)

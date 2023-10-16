@@ -4,17 +4,15 @@ from unittest import TestCase
 from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
-from src.search.AStarSearch import AStarSearch
 from src.search.AStarSearchMax import AStarSearchMax
-from src.search.GBFSSearch import GBFSSearch
 from src.utils.Arguments import Arguments
 
 
-class TestAStarCounters(TestCase):
+class TestAStarDroneMax(TestCase):
 
     def setUp(self) -> None:
-        domainFile = "../../files/ipc-2023/counters/domain.pddl"
-        problemFile = "../../files/ipc-2023/counters/instances/rnd_instance_40_3.pddl"
+        domainFile = "../../files/ipc-2023/drone/domain.pddl"
+        problemFile = "../../files/ipc-2023/drone/instances/problem_4_2_5.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)
@@ -23,7 +21,7 @@ class TestAStarCounters(TestCase):
         pass
 
     def test_solve(self):
-        solver = AStarSearchMax(self.gDomain, self.problem, self.args, maximize=True)
+        solver = AStarSearchMax(self.gDomain, self.problem, self.args)
         plan: NumericPlan = solver.solve()
 
         self.assertIsInstance(plan, NumericPlan)

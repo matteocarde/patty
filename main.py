@@ -4,6 +4,7 @@ from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
 from src.search.AStarSearch import AStarSearch
+from src.search.AStarSearchMax import AStarSearchMax
 from src.search.GBFSSearch import GBFSSearch
 from src.search.Search import Search
 from src.search.StaticSearch import StaticSearch
@@ -32,9 +33,11 @@ def main():
 
         solver: Search
         if args.search == "astar-nomax":
-            solver = AStarSearch(gDomain, problem, args, maximize=False, avoidP=args.avoidP, useSCCs=args.useSCCs)
-        elif args.search == "astar":
-            solver = AStarSearch(gDomain, problem, args, maximize=True, avoidP=args.avoidP, useSCCs=args.useSCCs)
+            solver = AStarSearch(gDomain, problem, args, maximize=False, useSCCs=args.useSCCs)
+        elif args.search == "astar" and not args.avoidP:
+            solver = AStarSearch(gDomain, problem, args, maximize=True, useSCCs=args.useSCCs)
+        elif args.search == "astar" and args.avoidP:
+            solver = AStarSearchMax(gDomain, problem, args, useSCCs=args.useSCCs)
         elif args.search == "step":
             solver = StepSearch(gDomain, problem, args)
         else:

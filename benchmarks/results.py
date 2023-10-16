@@ -31,6 +31,7 @@ SOLVERS = {
     "PATTY-ASTAR-MAX": "P_{A^*}^{max}",
     "PATTY-GBFS-MAX-NO-P": r"P_{\text{gbfs}}^{max+}",
     "PATTY-ASTAR-MAX-NO-P": "P_{A^*}^{max+}",
+    "PATTY-ASTAR-MAX-NO-P-SCCS": "P_{A^* - SCC}^{max+}",
 }
 
 DOMAINS = {
@@ -88,7 +89,7 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2023-10-15-SCC-v4"
+    exp = "2023-10-15-SCC-v5"
     file = f"benchmarks/results/{exp}.csv"
 
     aResults: [Result] = []
@@ -247,11 +248,12 @@ def main():
             'PATTY-ASTAR-MAX': "SMT",
             # 'PATTY-GBFS-MAX-NO-P': "SMT",
             'PATTY-ASTAR-MAX-NO-P': "SMT",
+            'PATTY-ASTAR-MAX-NO-P-SCCS': 'SMT',
             # 'PATTY-R',
             # 'RANTANPLAN': "SMT",
             # 'SpringRoll': "SMT",
             # "OMT": "SMT",
-            'ENHSP': "SEARCH",
+            # 'ENHSP': "SEARCH",
             # 'METRIC-FF': "SEARCH",
             # "NFD": "SEARCH"
         },
