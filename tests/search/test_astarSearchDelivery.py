@@ -13,7 +13,7 @@ class TestAStarDelivery(TestCase):
 
     def setUp(self) -> None:
         domainFile = "../../files/ipc-2023/delivery/domain.pddl"
-        problemFile = "../../files/ipc-2023/delivery/instances/prob08.pddl"
+        problemFile = "../../files/ipc-2023/delivery/instances/prob01.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)

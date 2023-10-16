@@ -22,7 +22,8 @@
 
 	(:action move
 		:parameters (?b - bot ?x - room ?y - room)
-		:precondition (and (at-bot ?b ?x)
+		:precondition (and 
+			(at-bot ?b ?x)
 			(door ?x ?y))
 		:effect (and (at-bot ?b ?y)
 			(not (at-bot ?b ?x))
@@ -32,7 +33,11 @@
 
 	(:action pick
 		:parameters (?i - item ?x - room ?a - arm ?b - bot)
-		:precondition (and (at ?i ?x) (at-bot ?b ?x) (free ?a) (mount ?a ?b)
+		:precondition (and
+			(at ?i ?x)
+			(at-bot ?b ?x)
+			(free ?a)
+			(mount ?a ?b)
 			(<= (+ (current_load ?b) (weight ?i)) (load_limit ?b)))
 		:effect (and (in-arm ?i ?a)
 			(not (at ?i ?x))

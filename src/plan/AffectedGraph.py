@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Dict, Set, List, Any
 
-from tarjan import tarjan
+import tarjan as scc
 
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
@@ -41,7 +41,7 @@ class AffectedGraphNode:
                 if eff.type == BinaryPredicateType.MODIFICATION:
                     self.eff["num"].add(eff.lhs.getAtom())
 
-        self.neighbours: [AffectedGraphNode] = list()
+        self.neighbours: [AffectedGraphNode] = set()
 
     def pruneForSubgraph(self, actions: Set[Action]) -> AffectedGraphNode:
         pruned = AffectedGraphNode(self.action)
@@ -63,19 +63,11 @@ class AffectedGraphNode:
     def __str__(self):
         return str(self.action)
 
-    def isAffectedBy(self, node: AffectedGraphNode) -> bool:
-
-        if self.pre["add"].intersection(node.eff["del"]):
-            return True
-        if self.pre["del"].intersection(node.eff["add"]):
-            return True
-        if self.pre["num"].intersection(node.eff["num"]):
-            return True
-
-        return False
-
     def addNeighbour(self, node: AffectedGraphNode):
-        self.neighbours.append(node)
+        if self not in node.neighbours:
+            self.neighbours.add(node)
+        else:
+            node.neighbours.remove(self)
 
 
 class AffectedGraph:
@@ -96,38 +88,35 @@ class AffectedGraph:
 
         keys = ["add", "del", "num"]
         bucketPre: Dict[str, Dict[Atom, Set[AffectedGraphNode]]] = dict((key, dict()) for key in keys)
-        bucketEff: Dict[str, Dict[Atom, Set[AffectedGraphNode]]] = dict((key, dict()) for key in keys)
 
         for node in graph.nodes:
             for key in keys:
                 for atom in node.pre[key]:
                     bucketPre[key][atom] = bucketPre[key].setdefault(atom, set())
                     bucketPre[key][atom].add(node)
-                for atom in node.eff[key]:
-                    bucketEff[key][atom] = bucketEff[key].setdefault(atom, set())
-                    bucketEff[key][atom].add(node)
 
-        called = 0
         for nodeA in graph.nodes:
             connectedNodes = set()
-            for p in nodeA.pre["add"]:
-                connectedNodes |= bucketEff["del"][p] if p in bucketEff["del"] else set()
-            for p in nodeA.pre["del"]:
-                connectedNodes |= bucketEff["add"][p] if p in bucketEff["add"] else set()
-            for p in nodeA.pre["num"]:
-                connectedNodes |= bucketEff["num"][p] if p in bucketEff["num"] else set()
+            for p in nodeA.eff["add"]:
+                connectedNodes |= bucketPre["del"][p] if p in bucketPre["del"] else set()
+            for p in nodeA.eff["del"]:
+                connectedNodes |= bucketPre["add"][p] if p in bucketPre["add"] else set()
+            for p in nodeA.eff["num"]:
+                connectedNodes |= bucketPre["num"][p] if p in bucketPre["num"] else set()
             for nodeB in connectedNodes:
-                nodeA.addNeighbour(nodeB)
+                if nodeA != nodeB:
+                    nodeA.addNeighbour(nodeB)
 
         return graph
 
-    def getOrderFromGraph(self) -> [Action]:
-
+    def getSCC(self):
         components = dict([(node, node.neighbours) for node in self.nodes])
-        dag: [[AffectedGraphNode]] = tarjan(components)
-        dag.reverse()
+        dag: [[AffectedGraphNode]] = scc.tarjan(components)
+        # dag.reverse()
+        return dag
 
-        return [n.action for group in dag for n in group]
+    def getOrderFromGraph(self) -> [Action]:
+        return [n.action for group in self.getSCC() for n in group]
 
     def toDot(self):
         s = ["digraph G {"]

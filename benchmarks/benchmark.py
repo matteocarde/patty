@@ -35,6 +35,8 @@ PLANNERS: Dict[str, Planner] = {
                                  avoidP=True),
     "PATTY-ASTAR-MAX-NO-P": Patty("PATTY-ASTAR-MAX-NO-P", "arpg", solver="z3", encoding="non-linear", search="astar",
                                   avoidP=True),
+    "PATTY-ASTAR-MAX-NO-P-SCCS": Patty("PATTY-ASTAR-MAX-NO-P-SCCS", "arpg", solver="z3", encoding="non-linear",
+                                       search="astar", avoidP=True, useSCCs=True),
     # "PATTY-EXPLICIT": Patty("PATTY-EXPLICIT", "arpg", solver="z3", encoding="non-linear", hasEffectAxioms=True),
     # "PATTY-CONCAT": Patty("PATTY-CONCAT", "arpg", solver="z3", encoding="non-linear", concatPatterns=True),
     # "PATTY-R": Patty("PATTY-R", "random", solver="z3", encoding="non-linear"),

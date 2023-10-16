@@ -60,7 +60,7 @@ class ARPG:
                 order.append(action)
         return order
 
-    def getActionsOrder(self) -> List[Action] or bool:
+    def getActionsOrder(self, useSCCs=False) -> List[Action] or bool:
 
         if self.goalNotReachable:
             return False
@@ -73,11 +73,18 @@ class ARPG:
                 if supporter.originatingAction not in usedActions:
                     partialOrder.add(supporter.originatingAction)
                 usedActions.add(supporter.originatingAction)
-            graphOrder = self.affectedGraph.getSubGraph(partialOrder).getOrderFromGraph()
-            order += graphOrder
+            if not useSCCs:
+                order += partialOrder
+            else:
+                subGraph = self.affectedGraph.getSubGraph(partialOrder)
+                graphOrder = subGraph.getOrderFromGraph()
+                order += graphOrder
         leftActions = set(self.actions) - usedActions
-        graphOrder = self.affectedGraph.getSubGraph(leftActions).getOrderFromGraph()
-        order += graphOrder
+        if not useSCCs:
+            order += leftActions
+        else:
+            graphOrder = self.affectedGraph.getSubGraph(leftActions).getOrderFromGraph()
+            order += graphOrder
         return order
 
     def getConstantAtoms(self) -> Dict[Atom, float]:

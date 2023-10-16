@@ -31,14 +31,10 @@ def main():
         ts.end("Grounding", console=console)
 
         solver: Search
-        if args.search == "gbfs-nomax":
-            solver = GBFSSearch(gDomain, problem, args, maximize=False, avoidP=args.avoidP)
-        elif args.search == "astar-nomax":
-            solver = AStarSearch(gDomain, problem, args, maximize=False, avoidP=args.avoidP)
-        elif args.search == "gbfs":
-            solver = GBFSSearch(gDomain, problem, args, maximize=True)
+        if args.search == "astar-nomax":
+            solver = AStarSearch(gDomain, problem, args, maximize=False, avoidP=args.avoidP, useSCCs=args.useSCCs)
         elif args.search == "astar":
-            solver = AStarSearch(gDomain, problem, args, maximize=True)
+            solver = AStarSearch(gDomain, problem, args, maximize=True, avoidP=args.avoidP, useSCCs=args.useSCCs)
         elif args.search == "step":
             solver = StepSearch(gDomain, problem, args)
         else:

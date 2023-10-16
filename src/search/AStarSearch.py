@@ -14,9 +14,11 @@ from src.utils.LogPrint import LogPrintLevel
 
 class AStarSearch(Search):
 
-    def __init__(self, domain: GroundedDomain, problem: Problem, args: Arguments, maximize=False, avoidP=False):
+    def __init__(self, domain: GroundedDomain, problem: Problem, args: Arguments, maximize=False, avoidP=False,
+                 useSCCs=False):
         self.maximize = maximize
         self.avoidP = avoidP
+        self.useSCCs = useSCCs
         super().__init__(domain, problem, args)
 
     def solve(self) -> NumericPlan:
@@ -29,7 +31,7 @@ class AStarSearch(Search):
         sprime: State = copy.deepcopy(s)
 
         patG: Pattern = Pattern.fromOrder([])
-        patH: Pattern = Pattern.fromState(s, self.problem.goal, self.domain)
+        patH: Pattern = Pattern.fromState(s, self.problem.goal, self.domain, useSCCs=self.useSCCs)
         patHPrime: Pattern = copy.deepcopy(patH)
         patF: Pattern = copy.deepcopy(patG + patH)
 
