@@ -1,0 +1,47 @@
+
+           \documentclass[11pt,landscape]{article}
+           \usepackage{graphicx}
+           \usepackage{lscape}
+           \usepackage{multirow}
+           \usepackage[a4paper,margin=1in,landscape]{geometry}
+
+           \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||cccccccc||cccccccc||ccccccc||}
+\hline
+ & \multicolumn{8}{c||}{Coverage (\%)}&\multicolumn{8}{c||}{Time (s)}&\multicolumn{7}{c||}{Bound (Common)}\\
+Domain & $P$&$P_{cat}$&$P_{A^*}$&$P_{A^*}^{max}$&$P_{A^* - SCC}^{max}$&$P_{A^*}^{max+}$&$P_{A^* - SCC}^{max+}$&$\mathrm{ENHSP}$&$P$&$P_{cat}$&$P_{A^*}$&$P_{A^*}^{max}$&$P_{A^* - SCC}^{max}$&$P_{A^*}^{max+}$&$P_{A^* - SCC}^{max+}$&$\mathrm{ENHSP}$&$P$&$P_{cat}$&$P_{A^*}$&$P_{A^*}^{max}$&$P_{A^* - SCC}^{max}$&$P_{A^*}^{max+}$&$P_{A^* - SCC}^{max+}$\\
+\hline
+\textit{Highly Numeric}&\textbf{7}&\textbf{6}&\textbf{7}&\textbf{8}&\textbf{7}&\textbf{6}&\textbf{6}&\textbf{3}&\textbf{2}&\textbf{2}&\textbf{0}&\textbf{1}&\textbf{1}&\textbf{0}&\textbf{1}&\textbf{3}&\textbf{8}&\textbf{8}&\textbf{7}&\textbf{8}&\textbf{7}&\textbf{8}&\textbf{7}\\\hline
+\textsc{BlockGrouping} (S)&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&75.0&1.47&\textbf{1.46}&4.75&2.05&1.69&1.68&1.68&11.25&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}\\
+\textsc{Counters} (S)&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&95.0&\textbf{0.82}&0.83&4.13&0.92&0.92&0.89&0.91&4.65&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}\\
+\textsc{Counters} (L)&\textbf{90.0}&50.0&40.0&30.0&50.0&30.0&50.0&35.0&\textbf{7.73}&18.46&22.25&21.44&16.20&23.03&17.80&20.07&2.00&1.67&1.67&\textbf{1.33}&2.00&\textbf{1.33}&2.00\\
+\textsc{Drone} (S)&15.0&15.0&55.0&65.0&65.0&30.0&50.0&\textbf{80.0}&25.68&25.68&20.76&17.28&17.83&22.62&19.18&\textbf{8.12}&\textbf{4.00}&4.67&6.67&4.67&6.67&5.00&4.33\\
+\textsc{PlantWatering} (S)&25.0&25.0&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&90.0&90.0&95.0&24.96&25.30&14.32&11.39&10.01&15.37&14.29&\textbf{8.49}&8.80&\textbf{8.60}&9.80&9.60&9.60&10.60&9.80\\
+\textsc{Farmland} (S)&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&0.86&0.83&1.19&0.80&0.78&0.79&0.78&\textbf{0.65}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}\\
+\textsc{Farmland} (L)&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&50.0&1.72&1.69&5.03&\textbf{1.65}&1.93&2.08&1.81&17.37&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}\\
+\textsc{HydroPower} (S)&90.0&\textbf{100.0}&95.0&\textbf{100.0}&90.0&\textbf{100.0}&95.0&10.0&13.11&\textbf{7.49}&10.76&15.19&16.58&14.68&16.05&27.37&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}\\
+\textsc{Sailing} (S)&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&0.98&1.03&1.33&0.83&0.81&1.32&\textbf{0.80}&1.49&\textbf{3.30}&\textbf{3.30}&\textbf{3.30}&\textbf{3.30}&\textbf{3.30}&\textbf{3.30}&\textbf{3.30}\\
+\textsc{Sailing} (L)&\textbf{100.0}&90.0&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&95.0&\textbf{100.0}&20.0&0.84&3.75&1.01&0.84&\textbf{0.76}&2.65&0.77&25.15&\textbf{1.28}&\textbf{1.28}&\textbf{1.28}&\textbf{1.28}&\textbf{1.28}&\textbf{1.28}&\textbf{1.28}
+\\\hline
+\textit{Lowly Numeric}&\textbf{2}&\textbf{1}&\textbf{2}&\textbf{0}&\textbf{1}&\textbf{1}&\textbf{0}&\textbf{5}&\textbf{1}&\textbf{1}&\textbf{1}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{1}&\textbf{5}&\textbf{4}&\textbf{2}&\textbf{2}&\textbf{2}&\textbf{3}&\textbf{2}&\textbf{4}\\\hline
+\textsc{Delivery} (S)&15.0&20.0&25.0&35.0&40.0&40.0&40.0&\textbf{55.0}&25.84&25.03&24.74&22.16&20.77&21.39&21.21&\textbf{15.68}&2.00&2.33&2.33&2.67&\textbf{1.67}&2.67&\textbf{1.67}\\
+\textsc{Expedition} (S)&10.0&10.0&\textbf{15.0}&10.0&10.0&10.0&10.0&10.0&27.21&27.21&\textbf{26.76}&27.47&27.48&27.44&27.36&27.31&\textbf{4.50}&\textbf{4.50}&8.00&8.50&6.00&7.50&5.50\\
+\textsc{MPrime} (S)&55.0&50.0&50.0&45.0&50.0&50.0&50.0&\textbf{80.0}&15.92&17.93&18.01&18.14&16.92&18.20&16.91&\textbf{8.86}&1.11&1.44&1.44&\textbf{1.00}&1.22&1.78&1.22\\
+\textsc{PathwaysMetric} (S)&5.0&5.0&5.0&5.0&5.0&5.0&5.0&\textbf{50.0}&29.03&29.02&29.02&29.01&28.99&29.02&29.03&\textbf{19.51}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}\\
+\textsc{Rover} (S)&\textbf{65.0}&55.0&50.0&45.0&50.0&40.0&50.0&30.0&\textbf{16.74}&17.79&19.73&18.50&18.21&19.87&18.75&22.17&\textbf{1.88}&2.12&2.25&2.00&2.25&\textbf{1.88}&2.25\\
+\textsc{Satellite} (S)&-&-&10.0&30.0&\textbf{35.0}&15.0&30.0&15.0&-&-&28.10&25.52&25.12&26.59&\textbf{25.05}&26.77&-&-&\textbf{4.50}&6.00&6.50&6.00&\textbf{4.50}\\
+\textsc{Sugar} (S)&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&95.0&95.0&\textbf{100.0}&95.0&85.0&5.12&\textbf{4.43}&6.52&6.93&7.17&6.01&6.77&6.63&\textbf{2.53}&2.58&3.84&3.42&3.61&3.53&3.06\\
+\textsc{TPP} (L)&10.0&10.0&10.0&10.0&10.0&10.0&5.0&\textbf{15.0}&27.17&27.61&27.20&27.74&27.12&27.78&28.55&\textbf{25.81}&2.50&2.50&3.50&3.50&2.50&3.50&\textbf{2.00}\\
+\textsc{ZenoTravel} (S)&55.0&55.0&55.0&55.0&55.0&55.0&55.0&\textbf{85.0}&15.54&15.29&16.48&16.62&15.63&16.35&15.14&\textbf{9.05}&1.82&2.00&2.27&2.27&\textbf{1.45}&2.45&1.55
+\\\hline
+
+        \end{tabular}}
+        \caption{Comparative analysis between the search-based solver $\textsc{ENHSP}$ and  $\textsc{Patty}$ run with the standard algorithm ($P$),  $\textsc{SolveConcat}$ ($P_{cat}$), \textsc{SolveGBFS} ($P_\text{gbfs}$), \textsc{SolveA}$^*$ ($P_{A^*}$), \textsc{SolveGBFSMax} ($P_\text{gbfs}^{max}$), \textsc{SolveA*Max} ($P_{A^*}^{max}$). ''Best numbers'' are in bold.  The numbers in the Highly and Lowly Numeric rows are the number of bolds in the subcolumn.}
+        \label{tab:experiments}
+        \end{table*}
+        
+\end{document}
