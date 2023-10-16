@@ -117,7 +117,7 @@ class BinaryPredicate(Predicate):
         if not self.__functions:
             self.__functions = self.lhs.getFunctions() | self.rhs.getFunctions()
         return self.__functions
-    
+
     def getLiterals(self) -> Set[Predicate]:
         return {self}
 
@@ -184,6 +184,11 @@ class BinaryPredicate(Predicate):
         else:
             result = Utilities.compare(x.operator, x.lhs.value, x.rhs.value)
             return result
+
+    def canHappenLifted(self, sub, problem, isPredicateStatic: Dict[str, bool]) -> bool:
+        # if all([not isPredicateStatic[f.name] for f in self.getFunctions()]):
+        #     return False
+        return True
 
     def toConstant(self) -> Constant:
         if self.getFunctions():

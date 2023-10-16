@@ -139,10 +139,17 @@ class Operation:
 
         return combinations
 
-    def getGroundedOperations(self, problem):
+    def getGroundedOperations(self, problem, isPredicateStatic: Dict[str, bool]):
         combinations: List[Dict[str, str]] = self.getCombinations(problem)
+
+        validCombinations: List[Dict[str, str]] = []
+
+        for sub in combinations:
+            if self.preconditions.canHappenLifted(sub, problem, isPredicateStatic):
+                validCombinations.append(sub)
+
         gOperations = []
-        for subs in combinations:
+        for subs in validCombinations:
             name = self.__getGroundedName(subs)
             preconditions = self.preconditions.ground(subs)
             effects = self.effects.ground(subs)

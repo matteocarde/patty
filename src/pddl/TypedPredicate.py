@@ -14,8 +14,15 @@ class TypedPredicate(Predicate):
     def __init__(self):
         super().__init__()
 
+    def __str__(self):
+        paramString = ' '.join(f"{x} - {t}" for (x, t) in self.parameters)
+        return f"{self.name} {paramString}"
+
+    def __repr__(self):
+        return str(self)
+
     @classmethod
-    def fromNode(cls, node: pddlParser.PositiveLiteralContext, types: Dict[str, Type]) -> TypedPredicate:
+    def fromNode(cls, node: pddlParser.TypedPositiveLiteralContext, types: Dict[str, Type]) -> TypedPredicate:
         typedPredicate = cls()
 
         atomNode: pddlParser.AtomContext = node.getChild(1)
@@ -23,11 +30,14 @@ class TypedPredicate(Predicate):
         typedPredicate.parameters = []
 
         for parameterNode in atomNode.children[1:]:
-            typedAtom = parameterNode.getChild(0)
-            if not isinstance(typedAtom, pddlParser.TypedAtomParameterContext):
-                raise f"Typed predicate {typedPredicate.name} is not types"
-            paramName = typedAtom.getChild(0).getText()
-            paramType = typedAtom.getChild(2).getText()
-            typedPredicate.parameters.append((paramName, types[paramType]))
+            paramNames = []
+            paramType = None
+            for c in parameterNode.children:
+                if isinstance(c, pddlParser.LiftedAtomParameterContext):
+                    paramNames.append(c.getText())
+                if isinstance(c, pddlParser.TypeNameContext):
+                    paramType = c.getText()
+            for name in paramNames:
+                typedPredicate.parameters.append((name, types[paramType]))
 
         return typedPredicate

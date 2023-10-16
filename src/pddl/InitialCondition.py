@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Dict
+from typing import List, Dict, Set
 
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
@@ -12,11 +12,11 @@ from src.pddl.grammar.pddlParser import pddlParser
 
 
 class InitialCondition:
-    assignments: List[Predicate]
+    assignments: Set[Predicate]
     numericAssignments: Dict[Atom, float]
 
     def __init__(self):
-        self.assignments = []
+        self.assignments = set()
         self.numericAssignments = dict()
 
     def __str__(self):
@@ -31,14 +31,14 @@ class InitialCondition:
     @classmethod
     def fromNode(cls, node: pddlParser.InitContext) -> InitialCondition:
         ic = cls()
-        ic.assignments = []
+        ic.assignments = set()
         for child in node.children:
             if isinstance(child, pddlParser.PositiveLiteralContext):
                 lit = Literal.fromNode(child)
-                ic.assignments.append(lit)
+                ic.assignments.add(lit)
             if isinstance(child, pddlParser.AssignmentContext):
                 assignment = BinaryPredicate.fromNode(child)
-                ic.assignments.append(assignment)
+                ic.assignments.add(assignment)
                 if not isinstance(assignment.rhs, Constant):
                     raise Exception(
                         "At the moment, this tool only support initial conditions with numeric constant assignments")

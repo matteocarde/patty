@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import copy
-
 from itertools import chain
 from typing import Dict, Set
 
@@ -91,8 +90,16 @@ class Formula:
         return x
 
     def canHappen(self, subs: Dict[Atom, float], default=None) -> bool:
-        canHappen = [c.canHappen(subs, default) for c in self.conditions]
-        return all(canHappen)
+        for c in self.conditions:
+            if not c.canHappen(subs, default):
+                return False
+        return True
+
+    def canHappenLifted(self, sub, problem, isPredicateStatic: Dict[str, bool]):
+        for c in self.conditions:
+            if not c.canHappenLifted(sub, problem, isPredicateStatic):
+                return False
+        return True
 
     def replace(self, atom: Atom, w: BinaryPredicate) -> Formula:
         f = Formula()

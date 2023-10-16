@@ -39,9 +39,15 @@ class Domain:
 
     def ground(self, problem: Problem, avoidSimplification=False) -> GroundedDomain:
 
-        gActions: Set[Action] = set([g for action in self.actions for g in action.ground(problem)])
-        gEvents: Set[Event] = set([g for event in self.events for g in event.ground(problem)])
-        gProcess: Set[Process] = set([g for process in self.processes for g in process.ground(problem)])
+        isPredicateStatic: Dict[str, bool] = dict([(p.name, True) for p in self.predicates | self.functions])
+        for action in self.actions | self.events | self.processes:
+            for eff in action.effects.getFunctions() | action.effects.getPredicates():
+                isPredicateStatic[eff.name] = False
+
+        gActions: Set[Action] = set([g for action in self.actions for g in action.ground(problem, isPredicateStatic)])
+        gEvents: Set[Event] = set([g for event in self.events for g in event.ground(problem, isPredicateStatic)])
+        gProcess: Set[Process] = set(
+            [g for process in self.processes for g in process.ground(problem, isPredicateStatic)])
 
         gDomain = GroundedDomain(self.name, gActions, gEvents, gProcess)
 
@@ -153,13 +159,13 @@ class Domain:
 
     def __setPredicates(self, node: pddlParser.PredicatesContext):
         for child in node.children:
-            if not isinstance(child, pddlParser.PositiveLiteralContext):
+            if not isinstance(child, pddlParser.TypedPositiveLiteralContext):
                 continue
             self.predicates.add(TypedPredicate.fromNode(child, self.types))
 
     def __setFunctions(self, node: pddlParser.FunctionsContext):
         for child in node.children:
-            if not isinstance(child, pddlParser.PositiveLiteralContext):
+            if not isinstance(child, pddlParser.TypedPositiveLiteralContext):
                 continue
             self.functions.add(TypedPredicate.fromNode(child, self.types))
 

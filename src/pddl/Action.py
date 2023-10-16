@@ -46,9 +46,9 @@ class Action(Operation):
     def type(self):
         return OperationType.ACTION
 
-    def ground(self, problem) -> List[Action]:
+    def ground(self, problem, isPredicateStatic: Dict[str, bool]) -> List[Action]:
         groundOps: List = []
-        toGroundOps = self.getGroundedOperations(problem)
+        toGroundOps = self.getGroundedOperations(problem, isPredicateStatic)
         for op in toGroundOps:
             name = op.name
             preconditions = op.preconditions

@@ -125,6 +125,12 @@ class Literal(Predicate):
     def canHappen(self, subs: Dict[Atom, float], default=None) -> bool:
         return True
 
+    def canHappenLifted(self, sub, problem, isPredicateStatic: Dict[str, bool]) -> bool:
+        if not isPredicateStatic[self.atom.name]:
+            return True
+        grounded = self.ground(sub)
+        return grounded in problem.init.assignments
+
     def getLinearIncrement(self) -> float:
         return 0
 
