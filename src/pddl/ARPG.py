@@ -62,8 +62,8 @@ class ARPG:
 
     def getActionsOrder(self, useSCCs=False) -> List[Action] or bool:
 
-        if self.goalNotReachable:
-            return False
+        # if self.goalNotReachable:
+        #     return False
 
         order: List[Action] = list()
         usedActions: Set[Action] = set(order)
