@@ -91,8 +91,8 @@ class Pattern:
         return Pattern.fromOrder(order)
 
     @classmethod
-    def fromARPG(cls, gDomain: GroundedDomain) -> Pattern:
-        order = gDomain.getARPG().getActionsOrder()
+    def fromARPG(cls, gDomain: GroundedDomain, useSCCs=False) -> Pattern:
+        order = gDomain.getARPG().getActionsOrder(useSCCs)
         return Pattern.fromOrder(order)
 
     @classmethod

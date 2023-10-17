@@ -140,6 +140,9 @@ class Literal(Predicate):
         if not problem.isPredicateStatic[self.atom.name]:
             return True
 
+        if not set(params).intersection(set(self.atom.attributes)):
+            return True
+
         if not self.atom.name in problem.assignmentsTree:
             return False
 

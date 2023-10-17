@@ -11,12 +11,13 @@ from src.utils.LogPrint import LogPrintLevel
 
 class StepSearch(Search):
 
-    def __init__(self, domain: GroundedDomain, problem: Problem, args: Arguments):
+    def __init__(self, domain: GroundedDomain, problem: Problem, args: Arguments, useSCCs=False):
+        self.useSCCs = useSCCs
         super().__init__(domain, problem, args)
 
     def getPattern(self) -> Pattern:
         if self.args.pattern == "arpg":
-            return Pattern.fromARPG(self.domain)
+            return Pattern.fromARPG(self.domain, useSCCs=self.useSCCs)
         if self.args.pattern == "random":
             return Pattern.fromRandom(self.domain)
 

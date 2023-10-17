@@ -39,9 +39,9 @@ def main():
         elif args.search == "astar" and args.avoidP:
             solver = AStarSearchMax(gDomain, problem, args, useSCCs=args.useSCCs)
         elif args.search == "step":
-            solver = StepSearch(gDomain, problem, args)
+            solver = StepSearch(gDomain, problem, args, useSCCs=args.useSCCs)
         else:
-            solver = StaticSearch(gDomain, problem, args)
+            solver = StaticSearch(gDomain, problem, args, useSCCs=args.useSCCs)
         plan: NumericPlan = solver.solve()
 
         console.log(plan.toValString(), LogPrintLevel.PLAN)

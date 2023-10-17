@@ -19,8 +19,10 @@ my_config = Config(
 
 PLANNERS: Dict[str, Planner] = {
     "PATTY": Patty("PATTY", search="step"),
+    "PATTY-SCCS": Patty("PATTY-SCC", search="step", useSCCs=True),
     "PATTY-STATIC": Patty("PATTY-STATIC", search="static"),
     "PATTY-ASTAR": Patty("PATTY-ASTAR", search="astar-nomax"),
+    "PATTY-ASTAR-SCC": Patty("PATTY-ASTAR-SCC", search="astar-nomax", useSCCs=True),
     "PATTY-ASTAR-MAX": Patty("PATTY-ASTAR-MAX", search="astar"),
     "PATTY-ASTAR-MAX-SCCS": Patty("PATTY-ASTAR-MAX-SCCS", search="astar", useSCCs=True),
     "PATTY-ASTAR-MAX-NO-P": Patty("PATTY-ASTAR-MAX-NO-P", search="astar", avoidP=True),
