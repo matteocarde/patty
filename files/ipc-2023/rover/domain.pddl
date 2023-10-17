@@ -95,7 +95,8 @@
 
 	(:action take_image
 		:parameters (?r - rover ?p - waypoint ?o - objective ?i - camera ?m - mode)
-		:precondition (and (calibrated ?i ?r)
+		:precondition (and
+			(calibrated ?i ?r)
 			(on_board ?i ?r)
 			(equipped_for_imaging ?r)
 			(supports ?i ?m)
@@ -111,12 +112,18 @@
 
 	(:action communicate_soil_data
 		:parameters (?r - rover ?l - lander ?p - waypoint ?x - waypoint ?y - waypoint)
-		:precondition (and (in ?r ?x)
-			(at_lander ?l ?y)(have_soil_analysis ?r ?p)
-			(visible ?x ?y)(available ?r)(channel_free ?l)
+		:precondition (and 
+			(in ?r ?x)
+			(at_lander ?l ?y)
+			(have_soil_analysis ?r ?p)
+			(visible ?x ?y)
+			(available ?r)
+			(channel_free ?l)
 			(>= (energy ?r) 4)
 		)
-		:effect (and (communicated_soil_data ?p)(available ?r)
+		:effect (and 
+			(communicated_soil_data ?p)
+			(available ?r)
 			(decrease (energy ?r) 4)
 		)
 	)

@@ -89,7 +89,7 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2023-10-16-GROUNDING-v2"
+    exp = "2023-10-16-GROUNDING-v4"
     file = f"benchmarks/results/{exp}.csv"
 
     aResults: [Result] = []
@@ -256,7 +256,7 @@ def main():
             # 'RANTANPLAN': "SMT",
             # 'SpringRoll': "SMT",
             # "OMT": "SMT",
-            # 'ENHSP': "SEARCH",
+            'ENHSP': "SEARCH",
             # 'METRIC-FF': "SEARCH",
             # "NFD": "SEARCH"
         },
