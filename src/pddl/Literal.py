@@ -125,10 +125,10 @@ class Literal(Predicate):
     def canHappen(self, subs: Dict[Atom, float], default=None) -> bool:
         return True
 
-    def canHappenLifted(self, sub, problem, isPredicateStatic: Dict[str, bool]) -> bool:
+    def canHappenLifted(self, sub: Dict[str, str], problem, isPredicateStatic: Dict[str, bool]) -> bool:
         if not problem.isPredicateStatic[self.atom.name]:
             return True
-        subStr = ",".join([k for k in sub])
+        subStr = ",".join([sub[attr] for attr in self.atom.attributes])
         atomStr = f"{self.atom.name}({subStr})"
         if self.sign == "+":
             return atomStr in problem.canHappenValue

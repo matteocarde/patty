@@ -95,7 +95,7 @@ class Formula:
                 return False
         return True
 
-    def canHappenLifted(self, sub, problem, isPredicateStatic: Dict[str, bool]):
+    def canHappenLifted(self, sub: Dict[str, str], problem, isPredicateStatic: Dict[str, bool]):
         for c in self.conditions:
             if not c.canHappenLifted(sub, problem, isPredicateStatic):
                 return False

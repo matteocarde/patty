@@ -105,15 +105,4 @@ class Problem:
                 atomStr = f"{init.getAtom().name}({subStr})"
                 self.canHappenValue.add(atomStr)
 
-        # for predicate in domain.predicates:
-        #     if not self.isPredicateStatic[predicate.name]:
-        #         continue
-        #
-        #     # subs = predicate.getCombinations(self)
-        #     # for sub in subs:
-        #     #     lit = predicate.ground(sub)
-        #     #     subStr = ",".join([k for k in sub.values()])
-        #     #     self.canHappenValue[(predicate.name, subStr)] = lit in self.init.assignments
-        #     # pass
-
         pass
