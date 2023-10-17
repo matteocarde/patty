@@ -28,7 +28,7 @@ def main():
         problem: Problem = Problem.fromFile(args.problem)
 
         ts.start("Grounding", console=console)
-        gDomain: GroundedDomain = domain.ground(problem)
+        gDomain: GroundedDomain = domain.ground(problem, console=console)
         ts.end("Grounding", console=console)
 
         solver: Search

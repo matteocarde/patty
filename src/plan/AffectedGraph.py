@@ -68,6 +68,7 @@ class AffectedGraphNode:
             self.neighbours.add(node)
         else:
             node.neighbours.remove(self)
+        pass
 
 
 class AffectedGraph:
@@ -101,8 +102,8 @@ class AffectedGraph:
                 connectedNodes |= bucketPre["del"][p] if p in bucketPre["del"] else set()
             for p in nodeA.eff["del"]:
                 connectedNodes |= bucketPre["add"][p] if p in bucketPre["add"] else set()
-            for p in nodeA.eff["num"]:
-                connectedNodes |= bucketPre["num"][p] if p in bucketPre["num"] else set()
+            # for p in nodeA.eff["num"]:
+            #     connectedNodes |= bucketPre["num"][p] if p in bucketPre["num"] else set()
             for nodeB in connectedNodes:
                 if nodeA != nodeB:
                     nodeA.addNeighbour(nodeB)

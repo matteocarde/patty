@@ -13,6 +13,7 @@ from src.pddl.Type import Type
 from src.pddl.TypedPredicate import TypedPredicate
 from src.pddl.Utilities import Utilities
 from src.pddl.grammar.pddlParser import pddlParser
+from src.utils.LogPrint import LogPrint, LogPrintLevel
 
 
 class Domain:
@@ -38,7 +39,7 @@ class Domain:
         self.isPredicateStatic: Dict[str, bool] = dict()
         pass
 
-    def ground(self, problem: Problem, avoidSimplification=False) -> GroundedDomain:
+    def ground(self, problem: Problem, avoidSimplification=False, console: LogPrint = None) -> GroundedDomain:
 
         problem.computeWhatCanHappen(self)
 
@@ -49,6 +50,10 @@ class Domain:
             [g for process in self.processes for g in process.ground(problem, self.isPredicateStatic)])
 
         gDomain = GroundedDomain(self.name, gActions, gEvents, gProcess)
+
+        if console:
+            console.log("Static Grounding Stats:", LogPrintLevel.STATS)
+            console.log(gDomain.getStats(), LogPrintLevel.STATS)
 
         if avoidSimplification:
             return gDomain
@@ -88,6 +93,11 @@ class Domain:
         from src.plan.AffectedGraph import AffectedGraph
         gDomain.affectedGraph = AffectedGraph.fromActions(gDomain.actions)
         gDomain.arpg = ARPG(gDomain, initialState, problem.goal)
+
+        if console:
+            console.log("Dynamic Grounding Stats:", LogPrintLevel.STATS)
+            console.log(gDomain.getStats(), LogPrintLevel.STATS)
+
         return gDomain
 
     @classmethod
@@ -242,3 +252,11 @@ class GroundedDomain(Domain):
 
     def getARPG(self):
         return self.arpg
+
+    def getStats(self) -> str:
+        stats = []
+        stats.append(f"|V_b|={len(self.predicates)}")
+        stats.append(f"|V_n|={len(self.functions)}")
+        stats.append(f"|A|={len(self.actions)}")
+        stats.append(f"|Asgn(A)|={len(self.assList)}")
+        return "\n".join(stats)

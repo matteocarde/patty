@@ -1,0 +1,2 @@
+DRONE: Lento se pattern_h viene concatenato
+DELIVERY: Lento se pattern_h viene concatenato

@@ -74,14 +74,14 @@ class ARPG:
                     partialOrder.add(supporter.originatingAction)
                 usedActions.add(supporter.originatingAction)
             if not useSCCs:
-                order += partialOrder
+                order += sorted(partialOrder, key=lambda a: a.name)
             else:
                 subGraph = self.affectedGraph.getSubGraph(partialOrder)
                 graphOrder = subGraph.getOrderFromGraph()
                 order += graphOrder
         leftActions = set(self.actions) - usedActions
         if not useSCCs:
-            order += leftActions
+            order += sorted(leftActions, key=lambda a: a.name)
         else:
             graphOrder = self.affectedGraph.getSubGraph(leftActions).getOrderFromGraph()
             order += graphOrder

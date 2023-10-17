@@ -52,6 +52,9 @@ class StaticSearch(Search):
             )
             self.ts.end(f"Conversion to SMT at bound {bound}", console=self.console)
 
+            self.console.log(f"Bound {bound} - Vars = {pddl2smt.getNVars()}", LogPrintLevel.STATS)
+            self.console.log(f"Bound {bound} - Rules = {pddl2smt.getNRules()}", LogPrintLevel.STATS)
+            self.console.log(f"Calls to Solver: {callsToSolver}", LogPrintLevel.STATS)
             self.ts.start(f"Solving Bound {bound}", console=self.console)
             solver: SMTSolver = SMTSolver(pddl2smt)
 
@@ -61,9 +64,6 @@ class StaticSearch(Search):
             solver.exit()
             self.ts.end(f"Solving Bound {bound}", console=self.console)
 
-            self.console.log(f"Bound {bound} - Vars = {pddl2smt.getNVars()}", LogPrintLevel.STATS)
-            self.console.log(f"Bound {bound} - Rules = {pddl2smt.getNRules()}", LogPrintLevel.STATS)
-            self.console.log(f"Calls to Solver: {callsToSolver}", LogPrintLevel.STATS)
 
             if self.args.saveSMT:
                 self.saveSMT(bound, pddl2smt)

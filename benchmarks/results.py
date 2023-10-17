@@ -24,12 +24,14 @@ SOLVERS = {
     # 'SMTPLAN+': "\mathrm{SMTP}^+",
     # 'OMT': "\mathrm{OMT}",
     "PATTY": "P",
+    "PATTY-SCC": "P_{SCC}",
     "PATTY-STATIC": "P_{cat}",
     "PATTY-ASTAR": "P_{A^*}",
+    "PATTY-ASTAR-SCC": "P_{A^*, SCC}",
     "PATTY-ASTAR-MAX": "P_{A^*}^{max}",
-    "PATTY-ASTAR-MAX-SCCS": "P_{A^* - SCC}^{max}",
+    "PATTY-ASTAR-MAX-SCCS": "P_{A^*, SCC}^{max}",
     "PATTY-ASTAR-MAX-NO-P": "P_{A^*}^{max+}",
-    "PATTY-ASTAR-MAX-NO-P-SCCS": "P_{A^* - SCC}^{max+}",
+    "PATTY-ASTAR-MAX-NO-P-SCCS": "P_{A^*, SCC}^{max+}",
 }
 
 DOMAINS = {
@@ -87,7 +89,7 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2023-10-16-GROUNDING-v1"
+    exp = "2023-10-16-GROUNDING-v2"
     file = f"benchmarks/results/{exp}.csv"
 
     aResults: [Result] = []
@@ -239,20 +241,22 @@ def main():
         },
         "search": {
             'PATTY': "SMT",
+            'PATTY-SCC': "SMT",
             'PATTY-STATIC': "SMT",
             # 'PATTY-GBFS': "SMT",
-            'PATTY-ASTAR': "SMT",
+            # 'PATTY-ASTAR': "SMT",
+            # 'PATTY-ASTAR-SCC': "SMT",
             # 'PATTY-GBFS-MAX': "SMT",
             'PATTY-ASTAR-MAX': "SMT",
             # 'PATTY-GBFS-MAX-NO-P': "SMT",
-            # "PATTY-ASTAR-MAX-SCCS": "SMT",
+            "PATTY-ASTAR-MAX-SCCS": "SMT",
             # 'PATTY-ASTAR-MAX-NO-P': "SMT",
             # 'PATTY-ASTAR-MAX-NO-P-SCCS': 'SMT',
             # 'PATTY-R',
             # 'RANTANPLAN': "SMT",
             # 'SpringRoll': "SMT",
             # "OMT": "SMT",
-            'ENHSP': "SEARCH",
+            # 'ENHSP': "SEARCH",
             # 'METRIC-FF': "SEARCH",
             # "NFD": "SEARCH"
         },
