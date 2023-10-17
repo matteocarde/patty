@@ -1,17 +1,17 @@
 from __future__ import annotations
+
 from typing import Dict, List, Set
 
+from src.pddl.Action import Action
 from src.pddl.Atom import Atom
+from src.pddl.Event import Event
 from src.pddl.Operation import Operation
 from src.pddl.Problem import Problem
-from src.pddl.State import State
-from src.pddl.Utilities import Utilities
-from src.pddl.Action import Action
-from src.pddl.Event import Event
 from src.pddl.Process import Process
+from src.pddl.State import State
 from src.pddl.Type import Type
 from src.pddl.TypedPredicate import TypedPredicate
-
+from src.pddl.Utilities import Utilities
 from src.pddl.grammar.pddlParser import pddlParser
 
 
@@ -35,19 +35,18 @@ class Domain:
         self.events = set()
         self.requirements = list()
         self.constants = set()
+        self.isPredicateStatic: Dict[str, bool] = dict()
         pass
 
     def ground(self, problem: Problem, avoidSimplification=False) -> GroundedDomain:
 
-        isPredicateStatic: Dict[str, bool] = dict([(p.name, True) for p in self.predicates | self.functions])
-        for action in self.actions | self.events | self.processes:
-            for eff in action.effects.getFunctions() | action.effects.getPredicates():
-                isPredicateStatic[eff.name] = False
+        problem.computeWhatCanHappen(self)
 
-        gActions: Set[Action] = set([g for action in self.actions for g in action.ground(problem, isPredicateStatic)])
-        gEvents: Set[Event] = set([g for event in self.events for g in event.ground(problem, isPredicateStatic)])
+        gActions: Set[Action] = set(
+            [g for action in self.actions for g in action.ground(problem, self.isPredicateStatic)])
+        gEvents: Set[Event] = set([g for event in self.events for g in event.ground(problem, self.isPredicateStatic)])
         gProcess: Set[Process] = set(
-            [g for process in self.processes for g in process.ground(problem, isPredicateStatic)])
+            [g for process in self.processes for g in process.ground(problem, self.isPredicateStatic)])
 
         gDomain = GroundedDomain(self.name, gActions, gEvents, gProcess)
 
@@ -114,6 +113,11 @@ class Domain:
                 domain.events.add(Event.fromNode(child, domain.types))
             elif isinstance(child, pddlParser.ProcessContext):
                 domain.processes.add(Process.fromNode(child, domain.types))
+
+        domain.isPredicateStatic: Dict[str, bool] = dict([(p.name, True) for p in domain.predicates | domain.functions])
+        for action in domain.actions | domain.events | domain.processes:
+            for eff in action.effects.getFunctions() | action.effects.getPredicates():
+                domain.isPredicateStatic[eff.name] = False
 
         return domain
 

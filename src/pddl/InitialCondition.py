@@ -13,6 +13,7 @@ from src.pddl.grammar.pddlParser import pddlParser
 
 class InitialCondition:
     assignments: Set[Predicate]
+    assignmentsByPropertyTree: Dict[str, Dict]
     numericAssignments: Dict[Atom, float]
 
     def __init__(self):

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 
-from typing import Dict
+from typing import Dict, Tuple
 
 from sympy import Symbol, Expr
 
@@ -44,6 +44,15 @@ class Atom:
 
         return atom
 
+    @classmethod
+    def fromProperties(cls, name: str, attributes: list[str]):
+        atom = cls()
+        atom.name = name
+        atom.attributes = attributes
+        atom.__setProperties()
+
+        return atom
+
     def __setProperties(self):
         parts = [self.name] + [a for a in self.attributes]
         self.__string = " ".join(parts)
@@ -54,10 +63,10 @@ class Atom:
         self.__functionName = f"{name}{parenthesis}"
         self.__alphaFunctionName = f"\\alpha_{{{name + parenthesis}}}"
 
-    def ground(self, subs: Dict[str, str]) -> Atom:
+    def ground(self, sub: Dict[str, str]) -> Atom:
         atom = Atom()
         atom.name = self.name
-        atom.attributes = [subs[attr] for attr in self.attributes]
+        atom.attributes = [sub[attr] for attr in self.attributes]
         atom.__setProperties()
         return atom
 

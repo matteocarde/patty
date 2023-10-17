@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 from sympy import Expr
-from typing import Dict, Set
+from typing import Dict, Set, Tuple
 
 from src.pddl.Atom import Atom
 from src.pddl.Predicate import Predicate
@@ -48,7 +48,7 @@ class Constant(Predicate):
 
         return constant
 
-    def ground(self, subs: Dict[str, str]) -> Constant:
+    def ground(self, sub: Tuple) -> Constant:
         constant = Constant()
         constant.value = self.value
         constant.isDelta = self.isDelta

@@ -4,7 +4,7 @@ import copy
 
 from enum import Enum
 from sympy import Expr, diff
-from typing import Dict, Set
+from typing import Dict, Set, Tuple
 
 from src.pddl.Atom import Atom
 from src.pddl.Constant import Constant
@@ -84,11 +84,11 @@ class BinaryPredicate(Predicate):
         else:
             raise NotImplemented()
 
-    def ground(self, subs: Dict[str, str]) -> BinaryPredicate:
+    def ground(self, sub: Dict[str, str]) -> BinaryPredicate:
         bp = BinaryPredicate()
         bp.operator = self.operator
-        bp.lhs = self.lhs.ground(subs)
-        bp.rhs = self.rhs.ground(subs)
+        bp.lhs = self.lhs.ground(sub)
+        bp.rhs = self.rhs.ground(sub)
         bp.type = self.type
 
         return bp

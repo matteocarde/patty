@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 from itertools import chain
-from typing import Dict, Set
+from typing import Dict, Set, Tuple
 
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
@@ -61,11 +61,11 @@ class Formula:
     def fromString(cls, string: str) -> Formula:
         return Formula.fromNode(Utilities.getParseTree(string).preconditions())
 
-    def ground(self, subs: Dict[str, str]):
+    def ground(self, sub: Dict[str, str]):
         gFormula = Formula()
         gFormula.type = self.type
         for condition in self.conditions:
-            gFormula.conditions.append(condition.ground(subs))
+            gFormula.conditions.append(condition.ground(sub))
         return gFormula
 
     def getFunctions(self) -> Set[Atom]:

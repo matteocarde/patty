@@ -1,6 +1,8 @@
 from __future__ import annotations
-from typing import Dict, List
+from typing import Dict, List, Tuple, Set
 
+from src.pddl.Atom import Atom
+from src.pddl.Literal import Literal
 from src.pddl.Predicate import Predicate
 from src.pddl.InitialCondition import InitialCondition
 from src.pddl.Goal import Goal
@@ -19,6 +21,8 @@ class Problem:
 
     def __init__(self):
         self.objectsByType = dict()
+        self.isPredicateStatic: Dict[str, bool] = dict()
+        self.canHappenValue: Set[str] = set()
 
     @classmethod
     def fromNode(cls, node: pddlParser.ProblemContext) -> Problem:
@@ -87,4 +91,29 @@ class Problem:
 
     def substitute(self, substitutions):
         self.goal = self.goal.substitute(substitutions)
+        pass
+
+    def computeWhatCanHappen(self, domain):
+
+        from src.pddl.Domain import Domain
+        domain: Domain
+        self.isPredicateStatic = domain.isPredicateStatic
+
+        for init in self.init.assignments:
+            if isinstance(init, Literal):
+                subStr = ",".join([k for k in init.getAtom().attributes])
+                atomStr = f"{init.getAtom().name}({subStr})"
+                self.canHappenValue.add(atomStr)
+
+        # for predicate in domain.predicates:
+        #     if not self.isPredicateStatic[predicate.name]:
+        #         continue
+        #
+        #     # subs = predicate.getCombinations(self)
+        #     # for sub in subs:
+        #     #     lit = predicate.ground(sub)
+        #     #     subStr = ",".join([k for k in sub.values()])
+        #     #     self.canHappenValue[(predicate.name, subStr)] = lit in self.init.assignments
+        #     # pass
+
         pass

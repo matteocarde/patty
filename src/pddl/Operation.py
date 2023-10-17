@@ -3,7 +3,7 @@ from __future__ import annotations
 import copy
 
 import itertools
-from typing import Dict, List, Set
+from typing import Dict, List, Set, Tuple
 
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate, BinaryPredicateType
@@ -120,7 +120,7 @@ class Operation:
     def __addEffects(self, node: p.OpEffectContext):
         self.effects = Effects.fromNode(node.getChild(1))
 
-    def getCombinations(self, problem: Problem) -> List[Dict[str, str]]:
+    def getCombinations(self, problem: Problem) -> List[Tuple]:
         subs: List[List[str]] = list()
         for parameter in self.parameters:
             pSubs = list()
@@ -130,40 +130,41 @@ class Operation:
                 pSubs += problem.objectsByType[childType.name]
             subs.append(pSubs)
 
-        combinations: List[Dict[str, str]] = list()
-        for sub in itertools.product(*subs):
-            comb: Dict[str, str] = dict()
-            for i, parameter in enumerate(self.parameters):
-                comb[parameter.name] = sub[i]
-            combinations.append(comb)
+        combinations = list(itertools.product(*subs))
+        # for sub in itertools.product(*subs):
+        #     comb: Dict[str, str] = dict()
+        #     for i, parameter in enumerate(self.parameters):
+        #         comb[parameter.name] = sub[i]
+        #     combinations.append(comb)
 
         return combinations
 
     def getGroundedOperations(self, problem, isPredicateStatic: Dict[str, bool]):
-        combinations: List[Dict[str, str]] = self.getCombinations(problem)
+        combinations: List[Tuple] = self.getCombinations(problem)
 
-        validCombinations: List[Dict[str, str]] = []
+        validCombinations: List[Tuple] = []
 
         for sub in combinations:
             if self.preconditions.canHappenLifted(sub, problem, isPredicateStatic):
                 validCombinations.append(sub)
 
         gOperations = []
-        for subs in validCombinations:
-            name = self.__getGroundedName(subs)
-            preconditions = self.preconditions.ground(subs)
-            effects = self.effects.ground(subs)
-            planName = self.__getGroundedPlanName(subs)
+        for sub in validCombinations:
+            name = self.__getGroundedName(sub)
+            planName = self.__getGroundedPlanName(sub)
+            subDict: Dict[str, str] = dict((p.name, sub[i]) for i, p in enumerate(self.parameters))
+            preconditions = self.preconditions.ground(subDict)
+            effects = self.effects.ground(subDict)
             operation: Operation = Operation.fromProperties(name, preconditions, effects, planName)
             gOperations.append(operation)
         return gOperations
 
-    def __getGroundedName(self, sub: Dict[str, str]) -> str:
-        parts = [self.name] + [c[1] for c in sub.items()]
+    def __getGroundedName(self, sub: Tuple) -> str:
+        parts = [self.name] + [str(c) for c in sub]
         return " ".join(parts)
 
-    def __getGroundedPlanName(self, sub: Dict[str, str]):
-        parts = [self.name] + [c[1] for c in sub.items()]
+    def __getGroundedPlanName(self, sub: Tuple):
+        parts = [self.name] + [str(c) for c in sub]
         return f"({'_'.join(parts)})"
 
     @property

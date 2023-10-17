@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from sympy import Expr
-from typing import Dict, Set
+from typing import Dict, Set, Tuple
 
 from src.pddl.Atom import Atom
 

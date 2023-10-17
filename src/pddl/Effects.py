@@ -3,7 +3,7 @@ from __future__ import annotations
 import copy
 
 from itertools import chain
-from typing import Dict, List, cast, Iterable
+from typing import Dict, List, cast, Iterable, Tuple
 
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate

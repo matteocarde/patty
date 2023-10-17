@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 from sympy import Expr
-from typing import Dict, Set
+from typing import Dict, Set, Tuple
 
 from src.pddl.Atom import Atom
 from src.pddl.Constant import Constant
@@ -73,12 +73,12 @@ class Literal(Predicate):
     def getLiterals(self) -> Set[Predicate]:
         return {self}
 
-    def ground(self, subs: Dict[str, str]) -> Literal:
+    def ground(self, sub: Dict[str, str]) -> Literal:
 
         literal = Literal()
         literal.sign = self.sign
 
-        literal.atom = self.atom.ground(subs)
+        literal.atom = self.atom.ground(sub)
         literal.funct = literal.atom.toFunctionName()
         literal.alphaFunct = literal.atom.toAlphaFunctionName()
 
@@ -126,10 +126,14 @@ class Literal(Predicate):
         return True
 
     def canHappenLifted(self, sub, problem, isPredicateStatic: Dict[str, bool]) -> bool:
-        if not isPredicateStatic[self.atom.name]:
+        if not problem.isPredicateStatic[self.atom.name]:
             return True
-        grounded = self.ground(sub)
-        return grounded in problem.init.assignments
+        subStr = ",".join([k for k in sub])
+        atomStr = f"{self.atom.name}({subStr})"
+        if self.sign == "+":
+            return atomStr in problem.canHappenValue
+        if self.sign == "-":
+            return atomStr not in problem.canHappenValue
 
     def getLinearIncrement(self) -> float:
         return 0

@@ -87,7 +87,7 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2023-10-15-SCC-v10"
+    exp = "2023-10-16-GROUNDING-v1"
     file = f"benchmarks/results/{exp}.csv"
 
     aResults: [Result] = []
@@ -198,7 +198,7 @@ def main():
             "ipc-2023/hydropower",
             "ipc-2023/sailing",
             "ipc-2023/fo-sailing",
-            # "line-exchange",
+            "line-exchange",
             # "line-exchange-quantity"
         ],
         r"\textit{Lowly Numeric}": [
@@ -245,9 +245,9 @@ def main():
             # 'PATTY-GBFS-MAX': "SMT",
             'PATTY-ASTAR-MAX': "SMT",
             # 'PATTY-GBFS-MAX-NO-P': "SMT",
-            "PATTY-ASTAR-MAX-SCCS": "SMT",
-            'PATTY-ASTAR-MAX-NO-P': "SMT",
-            'PATTY-ASTAR-MAX-NO-P-SCCS': 'SMT',
+            # "PATTY-ASTAR-MAX-SCCS": "SMT",
+            # 'PATTY-ASTAR-MAX-NO-P': "SMT",
+            # 'PATTY-ASTAR-MAX-NO-P-SCCS': 'SMT',
             # 'PATTY-R',
             # 'RANTANPLAN': "SMT",
             # 'SpringRoll': "SMT",
