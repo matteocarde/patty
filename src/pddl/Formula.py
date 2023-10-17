@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 from itertools import chain
-from typing import Dict, Set, Tuple
+from typing import Dict, Set, Tuple, List
 
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
@@ -95,9 +95,22 @@ class Formula:
                 return False
         return True
 
-    def canHappenLifted(self, sub: Dict[str, str], problem, isPredicateStatic: Dict[str, bool]):
+    def canHappenLifted(self, sub: Tuple, params: List[str], problem):
         for c in self.conditions:
-            if not c.canHappenLifted(sub, problem, isPredicateStatic):
+            if not c.canHappenLifted(sub, params, problem):
+                return False
+        return True
+
+    def canHappenLiftedPartial(self, item: Tuple, params: List[str], problem):
+        for c in self.conditions:
+            if not c.canHappenLiftedPartial(item, params, problem):
+                return False
+        return True
+        pass
+
+    def isDynamicLifted(self, problem):
+        for c in self.conditions:
+            if not c.isDynamicLifted(problem):
                 return False
         return True
 

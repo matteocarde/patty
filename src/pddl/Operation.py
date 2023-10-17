@@ -120,7 +120,7 @@ class Operation:
     def __addEffects(self, node: p.OpEffectContext):
         self.effects = Effects.fromNode(node.getChild(1))
 
-    def getCombinations(self, problem: Problem) -> List[Dict[str, str]]:
+    def getCombinations(self, problem: Problem) -> List[List[str]]:
         subs: List[List[str]] = list()
         for parameter in self.parameters:
             pSubs = list()
@@ -130,20 +130,44 @@ class Operation:
                 pSubs += problem.objectsByType[childType.name]
             subs.append(pSubs)
 
-        combinations = []
-        for sub in itertools.product(*subs):
-            combinations.append(dict([(p.name, sub[i]) for i, p in enumerate(self.parameters)]))
+        return subs  # list(itertools.product(*subs))
 
-        return combinations
+    def __getValidCombinationsSub(self, problem: Problem, item: Tuple, itemParams: List[str],
+                                  downLevels: List[List[str]], paramsLeft: List[str]) -> List[Tuple]:
+
+        if item and not self.preconditions.canHappenLiftedPartial(item, itemParams, problem):
+            return []
+
+        if not downLevels:
+            return [item]
+
+        paths: List[Tuple] = list()
+        for itemDown in downLevels[0]:
+            paths += self.__getValidCombinationsSub(problem,
+                                                    item + tuple([itemDown]),
+                                                    itemParams + [paramsLeft[0]],
+                                                    downLevels[1:],
+                                                    paramsLeft[1:])
+        return paths
+
+    def __getValidCombinations(self, problem, levels: List[List[str]], params: List[str]) -> List[Tuple]:
+        paths: List[Tuple] = self.__getValidCombinationsSub(problem, tuple(), [], levels, params)
+        return paths
 
     def getGroundedOperations(self, problem, isPredicateStatic: Dict[str, bool]):
-        combinations: List[Dict[str, str]] = self.getCombinations(problem)
+        levels: List[List[str]] = self.getCombinations(problem)
+
+        combinations: List[Tuple]
+
+        if self.preconditions.isDynamicLifted(problem):
+            combinations = list(itertools.product(*levels))
+        else:
+            opParams = [p.name for p in self.parameters]
+            combinations = self.__getValidCombinations(problem, levels, opParams)
 
         validCombinations: List[Dict[str, str]] = []
-
         for sub in combinations:
-            if self.preconditions.canHappenLifted(sub, problem, isPredicateStatic):
-                validCombinations.append(sub)
+            validCombinations.append(dict([(p.name, sub[i]) for i, p in enumerate(self.parameters)]))
 
         gOperations = []
         for sub in validCombinations:

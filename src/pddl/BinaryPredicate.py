@@ -190,6 +190,14 @@ class BinaryPredicate(Predicate):
         #     return False
         return True
 
+    def canHappenLiftedPartial(self, sub, problem, isPredicateStatic: Dict[str, bool]) -> bool:
+        # if all([not isPredicateStatic[f.name] for f in self.getFunctions()]):
+        #     return False
+        return True
+
+    def isDynamicLifted(self, problem) -> bool:
+        return True
+
     def toConstant(self) -> Constant:
         if self.getFunctions():
             raise Exception(f"Cannot transform {self} into a Constant")

@@ -23,6 +23,7 @@ class Problem:
         self.objectsByType = dict()
         self.isPredicateStatic: Dict[str, bool] = dict()
         self.canHappenValue: Set[str] = set()
+        self.assignmentsTree: Dict = dict()
 
     @classmethod
     def fromNode(cls, node: pddlParser.ProblemContext) -> Problem:
@@ -104,5 +105,12 @@ class Problem:
                 subStr = ",".join([k for k in init.getAtom().attributes])
                 atomStr = f"{init.getAtom().name}({subStr})"
                 self.canHappenValue.add(atomStr)
+
+                self.assignmentsTree[init.atom.name] = self.assignmentsTree.setdefault(init.atom.name, dict())
+                root = self.assignmentsTree[init.atom.name]
+                for i, attr in enumerate(init.atom.attributes):
+                    root[i] = root.setdefault(i, dict())
+                    root[i][attr] = root[i].setdefault(attr, set())
+                    root[i][attr].add(init)
 
         pass
