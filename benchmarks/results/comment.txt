@@ -1,6 +1,6 @@
 DRONE:        Lento se pattern_h viene concatenato ed esplode con tante azioni. Necessita frontier
 HYDROPOWER:   INDAGARE
-COUNTERS(L):  PERCHE' ADESSO E' NORMALE
+COUNTERS(L):  PERCHE' ADESSO E' NORMALE ?
 DELIVERY:     Lento se pattern_h viene concatenato ed esplode con tante azioni. Necessita frontier
 EXPEDITION:   Un solo subgoal. Astar inutile. Necessita frontier
 MPRIME:       Un solo subgoal. Astar inutile. Necessita frontier
