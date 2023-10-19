@@ -12,23 +12,19 @@ SMT_SOLVERS = {'SpringRoll', "PATTY", "PATTY-STATIC", "PATTY-GBFS", "PATTY-ASTAR
 TIME_LIMIT = 30 * 1000
 
 SOLVERS = {
-    # 'SpringRoll': "SR",
-    # 'PATTY': "P",
-    # 'PATTY-EXPLICIT': "P_{exp}",
-    # 'PATTY-CONCAT': "P_{cat}",
-    # # 'PATTY-R': "P_r",
-    # 'RANTANPLAN': "\mathrm{R^2\exists}",
-    # 'METRIC-FF': "\mathrm{FF}",
+    'SpringRoll': "SR",
+    'RANTANPLAN': "\mathrm{R^2\exists}",
+    'METRIC-FF': "\mathrm{FF}",
     'ENHSP': r"\mathrm{ENHSP}",
-    # 'NFD': "\mathrm{NFD}",
-    # 'SMTPLAN+': "\mathrm{SMTP}^+",
-    # 'OMT': "\mathrm{OMT}",
+    'NFD': "\mathrm{NFD}",
+    'SMTPLAN+': "\mathrm{SMTP}^+",
+    'OMT': "\mathrm{OMT}",
     "PATTY": "P",
     "PATTY-SCC": "P_{SCC}",
     "PATTY-STATIC": "P_{cat}",
     "PATTY-ASTAR": "P_{A^*}",
     "PATTY-ASTAR-SCC": "P_{A^*, SCC}",
-    "PATTY-ASTAR-MAX": "P_{A^*}^{max}",
+    "PATTY-ASTAR-MAX": "P_{A^*}",
     "PATTY-ASTAR-MAX-SCCS": "P_{A^*, SCC}^{max}",
     "PATTY-ASTAR-MAX-NO-P": "P_{A^*}^{max+}",
     "PATTY-ASTAR-MAX-NO-P-SCCS": "P_{A^*, SCC}^{max+}",
@@ -89,14 +85,18 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2023-10-16-GROUNDING-v4"
+    exp = "2023-10-16-GROUNDING-v5"
     file = f"benchmarks/results/{exp}.csv"
 
+    # joinWith = ["benchmarks/results/SEARCH.csv"] + [file]
+    joinWith = [file]
+
     aResults: [Result] = []
-    with open(file, "r") as f:
-        reader = csv.reader(f, delimiter=",")
-        for i, line in enumerate(reader):
-            aResults.append(Result.fromCSVLine(line[0].split(",")))
+    for fileJoin in joinWith:
+        with open(fileJoin, "r") as f:
+            reader = csv.reader(f, delimiter=",")
+            for i, line in enumerate(reader):
+                aResults.append(Result.fromCSVLine(line[0].split(",")))
 
     folder = f'benchmarks/latex/{exp}'
     if os.path.exists(folder):
@@ -235,59 +235,26 @@ def main():
             "coverage": ("Coverage (\%)", {"SMT", "SEARCH"}),
             "time": ("Time (s)", {"SMT", "SEARCH"}),
             "bound": ("Bound (Common)", {"SMT"}),
-            # "nOfVars": ("$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$", {"SMT"}),
-            # "nOfRules": ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}),
+            "nOfVars": ("$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$", {"SMT"}),
+            "nOfRules": ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}),
             # "lastCallsToSolver": (r"$\textsc{Solve}(\Pi^\prec)$ calls", {"SMT"}),
         },
-        "search": {
+        "planners": [{
             'PATTY': "SMT",
-            'PATTY-SCC': "SMT",
             'PATTY-STATIC': "SMT",
-            # 'PATTY-GBFS': "SMT",
-            # 'PATTY-ASTAR': "SMT",
-            # 'PATTY-ASTAR-SCC': "SMT",
-            # 'PATTY-GBFS-MAX': "SMT",
             'PATTY-ASTAR-MAX': "SMT",
-            # 'PATTY-GBFS-MAX-NO-P': "SMT",
-            "PATTY-ASTAR-MAX-SCCS": "SMT",
-            # 'PATTY-ASTAR-MAX-NO-P': "SMT",
-            # 'PATTY-ASTAR-MAX-NO-P-SCCS': 'SMT',
-            # 'PATTY-R',
-            # 'RANTANPLAN': "SMT",
-            # 'SpringRoll': "SMT",
-            # "OMT": "SMT",
+        }, {
+            'PATTY-ASTAR-MAX': "SEARCH",
             'ENHSP': "SEARCH",
-            # 'METRIC-FF': "SEARCH",
-            # "NFD": "SEARCH"
-        },
+            'METRIC-FF': "SEARCH",
+            "NFD": "SEARCH",
+        }],
         "caption": r"Comparative analysis between the search-based solver $\textsc{ENHSP}$ and  $\textsc{Patty}$ run "
                    r"with the standard algorithm ($P$),  $\textsc{SolveConcat}$ ($P_{cat}$), \textsc{SolveGBFS} ("
                    r"$P_\text{gbfs}$), \textsc{SolveA}$^*$ ($P_{A^*}$), \textsc{SolveGBFSMax} ($P_\text{gbfs}^{"
                    r"max}$), \textsc{SolveA*Max} ($P_{A^*}^{max}$). ''Best numbers'' are in bold.  The numbers in the "
                    r"Highly and Lowly Numeric rows are the number of bolds in the subcolumn."
-    },
-        #     {
-        #     "name": "tab:exp-search",
-        #     "type": "table",
-        #     "width": r"\columnwidth",
-        #     "columns": {
-        #         "coverage": "Coverage (\%)",
-        #         "time": "Time (s)",
-        #         # "length": "Plan Length"
-        #     },
-        #     "search": [
-        #         # 'PATTY-arpg-yices-binary',
-        #         'PATTY',
-        #         # 'RANTANPLAN',
-        #         # 'SpringRoll',
-        #         'ENHSP',
-        #         'METRIC-FF',
-        #         "NFD"
-        #     ],
-        #     "caption": r"Comparative analysis between \textsc{Patty} and the search-based search \textsc{ENHSP} (E), "
-        #                r"\textsc{MetricFF} (FF) and \textsc{NumericFastDownward} (NFD)."
-        # }
-    ]
+    }]
 
     latex = []
     latex.append(r"""
@@ -301,26 +268,29 @@ def main():
 
     for table in tables:
         stats = table["columns"].keys()
-        solvers = table["search"].keys()
 
-        best = dict()
-        for (domain, domainDict) in d.items():
-            best[domain] = dict()
-            for stat in table["columns"].keys():
-                better = {}
-                betterValue = float("-inf") if winners[stat] > 0 else float("+inf")
-                for solver in solvers:
-                    if solver not in t[domain][stat]:
-                        continue
-                    value = t[domain][stat][solver]
-                    if value in {"-", "G", "-1.00"}:
-                        continue
-                    if float(value) * winners[stat] > betterValue * winners[stat]:
-                        betterValue = float(value)
-                        better = {solver}
-                    elif float(value) == betterValue:
-                        better |= {solver}
-                best[domain][stat] = better
+        best: List[Dict] = list()
+        for i in range(len(table["planners"])):
+            bestCluster = dict()
+            solvers = table["planners"][i].keys()
+            best.append(bestCluster)
+            for (domain, domainDict) in d.items():
+                bestCluster[domain] = dict()
+                for stat in table["columns"].keys():
+                    better = {}
+                    betterValue = float("-inf") if winners[stat] > 0 else float("+inf")
+                    for solver in solvers:
+                        if solver not in t[domain][stat]:
+                            continue
+                        value = t[domain][stat][solver]
+                        if value in {"-", "G", "-1.00"}:
+                            continue
+                        if float(value) * winners[stat] > betterValue * winners[stat]:
+                            betterValue = float(value)
+                            better = {solver}
+                        elif float(value) == betterValue:
+                            better |= {solver}
+                    bestCluster[domain][stat] = better
 
         latex.append(r"""
             \begin{""" + table["type"] + r"""}[tb]
@@ -332,13 +302,19 @@ def main():
         cString = ""
         for (stat, (name, statTypes)) in table["columns"].items():
             nCells = 0
-            for (solver, type) in table["search"].items():
-                if type not in statTypes:
-                    continue
-                solversHeader.append(f"${SOLVERS[solver]}$")
-                nCells += 1
+            clString = []
+            for cluster in table["planners"]:
+                clCells = 0
+                for (solver, type) in cluster.items():
+                    if type not in statTypes:
+                        continue
+                    solversHeader.append(f"${SOLVERS[solver]}$")
+                    nCells += 1
+                    clCells += 1
+                if clCells > 0:
+                    clString.append(clCells * 'c')
+            cString += f"|{'|'.join(clString)}|"
             mString.append(r"\multicolumn{" + str(nCells) + "}{c||}{" + name + "}")
-            cString += f"|{nCells * 'c'}|"
 
         columns = f"|l|{cString}" + "|"
 
@@ -352,31 +328,46 @@ def main():
             rows = []
             row = [cluster]
             for (stat, (name, statTypes)) in table["columns"].items():
-                for (solver, type) in table["search"].items():
-                    if type not in statTypes:
-                        continue
-                    nOfBest = 0
-                    for domain in clusterDomains:
-                        if solver in best[domain][stat]:
-                            nOfBest += 1
-                    row.append(r"\textbf{" + str(nOfBest) + "}")
+                for i, plCluster in enumerate(table["planners"]):
+                    for (solver, type) in plCluster.items():
+                        if type not in statTypes:
+                            continue
+                        nOfBest = 0
+                        for domain in clusterDomains:
+                            if solver in best[i][domain][stat]:
+                                nOfBest += 1
+                        row.append(r"\textbf{" + str(nOfBest) + "}")
             latex.append("&".join(row) + r"\\\hline")
             for domain in clusterDomains:
                 row = [DOMAINS[domain]]
                 for (stat, (name, statTypes)) in table["columns"].items():
-                    for (solver, type) in table["search"].items():
-                        if type not in statTypes:
-                            continue
-                        if solver not in t[domain][stat]:
-                            row.append("TBD")
-                            continue
-                        if solver in best[domain][stat]:
-                            row.append(r"\textbf{" + t[domain][stat][solver] + "}")
-                        else:
-                            row.append(t[domain][stat][solver])
+                    for i, plCluster in enumerate(table["planners"]):
+                        for (solver, type) in plCluster.items():
+                            if type not in statTypes:
+                                continue
+                            if solver not in t[domain][stat]:
+                                row.append("TBD")
+                                continue
+                            if solver in best[i][domain][stat]:
+                                row.append(r"\textbf{" + t[domain][stat][solver] + "}")
+                            else:
+                                row.append(t[domain][stat][solver])
                 rows.append("&".join(row))
             latex.append("\\\\\n".join(rows))
             latex.append(fr"\\\hline")
+        row = [r"\textit{Total}"]
+        for (stat, (name, statTypes)) in table["columns"].items():
+            for i, plCluster in enumerate(table["planners"]):
+                for (solver, type) in plCluster.items():
+                    if type not in statTypes:
+                        continue
+                    nOfBest = 0
+                    for (cluster, clusterDomains) in domainsClusters.items():
+                        for domain in clusterDomains:
+                            if solver in best[i][domain][stat]:
+                                nOfBest += 1
+                    row.append(r"\textbf{" + str(nOfBest) + "}")
+        latex.append("&".join(row) + r"\\\hline")
 
         latex.append(r"""
         \end{tabular}}

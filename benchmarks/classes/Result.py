@@ -46,7 +46,8 @@ class Result:
         r.nOfVars = int(csvLine[8])
         r.nOfRules = int(csvLine[9])
         r.lastSearchedBound = int(csvLine[10])
-        r.lastCallsToSolver = int(csvLine[11])
+        if len(csvLine) > 11:
+            r.lastCallsToSolver = int(csvLine[11])
 
         return r
 
