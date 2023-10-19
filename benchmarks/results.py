@@ -85,7 +85,7 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2023-10-16-GROUNDING-v8"
+    exp = "2023-10-19-MAX-v1"
     file = f"benchmarks/results/{exp}.csv"
 
     joinWith = ["benchmarks/results/SEARCH-300.csv"] + [file]
@@ -243,6 +243,7 @@ def main():
             'PATTY': "SMT",
             'PATTY-STATIC': "SMT",
             'PATTY-ASTAR-MAX': "SMT",
+            'PATTY-ASTAR-MAX-NO-P': "SMT",
         }, {
             'PATTY-ASTAR-MAX': "SEARCH",
             'ENHSP': "SEARCH",

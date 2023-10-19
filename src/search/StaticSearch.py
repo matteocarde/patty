@@ -1,6 +1,7 @@
 from src.pddl.Domain import GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
+from src.pddl.State import State
 from src.plan.PDDL2SMT import PDDL2SMT
 from src.plan.Pattern import Pattern
 from src.search.Search import Search
@@ -26,6 +27,10 @@ class StaticSearch(Search):
     def solve(self) -> NumericPlan:
         callsToSolver = 0
         pattern: Pattern = self.getPattern()
+        subgoalsAchieved = set()
+        totalSubgoals = self.problem.goal.conditions
+
+        initialState: State = State.fromInitialCondition(self.problem.init)
 
         if self.args.printARPG:
             self.console.log(str(self.domain.arpg), LogPrintLevel.PLAN)
@@ -44,6 +49,8 @@ class StaticSearch(Search):
                 problem=self.problem,
                 pattern=fPattern,
                 bound=1,
+                relaxGoal=self.args.maximize,
+                subgoalsAchieved=set() if self.args.maximize else None,
                 encoding=self.args.encoding,
                 binaryActions=self.args.binaryActions,
                 rollBound=self.args.rollBound,
@@ -55,7 +62,7 @@ class StaticSearch(Search):
             self.console.log(f"Bound {bound} - Rules = {pddl2smt.getNRules()}", LogPrintLevel.STATS)
             self.console.log(f"Calls to Solver: {callsToSolver}", LogPrintLevel.STATS)
             self.ts.start(f"Solving Bound {bound}", console=self.console)
-            solver: SMTSolver = SMTSolver(pddl2smt)
+            solver: SMTSolver = SMTSolver(pddl2smt, maximize=self.args.maximize)
 
             plan: NumericPlan
             plan = solver.solve()
@@ -63,12 +70,17 @@ class StaticSearch(Search):
             solver.exit()
             self.ts.end(f"Solving Bound {bound}", console=self.console)
 
+
+
             if self.args.saveSMT:
                 self.saveSMT(bound, pddl2smt)
 
-            if plan:
-                self.console.log(f"Bound: {bound}", LogPrintLevel.STATS)
-                return plan
+            if isinstance(plan, NumericPlan):
+                state = initialState.applyPlan(plan)
+                subgoalsAchieved = {g for g in self.problem.goal.conditions if state.satisfies(g)}
+                if len(subgoalsAchieved) == len(totalSubgoals):
+                    self.console.log(f"Bound: {bound}", LogPrintLevel.STATS)
+                    return plan
 
             self.console.log(f"NO SOLUTION: No solution with bound {bound}. Try to increase the bound",
                              LogPrintLevel.PLAN)

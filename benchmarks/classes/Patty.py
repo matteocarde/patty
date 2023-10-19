@@ -9,10 +9,9 @@ NAME = "PATTY"
 class Patty(Planner):
     name = NAME
 
-    def __init__(self, name, search="static", avoidP=False, useSCCs=False):
+    def __init__(self, name, search="static", maximize=False):
         self.search = search
-        self.avoidP = avoidP
-        self.useSCCs = useSCCs
+        self.maximize = maximize
         self.name = name
         super().__init__()
 
@@ -41,19 +40,8 @@ class Patty(Planner):
             "patty",
             "-o", domain,
             "-f", problem,
-            "-s", self.search,
-            # "-pp",
-            # "--pattern", self.pattern,
-            # "--solver", self.solver,
-            # "--encoding", self.encoding,
-            # "--roll-bound", str(self.rollBound)
+            "-s", self.search
         ]
-        # if self.hasEffectAxioms:
-        #     cmd += ["--effect-axioms"]
-        if self.avoidP:
-            cmd += ["--avoid-p"]
-        if self.useSCCs:
-            cmd += ["--use-sccs"]
-        # if self.concatPatterns:
-        #     cmd += ["--concat"]
+        if self.maximize:
+            cmd += ["--maximize"]
         return cmd
