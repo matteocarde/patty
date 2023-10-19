@@ -37,6 +37,8 @@ class Arguments:
                             action="store_true", default=False)
         parser.add_argument('--avoid-p', help="Doesn't use the G/P approach when solving with A* or GBFS",
                             action="store_true", default=False)
+        parser.add_argument('--maximize', help="If it should maximize the subgoals when using step or static search",
+                            action="store_true", default=False)
         parser.add_argument('--use-sccs', help="Use SCCs when computing pattern",
                             action="store_true", default=False)
 
@@ -60,4 +62,5 @@ class Arguments:
         self.rollBound = args.roll_bound
         self.concatPattern = args.concat
         self.avoidP = args.avoid_p
+        self.maximize = args.maximize
         self.useSCCs = args.use_sccs
