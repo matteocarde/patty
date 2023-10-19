@@ -85,11 +85,11 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2023-10-16-GROUNDING-v5"
+    exp = "2023-10-16-GROUNDING-v6"
     file = f"benchmarks/results/{exp}.csv"
 
-    # joinWith = ["benchmarks/results/SEARCH.csv"] + [file]
-    joinWith = [file]
+    joinWith = ["benchmarks/results/SEARCH-30.csv"] + [file]
+    # joinWith = [file]
 
     aResults: [Result] = []
     for fileJoin in joinWith:

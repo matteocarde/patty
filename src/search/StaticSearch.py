@@ -27,9 +27,6 @@ class StaticSearch(Search):
         callsToSolver = 0
         pattern: Pattern = self.getPattern()
 
-        if self.args.printPattern:
-            self.console.log("Pattern: " + str(pattern), LogPrintLevel.PLAN)
-
         if self.args.printARPG:
             self.console.log(str(self.domain.arpg), LogPrintLevel.PLAN)
 
@@ -38,6 +35,8 @@ class StaticSearch(Search):
         while bound <= self.maxBound:
 
             fPattern = pattern.multiply(bound)
+            if self.args.printPattern:
+                self.console.log("Pattern: " + str(fPattern), LogPrintLevel.PLAN)
 
             self.ts.start(f"Conversion to SMT at bound {bound}", console=self.console)
             pddl2smt: PDDL2SMT = PDDL2SMT(
@@ -63,7 +62,6 @@ class StaticSearch(Search):
             callsToSolver += 1
             solver.exit()
             self.ts.end(f"Solving Bound {bound}", console=self.console)
-
 
             if self.args.saveSMT:
                 self.saveSMT(bound, pddl2smt)

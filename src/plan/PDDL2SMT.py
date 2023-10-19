@@ -1,6 +1,9 @@
 from typing import List, Dict, Set
 
-from pysmt.shortcuts import write_smtlib
+import pysmt.smtlib.commands as smtcmd
+import pysmt.smtlib.script
+from pysmt.environment import get_env
+from pysmt.logics import QF_NRA
 
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
@@ -16,8 +19,6 @@ from src.plan.TransitionVariables import TransitionVariables
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTNumericVariable import SMTNumericVariable
 from src.smt.SMTSolution import SMTSolution
-
-import pysmt.smtlib.script
 
 # BOUND = 1000
 EXPLICIT_DELTA = False
@@ -292,17 +293,16 @@ class PDDL2SMT:
                     if not isinstance(eff, BinaryPredicate):
                         continue
                     v = eff.lhs.getAtom()
+                    rhsExpr = SMTNumericVariable.fromPddl(eff.rhs, stepVars.deltaVariables[a])
                     if eff.operator == "assign":
-                        subs[v] = SMTNumericVariable.fromPddl(eff.rhs, stepVars.deltaVariables[a])
+                        subs[v] = rhsExpr
                         continue
                     if eff.operator == "increase":
-                        subs[v] = stepVars.deltaVariables[a][v] + \
-                                  SMTNumericVariable.fromPddl(eff.rhs, stepVars.deltaVariables[a]) * \
-                                  (stepVars.actionVariables[a] - 1)
+                        x = stepVars.deltaVariables[a][v] + rhsExpr * (stepVars.actionVariables[a] - 1)
+                        subs[v] = x
+                        pass
                     else:
-                        subs[v] = stepVars.deltaVariables[a][v] - \
-                                  SMTNumericVariable.fromPddl(eff.rhs, stepVars.deltaVariables[a]) * \
-                                  (stepVars.actionVariables[a] - 1)
+                        subs[v] = stepVars.deltaVariables[a][v] - rhsExpr * (stepVars.actionVariables[a] - 1)
 
                 for v in stepVars.deltaVariables[a].keys():
                     subs[v] = subs[v] if v in subs else stepVars.deltaVariables[a][v]
@@ -394,9 +394,31 @@ class PDDL2SMT:
             print(rule)
 
     def writeSMTLIB(self, filename: str):
-        formula = SMTExpression.andOfExpressionsList(self.rules)
+        formula = SMTExpression.andOfExpressionsList(self.rules).expression
         with open(filename, "w") as fout:
-            script = pysmt.smtlib.script.smtlibscript_from_formula(formula.expression)
+            script = pysmt.smtlib.script.SmtLibScript()
+
+            script.add(name=smtcmd.SET_LOGIC,
+                       args=[QF_NRA])
+
+            # Declare all types
+            types = get_env().typeso.get_types(formula, custom_only=True)
+            for type_ in types:
+                script.add(name=smtcmd.DECLARE_SORT, args=[type_.decl])
+
+            deps = formula.get_free_variables()
+            # Declare all variables
+            for symbol in deps:
+                assert symbol.is_symbol()
+                script.add(name=smtcmd.DECLARE_FUN, args=[symbol])
+
+            for r in self.rules:
+                # Assert formula
+                script.add_command(pysmt.smtlib.script.SmtLibCommand(name=smtcmd.ASSERT,
+                                                                     args=[r.expression]))
+            # check-sat
+            script.add_command(pysmt.smtlib.script.SmtLibCommand(name=smtcmd.CHECK_SAT,
+                                                                 args=[]))
             script.serialize(fout, daggify=False)
 
     def __str__(self):
