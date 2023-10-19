@@ -8,6 +8,7 @@ PLANNERS = [
     # "PATTY-SCCS",
     "PATTY-STATIC",
     # "PATTY-ASTAR",
+    "PATTY-ASTAR-MAX-NO-P",
     "PATTY-ASTAR-MAX",
     # "PATTY-ASTAR-MAX-SCCS",
     # "PATTY-GBFS-MAX-NO-P",
