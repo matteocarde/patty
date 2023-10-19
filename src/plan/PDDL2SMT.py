@@ -43,7 +43,7 @@ class PDDL2SMT:
         self.rollBound = rollBound
         self.hasEffectAxioms = hasEffectAxioms
         self.relaxGoal = relaxGoal
-        self.subgoalsAchieved = subgoalsAchieved
+        self.subgoalsAchieved = subgoalsAchieved if subgoalsAchieved else set()
 
         self.transitionVariables: [TransitionVariables] = list()
 

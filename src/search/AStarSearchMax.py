@@ -48,9 +48,8 @@ class AStarSearchMax(Search):
                 pattern=patF,
                 bound=1,
                 relaxGoal=True,
-                subgoalsAchieved=set(),
+                subgoalsAchieved=subgoalsAchieved if not self.avoidP else set(),
                 encoding=self.args.encoding,
-                binaryActions=self.args.binaryActions,
                 rollBound=self.args.rollBound,
                 hasEffectAxioms=self.args.hasEffectAxioms
             )

@@ -49,7 +49,6 @@ class AStarSearch(Search):
                 relaxGoal=True,
                 subgoalsAchieved=subgoalsAchieved if not self.avoidP else set(),
                 encoding=self.args.encoding,
-                binaryActions=self.args.binaryActions,
                 rollBound=self.args.rollBound,
                 hasEffectAxioms=self.args.hasEffectAxioms
             )

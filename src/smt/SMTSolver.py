@@ -106,7 +106,6 @@ class SMTSolver:
             found = self.solver.solve()
             if not found:
                 return False
-
         solution = SMTSolution()
         if self.maximize:
             model = self.solver.model()
