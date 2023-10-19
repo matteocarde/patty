@@ -1,5 +1,3 @@
-PATTY-STATIC,ipc-2023/sailing,files/ipc-2023/sailing/domain.pddl,files/ipc-2023/sailing/instances/instance_1_4_1229.pddl
-PATTY-STATIC,ipc-2023/fo-sailing,files/ipc-2023/fo-sailing/domain.pddl,files/ipc-2023/fo-sailing/instances/instance_1_4_1229.pddl
 PATTY-ASTAR-MAX,ipc-2023/counters,files/ipc-2023/counters/domain.pddl,files/ipc-2023/counters/instances/fz_instance_12.pddl
 PATTY-ASTAR-MAX,line-exchange,files/line-exchange/domain.pddl,files/line-exchange/instances/2_5_25_10.pddl
 PATTY-ASTAR-MAX-NO-P,ipc-2023/mprime,files/ipc-2023/mprime/domain.pddl,files/ipc-2023/mprime/instances/pfile15.pddl
@@ -200,6 +198,7 @@ PATTY-ASTAR-MAX-NO-P,ipc-2023/sugar,files/ipc-2023/sugar/domain.pddl,files/ipc-2
 PATTY-STATIC,ipc-2023/hydropower,files/ipc-2023/hydropower/domain.pddl,files/ipc-2023/hydropower/instances/pfile13.pddl
 PATTY-ASTAR-MAX-NO-P,ipc-2023/hydropower,files/ipc-2023/hydropower/domain.pddl,files/ipc-2023/hydropower/instances/pfile05.pddl
 PATTY-STATIC,ipc-2023/sailing,files/ipc-2023/sailing/domain.pddl,files/ipc-2023/sailing/instances/instance_2_9_1229.pddl
+PATTY-STATIC,ipc-2023/fo-sailing,files/ipc-2023/fo-sailing/domain.pddl,files/ipc-2023/fo-sailing/instances/instance_1_4_1229.pddl
 PATTY-STATIC,ipc-2023/ext-plant-watering,files/ipc-2023/ext-plant-watering/domain.pddl,files/ipc-2023/ext-plant-watering/instances/instance_15_7_2_1.pddl
 PATTY-ASTAR-MAX,ipc-2023/ext-plant-watering,files/ipc-2023/ext-plant-watering/domain.pddl,files/ipc-2023/ext-plant-watering/instances/instance_15_19_2_1.pddl
 PATTY,ipc-2023/farmland,files/ipc-2023/farmland/domain.pddl,files/ipc-2023/farmland/instances/instance_10_700_1229.pddl
@@ -1654,6 +1653,7 @@ PATTY,ipc-2023/pathwaysmetric,files/ipc-2023/pathwaysmetric/domain.pddl,files/ip
 PATTY-ASTAR-MAX-NO-P,line-exchange,files/line-exchange/domain.pddl,files/line-exchange/instances/4_10_25_100.pddl
 PATTY-ASTAR-MAX,ipc-2023/zenotravel,files/ipc-2023/zenotravel/domain.pddl,files/ipc-2023/zenotravel/instances/pfile12.pddl
 PATTY,ipc-2023/pathwaysmetric,files/ipc-2023/pathwaysmetric/domain.pddl,files/ipc-2023/pathwaysmetric/instances/pfile18.pddl
+PATTY-STATIC,ipc-2023/sailing,files/ipc-2023/sailing/domain.pddl,files/ipc-2023/sailing/instances/instance_1_4_1229.pddl
 PATTY-STATIC,line-exchange-quantity,files/line-exchange-quantity/domain.pddl,files/line-exchange-quantity/instances/1.pddl
 PATTY-ASTAR-MAX-NO-P,line-exchange,files/line-exchange/domain.pddl,files/line-exchange/instances/2_5_90_10.pddl
 PATTY-ASTAR-MAX,ipc-2023/fo-sailing,files/ipc-2023/fo-sailing/domain.pddl,files/ipc-2023/fo-sailing/instances/instance_1_4_1229.pddl
