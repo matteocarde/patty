@@ -20,7 +20,7 @@
 	;; Increment the value in the given counter by one
 	(:action increment
 		:parameters (?c - counter)
-		:precondition (and (<= (+ (value ?c) (rate_value ?c)) (max_int)))
+		:precondition (and (<= (+ (value ?c) (rate_value ?c)) (max_int))) ; v + r <= max_int
 		:effect (and
 			(increase (value ?c) (rate_value ?c))
 			(increase (total-cost) 1))

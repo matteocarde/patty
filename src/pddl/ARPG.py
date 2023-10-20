@@ -1,3 +1,4 @@
+import random
 from typing import Set, List, Dict
 
 from src.pddl.Action import Action
@@ -9,6 +10,8 @@ from src.pddl.RelaxedIntervalState import RelaxedIntervalState
 from src.pddl.State import State
 from src.pddl.Supporter import Supporter
 from src.plan.AffectedGraph import AffectedGraph
+
+SEED = 20121996
 
 
 class ARPG:
@@ -74,14 +77,20 @@ class ARPG:
                     partialOrder.add(supporter.originatingAction)
                 usedActions.add(supporter.originatingAction)
             if not useSCCs:
-                order += partialOrder
+                random.seed(SEED)
+                sortOrder = sorted(partialOrder, key=lambda a: a.name)
+                random.shuffle(sortOrder)
+                order += sortOrder
             else:
                 subGraph = self.affectedGraph.getSubGraph(partialOrder)
                 graphOrder = subGraph.getOrderFromGraph()
                 order += graphOrder
         leftActions = set(self.actions) - usedActions
         if not useSCCs:
-            order += leftActions
+            random.seed(SEED)
+            sortOrder = sorted(leftActions, key=lambda a: a.name)
+            random.shuffle(sortOrder)
+            order += sortOrder
         else:
             graphOrder = self.affectedGraph.getSubGraph(leftActions).getOrderFromGraph()
             order += graphOrder

@@ -21,17 +21,17 @@ class SMTSolver:
         self.assertions: List[SMTExpression] = list()
         self.softAssertions: List[SMTExpression] = list()
         self.pddl2smt: PDDL2SMT = pddl2smt
-        self.maximize = maximize
+        self.maximize = True
 
         if self.maximize:
             self.solver = Optimize()
             self.z3: Solver = Solver("z3",
-                                     logic=QF_LRA,
+                                     logic=QF_NRA,
                                      incremental=True,
                                      generate_models=True)
         else:
             self.solver: Portfolio = Portfolio(["z3"],
-                                               logic=QF_LRA,
+                                               logic=QF_NRA,
                                                incremental=True,
                                                generate_models=True)
 

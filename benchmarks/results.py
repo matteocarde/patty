@@ -6,10 +6,9 @@ from typing import Dict, List
 
 from classes.Result import Result
 
-SMT_SOLVERS = {'SpringRoll', "PATTY", "PATTY-STATIC", "PATTY-GBFS", "PATTY-ASTAR", "PATTY-GBFS-MAX", "PATTY-ASTAR-MAX",
-               "PATTY-GBFS-MAX-NO-P", "PATTY-ASTAR-MAX-NO-P",
+SMT_SOLVERS = {'SpringRoll', "PATTY", "PATTY-MAX", "PATTY-ASTAR", "PATTY-STATIC", "PATTY-STATIC-MAX",
                'RANTANPLAN', "OMT"}
-TIME_LIMIT = 30 * 1000
+TIME_LIMIT = 60 * 1000
 
 SOLVERS = {
     'SpringRoll': "SR",
@@ -20,14 +19,10 @@ SOLVERS = {
     'SMTPLAN+': "\mathrm{SMTP}^+",
     'OMT': "\mathrm{OMT}",
     "PATTY": "P",
-    "PATTY-SCC": "P_{SCC}",
+    "PATTY-MAX": "P^{max}",
     "PATTY-STATIC": "P_{cat}",
+    "PATTY-STATIC-MAX": "P_{cat}^{max}",
     "PATTY-ASTAR": "P_{A^*}",
-    "PATTY-ASTAR-SCC": "P_{A^*, SCC}",
-    "PATTY-ASTAR-MAX": "P_{A^*}",
-    "PATTY-ASTAR-MAX-SCCS": "P_{A^*, SCC}^{max}",
-    "PATTY-ASTAR-MAX-NO-P": "P_{A^*}^{max+}",
-    "PATTY-ASTAR-MAX-NO-P-SCCS": "P_{A^*, SCC}^{max+}",
 }
 
 DOMAINS = {
@@ -85,7 +80,7 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2023-10-19-MAX-v1"
+    exp = "2023-10-19-MAX-v2"
     file = f"benchmarks/results/{exp}.csv"
 
     joinWith = ["benchmarks/results/SEARCH-300.csv"] + [file]
@@ -234,18 +229,19 @@ def main():
         "columns": {
             "coverage": ("Coverage (\%)", {"SMT", "SEARCH"}),
             "time": ("Time (s)", {"SMT", "SEARCH"}),
-            "bound": ("Bound (Common)", {"SMT"}),
+            "bound": (r"Calls to \textsc{Solve}", {"SMT"}),
             "nOfVars": ("$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$", {"SMT"}),
             "nOfRules": ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}),
             # "lastCallsToSolver": (r"$\textsc{Solve}(\Pi^\prec)$ calls", {"SMT"}),
         },
         "planners": [{
-            'PATTY': "SMT",
-            'PATTY-STATIC': "SMT",
-            'PATTY-ASTAR-MAX': "SMT",
-            'PATTY-ASTAR-MAX-NO-P': "SMT",
+            # 'PATTY': "SMT",
+            'PATTY-MAX': "SMT",
+            # 'PATTY-STATIC': "SMT",
+            'PATTY-STATIC-MAX': "SMT",
+            'PATTY-ASTAR': "SMT"
         }, {
-            'PATTY-ASTAR-MAX': "SEARCH",
+            'PATTY-ASTAR': "SEARCH",
             'ENHSP': "SEARCH",
             'METRIC-FF': "SEARCH",
             "NFD": "SEARCH",
