@@ -5,9 +5,9 @@ from natsort import natsort
 # PLANNERS = ["PATTY", "PATTY-R-YICES", "PATTY-R-Z3-NL", "PATTY-NL", "PATTY-Z3", "SPRINGROLL"]
 PLANNERS = [
     "PATTY",
-    "PATTY-MAX",
+    # "PATTY-MAX",
     "PATTY-STATIC",
-    "PATTY-STATIC-MAX",
+    # "PATTY-STATIC-MAX",
     "PATTY-ASTAR",
     # "SPRINGROLL",
     # "RANTANPLAN",

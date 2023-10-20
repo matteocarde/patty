@@ -4,7 +4,7 @@ from unittest import TestCase
 from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
-from src.search.AStarSearch import AStarSearch
+from src.search.AStarSearchMax import AStarSearchMax
 from src.utils.Arguments import Arguments
 
 
@@ -12,7 +12,7 @@ class TestAStarHydroPower(TestCase):
 
     def setUp(self) -> None:
         domainFile = "../../files/ipc-2023/hydropower/domain.pddl"
-        problemFile = "../../files/ipc-2023/hydropower/instances/pfile01.pddl"
+        problemFile = "../../files/ipc-2023/hydropower/instances/pfile12.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)
@@ -21,7 +21,7 @@ class TestAStarHydroPower(TestCase):
         pass
 
     def test_solve(self):
-        solver = AStarSearch(self.gDomain, self.problem, self.args, maximize=True)
+        solver = AStarSearchMax(self.gDomain, self.problem, self.args)
         plan: NumericPlan = solver.solve()
 
         self.assertIsInstance(plan, NumericPlan)

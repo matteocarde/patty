@@ -23,7 +23,7 @@
 
 	;;;;;;;;;;;;advancing time
 
-	(:action advance_time
+	(:action time
 		:parameters(?t1 - time ?t2 - time)
 		:precondition (and
 			(timenow ?t1)

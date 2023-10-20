@@ -80,7 +80,7 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2023-10-19-MAX-v2"
+    exp = "2023-10-20-ORDER-v1"
     file = f"benchmarks/results/{exp}.csv"
 
     joinWith = ["benchmarks/results/SEARCH-300.csv"] + [file]
@@ -235,9 +235,9 @@ def main():
             # "lastCallsToSolver": (r"$\textsc{Solve}(\Pi^\prec)$ calls", {"SMT"}),
         },
         "planners": [{
-            # 'PATTY': "SMT",
+            'PATTY': "SMT",
             'PATTY-MAX': "SMT",
-            # 'PATTY-STATIC': "SMT",
+            'PATTY-STATIC': "SMT",
             'PATTY-STATIC-MAX': "SMT",
             'PATTY-ASTAR': "SMT"
         }, {
