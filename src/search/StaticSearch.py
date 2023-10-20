@@ -13,7 +13,7 @@ from src.utils.LogPrint import LogPrintLevel
 class StaticSearch(Search):
 
     def __init__(self, domain: GroundedDomain, problem: Problem, args: Arguments, useSCCs=False):
-        self.useSCCs = useSCCs
+        self.useSCCs = args.useSCCs
         super().__init__(domain, problem, args)
 
     def getPattern(self) -> Pattern:
@@ -69,8 +69,6 @@ class StaticSearch(Search):
             callsToSolver += 1
             solver.exit()
             self.ts.end(f"Solving Bound {bound}", console=self.console)
-
-
 
             if self.args.saveSMT:
                 self.saveSMT(bound, pddl2smt)

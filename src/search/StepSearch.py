@@ -12,8 +12,8 @@ from src.utils.LogPrint import LogPrintLevel
 
 class StepSearch(Search):
 
-    def __init__(self, domain: GroundedDomain, problem: Problem, args: Arguments, useSCCs=False):
-        self.useSCCs = useSCCs
+    def __init__(self, domain: GroundedDomain, problem: Problem, args: Arguments):
+        self.useSCCs = args.useSCCs
         super().__init__(domain, problem, args)
 
     def getPattern(self) -> Pattern:

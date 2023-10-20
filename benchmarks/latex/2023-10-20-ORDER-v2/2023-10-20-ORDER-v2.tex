@@ -1,0 +1,49 @@
+
+           \documentclass[11pt,landscape]{article}
+           \usepackage{graphicx}
+           \usepackage{lscape}
+           \usepackage{multirow}
+           \usepackage[a4paper,margin=1in,landscape]{geometry}
+
+           \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||ccc|cccc||ccc|cccc||ccc||ccc||ccc||}
+\hline
+ & \multicolumn{7}{c||}{Coverage (\%)}&\multicolumn{7}{c||}{Time (s)}&\multicolumn{3}{c||}{Calls to \textsc{Solve}}&\multicolumn{3}{c||}{$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$}&\multicolumn{3}{c||}{$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$}\\
+Domain & $P$&$P_{cat}$&$P_{A^*}$&$P_{A^*}$&$\mathrm{ENHSP}$&$\mathrm{FF}$&$\mathrm{NFD}$&$P$&$P_{cat}$&$P_{A^*}$&$P_{A^*}$&$\mathrm{ENHSP}$&$\mathrm{FF}$&$\mathrm{NFD}$&$P$&$P_{cat}$&$P_{A^*}$&$P$&$P_{cat}$&$P_{A^*}$&$P$&$P_{cat}$&$P_{A^*}$\\
+\hline
+\textit{Highly Numeric}&\textbf{6}&\textbf{7}&\textbf{11}&\textbf{10}&\textbf{6}&\textbf{0}&\textbf{0}&\textbf{2}&\textbf{1}&\textbf{8}&\textbf{9}&\textbf{1}&\textbf{0}&\textbf{1}&\textbf{10}&\textbf{10}&\textbf{9}&\textbf{6}&\textbf{8}&\textbf{9}&\textbf{6}&\textbf{8}&\textbf{9}\\\hline
+\textsc{BlockGrouping} (S)&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&10.0&-&2.17&2.12&\textbf{1.67}&\textbf{1.67}&47.99&54.18&-&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{174}&\textbf{174}&\textbf{174}&\textbf{432}&\textbf{432}&\textbf{432}\\
+\textsc{Counters} (S)&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&60.0&50.0&0.82&\textbf{0.81}&0.90&\textbf{0.90}&6.91&33.00&35.41&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{90}&\textbf{90}&\textbf{90}&\textbf{201}&\textbf{201}&\textbf{201}\\
+\textsc{Counters} (L)&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&45.0&40.0&25.0&\textbf{0.81}&0.82&0.82&\textbf{0.82}&48.53&36.05&45.40&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{94}&\textbf{94}&\textbf{94}&\textbf{198}&\textbf{198}&\textbf{198}\\
+\textsc{Drone} (S)&15.0&15.0&\textbf{80.0}&80.0&\textbf{85.0}&10.0&80.0&52.12&52.98&\textbf{28.94}&28.94&23.92&54.00&\textbf{17.39}&\textbf{5.67}&\textbf{5.67}&8.33&142&95&\textbf{54}&344&259&\textbf{136}\\
+\textsc{PlantWatering} (S)&-&-&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&10.0&60.0&-&-&\textbf{8.65}&\textbf{8.65}&9.80&60.49&89.17&-&-&\textbf{18.55}&346&\textbf{280}&300&920&\textbf{774}&835\\
+\textsc{Farmland} (S)&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&35.0&75.0&0.84&0.88&\textbf{0.79}&0.79&\textbf{0.74}&50.79&25.48&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{50}&\textbf{50}&\textbf{50}&\textbf{107}&\textbf{107}&\textbf{107}\\
+\textsc{Farmland} (L)&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&75.0&75.0&55.0&\textbf{0.77}&0.78&2.45&\textbf{2.45}&36.83&30.67&43.75&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{64}&\textbf{64}&\textbf{64}&\textbf{129}&\textbf{129}&\textbf{129}\\
+\textsc{HydroPower} (S)&60.0&60.0&\textbf{100.0}&\textbf{100.0}&10.0&5.0&5.0&35.46&35.52&\textbf{12.73}&\textbf{12.73}&54.43&57.00&57.06&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{298}&\textbf{298}&\textbf{298}&\textbf{640}&\textbf{640}&\textbf{640}\\
+\textsc{Sailing} (S)&85.0&95.0&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&5.0&50.0&16.86&16.31&\textbf{0.79}&\textbf{0.79}&1.45&57.00&30.28&\textbf{2.88}&\textbf{2.88}&\textbf{2.88}&110&88&\textbf{55}&210&188&\textbf{104}\\
+\textsc{Sailing} (L)&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&20.0&40.0&70.0&4.46&2.61&\textbf{1.73}&\textbf{1.73}&49.21&38.87&46.21&\textbf{1.45}&\textbf{1.45}&\textbf{1.45}&66&61&\textbf{57}&167&160&\textbf{147}\\
+\textsc{LineExchange} (L)&89.8&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&54.6&55.6&47.2&12.24&3.82&\textbf{1.48}&\textbf{1.48}&37.87&32.61&43.29&\textbf{4.01}&\textbf{4.01}&5.85&192&\textbf{127}&133&464&\textbf{360}&375
+\\\hline
+\textit{Lowly Numeric}&\textbf{2}&\textbf{1}&\textbf{9}&\textbf{4}&\textbf{4}&\textbf{2}&\textbf{1}&\textbf{1}&\textbf{0}&\textbf{8}&\textbf{3}&\textbf{2}&\textbf{2}&\textbf{2}&\textbf{7}&\textbf{7}&\textbf{6}&\textbf{2}&\textbf{4}&\textbf{5}&\textbf{3}&\textbf{3}&\textbf{5}\\\hline
+\textsc{Delivery} (S)&10.0&10.0&\textbf{30.0}&30.0&65.0&\textbf{95.0}&45.0&56.62&56.65&\textbf{45.42}&45.42&37.22&36.52&\textbf{33.20}&\textbf{3.00}&\textbf{3.00}&\textbf{3.00}&809&610&\textbf{415}&2427&2219&\textbf{1439}\\
+\textsc{Expedition} (S)&-&-&\textbf{10.0}&10.0&10.0&-&\textbf{15.0}&-&-&\textbf{54.83}&54.83&54.33&-&\textbf{51.61}&-&-&\textbf{7.00}&294&\textbf{242}&293&\textbf{713}&728&906\\
+\textsc{MPrime} (S)&30.0&25.0&\textbf{45.0}&45.0&\textbf{85.0}&80.0&65.0&43.89&45.65&\textbf{37.17}&37.17&13.74&\textbf{9.61}&49.61&\textbf{2.20}&\textbf{2.20}&2.60&617&\textbf{461}&465&1664&\textbf{1490}&1504\\
+\textsc{PathwaysMetric} (S)&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&60.0&50.0&5.0&6.78&6.90&\textbf{4.82}&\textbf{4.82}&37.94&34.86&57.02&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{1148}&\textbf{1148}&\textbf{1148}&\textbf{1937}&\textbf{1937}&\textbf{1937}\\
+\textsc{Rover} (S)&40.0&40.0&\textbf{50.0}&\textbf{50.0}&35.0&\textbf{50.0}&20.0&37.83&37.97&\textbf{36.32}&36.32&48.45&\textbf{28.43}&49.02&\textbf{2.00}&\textbf{2.00}&2.75&701&455&\textbf{427}&1663&1415&\textbf{1302}\\
+\textsc{Satellite} (S)&-&-&\textbf{30.0}&\textbf{30.0}&\textbf{30.0}&20.0&20.0&-&-&\textbf{45.03}&\textbf{45.03}&54.61&45.88&52.70&-&-&\textbf{4.33}&\textbf{629}&962&668&\textbf{1978}&3383&2292\\
+\textsc{Sugar} (S)&25.0&25.0&\textbf{100.0}&\textbf{100.0}&95.0&65.0&25.0&50.31&50.68&\textbf{6.28}&\textbf{6.28}&11.69&35.90&52.93&\textbf{2.20}&\textbf{2.20}&3.20&919&\textbf{669}&722&2283&\textbf{1944}&2130\\
+\textsc{TPP} (L)&\textbf{10.0}&5.0&\textbf{10.0}&10.0&\textbf{20.0}&10.0&10.0&\textbf{54.19}&57.05&54.26&54.26&\textbf{52.33}&53.68&54.02&\textbf{2.00}&\textbf{2.00}&\textbf{2.00}&176&147&\textbf{93}&477&448&\textbf{262}\\
+\textsc{ZenoTravel} (S)&45.0&50.0&\textbf{55.0}&55.0&\textbf{100.0}&55.0&45.0&36.84&36.40&\textbf{28.43}&28.43&\textbf{20.37}&27.00&46.47&\textbf{1.56}&\textbf{1.56}&\textbf{1.56}&371&330&\textbf{258}&1195&1151&\textbf{861}
+\\\hline
+\textit{Total}&\textbf{8}&\textbf{8}&\textbf{20}&\textbf{14}&\textbf{10}&\textbf{2}&\textbf{1}&\textbf{3}&\textbf{1}&\textbf{16}&\textbf{12}&\textbf{3}&\textbf{2}&\textbf{3}&\textbf{17}&\textbf{17}&\textbf{15}&\textbf{8}&\textbf{12}&\textbf{14}&\textbf{9}&\textbf{11}&\textbf{14}\\\hline
+
+        \end{tabular}}
+        \caption{Comparative analysis between the search-based solver $\textsc{ENHSP}$ and  $\textsc{Patty}$ run with the standard algorithm ($P$),  $\textsc{SolveConcat}$ ($P_{cat}$), \textsc{SolveGBFS} ($P_\text{gbfs}$), \textsc{SolveA}$^*$ ($P_{A^*}$), \textsc{SolveGBFSMax} ($P_\text{gbfs}^{max}$), \textsc{SolveA*Max} ($P_{A^*}^{max}$). ''Best numbers'' are in bold.  The numbers in the Highly and Lowly Numeric rows are the number of bolds in the subcolumn.}
+        \label{tab:experiments}
+        \end{table*}
+        
+\end{document}

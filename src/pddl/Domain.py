@@ -91,7 +91,8 @@ class Domain:
         gDomain.actions = set(orderedActions)
 
         from src.plan.AffectedGraph import AffectedGraph
-        gDomain.affectedGraph = AffectedGraph.fromActions(gDomain.actions)
+        sortedActions = sorted(gDomain.actions, key=lambda a: a.name)
+        gDomain.affectedGraph = AffectedGraph.fromActions(sortedActions)
         gDomain.arpg = ARPG(gDomain, initialState, problem.goal)
 
         if console:

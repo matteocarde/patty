@@ -9,10 +9,11 @@ NAME = "PATTY"
 class Patty(Planner):
     name = NAME
 
-    def __init__(self, name, search="static", maximize=False):
+    def __init__(self, name, search="static", maximize=False, useSCCs=False):
         self.search = search
         self.maximize = maximize
         self.name = name
+        self.useSCCs = useSCCs
         super().__init__()
 
     @staticmethod
@@ -44,4 +45,6 @@ class Patty(Planner):
         ]
         if self.maximize:
             cmd += ["--maximize"]
+        if self.useSCCs:
+            cmd += ["--use-sccs"]
         return cmd

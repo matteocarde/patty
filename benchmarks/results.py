@@ -80,7 +80,7 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2023-10-20-ORDER-v1"
+    exp = "2023-10-20-ORDER-v2"
     file = f"benchmarks/results/{exp}.csv"
 
     joinWith = ["benchmarks/results/SEARCH-300.csv"] + [file]
@@ -176,9 +176,9 @@ def main():
             t[domain]["length"][solver] = r(statistics.mean([r.planLength for r in pResult if r.solved]), 0) if \
                 t[domain]["coverage"][solver] != "-" else "-"
 
-            v = [r.nOfVars for r in pResult if r.nOfVars > 0 and r.problem in commonlyGrounded]
+            v = [r.nOfVars for r in pResult if r.nOfVars > 0 and r.problem in commonlySolved]
             t[domain]["nOfVars"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
-            v = [r.nOfRules for r in pResult if r.nOfRules > 0 and r.problem in commonlyGrounded]
+            v = [r.nOfRules for r in pResult if r.nOfRules > 0 and r.problem in commonlySolved]
             t[domain]["nOfRules"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
             v = [r.lastCallsToSolver for r in pResult if r.lastCallsToSolver > 0 and r.problem in commonlySolved]
             t[domain]["lastCallsToSolver"][solver] = r(statistics.mean(v), 2) if len(v) else "-"
@@ -236,9 +236,9 @@ def main():
         },
         "planners": [{
             'PATTY': "SMT",
-            'PATTY-MAX': "SMT",
+            # 'PATTY-MAX': "SMT",
             'PATTY-STATIC': "SMT",
-            'PATTY-STATIC-MAX': "SMT",
+            # 'PATTY-STATIC-MAX': "SMT",
             'PATTY-ASTAR': "SMT"
         }, {
             'PATTY-ASTAR': "SEARCH",

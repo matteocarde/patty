@@ -31,11 +31,11 @@ def main():
 
         solver: Search
         if args.search == "astar":
-            solver = AStarSearchMax(gDomain, problem, args, useSCCs=args.useSCCs)
+            solver = AStarSearchMax(gDomain, problem, args)
         elif args.search == "step":
-            solver = StepSearch(gDomain, problem, args, useSCCs=args.useSCCs)
+            solver = StepSearch(gDomain, problem, args)
         else:
-            solver = StaticSearch(gDomain, problem, args, useSCCs=args.useSCCs)
+            solver = StaticSearch(gDomain, problem, args)
         plan: NumericPlan = solver.solve()
 
         console.log(plan.toValString(), LogPrintLevel.PLAN)

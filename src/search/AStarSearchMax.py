@@ -14,11 +14,10 @@ from src.utils.LogPrint import LogPrintLevel
 
 class AStarSearchMax(Search):
 
-    def __init__(self, domain: GroundedDomain, problem: Problem, args: Arguments, maximize=False, avoidP=False,
-                 useSCCs=False):
+    def __init__(self, domain: GroundedDomain, problem: Problem, args: Arguments, maximize=False, avoidP=False):
         self.maximize = maximize
         self.avoidP = avoidP
-        self.useSCCs = useSCCs
+        self.useSCCs = args.useSCCs
         super().__init__(domain, problem, args)
 
     def solve(self) -> NumericPlan:
