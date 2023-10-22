@@ -12,7 +12,7 @@ class TestAStarHydroPower(TestCase):
 
     def setUp(self) -> None:
         domainFile = "../../files/ipc-2023/hydropower/domain.pddl"
-        problemFile = "../../files/ipc-2023/hydropower/instances/pfile12.pddl"
+        problemFile = "../../files/ipc-2023/hydropower/instances/pfile2.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)

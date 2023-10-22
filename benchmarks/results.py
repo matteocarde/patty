@@ -80,7 +80,7 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2023-10-20-ORDER-v2"
+    exp = "2023-10-20-ORDER-v3"
     file = f"benchmarks/results/{exp}.csv"
 
     joinWith = ["benchmarks/results/SEARCH-300.csv"] + [file]

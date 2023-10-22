@@ -21,7 +21,7 @@ class SMTSolver:
         self.assertions: List[SMTExpression] = list()
         self.softAssertions: List[SMTExpression] = list()
         self.pddl2smt: PDDL2SMT = pddl2smt
-        self.maximize = maximize
+        self.maximize = True
 
         if self.maximize:
             self.solver = Optimize()

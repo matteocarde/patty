@@ -5,6 +5,7 @@ from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
 from src.search.AStarSearchMax import AStarSearchMax
+from src.search.StepSearch import StepSearch
 from src.utils.Arguments import Arguments
 
 
@@ -12,7 +13,7 @@ class TestAStarHydroPowerSCC(TestCase):
 
     def setUp(self) -> None:
         domainFile = "../../files/ipc-2023/hydropower/domain.pddl"
-        problemFile = "../../files/ipc-2023/hydropower/instances/pfile12.pddl"
+        problemFile = "../../files/ipc-2023/hydropower/instances/pfile02.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)
@@ -22,7 +23,7 @@ class TestAStarHydroPowerSCC(TestCase):
 
     def test_solve(self):
         self.args.useSCCs = True
-        solver = AStarSearchMax(self.gDomain, self.problem, self.args)
+        solver = StepSearch(self.gDomain, self.problem, self.args)
         plan: NumericPlan = solver.solve()
 
         self.assertIsInstance(plan, NumericPlan)
