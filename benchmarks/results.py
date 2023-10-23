@@ -8,7 +8,7 @@ from classes.Result import Result
 
 SMT_SOLVERS = {'SpringRoll', "PATTY", "PATTY-MAX", "PATTY-ASTAR", "PATTY-STATIC", "PATTY-STATIC-MAX",
                'RANTANPLAN', "OMT"}
-TIME_LIMIT = 60 * 1000
+TIME_LIMIT = 300 * 1000
 
 SOLVERS = {
     'SpringRoll': "SR",
@@ -80,7 +80,7 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2023-10-20-ORDER-v3"
+    exp = "2023-10-22-FINAL-v1"
     file = f"benchmarks/results/{exp}.csv"
 
     joinWith = ["benchmarks/results/SEARCH-300.csv"] + [file]
@@ -234,18 +234,24 @@ def main():
             "nOfRules": ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}),
             # "lastCallsToSolver": (r"$\textsc{Solve}(\Pi^\prec)$ calls", {"SMT"}),
         },
-        "planners": [{
-            'PATTY': "SMT",
-            # 'PATTY-MAX': "SMT",
-            'PATTY-STATIC': "SMT",
-            # 'PATTY-STATIC-MAX': "SMT",
-            'PATTY-ASTAR': "SMT"
-        }, {
-            'PATTY-ASTAR': "SEARCH",
-            'ENHSP': "SEARCH",
-            'METRIC-FF': "SEARCH",
-            "NFD": "SEARCH",
-        }],
+        "planners": [
+            {
+                'PATTY': "SMT",
+                'PATTY-STATIC': "SMT",
+                'PATTY-ASTAR': "SMT",
+                'ENHSP': "SEARCH",
+                'METRIC-FF': "SEARCH",
+                "NFD": "SEARCH",
+            },
+            # {
+            #     # 'PATTY': "SMT",
+            #     # 'PATTY-STATIC': "SMT",
+            #     'PATTY-ASTAR': "SEARCH",
+            #     'ENHSP': "SEARCH",
+            #     'METRIC-FF': "SEARCH",
+            #     "NFD": "SEARCH",
+            # }
+        ],
         "caption": r"Comparative analysis between the search-based solver $\textsc{ENHSP}$ and  $\textsc{Patty}$ run "
                    r"with the standard algorithm ($P$),  $\textsc{SolveConcat}$ ($P_{cat}$), \textsc{SolveGBFS} ("
                    r"$P_\text{gbfs}$), \textsc{SolveA}$^*$ ($P_{A^*}$), \textsc{SolveGBFSMax} ($P_\text{gbfs}^{"
