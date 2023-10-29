@@ -14,9 +14,7 @@ from src.utils.LogPrint import LogPrintLevel
 
 class AStarSearchMax(Search):
 
-    def __init__(self, domain: GroundedDomain, problem: Problem, args: Arguments, maximize=False, avoidP=False):
-        self.maximize = maximize
-        self.avoidP = avoidP
+    def __init__(self, domain: GroundedDomain, problem: Problem, args: Arguments):
         self.useSCCs = args.useSCCs
         super().__init__(domain, problem, args)
 
@@ -47,7 +45,7 @@ class AStarSearchMax(Search):
                 pattern=patF,
                 bound=1,
                 relaxGoal=True,
-                subgoalsAchieved=subgoalsAchieved if not self.avoidP else set(),
+                subgoalsAchieved=subgoalsAchieved,
                 encoding=self.args.encoding,
                 rollBound=self.args.rollBound,
                 hasEffectAxioms=self.args.hasEffectAxioms

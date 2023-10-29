@@ -173,7 +173,8 @@ def main():
             t[domain]["time"][solver] = r(statistics.mean([r.time if r.solved else TIME_LIMIT for r in pResult]) / 1000,
                                           2) if \
                 t[domain]["coverage"][solver] != "-" else "-"
-            t[domain]["length"][solver] = r(statistics.mean([r.planLength for r in pResult if r.solved]), 0) if \
+            t[domain]["length"][solver] = r(
+                statistics.mean([r.planLength for r in pResult if r.solved and r.problem in commonlySolved]), 0) if \
                 t[domain]["coverage"][solver] != "-" else "-"
 
             v = [r.nOfVars for r in pResult if r.nOfVars > 0 and r.problem in commonlySolved]
@@ -220,6 +221,7 @@ def main():
         "nOfVars": -1,
         "nOfRules": -1,
         "lastCallsToSolver": -1,
+        "length": -1
     }
 
     tables = [{
@@ -232,6 +234,7 @@ def main():
             "bound": (r"Calls to \textsc{Solve}", {"SMT"}),
             "nOfVars": ("$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$", {"SMT"}),
             "nOfRules": ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}),
+            # "length": ("Plan Length", {"SMT", "SEARCH"}),
             # "lastCallsToSolver": (r"$\textsc{Solve}(\Pi^\prec)$ calls", {"SMT"}),
         },
         "planners": [
@@ -239,18 +242,18 @@ def main():
                 'PATTY': "SMT",
                 'PATTY-STATIC': "SMT",
                 'PATTY-ASTAR': "SMT",
+                # 'ENHSP': "SEARCH",
+                # 'METRIC-FF': "SEARCH",
+                # "NFD": "SEARCH",
+            },
+            {
+                # 'PATTY': "SMT",
+                # 'PATTY-STATIC': "SMT",
+                'PATTY-ASTAR': "SEARCH",
                 'ENHSP': "SEARCH",
                 'METRIC-FF': "SEARCH",
                 "NFD": "SEARCH",
-            },
-            # {
-            #     # 'PATTY': "SMT",
-            #     # 'PATTY-STATIC': "SMT",
-            #     'PATTY-ASTAR': "SEARCH",
-            #     'ENHSP': "SEARCH",
-            #     'METRIC-FF': "SEARCH",
-            #     "NFD": "SEARCH",
-            # }
+            }
         ],
         "caption": r"Comparative analysis between the search-based solver $\textsc{ENHSP}$ and  $\textsc{Patty}$ run "
                    r"with the standard algorithm ($P$),  $\textsc{SolveConcat}$ ($P_{cat}$), \textsc{SolveGBFS} ("

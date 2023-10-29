@@ -21,7 +21,7 @@ class TestAStarCountersLinear(TestCase):
         pass
 
     def test_solve(self):
-        solver = AStarSearchMax(self.gDomain, self.problem, self.args, maximize=True)
+        solver = AStarSearchMax(self.gDomain, self.problem, self.args)
         plan: NumericPlan = solver.solve()
 
         self.assertIsInstance(plan, NumericPlan)

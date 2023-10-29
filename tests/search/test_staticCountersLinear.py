@@ -22,7 +22,6 @@ class TestAStarCountersLinear(TestCase):
 
     def test_solve(self):
         self.args.printPattern = True
-        self.args.saveSMT = "test"
         solver = StaticSearch(self.gDomain, self.problem, self.args)
         plan: NumericPlan = solver.solve()
 
