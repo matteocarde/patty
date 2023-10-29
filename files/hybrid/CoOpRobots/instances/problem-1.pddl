@@ -33,8 +33,7 @@
 
   (:goal
     (and
-      (atObject ball1 roomC))
-      ;(atRobot robot1 roomB)
+      (atObject ball1 roomC)
     )
   )
 )

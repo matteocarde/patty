@@ -50,22 +50,6 @@
     )
   )
 
-  (:process moving
-    :parameters (?r - robot ?a - room ?b - room)
-    :precondition (and
-      (link ?a ?b)
-      (moving ?r ?a ?b)
-      (inMovement ?r)
-      (< (distanceRun ?r ?a ?b) (distance ?a ?b))
-      (>= (battery ?r) 20)
-    )
-    :effect (and
-      (increase
-        (distanceRun ?r ?a ?b)
-        (* (speed ?r) #t))
-    )
-  )
-
   (:event endMoving
     :parameters (?r - robot ?a - room ?b - room)
     :precondition (and
@@ -94,31 +78,6 @@
       (charging ?r)
       (assign (d ?r) (deltaCharging ?r))
       (assign (tk ?r) (time))
-    )
-  )
-
-  (:process charging
-    :parameters (?r - robot)
-    :precondition (and
-      (charging ?r)
-      (< (battery ?r) 100)
-    )
-    :effect (and
-      (increase (battery ?r) (* #t 1))
-    )
-  )
-
-  (:process discharging
-    :parameters (?r - robot)
-    :precondition (and
-      (handsFull ?r)
-      (not (charging ?r))
-      (>= (battery ?r) 0)
-    )
-    :effect (and
-      (decrease
-        (battery ?r)
-        (* #t (* (speed ?r) (dischargeRate ?r))))
     )
   )
 
@@ -175,6 +134,47 @@
     )
     :effect (and
       (assign (tk ?r) (- (+ (time) (d ?r)) #t))
+    )
+  )
+
+  (:process charging
+    :parameters (?r - robot)
+    :precondition (and
+      (charging ?r)
+      (< (battery ?r) 100)
+    )
+    :effect (and
+      (increase (battery ?r) (* #t 1))
+    )
+  )
+
+  (:process discharging
+    :parameters (?r - robot)
+    :precondition (and
+      (handsFull ?r)
+      (not (charging ?r))
+      (>= (battery ?r) 0)
+    )
+    :effect (and
+      (decrease
+        (battery ?r)
+        (* #t (* (speed ?r) (dischargeRate ?r))))
+    )
+  )
+
+  (:process moving
+    :parameters (?r - robot ?a - room ?b - room)
+    :precondition (and
+      (link ?a ?b)
+      (moving ?r ?a ?b)
+      (inMovement ?r)
+      (< (distanceRun ?r ?a ?b) (distance ?a ?b))
+      (>= (battery ?r) 20)
+    )
+    :effect (and
+      (increase
+        (distanceRun ?r ?a ?b)
+        (* (speed ?r) #t))
     )
   )
 

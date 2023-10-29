@@ -2,9 +2,9 @@
 (define (problem descent_prob)
 	(:domain descent)
 	(:init
-(= (ck ) 0)
-(= (tk ) 0)
-(= (delta ) 1)
+		(= (time) 0)
+		(= (tk) 0)
+		(= (delta) 1)
 		(= d_final 100)
 		(= d_margin 10)
 		(= v_margin 10)
@@ -21,7 +21,9 @@
 		;;(not (landed))
 		;;(not (crashed))
 	)
-	(:goal (and (landed) (not (block))))
-	(:metric minimize(total-time))
+	(:goal
+		(and (landed) (not (block)))
+	)
+	(:metric minimize(total-time)
+	)
 )
-	

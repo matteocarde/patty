@@ -6,9 +6,9 @@
     xyaxes ZAXES - axis
   )
   (:init
-(= (ck ) 0)
-(= (tk ) 0)
-(= (delta ) 1)
+    (= (ck) 0)
+    (= (tk) 0)
+    (= (delta) 1)
 
     (= (speed-i) 10)
     (= (speed-d) 10)
@@ -44,5 +44,6 @@
 
       (< (angle L3 xyaxes) 343.4)
 
-    ))
+    )
+  )
 )

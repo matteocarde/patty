@@ -4,7 +4,7 @@
   ;(:objects  )
 
   (:init
-(= (ck ) 0)
+(= (time) 0)
 (= (tk ) 0)
 (= (delta ) 1)
   (= (d) 0.0)

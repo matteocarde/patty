@@ -27,7 +27,6 @@
     (affects L2 L4)
     (affects L3 L4)
 
-
     (= (ck) 0)
     (= (tk) 0)
     (= (delta) 1)

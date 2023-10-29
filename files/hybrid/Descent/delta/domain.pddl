@@ -12,7 +12,7 @@
 	)
 	(:functions
 		(delta)
-		(ck)
+		(time)
 		(tk)
 		(M)
 		(q)
@@ -31,10 +31,10 @@
 	(:event tic
 		:parameters ()
 		:precondition (and
-			(= (ck) (+ (tk) #t))
+			(= (time) (+ (tk) #t))
 		)
 		:effect (and
-			(assign (tk) (- (+ (ck) (delta)) #t))
+			(assign (tk) (- (+ (time) (delta)) #t))
 		)
 	)
 
@@ -54,7 +54,7 @@
 			)
 		)
 		:effect (and
-			(increase (ck) (* #t 1.0))
+			(increase (time) (* #t 1.0))
 		)
 	)
 
@@ -76,7 +76,7 @@
 	(:action start_descent
 		:parameters()
 		:precondition (and
-			(= (ck) (tk))
+			(= (time) (tk))
 			(stop)
 			(not (block))
 		)
@@ -90,7 +90,7 @@
 	(:action land
 		:parameters ()
 		:precondition (and
-			(= (ck) (tk))
+			(= (time) (tk))
 			(not (block))
 			(landing)
 			(< (v) (v_margin)) (< (d) (d_final)) (> (d) (- (d_final) (d_margin)))
@@ -104,7 +104,7 @@
 	(:action start-thrust
 		:parameters ()
 		:precondition (and
-			(= (ck) (tk))
+			(= (time) (tk))
 			(not (thrusting))
 			(landing)
 			(not (block))
@@ -118,7 +118,7 @@
 	(:action stop-thrust
 		:parameters ()
 		:precondition (and
-			(= (ck) (tk))
+			(= (time) (tk))
 			(thrusting)
 			(not (block)))
 		:effect (and
@@ -129,6 +129,7 @@
 	(:action thrust-finished
 		:parameters ()
 		:precondition (and
+			(= (time) (tk))
 			(thrusting)
 			(< (thrust-duration) (/ (- (M) (M_min)) q))
 		)

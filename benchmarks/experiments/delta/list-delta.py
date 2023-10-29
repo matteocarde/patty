@@ -75,10 +75,10 @@ def main():
             "DELTA": "hybrid/Linear-Car-2/delta",
             "NODELTA": "hybrid/Linear-Car-2"
         },
-        "Linear-Generator": {
-            "DELTA": "hybrid/Linear-Generator/delta",
-            "NODELTA": "hybrid/Linear-Generator"
-        },
+        # "Linear-Generator": {
+        #     "DELTA": "hybrid/Linear-Generator/delta",
+        #     "NODELTA": "hybrid/Linear-Generator"
+        # },
         # "OT-Car": {
         #     "DELTA": "hybrid/OT-Car/delta",
         #     "NODELTA": "hybrid/OT-Car"

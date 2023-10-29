@@ -8,7 +8,7 @@
 	)
 
 	(:functions
-		(ck)
+		(time)
 		(tk)
 		(delta)
 		(d)
@@ -22,10 +22,10 @@
 	(:event tic
 		:parameters ()
 		:precondition (and
-			(= (ck) (+ (tk) #t))
+			(= (time) (+ (tk) #t))
 		)
 		:effect (and
-			(assign (tk) (- (+ (ck) (delta)) #t))
+			(assign (tk) (- (+ (time) (delta)) #t))
 		)
 	)
 
@@ -35,7 +35,7 @@
 			(engine_running)
 		)
 		:effect (and
-			(increase (ck) (* #t 1.0))
+			(increase (time) (* #t 1.0))
 		)
 	)
 
@@ -56,7 +56,7 @@
 	(:action accelerate
 		:parameters ()
 		:precondition (and
-			(= (ck) (tk))
+			(= (time) (tk))
 			(< (a) (max_acceleration))
 			(engine_running)
 		)
@@ -79,7 +79,7 @@
 	(:action stop_car
 		:parameters ()
 		:precondition (and
-			(= (ck) (tk))
+			(= (time) (tk))
 			(> (v) -0.1)
 			(< (v) 0.1)
 			(= (a) 0.0)
@@ -96,7 +96,7 @@
 	(:action start_car
 		:parameters ()
 		:precondition (and
-			(= (ck) (tk))
+			(= (time) (tk))
 			(engine_stopped)
 		)
 		:effect (and
@@ -108,7 +108,7 @@
 	(:action decelerate
 		:parameters ()
 		:precondition (and
-			(= (ck) (tk))
+			(= (time) (tk))
 			(> (a) (min_acceleration))
 			(engine_running)
 		)

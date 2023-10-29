@@ -2,7 +2,7 @@
 (define (problem descent_prob)
 	(:domain descent)
 	(:init
-(= (ck ) 0)
+(= (time) 0)
 (= (tk ) 0)
 (= (delta ) 1)
 		(= d_final 300)
