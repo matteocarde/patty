@@ -6,6 +6,7 @@
 	(:init
 		(= (time) 0)
 		(= (tk) 0)
+		(= (dcost) 0)
 		(= (delta) 1)
 		(= (d) 0.0)
 		(= (v) 0.0)
@@ -23,4 +24,8 @@
 			(engine_stopped)
 		)
 	)
+
+	; (:metric minimize
+	; 	(dcost)
+	; )
 )

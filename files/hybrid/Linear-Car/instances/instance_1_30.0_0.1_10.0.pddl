@@ -4,7 +4,7 @@
 	;(:objects  )
 
 	(:init
-		(= (d) 10.0)
+		(= (d) 0.0)
 		(= (v) 0.0)
 		(engine_stopped)
 		(= (a) 0.0)
@@ -20,24 +20,5 @@
 			(engine_stopped)
 		)
 	)
+
 )
-
-; Executed Wrong Plan: d=10
-; 0: (start_car)
-; 0: (accelerate)
-; 0: -----waiting---- [1.0]
-; 1.0: (decelerate)
-; 1.0: -----waiting---- [290.0]
-; 290.0: (decelerate)
-; 290.0: -----waiting---- [291.0]
-; 291.0: (stop_car)
-
-; Correct given plan: d=0
-; 0: (start_car)
-; 0: (accelerate)
-; 0: -----waiting---- [1.0]
-; 1.0: (decelerate)
-; 1.0: -----waiting---- [300.0]
-; 300.0: (decelerate)
-; 300.0: -----waiting---- [301.0]
-; 301.0: (stop_car)

@@ -1,8 +1,6 @@
 (define (domain car_linear_mt_sc)
 	;(:requirements :fluents :durative-actions :duration-inequalities :adl :typing :time)
 	(:predicates
-		(alwaysfalse)
-		(edge)
 		(engine_running)
 		(engine_stopped)
 	)
@@ -17,6 +15,7 @@
 		(max_acceleration)
 		(min_acceleration)
 		(max_speed)
+		(dcost)
 	)
 
 	(:event tic
@@ -54,9 +53,22 @@
 
 	(:process moving
 		:parameters ()
-		:precondition (engine_running)
+		:precondition (and(engine_running))
 		:effect (and
 			(increase (v) (* #t (a))) ;; velocity changes because of the acceleration
+		)
+	)
+
+	(:action accelerate
+		:parameters ()
+		:precondition (and
+			(= (time) (tk))
+			(< (a) (max_acceleration))
+			(engine_running)
+		)
+		:effect (and
+			(increase (a) 1.0)
+			; (increase (dcost) 10)
 		)
 	)
 
@@ -73,20 +85,11 @@
 		)
 	)
 
-	(:action accelerate
-		:parameters ()
-		:precondition (and
-			(= (time) (tk))
-			(< (a) (max_acceleration))
-			(engine_running)
-		)
-		:effect (and(increase (a) 1.0))
-	)
-
 	(:action stop_car
 		:parameters ()
 		:precondition (and
 			(= (time) (tk))
+			(> (v) -0.1)
 			(< (v) 0.1)
 			(= (a) 0.0)
 			(engine_running)
@@ -95,6 +98,7 @@
 			(assign (v) 0.0)
 			(engine_stopped)
 			(not (engine_running))
+			; (increase (dcost) 10)
 		)
 
 	)
@@ -108,6 +112,7 @@
 		:effect (and
 			(engine_running)
 			(not (engine_stopped))
+			; (increase (dcost) 10)
 		)
 	)
 
@@ -118,6 +123,9 @@
 			(> (a) (min_acceleration))
 			(engine_running)
 		)
-		:effect (and(decrease (a) 1.0))
+		:effect (and
+			(decrease (a) 1.0)
+			; (increase (dcost) 10)
+		)
 	)
 )
