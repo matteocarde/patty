@@ -2,7 +2,6 @@ import csv
 import os
 import re
 import shutil
-import time
 from typing import Dict, List
 
 from matplotlib import pyplot as plt
@@ -10,7 +9,7 @@ from matplotlib.axes import Subplot
 
 from classes.Result import Result
 
-DOMAINS = ["CoOpRobots"]
+DOMAINS = ["BaxterMulti"]
 
 HEURISTICS = [
     "ENHSP-SAT-HMRP",
@@ -35,11 +34,11 @@ LINES = {
         "type": "NODELTA",
         "config": "-de 1 -dp 1 -dh 1"
     },
-    ("NODELTA", "-de 1 -dp 3 -dh 3"): {
+    ("NODELTA", "-de 1 -dp 5 -dh 5"): {
         "id": "2DELTA",
         "name": r"$2\delta$",
         "type": "NODELTA",
-        "config": "-de 1 -dp 3 -dh 3"
+        "config": "-de 1 -dp 5 -dh 5"
     },
     ("DELTA", "-de 1 -dp 1 -dh 1"): {
         "id": "KDELTA",
@@ -56,7 +55,7 @@ def problemToInt(problem):
 
 
 def main():
-    filename = "2023-09-29-TICKING-v3.csv"
+    filename = "2023-10-30-BAXTERMULTI-v1.csv"
     file = f"benchmarks/results/{filename}"
 
     results: [Result] = []
@@ -110,6 +109,8 @@ def main():
         plt.title(rf"${domain}$")
         fig, axs = plt.subplots(len(HEURISTICS), 1)
         for j, heuristic in enumerate(HEURISTICS):
+            if heuristic not in rDict[domain]:
+                continue
             ax: Subplot = axs[j]
             ax.set_title(rf"{heuristic}")
             ax.grid()

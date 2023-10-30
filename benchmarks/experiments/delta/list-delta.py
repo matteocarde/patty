@@ -5,47 +5,77 @@ from natsort import natsort
 
 PLANNERS = {
     "DELTA": [
-        "ENHSP-SAT-HMRP[-de 0.1 -dp 0.1 -dh 0.1]",
-        "ENHSP-SAT-HADD[-de 0.1 -dp 0.1 -dh 0.1]",
-        # "ENHSP-SAT-HMAX[-de 0.1 -dp 0.1 -dh 0.1]",
-        "ENHSP-SAT-AIBR[-de 0.1 -dp 0.1 -dh 0.1]",
-        # "ENHSP-SAT-HRADD[-de 0.1 -dp 0.1 -dh 0.1]",
-        "ENHSP-SAT-BLIND[-de 0.1 -dp 0.1 -dh 0.1]",
-        "ENHSP-OPT-HMRP[-de 0.1 -dp 0.1 -dh 0.1]",
-        "ENHSP-OPT-HADD[-de 0.1 -dp 0.1 -dh 0.1]",
-        # "ENHSP-OPT-HMAX[-de 0.1 -dp 0.1 -dh 0.1]",
-        "ENHSP-OPT-AIBR[-de 0.1 -dp 0.1 -dh 0.1]",
-        # "ENHSP-OPT-HRADD[-de 0.1 -dp 0.1 -dh 0.1]",
-        "ENHSP-OPT-BLIND[-de 0.1 -dp 0.1 -dh 0.1]"
+        "ENHSP-SAT-HMRP[-de 1 -dp 1 -dh 1]",
+        "ENHSP-SAT-HADD[-de 1 -dp 1 -dh 1]",
+        "ENHSP-SAT-AIBR[-de 1 -dp 1 -dh 1]",
+        "ENHSP-SAT-BLIND[-de 1 -dp 1 -dh 1]",
+        "ENHSP-OPT-HMRP[-de 1 -dp 1 -dh 1]",
+        "ENHSP-OPT-HADD[-de 1 -dp 1 -dh 1]",
+        "ENHSP-OPT-AIBR[-de 1 -dp 1 -dh 1]",
+        "ENHSP-OPT-BLIND[-de 1 -dp 1 -dh 1]"
     ],
     "NODELTA": [
-        "ENHSP-SAT-HMRP[-de 0.1 -dp 0.1 -dh 0.1]",
-        "ENHSP-SAT-HADD[-de 0.1 -dp 0.1 -dh 0.1]",
-        # "ENHSP-SAT-HMAX[-de 0.1 -dp 0.1 -dh 0.1]",
-        "ENHSP-SAT-AIBR[-de 0.1 -dp 0.1 -dh 0.1]",
-        # "ENHSP-SAT-HRADD[-de 0.1 -dp 0.1 -dh 0.1]",
-        "ENHSP-SAT-BLIND[-de 0.1 -dp 0.1 -dh 0.1]",
-        "ENHSP-OPT-HMRP[-de 0.1 -dp 0.1 -dh 0.1]",
-        "ENHSP-OPT-HADD[-de 0.1 -dp 0.1 -dh 0.1]",
-        # "ENHSP-OPT-HMAX[-de 0.1 -dp 0.1 -dh 0.1]",
-        "ENHSP-OPT-AIBR[-de 0.1 -dp 0.1 -dh 0.1]",
-        # "ENHSP-OPT-HRADD[-de 0.1 -dp 0.1 -dh 0.1]",
-        "ENHSP-OPT-BLIND[-de 0.1 -dp 0.1 -dh 0.1]",
+        "ENHSP-SAT-HMRP[-de 1 -dp 5 -dh 5]",
+        "ENHSP-SAT-HADD[-de 1 -dp 5 -dh 5]",
+        "ENHSP-SAT-AIBR[-de 1 -dp 5 -dh 5]",
+        "ENHSP-SAT-BLIND[-de 1 -dp 5 -dh 5]",
+        "ENHSP-OPT-HMRP[-de 1 -dp 5 -dh 5]",
+        "ENHSP-OPT-HADD[-de 1 -dp 5 -dh 5]",
+        "ENHSP-OPT-AIBR[-de 1 -dp 5 -dh 5]",
+        "ENHSP-OPT-BLIND[-de 1 -dp 5 -dh 5]",
 
-        "ENHSP-SAT-HMRP[-de 0.1 -dp 1 -dh 1]",
-        "ENHSP-SAT-HADD[-de 0.1 -dp 1 -dh 1]",
-        # "ENHSP-SAT-HMAX[-de 0.1 -dp 1 -dh 1]",
-        "ENHSP-SAT-AIBR[-de 0.1 -dp 1 -dh 1]",
-        # "ENHSP-SAT-HRADD[-de 0.1 -dp 1 -dh 1]",
-        "ENHSP-SAT-BLIND[-de 0.1 -dp 1 -dh 1]",
-        "ENHSP-OPT-HMRP[-de 0.1 -dp 1 -dh 1]",
-        "ENHSP-OPT-HADD[-de 0.1 -dp 1 -dh 1]",
-        # "ENHSP-OPT-HMAX[-de 0.1 -dp 1 -dh 1]",
-        "ENHSP-OPT-AIBR[-de 0.1 -dp 1 -dh 1]",
-        # "ENHSP-OPT-HRADD[-de 0.1 -dp 1 -dh 1]",
-        "ENHSP-OPT-BLIND[-de 0.1 -dp 1 -dh 1]"
+        "ENHSP-SAT-HMRP[-de 1 -dp 1 -dh 1]",
+        "ENHSP-SAT-HADD[-de 1 -dp 1 -dh 1]",
+        "ENHSP-SAT-AIBR[-de 1 -dp 1 -dh 1]",
+        "ENHSP-SAT-BLIND[-de 1 -dp 1 -dh 1]",
+        "ENHSP-OPT-HMRP[-de 1 -dp 1 -dh 1]",
+        "ENHSP-OPT-HADD[-de 1 -dp 1 -dh 1]",
+        "ENHSP-OPT-AIBR[-de 1 -dp 1 -dh 1]",
+        "ENHSP-OPT-BLIND[-de 1 -dp 1 -dh 1]",
+
+        # "ENHSP-SAT-HMRP[-de 0.1 -dp 1 -dh 1]",
+        # "ENHSP-SAT-HADD[-de 0.1 -dp 1 -dh 1]",
+        # "ENHSP-SAT-AIBR[-de 0.1 -dp 1 -dh 1]",
+        # "ENHSP-SAT-BLIND[-de 0.1 -dp 1 -dh 1]",
+        # "ENHSP-OPT-HMRP[-de 0.1 -dp 1 -dh 1]",
+        # "ENHSP-OPT-HADD[-de 0.1 -dp 1 -dh 1]",
+        # "ENHSP-OPT-AIBR[-de 0.1 -dp 1 -dh 1]",
+        # "ENHSP-OPT-BLIND[-de 0.1 -dp 1 -dh 1]"
     ]
 }
+
+
+# PLANNERS = {
+#     "DELTA": [
+#         "ENHSP-SAT-HMRP[-de 0.1 -dp 0.1 -dh 0.1]",
+#         "ENHSP-SAT-HADD[-de 0.1 -dp 0.1 -dh 0.1]",
+#         "ENHSP-SAT-AIBR[-de 0.1 -dp 0.1 -dh 0.1]",
+#         "ENHSP-SAT-BLIND[-de 0.1 -dp 0.1 -dh 0.1]",
+#         "ENHSP-OPT-HMRP[-de 0.1 -dp 0.1 -dh 0.1]",
+#         "ENHSP-OPT-HADD[-de 0.1 -dp 0.1 -dh 0.1]",
+#         "ENHSP-OPT-AIBR[-de 0.1 -dp 0.1 -dh 0.1]",
+#         "ENHSP-OPT-BLIND[-de 0.1 -dp 0.1 -dh 0.1]"
+#     ],
+#     "NODELTA": [
+#         "ENHSP-SAT-HMRP[-de 0.1 -dp 0.1 -dh 0.1]",
+#         "ENHSP-SAT-HADD[-de 0.1 -dp 0.1 -dh 0.1]",
+#         "ENHSP-SAT-AIBR[-de 0.1 -dp 0.1 -dh 0.1]",
+#         "ENHSP-SAT-BLIND[-de 0.1 -dp 0.1 -dh 0.1]",
+#         "ENHSP-OPT-HMRP[-de 0.1 -dp 0.1 -dh 0.1]",
+#         "ENHSP-OPT-HADD[-de 0.1 -dp 0.1 -dh 0.1]",
+#         "ENHSP-OPT-AIBR[-de 0.1 -dp 0.1 -dh 0.1]",
+#         "ENHSP-OPT-BLIND[-de 0.1 -dp 0.1 -dh 0.1]",
+#
+#         "ENHSP-SAT-HMRP[-de 0.1 -dp 1 -dh 1]",
+#         "ENHSP-SAT-HADD[-de 0.1 -dp 1 -dh 1]",
+#         "ENHSP-SAT-AIBR[-de 0.1 -dp 1 -dh 1]",
+#         "ENHSP-SAT-BLIND[-de 0.1 -dp 1 -dh 1]",
+#         "ENHSP-OPT-HMRP[-de 0.1 -dp 1 -dh 1]",
+#         "ENHSP-OPT-HADD[-de 0.1 -dp 1 -dh 1]",
+#         "ENHSP-OPT-AIBR[-de 0.1 -dp 1 -dh 1]",
+#         "ENHSP-OPT-BLIND[-de 0.1 -dp 1 -dh 1]"
+#     ]
+# }
 
 
 def main():
@@ -55,26 +85,30 @@ def main():
         #     "DELTA": "hybrid/CoOpRobots/delta",
         #     "NODELTA": "hybrid/CoOpRobots"
         # },
-        "Baxter": {
-            "DELTA": "hybrid/Baxter/delta",
-            "NODELTA": "hybrid/Baxter"
+        "BaxterMulti": {
+            "DELTA": "hybrid/BaxterMulti/delta",
+            "NODELTA": "hybrid/BaxterMulti"
         },
-        "Descent": {
-            "DELTA": "hybrid/Descent/delta",
-            "NODELTA": "hybrid/Descent"
-        },
-        "HVAC": {
-            "DELTA": "hybrid/HVAC/delta",
-            "NODELTA": "hybrid/HVAC"
-        },
-        "Linear-Car": {
-            "DELTA": "hybrid/Linear-Car/delta",
-            "NODELTA": "hybrid/Linear-Car"
-        },
-        "Linear-Car-2": {
-            "DELTA": "hybrid/Linear-Car-2/delta",
-            "NODELTA": "hybrid/Linear-Car-2"
-        },
+        # "Baxter": {
+        #     "DELTA": "hybrid/Baxter/delta",
+        #     "NODELTA": "hybrid/Baxter"
+        # },
+        # "Descent": {
+        #     "DELTA": "hybrid/Descent/delta",
+        #     "NODELTA": "hybrid/Descent"
+        # },
+        # "HVAC": {
+        #     "DELTA": "hybrid/HVAC/delta",
+        #     "NODELTA": "hybrid/HVAC"
+        # },
+        # "Linear-Car": {
+        #     "DELTA": "hybrid/Linear-Car/delta",
+        #     "NODELTA": "hybrid/Linear-Car"
+        # },
+        # "Linear-Car-2": {
+        #     "DELTA": "hybrid/Linear-Car-2/delta",
+        #     "NODELTA": "hybrid/Linear-Car-2"
+        # },
         # "Linear-Generator": {
         #     "DELTA": "hybrid/Linear-Generator/delta",
         #     "NODELTA": "hybrid/Linear-Generator"
@@ -83,10 +117,10 @@ def main():
         #     "DELTA": "hybrid/OT-Car/delta",
         #     "NODELTA": "hybrid/OT-Car"
         # },
-        "Solar-Rover": {
-            "DELTA": "hybrid/Solar-Rover/delta",
-            "NODELTA": "hybrid/Solar-Rover"
-        }
+        # "Solar-Rover": {
+        #     "DELTA": "hybrid/Solar-Rover/delta",
+        #     "NODELTA": "hybrid/Solar-Rover"
+        # }
 
     }
 
