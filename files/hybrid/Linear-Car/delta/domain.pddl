@@ -68,7 +68,6 @@
 		)
 		:effect (and
 			(increase (a) 1.0)
-			; (increase (dcost) 10)
 		)
 	)
 
@@ -98,7 +97,6 @@
 			(assign (v) 0.0)
 			(engine_stopped)
 			(not (engine_running))
-			; (increase (dcost) 10)
 		)
 
 	)
@@ -112,7 +110,6 @@
 		:effect (and
 			(engine_running)
 			(not (engine_stopped))
-			; (increase (dcost) 10)
 		)
 	)
 
@@ -125,7 +122,6 @@
 		)
 		:effect (and
 			(decrease (a) 1.0)
-			; (increase (dcost) 10)
 		)
 	)
 )

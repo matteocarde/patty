@@ -26,13 +26,13 @@ HEURISTICS = [
     # "ENHSP-SAT-HMAX",
     "ENHSP-SAT-AIBR",
     # "ENHSP-SAT-HRADD",
-    "ENHSP-SAT-BLIND",
+    # "ENHSP-SAT-BLIND",
     "ENHSP-OPT-HMRP",
     "ENHSP-OPT-HADD",
     # "ENHSP-OPT-HMAX",
     "ENHSP-OPT-AIBR",
     # "ENHSP-OPT-HRADD",
-    "ENHSP-OPT-BLIND"
+    # "ENHSP-OPT-BLIND"
 ]
 
 DELTAS = {
@@ -83,6 +83,8 @@ def main():
         domainType = r.domain.split("-")[-1]
         solver = r.solver.split("[")[0]
         config = r.solver.split("[")[1][:-1]
+        if (domainType, config) not in DELTAS:
+            continue
         line = DELTAS[(domainType, config)]
         lineId = line["id"]
         rDict[domain] = rDict.setdefault(domain, {})
@@ -144,10 +146,11 @@ def main():
         \centering
         \resizebox{\textwidth}{!}{""")
 
-    cArray = ["cc"] + ["|ccc" for d in DOMAINS]
+    nOfDeltas = len(DELTAS.values())
+    cArray = ["cc"] + ["|" + "c" * nOfDeltas for d in DOMAINS]
     latex.append(r"\begin{tabular}{" + ''.join(cArray) + "}")
 
-    dString = [r"\multicolumn{3}{|c}{" + d + "}" for d in DOMAINS]
+    dString = [r"\multicolumn{" + str(nOfDeltas) + "}{|c}{" + d + "}" for d in DOMAINS]
     latex.append(fr" & & " + "&".join(dString) + r"\\")
     lString = "&".join([l["name"] for l in DELTAS.values()] * len(DOMAINS))
     latex.append(fr"& & " + lString + r"\\")

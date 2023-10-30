@@ -18,13 +18,13 @@ HEURISTICS = [
     "ENHSP-SAT-HMAX",
     "ENHSP-SAT-AIBR",
     "ENHSP-SAT-HRADD",
-    "ENHSP-SAT-BLIND",
+    # "ENHSP-SAT-BLIND",
     "ENHSP-OPT-HMRP",
     "ENHSP-OPT-HADD",
     "ENHSP-OPT-HMAX",
     "ENHSP-OPT-AIBR",
     "ENHSP-OPT-HRADD",
-    "ENHSP-OPT-BLIND",
+    # "ENHSP-OPT-BLIND",
     "PORTFOLIO"
 ]
 
@@ -73,6 +73,8 @@ def main():
         domain = r.domain.split("-")[0]
         type = r.domain.split("-")[1]
         solver = r.solver.split("[")[0]
+        if solver not in HEURISTICS:
+            continue
         config = r.solver.split("[")[1][:-1]
         line = LINES[(type, config)]
         id = line["id"]

@@ -21,6 +21,7 @@
 	)
 
 	(:functions
+		(dcost)
 		(ck)
 		(delta)
 		(tk)
