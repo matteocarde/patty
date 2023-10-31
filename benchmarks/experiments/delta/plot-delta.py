@@ -9,21 +9,22 @@ from matplotlib.axes import Subplot
 
 from classes.Result import Result
 
+TIMEOUT = 120000
 DOMAINS = ["BaxterMulti"]
 
 HEURISTICS = [
     "ENHSP-SAT-HMRP",
     "ENHSP-SAT-HADD",
-    "ENHSP-SAT-HMAX",
+    # "ENHSP-SAT-HMAX",
     "ENHSP-SAT-AIBR",
-    "ENHSP-SAT-HRADD",
-    # "ENHSP-SAT-BLIND",
+    # "ENHSP-SAT-HRADD",
+    "ENHSP-SAT-BLIND",
     "ENHSP-OPT-HMRP",
     "ENHSP-OPT-HADD",
-    "ENHSP-OPT-HMAX",
+    # "ENHSP-OPT-HMAX",
     "ENHSP-OPT-AIBR",
-    "ENHSP-OPT-HRADD",
-    # "ENHSP-OPT-BLIND",
+    # "ENHSP-OPT-HRADD",
+    "ENHSP-OPT-BLIND",
     "PORTFOLIO"
 ]
 
@@ -55,7 +56,7 @@ def problemToInt(problem):
 
 
 def main():
-    filename = "2023-10-30-BAXTERMULTI-v1.csv"
+    filename = "2023-10-30-BAXTERMULTI-v2.csv"
     file = f"benchmarks/results/{filename}"
 
     results: [Result] = []
@@ -87,7 +88,7 @@ def main():
         portfolio[domain][id][r.problem] = portfolio[domain][id].setdefault(r.problem, [])
         portfolio[domain][id][r.problem].append(r)
 
-        r.time = r.time if r.solved else 60000
+        r.time = r.time if r.solved else TIMEOUT
 
     for domain in DOMAINS:
         for line in LINES.values():

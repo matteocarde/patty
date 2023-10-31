@@ -1,9 +1,9 @@
 #!/bin/bash
-DL_DELTA=25
-DL_NODELTA=10
-INSTANCE="instance_1_30.0_0.1_10.0.pddl";
+DL_DELTA=6
+DL_NODELTA=3
+INSTANCE="problem-10.pddl";
 SEARCH=gbfs
-HEURISTIC=aibr
+HEURISTIC=hadd
 T=$(date +%s)
 
 rm *.sp_log
@@ -12,14 +12,13 @@ rm *.sp_log
 enhsp \
   -o domain.pddl \
   -f instances/$INSTANCE \
-  -de 0.1 \
-  -dp 0.1 \
-  -dh 0.1 \
+  -de 1 \
+  -dp 1 \
+  -dh 1 \
+  -s $SEARCH \
+  -h $HEURISTIC\
   -dl $DL_NODELTA \
   -sjr \
-  -s $SEARCH \
-  -h $HEURISTIC \
-  -ties larger_g
 
 mv instances/$INSTANCE.sp_log sjr-1∂-$T.sp_log
 
@@ -27,14 +26,13 @@ mv instances/$INSTANCE.sp_log sjr-1∂-$T.sp_log
 enhsp \
   -o domain.pddl \
   -f instances/$INSTANCE \
-  -de 0.1 \
-  -dp 1 \
-  -dh 1 \
+  -de 1 \
+  -dp 5 \
+  -dh 5 \
   -dl $DL_NODELTA \
   -sjr \
   -s $SEARCH \
-  -h $HEURISTIC \
-  -ties larger_g
+  -h $HEURISTIC 
 
 mv instances/$INSTANCE.sp_log sjr-2∂-$T.sp_log
 
@@ -42,14 +40,13 @@ mv instances/$INSTANCE.sp_log sjr-2∂-$T.sp_log
 enhsp \
   -o delta/domain.pddl \
   -f delta/instances/$INSTANCE \
-  -de 0.2 \
-  -dp 0.2 \
-  -dh 0.2 \
-  -dl $DL_DELTA \
-  -sjr \
+  -de 1 \
+  -dp 1 \
+  -dh 1 \
   -s $SEARCH \
   -h $HEURISTIC\
-  -ties larger_g
+  -dl $DL_DELTA \
+  -sjr \
 
 mv delta/instances/$INSTANCE.sp_log sjr-K∂-$T.sp_log
 
