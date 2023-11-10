@@ -19,3 +19,5 @@ benchmarks/planners/cplex/installer.bin
 *.sp_log
 
 *.pdf
+
+*.SOL
