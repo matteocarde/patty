@@ -5,6 +5,7 @@ from typing import Dict, List, Tuple, Set
 
 from src.pddl.Atom import Atom
 from src.pddl.Literal import Literal
+from src.pddl.PDDLWriter import PDDLWriter
 from src.pddl.Predicate import Predicate
 from src.pddl.InitialCondition import InitialCondition
 from src.pddl.Goal import Goal
@@ -130,3 +131,37 @@ class Problem:
                     root[i][attr].add(init)
 
         pass
+
+    def toPDDL(self, pw: PDDLWriter = PDDLWriter()):
+        pw.write(f"(define (problem {self.name})")
+        pw.increaseTab()
+        pw.write(f"(:domain {self.domainName})")
+
+        # Constants
+        pw.write(f"(:objects")
+        pw.increaseTab()
+        for (type, objects) in self.objectsByType.items():
+            objStr = " ".join(objects)
+            pw.write(f"{objStr} - {type}")
+        pw.decreaseTab()
+        pw.write(f")")
+
+        # Init
+        pw.write(f"(:init")
+        pw.increaseTab()
+        for a in self.init.assignments:
+            a.toPDDL(pw)
+        pw.decreaseTab()
+        pw.write(f")")
+
+        # Goal
+        pw.write(f"(:goal")
+        pw.increaseTab()
+        self.goal.toPDDL(pw)
+        pw.decreaseTab()
+        pw.write(f")")
+
+        pw.decreaseTab()
+        pw.write(f")")
+
+        return pw

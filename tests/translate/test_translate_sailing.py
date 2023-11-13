@@ -6,12 +6,12 @@ from src.pddl.Domain import Domain
 from src.pddl.Problem import Problem
 
 
-class TestBlockGrouping(TestCase):
+class TestSailing(TestCase):
 
     def setUp(self) -> None:
-        self.domain: Domain = Domain.fromFile("../../files/ipc-2023/block-grouping/domain.pddl")
-        self.problem: Problem = Problem.fromFile(
-            "../../files/ipc-2023/block-grouping/instances/instance_15_25_6_3.pddl")
+        self.folder = "../../files/ipc-2023/fo-sailing"
+        self.domain: Domain = Domain.fromFile(f"{self.folder}/domain.pddl")
+        self.problem: Problem = Problem.fromFile(f"{self.folder}/instances/instance_1_1_1229.pddl")
         self.pt: PatternTranslator = PatternTranslator(self.domain, self.problem)
         pass
 
@@ -29,10 +29,10 @@ class TestBlockGrouping(TestCase):
         self.assertIsInstance(tDomainString, str)
         self.assertIsInstance(tProblemString, str)
 
-        with open("../../files/ipc-2023/block-grouping/domain_pattern.pddl", "w") as fDomain:
+        with open(f"{self.folder}/domain_pattern.pddl", "w") as fDomain:
             fDomain.write(tDomainString)
 
-        with open("../../files/ipc-2023/block-grouping/problem_pattern.pddl", "w") as fDomain:
+        with open(f"{self.folder}/problem_pattern.pddl", "w") as fDomain:
             fDomain.write(tProblemString)
 
 

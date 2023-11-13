@@ -1,7 +1,8 @@
 import traceback
 
 from src.pattern.PatternTranslator import PatternTranslator
-from src.pddl.Domain import Domain, GroundedDomain
+from src.pddl.Domain import Domain
+from src.pddl.GroundedDomain import GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
 from src.search.AStarSearchMax import AStarSearchMax
@@ -58,7 +59,6 @@ def translate(args: Arguments):
     tProblem: Problem = pt.getTranslatedProblem()
 
     tDomainString = tDomain.toPDDL()
-
 
 
 def main():

@@ -6,7 +6,6 @@
 	)
 
 	(:init
-		(turn_move_block_down b1)
 		(= (x b9) 4)
 		(= (y b9) 3)
 		(= (x b5) 3)
