@@ -3,8 +3,8 @@ from typing import Set, List, Dict
 
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
-from src.pddl.Domain import GroundedDomain
 from src.pddl.Goal import Goal
+from src.pddl.GroundedDomain import GroundedDomain
 from src.pddl.PDDLException import PDDLException
 from src.pddl.RelaxedIntervalState import RelaxedIntervalState
 from src.pddl.State import State

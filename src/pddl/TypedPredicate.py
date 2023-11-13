@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import itertools
 from typing import Dict, Tuple, List
 
@@ -20,6 +21,13 @@ class TypedPredicate(Predicate):
 
     def __init__(self):
         super().__init__()
+
+    def __deepcopy__(self, m=None):
+        c = TypedPredicate()
+        c.name = self.name
+        c.parameters = copy.deepcopy(self.parameters, m)
+        c.atom = copy.deepcopy(self.atom, m)
+        return c
 
     def __str__(self):
         paramString = ' '.join(f"{p}" for p in self.parameters)

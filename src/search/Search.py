@@ -1,4 +1,4 @@
-from src.pddl.Domain import GroundedDomain
+from src.pddl.GroundedDomain import GroundedDomain
 from src.pddl.Problem import Problem
 from src.plan.PDDL2SMT import PDDL2SMT
 from src.utils.Arguments import Arguments

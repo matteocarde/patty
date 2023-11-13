@@ -28,7 +28,7 @@ class Literal(Predicate):
         return l
 
     @classmethod
-    def fromAtom(cls, atom: Atom, sign: str):
+    def fromAtom(cls, atom: Atom, sign: str = "+"):
         lit = cls()
         lit.atom = atom
         lit.sign = sign

@@ -9,7 +9,7 @@ from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.Constant import Constant
-from src.pddl.Domain import GroundedDomain
+from src.pddl.GroundedDomain import GroundedDomain
 from src.pddl.Formula import Formula
 from src.pddl.Literal import Literal
 from src.pddl.NumericPlan import NumericPlan

@@ -39,6 +39,13 @@ class Arguments:
                             action="store_true", default=False)
         parser.add_argument('--use-sccs', help="Use SCCs when computing pattern",
                             action="store_true", default=False)
+        parser.add_argument('-t', '--translate',
+                            help="Translates the PDDL problem into another one which constrains the action to be "
+                                 "applied according to a pattern",
+                            action="store_true", default=False)
+
+        parser.add_argument('-tf', '--translate-folder',
+                            help="Which folder should be used to put the translated domain and problem into")
 
         args = parser.parse_args()
         self.isHelp = "help" in args
@@ -61,3 +68,5 @@ class Arguments:
         self.concatPattern = args.concat
         self.maximize = args.maximize
         self.useSCCs = args.use_sccs
+        self.translate = args.translate
+        self.translateFolder = args.translate_folder

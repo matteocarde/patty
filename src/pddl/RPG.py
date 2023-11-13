@@ -1,7 +1,7 @@
 from typing import List, Set
 
 from src.pddl.Action import Action
-from src.pddl.Domain import GroundedDomain
+from src.pddl.GroundedDomain import GroundedDomain
 from src.pddl.Literal import Literal
 from src.pddl.Problem import Problem
 

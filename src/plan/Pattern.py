@@ -6,8 +6,8 @@ from typing import List, Dict
 
 from src.pddl.ARPG import ARPG
 from src.pddl.Action import Operation, Action
-from src.pddl.Domain import GroundedDomain
 from src.pddl.Goal import Goal
+from src.pddl.GroundedDomain import GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.State import State
 
@@ -29,6 +29,9 @@ class Pattern:
 
     def __getitem__(self, item):
         return self.__order[item]
+
+    def __len__(self):
+        return len(self.__order)
 
     @property
     def order(self):

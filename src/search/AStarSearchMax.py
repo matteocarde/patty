@@ -1,6 +1,6 @@
 import copy
 
-from src.pddl.Domain import GroundedDomain
+from src.pddl.GroundedDomain import GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
 from src.pddl.State import State
