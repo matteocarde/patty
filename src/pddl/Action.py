@@ -11,6 +11,7 @@ from src.pddl.Constant import Constant
 from src.pddl.MooreInterval import MooreInterval
 from src.pddl.Operation import Operation
 from src.pddl.OperationType import OperationType
+from src.pddl.PDDLWriter import PDDLWriter
 from src.pddl.Supporter import Supporter, SupporterEffect
 from src.pddl.Type import Type
 from src.pddl.Utilities import Utilities
@@ -130,3 +131,15 @@ class Action(Operation):
         a_i = super().getBinaryOperation(i)
         a_i.__class__ = Action
         return a_i
+
+    def toPDDL(self, pw: PDDLWriter = PDDLWriter()):
+        pw.write(f"(:action {self.name}")
+        pw.increaseTab()
+        parameters = " ".join([str(p) for p in self.parameters])
+        pw.write(f":parameters ({parameters})")
+        self.preconditions.toPDDL(pw)
+        self.effects.toPDDL(pw)
+
+        pw.decreaseTab()
+        pw.write(")")
+        pass

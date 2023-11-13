@@ -6,6 +6,7 @@ from typing import Dict, Set, Tuple, List
 
 from src.pddl.Atom import Atom
 from src.pddl.Constant import Constant
+from src.pddl.PDDLWriter import PDDLWriter
 from src.pddl.Predicate import Predicate
 from src.pddl.Utilities import Utilities
 from src.pddl.grammar.pddlParser import pddlParser as p
@@ -179,3 +180,4 @@ class Literal(Predicate):
 
     def toExpression(self) -> Expr:
         return self.atom.toExpression()
+

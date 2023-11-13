@@ -8,6 +8,7 @@ from typing import Dict, List, cast, Iterable, Tuple
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.Literal import Literal
+from src.pddl.PDDLWriter import PDDLWriter
 from src.pddl.grammar.pddlParser import pddlParser
 from src.pddl.grammar.pddlParser import pddlParser as p
 
@@ -78,3 +79,11 @@ class Effects:
 
     def addEffect(self, ass: Literal or BinaryPredicate):
         self.assignments.append(ass)
+
+    def toPDDL(self, pw: PDDLWriter = PDDLWriter()):
+        pw.write(f":effect (and")
+        pw.increaseTab()
+        for c in self.assignments:
+            c.toPDDL(pw)
+        pw.decreaseTab()
+        pw.write(")")

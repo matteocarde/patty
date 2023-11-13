@@ -57,16 +57,25 @@ class PatternTranslator:
     def getTranslatedDomain(self) -> Domain:
         tDomain = copy.deepcopy(self.domain)
 
+        tDomain.constants = copy.deepcopy(self.problem.objectsByType)
+
         for action in tDomain.actions:
             lit: Literal = PatternTranslator.getTurnLiteral(action)
             action.preconditions.addPrecondition(lit)
             p: TypedPredicate = PatternTranslator.getTurnTypedPredicate(action)
             tDomain.predicates.add(p)
 
-        for i in range(0, len(self.pattern) - 1):
-            f = self.pattern[i]
-            t = self.pattern[i + 1]
+        couples = [(self.pattern[i], self.pattern[i + 1]) for i in range(0, len(self.pattern) - 2)]
+        couples.append((self.pattern[-2], self.pattern[0]))
+        for (f, t) in couples:
             action = PatternTranslator.getActionToMovePattern(f, t)
             tDomain.actions.add(action)
 
         return tDomain
+
+    def getTranslatedProblem(self) -> Problem:
+        tProblem = copy.deepcopy(self.problem)
+        firstAction = self.pattern[0]
+        tProblem.init.addPropositionalAssignment(PatternTranslator.getTurnLiteral(firstAction))
+
+        return tProblem

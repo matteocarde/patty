@@ -18,8 +18,17 @@ class TestBlockGrouping(TestCase):
         self.assertIsInstance(self.pt, PatternTranslator)
 
     def test_domainTranslation(self):
-        domain = self.pt.getTranslatedDomain()
-        self.assertIsInstance(domain, Domain)
+        tDomain: Domain = self.pt.getTranslatedDomain()
+        self.assertIsInstance(tDomain, Domain)
+        tProblem = self.pt.getTranslatedProblem()
+        self.assertIsInstance(tProblem, Problem)
+
+        tDomainString = tDomain.toPDDL().toString()
+        print(tDomainString)
+        self.assertIsInstance(tDomainString, str)
+
+        with open("../../files/block-grouping/domain_pattern.pddl", "w") as fDomain:
+            fDomain.write(tDomainString)
 
 
 if __name__ == '__main__':

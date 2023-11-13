@@ -54,6 +54,12 @@ def translate(args: Arguments):
 
     pt: PatternTranslator = PatternTranslator(domain, problem)
 
+    tDomain: Domain = pt.getTranslatedDomain()
+    tProblem: Problem = pt.getTranslatedProblem()
+
+    tDomainString = tDomain.toPDDL()
+
+
 
 def main():
     args = Arguments()

@@ -45,28 +45,14 @@ class InitialCondition:
                         "At the moment, this tool only support initial conditions with numeric constant assignments")
                 ic.numericAssignments[assignment.getAtom()] = assignment.rhs.value
 
-        # pTree = dict()
-        # for assignment in ic.numericAssignments:
-        #     name = assignment.name
-        #     pTree[name] = pTree.setdefault(name, dict())
-        #     node = pTree[name]
-        #     lastAttr = None
-        #     lastNode = None
-        #     for attr in assignment.attributes:
-        #         node[attr] = node.setdefault(attr, dict())
-        #         lastAttr = attr
-        #         lastNode = node
-        #         node = node[attr]
-        #     if lastAttr:
-        #         lastNode[lastAttr] = True
-        #
-        # ic.assignmentsByPropertyTree = pTree
-
         return ic
 
     def getAssignment(self, atom: Atom) -> float:
         return self.numericAssignments[atom]
         pass
+
+    def addPropositionalAssignment(self, literal: Literal):
+        self.assignments.add(literal)
 
     @classmethod
     def fromString(cls, string: str):

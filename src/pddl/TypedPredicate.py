@@ -6,6 +6,7 @@ from typing import Dict, Tuple, List
 
 from src.pddl.Atom import Atom
 from src.pddl.Literal import Literal
+from src.pddl.PDDLWriter import PDDLWriter
 from src.pddl.Parameter import Parameter
 from src.pddl.Predicate import Predicate
 from src.pddl.Problem import Problem
@@ -84,3 +85,8 @@ class TypedPredicate(Predicate):
         literal.alphaFunct = literal.atom.toAlphaFunctionName()
 
         return literal
+
+    def toPDDL(self, pw: PDDLWriter = PDDLWriter()):
+        parameters = " ".join([f"{p.name} - {p.type.name}" for p in self.parameters])
+        pw.write(f"({self.name} {parameters})")
+        pass

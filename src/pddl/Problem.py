@@ -1,4 +1,6 @@
 from __future__ import annotations
+
+import copy
 from typing import Dict, List, Tuple, Set
 
 from src.pddl.Atom import Atom
@@ -24,6 +26,20 @@ class Problem:
         self.isPredicateStatic: Dict[str, bool] = dict()
         self.canHappenValue: Set[str] = set()
         self.assignmentsTree: Dict = dict()
+
+    def __deepcopy__(self, m=None) -> Problem:
+        p = Problem()
+        p.name = self.name
+        p.domainName = self.domainName
+        p.objectsByType = copy.deepcopy(self.objectsByType, m)
+        p.init = copy.deepcopy(self.init, m)
+        p.metric = copy.deepcopy(self.metric)
+        p.goal = copy.deepcopy(self.goal)
+        p.isPredicateStatic = copy.deepcopy(self.isPredicateStatic)
+        p.canHappenValue = copy.deepcopy(self.canHappenValue)
+        p.assignmentsTree = copy.deepcopy(self.assignmentsTree)
+
+        return p
 
     @classmethod
     def fromNode(cls, node: pddlParser.ProblemContext) -> Problem:

@@ -5,6 +5,7 @@ import copy
 from typing import Dict, cast, Tuple
 
 from src.pddl.Formula import Formula
+from src.pddl.PDDLWriter import PDDLWriter
 from src.pddl.grammar.pddlParser import pddlParser
 
 
@@ -33,6 +34,8 @@ class Preconditions(Formula):
     def addPrecondition(self, param):
         self.addClause(param)
 
-
-
-
+    def toPDDL(self, pw: PDDLWriter = PDDLWriter()):
+        pw.write(f":precondition ")
+        # pw.increaseTab()
+        super().toPDDL(pw)
+        # pw.decreaseTab()

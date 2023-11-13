@@ -7,6 +7,7 @@ from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.Event import Event
 from src.pddl.Operation import Operation
+from src.pddl.PDDLWriter import PDDLWriter
 from src.pddl.Problem import Problem
 from src.pddl.Process import Process
 from src.pddl.State import State
@@ -26,6 +27,7 @@ class Domain:
     actions: set[Action]
     events: set[Event]
     processes: set[Process]
+    constants: Dict[str, List[str]]
     __operationsDict: Dict[str, Operation]
 
     def __init__(self):
@@ -36,7 +38,7 @@ class Domain:
         self.processes = set()
         self.events = set()
         self.requirements = list()
-        self.constants = set()
+        self.constants = dict()
         self.isPredicateStatic: Dict[str, bool] = dict()
         pass
 
@@ -200,3 +202,49 @@ class Domain:
             if not isinstance(child, pddlParser.TypedPositiveLiteralContext):
                 continue
             self.functions.add(TypedPredicate.fromNode(child, self.types))
+
+    def toPDDL(self, pw: PDDLWriter = PDDLWriter()):
+        pw.write(f"(define (domain {self.name})")
+        pw.increaseTab()
+        # Types
+        pw.write(f"(:types")
+        pw.increaseTab()
+        for type in self.types.values():
+            type.toPDDL(pw)
+        pw.decreaseTab()
+        pw.write(f")")
+
+        if self.constants:
+            # Constants
+            pw.write(f"(:constants")
+            pw.increaseTab()
+            for (type, objects) in self.constants.items():
+                objStr = " ".join(objects)
+                pw.write(f"{objStr} - {type}")
+            pw.decreaseTab()
+            pw.write(f")")
+
+        # Predicates
+        pw.write(f"(:predicates")
+        pw.increaseTab()
+        for p in self.predicates:
+            p.toPDDL(pw)
+        pw.decreaseTab()
+        pw.write(f")")
+
+        if self.functions:
+            # Functions
+            pw.write(f"(:functions")
+            pw.increaseTab()
+            for f in self.functions:
+                f.toPDDL(pw)
+            pw.decreaseTab()
+            pw.write(f")")
+
+        for h in self.actions | self.events | self.processes:
+            h.toPDDL(pw)
+
+        pw.decreaseTab()
+        pw.write(f")")
+
+        return pw
