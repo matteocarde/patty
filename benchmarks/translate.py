@@ -1,76 +1,91 @@
-import sys
-import time
-import traceback
-from typing import Dict
+import os
+import random
+import shutil
 
-import boto3
-from botocore.config import Config
+from natsort import natsort
 
-from classes.CloudLogger import CloudLogger
-from classes.ENHSP import ENHSP
-from classes.Envs import Envs
-from classes.Patty import Patty
-from classes.Planner import Planner
-from classes.Result import Result
+from src.pattern.PatternTranslator import PatternTranslator
+from src.pddl.Domain import Domain
+from src.pddl.PDDLWriter import PDDLWriter
+from src.pddl.Problem import Problem
+
+# PLANNERS = ["PATTY", "PATTY-R-YICES", "PATTY-R-Z3-NL", "PATTY-NL", "PATTY-Z3", "SPRINGROLL"]
+PLANNERS = [
+    # "PATTY",
+    # "PATTY-MAX",
+    # "PATTY-STATIC",
+    # "PATTY-STATIC-MAX",
+    # "PATTY-ASTAR",
+    "SPRINGROLL",
+    # "RANTANPLAN",
+    "ENHSP-HADD",
+    "ENHSP-HRADD",
+    "ENHSP-HMRP",
+    "ENHSP-AIBR",
+    "METRIC-FF",
+    "NFD",
+    "OMT"
+]
+NAME = "instances-translate.csv"
 
 
 def main():
-    f = open("translate-list.csv", "r")
-    csv = f.read()
-    f.close()
-    instances = [[v for v in line.split(",")] for line in csv.split("\n")]
+    domains = [
+        "ipc-2023/block-grouping",
+        "ipc-2023/counters",
+        "ipc-2023/delivery",
+        "ipc-2023/drone",
+        "ipc-2023/expedition",
+        "ipc-2023/ext-plant-watering",
+        "ipc-2023/farmland",
+        "ipc-2023/fo-farmland",
+        "ipc-2023/fo-sailing",
+        "ipc-2023/fo_counters",
+        "ipc-2023/hydropower",
+        "ipc-2023/mprime",
+        "ipc-2023/pathwaysmetric",
+        "ipc-2023/rover",
+        "ipc-2023/sailing",
+        "ipc-2023/satellite",
+        "ipc-2023/sugar",
+        "ipc-2023/tpp",
+        "ipc-2023/zenotravel",
+        # "line-exchange",
+        # "line-exchange-quantity"
+    ]
 
-    if type == "TRANSLATED":
+    instances = list()
 
-        folder = domainFile.replace("domain.pddl", "")
-        if not os.path.exists(folder):
-            os.mkdir(folder + "instances-translated")
-        domain = Domain.fromFile(domainFile)
-        problem = Problem.fromFile(problemFile)
+    for domain in domains:
+        problems = natsort.natsorted(os.listdir(f"files/{domain}/instances"))
+        folder = f"files/{domain}/pattern-instances/"
+        if os.path.exists(folder):
+            shutil.rmtree(folder)
+        os.mkdir(folder)
 
-        domainFile = folder + "domain-translated.pddl"
-        problemFile = problemFile.replace("/instances/", "/instances-translated/")
+        for problem in problems:
+            if problem[-5:] != ".pddl":
+                continue
+            domainFile = f"files/{domain}/domain.pddl"
+            problemFile = f"files/{domain}/instances/{problem}"
 
-        pt = PatternTranslator(domain, problem)
-        tDomain = pt.getTranslatedDomain()
-        tProblem = pt.getTranslatedProblem()
+            print(f"Translating {domain} {problem}")
+            domainObj = Domain.fromFile(domainFile)
+            problemObj = Problem.fromFile(problemFile)
 
-        with open(domainFile, "w") as f:
-            f.write(tDomain.toPDDL().toString())
-        with open(domainFile, "w") as f:
-            f.write(tDomain.toPDDL().toString())
+            tProblemFile = problemFile.replace("/instances/", "/pattern-instances/")
+            tDomainFile = tProblemFile.replace(".pddl", "-domain.pddl")
 
-    if envs.isInsideAWS:
-        a = min(envs.startFrom + (envs.index * envs.instances), len(instances))
-        b = min(envs.startFrom + ((envs.index + 1) * envs.instances), len(instances))
-        instances = instances[a:b]
+            pt = PatternTranslator(domainObj, problemObj)
+            tDomain = pt.getTranslatedDomain()
+            tProblem = pt.getTranslatedProblem()
 
-    for el in instances:
-        planner = PLANNERS[el[0]]
-        benchmark = el[1]
-        domainFile = el[2]
-        problemFile = el[3]
+            with open(tDomainFile, "w") as f:
+                f.write(tDomain.toPDDL(PDDLWriter()).toString())
+            with open(tProblemFile, "w") as f:
+                f.write(tProblem.toPDDL(PDDLWriter()).toString())
 
-        try:
-            if envs.isInsideAWS:
-                print(f"Starting {planner} {benchmark} {domainFile} {problemFile}")
-            r: Result = planner.run(benchmark, domainFile, problemFile, logger, envs.timeout)
-            print(r)
-            if not r.solved:
-                print(r.stdout)
-            logger.log(r.toCSV())
-            s3.put_object(
-                Key=f"{envs.experiment}/{r.solver}/{r.domain.replace('/', '_')}/{r.problem.replace('/', '_')}/{time.time_ns()}.txt",
-                Bucket="patty-benchmarks",
-                Body=bytes(r.stdout, 'utf-8')
-            )
-
-        except Exception as error:
-            if isinstance(error, KeyboardInterrupt):
-                print("Interrupted by user...")
-                break
-            logger.error(traceback.format_exc())
-            print(traceback.format_exc(), file=sys.stderr)
+    print(f"Completed")
 
 
 if __name__ == '__main__':

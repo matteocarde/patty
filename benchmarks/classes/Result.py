@@ -25,11 +25,13 @@ class Result:
     nOfRules: int = -1
     lastSearchedBound: int = -1
     lastCallsToSolver: int = -1
+    extra: str
 
     def __init__(self, domain: str, problem: str):
         self.plan = list()
         self.domain = domain
         self.problem = problem.split("/")[-1]
+        self.extra = ""
         pass
 
     @classmethod
@@ -48,6 +50,7 @@ class Result:
         r.lastSearchedBound = int(csvLine[10])
         if len(csvLine) > 11:
             r.lastCallsToSolver = int(csvLine[11])
+            r.extra = csvLine[12]
 
         return r
 
@@ -70,7 +73,8 @@ class Result:
             (str(self.nOfVars), 5),
             (str(self.nOfRules), 5),
             (str(self.lastSearchedBound), 5),
-            (str(self.lastCallsToSolver), 5)
+            (str(self.lastCallsToSolver), 5),
+            (str(self.extra), 20)
         ]
 
         string = "|" + "|".join(["{:^" + str(n[1]) + "}" for n in row]) + "|"
@@ -94,6 +98,7 @@ class Result:
             str(self.nOfRules),
             str(self.lastSearchedBound),
             str(self.lastCallsToSolver),
+            str(self.extra),
         ])
 
     @classmethod
@@ -112,6 +117,7 @@ class Result:
             r.time = max([e.time for e in results if e.solved])
             r.bound = max([e.bound for e in results if e.solved])
             r.planLength = statistics.mean([e.planLength for e in results if e.solved])
+        r.extra = results[0].extra
         return r
 
     @classmethod

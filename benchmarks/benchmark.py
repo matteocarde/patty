@@ -28,6 +28,7 @@ PLANNERS: Dict[str, Planner] = {
     "ENHSP-HADD": ENHSP("sat-hadd"),
     "ENHSP-HRADD": ENHSP("sat-hradd"),
     "ENHSP-HMRP": ENHSP("sat-hmrphj"),
+    "ENHSP-AIBR": ENHSP("sat-aibr"),
     # "METRIC-FF": MetricFF(),
     # "NFD": NFD(),
     # "OMT": OMT(),
@@ -55,15 +56,18 @@ def main():
         instances = instances[a:b]
 
     for el in instances:
+
         planner = PLANNERS[el[0]]
         benchmark = el[1]
         domainFile = el[2]
         problemFile = el[3]
+        extra = el[4]
 
         try:
             if envs.isInsideAWS:
                 print(f"Starting {planner} {benchmark} {domainFile} {problemFile}")
             r: Result = planner.run(benchmark, domainFile, problemFile, logger, envs.timeout)
+            r.extra = extra
             print(r)
             if not r.solved:
                 print(r.stdout)

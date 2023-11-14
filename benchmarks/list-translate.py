@@ -16,15 +16,15 @@ PLANNERS = [
     # "PATTY-STATIC",
     # "PATTY-STATIC-MAX",
     # "PATTY-ASTAR",
-    "SPRINGROLL",
+    # "SPRINGROLL",
     # "RANTANPLAN",
     "ENHSP-HADD",
     "ENHSP-HRADD",
     "ENHSP-HMRP",
     "ENHSP-AIBR",
-    "METRIC-FF",
-    "NFD",
-    "OMT"
+    # "METRIC-FF",
+    # "NFD",
+    # "OMT"
 ]
 NAME = "instances-translate.csv"
 
@@ -56,38 +56,26 @@ def main():
 
     instances = list()
 
-    for domain in domains:
-        problems = natsort.natsorted(os.listdir(f"files/{domain}/instances"))
-        folder = f"files/{domain}/pattern-instances/"
-        if os.path.exists(folder):
-            shutil.rmtree(folder)
-        os.mkdir(folder)
+    for t in {"ORIGINAL", "TRANSLATED"}:
+        for domain in domains:
+            problems = natsort.natsorted(os.listdir(f"files/{domain}/instances"))
 
-        for problem in problems:
-            if problem[-5:] != ".pddl":
-                continue
-            domainFile = f"files/{domain}/domain.pddl"
-            problemFile = f"files/{domain}/instances/{problem}"
+            for problem in problems:
+                if problem[-5:] != ".pddl":
+                    continue
 
-            print(f"Translating {domain} {problem}")
-            domainObj = Domain.fromFile(domainFile)
-            problemObj = Problem.fromFile(problemFile)
+                if t == "ORIGINAL":
+                    domainFile = f"files/{domain}/domain.pddl"
+                    problemFile = f"files/{domain}/instances/{problem}"
+                else:
+                    domainFile = f"files/{domain}/pattern-instances/{problem.replace('.pddl', '-domain.pddl')}"
+                    problemFile = f"files/{domain}/pattern-instances/{problem}"
 
-            tProblemFile = problemFile.replace("/instances/", "/pattern-instances/")
-            tDomainFile = tProblemFile.replace(".pddl", "-domain.pddl")
+                assert os.path.exists(domainFile)
+                assert os.path.exists(problemFile)
 
-            pt = PatternTranslator(domainObj, problemObj)
-            tDomain = pt.getTranslatedDomain()
-            tProblem = pt.getTranslatedProblem()
-
-            with open(tDomainFile, "w") as f:
-                f.write(tDomain.toPDDL(PDDLWriter()).toString())
-            with open(tProblemFile, "w") as f:
-                f.write(tProblem.toPDDL(PDDLWriter()).toString())
-
-            for planner in PLANNERS:
-                instances.append([f"{planner}-ORIGINAL", domain, domainFile, problemFile])
-                instances.append([f"{planner}-TRANSLATED", domain, tDomainFile, tProblemFile])
+                for planner in PLANNERS:
+                    instances.append([f"{planner}", domain, domainFile, problemFile, t])
 
     random.shuffle(instances)
     print(f"Listing {len(instances)} instances")
