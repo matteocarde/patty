@@ -161,6 +161,10 @@ class Problem:
         pw.decreaseTab()
         pw.write(f")")
 
+        # Metric
+        if self.metric:
+            pw.write(f"(:metric minimize {self.metric})")
+
         pw.decreaseTab()
         pw.write(f")")
 

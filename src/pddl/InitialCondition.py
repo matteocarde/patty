@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import List, Dict, Set
 
 from src.pddl.Atom import Atom
-from src.pddl.BinaryPredicate import BinaryPredicate
+from src.pddl.BinaryPredicate import BinaryPredicate, BinaryPredicateType
 from src.pddl.Constant import Constant
 from src.pddl.Literal import Literal
 from src.pddl.Predicate import Predicate
@@ -57,3 +57,15 @@ class InitialCondition:
     @classmethod
     def fromString(cls, string: str):
         return InitialCondition.fromNode(Utilities.getParseTree(string).init())
+
+    def addNumericAssignment(self, costLit: Literal, value: float):
+        bp = BinaryPredicate()
+        bp.lhs = costLit
+        bp.rhs = Constant(value)
+        bp.operator = "="
+        bp.type = BinaryPredicateType.COMPARATION
+
+        self.assignments.add(bp)
+        self.numericAssignments[costLit.atom] = value
+
+        pass

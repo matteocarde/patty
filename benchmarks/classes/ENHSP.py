@@ -19,7 +19,8 @@ class ENHSP(Planner):
         r.solved = len(re.findall(r"Problem Solved", stdout)) > 0
         r.time = Result.parseTime(stdout)
         r.plan = re.findall(r"^.*?: (\(.*?\))$", stdout, re.MULTILINE)
-        r.planLength = len(r.plan)
+        rePlanLength = re.findall(r"Metric (Search):(.*?)$", stdout, re.MULTILINE)
+        r.planLength = len(r.plan) if not rePlanLength else int(rePlanLength[-1])
 
         return r
 

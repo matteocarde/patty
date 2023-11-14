@@ -2,6 +2,8 @@ import copy
 
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
+from src.pddl.BinaryPredicate import BinaryPredicate, BinaryPredicateType
+from src.pddl.Constant import Constant
 from src.pddl.Domain import Domain
 from src.pddl.Effects import Effects
 from src.pddl.Literal import Literal
@@ -20,6 +22,18 @@ class PatternTranslator:
         self.gDomain = self.domain.ground(self.problem)
 
         self.pattern = Pattern.fromARPG(self.gDomain)
+
+        self.costLit = Literal.fromPositiveString("(cost_pattern)")
+        self.costTP = TypedPredicate()
+        self.costTP.name = "cost_pattern"
+        self.costTP.atom = self.costLit.atom
+        self.costTP.parameters = []
+
+        self.costIncr = BinaryPredicate()
+        self.costIncr.lhs = self.costLit
+        self.costIncr.rhs = Constant(1)
+        self.costIncr.operator = "increase"
+        self.costIncr.type = BinaryPredicateType.MODIFICATION
 
         pass
 
@@ -59,9 +73,12 @@ class PatternTranslator:
 
         tDomain.constants = copy.deepcopy(self.problem.objectsByType)
 
+        tDomain.functions.add(self.costTP)
+
         for action in tDomain.actions:
             lit: Literal = PatternTranslator.getTurnLiteral(action)
             action.preconditions.addPrecondition(lit)
+            action.effects.addEffect(self.costIncr)
             p: TypedPredicate = PatternTranslator.getTurnTypedPredicate(action)
             tDomain.predicates.add(p)
 
@@ -77,5 +94,8 @@ class PatternTranslator:
         tProblem = copy.deepcopy(self.problem)
         firstAction = self.pattern[0]
         tProblem.init.addPropositionalAssignment(PatternTranslator.getTurnLiteral(firstAction))
+        tProblem.init.addNumericAssignment(self.costLit, 0)
+
+        tProblem.metric = self.costLit
 
         return tProblem
