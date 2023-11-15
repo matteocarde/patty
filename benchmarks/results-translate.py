@@ -14,6 +14,10 @@ SOLVERS_NOTYPE = {
     'SpringRoll': "SR",
     'METRIC-FF': "\mathrm{FF}",
     'ENHSP': r"E",
+    'ENHSP-sat-hmrphj': r"E_{hmrp}",
+    'ENHSP-sat-hadd': r"E_{hadd}",
+    'ENHSP-sat-hradd': r"E_{hradd}",
+    'ENHSP-sat-aibr': r"E_{aibr}",
     'NFD': "\mathrm{NFD}",
     'OMT': "\mathrm{OMT}",
 }
@@ -78,7 +82,7 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2023-11-14-TRANSLATE-v1"
+    exp = "2023-11-14-TRANSLATE-v2"
     file = f"benchmarks/results/{exp}.csv"
 
     joinWith = [] + [file]
@@ -101,14 +105,14 @@ def main():
 
     # Joining together portfolios
     results = Result.joinPorfolios(aResults, {
-        "ENHSP-sat-hadd-ORIGINAL": "ENHSP-ORIGINAL",
-        "ENHSP-sat-hradd-ORIGINAL": "ENHSP-ORIGINAL",
-        "ENHSP-sat-hmrphj-ORIGINAL": "ENHSP-ORIGINAL",
-        "ENHSP-sat-aibr-ORIGINAL": "ENHSP-ORIGINAL",
-        "ENHSP-sat-hadd-TRANSLATED": "ENHSP-TRANSLATED",
-        "ENHSP-sat-hradd-TRANSLATED": "ENHSP-TRANSLATED",
-        "ENHSP-sat-hmrphj-TRANSLATED": "ENHSP-TRANSLATED",
-        "ENHSP-sat-aibr-TRANSLATED": "ENHSP-TRANSLATED",
+        # "ENHSP-sat-hadd-ORIGINAL": "ENHSP-ORIGINAL",
+        # "ENHSP-sat-hradd-ORIGINAL": "ENHSP-ORIGINAL",
+        # "ENHSP-sat-hmrphj-ORIGINAL": "ENHSP-ORIGINAL",
+        # "ENHSP-sat-aibr-ORIGINAL": "ENHSP-ORIGINAL",
+        # "ENHSP-sat-hadd-TRANSLATED": "ENHSP-TRANSLATED",
+        # "ENHSP-sat-hradd-TRANSLATED": "ENHSP-TRANSLATED",
+        # "ENHSP-sat-hmrphj-TRANSLATED": "ENHSP-TRANSLATED",
+        # "ENHSP-sat-aibr-TRANSLATED": "ENHSP-TRANSLATED",
     })
 
     solvers = set()
@@ -225,8 +229,24 @@ def main():
         },
         "planners": [
             {
-                'ENHSP-ORIGINAL': "SMT",
-                'ENHSP-TRANSLATED': "SMT",
+                'ENHSP-sat-hmrphj-ORIGINAL': "SMT",
+                'ENHSP-sat-hmrphj-TRANSLATED': "SMT",
+
+            },
+            {
+                'ENHSP-sat-aibr-ORIGINAL': "SMT",
+                'ENHSP-sat-aibr-TRANSLATED': "SMT",
+
+            },
+            {
+                'ENHSP-sat-hadd-ORIGINAL': "SMT",
+                'ENHSP-sat-hadd-TRANSLATED': "SMT",
+
+            },
+            {
+                'ENHSP-sat-hradd-ORIGINAL': "SMT",
+                'ENHSP-sat-hradd-TRANSLATED': "SMT",
+
             }
         ],
         "caption": r"Comparative analysis between the search-based solver $\textsc{ENHSP}$ and  $\textsc{Patty}$ run "
