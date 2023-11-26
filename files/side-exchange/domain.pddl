@@ -15,8 +15,6 @@
   (:functions
     (q ?r - robot)
     (b ?e - robot ?c - color)
-    (turn)
-    (turn ?c - color)
   )
 
   (:action exch
@@ -37,7 +35,6 @@
       (edge ?e)
       (not (holding))
       (> (b ?e ?c) 0)
-      (= (turn) (turn ?c))
     )
     :effect (and
       (holding)
@@ -59,7 +56,7 @@
       (not (holding ?c))
       (assign (q ?e) 0)
       (increase (b ?e ?c) 1)
-      (decrease (turn) (* 2 (turn)))
     )
 
   )
+)
