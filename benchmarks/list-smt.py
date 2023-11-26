@@ -4,46 +4,47 @@ from natsort import natsort
 
 # PLANNERS = ["PATTY", "PATTY-R-YICES", "PATTY-R-Z3-NL", "PATTY-NL", "PATTY-Z3", "SPRINGROLL"]
 PLANNERS = [
-    # "PATTY",
+    "PATTY",
     # "PATTY-MAX",
     "PATTY-STATIC",
     # "PATTY-STATIC-MAX",
-    # "PATTY-ASTAR",
-    # "SPRINGROLL",
-    # "RANTANPLAN",
-    # "ENHSP-HADD",
-    # "ENHSP-HRADD",
-    # "ENHSP-HMRP",
-    # "METRIC-FF",
-    # "NFD",
-    # "OMT"
+    "PATTY-ASTAR",
+    "SPRINGROLL",
+    "RANTANPLAN",
+    "ENHSP-HADD",
+    "ENHSP-HRADD",
+    "ENHSP-HMRP",
+    "METRIC-FF",
+    "NFD",
+    "OMT"
 ]
-NAME = "instances-search.csv"
+NAME = "instances-line.csv"
 
 
 def main():
     domains = [
-        "ipc-2023/block-grouping",
-        "ipc-2023/counters",
-        "ipc-2023/delivery",
-        "ipc-2023/drone",
-        "ipc-2023/expedition",
-        "ipc-2023/ext-plant-watering",
-        "ipc-2023/farmland",
-        "ipc-2023/fo-farmland",
-        "ipc-2023/fo-sailing",
-        "ipc-2023/fo_counters",
-        "ipc-2023/hydropower",
-        "ipc-2023/mprime",
-        "ipc-2023/pathwaysmetric",
-        "ipc-2023/rover",
-        "ipc-2023/sailing",
-        "ipc-2023/satellite",
-        "ipc-2023/sugar",
-        "ipc-2023/tpp",
-        "ipc-2023/zenotravel",
-        "line-exchange",
-        "line-exchange-quantity"
+        # "ipc-2023/block-grouping",
+        # "ipc-2023/counters",
+        # "ipc-2023/delivery",
+        # "ipc-2023/drone",
+        # "ipc-2023/expedition",
+        # "ipc-2023/ext-plant-watering",
+        # "ipc-2023/farmland",
+        # "ipc-2023/fo-farmland",
+        # "ipc-2023/fo-sailing",
+        # "ipc-2023/fo_counters",
+        # "ipc-2023/hydropower",
+        # "ipc-2023/mprime",
+        # "ipc-2023/pathwaysmetric",
+        # "ipc-2023/rover",
+        # "ipc-2023/sailing",
+        # "ipc-2023/satellite",
+        # "ipc-2023/sugar",
+        # "ipc-2023/tpp",
+        # "ipc-2023/zenotravel",
+        # "line-exchange",
+        # "line-exchange-quantity"
+        "side-exchange"
     ]
 
     instances = list()
