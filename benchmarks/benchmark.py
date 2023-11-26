@@ -6,6 +6,10 @@ from typing import Dict
 import boto3
 from botocore.config import Config
 
+from benchmarks.classes.MetricFF import MetricFF
+from benchmarks.classes.NFD import NFD
+from benchmarks.classes.OMT import OMT
+from benchmarks.classes.SpringRoll import SpringRoll
 from classes.CloudLogger import CloudLogger
 from classes.ENHSP import ENHSP
 from classes.Envs import Envs
@@ -23,14 +27,14 @@ PLANNERS: Dict[str, Planner] = {
     "PATTY-STATIC": Patty("PATTY-STATIC", search="static", useSCCs=True),
     "PATTY-STATIC-MAX": Patty("PATTY-STATIC-MAX", search="static", maximize=True),
     "PATTY-ASTAR": Patty("PATTY-ASTAR", search="astar", useSCCs=True),
-    # "SPRINGROLL": SpringRoll(),
+    "SPRINGROLL": SpringRoll(),
     # "RANTANPLAN": Patty("RANTANPLAN", "arpg", solver="z3", encoding="non-linear", rollBound=1, hasEffectAxioms=True),
     "ENHSP-HADD": ENHSP("sat-hadd"),
     "ENHSP-HRADD": ENHSP("sat-hradd"),
     "ENHSP-HMRP": ENHSP("sat-hmrphj"),
-    # "METRIC-FF": MetricFF(),
-    # "NFD": NFD(),
-    # "OMT": OMT(),
+    "METRIC-FF": MetricFF(),
+    "NFD": NFD(),
+    "OMT": OMT(),
 }
 
 
