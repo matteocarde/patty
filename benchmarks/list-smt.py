@@ -10,7 +10,7 @@ PLANNERS = [
     # "PATTY-STATIC-MAX",
     "PATTY-ASTAR",
     "SPRINGROLL",
-    "RANTANPLAN",
+    # "RANTANPLAN",
     "ENHSP-HADD",
     "ENHSP-HRADD",
     "ENHSP-HMRP",
