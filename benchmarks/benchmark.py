@@ -6,10 +6,10 @@ from typing import Dict
 import boto3
 from botocore.config import Config
 
-from benchmarks.classes.MetricFF import MetricFF
-from benchmarks.classes.NFD import NFD
-from benchmarks.classes.OMT import OMT
-from benchmarks.classes.SpringRoll import SpringRoll
+from classes.MetricFF import MetricFF
+from classes.NFD import NFD
+from classes.OMT import OMT
+from classes.SpringRoll import SpringRoll
 from classes.CloudLogger import CloudLogger
 from classes.ENHSP import ENHSP
 from classes.Envs import Envs
