@@ -10,11 +10,11 @@ from natsort import natsorted
 from classes.Result import Result
 
 SOLVERS = {
-    'RANTANPLAN': "\mathrm{R^2\exists}",
-    'OMT': "\mathrm{OMT}",
+    # 'RANTANPLAN': "\mathrm{R^2\exists}",
+    # 'OMT': "\mathrm{OMT}",
     'ENHSP': r"\mathrm{ENHSP}",
-    'NFD': "\mathrm{NFD}",
-    'METRIC-FF': "\mathrm{FF}",
+    # 'NFD': "\mathrm{NFD}",
+    # 'METRIC-FF': "\mathrm{FF}",
     'SpringRoll': "\mathrm{SR}",
     'PATTY': "P",
     'PATTY-STATIC': "P_{cat}",
@@ -25,10 +25,11 @@ DOMAINS = {
     "side-exchange": r"\textsc{SideExchange}"
 }
 
+TIMEOUT = 30
 
 def main():
     files = [
-        "benchmarks/results/2023-11-29-SIDE-v1.csv"
+        "benchmarks/results/2023-11-26-SIDE-v4.csv"
     ]
     aResults: [Result] = []
     for file in files:
@@ -61,21 +62,22 @@ def main():
 
     plt.rcParams.update({
         "text.usetex": True,
-        "figure.figsize": [7.50, 3.50],
+        "figure.figsize": [7.50, 1.50],
         "figure.autolayout": True
     })
 
     i = 1
     for domain in DOMAINS.keys():
+        plt.figure(figsize=(7.50, 3))
         plt.figure(num=i, figsize=(8, 5))
         plt.title(rf"${DOMAINS[domain]}$")
         plt.grid()
-        plt.xlabel("Number of objects")
+        plt.xlabel("Value of $Q$")
         plt.ylabel("Planning Time (s)")
         for solver in SOLVERS:
             tuple = rDomain[domain][solver]
             x = np.linspace(1, len(xAxes[domain]), len(xAxes[domain]))
-            y = [tuple[prob].time / 1000 if prob in tuple and tuple[prob].solved else 300 for prob in xAxes[domain]]
+            y = [tuple[prob].time / 1000 if prob in tuple and tuple[prob].solved else TIMEOUT for prob in xAxes[domain]]
             ticks = [tick.replace(".pddl", "").replace("_", "\_") for tick in xAxes[domain]]
             ticks = [t if int(t) % 2 == 0 else "" for t in ticks]
             plt.xticks(x, ticks)
