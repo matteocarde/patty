@@ -212,6 +212,14 @@ class BinaryPredicate(Predicate):
             raise Exception("Cannot transform", self, " to expression ", self.type)
         return Utilities.op(self.operator, self.lhs.toExpression(), self.rhs.toExpression())
 
+    def expressify(self, symbols: Dict[Atom, Expr]) -> Expr:
+        if self.type == BinaryPredicateType.OPERATION:
+            return Utilities.op(self.operator, self.lhs.expressify(symbols), self.rhs.expressify(symbols))
+        elif self.type == BinaryPredicateType.COMPARATION:
+            return Utilities.compare(self.operator, self.lhs.expressify(symbols), self.rhs.expressify(symbols))
+        else:
+            raise Exception("Cannot expressify assignment")
+
     def getIntervalFromSimpleCondition(self) -> MooreInterval or None:
         if len(self.getFunctions()) > 1:
             return None

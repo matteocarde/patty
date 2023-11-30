@@ -79,6 +79,9 @@ class Constant(Predicate):
     def toExpression(self) -> Expr or float:
         return self.value
 
+    def expressify(self, symbols: Dict[Atom, Expr]) -> Expr or float:
+        return self.value
+
     def replace(self, atom: Atom, w):
         return copy.deepcopy(self)
 

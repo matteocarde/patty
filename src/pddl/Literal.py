@@ -129,5 +129,8 @@ class Literal(Predicate):
     def toExpression(self) -> Expr:
         return self.atom.toExpression()
 
+    def expressify(self, symbols: Dict[Atom, Expr]) -> Expr:
+        return symbols[self.atom]
+
     def comesFromTypedPredicate(self, tp: TypedPredicate) -> bool:
         return tp.name == self.atom.name and len(tp.parameters) == len(self.atom.attributes)

@@ -5,6 +5,8 @@ import copy
 from itertools import chain
 from typing import Dict, Set
 
+from sympy import Expr
+
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.Literal import Literal
@@ -19,7 +21,7 @@ class Formula:
 
     def __init__(self):
         self.type = "AND"
-        self.conditions = list()
+        self.conditions: [Formula or Predicate] = list()
 
     def __deepcopy__(self, m=None) -> Formula:
         m = {} if m is None else m
@@ -97,6 +99,11 @@ class Formula:
         for el in self.conditions:
             f.conditions.append(el.replace(atom, w))
         return f
+
+    def expressify(self, symbols: Dict[Atom, Expr]) -> Expr:
+        if self.type == "or":
+            raise Exception("Cannot expressify OR formula")
+        return [c.expressify(symbols) for c in self.conditions]
 
     def __iter__(self):
         return iter(self.conditions)

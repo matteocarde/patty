@@ -24,10 +24,10 @@ class Process(Operation):
     def ground(self, problem) -> List[Process]:
         groundOps: List = []
         for op in self.getGroundedOperations(problem):
-            event = Process()
-            event.name = op.name
-            event.preconditions = op.preconditions
-            event.effects = op.effects
-            event.planName = op.planName
-            groundOps.append(event)
+            name = op.name
+            preconditions = op.preconditions
+            effects = op.effects
+            planName = op.planName
+            process = Process.fromProperties(name, preconditions, effects, planName)
+            groundOps.append(process)
         return groundOps

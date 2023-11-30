@@ -26,6 +26,9 @@ class Predicate:
     def toLatex(self) -> str:
         raise NotImplemented
 
+    def expressify(self, symbols: Dict[Atom, Expr]) -> Expr:
+        raise NotImplemented
+
     def __eq__(self, other):
         if not isinstance(other, Predicate):
             return False

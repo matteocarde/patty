@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import copy
-
 from typing import Dict, cast
 
 from src.pddl.Formula import Formula
@@ -32,4 +31,5 @@ class Preconditions(Formula):
 
     def addPrecondition(self, param):
         self.addClause(param)
+
 
