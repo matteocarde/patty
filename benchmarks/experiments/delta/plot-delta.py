@@ -2,31 +2,30 @@ import csv
 import os
 import re
 import shutil
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 from matplotlib import pyplot as plt
 from matplotlib.axes import Subplot
 
 from classes.Result import Result
 
-TIMEOUT = 120000
-DOMAINS = ["BaxterMulti"]
+TIMEOUT = 300000
 
-HEURISTICS = [
+PRINTONLY = ["PORTFOLIO"]
+PLANNERS = {
     "ENHSP-SAT-HMRP",
     "ENHSP-SAT-HADD",
-    # "ENHSP-SAT-HMAX",
+    "ENHSP-SAT-HMAX",
     "ENHSP-SAT-AIBR",
-    # "ENHSP-SAT-HRADD",
-    "ENHSP-SAT-BLIND",
+    "ENHSP-SAT-HRADD",
+    # "ENHSP-SAT-BLIND",
     "ENHSP-OPT-HMRP",
     "ENHSP-OPT-HADD",
-    # "ENHSP-OPT-HMAX",
+    "ENHSP-OPT-HMAX",
     "ENHSP-OPT-AIBR",
-    # "ENHSP-OPT-HRADD",
-    "ENHSP-OPT-BLIND",
-    "PORTFOLIO"
-]
+    "ENHSP-OPT-HRADD",
+    "UPMURPHI"
+}
 
 LINES = {
     ("NODELTA", "-de 1 -dp 1 -dh 1"): {
@@ -35,7 +34,7 @@ LINES = {
         "type": "NODELTA",
         "config": "-de 1 -dp 1 -dh 1"
     },
-    ("NODELTA", "-de 1 -dp 5 -dh 5"): {
+    ("NODELTA", "-de 1 -dp 3 -dh 3"): {
         "id": "2DELTA",
         "name": r"$2\delta$",
         "type": "NODELTA",
@@ -56,7 +55,7 @@ def problemToInt(problem):
 
 
 def main():
-    filename = "2023-10-30-BAXTERMULTI-v2.csv"
+    filename = "2023-11-30-FINAL-v3.csv"
     file = f"benchmarks/results/{filename}"
 
     results: [Result] = []
@@ -72,69 +71,89 @@ def main():
     for r in results:
         domain = r.domain.split("-")[0]
         type = r.domain.split("-")[1]
-        solver = r.solver.split("[")[0]
-        if solver not in HEURISTICS:
+        heuristic = r.solver.split("[")[0]
+        if heuristic not in PLANNERS:
             continue
+
+        solver = heuristic.split("-")[0]
+
         config = r.solver.split("[")[1][:-1]
+        if (type, config) not in LINES:
+            continue
         line = LINES[(type, config)]
         id = line["id"]
-        rDict[domain] = rDict.setdefault(domain, {})
-        rDict[domain][solver] = rDict[domain].setdefault(solver, {})
-        rDict[domain][solver][id] = rDict[domain][solver].setdefault(id, [])
-        rDict[domain][solver][id].append(r)
-
-        portfolio[domain] = portfolio.setdefault(domain, {})
-        portfolio[domain][id] = portfolio[domain].setdefault(id, {})
-        portfolio[domain][id][r.problem] = portfolio[domain][id].setdefault(r.problem, [])
-        portfolio[domain][id][r.problem].append(r)
+        rDict[solver] = rDict.setdefault(solver, {})
+        rDict[solver][id] = rDict[solver].setdefault(id, {})
+        rDict[solver][id][r.problem] = rDict[solver][id].setdefault(r.problem, [])
+        rDict[solver][id][r.problem].append(r)
 
         r.time = r.time if r.solved else TIMEOUT
 
-    for domain in DOMAINS:
-        for line in LINES.values():
-            id = line["id"]
-            for rs in portfolio[domain][id].values():
-                r = Result.portfolio(rs, "PORTFOLIO")
-                rDict[domain]["PORTFOLIO"] = rDict[domain].setdefault("PORTFOLIO", {})
-                rDict[domain]["PORTFOLIO"][id] = rDict[domain]["PORTFOLIO"].setdefault(id, [])
-                rDict[domain]["PORTFOLIO"][id].append(r)
+    lines: Dict[str, List[Tuple[int, int]]] = dict()
+
+    for (solver, solverDict) in rDict.items():
+        for (line, lineDict) in solverDict.items():
+            key = f"{solver}-{line}"
+            lines[key] = []
+            for (problem, problemList) in lineDict.items():
+                alpha = int(problem.split("-")[1].split(".")[0])
+                value = min([r.time for r in problemList]) / 1000
+                lines[key].append((alpha, value))
+            lines[key].sort(key=lambda l: l[0])
 
     plt.rcParams.update({
         "text.usetex": True,
-        "figure.figsize": [7.50, 2.5 * len(HEURISTICS)],
+        "figure.figsize": [7.50, 2 * len(PRINTONLY)],
         "figure.autolayout": True
     })
 
-    for i, domain in enumerate(DOMAINS):
-        plt.figure(num=i, figsize=(20, 5))
-        plt.title(rf"${domain}$")
-        fig, axs = plt.subplots(len(HEURISTICS), 1)
-        for j, heuristic in enumerate(HEURISTICS):
-            if heuristic not in rDict[domain]:
-                continue
-            ax: Subplot = axs[j]
-            ax.set_title(rf"{heuristic}")
-            ax.grid()
-            ax.set_xlabel("Scaling factor")
-            ax.set_ylabel("Pl. Time (s)")
-            ax.set_xscale("log")
+    fig, ax = plt.subplots()
+    ax.grid()
+    ax.set_xlabel("Distance between Base Camp and Location ExpB")
+    ax.set_ylabel("Run Time (s)")
+    ax.set_xscale("log")
 
-            for line in LINES.values():
-                points = dict({(problemToInt(r.problem), r.time / 1000) for r in rDict[domain][heuristic][line["id"]]})
-                x = list(points.keys())
-                x.sort()
-                y = [points[e] for e in x]
-                ax.plot(x, y, label=line["name"])
-                pass
+    LABELS = {
+        "ENHSP-KDELTA": {
+            "label": "$E-K\delta$",
+            "style": "g-"
+        },
+        "ENHSP-1DELTA": {
+            "label": "$E-1\delta$",
+            "style": "r-"
+        },
+        "ENHSP-2DELTA": {
+            "label": "$E-2\delta$",
+            "style": "b-"
+        },
+        "UPMURPHI-KDELTA": {
+            "label": "$U-K\delta$",
+            "style": "g--"
+        },
+        "UPMURPHI-1DELTA": {
+            "label": "$U-1\delta$",
+            "style": "r--"
+        }
+    }
 
-            ax.legend(loc="upper right")
-        exp = filename.replace(".csv", "")
-        folder = f'benchmarks/figures/{exp}'
-        if os.path.exists(folder):
-            shutil.rmtree(folder)
-        os.mkdir(folder)
-        plt.savefig(f'{folder}/{domain}-{exp}.pdf')
-        plt.show()
+    for (key, points) in lines.items():
+        x = [p[0] for p in points]
+        y = [p[1] for p in points]
+        ax.plot(x, y, LABELS[key]["style"], label=LABELS[key]["label"])
+
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    # ax.spines['bottom'].set_visible(False)
+    # ax.spines['left'].set_visible(False)
+    ax.legend(loc="upper left", fontsize="8")
+
+    exp = filename.replace(".csv", "")
+    folder = f'benchmarks/figures/{exp}'
+    if os.path.exists(folder):
+        shutil.rmtree(folder)
+    os.mkdir(folder)
+    plt.savefig(f'{folder}/{exp}.pdf', bbox_inches='tight', pad_inches=0.01)
+    plt.show()
 
 
 if __name__ == '__main__':

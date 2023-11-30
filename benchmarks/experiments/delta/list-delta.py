@@ -8,30 +8,24 @@ PLANNERS = {
         "ENHSP-SAT-HMRP[-de 1 -dp 1 -dh 1]",
         "ENHSP-SAT-HADD[-de 1 -dp 1 -dh 1]",
         "ENHSP-SAT-AIBR[-de 1 -dp 1 -dh 1]",
-        "ENHSP-SAT-BLIND[-de 1 -dp 1 -dh 1]",
         "ENHSP-OPT-HMRP[-de 1 -dp 1 -dh 1]",
         "ENHSP-OPT-HADD[-de 1 -dp 1 -dh 1]",
         "ENHSP-OPT-AIBR[-de 1 -dp 1 -dh 1]",
-        "ENHSP-OPT-BLIND[-de 1 -dp 1 -dh 1]"
     ],
     "NODELTA": [
-        "ENHSP-SAT-HMRP[-de 1 -dp 5 -dh 5]",
-        "ENHSP-SAT-HADD[-de 1 -dp 5 -dh 5]",
-        "ENHSP-SAT-AIBR[-de 1 -dp 5 -dh 5]",
-        "ENHSP-SAT-BLIND[-de 1 -dp 5 -dh 5]",
-        "ENHSP-OPT-HMRP[-de 1 -dp 5 -dh 5]",
-        "ENHSP-OPT-HADD[-de 1 -dp 5 -dh 5]",
-        "ENHSP-OPT-AIBR[-de 1 -dp 5 -dh 5]",
-        "ENHSP-OPT-BLIND[-de 1 -dp 5 -dh 5]",
+        "ENHSP-SAT-HMRP[-de 1 -dp 3 -dh 3]",
+        "ENHSP-SAT-HADD[-de 1 -dp 3 -dh 3]",
+        "ENHSP-SAT-AIBR[-de 1 -dp 3 -dh 3]",
+        "ENHSP-OPT-HMRP[-de 1 -dp 3 -dh 3]",
+        "ENHSP-OPT-HADD[-de 1 -dp 3 -dh 3]",
+        "ENHSP-OPT-AIBR[-de 1 -dp 3 -dh 3]",
 
         "ENHSP-SAT-HMRP[-de 1 -dp 1 -dh 1]",
         "ENHSP-SAT-HADD[-de 1 -dp 1 -dh 1]",
         "ENHSP-SAT-AIBR[-de 1 -dp 1 -dh 1]",
-        "ENHSP-SAT-BLIND[-de 1 -dp 1 -dh 1]",
         "ENHSP-OPT-HMRP[-de 1 -dp 1 -dh 1]",
         "ENHSP-OPT-HADD[-de 1 -dp 1 -dh 1]",
         "ENHSP-OPT-AIBR[-de 1 -dp 1 -dh 1]",
-        "ENHSP-OPT-BLIND[-de 1 -dp 1 -dh 1]",
 
         # "ENHSP-SAT-HMRP[-de 0.1 -dp 1 -dh 1]",
         # "ENHSP-SAT-HADD[-de 0.1 -dp 1 -dh 1]",
@@ -79,16 +73,16 @@ PLANNERS = {
 
 
 def main():
-    NAME = "delta-all"
+    NAME = "delta"
     domains = {
-        # "CoOpRobots": {
-        #     "DELTA": "hybrid/CoOpRobots/delta",
-        #     "NODELTA": "hybrid/CoOpRobots"
-        # },
-        "BaxterMulti": {
-            "DELTA": "hybrid/BaxterMulti/delta",
-            "NODELTA": "hybrid/BaxterMulti"
+        "CoOpRobots": {
+            "DELTA": "hybrid/CoOpRobots/delta",
+            "NODELTA": "hybrid/CoOpRobots"
         },
+        # "BaxterMulti": {
+        #     "DELTA": "hybrid/BaxterMulti/delta",
+        #     "NODELTA": "hybrid/BaxterMulti"
+        # },
         # "Baxter": {
         #     "DELTA": "hybrid/Baxter/delta",
         #     "NODELTA": "hybrid/Baxter"
