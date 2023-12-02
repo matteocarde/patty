@@ -49,6 +49,12 @@ class InitialCondition:
         return self.numericAssignments[atom]
         pass
 
+    def addPredicate(self, l: Literal):
+        self.assignments.append(l)
+
+    def addNumericAssignment(self, atom: Atom, value: float):
+        self.numericAssignments[atom] = value
+
     @classmethod
     def fromString(cls, string: str):
         return InitialCondition.fromNode(Utilities.getParseTree(string).init())

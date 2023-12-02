@@ -4,6 +4,7 @@ from unittest import TestCase
 from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.Problem import Problem
 from src.pddl.Trace import Trace
+from src.retrieve.InitialConditionRetriever import InitialConditionRetriever
 from src.retrieve.InitialConditionSpace import InitialConditionSpace
 
 
@@ -25,6 +26,12 @@ class TestHVAC(TestCase):
         self.assertIsInstance(self.domain, Domain)
         self.assertIsInstance(self.problem, Problem)
         self.assertIsInstance(self.gDomain, GroundedDomain)
+
+    def test_solve(self):
+        icr = InitialConditionRetriever(self.ics)
+        print("Solving....")
+        res = icr.solve()
+        pass
 
 
 if __name__ == '__main__':

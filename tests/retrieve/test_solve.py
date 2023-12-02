@@ -3,9 +3,11 @@ from math import cos, atan
 from unittest import TestCase
 
 import numpy as np
+from pylatex import Matrix
 from scipy.optimize import minimize, NonlinearConstraint
 from sympy import symbols, linsolve, solve, solveset, nonlinsolve, solve_rational_inequalities, Eq, reduce_inequalities, \
-    lambdify
+    lambdify, simplify, linear_eq_to_matrix
+from sympy.solvers.solveset import linear_coeffs
 
 from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.Problem import Problem
@@ -70,6 +72,33 @@ class TestSolve(TestCase):
 
         self.assertAlmostEqual(res.x[0], 5)
         self.assertAlmostEqual(res.x[1], 5)
+
+    def test_relational(self):
+        x, y, z = symbols("x y z")
+
+        a = x + y > 10
+        b = x + y
+        c = x + y < 10
+
+        self.assertEqual(a.is_Relational, True)
+        self.assertEqual(b.is_Relational, False)
+        self.assertEqual(c.is_Relational, True)
+
+    def test_lin_nonlin(self):
+        x, y = symbols("x y")
+
+        a = x + y
+        b = x * y
+
+        ac = linear_coeffs(a, x, y)
+        raised = False
+        try:
+            bc = linear_coeffs(b, x, y)
+        except:
+            raised = True
+
+        self.assertTrue(raised)
+        self.assertEqual(ac, [1, 1, 0])
 
 
 if __name__ == '__main__':

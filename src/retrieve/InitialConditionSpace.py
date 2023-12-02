@@ -1,7 +1,6 @@
-from typing import Set, Dict, List
+from typing import Dict, List
 
-from sympy import Expr, symbols, Eq, solve, solveset, solve_rational_inequalities, latex, S, linsolve, nonlinsolve
-from sympy.core import symbol
+from sympy import Expr, symbols, S
 
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
@@ -11,7 +10,6 @@ from src.pddl.Literal import Literal
 from src.pddl.Operation import Operation
 from src.pddl.Problem import Problem
 from src.pddl.Trace import Trace, Log
-from src.pddl.Utilities import Utilities
 
 
 class InitialConditionSpace:
@@ -21,29 +19,31 @@ class InitialConditionSpace:
         self.problem = problem
         self.domain = domain
         self.Xis: Dict[int, Dict[Atom, Expr]] = dict()
-        self.vars = list()
-        # self.conditions: List[Expr] = []
+
+        for log in self.trace:
+            log.squash()
 
         self.m = len(trace)
         for i in range(0, self.m + 1):
             Xi: Dict[Atom, Expr] = dict()
+            invXi: Dict[Expr, Atom] = dict()
             self.Xis[i] = Xi
-            for v in self.domain.allAtoms:
-                name = v.name.replace('_', '\_')
-                Xi[v] = symbols(f"{name}_{{{i}}}")
-                self.vars.append(Xi[v])
+            for atom in self.domain.allAtoms:
+                name = atom.name.replace('_', '\_')
+                var = symbols(f"{name}_{{{i}}}")
+                Xi[atom] = var
 
-        deltaVar = symbols("delta")
-        self.vars.append(deltaVar)
-        self.conditions = []
-        # self.conditions = [Eq(deltaVar, 1)]
-        self.conditions += self.getGoalConditions(self.problem.goal) + self.getTraceConditions(self.trace)
+        self.updateXis()
+        self.conditions = self.getGoalConditions(self.problem.goal) + self.getTraceConditions(self.trace)
 
-        for c in self.conditions:
-            print(latex(c) + r"\\")
-
-        x = nonlinsolve(self.conditions, self.vars)
         pass
+
+    def updateXis(self):
+        for i, log in enumerate(self.trace):
+            self.getPropXis(log.squashed, self.Xis[i])
+            self.getEffXis(log.squashed, self.Xis[i], self.Xis[i + 1])
+            self.getFrameXis(log.squashed, self.Xis[i], self.Xis[i + 1])
+        self.getGoalXis(self.problem.goal, self.Xis[self.m])
 
     def getGoalConditions(self, goal: Goal) -> List[Expr]:
         conditions = []
@@ -52,8 +52,6 @@ class InitialConditionSpace:
         for c in goal.conditions:
             if isinstance(c, BinaryPredicate):
                 conditions.append(c.expressify(self.Xis[self.m]))
-            elif isinstance(c, Literal):
-                conditions.append(c.expressifyWithEquation(self.Xis[self.m]))
 
         return conditions
 
@@ -62,61 +60,63 @@ class InitialConditionSpace:
 
         log: Log
         for i, log in enumerate(trace):
-            h: Operation = log.squash()
-            conditions += self.getPropConditions(h, self.Xis[i])
-            conditions += self.getPreConditions(h, self.Xis[i])
-            conditions += self.getEffConditions(h, self.Xis[i], self.Xis[i + 1])
-            conditions += self.getFrameConditions(h, self.Xis[i], self.Xis[i + 1])
+            conditions += self.getPreConditions(log.squashed, self.Xis[i])
 
         return conditions
 
-    def getPreConditions(self, h: Operation, Xi: Dict[Atom, Expr]) -> [Expr]:
+    @staticmethod
+    def getPreConditions(h: Operation, Xi: Dict[Atom, Expr]) -> [Expr]:
         conditions = []
         for pre in h.preconditions:
             if isinstance(pre, BinaryPredicate):
-                conditions.append(pre.expressify(Xi))
+                f = pre.expressify(Xi)
+                if isinstance(f, Expr):
+                    conditions.append(f)
+                elif isinstance(f, bool):
+                    assert f
+
         return conditions
 
-    def getPropConditions(self, h: Operation, Xi: Dict[Atom, Expr]) -> [Expr]:
-        conditions = []
+    @staticmethod
+    def getPropXis(h: Operation, Xi: Dict[Atom, Expr]) -> [Expr]:
 
         atomsInPre = set()
         for pre in h.preconditions:
             if isinstance(pre, Literal):
-                conditions.append(pre.expressifyWithEquation(Xi))
+                atom = pre.getAtom()
+                Xi[atom] = S(1) if pre.sign == "+" else S(-1)
                 atomsInPre.add(pre.getAtom())
 
         for eff in h.effects:
             if isinstance(eff, Literal) and eff.getAtom() not in atomsInPre:
-                # conditions.append(Eq(eff.expressify(Xi), 0))
-                conditions.append(eff.expressify(Xi))
+                atom = eff.getAtom()
+                Xi[atom] = S(0)
 
-        return conditions
+    @staticmethod
+    def getGoalXis(goal: Goal, Xi: Dict[Atom, Expr]):
+        if goal.type == "OR":
+            raise Exception("Cannot expressify OR formula")
+        for c in goal.conditions:
+            if isinstance(c, Literal):
+                atom = c.getAtom()
+                Xi[atom] = S(+1) if c.sign == "+" else S(-1)
 
-    def getEffConditions(self, h: Operation, Xi: Dict[Atom, Expr], XiPrime: Dict[Atom, Expr]) -> [Expr]:
-        conditions = []
+    @staticmethod
+    def getEffXis(h: Operation, Xi: Dict[Atom, Expr], XiPrime: Dict[Atom, Expr]) -> [Expr]:
+
         for eff in h.effects:
             if isinstance(eff, BinaryPredicate):
-                lhs = eff.lhs.expressify(Xi)
-                lhsPrime = eff.lhs.expressify(XiPrime)
+                atom = eff.lhs.getAtom()
                 rhs = eff.rhs.expressify(Xi)
                 c = None
                 if eff.operator == "increase":
-                    c = lhsPrime - (lhs + rhs)  # Eq(lhsPrime, lhs + rhs)
+                    XiPrime[atom] = Xi[atom] + rhs
                 if eff.operator == "decrease":
-                    c = lhsPrime - (lhs - rhs)  # Eq(lhsPrime, lhs - rhs)
+                    XiPrime[atom] = Xi[atom] - rhs
                 if eff.operator == "assign":
-                    c = lhsPrime - rhs  # Eq(lhsPrime, rhs)
-                assert c is not None
-                conditions.append(c)
+                    XiPrime[atom] = rhs  # Eq(lhsPrime, rhs)
 
-        return conditions
-
-    def getFrameConditions(self, h: Operation, Xi: Dict[Atom, Expr], XiPrime: Dict[Atom, Expr]) -> [Expr]:
-        conditions = []
+    def getFrameXis(self, h: Operation, Xi: Dict[Atom, Expr], XiPrime: Dict[Atom, Expr]) -> [Expr]:
         untouched = self.domain.allAtoms - h.influencedAtoms
         for atom in untouched:
-            # conditions.append(Eq(Xi[atom], XiPrime[atom]))
-            conditions.append(Xi[atom] - XiPrime[atom])
-
-        return conditions
+            XiPrime[atom] = Xi[atom]

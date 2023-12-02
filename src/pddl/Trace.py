@@ -24,6 +24,7 @@ class Log:
         self.time: float = time
         self.type: OperationType or None = None
         self.operations: Set[Operation] = set()
+        self.squashed: Operation or None = None
 
     def add(self, operation: Operation):
         self.operations.add(operation)
@@ -35,18 +36,17 @@ class Log:
     def __repr__(self):
         return str(self)
 
-    def squash(self) -> Operation:
+    def squash(self):
         if len(self.operations) == 1:
-            return self.operations.pop()
-        pass
+            squashed = list(self.operations)[0]
+        else:
+            name = "_".join([op.name for op in self.operations])
+            preconditions = Preconditions.join([op.preconditions for op in self.operations])
+            effects = Effects.join([op.effects for op in self.operations])
+            planName = "no"
+            squashed = classes[self.type].fromProperties(name, preconditions, effects, planName)
 
-        name = "_".join([op.name for op in self.operations])
-        preconditions = Preconditions.join([op.preconditions for op in self.operations])
-        effects = Effects.join([op.effects for op in self.operations])
-        planName = "no"
-        squashed = classes[self.type].fromProperties(name, preconditions, effects, planName)
-
-        return squashed
+        self.squashed = squashed
 
 
 class Trace:
@@ -59,6 +59,9 @@ class Trace:
 
     def __iter__(self):
         return iter(self.logs)
+
+    def __getitem__(self, item):
+        return self.logs[item]
 
     @classmethod
     def fromFile(cls, filename: str, domain: GroundedDomain):
