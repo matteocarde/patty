@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import copy
-from sympy import Expr
+from sympy import Expr, Eq
 from typing import Dict, Set
 
 from src.pddl.Atom import Atom
@@ -134,3 +134,7 @@ class Literal(Predicate):
 
     def comesFromTypedPredicate(self, tp: TypedPredicate) -> bool:
         return tp.name == self.atom.name and len(tp.parameters) == len(self.atom.attributes)
+
+    def expressifyWithEquation(self, symbols: Dict[Atom, Expr]) -> Expr:
+        # return Eq(self.expressify(symbols), 1) if self.sign == "+" else Eq(self.expressify(symbols), -1)
+        return self.expressify(symbols) - 1 if self.sign == "+" else self.expressify(symbols) + 1

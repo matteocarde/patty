@@ -3,7 +3,7 @@ from __future__ import annotations
 import copy
 
 from itertools import chain
-from typing import Dict, Set
+from typing import Dict, Set, List
 
 from sympy import Expr
 
@@ -142,3 +142,15 @@ class Formula:
 
     def addClause(self, clause: Formula or Predicate):
         self.conditions.append(clause)
+
+    @classmethod
+    def join(cls, formulas: List[Formula]) -> Formula:
+        joinedF = cls()
+        type = formulas[0].type
+        joinedF.conditions = []
+        for f in formulas:
+            if type != f.type:
+                raise Exception("Cannot join together preconditions of different types")
+            joinedF.conditions += f.conditions
+        joinedF.type = type
+        return joinedF

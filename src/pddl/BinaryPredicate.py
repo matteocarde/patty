@@ -216,7 +216,9 @@ class BinaryPredicate(Predicate):
         if self.type == BinaryPredicateType.OPERATION:
             return Utilities.op(self.operator, self.lhs.expressify(symbols), self.rhs.expressify(symbols))
         elif self.type == BinaryPredicateType.COMPARATION:
-            return Utilities.compare(self.operator, self.lhs.expressify(symbols), self.rhs.expressify(symbols))
+            if self.operator == "=":
+                return self.lhs.expressify(symbols) - self.rhs.expressify(symbols)
+            return Utilities.compareExpr(self.operator, self.lhs.expressify(symbols), self.rhs.expressify(symbols))
         else:
             raise Exception("Cannot expressify assignment")
 

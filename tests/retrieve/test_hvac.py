@@ -7,15 +7,15 @@ from src.pddl.Trace import Trace
 from src.retrieve.InitialConditionSpace import InitialConditionSpace
 
 
-class TestLinearCar(TestCase):
+class TestHVAC(TestCase):
 
     def setUp(self) -> None:
-        folder = "../../files/hybrid/Linear-Car"
+        folder = "../../files/hybrid/HVAC"
         self.domain: Domain = Domain.fromFile(f"{folder}/domain.pddl")
-        self.problem: Problem = Problem.fromFile(f"{folder}/instances/instance_0_30.0_0.1_10.0.pddl")
+        self.problem: Problem = Problem.fromFile(f"{folder}/instances/instance_1_1.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem, avoidSimplification=True)
 
-        self.trace: Trace = Trace.fromFile(f"{folder}/plans/instance_0_30.0_0.1_10.0.txt", self.gDomain)
+        self.trace: Trace = Trace.fromFile(f"{folder}/plans/instance_1_1.pddl", self.gDomain)
 
         self.ics: InitialConditionSpace = InitialConditionSpace(self.trace, self.problem, self.gDomain)
 

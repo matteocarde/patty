@@ -6,7 +6,7 @@ from itertools import chain
 from typing import Dict, List, cast, Iterable
 
 from src.pddl.Atom import Atom
-from src.pddl.BinaryPredicate import BinaryPredicate
+from src.pddl.BinaryPredicate import BinaryPredicate, BinaryPredicateType
 from src.pddl.Literal import Literal
 from src.pddl.grammar.pddlParser import pddlParser
 from src.pddl.grammar.pddlParser import pddlParser as p
@@ -78,3 +78,19 @@ class Effects:
 
     def addEffect(self, ass: Literal or BinaryPredicate):
         self.assignments.append(ass)
+
+    @classmethod
+    def join(cls, effects: List[Effects]) -> Effects:
+        joinedEff = cls()
+        for e in effects:
+            joinedEff.assignments += e.assignments
+
+        rhs = set()
+        for e in joinedEff.assignments:
+            if not isinstance(e, BinaryPredicate) or e.type != BinaryPredicateType.MODIFICATION:
+                continue
+            if e.lhs.getAtom() in rhs:
+                raise Exception(
+                    "When joining the effects there are multiple modification of the same variable. Now I am lazy")
+            rhs.add(e.lhs.getAtom)
+        return joinedEff

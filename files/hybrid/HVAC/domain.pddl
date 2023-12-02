@@ -25,17 +25,17 @@
 		:effect (and (satisfied ?r))
 	)
 
-	(:constraint temperature_domain
-		:parameters (?l -room)
-		;;Constraint on the possible temperature in a room
-		:condition (and (<= (temp ?l) 30) (>= (temp ?l) 10))
-	)
+	; (:constraint temperature_domain
+	; 	:parameters (?l -room)
+	; 	;;Constraint on the possible temperature in a room
+	; 	:condition (and (<= (temp ?l) 30) (>= (temp ?l) 10))
+	; )
 
 	;; this process models the passing of time
 	(:process time_passing
 		:parameters ()
 		:precondition (and(not(alwaysfalse)))
-		:effect (increase (time) (* #t 1))
+		:effect (and (increase (time) (* #t 1)))
 	)
 
 	;; this process models how the temperature changes along the time according to the air-flow and the temp_sa. Many other parameters have to be added. 

@@ -1,9 +1,21 @@
 import re
 from typing import List, Set
 
+from src.pddl.Action import Action
 from src.pddl.Domain import GroundedDomain
+from src.pddl.Effects import Effects
+from src.pddl.Event import Event
+from src.pddl.Formula import Formula
 from src.pddl.Operation import Operation
 from src.pddl.OperationType import OperationType
+from src.pddl.Preconditions import Preconditions
+from src.pddl.Process import Process
+
+classes = {
+    OperationType.ACTION: Action,
+    OperationType.EVENT: Event,
+    OperationType.PROCESS: Process,
+}
 
 
 class Log:
@@ -23,6 +35,19 @@ class Log:
     def __repr__(self):
         return str(self)
 
+    def squash(self) -> Operation:
+        if len(self.operations) == 1:
+            return self.operations.pop()
+        pass
+
+        name = "_".join([op.name for op in self.operations])
+        preconditions = Preconditions.join([op.preconditions for op in self.operations])
+        effects = Effects.join([op.effects for op in self.operations])
+        planName = "no"
+        squashed = classes[self.type].fromProperties(name, preconditions, effects, planName)
+
+        return squashed
+
 
 class Trace:
 
@@ -31,6 +56,9 @@ class Trace:
 
     def __len__(self):
         return len(self.logs)
+
+    def __iter__(self):
+        return iter(self.logs)
 
     @classmethod
     def fromFile(cls, filename: str, domain: GroundedDomain):
@@ -65,3 +93,7 @@ class Trace:
 
     def __repr__(self):
         return str(self)
+
+    @classmethod
+    def squash(cls, operations):
+        pass

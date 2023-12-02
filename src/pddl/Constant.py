@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import copy
-from sympy import Expr
+from sympy import Expr, symbols
 from typing import Dict, Set
 
 from src.pddl.Atom import Atom
@@ -76,11 +76,11 @@ class Constant(Predicate):
     def getLinearIncrement(self) -> float:
         return self.value
 
-    def toExpression(self) -> Expr or float:
+    def toExpression(self, onlyExpr=False) -> Expr or float:
         return self.value
 
-    def expressify(self, symbols: Dict[Atom, Expr]) -> Expr or float:
-        return self.value
+    def expressify(self, s: Dict[Atom, Expr]) -> Expr or float:
+        return self.value if not self.isDelta else 1  # symbols("delta")
 
     def replace(self, atom: Atom, w):
         return copy.deepcopy(self)
