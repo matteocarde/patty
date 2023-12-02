@@ -54,6 +54,7 @@ class InitialCondition:
 
     def addNumericAssignment(self, atom: Atom, value: float):
         self.numericAssignments[atom] = value
+        self.assignments.append(BinaryPredicate.fromAssignment(atom, value))
 
     @classmethod
     def fromString(cls, string: str):

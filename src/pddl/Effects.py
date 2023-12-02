@@ -44,9 +44,9 @@ class Effects:
 
         return effects
 
-    def ground(self, sub: Dict[str, str]) -> Effects:
+    def ground(self, sub: Dict[str, str], delta=1) -> Effects:
         e = Effects()
-        e.assignments = [predicate.ground(sub) for predicate in self.assignments]
+        e.assignments = [predicate.ground(sub, delta=1) for predicate in self.assignments]
         return e
 
     def getFunctions(self):
@@ -92,5 +92,5 @@ class Effects:
             if e.lhs.getAtom() in rhs:
                 raise Exception(
                     "When joining the effects there are multiple modification of the same variable. Now I am lazy")
-            rhs.add(e.lhs.getAtom)
+            rhs.add(e.lhs.getAtom())
         return joinedEff

@@ -64,11 +64,11 @@ class Formula:
     def fromString(cls, string: str) -> Formula:
         return Formula.fromNode(Utilities.getParseTree(string).preconditions())
 
-    def ground(self, subs: Dict[str, str]):
+    def ground(self, subs: Dict[str, str], delta=1):
         gFormula = Formula()
         gFormula.type = self.type
         for condition in self.conditions:
-            gFormula.conditions.append(condition.ground(subs))
+            gFormula.conditions.append(condition.ground(subs, delta))
         return gFormula
 
     def getFunctions(self) -> Set[Atom]:

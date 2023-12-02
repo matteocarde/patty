@@ -40,6 +40,22 @@
 		)
 	)
 
+	(:process thrust
+		:parameters ()
+		:precondition (and
+			(landing)
+			(thrusting)
+			(not (block))
+		)
+		:effect (and
+			(decrease
+				(v)
+				(* #t (* (* (ISP) (g)) (/ (q) (M)))))
+			(decrease (M) (* #t (q)))
+			(increase (thrust-duration) (* #t 1.0))
+		)
+	)
+
 	(:action start_descent
 		:parameters()
 		:precondition (and
@@ -58,7 +74,8 @@
 		:precondition (and
 			(not (block))
 			(landing)
-			(< (v) (v_margin)) (< (d) (d_final)) (> (d) (- (d_final) (d_margin)))
+			(< (v) (v_margin)) (< (d) (d_final))
+			(> (d) (- (d_final) (d_margin)))
 		)
 		:effect (and
 			(landed)
@@ -91,34 +108,40 @@
 		:parameters ()
 		:precondition (and
 			(thrusting)
-			(>= (thrust-duration) (/ (- (M) (M_min)) q))
+			(>= (thrust-duration) (/ (- (M) (M_min)) (q)))
 		)
 		:effect (and
 			(not (thrusting))
 		)
 	)
 
-	(:process thrust
-		:parameters ()
-		:precondition (and
-			(landing)
-			(thrusting)
-			(not (block))
-		)
-		:effect (and
-			(decrease
-				(v)
-				(* #t (* (* (ISP) (g)) (/ (q) (M)))))
-			(decrease (M) (* #t (q)))
-			(increase (thrust-duration) (* #t 1.0))
-		)
-	)
-
-	(:event anti-crash
+	(:event anti-crash1
 		:parameters()
 		:precondition (and
-			(not (and (< (d) (d_final)) (> (M) (M_min)))) (not (block)))
-		:effect (block)
+			(> (d) (d_final))
+			(not (block)))
+		:effect (and (block))
 	)
+
+	(:event anti-crash2
+		:parameters()
+		:precondition (and
+			(< (M) (M_min))
+			(not (block)))
+		:effect (and (block))
+	)
+
+	; (:event anti-crash
+	; 	:parameters()
+	; 	:precondition (and
+	; 		(and
+	; 			(< (d) (d_final))
+	; 		)
+	; 		(not (and
+	; 				(< (d) (d_final)) ;not ((d < df) and (M > Min)) = (d > df) or (M < Min)
+	; 				(> (M) (M_min))))
+	; 		(not (block)))
+	; 	:effect (and (block))
+	; )
 
 )

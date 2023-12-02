@@ -1,0 +1,88 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 7
+Aibr Preprocessing
+|F|:5
+|X|:5
+Aibr Preprocessing
+|A|:4
+|P|:2
+|E|:3
+Delta time heuristic model:1.0
+Delta time planning model:1.0
+Delta time search-execution model:1.0
+Delta time validation model:1
+AIBR selected
+Setting horizon to:NaN
+Running Greedy Best First Search
+h(n = s_0)=36.0
+ g(n)= 1.0 h(n)=29.0
+ g(n)= 2.0 h(n)=25.0
+ g(n)= 3.0 h(n)=21.0
+ g(n)= 4.0 h(n)=17.0
+ g(n)= 5.0 h(n)=13.0
+ g(n)= 6.0 h(n)=12.0
+ g(n)= 8.0 h(n)=8.0
+ g(n)= 9.0 h(n)=4.0
+ g(n)= 21.0 h(n)=0.0
+Extracting plan with execution delta: 1.0
+Problem Solved
+
+Found Plan:
+0: (start_descent)
+0: (falling)
+0: -----waiting---- [1.0]
+1.0: (falling)
+1.0: -----waiting---- [2.0]
+2.0: (falling)
+2.0: -----waiting---- [3.0]
+3.0: (start-thrust)
+3.0: (falling)
+3.0: (thrust)
+3.0: -----waiting---- [4.0]
+4.0: (falling)
+4.0: (thrust)
+4.0: -----waiting---- [5.0]
+5.0: (falling)
+5.0: (thrust)
+5.0: -----waiting---- [6.0]
+6.0: (falling)
+6.0: (thrust)
+6.0: -----waiting---- [7.0]
+7.0: (stop-thrust)
+7.0: (falling)
+7.0: -----waiting---- [8.0]
+8.0: (start-thrust)
+8.0: (falling)
+8.0: (thrust)
+8.0: -----waiting---- [9.0]
+9.0: (falling)
+9.0: (thrust)
+9.0: -----waiting---- [10.0]
+10.0: (stop-thrust)
+10.0: (falling)
+10.0: -----waiting---- [11.0]
+11.0: (start-thrust)
+11.0: (falling)
+11.0: (thrust)
+11.0: -----waiting---- [12.0]
+12.0: (falling)
+12.0: (thrust)
+12.0: -----waiting---- [13.0]
+13.0: (falling)
+13.0: (thrust)
+13.0: -----waiting---- [14.0]
+14.0: (land)
+
+Plan-Length:44
+Elapsed Time: 14.0
+Metric (Search):21.0
+Planning Time (msec): 145
+Heuristic Time (msec): 21
+Search Time (msec): 29
+Expanded Nodes:166
+States Evaluated:272
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:80
+Number of Duplicates detected:58

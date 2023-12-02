@@ -84,11 +84,11 @@ class BinaryPredicate(Predicate):
         else:
             raise NotImplemented()
 
-    def ground(self, subs: Dict[str, str]) -> BinaryPredicate:
+    def ground(self, subs: Dict[str, str], delta=1) -> BinaryPredicate:
         bp = BinaryPredicate()
         bp.operator = self.operator
-        bp.lhs = self.lhs.ground(subs)
-        bp.rhs = self.rhs.ground(subs)
+        bp.lhs = self.lhs.ground(subs, delta)
+        bp.rhs = self.rhs.ground(subs, delta)
         bp.type = self.type
 
         return bp
@@ -239,6 +239,15 @@ class BinaryPredicate(Predicate):
         ub = float(-q / m) if self.operator in {"<=", "<", "=", "!="} else float("+inf")
 
         return MooreInterval(lb, ub)
+
+    @classmethod
+    def fromAssignment(cls, atom: Atom, value: float):
+        bp = cls()
+        bp.operator = "="
+        bp.lhs = Literal.fromAtom(atom, "+")
+        bp.rhs = Constant(value)
+        bp.type = BinaryPredicateType.MODIFICATION
+        return bp
 
     @classmethod
     def fromOperationString(cls, string: str):

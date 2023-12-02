@@ -51,11 +51,11 @@ class Domain:
         domain.constants = copy.deepcopy(self.constants, m)
         return domain
 
-    def ground(self, problem: Problem, avoidSimplification=False) -> GroundedDomain:
+    def ground(self, problem: Problem, avoidSimplification=False, delta=1) -> GroundedDomain:
 
-        gActions: Set[Action] = set([g for action in self.actions for g in action.ground(problem)])
-        gEvents: Set[Event] = set([g for event in self.events for g in event.ground(problem)])
-        gProcess: Set[Process] = set([g for process in self.processes for g in process.ground(problem)])
+        gActions: Set[Action] = set([g for action in self.actions for g in action.ground(problem, delta=delta)])
+        gEvents: Set[Event] = set([g for event in self.events for g in event.ground(problem, delta=delta)])
+        gProcess: Set[Process] = set([g for process in self.processes for g in process.ground(problem, delta=delta)])
 
         gDomain = GroundedDomain(self.name, gActions, gEvents, gProcess)
 

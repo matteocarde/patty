@@ -11,7 +11,7 @@ class Predicate:
     def __init__(self):
         pass
 
-    def ground(self, subs: Dict[str, str]) -> Predicate:
+    def ground(self, subs: Dict[str, str], delta=1) -> Predicate:
         raise NotImplemented()
 
     def getAtom(self) -> Atom:

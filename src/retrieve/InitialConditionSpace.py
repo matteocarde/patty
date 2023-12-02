@@ -26,10 +26,9 @@ class InitialConditionSpace:
         self.m = len(trace)
         for i in range(0, self.m + 1):
             Xi: Dict[Atom, Expr] = dict()
-            invXi: Dict[Expr, Atom] = dict()
             self.Xis[i] = Xi
             for atom in self.domain.allAtoms:
-                name = atom.name.replace('_', '\_')
+                name = str(atom).replace(' ', '\_')
                 var = symbols(f"{name}_{{{i}}}")
                 Xi[atom] = var
 
@@ -42,8 +41,11 @@ class InitialConditionSpace:
         for i, log in enumerate(self.trace):
             self.getPropXis(log.squashed, self.Xis[i])
             self.getEffXis(log.squashed, self.Xis[i], self.Xis[i + 1])
-            self.getFrameXis(log.squashed, self.Xis[i], self.Xis[i + 1])
+
         self.getGoalXis(self.problem.goal, self.Xis[self.m])
+
+        for i, log in reversed(list(enumerate(self.trace))):
+            self.getFrameXis(log.squashed, self.Xis[i], self.Xis[i + 1])
 
     def getGoalConditions(self, goal: Goal) -> List[Expr]:
         conditions = []
@@ -51,7 +53,9 @@ class InitialConditionSpace:
             raise Exception("Cannot expressify OR formula")
         for c in goal.conditions:
             if isinstance(c, BinaryPredicate):
-                conditions.append(c.expressify(self.Xis[self.m]))
+                expr = c.expressify(self.Xis[self.m])
+                if isinstance(expr, Expr):
+                    conditions.append(expr)
 
         return conditions
 
@@ -119,4 +123,5 @@ class InitialConditionSpace:
     def getFrameXis(self, h: Operation, Xi: Dict[Atom, Expr], XiPrime: Dict[Atom, Expr]) -> [Expr]:
         untouched = self.domain.allAtoms - h.influencedAtoms
         for atom in untouched:
-            XiPrime[atom] = Xi[atom]
+            if isinstance(Xi[atom], Expr):
+                Xi[atom] = XiPrime[atom]

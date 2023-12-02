@@ -6,10 +6,12 @@ from src.pddl.Domain import GroundedDomain
 from src.pddl.Effects import Effects
 from src.pddl.Event import Event
 from src.pddl.Formula import Formula
+from src.pddl.InitialCondition import InitialCondition
 from src.pddl.Operation import Operation
 from src.pddl.OperationType import OperationType
 from src.pddl.Preconditions import Preconditions
 from src.pddl.Process import Process
+from src.pddl.State import State
 
 classes = {
     OperationType.ACTION: Action,
@@ -97,6 +99,13 @@ class Trace:
     def __repr__(self):
         return str(self)
 
-    @classmethod
-    def squash(cls, operations):
-        pass
+    def apply(self, init: InitialCondition):
+
+        s = State.fromInitialCondition(init)
+        states = [(None, s)]
+        for log in self.logs:
+            # for h in log.operations:
+            s = s.applyAction(log.squashed)
+            states.append((log.squashed, s))
+
+        return s

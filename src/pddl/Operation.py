@@ -142,13 +142,13 @@ class Operation:
 
         return combinations
 
-    def getGroundedOperations(self, problem):
+    def getGroundedOperations(self, problem, delta=1):
         combinations: List[Dict[str, str]] = self.getCombinations(problem)
         gOperations = []
         for subs in combinations:
             name = self.__getGroundedName(subs)
-            preconditions = self.preconditions.ground(subs)
-            effects = self.effects.ground(subs)
+            preconditions = self.preconditions.ground(subs, delta)
+            effects = self.effects.ground(subs, delta)
             planName = self.__getGroundedPlanName(subs)
             operation: Operation = Operation.fromProperties(name, preconditions, effects, planName)
             gOperations.append(operation)

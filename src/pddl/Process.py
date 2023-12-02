@@ -21,9 +21,9 @@ class Process(Operation):
     def type(self):
         return OperationType.PROCESS
 
-    def ground(self, problem) -> List[Process]:
+    def ground(self, problem, delta=1) -> List[Process]:
         groundOps: List = []
-        for op in self.getGroundedOperations(problem):
+        for op in self.getGroundedOperations(problem, delta=delta):
             name = op.name
             preconditions = op.preconditions
             effects = op.effects

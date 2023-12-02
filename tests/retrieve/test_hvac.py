@@ -2,7 +2,9 @@ import unittest
 from unittest import TestCase
 
 from src.pddl.Domain import Domain, GroundedDomain
+from src.pddl.InitialCondition import InitialCondition
 from src.pddl.Problem import Problem
+from src.pddl.State import State
 from src.pddl.Trace import Trace
 from src.retrieve.InitialConditionRetriever import InitialConditionRetriever
 from src.retrieve.InitialConditionSpace import InitialConditionSpace
@@ -29,9 +31,11 @@ class TestHVAC(TestCase):
 
     def test_solve(self):
         icr = InitialConditionRetriever(self.ics)
-        print("Solving....")
-        res = icr.solve()
-        pass
+        init: InitialCondition = icr.solve()
+
+        finalState: State = self.trace.apply(init)
+
+        self.assertTrue(finalState.satisfies(self.problem.goal))
 
 
 if __name__ == '__main__':

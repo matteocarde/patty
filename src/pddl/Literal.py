@@ -71,7 +71,7 @@ class Literal(Predicate):
     def getAtom(self) -> Atom:
         return self.atom
 
-    def ground(self, subs: Dict[str, str]) -> Literal:
+    def ground(self, subs: Dict[str, str], delta=1) -> Literal:
 
         literal = Literal()
         literal.sign = self.sign

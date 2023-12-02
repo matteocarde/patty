@@ -48,10 +48,9 @@ class Constant(Predicate):
 
         return constant
 
-    def ground(self, subs: Dict[str, str]) -> Constant:
+    def ground(self, subs: Dict[str, str], delta=1) -> Constant:
         constant = Constant()
-        constant.value = self.value
-        constant.isDelta = self.isDelta
+        constant.value = self.value if not self.isDelta else delta
 
         return constant
 
@@ -80,7 +79,8 @@ class Constant(Predicate):
         return self.value
 
     def expressify(self, s: Dict[Atom, Expr]) -> Expr or float:
-        return self.value if not self.isDelta else 1  # symbols("delta")
+        assert not self.isDelta
+        return self.value
 
     def replace(self, atom: Atom, w):
         return copy.deepcopy(self)

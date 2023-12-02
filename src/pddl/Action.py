@@ -47,9 +47,9 @@ class Action(Operation):
     def type(self):
         return OperationType.ACTION
 
-    def ground(self, problem) -> List[Action]:
+    def ground(self, problem, delta=1) -> List[Action]:
         groundOps: List = []
-        for op in self.getGroundedOperations(problem):
+        for op in self.getGroundedOperations(problem, delta=1):
             name = op.name
             preconditions = op.preconditions
             effects = op.effects

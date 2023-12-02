@@ -1,8 +1,8 @@
 from typing import Tuple, List, Dict
 
 import numpy as np
-from scipy.optimize import NonlinearConstraint, minimize, LinearConstraint
-from sympy import Expr, Symbol, simplify, lambdify
+from scipy.optimize import NonlinearConstraint, minimize, LinearConstraint, Bounds
+from sympy import Expr, Symbol, simplify, lambdify, latex
 from sympy.solvers import solveset
 from sympy.solvers.solveset import linear_coeffs, linear_eq_to_matrix
 
@@ -27,25 +27,26 @@ class InitialConditionRetriever:
         pass
 
     def solve(self) -> InitialCondition:
-        x0 = [0 for x in self.variables]
+        x0 = [1 for x in self.variables]
+        # bounds = Bounds([0.1 for x in self.variables], [np.inf for x in self.variables])
         f = lambda x: 0
-        solution = minimize(f, x0, method='trust-constr', constraints=self.constraints)
+        solution = minimize(f, x0, method='trust-constr', constraints=self.constraints)  # , bounds=bounds)
 
         res: Dict[Symbol, float] = dict()
         for i, var in enumerate(self.variables):
-            res[self.variables[i]] = round(solution.x[i], 2)
+            res[self.variables[i]] = round(solution.x[i], 5)
 
         init = InitialCondition()
         for atom in self.domain.predicates:
             xi = self.ics.Xis[0][atom]
             value = xi.subs(res)
-            assert value.is_constant()
-            if value > 0.5:
+            if value.is_constant() and value > 0.5:
                 init.addPredicate(Literal.fromAtom(atom, "+"))
 
         for atom in self.domain.functions:
             xi = self.ics.Xis[0][atom]
             value = xi.subs(res)
+            value = value if value.is_constant() else 0.1
             init.addNumericAssignment(atom, value)
 
         return init

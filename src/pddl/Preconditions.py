@@ -24,13 +24,10 @@ class Preconditions(Formula):
         p.__class__ = Preconditions
         return cast(Preconditions, p)
 
-    def ground(self, sub: Dict[str, str]) -> Preconditions:
-        f = super().ground(sub)
+    def ground(self, sub: Dict[str, str], delta=1) -> Preconditions:
+        f = super().ground(sub, delta)
         f.__class__ = Preconditions
         return f
 
     def addPrecondition(self, param):
         self.addClause(param)
-
-
-
