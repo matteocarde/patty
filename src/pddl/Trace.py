@@ -66,14 +66,22 @@ class Trace:
         return self.logs[item]
 
     @classmethod
-    def fromFile(cls, filename: str, domain: GroundedDomain):
+    def fromENHSP(cls, filename: str, domain: GroundedDomain):
+        return cls.fromFile(filename, domain, r"^(.*?): (\(.*?\))$")
+
+    @classmethod
+    def fromPatty(cls, filename: str, domain: GroundedDomain):
+        return cls.fromFile(filename, domain, r"^(.*?): (\(.*?\))$")
+
+    @classmethod
+    def fromFile(cls, filename: str, domain: GroundedDomain, lineRegex: str):
         t = cls()
 
         f = open(filename, "r")
         stdout = f.read()
         f.close()
 
-        lines = re.findall(r"^(.*?): (\(.*?\))$", stdout, re.MULTILINE)
+        lines = re.findall(lineRegex, stdout, re.MULTILINE)
 
         currentLog = None
 
@@ -85,7 +93,8 @@ class Trace:
             if not currentLog \
                     or currentLog.time != time \
                     or currentLog.type == OperationType.ACTION \
-                    or currentLog.type != op.type:
+                    or currentLog.type != op.type \
+                    or op.isMutexSet(currentLog.operations):
                 currentLog = Log(time)
                 t.logs.append(currentLog)
 

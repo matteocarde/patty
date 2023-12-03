@@ -93,9 +93,10 @@ class InitialConditionSpace:
 
     def getGoalConditions(self, goal: Goal) -> List[Expr]:
         conditions = []
-        if goal.type == "OR":
+        if goal.containsOrs():
             raise Exception("Cannot expressify OR formula")
         Xi = self.vg.getXi(self.m)
+
         for c in goal.conditions:
             if isinstance(c, BinaryPredicate):
                 expr = c.expressify(Xi)

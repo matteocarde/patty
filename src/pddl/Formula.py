@@ -100,8 +100,8 @@ class Formula:
             f.conditions.append(el.replace(atom, w))
         return f
 
-    def expressify(self, symbols: Dict[Atom, Expr]) -> Expr:
-        if self.type == "or":
+    def expressify(self, symbols: Dict[Atom, Expr]) -> [Expr]:
+        if self.type == "OR":
             raise Exception("Cannot expressify OR formula")
         return [c.expressify(symbols) for c in self.conditions]
 

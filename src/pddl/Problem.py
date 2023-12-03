@@ -1,6 +1,7 @@
 from __future__ import annotations
-from typing import Dict, List
+from typing import Dict, List, Set
 
+from src.pddl.Atom import Atom
 from src.pddl.Predicate import Predicate
 from src.pddl.InitialCondition import InitialCondition
 from src.pddl.Goal import Goal
@@ -18,6 +19,7 @@ class Problem:
     goal: Goal
 
     def __init__(self):
+        self.allAtoms: Set[Atom] = set()
         self.objectsByType = dict()
 
     @classmethod
@@ -36,6 +38,9 @@ class Problem:
                 problem.goal = Goal.fromNode(node)
             if isinstance(node, pddlParser.MetricContext):
                 problem.__setMetric(node)
+
+        problem.allAtoms = problem.init.allAtoms
+
         return problem
 
     @classmethod

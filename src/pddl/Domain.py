@@ -58,6 +58,7 @@ class Domain:
         gProcess: Set[Process] = set([g for process in self.processes for g in process.ground(problem, delta=delta)])
 
         gDomain = GroundedDomain(self.name, gActions, gEvents, gProcess)
+        gDomain.allAtoms |= problem.allAtoms
 
         if avoidSimplification:
             return gDomain

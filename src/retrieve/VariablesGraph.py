@@ -56,6 +56,8 @@ class VariablesGraph:
             for atom in domain.allAtoms:
                 Xi[atom] = VariablesGraph.Node(atom, i)
 
+        pass
+
     def __repr__(self):
         return str(self.Xis)
 

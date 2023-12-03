@@ -18,7 +18,7 @@ class TestDescent(TestCase):
         self.problem: Problem = Problem.fromFile(f"{folder}/instances/prob_earth01.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem, avoidSimplification=True)
 
-        self.trace: Trace = Trace.fromFile(f"{folder}/plans/prob_earth01.txt", self.gDomain)
+        self.trace: Trace = Trace.fromENHSP(f"{folder}/plans/prob_earth01.txt", self.gDomain)
 
         self.ics: InitialConditionSpace = InitialConditionSpace(self.trace, self.problem, self.gDomain)
 

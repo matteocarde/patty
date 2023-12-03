@@ -351,3 +351,19 @@ class Operation:
 
         o_i.name = f"{o_i.name}_{2 ** i}"
         return o_i
+
+    def isMutex(self, other: Operation) -> bool:
+        mutex = self.addList.intersection(other.delList)
+        mutex |= self.delList.intersection(other.addList)
+        mutex |= self.addList.intersection(other.preB)
+        mutex |= self.delList.intersection(other.preB)
+        mutex |= self.preB.intersection(other.addList)
+        mutex |= self.preB.intersection(other.delList)
+        mutex |= self.assList.intersection(other.assList)
+        return len(mutex) > 0
+
+    def isMutexSet(self, operations: Set[Operation]):
+        isMutex = False
+        for op in operations:
+            isMutex = isMutex or self.isMutex(op)
+        return isMutex

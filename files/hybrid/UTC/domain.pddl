@@ -10,13 +10,13 @@
 		(normal ?r - road)
 		(active ?i - intersection ?r - road)
 		(bufferconnected ?b - buffer ?r - road)
-		(availableflow ?r1 ?r2 - road ?i - intersection)
+		(availableflow ?r1 - road ?r2 - road ?i - intersection)
 		(gotcars ?b - buffer)
 
 	)
 
 	(:functions
-		(flow ?r1 ?r2 - road ?i - intersection)
+		(flow ?r1 - road ?r2 - road ?i - intersection)
 		(queue ?r - road)
 		(max_queue ?r - road)
 		(saturated_queue ?r - road)

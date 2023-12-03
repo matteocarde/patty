@@ -10,15 +10,16 @@ from src.retrieve.InitialConditionRetriever import InitialConditionRetriever
 from src.retrieve.InitialConditionSpace import InitialConditionSpace
 
 
-class TestLinearCar(TestCase):
+class TestBlockGrouping(TestCase):
 
     def setUp(self) -> None:
-        folder = "../../files/hybrid/Linear-Car"
+        folder = "../../files/numeric/ipc-2023/block-grouping"
+        problem = "instance_11_35_8_3"
         self.domain: Domain = Domain.fromFile(f"{folder}/domain.pddl")
-        self.problem: Problem = Problem.fromFile(f"{folder}/instances/instance_1_30.0_0.1_10.0.pddl")
+        self.problem: Problem = Problem.fromFile(f"{folder}/instances/{problem}.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem, avoidSimplification=True)
 
-        self.trace: Trace = Trace.fromENHSP(f"{folder}/plans/instance_1_30.0_0.1_10.0.txt", self.gDomain)
+        self.trace: Trace = Trace.fromPatty(f"{folder}/plans/{problem}.txt", self.gDomain)
 
         self.ics: InitialConditionSpace = InitialConditionSpace(self.trace, self.problem, self.gDomain)
 

@@ -86,7 +86,7 @@ class Effects:
         bp = BinaryPredicate()
         bp.operator = signs[0] if first.operator == "increase" else signs[1]
         bp.lhs = lhs
-        bp.rhs = Effects.__joinFollowingBinaryPredicates(bp.rhs, bps[1:], signs) if len(bps) > 1 else first.rhs
+        bp.rhs = Effects.__joinFollowingBinaryPredicates(first.rhs, bps[1:], signs) if len(bps) > 1 else first.rhs
         bp.type = BinaryPredicateType.OPERATION
 
         return bp
@@ -125,5 +125,6 @@ class Effects:
                 continue
             joinedBp = Effects.joinBinaryPredicates(phi)
             joinedEff.assignments.append(joinedBp)
+            pass
 
         return joinedEff

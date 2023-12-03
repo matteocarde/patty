@@ -19,7 +19,7 @@ class TestBaxter(TestCase):
         self.problem: Problem = Problem.fromFile(f"{folder}/instances/{problem}.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem, avoidSimplification=True)
 
-        self.trace: Trace = Trace.fromFile(f"{folder}/plans/{problem}.txt", self.gDomain)
+        self.trace: Trace = Trace.fromENHSP(f"{folder}/plans/{problem}.txt", self.gDomain)
 
         self.ics: InitialConditionSpace = InitialConditionSpace(self.trace, self.problem, self.gDomain)
 
