@@ -126,7 +126,4 @@ class Effects:
             joinedBp = Effects.joinBinaryPredicates(phi)
             joinedEff.assignments.append(joinedBp)
 
-            # x = x + a - b + c - d -> increase(x, (- (+ (- a b) c) d))
-            # x = x - a + b - c + d -> decrease(x, (+ (- (+ a b) c) d))
-
         return joinedEff

@@ -3,8 +3,8 @@ from typing import Dict
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
-from src.pddl.Formula import Formula
 from src.pddl.Constant import Constant
+from src.pddl.Formula import Formula
 from src.pddl.InitialCondition import InitialCondition
 from src.pddl.Literal import Literal
 from src.pddl.Predicate import Predicate
@@ -41,7 +41,7 @@ class State:
         state = State()
         state.assignments = self.assignments.copy()
 
-        if not state.satisfies(action.preconditions):
+        if not state.satisfies(action.preconditions, tolerance=0.01):
             raise Exception(f"Tried to apply action {action} to a state in which its preconditions are note satisfied")
 
         effect: Predicate
@@ -50,34 +50,34 @@ class State:
 
         return state
 
-    def __satisfiesAnd(self, formula: Formula):
+    def __satisfiesAnd(self, formula: Formula, tolerance=0.0):
         satisfied = True
         for c in formula.conditions:
-            if isinstance(c, Predicate) and not self.satisfiesPredicate(c):
+            if isinstance(c, Predicate) and not self.satisfiesPredicate(c, tolerance=tolerance):
                 return False
-            if isinstance(c, Formula) and c.type == "AND" and not self.__satisfiesAnd(c):
+            if isinstance(c, Formula) and c.type == "AND" and not self.__satisfiesAnd(c, tolerance=tolerance):
                 return False
-            if isinstance(c, Formula) and c.type == "OR" and not self.__satisfiesOr(c):
+            if isinstance(c, Formula) and c.type == "OR" and not self.__satisfiesOr(c, tolerance=tolerance):
                 return False
 
         return satisfied
 
-    def __satisfiesOr(self, formula: Formula):
+    def __satisfiesOr(self, formula: Formula, tolerance=0.0):
         satisfied = False
         for c in formula.conditions:
-            if isinstance(c, Predicate) and self.satisfiesPredicate(c):
+            if isinstance(c, Predicate) and self.satisfiesPredicate(c, tolerance=tolerance):
                 return True
-            if isinstance(c, Formula) and c.type == "AND" and self.__satisfiesAnd(c):
+            if isinstance(c, Formula) and c.type == "AND" and self.__satisfiesAnd(c, tolerance=tolerance):
                 return True
-            if isinstance(c, Formula) and c.type == "OR" and self.__satisfiesOr(c):
+            if isinstance(c, Formula) and c.type == "OR" and self.__satisfiesOr(c, tolerance=tolerance):
                 return True
 
         return satisfied
 
-    def satisfies(self, c: Formula) -> bool:
-        return self.__satisfiesAnd(c) if c.type == "AND" else self.__satisfiesOr(c)
+    def satisfies(self, c: Formula, tolerance=0.0) -> bool:
+        return self.__satisfiesAnd(c, tolerance) if c.type == "AND" else self.__satisfiesOr(c, tolerance)
 
-    def satisfiesPredicate(self, p: Predicate):
+    def satisfiesPredicate(self, p: Predicate, tolerance=0.0):
         if isinstance(p, Literal):
             atom = p.getAtom()
             if p.sign == "+":
@@ -93,6 +93,14 @@ class State:
 
         function: BinaryPredicate = p.lhs - p.rhs
         result = self.substituteInto(function)
+
+        if tolerance:
+            if p.operator == "=":
+                return abs(result) <= tolerance
+            if p.operator in {">", ">=", "!="}:
+                return result >= - tolerance
+            if p.operator in {"<", "<="}:
+                return result <= tolerance
 
         return Utilities.compare(p.operator, result, 0)
 

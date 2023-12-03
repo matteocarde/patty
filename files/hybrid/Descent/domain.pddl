@@ -46,6 +46,7 @@
 			(landing)
 			(thrusting)
 			(not (block))
+			(> (M) 0)
 		)
 		:effect (and
 			(decrease

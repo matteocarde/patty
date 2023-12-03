@@ -87,7 +87,8 @@ class InitialConditionSpace:
                 if eff.operator == "decrease":
                     rhsXi = Xi[atom] - rhs
                 if eff.operator == "assign":
-                    rhsXi = rhs  # Eq(lhsPrime, rhs)
+                    rhsXi = rhs
+
                 self.vg.getNode(i + 1, atom).setValue(rhsXi)
 
     def getGoalConditions(self, goal: Goal) -> List[Expr]:
@@ -109,7 +110,9 @@ class InitialConditionSpace:
         log: Log
         for i, log in enumerate(trace):
             Xi = self.vg.getXi(i)
+            XiPrime = self.vg.getXi(i + 1)
             conditions += self.getPreConditions(log.squashed, Xi)
+            conditions += self.getEffConditions(log.squashed, Xi, XiPrime)
 
         return conditions
 
@@ -124,4 +127,19 @@ class InitialConditionSpace:
                 elif isinstance(f, bool):
                     assert f
 
+        return conditions
+
+    @staticmethod
+    def getEffConditions(h: Operation, Xi: Dict[Atom, Expr], XiPrime: Dict[Atom, Expr]) -> [Expr]:
+        conditions = []
+        for eff in h.effects:
+            if isinstance(eff, BinaryPredicate):
+                rhs: Expr = eff.rhs.expressify(Xi)
+                atom = eff.getAtom()
+                if eff.operator == "assign":
+                    rhs: Expr = eff.rhs.expressify(Xi)
+                    if not rhs.free_symbols:
+                        c = XiPrime[atom] - rhs
+                        if c.free_symbols:
+                            conditions.append(c)
         return conditions
