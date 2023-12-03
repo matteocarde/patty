@@ -3,7 +3,7 @@ from __future__ import annotations
 import copy
 
 from itertools import chain
-from typing import Dict, List, cast, Iterable
+from typing import Dict, List, cast, Iterable, Tuple
 
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate, BinaryPredicateType
@@ -80,17 +80,53 @@ class Effects:
         self.assignments.append(ass)
 
     @classmethod
+    def __joinFollowingBinaryPredicates(cls, lhs: BinaryPredicate, bps: List[BinaryPredicate],
+                                        signs: Tuple[str, str]) -> BinaryPredicate:
+        first = bps[0]
+        bp = BinaryPredicate()
+        bp.operator = signs[0] if first.operator == "increase" else signs[1]
+        bp.lhs = lhs
+        bp.rhs = Effects.__joinFollowingBinaryPredicates(bp.rhs, bps[1:], signs) if len(bps) > 1 else first.rhs
+        bp.type = BinaryPredicateType.OPERATION
+
+        return bp
+
+    # (increase x (f))
+    # (decrease x (g))
+    # -> (increase x (- (f g))
+    @classmethod
+    def joinBinaryPredicates(cls, bps: List[BinaryPredicate]) -> BinaryPredicate:
+        first = bps[0]
+        bp = BinaryPredicate()
+        bp.operator = first.operator
+        bp.lhs = first.lhs
+        signs = ("+", "-") if bp.operator == "increase" else ("-", "+")
+        bp.rhs = Effects.__joinFollowingBinaryPredicates(first.rhs, bps[1:], signs)
+        bp.type = BinaryPredicateType.MODIFICATION
+
+        return bp
+
+    @classmethod
     def join(cls, effects: List[Effects]) -> Effects:
         joinedEff = cls()
+        rhs: Dict[Atom, List[BinaryPredicate]] = dict()
         for e in effects:
-            joinedEff.assignments += e.assignments
+            for c in e.assignments:
+                if isinstance(c, Literal):
+                    joinedEff.assignments.append(c)
+                elif isinstance(c, BinaryPredicate):
+                    atom = c.getAtom()
+                    rhs[atom] = rhs.setdefault(atom, [])
+                    rhs[atom].append(c)
 
-        rhs = set()
-        for e in joinedEff.assignments:
-            if not isinstance(e, BinaryPredicate) or e.type != BinaryPredicateType.MODIFICATION:
+        for (atom, phi) in rhs.items():
+            if len(phi) == 1:
+                joinedEff.assignments += phi
                 continue
-            if e.lhs.getAtom() in rhs:
-                raise Exception(
-                    "When joining the effects there are multiple modification of the same variable. Now I am lazy")
-            rhs.add(e.lhs.getAtom())
+            joinedBp = Effects.joinBinaryPredicates(phi)
+            joinedEff.assignments.append(joinedBp)
+
+            # x = x + a - b + c - d -> increase(x, (- (+ (- a b) c) d))
+            # x = x - a + b - c + d -> decrease(x, (+ (- (+ a b) c) d))
+
         return joinedEff

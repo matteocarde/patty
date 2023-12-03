@@ -34,18 +34,18 @@ class InitialConditionRetriever:
 
         res: Dict[Symbol, float] = dict()
         for i, var in enumerate(self.variables):
-            res[self.variables[i]] = round(solution.x[i], 5)
+            res[self.variables[i]] = solution.x[i]
 
         init = InitialCondition()
         for atom in self.domain.predicates:
-            xi = self.ics.Xis[0][atom]
-            value = xi.subs(res)
+            node = self.ics.vg.getNode(0, atom)
+            value = node.value
             if value.is_constant() and value > 0.5:
                 init.addPredicate(Literal.fromAtom(atom, "+"))
 
         for atom in self.domain.functions:
-            xi = self.ics.Xis[0][atom]
-            value = xi.subs(res)
+            node = self.ics.vg.getNode(0, atom)
+            value = node.value.subs(res)
             value = value if value.is_constant() else 0.1
             init.addNumericAssignment(atom, value)
 

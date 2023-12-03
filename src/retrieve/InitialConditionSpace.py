@@ -10,6 +10,7 @@ from src.pddl.Literal import Literal
 from src.pddl.Operation import Operation
 from src.pddl.Problem import Problem
 from src.pddl.Trace import Trace, Log
+from src.retrieve.VariablesGraph import VariablesGraph
 
 
 class InitialConditionSpace:
@@ -18,42 +19,85 @@ class InitialConditionSpace:
         self.trace = trace
         self.problem = problem
         self.domain = domain
-        self.Xis: Dict[int, Dict[Atom, Expr]] = dict()
+
+        self.m = len(trace)
 
         for log in self.trace:
             log.squash()
 
-        self.m = len(trace)
-        for i in range(0, self.m + 1):
-            Xi: Dict[Atom, Expr] = dict()
-            self.Xis[i] = Xi
-            for atom in self.domain.allAtoms:
-                name = str(atom).replace(' ', '\_')
-                var = symbols(f"{name}_{{{i}}}")
-                Xi[atom] = var
+        self.vg = VariablesGraph(self.domain, self.trace)
 
+        self.addVariablesGraphConnections()
         self.updateXis()
         self.conditions = self.getGoalConditions(self.problem.goal) + self.getTraceConditions(self.trace)
 
         pass
 
+    def addVariablesGraphConnections(self):
+        subs: Dict[Expr, Expr] = dict()
+        for (i, log) in enumerate(self.trace):
+            untouched = self.domain.allAtoms - log.squashed.influencedAtoms
+            for atom in untouched:
+                node = self.vg.getNode(i, atom)
+                nodePrime = self.vg.getNode(i + 1, atom)
+                node.addConnection(nodePrime)
+
+        return subs
+
     def updateXis(self):
+        self.getGoalXis(self.problem.goal, self.m)
         for i, log in enumerate(self.trace):
-            self.getPropXis(log.squashed, self.Xis[i])
-            self.getEffXis(log.squashed, self.Xis[i], self.Xis[i + 1])
+            self.setPropXis(log.squashed, i)
+            self.setEffXis(log.squashed, i)
+        self.vg.fixXi()
 
-        self.getGoalXis(self.problem.goal, self.Xis[self.m])
+    def getGoalXis(self, goal: Goal, m: int):
+        if goal.type == "OR":
+            raise Exception("Cannot expressify OR formula")
+        for c in goal.conditions:
+            if isinstance(c, Literal):
+                atom = c.getAtom()
+                value = S(+1) if c.sign == "+" else S(-1)
+                self.vg.getNode(m, atom).setValue(value)
 
-        for i, log in reversed(list(enumerate(self.trace))):
-            self.getFrameXis(log.squashed, self.Xis[i], self.Xis[i + 1])
+    def setPropXis(self, h: Operation, i: int):
+
+        atomsInPre = set()
+        for pre in h.preconditions:
+            if isinstance(pre, Literal):
+                atom = pre.getAtom()
+                value = S(1) if pre.sign == "+" else S(-1)
+                self.vg.getNode(i, atom).setValue(value)
+                atomsInPre.add(pre.getAtom())
+
+        for eff in h.effects:
+            if isinstance(eff, Literal) and eff.getAtom() not in atomsInPre:
+                atom = eff.getAtom()
+                self.vg.getNode(i, atom).setValue(S(0))
+
+    def setEffXis(self, h: Operation, i: int) -> [Expr]:
+        for eff in h.effects:
+            if isinstance(eff, BinaryPredicate):
+                Xi = self.vg.getXi(i)
+                atom = eff.lhs.getAtom()
+                rhs = eff.rhs.expressify(Xi)
+                rhsXi = None
+                if eff.operator == "increase":
+                    rhsXi = Xi[atom] + rhs
+                if eff.operator == "decrease":
+                    rhsXi = Xi[atom] - rhs
+                if eff.operator == "assign":
+                    rhsXi = rhs  # Eq(lhsPrime, rhs)
+                self.vg.getNode(i + 1, atom).setValue(rhsXi)
 
     def getGoalConditions(self, goal: Goal) -> List[Expr]:
         conditions = []
         if goal.type == "OR":
             raise Exception("Cannot expressify OR formula")
+        Xi = self.vg.getXi(self.m)
         for c in goal.conditions:
             if isinstance(c, BinaryPredicate):
-                expr = c.expressify(self.Xis[self.m])
+                expr = c.expressify(Xi)
                 if isinstance(expr, Expr):
                     conditions.append(expr)
 
@@ -64,7 +108,8 @@ class InitialConditionSpace:
 
         log: Log
         for i, log in enumerate(trace):
-            conditions += self.getPreConditions(log.squashed, self.Xis[i])
+            Xi = self.vg.getXi(i)
+            conditions += self.getPreConditions(log.squashed, Xi)
 
         return conditions
 
@@ -80,48 +125,3 @@ class InitialConditionSpace:
                     assert f
 
         return conditions
-
-    @staticmethod
-    def getPropXis(h: Operation, Xi: Dict[Atom, Expr]) -> [Expr]:
-
-        atomsInPre = set()
-        for pre in h.preconditions:
-            if isinstance(pre, Literal):
-                atom = pre.getAtom()
-                Xi[atom] = S(1) if pre.sign == "+" else S(-1)
-                atomsInPre.add(pre.getAtom())
-
-        for eff in h.effects:
-            if isinstance(eff, Literal) and eff.getAtom() not in atomsInPre:
-                atom = eff.getAtom()
-                Xi[atom] = S(0)
-
-    @staticmethod
-    def getGoalXis(goal: Goal, Xi: Dict[Atom, Expr]):
-        if goal.type == "OR":
-            raise Exception("Cannot expressify OR formula")
-        for c in goal.conditions:
-            if isinstance(c, Literal):
-                atom = c.getAtom()
-                Xi[atom] = S(+1) if c.sign == "+" else S(-1)
-
-    @staticmethod
-    def getEffXis(h: Operation, Xi: Dict[Atom, Expr], XiPrime: Dict[Atom, Expr]) -> [Expr]:
-
-        for eff in h.effects:
-            if isinstance(eff, BinaryPredicate):
-                atom = eff.lhs.getAtom()
-                rhs = eff.rhs.expressify(Xi)
-                c = None
-                if eff.operator == "increase":
-                    XiPrime[atom] = Xi[atom] + rhs
-                if eff.operator == "decrease":
-                    XiPrime[atom] = Xi[atom] - rhs
-                if eff.operator == "assign":
-                    XiPrime[atom] = rhs  # Eq(lhsPrime, rhs)
-
-    def getFrameXis(self, h: Operation, Xi: Dict[Atom, Expr], XiPrime: Dict[Atom, Expr]) -> [Expr]:
-        untouched = self.domain.allAtoms - h.influencedAtoms
-        for atom in untouched:
-            if isinstance(Xi[atom], Expr):
-                Xi[atom] = XiPrime[atom]

@@ -12,10 +12,10 @@ from src.pddl.Utilities import Utilities
 
 
 class State:
-    __assignments: Dict[Atom, bool or float]
+    assignments: Dict[Atom, bool or float]
 
     def __init__(self):
-        self.__assignments: Dict[Atom, bool or float] = dict()
+        self.assignments: Dict[Atom, bool or float] = dict()
 
     @classmethod
     def fromInitialCondition(cls, init: InitialCondition):
@@ -24,29 +24,29 @@ class State:
         assignment: Predicate
         for assignment in init.assignments:
             atom = assignment.getAtom()
-            state.__assignments[atom] = state.getRealization(assignment)
+            state.assignments[atom] = state.getRealization(assignment)
 
         return state
 
     def getAtom(self, atom: Atom) -> bool or float:
-        if atom not in self.__assignments:
+        if atom not in self.assignments:
             return False
-        return self.__assignments[atom]
+        return self.assignments[atom]
 
     def __repr__(self):
-        return repr(self.__assignments)
+        return repr(self.assignments)
 
     def applyAction(self, action: Action):
 
         state = State()
-        state.__assignments = self.__assignments.copy()
+        state.assignments = self.assignments.copy()
 
         if not state.satisfies(action.preconditions):
             raise Exception(f"Tried to apply action {action} to a state in which its preconditions are note satisfied")
 
         effect: Predicate
         for effect in action.effects:
-            state.__assignments[effect.getAtom()] = self.getRealization(effect)
+            state.assignments[effect.getAtom()] = self.getRealization(effect)
 
         return state
 
@@ -81,9 +81,9 @@ class State:
         if isinstance(p, Literal):
             atom = p.getAtom()
             if p.sign == "+":
-                return atom in self.__assignments and self.__assignments[atom]
+                return atom in self.assignments and self.assignments[atom]
             else:
-                return atom not in self.__assignments or not self.__assignments[atom]
+                return atom not in self.assignments or not self.assignments[atom]
 
         if not isinstance(p, BinaryPredicate):
             raise "Precondition can only be BinaryPredicate or Literal"
@@ -104,7 +104,7 @@ class State:
                 raise Exception(f"Operator {p.operator} not allowed in effects")
 
             lhs = self.substituteInto(p.rhs)
-            value = self.__assignments[p.getAtom()] if p.getAtom() in self.__assignments else 0
+            value = self.assignments[p.getAtom()] if p.getAtom() in self.assignments else 0
             if p.operator == "assign" or p.operator == "=":
                 return lhs
             if p.operator == "increase":
@@ -116,7 +116,7 @@ class State:
         if isinstance(p, Constant):
             return p.value
         if isinstance(p, Literal):
-            return self.__assignments[p.getAtom()] if p.getAtom() in self.__assignments else 0
+            return self.assignments[p.getAtom()] if p.getAtom() in self.assignments else 0
         if isinstance(p, BinaryPredicate):
             lhs = self.substituteInto(p.lhs)
             rhs = self.substituteInto(p.rhs)

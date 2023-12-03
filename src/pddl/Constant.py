@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import copy
-from sympy import Expr, symbols
+from sympy import Expr, symbols, S
 from typing import Dict, Set
 
 from src.pddl.Atom import Atom
@@ -78,9 +78,9 @@ class Constant(Predicate):
     def toExpression(self, onlyExpr=False) -> Expr or float:
         return self.value
 
-    def expressify(self, s: Dict[Atom, Expr]) -> Expr or float:
+    def expressify(self, s: Dict[Atom, Expr]) -> Expr:
         assert not self.isDelta
-        return self.value
+        return S(self.value)
 
     def replace(self, atom: Atom, w):
         return copy.deepcopy(self)

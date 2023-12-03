@@ -14,11 +14,12 @@ class TestBaxter(TestCase):
 
     def setUp(self) -> None:
         folder = "../../files/hybrid/Baxter"
+        problem = "P6_i4"
         self.domain: Domain = Domain.fromFile(f"{folder}/domain.pddl")
-        self.problem: Problem = Problem.fromFile(f"{folder}/instances/P4_i1.pddl")
+        self.problem: Problem = Problem.fromFile(f"{folder}/instances/{problem}.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem, avoidSimplification=True)
 
-        self.trace: Trace = Trace.fromFile(f"{folder}/plans/P4_i1.txt", self.gDomain)
+        self.trace: Trace = Trace.fromFile(f"{folder}/plans/{problem}.txt", self.gDomain)
 
         self.ics: InitialConditionSpace = InitialConditionSpace(self.trace, self.problem, self.gDomain)
 
