@@ -1,10 +1,10 @@
+from random import randrange
 from typing import Tuple, List, Dict
 
 import numpy
 import numpy as np
-from scipy.optimize import NonlinearConstraint, minimize, LinearConstraint, Bounds
-from sympy import Expr, Symbol, simplify, lambdify, latex
-from sympy.solvers import solveset
+from scipy.optimize import NonlinearConstraint, minimize, LinearConstraint
+from sympy import Expr, Symbol, lambdify
 from sympy.solvers.solveset import linear_coeffs, linear_eq_to_matrix
 
 from src.pddl.InitialCondition import InitialCondition
@@ -30,18 +30,22 @@ class InitialConditionRetriever:
         pass
 
     def solve(self) -> InitialCondition:
-        x0 = [0 for x in self.variables]
+        x0 = [randrange(10, 1000) for x in self.variables]
         # bounds = Bounds([0.1 for x in self.variables], [np.inf for x in self.variables])
-        f = lambda x: numpy.sum([1 for e in x])
+        f = lambda x: 0
 
         options = {
-            "maxiter": 1000
+            "maxiter": 10000,
+            "factorization_method": "SVDFactorization",
+            "gtol": 0.001,
+            "initial_constr_penalty": 100,
+            "verbose": 2
         }
         solution = minimize(f, x0, method='trust-constr', constraints=self.constraints,
                             options=options, tol=1e-3)  # , bounds=bounds)
-
+        print(solution.constr_violation)
         if not solution.success:
-            raise Exception("Minimize couldn't return a solution")
+            raise Exception(f"Minimize couldn't return a solution: {solution.message}")
 
         res: Dict[Symbol, float] = dict()
         for i, var in enumerate(self.variables):
