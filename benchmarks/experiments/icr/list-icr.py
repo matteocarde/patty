@@ -43,8 +43,8 @@ def main():
             if plan[-4:] != ".txt":
                 continue
             domainFile = f"files/{path}/domain.pddl"
-            problemFile = f"files/{path}/instances/{plan[:-4]}.pddl"
-            cProblemFile = f"files/{path}/instances/{plan[:-4]}.pddl"
+            problemFile = f"files/{path}/instances/{plan[:-9]}.pddl"
+            cProblemFile = f"files/{path}/instances/{plan[:-9]}.pddl"
             traceFile = f"files/{path}/plans/{plan}"
             # CORRECT: Repair correct init condition
             # PARTIAL: Repair partial correct init condition

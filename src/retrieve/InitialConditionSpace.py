@@ -1,3 +1,4 @@
+import sys
 from typing import Dict, List
 
 from sympy import Expr, symbols, S
@@ -19,6 +20,8 @@ class InitialConditionSpace:
         self.trace = trace
         self.problem = problem
         self.domain = domain
+
+        sys.setrecursionlimit(max(2 * len(self.trace), 1000))
 
         self.m = len(trace)
 

@@ -30,7 +30,7 @@ class InitialConditionRetriever:
             var = self.ics.vg.getNode(0, atom).value
             self.varsToAtom[var] = atom
             self.obj += (var - value) ** 2
-        self.obj = simplify(self.obj)
+        # self.obj = simplify(self.obj)
 
         uniqueVars: Set[Symbol] = set()
         for c in self.conditions:
@@ -63,7 +63,7 @@ class InitialConditionRetriever:
 
         # noinspection PyTypeChecker
         solution: OptimizeResult = minimize(f, self.x0, method='trust-constr', constraints=self.constraints,
-                                            options=options, tol=1e-6)
+                                            options=options, tol=1e-3)
 
         if not solution.success:
             raise Exception(f"Minimize couldn't return a solution: {solution.message}")
@@ -94,7 +94,7 @@ class InitialConditionRetriever:
             node = self.ics.vg.getNode(0, atom)
             value = node.value.subs(res)
             value = value if value.is_constant() else 0
-            init.addNumericAssignment(atom, value)
+            init.addNumericAssignment(atom, round(value, 2))
 
         return init, solution.fun
 

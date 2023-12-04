@@ -19,6 +19,7 @@ def main():
         ts: TimeStat = TimeStat()
         ts.start("Overall")
         ts.start("Grounding")
+        print("Grounding")
         domain: Domain = Domain.fromFile(args.domain)
         problem: Problem = Problem.fromFile(args.problem)
         gDomain: GroundedDomain = domain.ground(problem, avoidSimplification=True)
@@ -26,9 +27,12 @@ def main():
         correctProblem: Problem = Problem.fromFile(args.correctProblem) if args.correctProblem else None
         ts.end("Grounding")
 
+        print("Initial Condition Space")
         ts.start("Initial Condition Retrieve")
+        print("Computing ICS")
         ics: InitialConditionSpace = InitialConditionSpace(trace, problem, gDomain)
 
+        print("Solving ICR")
         icr = InitialConditionRetriever(ics, problem.init)
         initSolution, optimum = icr.solve()
 

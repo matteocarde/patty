@@ -1,2 +1,2 @@
 #!/bin/bash
-      conda run -n patty python /Users/carde/Documents/Workspace/patty/icr.py $@
+      conda run "--no-capture-output" -n patty python /Users/carde/Documents/Workspace/patty/icr.py $@

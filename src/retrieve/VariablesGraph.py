@@ -26,6 +26,7 @@ class VariablesGraph:
             return str(self.value)
 
         def addConnection(self, node: VariablesGraph.Node):
+            # print(f"{self.var} -- {node.var}")
             self.connectedWith.add(node)
             node.connectedWith.add(self)
             if node.index < self.index:
