@@ -1,0 +1,56 @@
+Started Grounding
+Ended Grounding
+Pattern: decrement c2; increase_rate c2; increment c0; increment c2; decrement c1; decrement c0; increment c1; increase_rate c1; increase_rate c0; decrement_rate c1; decrement_rate c0; decrement_rate c2
+Started Conversion to SMT at bound 1
+Ended Conversion to SMT at bound 1
+Started Solving Bound 1
+Ended Solving Bound 1
+Bound 1 - Vars = 26
+Bound 1 - Rules = 58
+NO SOLUTION: A solution could not be found with bound 1. Try to increase the bound
+Started Conversion to SMT at bound 2
+Ended Conversion to SMT at bound 2
+Started Solving Bound 2
+Ended Solving Bound 2
+Bound 2 - Vars = 45
+Bound 2 - Rules = 108
+0: (increase_rate c2)
+1: (increase_rate c2)
+2: (increase_rate c2)
+3: (increase_rate c2)
+4: (increase_rate c2)
+5: (increase_rate c2)
+6: (increase_rate c2)
+7: (increase_rate c1)
+8: (increase_rate c1)
+9: (increase_rate c1)
+10: (increase_rate c1)
+11: (increase_rate c1)
+12: (increase_rate c0)
+13: (increase_rate c0)
+14: (increase_rate c0)
+15: (increase_rate c0)
+16: (decrement_rate c0)
+17: (decrement_rate c0)
+18: (decrement_rate c0)
+19: (decrement_rate c2)
+20: (increment c0)
+21: (increment c0)
+22: (increment c2)
+23: (decrement c0)
+24: (decrement c0)
+25: (increment c1)
+26: (decrement_rate c0)
+
+Plan is valid
+Bound: 2
+Grounding: 40ms
+Conversion to SMT at bound 1: 8ms
+Solving Bound 1: 32ms
+Conversion to SMT at bound 2: 11ms
+Solving Bound 2: 78ms
+Overall: 203ms
+
+real 0.77
+user 0.69
+sys 0.08

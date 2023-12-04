@@ -6,6 +6,7 @@ from src.pddl.Domain import GroundedDomain
 from src.pddl.Effects import Effects
 from src.pddl.Event import Event
 from src.pddl.Formula import Formula
+from src.pddl.Goal import Goal
 from src.pddl.InitialCondition import InitialCondition
 from src.pddl.Operation import Operation
 from src.pddl.OperationType import OperationType
@@ -118,3 +119,10 @@ class Trace:
             states.append((log.squashed, s))
 
         return s
+
+    def validate(self, init: InitialCondition, goal: Goal, tolerance=0):
+
+        goalState = self.apply(init)
+        return goalState.satisfies(goal, tolerance=tolerance)
+
+        pass

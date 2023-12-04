@@ -1,10 +1,11 @@
+import math
 from random import randrange
-from typing import Tuple, List, Dict
+from typing import Tuple, List, Dict, Set
 
 import numpy
 import numpy as np
-from scipy.optimize import NonlinearConstraint, minimize, LinearConstraint
-from sympy import Expr, Symbol, lambdify
+from scipy.optimize import NonlinearConstraint, minimize, LinearConstraint, OptimizeResult
+from sympy import Expr, Symbol, lambdify, S, simplify
 from sympy.solvers.solveset import linear_coeffs, linear_eq_to_matrix
 
 from src.pddl.InitialCondition import InitialCondition
@@ -16,23 +17,30 @@ EPSILON = 0.01
 
 class InitialConditionRetriever:
 
-    def __init__(self, ics: InitialConditionSpace):
+    def __init__(self, ics: InitialConditionSpace, wIc: InitialCondition):
         self.conditions = ics.conditions
         self.domain = ics.domain
-        uniqueVars = set()
+        self.ics = ics
+
+        self.obj: Expr = S(0)
+        for (atom, value) in wIc.numericAssignments.items():
+            var = self.ics.vg.getNode(0, atom).value
+            self.obj += (var - value) ** 2
+        self.obj = simplify(self.obj)
+        uniqueVars: Set[Symbol] = set()
         for c in self.conditions:
             uniqueVars |= c.free_symbols
-        self.variables = list(uniqueVars)
-        self.x = [tuple(self.variables)]
-        self.ics = ics
+        uniqueVars |= self.obj.free_symbols
+        self.variables: [Symbol] = list(uniqueVars)
+        self.x: List[Tuple[Symbol]] = [tuple(self.variables)]
 
         self.constraints = self.getConstraints()
         pass
 
     def solve(self) -> InitialCondition:
-        x0 = [0 for x in self.variables]
-        # bounds = Bounds([0.1 for x in self.variables], [np.inf for x in self.variables])
-        f = lambda x: 0
+
+        x0 = np.array([0 for x in self.variables])
+        f = lambdify(self.x, self.obj, "numpy")
 
         options = {
             "maxiter": 10000,
@@ -41,8 +49,12 @@ class InitialConditionRetriever:
             "initial_constr_penalty": 100,
             "verbose": 2
         }
-        solution = minimize(f, x0, method='trust-constr', constraints=self.constraints,
-                            options=options, tol=1e-3)  # , bounds=bounds)
+
+        # noinspection PyTypeChecker
+        solution: OptimizeResult = minimize(f, x0, method='trust-constr', constraints=self.constraints,
+                                            options=options, tol=1e-3)
+
+        print(f"DISTANCE: {solution.optimality}")
         if not solution.success:
             raise Exception(f"Minimize couldn't return a solution: {solution.message}")
 

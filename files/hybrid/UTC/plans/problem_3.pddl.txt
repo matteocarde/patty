@@ -1,0 +1,127 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 304
+Aibr Preprocessing
+|F|:0
+|X|:16
+Aibr Preprocessing
+|A|:3
+|P|:19
+|E|:9
+Delta time heuristic model:1.0
+Delta time planning model:1.0
+Delta time search-execution model:1.0
+Delta time validation model:1
+AIBR selected
+Setting horizon to:NaN
+Running WA-STAR
+Extracting plan with execution delta: 1.0
+Problem Solved
+
+Found Plan:
+0: -----waiting---- [5.0]
+5.0: (switchTrafficSignal ter2)
+5.0: (switchTrafficSignal ter3)
+5.0: -----waiting---- [10.0]
+10.0: (switchTrafficSignal ter2)
+10.0: -----waiting---- [13.0]
+13.0: (switchTrafficSignal ter3)
+13.0: -----waiting---- [15.0]
+15.0: (switchTrafficSignal ter2)
+15.0: -----waiting---- [18.0]
+18.0: (switchTrafficSignal ter3)
+18.0: -----waiting---- [20.0]
+20.0: (switchTrafficSignal ter2)
+20.0: -----waiting---- [23.0]
+23.0: (switchTrafficSignal ter3)
+23.0: (switchTrafficSignal ter1)
+23.0: -----waiting---- [25.0]
+25.0: (switchTrafficSignal ter2)
+25.0: -----waiting---- [28.0]
+28.0: (switchTrafficSignal ter1)
+28.0: (switchTrafficSignal ter3)
+28.0: -----waiting---- [40.0]
+40.0: (switchTrafficSignal ter3)
+40.0: -----waiting---- [42.0]
+42.0: (switchTrafficSignal ter2)
+42.0: -----waiting---- [44.0]
+44.0: (switchTrafficSignal ter1)
+44.0: -----waiting---- [45.0]
+45.0: (switchTrafficSignal ter3)
+45.0: -----waiting---- [49.0]
+49.0: (switchTrafficSignal ter2)
+49.0: -----waiting---- [50.0]
+50.0: (switchTrafficSignal ter3)
+50.0: -----waiting---- [55.0]
+55.0: (switchTrafficSignal ter2)
+55.0: (switchTrafficSignal ter3)
+55.0: (switchTrafficSignal ter1)
+55.0: -----waiting---- [60.0]
+60.0: (switchTrafficSignal ter1)
+60.0: -----waiting---- [63.0]
+63.0: (switchTrafficSignal ter3)
+63.0: (switchTrafficSignal ter2)
+63.0: -----waiting---- [68.0]
+68.0: (switchTrafficSignal ter3)
+68.0: -----waiting---- [69.0]
+69.0: (switchTrafficSignal ter2)
+69.0: -----waiting---- [71.0]
+71.0: (switchTrafficSignal ter1)
+71.0: -----waiting---- [74.0]
+74.0: (switchTrafficSignal ter2)
+74.0: -----waiting---- [75.0]
+75.0: (switchTrafficSignal ter3)
+75.0: -----waiting---- [79.0]
+79.0: (switchTrafficSignal ter2)
+79.0: -----waiting---- [83.0]
+83.0: (switchTrafficSignal ter3)
+83.0: -----waiting---- [85.0]
+85.0: (switchTrafficSignal ter2)
+85.0: (switchTrafficSignal ter1)
+85.0: -----waiting---- [90.0]
+90.0: (switchTrafficSignal ter1)
+90.0: (switchTrafficSignal ter2)
+90.0: -----waiting---- [91.0]
+91.0: (switchTrafficSignal ter3)
+91.0: -----waiting---- [95.0]
+95.0: (switchTrafficSignal ter2)
+95.0: -----waiting---- [96.0]
+96.0: (switchTrafficSignal ter3)
+96.0: -----waiting---- [100.0]
+100.0: (switchTrafficSignal ter2)
+100.0: -----waiting---- [103.0]
+103.0: (switchTrafficSignal ter3)
+103.0: -----waiting---- [104.0]
+104.0: (switchTrafficSignal ter1)
+104.0: -----waiting---- [105.0]
+105.0: (switchTrafficSignal ter2)
+105.0: -----waiting---- [108.0]
+108.0: (switchTrafficSignal ter3)
+108.0: -----waiting---- [110.0]
+110.0: (switchTrafficSignal ter2)
+110.0: -----waiting---- [113.0]
+113.0: (switchTrafficSignal ter3)
+113.0: -----waiting---- [118.0]
+118.0: (switchTrafficSignal ter2)
+118.0: (switchTrafficSignal ter3)
+118.0: (switchTrafficSignal ter1)
+118.0: -----waiting---- [123.0]
+123.0: (switchTrafficSignal ter2)
+123.0: (switchTrafficSignal ter1)
+123.0: -----waiting---- [127.0]
+
+Plan-Length:195
+Elapsed Time: 127.0
+Metric (Search):177.0
+Planning Time (msec): 6802
+Heuristic Time (msec): 5322
+Search Time (msec): 5689
+Expanded Nodes:3707
+States Evaluated:8034
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:0
+Number of Duplicates detected:757
+real 6.92
+user 4.97
+sys 0.25

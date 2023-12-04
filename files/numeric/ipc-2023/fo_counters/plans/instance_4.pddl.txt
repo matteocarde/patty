@@ -1,0 +1,67 @@
+Started Grounding
+Ended Grounding
+Pattern: decrement c3; increment c2; decrement c1; increase_rate c2; increase_rate c3; increment c1; decrement c2; increase_rate c1; increment c0; increase_rate c0; decrement c0; increment c3; decrement_rate c0; decrement_rate c3; decrement_rate c2; decrement_rate c1
+Started Conversion to SMT at bound 1
+Ended Conversion to SMT at bound 1
+Started Solving Bound 1
+Ended Solving Bound 1
+Bound 1 - Vars = 34
+Bound 1 - Rules = 76
+NO SOLUTION: A solution could not be found with bound 1. Try to increase the bound
+Started Conversion to SMT at bound 2
+Ended Conversion to SMT at bound 2
+Started Solving Bound 2
+Ended Solving Bound 2
+Bound 2 - Vars = 59
+Bound 2 - Rules = 142
+0: (increase_rate c2)
+1: (increase_rate c2)
+2: (increase_rate c2)
+3: (increase_rate c2)
+4: (increase_rate c2)
+5: (increase_rate c2)
+6: (increase_rate c2)
+7: (increase_rate c3)
+8: (increase_rate c3)
+9: (increase_rate c3)
+10: (increase_rate c3)
+11: (increase_rate c3)
+12: (increase_rate c3)
+13: (increase_rate c3)
+14: (increase_rate c3)
+15: (increase_rate c3)
+16: (increase_rate c1)
+17: (increase_rate c0)
+18: (increase_rate c0)
+19: (increase_rate c0)
+20: (decrement_rate c0)
+21: (decrement_rate c0)
+22: (decrement_rate c0)
+23: (decrement_rate c3)
+24: (increment c2)
+25: (increase_rate c2)
+26: (increment c1)
+27: (increment c1)
+28: (increment c1)
+29: (increment c1)
+30: (increment c1)
+31: (increment c1)
+32: (increase_rate c1)
+33: (increase_rate c1)
+34: (decrement c0)
+35: (increment c3)
+36: (decrement_rate c3)
+37: (decrement_rate c3)
+
+Plan is valid
+Bound: 2
+Grounding: 45ms
+Conversion to SMT at bound 1: 9ms
+Solving Bound 1: 36ms
+Conversion to SMT at bound 2: 16ms
+Solving Bound 2: 107ms
+Overall: 247ms
+
+real 0.81
+user 0.72
+sys 0.08

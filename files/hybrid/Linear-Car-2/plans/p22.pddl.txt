@@ -1,0 +1,75 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 16
+Aibr Preprocessing
+|F|:2
+|X|:3
+Aibr Preprocessing
+|A|:4
+|P|:2
+|E|:1
+Delta time heuristic model:1.0
+Delta time planning model:1.0
+Delta time search-execution model:1.0
+Delta time validation model:1
+AIBR selected
+Setting horizon to:NaN
+Running WA-STAR
+Extracting plan with execution delta: 1.0
+Problem Solved
+
+Found Plan:
+0: (start_car)
+0: (accelerate)
+0: -----waiting---- [2.0]
+2.0: (accelerate)
+2.0: -----waiting---- [3.0]
+3.0: (accelerate)
+3.0: -----waiting---- [4.0]
+4.0: (accelerate)
+4.0: -----waiting---- [5.0]
+5.0: (accelerate)
+5.0: -----waiting---- [6.0]
+6.0: (accelerate)
+6.0: -----waiting---- [11.0]
+11.0: (decelerate)
+11.0: -----waiting---- [12.0]
+12.0: (decelerate)
+12.0: -----waiting---- [15.0]
+15.0: (decelerate)
+15.0: -----waiting---- [16.0]
+16.0: (decelerate)
+16.0: -----waiting---- [17.0]
+17.0: (decelerate)
+17.0: -----waiting---- [19.0]
+19.0: (decelerate)
+19.0: -----waiting---- [23.0]
+23.0: (decelerate)
+23.0: -----waiting---- [26.0]
+26.0: (decelerate)
+26.0: -----waiting---- [32.0]
+32.0: (decelerate)
+32.0: -----waiting---- [39.0]
+39.0: (decelerate)
+39.0: -----waiting---- [43.0]
+43.0: (accelerate)
+43.0: -----waiting---- [47.0]
+47.0: (accelerate)
+47.0: -----waiting---- [50.0]
+50.0: (stop_car)
+
+Plan-Length:71
+Elapsed Time: 50.0
+Metric (Search):70.0
+Planning Time (msec): 1138
+Heuristic Time (msec): 592
+Search Time (msec): 708
+Expanded Nodes:524
+States Evaluated:1298
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:0
+Number of Duplicates detected:271
+real 1.29
+user 1.20
+sys 0.09

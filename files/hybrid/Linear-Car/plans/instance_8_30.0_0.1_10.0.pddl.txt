@@ -1,0 +1,59 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 11
+Aibr Preprocessing
+|F|:2
+|X|:3
+Aibr Preprocessing
+|A|:4
+|P|:2
+|E|:1
+Delta time heuristic model:1.0
+Delta time planning model:1.0
+Delta time search-execution model:1.0
+Delta time validation model:1
+AIBR selected
+Setting horizon to:NaN
+Running WA-STAR
+Extracting plan with execution delta: 1.0
+Problem Solved
+
+Found Plan:
+0: (start_car)
+0: (accelerate)
+0: (accelerate)
+0: (accelerate)
+0: -----waiting---- [5.0]
+5.0: (decelerate)
+5.0: -----waiting---- [6.0]
+6.0: (decelerate)
+6.0: -----waiting---- [9.0]
+9.0: (decelerate)
+9.0: -----waiting---- [12.0]
+12.0: (decelerate)
+12.0: -----waiting---- [15.0]
+15.0: (decelerate)
+15.0: -----waiting---- [22.0]
+22.0: (accelerate)
+22.0: -----waiting---- [24.0]
+24.0: (accelerate)
+24.0: -----waiting---- [25.0]
+25.0: (decelerate)
+25.0: -----waiting---- [26.0]
+26.0: (stop_car)
+
+Plan-Length:40
+Elapsed Time: 26.0
+Metric (Search):39.0
+Planning Time (msec): 730
+Heuristic Time (msec): 269
+Search Time (msec): 294
+Expanded Nodes:89
+States Evaluated:210
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:0
+Number of Duplicates detected:54
+real 0.89
+user 0.62
+sys 0.05

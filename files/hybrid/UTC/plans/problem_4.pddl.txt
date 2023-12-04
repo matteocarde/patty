@@ -1,0 +1,85 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 298
+Aibr Preprocessing
+|F|:0
+|X|:16
+Aibr Preprocessing
+|A|:3
+|P|:19
+|E|:9
+Delta time heuristic model:1.0
+Delta time planning model:1.0
+Delta time search-execution model:1.0
+Delta time validation model:1
+AIBR selected
+Setting horizon to:NaN
+Running WA-STAR
+Extracting plan with execution delta: 1.0
+Problem Solved
+
+Found Plan:
+0: -----waiting---- [5.0]
+5.0: (switchTrafficSignal ter3)
+5.0: -----waiting---- [8.0]
+8.0: (switchTrafficSignal ter2)
+8.0: -----waiting---- [14.0]
+14.0: (switchTrafficSignal ter3)
+14.0: -----waiting---- [19.0]
+19.0: (switchTrafficSignal ter2)
+19.0: -----waiting---- [20.0]
+20.0: (switchTrafficSignal ter3)
+20.0: (switchTrafficSignal ter1)
+20.0: -----waiting---- [24.0]
+24.0: (switchTrafficSignal ter2)
+24.0: -----waiting---- [25.0]
+25.0: (switchTrafficSignal ter1)
+25.0: (switchTrafficSignal ter3)
+25.0: -----waiting---- [31.0]
+31.0: (switchTrafficSignal ter1)
+31.0: -----waiting---- [34.0]
+34.0: (switchTrafficSignal ter2)
+34.0: -----waiting---- [36.0]
+36.0: (switchTrafficSignal ter1)
+36.0: -----waiting---- [39.0]
+39.0: (switchTrafficSignal ter3)
+39.0: (switchTrafficSignal ter2)
+39.0: -----waiting---- [41.0]
+41.0: (switchTrafficSignal ter1)
+41.0: -----waiting---- [44.0]
+44.0: (switchTrafficSignal ter3)
+44.0: (switchTrafficSignal ter2)
+44.0: -----waiting---- [47.0]
+47.0: (switchTrafficSignal ter1)
+47.0: -----waiting---- [55.0]
+55.0: (switchTrafficSignal ter1)
+55.0: -----waiting---- [59.0]
+59.0: (switchTrafficSignal ter2)
+59.0: -----waiting---- [65.0]
+65.0: (switchTrafficSignal ter1)
+65.0: (switchTrafficSignal ter3)
+65.0: (switchTrafficSignal ter2)
+65.0: -----waiting---- [70.0]
+70.0: (switchTrafficSignal ter3)
+70.0: (switchTrafficSignal ter2)
+70.0: -----waiting---- [72.0]
+72.0: (switchTrafficSignal ter1)
+72.0: -----waiting---- [77.0]
+77.0: (switchTrafficSignal ter2)
+77.0: -----waiting---- [80.0]
+
+Plan-Length:117
+Elapsed Time: 80.0
+Metric (Search):107.0
+Planning Time (msec): 4863
+Heuristic Time (msec): 3433
+Search Time (msec): 3777
+Expanded Nodes:2309
+States Evaluated:4536
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:0
+Number of Duplicates detected:826
+real 5.03
+user 4.82
+sys 0.19

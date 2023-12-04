@@ -1,0 +1,54 @@
+Started Grounding
+Ended Grounding
+Pattern: increment c1; increment c0; increment c2; decrement c0; decrement c2; increment c3; decrement c3; decrement c1
+Started Conversion to SMT at bound 1
+Ended Conversion to SMT at bound 1
+Started Solving Bound 1
+Ended Solving Bound 1
+Bound 1 - Vars = 16
+Bound 1 - Rules = 33
+0: (increment c1)
+1: (increment c1)
+2: (increment c0)
+3: (increment c0)
+4: (increment c0)
+5: (increment c0)
+6: (increment c0)
+7: (increment c0)
+8: (increment c0)
+9: (increment c2)
+10: (decrement c0)
+11: (decrement c0)
+12: (decrement c0)
+13: (decrement c0)
+14: (decrement c0)
+15: (decrement c0)
+16: (decrement c0)
+17: (decrement c0)
+18: (decrement c2)
+19: (decrement c2)
+20: (decrement c2)
+21: (decrement c2)
+22: (decrement c2)
+23: (decrement c2)
+24: (increment c3)
+25: (increment c3)
+26: (increment c3)
+27: (increment c3)
+28: (decrement c3)
+29: (decrement c3)
+30: (decrement c1)
+31: (decrement c1)
+32: (decrement c1)
+33: (decrement c1)
+
+Plan is valid
+Bound: 1
+Grounding: 36ms
+Conversion to SMT at bound 1: 4ms
+Solving Bound 1: 39ms
+Overall: 106ms
+
+real 0.65
+user 0.56
+sys 0.08

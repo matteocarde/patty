@@ -1,0 +1,57 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 364
+Aibr Preprocessing
+|F|:0
+|X|:15
+Aibr Preprocessing
+|A|:3
+|P|:21
+|E|:9
+Delta time heuristic model:1.0
+Delta time planning model:1.0
+Delta time search-execution model:1.0
+Delta time validation model:1
+AIBR selected
+Setting horizon to:NaN
+Running WA-STAR
+Extracting plan with execution delta: 1.0
+Problem Solved
+
+Found Plan:
+0: -----waiting---- [5.0]
+5.0: (switchTrafficSignal ter3)
+5.0: (switchTrafficSignal ter2)
+5.0: (switchTrafficSignal ter1)
+5.0: -----waiting---- [10.0]
+10.0: (switchTrafficSignal ter2)
+10.0: (switchTrafficSignal ter3)
+10.0: -----waiting---- [29.0]
+29.0: (switchTrafficSignal ter3)
+29.0: (switchTrafficSignal ter2)
+29.0: -----waiting---- [34.0]
+34.0: (switchTrafficSignal ter2)
+34.0: (switchTrafficSignal ter3)
+34.0: -----waiting---- [39.0]
+39.0: (switchTrafficSignal ter3)
+39.0: (switchTrafficSignal ter2)
+39.0: (switchTrafficSignal ter1)
+39.0: -----waiting---- [44.0]
+44.0: (switchTrafficSignal ter1)
+44.0: -----waiting---- [60.0]
+
+Plan-Length:77
+Elapsed Time: 60.0
+Metric (Search):73.0
+Planning Time (msec): 3071
+Heuristic Time (msec): 1643
+Search Time (msec): 1924
+Expanded Nodes:2424
+States Evaluated:4003
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:0
+Number of Duplicates detected:455
+real 3.15
+user 3.01
+sys 0.17

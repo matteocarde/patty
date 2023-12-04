@@ -1,0 +1,39 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 85
+Aibr Preprocessing
+|F|:27
+|X|:10
+Aibr Preprocessing
+|A|:40
+|P|:60
+|E|:20
+Delta time heuristic model:1.0
+Delta time planning model:1.0
+Delta time search-execution model:1.0
+Delta time validation model:1
+H1 Setup Time (msec): 11
+Setting horizon to:NaN
+Running WA-STAR
+Extracting plan with execution delta: 1.0
+Problem Solved
+
+Found Plan:
+0: (start_movement_increase L4 L5 xyaxes)
+0: -----waiting---- [8.0]
+
+Plan-Length:9
+Elapsed Time: 8.0
+Metric (Search):9.0
+Planning Time (msec): 920
+Heuristic Time (msec): 92
+Search Time (msec): 121
+Expanded Nodes:34
+States Evaluated:80
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:0
+Number of Duplicates detected:4
+real 1.09
+user 1.06
+sys 0.05
