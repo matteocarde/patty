@@ -1,3 +1,4 @@
+import re
 import subprocess
 from subprocess import Popen
 
@@ -14,7 +15,8 @@ class ICRExp:
         self.settings = ""
         pass
 
-    def run(self, expType: str, domain: str, domainFile: str, problemFile: str, traceFile: str, cProblemFile: str,
+    def run(self, expType: str, domain: str, domainFile: str,
+            problemFile: str, traceFile: str, cProblemFile: str,
             timeout: int) -> ICRResult:
         stdout, code, cmd = self.exec(domainFile, problemFile, traceFile, cProblemFile, timeout)
         r = ICRResult(expType, domain, problemFile)
@@ -44,4 +46,13 @@ class ICRExp:
 
     @staticmethod
     def parseOutput(r: ICRResult, stdout: str):
-        pass
+        r.solved = len(re.findall(r"The initial condition is valid", stdout)) > 0
+        r.time = ICRResult.parseTime(stdout)
+        reOptimum = re.findall(r"Optimum: (.*?)$", stdout, re.MULTILINE)
+        r.optimum = -1 if not reOptimum else float(reOptimum[0])
+        reDRW = re.findall(r"Distance Retrieved-Wrong: (.*?)$", stdout, re.MULTILINE)
+        r.dRW = -1 if not reDRW else float(reDRW[0])
+        reDRC = re.findall(r"Distance Retrieved-Correct: (.*?)$", stdout, re.MULTILINE)
+        r.dRC = -1 if not reDRC else float(reDRC[0])
+
+        return r

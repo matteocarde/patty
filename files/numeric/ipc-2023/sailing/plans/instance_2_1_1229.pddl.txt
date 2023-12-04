@@ -1,6 +1,6 @@
 Started Grounding
 Ended Grounding
-Pattern: go_south b0; go_north_east b1; go_south b1; go_north_west b0; go_est b1; go_south_east b1; go_south_east b0; go_west b1; go_south_west b1; go_west b0; go_north_east b0; go_north_west b1; go_est b0; go_south_west b0; save_person b0 p0; save_person b1 p0
+Pattern: go_south b1; go_west b1; go_west b0; go_north_west b0; go_north_west b1; go_south_west b1; go_south_east b1; go_south_east b0; go_north_east b1; go_north_east b0; go_south_west b0; go_est b0; go_south b0; go_est b1; save_person b0 p0; save_person b1 p0
 Started Conversion to SMT at bound 1
 Ended Conversion to SMT at bound 1
 Started Solving Bound 1
@@ -305,11 +305,11 @@ Bound 1 - Rules = 33
 
 Plan is valid
 Bound: 1
-Grounding: 6ms
-Conversion to SMT at bound 1: 5ms
-Solving Bound 1: 47ms
-Overall: 96ms
+Grounding: 7ms
+Conversion to SMT at bound 1: 4ms
+Solving Bound 1: 48ms
+Overall: 98ms
 
-real 0.62
-user 0.53
-sys 0.08
+real 0.65
+user 0.55
+sys 0.09

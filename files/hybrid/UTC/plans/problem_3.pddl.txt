@@ -1,7 +1,7 @@
 Domain parsed
 Problem parsed
 Grounding..
-Grounding Time: 304
+Grounding Time: 295
 Aibr Preprocessing
 |F|:0
 |X|:16
@@ -20,108 +20,892 @@ Extracting plan with execution delta: 1.0
 Problem Solved
 
 Found Plan:
-0: -----waiting---- [5.0]
+0: (flowrun_green r5 r7s ter2)
+0: (flowrun_green r7s r10 ter3)
+0: (keepgreen r7s ter3)
+0: (keepgreen r1 ter1)
+0: (keepgreen r5 ter2)
+0: (flowrun_green r1 r5 ter1)
+0: (flowrun_green r5 r9 ter2)
+0: -----waiting---- [1.0]
+1.0: (flowrun_green r5 r7s ter2)
+1.0: (flowrun_green r7s r10 ter3)
+1.0: (keepgreen r7s ter3)
+1.0: (keepgreen r1 ter1)
+1.0: (keepgreen r5 ter2)
+1.0: (flowrun_green r1 r5 ter1)
+1.0: (flowrun_green r5 r9 ter2)
+1.0: -----waiting---- [2.0]
+2.0: (flowrun_green r5 r7s ter2)
+2.0: (flowrun_green r7s r10 ter3)
+2.0: (keepgreen r7s ter3)
+2.0: (keepgreen r1 ter1)
+2.0: (keepgreen r5 ter2)
+2.0: (flowrun_green r1 r5 ter1)
+2.0: (flowrun_green r5 r9 ter2)
+2.0: -----waiting---- [3.0]
+3.0: (flowrun_green r5 r7s ter2)
+3.0: (flowrun_green r7s r10 ter3)
+3.0: (keepgreen r7s ter3)
+3.0: (keepgreen r1 ter1)
+3.0: (keepgreen r5 ter2)
+3.0: (flowrun_green r1 r5 ter1)
+3.0: (flowrun_green r5 r9 ter2)
+3.0: -----waiting---- [4.0]
+4.0: (flowrun_green r5 r7s ter2)
+4.0: (flowrun_green r7s r10 ter3)
+4.0: (keepgreen r7s ter3)
+4.0: (keepgreen r1 ter1)
+4.0: (keepgreen r5 ter2)
+4.0: (flowrun_green r1 r5 ter1)
+4.0: (flowrun_green r5 r9 ter2)
+4.0: -----waiting---- [5.0]
 5.0: (switchTrafficSignal ter2)
 5.0: (switchTrafficSignal ter3)
-5.0: -----waiting---- [10.0]
+5.0: (keepgreen r1 ter1)
+5.0: (flowrun_green r1 r5 ter1)
+5.0: (flowrun_green r8 r7n ter3)
+5.0: (flowrun_green r6 r7s ter2)
+5.0: (flowrun_green r8 r10 ter3)
+5.0: (keepgreen r6 ter2)
+5.0: (keepgreen r8 ter3)
+5.0: (flowrun_green r6 r9 ter2)
+5.0: -----waiting---- [6.0]
+6.0: (keepgreen r1 ter1)
+6.0: (flowrun_green r1 r5 ter1)
+6.0: (flowrun_green r8 r7n ter3)
+6.0: (flowrun_green r6 r7s ter2)
+6.0: (flowrun_green r8 r10 ter3)
+6.0: (keepgreen r6 ter2)
+6.0: (keepgreen r8 ter3)
+6.0: (flowrun_green r6 r9 ter2)
+6.0: -----waiting---- [7.0]
+7.0: (keepgreen r1 ter1)
+7.0: (flowrun_green r1 r5 ter1)
+7.0: (flowrun_green r8 r7n ter3)
+7.0: (flowrun_green r6 r7s ter2)
+7.0: (flowrun_green r8 r10 ter3)
+7.0: (keepgreen r6 ter2)
+7.0: (keepgreen r8 ter3)
+7.0: (flowrun_green r6 r9 ter2)
+7.0: -----waiting---- [8.0]
+8.0: (keepgreen r1 ter1)
+8.0: (flowrun_green r1 r5 ter1)
+8.0: (flowrun_green r8 r7n ter3)
+8.0: (flowrun_green r6 r7s ter2)
+8.0: (flowrun_green r8 r10 ter3)
+8.0: (keepgreen r6 ter2)
+8.0: (keepgreen r8 ter3)
+8.0: (flowrun_green r6 r9 ter2)
+8.0: -----waiting---- [9.0]
+9.0: (keepgreen r1 ter1)
+9.0: (flowrun_green r1 r5 ter1)
+9.0: (flowrun_green r8 r7n ter3)
+9.0: (flowrun_green r6 r7s ter2)
+9.0: (flowrun_green r8 r10 ter3)
+9.0: (keepgreen r6 ter2)
+9.0: (keepgreen r8 ter3)
+9.0: (flowrun_green r6 r9 ter2)
+9.0: -----waiting---- [10.0]
 10.0: (switchTrafficSignal ter2)
-10.0: -----waiting---- [13.0]
+10.0: (keepgreen r1 ter1)
+10.0: (flowrun_green r1 r5 ter1)
+10.0: (flowrun_green r8 r7n ter3)
+10.0: (flowrun_green r7n r9 ter2)
+10.0: (flowrun_green r8 r10 ter3)
+10.0: (keepgreen r7n ter2)
+10.0: (keepgreen r8 ter3)
+10.0: -----waiting---- [11.0]
+11.0: (keepgreen r1 ter1)
+11.0: (flowrun_green r1 r5 ter1)
+11.0: (flowrun_green r8 r7n ter3)
+11.0: (flowrun_green r7n r9 ter2)
+11.0: (flowrun_green r8 r10 ter3)
+11.0: (keepgreen r7n ter2)
+11.0: (keepgreen r8 ter3)
+11.0: -----waiting---- [12.0]
+12.0: (keepgreen r1 ter1)
+12.0: (flowrun_green r1 r5 ter1)
+12.0: (flowrun_green r7n r9 ter2)
+12.0: (keepgreen r7n ter2)
+12.0: (keepgreen r8 ter3)
+12.0: -----waiting---- [13.0]
 13.0: (switchTrafficSignal ter3)
-13.0: -----waiting---- [15.0]
+13.0: (restartoken ter3)
+13.0: (flowrun_green r7s r10 ter3)
+13.0: (keepgreen r7s ter3)
+13.0: (keepgreen r1 ter1)
+13.0: (flowrun_green r1 r5 ter1)
+13.0: (flowrun_green r7n r9 ter2)
+13.0: (keepgreen r7n ter2)
+13.0: -----waiting---- [14.0]
+14.0: (flowrun_green r7s r10 ter3)
+14.0: (keepgreen r7s ter3)
+14.0: (keepgreen r1 ter1)
+14.0: (flowrun_green r1 r5 ter1)
+14.0: (flowrun_green r7n r9 ter2)
+14.0: (keepgreen r7n ter2)
+14.0: -----waiting---- [15.0]
 15.0: (switchTrafficSignal ter2)
-15.0: -----waiting---- [18.0]
+15.0: (restartoken ter2)
+15.0: (flowrun_green r5 r7s ter2)
+15.0: (flowrun_green r7s r10 ter3)
+15.0: (keepgreen r7s ter3)
+15.0: (keepgreen r1 ter1)
+15.0: (keepgreen r5 ter2)
+15.0: (flowrun_green r1 r5 ter1)
+15.0: (flowrun_green r5 r9 ter2)
+15.0: -----waiting---- [16.0]
+16.0: (flowrun_green r5 r7s ter2)
+16.0: (flowrun_green r7s r10 ter3)
+16.0: (keepgreen r7s ter3)
+16.0: (keepgreen r1 ter1)
+16.0: (keepgreen r5 ter2)
+16.0: (flowrun_green r1 r5 ter1)
+16.0: (flowrun_green r5 r9 ter2)
+16.0: -----waiting---- [17.0]
+17.0: (flowrun_green r5 r7s ter2)
+17.0: (flowrun_green r7s r10 ter3)
+17.0: (keepgreen r7s ter3)
+17.0: (keepgreen r1 ter1)
+17.0: (keepgreen r5 ter2)
+17.0: (flowrun_green r1 r5 ter1)
+17.0: (flowrun_green r5 r9 ter2)
+17.0: -----waiting---- [18.0]
 18.0: (switchTrafficSignal ter3)
-18.0: -----waiting---- [20.0]
+18.0: (flowrun_green r5 r7s ter2)
+18.0: (keepgreen r1 ter1)
+18.0: (keepgreen r5 ter2)
+18.0: (flowrun_green r1 r5 ter1)
+18.0: (flowrun_green r5 r9 ter2)
+18.0: (keepgreen r8 ter3)
+18.0: -----waiting---- [19.0]
+19.0: (flowrun_green r5 r7s ter2)
+19.0: (keepgreen r1 ter1)
+19.0: (keepgreen r5 ter2)
+19.0: (flowrun_green r1 r5 ter1)
+19.0: (flowrun_green r5 r9 ter2)
+19.0: (keepgreen r8 ter3)
+19.0: -----waiting---- [20.0]
 20.0: (switchTrafficSignal ter2)
-20.0: -----waiting---- [23.0]
+20.0: (keepgreen r1 ter1)
+20.0: (flowrun_green r1 r5 ter1)
+20.0: (flowrun_green r6 r7s ter2)
+20.0: (keepgreen r6 ter2)
+20.0: (keepgreen r8 ter3)
+20.0: (flowrun_green r6 r9 ter2)
+20.0: -----waiting---- [21.0]
+21.0: (keepgreen r1 ter1)
+21.0: (flowrun_green r1 r5 ter1)
+21.0: (flowrun_green r6 r7s ter2)
+21.0: (keepgreen r6 ter2)
+21.0: (keepgreen r8 ter3)
+21.0: (flowrun_green r6 r9 ter2)
+21.0: -----waiting---- [22.0]
+22.0: (keepgreen r1 ter1)
+22.0: (flowrun_green r1 r5 ter1)
+22.0: (flowrun_green r6 r7s ter2)
+22.0: (keepgreen r6 ter2)
+22.0: (keepgreen r8 ter3)
+22.0: (flowrun_green r6 r9 ter2)
+22.0: -----waiting---- [23.0]
 23.0: (switchTrafficSignal ter3)
 23.0: (switchTrafficSignal ter1)
-23.0: -----waiting---- [25.0]
+23.0: (restartoken ter3)
+23.0: (flowrun_green r7s r10 ter3)
+23.0: (keepgreen r7s ter3)
+23.0: (keepgreen r6 ter2)
+23.0: (keepgreen r2 ter1)
+23.0: (flowrun_green r2 r5 ter1)
+23.0: -----waiting---- [24.0]
+24.0: (flowrun_green r7s r10 ter3)
+24.0: (keepgreen r7s ter3)
+24.0: (keepgreen r6 ter2)
+24.0: (keepgreen r2 ter1)
+24.0: (flowrun_green r2 r5 ter1)
+24.0: -----waiting---- [25.0]
 25.0: (switchTrafficSignal ter2)
-25.0: -----waiting---- [28.0]
+25.0: (flowrun_green r7s r10 ter3)
+25.0: (keepgreen r7s ter3)
+25.0: (flowrun_green r7n r9 ter2)
+25.0: (keepgreen r7n ter2)
+25.0: (keepgreen r2 ter1)
+25.0: (flowrun_green r2 r5 ter1)
+25.0: -----waiting---- [26.0]
+26.0: (flowrun_green r7s r10 ter3)
+26.0: (keepgreen r7s ter3)
+26.0: (flowrun_green r7n r9 ter2)
+26.0: (keepgreen r7n ter2)
+26.0: (keepgreen r2 ter1)
+26.0: (flowrun_green r2 r5 ter1)
+26.0: -----waiting---- [27.0]
+27.0: (flowrun_green r7s r10 ter3)
+27.0: (keepgreen r7s ter3)
+27.0: (flowrun_green r7n r9 ter2)
+27.0: (keepgreen r7n ter2)
+27.0: (keepgreen r2 ter1)
+27.0: (flowrun_green r2 r5 ter1)
+27.0: -----waiting---- [28.0]
 28.0: (switchTrafficSignal ter1)
 28.0: (switchTrafficSignal ter3)
-28.0: -----waiting---- [40.0]
+28.0: (flowrun_green r3 r5 ter1)
+28.0: (flowrun_green r7n r9 ter2)
+28.0: (keepgreen r7n ter2)
+28.0: (keepgreen r8 ter3)
+28.0: (keepgreen r3 ter1)
+28.0: -----waiting---- [29.0]
+29.0: (flowrun_green r3 r5 ter1)
+29.0: (flowrun_green r7n r9 ter2)
+29.0: (keepgreen r7n ter2)
+29.0: (keepgreen r8 ter3)
+29.0: (keepgreen r3 ter1)
+29.0: -----waiting---- [30.0]
+30.0: (flowrun_green r3 r5 ter1)
+30.0: (flowrun_green r7n r9 ter2)
+30.0: (keepgreen r7n ter2)
+30.0: (keepgreen r8 ter3)
+30.0: (keepgreen r3 ter1)
+30.0: -----waiting---- [31.0]
+31.0: (flowrun_green r3 r5 ter1)
+31.0: (flowrun_green r7n r9 ter2)
+31.0: (keepgreen r7n ter2)
+31.0: (keepgreen r8 ter3)
+31.0: (keepgreen r3 ter1)
+31.0: -----waiting---- [32.0]
+32.0: (flowrun_green r3 r5 ter1)
+32.0: (flowrun_green r7n r9 ter2)
+32.0: (keepgreen r7n ter2)
+32.0: (keepgreen r8 ter3)
+32.0: (keepgreen r3 ter1)
+32.0: -----waiting---- [33.0]
+33.0: (flowrun_green r3 r5 ter1)
+33.0: (flowrun_green r7n r9 ter2)
+33.0: (keepgreen r7n ter2)
+33.0: (keepgreen r8 ter3)
+33.0: (keepgreen r3 ter1)
+33.0: -----waiting---- [34.0]
+34.0: (flowrun_green r3 r5 ter1)
+34.0: (flowrun_green r7n r9 ter2)
+34.0: (keepgreen r7n ter2)
+34.0: (keepgreen r8 ter3)
+34.0: (keepgreen r3 ter1)
+34.0: -----waiting---- [35.0]
+35.0: (flowrun_green r3 r5 ter1)
+35.0: (flowrun_green r7n r9 ter2)
+35.0: (keepgreen r7n ter2)
+35.0: (keepgreen r8 ter3)
+35.0: (keepgreen r3 ter1)
+35.0: -----waiting---- [36.0]
+36.0: (flowrun_green r3 r5 ter1)
+36.0: (flowrun_green r7n r9 ter2)
+36.0: (keepgreen r7n ter2)
+36.0: (keepgreen r8 ter3)
+36.0: (keepgreen r3 ter1)
+36.0: -----waiting---- [37.0]
+37.0: (flowrun_green r3 r5 ter1)
+37.0: (keepgreen r7n ter2)
+37.0: (keepgreen r8 ter3)
+37.0: (keepgreen r3 ter1)
+37.0: -----waiting---- [38.0]
+38.0: (flowrun_green r3 r5 ter1)
+38.0: (keepgreen r7n ter2)
+38.0: (keepgreen r8 ter3)
+38.0: (keepgreen r3 ter1)
+38.0: -----waiting---- [39.0]
+39.0: (flowrun_green r3 r5 ter1)
+39.0: (keepgreen r7n ter2)
+39.0: (keepgreen r8 ter3)
+39.0: (keepgreen r3 ter1)
+39.0: -----waiting---- [40.0]
 40.0: (switchTrafficSignal ter3)
-40.0: -----waiting---- [42.0]
+40.0: (restartoken ter3)
+40.0: (flowrun_green r7s r10 ter3)
+40.0: (keepgreen r7s ter3)
+40.0: (flowrun_green r3 r5 ter1)
+40.0: (keepgreen r7n ter2)
+40.0: (keepgreen r3 ter1)
+40.0: -----waiting---- [41.0]
+41.0: (flowrun_green r7s r10 ter3)
+41.0: (keepgreen r7s ter3)
+41.0: (flowrun_green r3 r5 ter1)
+41.0: (keepgreen r7n ter2)
+41.0: (keepgreen r3 ter1)
+41.0: -----waiting---- [42.0]
 42.0: (switchTrafficSignal ter2)
-42.0: -----waiting---- [44.0]
+42.0: (restartoken ter2)
+42.0: (flowrun_green r5 r7s ter2)
+42.0: (flowrun_green r7s r10 ter3)
+42.0: (keepgreen r7s ter3)
+42.0: (keepgreen r5 ter2)
+42.0: (flowrun_green r5 r9 ter2)
+42.0: (flowrun_green r3 r5 ter1)
+42.0: (keepgreen r3 ter1)
+42.0: -----waiting---- [43.0]
+43.0: (flowrun_green r5 r7s ter2)
+43.0: (flowrun_green r7s r10 ter3)
+43.0: (keepgreen r7s ter3)
+43.0: (keepgreen r5 ter2)
+43.0: (flowrun_green r5 r9 ter2)
+43.0: (flowrun_green r3 r5 ter1)
+43.0: (keepgreen r3 ter1)
+43.0: -----waiting---- [44.0]
 44.0: (switchTrafficSignal ter1)
+44.0: (restartoken ter1)
+44.0: (flowrun_green r5 r7s ter2)
+44.0: (flowrun_green r7s r10 ter3)
+44.0: (keepgreen r7s ter3)
+44.0: (keepgreen r1 ter1)
+44.0: (keepgreen r5 ter2)
+44.0: (flowrun_green r1 r5 ter1)
+44.0: (flowrun_green r5 r9 ter2)
 44.0: -----waiting---- [45.0]
 45.0: (switchTrafficSignal ter3)
-45.0: -----waiting---- [49.0]
+45.0: (flowrun_green r5 r7s ter2)
+45.0: (keepgreen r1 ter1)
+45.0: (keepgreen r5 ter2)
+45.0: (flowrun_green r1 r5 ter1)
+45.0: (flowrun_green r5 r9 ter2)
+45.0: (keepgreen r8 ter3)
+45.0: -----waiting---- [46.0]
+46.0: (flowrun_green r5 r7s ter2)
+46.0: (keepgreen r1 ter1)
+46.0: (keepgreen r5 ter2)
+46.0: (flowrun_green r1 r5 ter1)
+46.0: (flowrun_green r5 r9 ter2)
+46.0: (keepgreen r8 ter3)
+46.0: -----waiting---- [47.0]
+47.0: (flowrun_green r5 r7s ter2)
+47.0: (keepgreen r1 ter1)
+47.0: (keepgreen r5 ter2)
+47.0: (flowrun_green r1 r5 ter1)
+47.0: (flowrun_green r5 r9 ter2)
+47.0: (keepgreen r8 ter3)
+47.0: -----waiting---- [48.0]
+48.0: (flowrun_green r5 r7s ter2)
+48.0: (keepgreen r1 ter1)
+48.0: (keepgreen r5 ter2)
+48.0: (flowrun_green r1 r5 ter1)
+48.0: (flowrun_green r5 r9 ter2)
+48.0: (keepgreen r8 ter3)
+48.0: -----waiting---- [49.0]
 49.0: (switchTrafficSignal ter2)
+49.0: (keepgreen r1 ter1)
+49.0: (flowrun_green r1 r5 ter1)
+49.0: (keepgreen r6 ter2)
+49.0: (keepgreen r8 ter3)
 49.0: -----waiting---- [50.0]
 50.0: (switchTrafficSignal ter3)
-50.0: -----waiting---- [55.0]
+50.0: (restartoken ter3)
+50.0: (flowrun_green r7s r10 ter3)
+50.0: (keepgreen r7s ter3)
+50.0: (keepgreen r1 ter1)
+50.0: (flowrun_green r1 r5 ter1)
+50.0: (keepgreen r6 ter2)
+50.0: -----waiting---- [51.0]
+51.0: (flowrun_green r7s r10 ter3)
+51.0: (keepgreen r7s ter3)
+51.0: (keepgreen r1 ter1)
+51.0: (flowrun_green r1 r5 ter1)
+51.0: (keepgreen r6 ter2)
+51.0: -----waiting---- [52.0]
+52.0: (flowrun_green r7s r10 ter3)
+52.0: (keepgreen r7s ter3)
+52.0: (keepgreen r1 ter1)
+52.0: (flowrun_green r1 r5 ter1)
+52.0: (keepgreen r6 ter2)
+52.0: -----waiting---- [53.0]
+53.0: (flowrun_green r7s r10 ter3)
+53.0: (keepgreen r7s ter3)
+53.0: (keepgreen r1 ter1)
+53.0: (flowrun_green r1 r5 ter1)
+53.0: (keepgreen r6 ter2)
+53.0: -----waiting---- [54.0]
+54.0: (flowrun_green r7s r10 ter3)
+54.0: (keepgreen r7s ter3)
+54.0: (keepgreen r1 ter1)
+54.0: (flowrun_green r1 r5 ter1)
+54.0: (keepgreen r6 ter2)
+54.0: -----waiting---- [55.0]
 55.0: (switchTrafficSignal ter2)
 55.0: (switchTrafficSignal ter3)
 55.0: (switchTrafficSignal ter1)
-55.0: -----waiting---- [60.0]
+55.0: (keepgreen r7n ter2)
+55.0: (keepgreen r8 ter3)
+55.0: (keepgreen r2 ter1)
+55.0: (flowrun_green r2 r5 ter1)
+55.0: -----waiting---- [56.0]
+56.0: (keepgreen r7n ter2)
+56.0: (keepgreen r8 ter3)
+56.0: (keepgreen r2 ter1)
+56.0: (flowrun_green r2 r5 ter1)
+56.0: -----waiting---- [57.0]
+57.0: (keepgreen r7n ter2)
+57.0: (keepgreen r8 ter3)
+57.0: (keepgreen r2 ter1)
+57.0: (flowrun_green r2 r5 ter1)
+57.0: -----waiting---- [58.0]
+58.0: (keepgreen r7n ter2)
+58.0: (keepgreen r8 ter3)
+58.0: (keepgreen r2 ter1)
+58.0: (flowrun_green r2 r5 ter1)
+58.0: -----waiting---- [59.0]
+59.0: (keepgreen r7n ter2)
+59.0: (keepgreen r8 ter3)
+59.0: (keepgreen r2 ter1)
+59.0: (flowrun_green r2 r5 ter1)
+59.0: -----waiting---- [60.0]
 60.0: (switchTrafficSignal ter1)
-60.0: -----waiting---- [63.0]
+60.0: (flowrun_green r3 r5 ter1)
+60.0: (keepgreen r7n ter2)
+60.0: (keepgreen r8 ter3)
+60.0: (keepgreen r3 ter1)
+60.0: -----waiting---- [61.0]
+61.0: (flowrun_green r3 r5 ter1)
+61.0: (keepgreen r7n ter2)
+61.0: (keepgreen r8 ter3)
+61.0: (keepgreen r3 ter1)
+61.0: -----waiting---- [62.0]
+62.0: (flowrun_green r3 r5 ter1)
+62.0: (keepgreen r7n ter2)
+62.0: (keepgreen r8 ter3)
+62.0: (keepgreen r3 ter1)
+62.0: -----waiting---- [63.0]
 63.0: (switchTrafficSignal ter3)
 63.0: (switchTrafficSignal ter2)
-63.0: -----waiting---- [68.0]
+63.0: (restartoken ter2)
+63.0: (restartoken ter3)
+63.0: (flowrun_green r5 r7s ter2)
+63.0: (flowrun_green r7s r10 ter3)
+63.0: (keepgreen r7s ter3)
+63.0: (keepgreen r5 ter2)
+63.0: (flowrun_green r5 r9 ter2)
+63.0: (flowrun_green r3 r5 ter1)
+63.0: (keepgreen r3 ter1)
+63.0: -----waiting---- [64.0]
+64.0: (flowrun_green r5 r7s ter2)
+64.0: (flowrun_green r7s r10 ter3)
+64.0: (keepgreen r7s ter3)
+64.0: (keepgreen r5 ter2)
+64.0: (flowrun_green r5 r9 ter2)
+64.0: (flowrun_green r3 r5 ter1)
+64.0: (keepgreen r3 ter1)
+64.0: -----waiting---- [65.0]
+65.0: (flowrun_green r5 r7s ter2)
+65.0: (flowrun_green r7s r10 ter3)
+65.0: (keepgreen r7s ter3)
+65.0: (keepgreen r5 ter2)
+65.0: (flowrun_green r5 r9 ter2)
+65.0: (flowrun_green r3 r5 ter1)
+65.0: (keepgreen r3 ter1)
+65.0: -----waiting---- [66.0]
+66.0: (flowrun_green r5 r7s ter2)
+66.0: (flowrun_green r7s r10 ter3)
+66.0: (keepgreen r7s ter3)
+66.0: (keepgreen r5 ter2)
+66.0: (flowrun_green r5 r9 ter2)
+66.0: (flowrun_green r3 r5 ter1)
+66.0: (keepgreen r3 ter1)
+66.0: -----waiting---- [67.0]
+67.0: (flowrun_green r5 r7s ter2)
+67.0: (flowrun_green r7s r10 ter3)
+67.0: (keepgreen r7s ter3)
+67.0: (keepgreen r5 ter2)
+67.0: (flowrun_green r5 r9 ter2)
+67.0: (flowrun_green r3 r5 ter1)
+67.0: (keepgreen r3 ter1)
+67.0: -----waiting---- [68.0]
 68.0: (switchTrafficSignal ter3)
+68.0: (flowrun_green r5 r7s ter2)
+68.0: (keepgreen r5 ter2)
+68.0: (flowrun_green r5 r9 ter2)
+68.0: (flowrun_green r3 r5 ter1)
+68.0: (keepgreen r8 ter3)
+68.0: (keepgreen r3 ter1)
 68.0: -----waiting---- [69.0]
 69.0: (switchTrafficSignal ter2)
-69.0: -----waiting---- [71.0]
+69.0: (flowrun_green r3 r5 ter1)
+69.0: (keepgreen r6 ter2)
+69.0: (keepgreen r8 ter3)
+69.0: (keepgreen r3 ter1)
+69.0: -----waiting---- [70.0]
+70.0: (flowrun_green r3 r5 ter1)
+70.0: (keepgreen r6 ter2)
+70.0: (keepgreen r8 ter3)
+70.0: (keepgreen r3 ter1)
+70.0: -----waiting---- [71.0]
 71.0: (switchTrafficSignal ter1)
-71.0: -----waiting---- [74.0]
+71.0: (restartoken ter1)
+71.0: (keepgreen r1 ter1)
+71.0: (flowrun_green r1 r5 ter1)
+71.0: (keepgreen r6 ter2)
+71.0: (keepgreen r8 ter3)
+71.0: -----waiting---- [72.0]
+72.0: (keepgreen r1 ter1)
+72.0: (flowrun_green r1 r5 ter1)
+72.0: (keepgreen r6 ter2)
+72.0: (keepgreen r8 ter3)
+72.0: -----waiting---- [73.0]
+73.0: (keepgreen r1 ter1)
+73.0: (flowrun_green r1 r5 ter1)
+73.0: (keepgreen r6 ter2)
+73.0: (keepgreen r8 ter3)
+73.0: -----waiting---- [74.0]
 74.0: (switchTrafficSignal ter2)
+74.0: (keepgreen r1 ter1)
+74.0: (flowrun_green r1 r5 ter1)
+74.0: (keepgreen r7n ter2)
+74.0: (keepgreen r8 ter3)
 74.0: -----waiting---- [75.0]
 75.0: (switchTrafficSignal ter3)
-75.0: -----waiting---- [79.0]
+75.0: (restartoken ter3)
+75.0: (flowrun_green r7s r10 ter3)
+75.0: (keepgreen r7s ter3)
+75.0: (keepgreen r1 ter1)
+75.0: (flowrun_green r1 r5 ter1)
+75.0: (keepgreen r7n ter2)
+75.0: -----waiting---- [76.0]
+76.0: (flowrun_green r7s r10 ter3)
+76.0: (keepgreen r7s ter3)
+76.0: (keepgreen r1 ter1)
+76.0: (keepgreen r7n ter2)
+76.0: -----waiting---- [77.0]
+77.0: (flowrun_green r7s r10 ter3)
+77.0: (keepgreen r7s ter3)
+77.0: (keepgreen r1 ter1)
+77.0: (keepgreen r7n ter2)
+77.0: -----waiting---- [78.0]
+78.0: (flowrun_green r7s r10 ter3)
+78.0: (keepgreen r7s ter3)
+78.0: (keepgreen r1 ter1)
+78.0: (keepgreen r7n ter2)
+78.0: -----waiting---- [79.0]
 79.0: (switchTrafficSignal ter2)
-79.0: -----waiting---- [83.0]
+79.0: (restartoken ter2)
+79.0: (flowrun_green r5 r7s ter2)
+79.0: (flowrun_green r7s r10 ter3)
+79.0: (keepgreen r7s ter3)
+79.0: (keepgreen r1 ter1)
+79.0: (keepgreen r5 ter2)
+79.0: (flowrun_green r5 r9 ter2)
+79.0: -----waiting---- [80.0]
+80.0: (flowrun_green r5 r7s ter2)
+80.0: (flowrun_green r7s r10 ter3)
+80.0: (keepgreen r7s ter3)
+80.0: (keepgreen r1 ter1)
+80.0: (keepgreen r5 ter2)
+80.0: (flowrun_green r1 r5 ter1)
+80.0: (flowrun_green r5 r9 ter2)
+80.0: -----waiting---- [81.0]
+81.0: (flowrun_green r5 r7s ter2)
+81.0: (flowrun_green r7s r10 ter3)
+81.0: (keepgreen r7s ter3)
+81.0: (keepgreen r1 ter1)
+81.0: (keepgreen r5 ter2)
+81.0: (flowrun_green r1 r5 ter1)
+81.0: (flowrun_green r5 r9 ter2)
+81.0: -----waiting---- [82.0]
+82.0: (flowrun_green r5 r7s ter2)
+82.0: (flowrun_green r7s r10 ter3)
+82.0: (keepgreen r7s ter3)
+82.0: (keepgreen r1 ter1)
+82.0: (keepgreen r5 ter2)
+82.0: (flowrun_green r1 r5 ter1)
+82.0: (flowrun_green r5 r9 ter2)
+82.0: -----waiting---- [83.0]
 83.0: (switchTrafficSignal ter3)
-83.0: -----waiting---- [85.0]
+83.0: (flowrun_green r5 r7s ter2)
+83.0: (keepgreen r1 ter1)
+83.0: (keepgreen r5 ter2)
+83.0: (flowrun_green r1 r5 ter1)
+83.0: (flowrun_green r5 r9 ter2)
+83.0: (keepgreen r8 ter3)
+83.0: -----waiting---- [84.0]
+84.0: (flowrun_green r5 r7s ter2)
+84.0: (keepgreen r1 ter1)
+84.0: (keepgreen r5 ter2)
+84.0: (flowrun_green r1 r5 ter1)
+84.0: (flowrun_green r5 r9 ter2)
+84.0: (keepgreen r8 ter3)
+84.0: -----waiting---- [85.0]
 85.0: (switchTrafficSignal ter2)
 85.0: (switchTrafficSignal ter1)
-85.0: -----waiting---- [90.0]
+85.0: (keepgreen r6 ter2)
+85.0: (keepgreen r8 ter3)
+85.0: (keepgreen r2 ter1)
+85.0: (flowrun_green r2 r5 ter1)
+85.0: -----waiting---- [86.0]
+86.0: (keepgreen r6 ter2)
+86.0: (keepgreen r8 ter3)
+86.0: (keepgreen r2 ter1)
+86.0: (flowrun_green r2 r5 ter1)
+86.0: -----waiting---- [87.0]
+87.0: (keepgreen r6 ter2)
+87.0: (keepgreen r8 ter3)
+87.0: (keepgreen r2 ter1)
+87.0: (flowrun_green r2 r5 ter1)
+87.0: -----waiting---- [88.0]
+88.0: (keepgreen r6 ter2)
+88.0: (keepgreen r8 ter3)
+88.0: (keepgreen r2 ter1)
+88.0: (flowrun_green r2 r5 ter1)
+88.0: -----waiting---- [89.0]
+89.0: (keepgreen r6 ter2)
+89.0: (keepgreen r8 ter3)
+89.0: (keepgreen r2 ter1)
+89.0: (flowrun_green r2 r5 ter1)
+89.0: -----waiting---- [90.0]
 90.0: (switchTrafficSignal ter1)
 90.0: (switchTrafficSignal ter2)
+90.0: (flowrun_green r3 r5 ter1)
+90.0: (keepgreen r7n ter2)
+90.0: (keepgreen r8 ter3)
+90.0: (keepgreen r3 ter1)
 90.0: -----waiting---- [91.0]
 91.0: (switchTrafficSignal ter3)
-91.0: -----waiting---- [95.0]
+91.0: (restartoken ter3)
+91.0: (flowrun_green r7s r10 ter3)
+91.0: (keepgreen r7s ter3)
+91.0: (flowrun_green r3 r5 ter1)
+91.0: (keepgreen r7n ter2)
+91.0: (keepgreen r3 ter1)
+91.0: -----waiting---- [92.0]
+92.0: (flowrun_green r7s r10 ter3)
+92.0: (keepgreen r7s ter3)
+92.0: (keepgreen r7n ter2)
+92.0: (keepgreen r3 ter1)
+92.0: -----waiting---- [93.0]
+93.0: (flowrun_green r7s r10 ter3)
+93.0: (keepgreen r7s ter3)
+93.0: (keepgreen r7n ter2)
+93.0: (keepgreen r3 ter1)
+93.0: -----waiting---- [94.0]
+94.0: (flowrun_green r7s r10 ter3)
+94.0: (keepgreen r7s ter3)
+94.0: (keepgreen r7n ter2)
+94.0: (keepgreen r3 ter1)
+94.0: -----waiting---- [95.0]
 95.0: (switchTrafficSignal ter2)
+95.0: (restartoken ter2)
+95.0: (flowrun_green r5 r7s ter2)
+95.0: (flowrun_green r7s r10 ter3)
+95.0: (keepgreen r7s ter3)
+95.0: (keepgreen r5 ter2)
+95.0: (flowrun_green r5 r9 ter2)
+95.0: (keepgreen r3 ter1)
 95.0: -----waiting---- [96.0]
 96.0: (switchTrafficSignal ter3)
-96.0: -----waiting---- [100.0]
+96.0: (flowrun_green r5 r7s ter2)
+96.0: (keepgreen r5 ter2)
+96.0: (flowrun_green r5 r9 ter2)
+96.0: (flowrun_green r3 r5 ter1)
+96.0: (keepgreen r8 ter3)
+96.0: (keepgreen r3 ter1)
+96.0: -----waiting---- [97.0]
+97.0: (flowrun_green r5 r7s ter2)
+97.0: (keepgreen r5 ter2)
+97.0: (flowrun_green r5 r9 ter2)
+97.0: (flowrun_green r3 r5 ter1)
+97.0: (keepgreen r8 ter3)
+97.0: (keepgreen r3 ter1)
+97.0: -----waiting---- [98.0]
+98.0: (flowrun_green r5 r7s ter2)
+98.0: (keepgreen r5 ter2)
+98.0: (flowrun_green r5 r9 ter2)
+98.0: (flowrun_green r3 r5 ter1)
+98.0: (keepgreen r8 ter3)
+98.0: (keepgreen r3 ter1)
+98.0: -----waiting---- [99.0]
+99.0: (flowrun_green r5 r7s ter2)
+99.0: (keepgreen r5 ter2)
+99.0: (flowrun_green r5 r9 ter2)
+99.0: (flowrun_green r3 r5 ter1)
+99.0: (keepgreen r8 ter3)
+99.0: (keepgreen r3 ter1)
+99.0: -----waiting---- [100.0]
 100.0: (switchTrafficSignal ter2)
-100.0: -----waiting---- [103.0]
+100.0: (flowrun_green r3 r5 ter1)
+100.0: (keepgreen r6 ter2)
+100.0: (keepgreen r8 ter3)
+100.0: (keepgreen r3 ter1)
+100.0: -----waiting---- [101.0]
+101.0: (flowrun_green r3 r5 ter1)
+101.0: (keepgreen r6 ter2)
+101.0: (keepgreen r8 ter3)
+101.0: (keepgreen r3 ter1)
+101.0: -----waiting---- [102.0]
+102.0: (flowrun_green r3 r5 ter1)
+102.0: (keepgreen r6 ter2)
+102.0: (keepgreen r8 ter3)
+102.0: (keepgreen r3 ter1)
+102.0: -----waiting---- [103.0]
 103.0: (switchTrafficSignal ter3)
+103.0: (restartoken ter3)
+103.0: (flowrun_green r7s r10 ter3)
+103.0: (keepgreen r7s ter3)
+103.0: (flowrun_green r3 r5 ter1)
+103.0: (keepgreen r6 ter2)
+103.0: (keepgreen r3 ter1)
 103.0: -----waiting---- [104.0]
 104.0: (switchTrafficSignal ter1)
+104.0: (restartoken ter1)
+104.0: (flowrun_green r7s r10 ter3)
+104.0: (keepgreen r7s ter3)
+104.0: (keepgreen r1 ter1)
+104.0: (flowrun_green r1 r5 ter1)
+104.0: (keepgreen r6 ter2)
 104.0: -----waiting---- [105.0]
 105.0: (switchTrafficSignal ter2)
-105.0: -----waiting---- [108.0]
+105.0: (flowrun_green r7s r10 ter3)
+105.0: (keepgreen r7s ter3)
+105.0: (keepgreen r1 ter1)
+105.0: (flowrun_green r1 r5 ter1)
+105.0: (keepgreen r7n ter2)
+105.0: -----waiting---- [106.0]
+106.0: (flowrun_green r7s r10 ter3)
+106.0: (keepgreen r7s ter3)
+106.0: (keepgreen r1 ter1)
+106.0: (keepgreen r7n ter2)
+106.0: -----waiting---- [107.0]
+107.0: (flowrun_green r7s r10 ter3)
+107.0: (keepgreen r7s ter3)
+107.0: (keepgreen r1 ter1)
+107.0: (keepgreen r7n ter2)
+107.0: -----waiting---- [108.0]
 108.0: (switchTrafficSignal ter3)
-108.0: -----waiting---- [110.0]
+108.0: (keepgreen r1 ter1)
+108.0: (keepgreen r7n ter2)
+108.0: (keepgreen r8 ter3)
+108.0: -----waiting---- [109.0]
+109.0: (keepgreen r1 ter1)
+109.0: (keepgreen r7n ter2)
+109.0: (keepgreen r8 ter3)
+109.0: -----waiting---- [110.0]
 110.0: (switchTrafficSignal ter2)
-110.0: -----waiting---- [113.0]
+110.0: (restartoken ter2)
+110.0: (flowrun_green r5 r7s ter2)
+110.0: (keepgreen r1 ter1)
+110.0: (keepgreen r5 ter2)
+110.0: (flowrun_green r5 r9 ter2)
+110.0: (keepgreen r8 ter3)
+110.0: -----waiting---- [111.0]
+111.0: (flowrun_green r5 r7s ter2)
+111.0: (keepgreen r1 ter1)
+111.0: (keepgreen r5 ter2)
+111.0: (flowrun_green r1 r5 ter1)
+111.0: (flowrun_green r5 r9 ter2)
+111.0: (keepgreen r8 ter3)
+111.0: -----waiting---- [112.0]
+112.0: (flowrun_green r5 r7s ter2)
+112.0: (keepgreen r1 ter1)
+112.0: (keepgreen r5 ter2)
+112.0: (flowrun_green r1 r5 ter1)
+112.0: (flowrun_green r5 r9 ter2)
+112.0: (keepgreen r8 ter3)
+112.0: -----waiting---- [113.0]
 113.0: (switchTrafficSignal ter3)
-113.0: -----waiting---- [118.0]
+113.0: (restartoken ter3)
+113.0: (flowrun_green r5 r7s ter2)
+113.0: (flowrun_green r7s r10 ter3)
+113.0: (keepgreen r7s ter3)
+113.0: (keepgreen r1 ter1)
+113.0: (keepgreen r5 ter2)
+113.0: (flowrun_green r1 r5 ter1)
+113.0: (flowrun_green r5 r9 ter2)
+113.0: -----waiting---- [114.0]
+114.0: (flowrun_green r5 r7s ter2)
+114.0: (flowrun_green r7s r10 ter3)
+114.0: (keepgreen r7s ter3)
+114.0: (keepgreen r1 ter1)
+114.0: (keepgreen r5 ter2)
+114.0: (flowrun_green r1 r5 ter1)
+114.0: (flowrun_green r5 r9 ter2)
+114.0: -----waiting---- [115.0]
+115.0: (flowrun_green r5 r7s ter2)
+115.0: (flowrun_green r7s r10 ter3)
+115.0: (keepgreen r7s ter3)
+115.0: (keepgreen r1 ter1)
+115.0: (keepgreen r5 ter2)
+115.0: (flowrun_green r1 r5 ter1)
+115.0: (flowrun_green r5 r9 ter2)
+115.0: -----waiting---- [116.0]
+116.0: (flowrun_green r5 r7s ter2)
+116.0: (flowrun_green r7s r10 ter3)
+116.0: (keepgreen r7s ter3)
+116.0: (keepgreen r1 ter1)
+116.0: (keepgreen r5 ter2)
+116.0: (flowrun_green r1 r5 ter1)
+116.0: (flowrun_green r5 r9 ter2)
+116.0: -----waiting---- [117.0]
+117.0: (flowrun_green r5 r7s ter2)
+117.0: (flowrun_green r7s r10 ter3)
+117.0: (keepgreen r7s ter3)
+117.0: (keepgreen r1 ter1)
+117.0: (keepgreen r5 ter2)
+117.0: (flowrun_green r1 r5 ter1)
+117.0: (flowrun_green r5 r9 ter2)
+117.0: -----waiting---- [118.0]
 118.0: (switchTrafficSignal ter2)
 118.0: (switchTrafficSignal ter3)
 118.0: (switchTrafficSignal ter1)
-118.0: -----waiting---- [123.0]
+118.0: (keepgreen r6 ter2)
+118.0: (keepgreen r8 ter3)
+118.0: (keepgreen r2 ter1)
+118.0: (flowrun_green r2 r5 ter1)
+118.0: -----waiting---- [119.0]
+119.0: (keepgreen r6 ter2)
+119.0: (keepgreen r8 ter3)
+119.0: (keepgreen r2 ter1)
+119.0: (flowrun_green r2 r5 ter1)
+119.0: -----waiting---- [120.0]
+120.0: (keepgreen r6 ter2)
+120.0: (keepgreen r8 ter3)
+120.0: (keepgreen r2 ter1)
+120.0: (flowrun_green r2 r5 ter1)
+120.0: -----waiting---- [121.0]
+121.0: (keepgreen r6 ter2)
+121.0: (keepgreen r8 ter3)
+121.0: (keepgreen r2 ter1)
+121.0: (flowrun_green r2 r5 ter1)
+121.0: -----waiting---- [122.0]
+122.0: (keepgreen r6 ter2)
+122.0: (keepgreen r8 ter3)
+122.0: (keepgreen r2 ter1)
+122.0: (flowrun_green r2 r5 ter1)
+122.0: -----waiting---- [123.0]
 123.0: (switchTrafficSignal ter2)
 123.0: (switchTrafficSignal ter1)
-123.0: -----waiting---- [127.0]
+123.0: (flowrun_green r3 r5 ter1)
+123.0: (keepgreen r7n ter2)
+123.0: (keepgreen r8 ter3)
+123.0: (keepgreen r3 ter1)
+123.0: -----waiting---- [124.0]
+124.0: (flowrun_green r3 r5 ter1)
+124.0: (keepgreen r7n ter2)
+124.0: (keepgreen r8 ter3)
+124.0: (keepgreen r3 ter1)
+124.0: -----waiting---- [125.0]
+125.0: (flowrun_green r3 r5 ter1)
+125.0: (keepgreen r7n ter2)
+125.0: (keepgreen r8 ter3)
+125.0: (keepgreen r3 ter1)
+125.0: -----waiting---- [126.0]
+126.0: (flowrun_green r3 r5 ter1)
+126.0: (keepgreen r7n ter2)
+126.0: (keepgreen r8 ter3)
+126.0: (keepgreen r3 ter1)
+126.0: -----waiting---- [127.0]
 
-Plan-Length:195
+Plan-Length:874
 Elapsed Time: 127.0
 Metric (Search):177.0
-Planning Time (msec): 6802
-Heuristic Time (msec): 5322
-Search Time (msec): 5689
+Planning Time (msec): 5965
+Heuristic Time (msec): 4619
+Search Time (msec): 4891
 Expanded Nodes:3707
 States Evaluated:8034
 Fixed constraint violations during search (zero-crossing):0
 Number of Dead-Ends detected:0
 Number of Duplicates detected:757
-real 6.92
-user 4.97
-sys 0.25
+real 6.14
+user 5.90
+sys 0.24

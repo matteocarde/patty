@@ -1,6 +1,8 @@
 from __future__ import annotations
 from typing import Dict, List, Set
 
+from prettytable import PrettyTable
+
 from src.pddl.Atom import Atom
 from src.pddl.Predicate import Predicate
 from src.pddl.InitialCondition import InitialCondition
@@ -93,3 +95,21 @@ class Problem:
     def substitute(self, substitutions):
         self.goal = self.goal.substitute(substitutions)
         pass
+
+    @classmethod
+    def computeDistance(cls, initA: InitialCondition, initB: InitialCondition, verbose=False, nameA="A",
+                        nameB="B") -> float:
+
+        distance = 0
+
+        pt = PrettyTable(["Atom", nameA, nameB])
+        for (atom, valueA) in initA.numericAssignments.items():
+            valueB = initB.numericAssignments[atom]
+            d = (valueA - valueB) ** 2
+            distance += d
+            pt.add_row([atom, valueA, valueB])
+
+        if verbose:
+            print(pt)
+
+        return distance

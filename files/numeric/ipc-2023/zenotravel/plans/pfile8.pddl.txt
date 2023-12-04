@@ -1,0 +1,46 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 105
+Aibr Preprocessing
+|F|:63
+|X|:6
+|A|:323
+|P|:0
+|E|:0
+H1 Setup Time (msec): 20
+Setting horizon to:NaN
+Running Greedy Best First Search
+Problem Solved
+
+Found Plan:
+0.0: (refuel plane3)
+1.0: (fly-slow plane3 city0 city2)
+2.0: (refuel plane1)
+3.0: (board person3 plane3 city2)
+4.0: (refuel plane3)
+5.0: (fly-fast plane1 city0 city3)
+6.0: (fly-slow plane2 city3 city4)
+7.0: (refuel plane2)
+8.0: (fly-slow plane3 city2 city1)
+9.0: (board person6 plane2 city4)
+10.0: (fly-slow plane2 city4 city2)
+11.0: (debark person3 plane3 city1)
+12.0: (board person1 plane3 city1)
+13.0: (fly-slow plane3 city1 city0)
+14.0: (debark person6 plane2 city2)
+15.0: (debark person1 plane3 city0)
+
+Plan-Length:16
+Metric (Search):16.0
+Planning Time (msec): 1599
+Heuristic Time (msec): 498
+Search Time (msec): 623
+Expanded Nodes:18
+States Evaluated:332
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:30
+Number of Duplicates detected:78
+real 1.77
+user 1.65
+sys 0.10

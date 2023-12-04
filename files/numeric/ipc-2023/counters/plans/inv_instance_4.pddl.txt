@@ -1,48 +1,49 @@
 Started Grounding
 Ended Grounding
-Pattern: decrement c2; increment c3; increment c0; increment c2; decrement c1; increment c1; decrement c0; decrement c3
+Pattern: decrement c0; increment c2; decrement c1; increment c3; increment c1; increment c0; decrement c2; decrement c3
 Started Conversion to SMT at bound 1
 Ended Conversion to SMT at bound 1
 Started Solving Bound 1
 Ended Solving Bound 1
 Bound 1 - Vars = 16
 Bound 1 - Rules = 41
-0: (decrement c2)
-1: (decrement c2)
-2: (increment c3)
-3: (increment c3)
-4: (increment c3)
-5: (increment c3)
-6: (increment c3)
-7: (increment c3)
-8: (increment c3)
-9: (increment c3)
-10: (increment c0)
-11: (increment c0)
-12: (increment c2)
-13: (increment c2)
-14: (increment c2)
-15: (increment c2)
-16: (increment c2)
-17: (decrement c1)
-18: (decrement c1)
-19: (increment c1)
-20: (increment c1)
-21: (decrement c0)
-22: (decrement c0)
-23: (decrement c0)
-24: (decrement c0)
-25: (decrement c0)
-26: (decrement c3)
+0: (decrement c0)
+1: (decrement c0)
+2: (decrement c0)
+3: (decrement c0)
+4: (decrement c0)
+5: (decrement c0)
+6: (increment c2)
+7: (increment c2)
+8: (increment c2)
+9: (increment c2)
+10: (increment c2)
+11: (decrement c1)
+12: (decrement c1)
+13: (increment c3)
+14: (increment c3)
+15: (increment c3)
+16: (increment c3)
+17: (increment c3)
+18: (increment c3)
+19: (increment c3)
+20: (increment c3)
+21: (increment c1)
+22: (increment c1)
+23: (increment c0)
+24: (increment c0)
+25: (decrement c2)
+26: (decrement c2)
 27: (decrement c3)
+28: (decrement c3)
 
 Plan is valid
 Bound: 1
-Grounding: 37ms
+Grounding: 38ms
 Conversion to SMT at bound 1: 4ms
 Solving Bound 1: 41ms
-Overall: 110ms
+Overall: 109ms
 
-real 0.65
-user 0.56
-sys 0.08
+real 0.66
+user 0.59
+sys 0.06

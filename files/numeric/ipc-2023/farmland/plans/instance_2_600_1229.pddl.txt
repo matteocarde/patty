@@ -1,14 +1,14 @@
 Started Grounding
 Ended Grounding
-Pattern: move-fast farm0 farm1; move-slow farm0 farm1; move-slow farm1 farm0; move-fast farm1 farm0
+Pattern: move-slow farm0 farm1; move-slow farm1 farm0; move-fast farm0 farm1; move-fast farm1 farm0
 Started Conversion to SMT at bound 1
 Ended Conversion to SMT at bound 1
 Started Solving Bound 1
 Ended Solving Bound 1
 Bound 1 - Vars = 14
 Bound 1 - Rules = 26
-0: (move-fast farm0 farm1)
-1: (move-fast farm0 farm1)
+0: (move-slow farm0 farm1)
+1: (move-slow farm0 farm1)
 2: (move-slow farm0 farm1)
 3: (move-slow farm0 farm1)
 4: (move-slow farm0 farm1)
@@ -365,24 +365,20 @@ Bound 1 - Rules = 26
 355: (move-slow farm0 farm1)
 356: (move-slow farm0 farm1)
 357: (move-slow farm0 farm1)
-358: (move-slow farm0 farm1)
-359: (move-slow farm0 farm1)
-360: (move-slow farm0 farm1)
-361: (move-slow farm0 farm1)
-362: (move-slow farm1 farm0)
-363: (move-slow farm1 farm0)
-364: (move-slow farm1 farm0)
-365: (move-slow farm1 farm0)
-366: (move-fast farm1 farm0)
-367: (move-fast farm1 farm0)
+358: (move-slow farm1 farm0)
+359: (move-slow farm1 farm0)
+360: (move-fast farm0 farm1)
+361: (move-fast farm0 farm1)
+362: (move-fast farm1 farm0)
+363: (move-fast farm1 farm0)
 
 Plan is valid
 Bound: 1
-Grounding: 57ms
+Grounding: 34ms
 Conversion to SMT at bound 1: 4ms
-Solving Bound 1: 31ms
-Overall: 133ms
+Solving Bound 1: 40ms
+Overall: 118ms
 
-real 0.74
-user 0.49
+real 0.70
+user 0.62
 sys 0.07

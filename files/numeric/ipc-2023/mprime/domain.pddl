@@ -5,7 +5,7 @@
         pleasure pain - emotion
     )
     (:predicates
-        (eats ?n1 ?n2 - food)
+        (eats ?n1 - food ?n2 - food)
         (craves ?v - emotion ?n - food)
         (fears ?c - pain ?v - pleasure)
         ;       (locale ?n - food ?a - province)
@@ -32,7 +32,7 @@
     )
 
     (:action feast
-        :parameters (?v - pleasure ?n1 ?n2 - food)
+        :parameters (?v - pleasure ?n1 - food ?n2 - food)
         :precondition (and (craves ?v ?n1)
             (eats ?n1 ?n2)
             (>= (locale ?n1) 1)
@@ -54,7 +54,7 @@
         )
     )
     (:action drink
-        :parameters (?n1 ?n2 - food)
+        :parameters (?n1 - food ?n2 - food)
         :precondition (and (>= (locale ?n1) 1))
         :effect (and (decrease (locale ?n1) 1)
             (increase (locale ?n2) 1))

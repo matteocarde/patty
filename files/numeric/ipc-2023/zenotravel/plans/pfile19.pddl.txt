@@ -1,0 +1,120 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 886
+Aibr Preprocessing
+|F|:725
+|X|:10
+|A|:8465
+|P|:0
+|E|:0
+H1 Setup Time (msec): 578
+Setting horizon to:NaN
+Running Greedy Best First Search
+Problem Solved
+
+Found Plan:
+0.0: (refuel plane2)
+1.0: (fly-slow plane3 city16 city18)
+2.0: (board person19 plane2 city1)
+3.0: (fly-slow plane2 city1 city3)
+4.0: (board person2 plane2 city3)
+5.0: (board person8 plane2 city3)
+6.0: (fly-slow plane4 city10 city17)
+7.0: (fly-slow plane2 city3 city9)
+8.0: (board person17 plane2 city9)
+9.0: (refuel plane2)
+10.0: (fly-slow plane2 city9 city17)
+11.0: (board person25 plane2 city17)
+12.0: (debark person19 plane2 city17)
+13.0: (fly-slow plane2 city17 city19)
+14.0: (board person1 plane2 city19)
+15.0: (fly-slow plane2 city19 city4)
+16.0: (board person23 plane2 city4)
+17.0: (fly-slow plane3 city18 city18)
+18.0: (refuel plane2)
+19.0: (fly-slow plane2 city4 city16)
+20.0: (board person10 plane2 city16)
+21.0: (board person4 plane2 city16)
+22.0: (fly-slow plane2 city16 city15)
+23.0: (board person22 plane2 city15)
+24.0: (refuel plane2)
+25.0: (fly-slow plane2 city15 city13)
+26.0: (board person9 plane2 city13)
+27.0: (board person5 plane2 city13)
+28.0: (debark person10 plane2 city13)
+29.0: (fly-slow plane2 city13 city17)
+30.0: (debark person9 plane2 city17)
+31.0: (refuel plane2)
+32.0: (fly-slow plane2 city17 city12)
+33.0: (board person20 plane2 city12)
+34.0: (debark person23 plane2 city12)
+35.0: (fly-slow plane2 city12 city14)
+36.0: (debark person20 plane2 city14)
+37.0: (refuel plane3)
+38.0: (refuel plane2)
+39.0: (fly-slow plane2 city14 city9)
+40.0: (debark person4 plane2 city9)
+41.0: (fly-slow plane2 city9 city1)
+42.0: (debark person2 plane2 city1)
+43.0: (refuel plane2)
+44.0: (fly-slow plane2 city1 city2)
+45.0: (board person11 plane2 city2)
+46.0: (debark person25 plane2 city2)
+47.0: (fly-slow plane2 city2 city13)
+48.0: (debark person11 plane2 city13)
+49.0: (refuel plane1)
+50.0: (board person18 plane1 city0)
+51.0: (fly-fast plane1 city0 city4)
+52.0: (debark person18 plane1 city4)
+53.0: (fly-slow plane1 city4 city11)
+54.0: (refuel plane2)
+55.0: (fly-slow plane2 city13 city10)
+56.0: (debark person1 plane2 city10)
+57.0: (fly-slow plane2 city10 city8)
+58.0: (board person15 plane2 city8)
+59.0: (board person13 plane2 city8)
+60.0: (board person21 plane2 city8)
+61.0: (refuel plane2)
+62.0: (fly-slow plane2 city8 city17)
+63.0: (debark person21 plane2 city17)
+64.0: (fly-slow plane2 city17 city13)
+65.0: (debark person15 plane2 city13)
+66.0: (fly-slow plane2 city13 city4)
+67.0: (refuel plane4)
+68.0: (debark person22 plane2 city4)
+69.0: (fly-slow plane4 city17 city6)
+70.0: (board person12 plane4 city6)
+71.0: (board person3 plane4 city6)
+72.0: (board person24 plane4 city6)
+73.0: (board person6 plane4 city6)
+74.0: (fly-slow plane4 city6 city16)
+75.0: (debark person6 plane4 city16)
+76.0: (refuel plane2)
+77.0: (fly-slow plane2 city4 city3)
+78.0: (debark person13 plane2 city3)
+79.0: (fly-slow plane2 city3 city0)
+80.0: (debark person5 plane2 city0)
+81.0: (debark person8 plane2 city0)
+82.0: (debark person17 plane2 city0)
+83.0: (fly-slow plane2 city0 city8)
+84.0: (refuel plane4)
+85.0: (fly-slow plane4 city16 city17)
+86.0: (debark person12 plane4 city17)
+87.0: (fly-slow plane4 city17 city13)
+88.0: (debark person24 plane4 city13)
+89.0: (debark person3 plane4 city13)
+
+Plan-Length:90
+Metric (Search):90.0
+Planning Time (msec): 26396
+Heuristic Time (msec): 18480
+Search Time (msec): 21065
+Expanded Nodes:146
+States Evaluated:6275
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:354
+Number of Duplicates detected:920
+real 26.62
+user 26.21
+sys 0.40

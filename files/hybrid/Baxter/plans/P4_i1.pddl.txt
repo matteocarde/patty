@@ -1,7 +1,7 @@
 Domain parsed
 Problem parsed
 Grounding..
-Grounding Time: 23
+Grounding Time: 66
 Aibr Preprocessing
 |F|:17
 |X|:6
@@ -21,19 +21,28 @@ Problem Solved
 
 Found Plan:
 0: (start_movement_decrease L2 L3 ZAXES)
-0: -----waiting---- [3.0]
+0: (propagate_move_angle_decrease L3 L4 ZAXES)
+0: (move_angle_decrease L3 ZAXES)
+0: -----waiting---- [1.0]
+1.0: (propagate_move_angle_decrease L3 L4 ZAXES)
+1.0: (move_angle_decrease L3 ZAXES)
+1.0: -----waiting---- [2.0]
+2.0: (propagate_move_angle_decrease L3 L4 ZAXES)
+2.0: (move_angle_decrease L3 ZAXES)
+2.0: -----waiting---- [3.0]
+3.0: (back-to-360 L3 ZAXES)
 
-Plan-Length:5
+Plan-Length:11
 Elapsed Time: 3.0
 Metric (Search):4.0
-Planning Time (msec): 822
-Heuristic Time (msec): 14
-Search Time (msec): 186
+Planning Time (msec): 637
+Heuristic Time (msec): 89
+Search Time (msec): 183
 Expanded Nodes:7
 States Evaluated:20
 Fixed constraint violations during search (zero-crossing):0
 Number of Dead-Ends detected:0
 Number of Duplicates detected:2
-real 0.95
-user 0.70
-sys 0.04
+real 0.73
+user 0.72
+sys 0.05

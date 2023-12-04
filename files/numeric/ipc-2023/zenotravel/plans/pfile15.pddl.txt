@@ -1,0 +1,77 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 577
+Aibr Preprocessing
+|F|:315
+|X|:10
+|A|:3237
+|P|:0
+|E|:0
+H1 Setup Time (msec): 383
+Setting horizon to:NaN
+Running Greedy Best First Search
+Problem Solved
+
+Found Plan:
+0.0: (refuel plane1)
+1.0: (fly-slow plane1 city0 city10)
+2.0: (fly-slow plane3 city2 city11)
+3.0: (board person2 plane1 city10)
+4.0: (board person6 plane1 city10)
+5.0: (fly-slow plane1 city10 city11)
+6.0: (board person10 plane1 city11)
+7.0: (board person7 plane1 city11)
+8.0: (debark person6 plane1 city11)
+9.0: (fly-fast plane4 city9 city9)
+10.0: (fly-slow plane2 city3 city3)
+11.0: (fly-slow plane1 city11 city8)
+12.0: (board person8 plane1 city8)
+13.0: (board person13 plane1 city8)
+14.0: (board person1 plane1 city8)
+15.0: (refuel plane1)
+16.0: (fly-slow plane1 city8 city11)
+17.0: (debark person13 plane1 city11)
+18.0: (fly-slow plane1 city11 city5)
+19.0: (board person4 plane1 city5)
+20.0: (board person12 plane1 city5)
+21.0: (fly-slow plane1 city5 city6)
+22.0: (debark person4 plane1 city6)
+23.0: (refuel plane1)
+24.0: (fly-slow plane1 city6 city11)
+25.0: (debark person8 plane1 city11)
+26.0: (fly-slow plane1 city11 city9)
+27.0: (debark person10 plane1 city9)
+28.0: (refuel plane1)
+29.0: (fly-slow plane1 city9 city4)
+30.0: (board person11 plane1 city4)
+31.0: (debark person2 plane1 city4)
+32.0: (debark person12 plane1 city4)
+33.0: (fly-slow plane1 city4 city6)
+34.0: (debark person11 plane1 city6)
+35.0: (refuel plane1)
+36.0: (fly-slow plane1 city6 city2)
+37.0: (debark person7 plane1 city2)
+38.0: (fly-slow plane1 city2 city1)
+39.0: (board person15 plane1 city1)
+40.0: (board person5 plane1 city1)
+41.0: (debark person1 plane1 city1)
+42.0: (refuel plane1)
+43.0: (fly-slow plane1 city1 city6)
+44.0: (debark person15 plane1 city6)
+45.0: (fly-slow plane1 city6 city8)
+46.0: (debark person5 plane1 city8)
+
+Plan-Length:47
+Metric (Search):47.0
+Planning Time (msec): 8471
+Heuristic Time (msec): 3311
+Search Time (msec): 5016
+Expanded Nodes:87
+States Evaluated:2303
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:72
+Number of Duplicates detected:528
+real 8.63
+user 8.37
+sys 0.27

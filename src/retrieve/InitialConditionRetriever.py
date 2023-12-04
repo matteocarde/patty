@@ -8,6 +8,7 @@ from scipy.optimize import NonlinearConstraint, minimize, LinearConstraint, Opti
 from sympy import Expr, Symbol, lambdify, S, simplify
 from sympy.solvers.solveset import linear_coeffs, linear_eq_to_matrix
 
+from src.pddl.Atom import Atom
 from src.pddl.InitialCondition import InitialCondition
 from src.pddl.Literal import Literal
 from src.retrieve.InitialConditionSpace import InitialConditionSpace
@@ -22,39 +23,48 @@ class InitialConditionRetriever:
         self.domain = ics.domain
         self.ics = ics
 
+        self.varsToAtom: Dict[Symbol, Atom] = dict()
+
         self.obj: Expr = S(0)
         for (atom, value) in wIc.numericAssignments.items():
             var = self.ics.vg.getNode(0, atom).value
+            self.varsToAtom[var] = atom
             self.obj += (var - value) ** 2
         self.obj = simplify(self.obj)
+
         uniqueVars: Set[Symbol] = set()
         for c in self.conditions:
             uniqueVars |= c.free_symbols
         uniqueVars |= self.obj.free_symbols
+
         self.variables: [Symbol] = list(uniqueVars)
         self.x: List[Tuple[Symbol]] = [tuple(self.variables)]
+
+        self.x0: List[float] = []
+        for var in self.variables:
+            atom = self.varsToAtom[var]
+            self.x0.append(wIc.numericAssignments[atom])
 
         self.constraints = self.getConstraints()
         pass
 
-    def solve(self) -> InitialCondition:
+    def solve(self) -> (InitialCondition, float):
 
-        x0 = np.array([0 for x in self.variables])
+        # self.x0 = np.array([0 for x in self.variables])
         f = lambdify(self.x, self.obj, "numpy")
 
         options = {
             "maxiter": 10000,
             "factorization_method": "SVDFactorization",
-            "xtol": 0.01,
-            "initial_constr_penalty": 100,
+            # "gtol": 0.01,
+            "initial_constr_penalty": 1,
             "verbose": 2
         }
 
         # noinspection PyTypeChecker
-        solution: OptimizeResult = minimize(f, x0, method='trust-constr', constraints=self.constraints,
-                                            options=options, tol=1e-3)
+        solution: OptimizeResult = minimize(f, self.x0, method='trust-constr', constraints=self.constraints,
+                                            options=options, tol=1e-6)
 
-        print(f"DISTANCE: {solution.optimality}")
         if not solution.success:
             raise Exception(f"Minimize couldn't return a solution: {solution.message}")
 
@@ -86,7 +96,7 @@ class InitialConditionRetriever:
             value = value if value.is_constant() else 0
             init.addNumericAssignment(atom, value)
 
-        return init
+        return init, solution.fun
 
     def getConstraints(self):
         constraints = []

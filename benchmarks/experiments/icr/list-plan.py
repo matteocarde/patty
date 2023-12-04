@@ -44,8 +44,9 @@ def main():
             domainFile = f"files/{path}/domain.pddl"
             problemFile = f"files/{path}/instances/{problem}"
             planFile = f"files/{path}/plans/{problem}.txt"
-            if not os.path.exists(f"files/{path}/plans") or not os.path.exists(planFile):
-                instances.append([planner, name, domainFile, problemFile])
+            # if os.path.exists(f"files/{path}/plans") and os.path.exists(planFile):
+            #     continue
+            instances.append([planner, name, domainFile, problemFile])
 
     random.shuffle(instances)
     print(f"Listing {len(instances)} instances")

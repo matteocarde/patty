@@ -1,7 +1,7 @@
 Domain parsed
 Problem parsed
 Grounding..
-Grounding Time: 13
+Grounding Time: 15
 Aibr Preprocessing
 |F|:2
 |X|:3
@@ -22,23 +22,28 @@ Problem Solved
 Found Plan:
 0: (start_car)
 0: (accelerate)
+0: (moving)
+0: (displacement)
 0: -----waiting---- [1.0]
 1.0: (decelerate)
 1.0: (decelerate)
+1.0: (moving)
+1.0: (displacement)
 1.0: -----waiting---- [2.0]
+2.0: (idle)
 2.0: (stop_car)
 
-Plan-Length:8
+Plan-Length:12
 Elapsed Time: 2.0
 Metric (Search):7.0
-Planning Time (msec): 455
-Heuristic Time (msec): 68
-Search Time (msec): 83
+Planning Time (msec): 490
+Heuristic Time (msec): 10
+Search Time (msec): 28
 Expanded Nodes:10
 States Evaluated:15
 Fixed constraint violations during search (zero-crossing):0
 Number of Dead-Ends detected:0
 Number of Duplicates detected:8
-real 0.53
-user 0.48
+real 0.57
+user 0.54
 sys 0.06
