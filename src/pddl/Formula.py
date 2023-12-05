@@ -10,6 +10,7 @@ from sympy import Expr
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.Literal import Literal
+from src.pddl.PDDLWriter import PDDLWriter
 from src.pddl.Predicate import Predicate
 from src.pddl.Utilities import Utilities
 from src.pddl.grammar.pddlParser import pddlParser as p
@@ -154,3 +155,13 @@ class Formula:
             joinedF.conditions += f.conditions
         joinedF.type = type
         return joinedF
+
+    def toPDDL(self, pw: PDDLWriter = PDDLWriter()):
+        pw.increaseTab()
+        pw.write(f"({self.type.lower()}")
+        pw.increaseTab()
+        for c in self.conditions:
+            c.toPDDL(pw)
+        pw.decreaseTab()
+        pw.write(")")
+        pw.decreaseTab()

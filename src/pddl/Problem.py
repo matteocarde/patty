@@ -1,9 +1,12 @@
 from __future__ import annotations
+
+import copy
 from typing import Dict, List, Set
 
 from prettytable import PrettyTable
 
 from src.pddl.Atom import Atom
+from src.pddl.PDDLWriter import PDDLWriter
 from src.pddl.Predicate import Predicate
 from src.pddl.InitialCondition import InitialCondition
 from src.pddl.Goal import Goal
@@ -25,6 +28,19 @@ class Problem:
         self.predicates: Set[Atom] = set()
         self.functions: Set[Atom] = set()
         self.objectsByType = dict()
+
+    def __deepcopy__(self, m):
+        cp = Problem()
+        cp.name = self.name
+        cp.domainName = self.domainName
+        cp.objectsByType = copy.deepcopy(self.objectsByType, m)
+        cp.init = copy.deepcopy(self.init, m)
+        cp.goal = copy.deepcopy(self.goal, m)
+        cp.metric = copy.deepcopy(self.metric, m)
+        cp.allAtoms = copy.deepcopy(self.allAtoms, m)
+        cp.predicates = copy.deepcopy(self.predicates, m)
+        cp.functions = copy.deepcopy(self.functions, m)
+        return cp
 
     @classmethod
     def fromNode(cls, node: pddlParser.ProblemContext) -> Problem:
@@ -119,3 +135,37 @@ class Problem:
             print(pt)
 
         return distance
+
+    def toPDDL(self, pw: PDDLWriter = PDDLWriter()):
+        pw.write(f"(define (problem {self.name})")
+        pw.increaseTab()
+        pw.write(f"(:domain {self.domainName})")
+
+        # Constants
+        pw.write(f"(:objects")
+        pw.increaseTab()
+        for (type, objects) in self.objectsByType.items():
+            objStr = " ".join(objects)
+            pw.write(f"{objStr} - {type}")
+        pw.decreaseTab()
+        pw.write(f")")
+
+        # Init
+        pw.write(f"(:init")
+        pw.increaseTab()
+        for a in self.init.assignments:
+            a.toPDDL(pw)
+        pw.decreaseTab()
+        pw.write(f")")
+
+        # Goal
+        pw.write(f"(:goal")
+        pw.increaseTab()
+        self.goal.toPDDL(pw)
+        pw.decreaseTab()
+        pw.write(f")")
+
+        pw.decreaseTab()
+        pw.write(f")")
+
+        return pw

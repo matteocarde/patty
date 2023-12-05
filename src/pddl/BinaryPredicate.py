@@ -123,6 +123,8 @@ class BinaryPredicate(Predicate):
         return self.__functions
 
     def __str__(self):
+        if self.operator == "!=":
+            return f"(not (= {self.lhs} {self.rhs}))"
         return f"({self.operator} {self.lhs} {self.rhs})"
 
     def __repr__(self):

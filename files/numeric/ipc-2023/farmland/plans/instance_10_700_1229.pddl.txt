@@ -1,22 +1,24 @@
-! ====== ! Warning: Unknown planner configuration. Going with default: gbfs with hadd ! ====== !
 Domain parsed
 Problem parsed
 Grounding..
-Grounding Time: 78
+Grounding Time: 16
 Aibr Preprocessing
 |F|:0
 |X|:10
 |A|:52
 |P|:0
 |E|:0
-H1 Setup Time (msec): 10
+H1 Setup Time (msec): 6
+Wrong setting for break-ties. Arbitrary tie breaking
 Setting horizon to:NaN
+Helpful Action Pruning Activated
 Running Greedy Best First Search
+JUMP for (move-slow farm1 farm0):393
 Problem Solved
 
 Found Plan:
-0.0: (move-slow farm6 farm7)
-1.0: (move-slow farm7 farm8)
+0.0: (move-slow farm1 farm0)
+1.0: (move-slow farm1 farm0)
 2.0: (move-slow farm1 farm0)
 3.0: (move-slow farm1 farm0)
 4.0: (move-slow farm1 farm0)
@@ -408,31 +410,32 @@ Found Plan:
 390.0: (move-slow farm1 farm0)
 391.0: (move-slow farm1 farm0)
 392.0: (move-slow farm1 farm0)
-393.0: (move-slow farm1 farm0)
-394.0: (move-slow farm1 farm2)
-395.0: (move-slow farm2 farm3)
-396.0: (move-slow farm1 farm2)
+393.0: (move-slow farm1 farm2)
+394.0: (move-slow farm2 farm3)
+395.0: (move-slow farm1 farm2)
+396.0: (move-slow farm6 farm7)
 397.0: (move-slow farm1 farm6)
-398.0: (move-slow farm6 farm7)
-399.0: (move-slow farm1 farm6)
-400.0: (move-slow farm3 farm4)
-401.0: (move-slow farm2 farm3)
-402.0: (move-slow farm1 farm2)
-403.0: (move-slow farm8 farm9)
-404.0: (move-slow farm7 farm8)
-405.0: (move-slow farm6 farm7)
-406.0: (move-slow farm1 farm6)
+398.0: (move-slow farm7 farm8)
+399.0: (move-slow farm2 farm7)
+400.0: (move-slow farm1 farm2)
+401.0: (move-slow farm3 farm4)
+402.0: (move-slow farm2 farm3)
+403.0: (move-slow farm1 farm2)
+404.0: (move-slow farm8 farm9)
+405.0: (move-slow farm7 farm8)
+406.0: (move-slow farm6 farm7)
+407.0: (move-fast farm1 farm6)
 
-Plan-Length:407
-Metric (Search):407.0
-Planning Time (msec): 1637
-Heuristic Time (msec): 862
-Search Time (msec): 1090
-Expanded Nodes:451
-States Evaluated:6298
+Plan-Length:408
+Metric (Search):408.0
+Planning Time (msec): 646
+Heuristic Time (msec): 88
+Search Time (msec): 103
+Expanded Nodes:24
+States Evaluated:70
 Fixed constraint violations during search (zero-crossing):0
 Number of Dead-Ends detected:0
-Number of Duplicates detected:1145
-real 1.82
-user 1.74
-sys 0.08
+Number of Duplicates detected:28
+real 0.73
+user 0.56
+sys 0.03

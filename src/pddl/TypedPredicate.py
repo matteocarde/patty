@@ -1,6 +1,7 @@
 from __future__ import annotations
 from typing import Dict, Tuple, List
 
+from src.pddl.PDDLWriter import PDDLWriter
 from src.pddl.Predicate import Predicate
 from src.pddl.Type import Type
 from src.pddl.Utilities import Utilities
@@ -44,3 +45,8 @@ class TypedPredicate(Predicate):
     @classmethod
     def fromString(cls, string: str, types: Dict[str, Type]):
         return cls.fromNode(Utilities.getParseTree(string).typedPositiveLiteral(), types)
+
+    def toPDDL(self, pw: PDDLWriter = PDDLWriter()):
+        parameters = " ".join([f"{p.name} - {p.type.name}" for p in self.parameters])
+        pw.write(f"({self.name} {parameters})")
+        pass

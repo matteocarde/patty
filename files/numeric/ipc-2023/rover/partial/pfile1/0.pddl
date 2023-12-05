@@ -1,0 +1,21 @@
+(define (problem roverprob1234)
+	(:domain rover)
+	(:objects
+		general - lander
+		colour high_res low_res - mode
+		rover0 - rover
+		rover0store - store
+		waypoint0 waypoint1 waypoint2 waypoint3 - waypoint
+		camera0 - camera
+		objective0 objective1 - objective
+	)
+	(:init
+	)
+	(:goal
+			(and
+				(communicated_soil_data waypoint2)
+				(communicated_rock_data waypoint3)
+				(communicated_image_data objective1 high_res)
+			)
+	)
+)

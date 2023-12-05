@@ -1,4 +1,3 @@
-! ====== ! Warning: Unknown planner configuration. Going with default: gbfs with hadd ! ====== !
 Domain parsed
 Problem parsed
 Grounding..
@@ -10,12 +9,15 @@ Aibr Preprocessing
 |P|:0
 |E|:0
 H1 Setup Time (msec): 8
+Wrong setting for break-ties. Arbitrary tie breaking
 Setting horizon to:NaN
+Helpful Action Pruning Activated
 Running Greedy Best First Search
+JUMP for (move-slow farm1 farm5):84
 Problem Solved
 
 Found Plan:
-0.0: (move-slow farm1 farm2)
+0.0: (move-slow farm1 farm5)
 1.0: (move-slow farm1 farm5)
 2.0: (move-slow farm1 farm5)
 3.0: (move-slow farm1 farm5)
@@ -99,24 +101,24 @@ Found Plan:
 81.0: (move-slow farm1 farm5)
 82.0: (move-slow farm1 farm5)
 83.0: (move-slow farm1 farm5)
-84.0: (move-slow farm6 farm7)
-85.0: (move-slow farm2 farm3)
-86.0: (move-slow farm1 farm2)
-87.0: (move-slow farm5 farm4)
-88.0: (move-slow farm1 farm5)
+84.0: (move-slow farm1 farm2)
+85.0: (move-slow farm5 farm4)
+86.0: (move-slow farm2 farm3)
+87.0: (move-slow farm1 farm2)
+88.0: (move-slow farm6 farm7)
 89.0: (move-slow farm5 farm6)
 90.0: (move-slow farm1 farm2)
 
 Plan-Length:91
 Metric (Search):91.0
-Planning Time (msec): 909
-Heuristic Time (msec): 186
-Search Time (msec): 399
-Expanded Nodes:92
-States Evaluated:1636
+Planning Time (msec): 594
+Heuristic Time (msec): 64
+Search Time (msec): 89
+Expanded Nodes:10
+States Evaluated:42
 Fixed constraint violations during search (zero-crossing):0
 Number of Dead-Ends detected:0
-Number of Duplicates detected:179
-real 1.08
-user 0.99
-sys 0.07
+Number of Duplicates detected:5
+real 0.70
+user 0.66
+sys 0.04

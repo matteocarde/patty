@@ -1,4 +1,3 @@
-! ====== ! Warning: Unknown planner configuration. Going with default: gbfs with hadd ! ====== !
 Domain parsed
 Problem parsed
 Grounding..
@@ -9,29 +8,31 @@ Aibr Preprocessing
 |A|:8
 |P|:0
 |E|:0
-H1 Setup Time (msec): 7
+H1 Setup Time (msec): 67
+Wrong setting for break-ties. Arbitrary tie breaking
 Setting horizon to:NaN
+Helpful Action Pruning Activated
 Running Greedy Best First Search
 Problem Solved
 
 Found Plan:
 0.0: (increment c3)
-1.0: (increment c3)
-2.0: (increment c2)
-3.0: (increment c3)
+1.0: (increment c2)
+2.0: (increment c3)
+3.0: (increment c1)
 4.0: (increment c2)
-5.0: (increment c1)
+5.0: (increment c3)
 
 Plan-Length:6
 Metric (Search):6.0
-Planning Time (msec): 497
-Heuristic Time (msec): 4
-Search Time (msec): 11
+Planning Time (msec): 495
+Heuristic Time (msec): 2
+Search Time (msec): 9
 Expanded Nodes:8
-States Evaluated:28
+States Evaluated:11
 Fixed constraint violations during search (zero-crossing):0
 Number of Dead-Ends detected:0
-Number of Duplicates detected:11
-real 0.57
-user 0.44
-sys 0.02
+Number of Duplicates detected:5
+real 0.64
+user 0.42
+sys 0.04

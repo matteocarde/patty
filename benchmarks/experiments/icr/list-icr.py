@@ -28,6 +28,8 @@ DOMAINS = {
     "UTC": "hybrid/UTC",
 }
 
+KINDS = [("partial", "PARTIAL"), ("noise", "NOISE")]
+
 
 def main():
     instances = list()
@@ -40,14 +42,22 @@ def main():
 
             if plan[-4:] != ".txt":
                 continue
+            probName = plan[:-9]
             domainFile = f"files/{path}/domain.pddl"
-            problemFile = f"files/{path}/instances/{plan[:-9]}.pddl"
-            cProblemFile = f"files/{path}/instances/{plan[:-9]}.pddl"
+            problemFile = f"files/{path}/instances/{probName}.pddl"
+            cProblemFile = f"files/{path}/instances/{probName}.pddl"
             traceFile = f"files/{path}/plans/{plan}"
             # CORRECT: Repair correct init condition
             # PARTIAL: Repair partial correct init condition
             # NOISE: Repair noisy initial condition
             instances.append(["TOTAL", name, domainFile, problemFile, traceFile, cProblemFile])
+
+            for (folder, kind) in KINDS:
+                if os.path.exists(f"files/{path}/{folder}") and os.path.exists(f"files/{path}/{folder}/{probName}"):
+                    kindList = natsort.natsorted(os.listdir(f"files/{path}/{folder}/{probName}"))
+                    for p in kindList:
+                        partialFile = f"files/{path}/{folder}/{probName}/{p}"
+                        instances.append([kind, name, domainFile, partialFile, traceFile, cProblemFile])
 
     random.shuffle(instances)
     print(f"Listing {len(instances)} instances")

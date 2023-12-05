@@ -11,6 +11,8 @@ class ICRArguments:
         parser.add_argument('-f', '--problem', dest='problem', help='The .pddl problem file', required=True)
         parser.add_argument('-t', '--trace', dest='trace', help='The .txt trace file', required=True)
         parser.add_argument('-c', '--correct', dest='correct', help='The .pddl correct problem file')
+        parser.add_argument('-tol', '--tolerance', dest='tolerance', help='The tolerance when searching for a solution',
+                            default=0.5)
 
         args = parser.parse_args()
         self.isHelp = "help" in args
@@ -18,3 +20,4 @@ class ICRArguments:
         self.problem = args.problem
         self.trace = args.trace
         self.correctProblem = args.correct
+        self.tolerance = float(args.tolerance)

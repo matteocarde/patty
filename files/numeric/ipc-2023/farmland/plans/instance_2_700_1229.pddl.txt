@@ -1,17 +1,19 @@
-! ====== ! Warning: Unknown planner configuration. Going with default: gbfs with hadd ! ====== !
 Domain parsed
 Problem parsed
 Grounding..
-Grounding Time: 80
+Grounding Time: 21
 Aibr Preprocessing
 |F|:0
 |X|:2
 |A|:4
 |P|:0
 |E|:0
-H1 Setup Time (msec): 6
+H1 Setup Time (msec): 51
+Wrong setting for break-ties. Arbitrary tie breaking
 Setting horizon to:NaN
+Helpful Action Pruning Activated
 Running Greedy Best First Search
+JUMP for (move-slow farm0 farm1):398
 Problem Solved
 
 Found Plan:
@@ -416,14 +418,14 @@ Found Plan:
 
 Plan-Length:398
 Metric (Search):398.0
-Planning Time (msec): 612
-Heuristic Time (msec): 83
-Search Time (msec): 186
-Expanded Nodes:399
-States Evaluated:800
+Planning Time (msec): 482
+Heuristic Time (msec): 0
+Search Time (msec): 9
+Expanded Nodes:2
+States Evaluated:2
 Fixed constraint violations during search (zero-crossing):0
 Number of Dead-Ends detected:0
-Number of Duplicates detected:789
-real 0.78
-user 0.57
-sys 0.05
+Number of Duplicates detected:0
+real 0.65
+user 0.58
+sys 0.04

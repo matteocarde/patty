@@ -1,4 +1,8 @@
 from __future__ import annotations
+
+import copy
+import math
+import random
 from typing import List, Dict, Set
 
 from src.pddl.Atom import Atom
@@ -21,6 +25,31 @@ class InitialCondition:
         self.assignments = []
         self.numericAssignments = dict()
 
+    @classmethod
+    def partialize(cls, init: InitialCondition, ratio: float) -> InitialCondition:
+        partial = copy.deepcopy(init)
+        random.shuffle(partial.assignments)
+        amount = math.floor(len(partial.assignments) * ratio)
+        partial.assignments = partial.assignments[:amount]
+
+        return partial
+
+    @classmethod
+    def noise(cls, init, amount):
+        noise: InitialCondition = InitialCondition()
+        for p in init.assignments:
+            if isinstance(p, Literal):
+                noise.assignments.append(p)
+
+            if isinstance(p, BinaryPredicate):
+                n = copy.deepcopy(p)
+                if not isinstance(n.rhs, Constant):
+                    raise Exception("Right hand side should be consant")
+                n.rhs.value = n.rhs.value + random.randrange(-amount, amount)
+                noise.assignments.append(n)
+
+        return noise
+
     def __str__(self):
         return str(self.assignments)
 
@@ -29,6 +58,15 @@ class InitialCondition:
 
     def __iter__(self):
         return iter(self.assignments)
+
+    def __deepcopy__(self, m):
+        cp = InitialCondition()
+        cp.allAtoms = copy.deepcopy(self.allAtoms, m)
+        cp.predicates = copy.deepcopy(self.predicates, m)
+        cp.functions = copy.deepcopy(self.functions, m)
+        cp.assignments = copy.deepcopy(self.assignments, m)
+        cp.numericAssignments = copy.deepcopy(self.numericAssignments, m)
+        return cp
 
     @classmethod
     def fromNode(cls, node: pddlParser.InitContext) -> InitialCondition:

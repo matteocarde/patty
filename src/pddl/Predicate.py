@@ -4,6 +4,7 @@ from sympy import Expr
 from typing import Dict, Set
 
 from src.pddl.Atom import Atom
+from src.pddl.PDDLWriter import PDDLWriter
 
 
 class Predicate:
@@ -82,3 +83,6 @@ class Predicate:
 
     def toExpression(self) -> Expr or float:
         raise NotImplemented()
+
+    def toPDDL(self, pw: PDDLWriter = PDDLWriter()):
+        pw.write(str(self))

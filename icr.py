@@ -36,7 +36,7 @@ def main():
 
         print("Solving ICR")
         icr = InitialConditionRetriever(ics, problem.init)
-        initSolution, optimum = icr.solve()
+        initSolution, optimum = icr.solve(tol=args.tolerance)
 
         ts.end("Initial Condition Retrieve")
 

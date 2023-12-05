@@ -1,0 +1,40 @@
+(define (problem mprime-x-5)
+	(:domain mystery-prime-typed)
+	(:objects
+		broccoli chocolate turkey tuna sweetroll shrimp cherry scallop - food
+		satisfaction excitement intoxication lubricity - pleasure
+		sciatica anxiety grief boils depression abrasion prostatitis angina jealousy laceration anger grief-2 dread loneliness hangover - pain
+	)
+	(:init
+		(eats sweetroll scallop)
+		(= (locale tuna) 3.0)
+		(= (locale sweetroll) 0.0)
+		(= (locale scallop) 0.0)
+		(= (harmony excitement) 3.0)
+		(eats cherry scallop)
+		(= (locale shrimp) 1.0)
+		(eats shrimp sweetroll)
+		(craves lubricity sweetroll)
+		(craves excitement turkey)
+		(craves sciatica broccoli)
+		(eats chocolate shrimp)
+		(craves grief-2 scallop)
+		(eats broccoli tuna)
+		(eats scallop cherry)
+		(craves boils broccoli)
+		(craves anxiety broccoli)
+		(craves abrasion turkey)
+		(eats tuna turkey)
+		(= (locale cherry) 1.0)
+		(eats turkey chocolate)
+		(eats scallop sweetroll)
+		(craves prostatitis turkey)
+		(craves dread scallop)
+	)
+	(:goal
+			(and
+				(craves loneliness shrimp)
+				(craves grief shrimp)
+			)
+	)
+)

@@ -42,18 +42,20 @@ class InitialConditionRetriever:
 
         self.x0: List[float] = []
         for var in self.variables:
-            atom = self.varsToAtom[var]
-            self.x0.append(wIc.numericAssignments[atom])
+            if var in self.varsToAtom:
+                atom = self.varsToAtom[var]
+                self.x0.append(wIc.numericAssignments[atom])
+            else:
+                self.x0.append(randrange(0, 100))
 
         self.constraints = self.getConstraints()
         pass
 
-    def solve(self) -> (InitialCondition, float):
+    def solve(self, tol=0.5) -> (InitialCondition, float):
 
         # self.x0 = np.array([0 for x in self.variables])
         f = lambdify(self.x, self.obj, "numpy")
 
-        tol = 0.5
         options = {
             "maxiter": 10000,
             "factorization_method": "SVDFactorization",
