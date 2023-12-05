@@ -10,11 +10,11 @@ from src.retrieve.InitialConditionRetriever import InitialConditionRetriever
 from src.retrieve.InitialConditionSpace import InitialConditionSpace
 
 
-class TestDescent(TestCase):
+class TestZenoTravel(TestCase):
 
     def setUp(self) -> None:
-        folder = "../../files/hybrid/Descent"
-        problem = "prob_earth01"
+        folder = "../../files/numeric/ipc-2023/zenotravel"
+        problem = "/pfile13"
         self.domain: Domain = Domain.fromFile(f"{folder}/domain.pddl")
         self.problem: Problem = Problem.fromFile(f"{folder}/instances/{problem}.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem, avoidSimplification=True)
@@ -29,9 +29,6 @@ class TestDescent(TestCase):
         self.assertIsInstance(self.domain, Domain)
         self.assertIsInstance(self.problem, Problem)
         self.assertIsInstance(self.gDomain, GroundedDomain)
-
-    def test_condition(self):
-        self.assertTrue(self.ics.checkInitialCondition(self.problem.init))
 
     def test_solve(self):
         icr = InitialConditionRetriever(self.ics, self.problem.init)

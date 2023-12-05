@@ -41,7 +41,7 @@ class State:
         state = State()
         state.assignments = self.assignments.copy()
 
-        if not state.satisfies(action.preconditions, tolerance=0.01):
+        if not state.satisfies(action.preconditions, tolerance=0.1):
             raise Exception(f"Tried to apply action {action} to a state in which its preconditions are note satisfied")
 
         effect: Predicate

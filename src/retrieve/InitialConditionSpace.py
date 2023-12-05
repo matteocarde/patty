@@ -76,8 +76,8 @@ class InitialConditionSpace:
 
         for eff in h.effects:
             if isinstance(eff, Literal) and eff.getAtom() not in atomsInPre:
-                atom = eff.getAtom()
-                self.vg.getNode(i, atom).setValue(S(0))
+                eAtom = eff.getAtom()
+                self.vg.getNode(i, eAtom).setValue(S(0))
 
     def setEffXis(self, h: Operation, i: int) -> [Expr]:
         for eff in h.effects:
@@ -159,7 +159,7 @@ class InitialConditionSpace:
         for c in self.conditions:
             res = c.subs(sub)
             if c.is_Relational and not res:
-                print(c, res)
+                print(c, res, c.lhs.subs(sub), c.rel_op, c.rhs.subs(sub))
                 return False
             elif not c.is_Relational and res != 0:
                 print(c, res)

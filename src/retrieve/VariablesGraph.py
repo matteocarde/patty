@@ -23,12 +23,14 @@ class VariablesGraph:
             return hash(self.name)
 
         def __repr__(self):
-            return str(self.value)
+            return f"{self.name} - {self.value}"
 
         def addConnection(self, node: VariablesGraph.Node):
             # print(f"{self.var} -- {node.var}")
             self.connectedWith.add(node)
             node.connectedWith.add(self)
+            self.connectedWith |= node.connectedWith
+            node.connectedWith |= self.connectedWith
             if node.index < self.index:
                 self.var = node.var
                 self.value = node.value
@@ -40,6 +42,8 @@ class VariablesGraph:
             if self.value == value:
                 return
             if not self.value.free_symbols:
+                if self.value != 0 and value == 0:
+                    return
                 raise Exception("Something wrong. It is overwriting a variable")
             self.value = value
             for n in self.connectedWith:

@@ -114,7 +114,7 @@ def main():
         DOMAINS_BY_KIND[kind] = DOMAINS_BY_KIND.setdefault(kind, [])
         DOMAINS_BY_KIND[kind].append(dom)
 
-    filename = "2023-12-04-ICR-TOTAL-v3.csv"
+    filename = "2023-12-04-ICR-TOTAL-v4.csv"
     file = f"benchmarks/results/{filename}"
 
     exp = filename.replace(".csv", "")
@@ -146,17 +146,24 @@ def main():
 
     pass
 
-    COLUMNS = {
+    DOMAIN_INFOS_COLUMNS = {
         "nOfAtoms": "$|V_b \cup V_n|$",
         "traceLength": "$|\mathcal{T}|$",
         "nOfConditions": "$|\mathcal{I}(\mathcal{T}, G)|$",
+    }
+    COLUMNS = {
+        # "nOfAtoms": "$|V_b \cup V_n|$",
+        # "traceLength": "$|\mathcal{T}|$",
+        # "nOfConditions": "$|\mathcal{I}(\mathcal{T}, G)|$",
         "coverage": "Cov. (\%)",
         "time": "Time (s)",
         "dCW": "$||I - I_\star||$",
     }
 
     table: Dict[str, Dict[str, Dict[str, float or str]]] = dict()
+    domainInfos: Dict[str, Dict[str, float or str]] = dict()
     for domain in DOMAINS:
+        domainInfos[domain] = dict()
         for experiment in EXPERIMENTS:
             if domain not in rDict[experiment]:
                 continue
@@ -175,9 +182,9 @@ def main():
             row["time"] = rString(time / 1000, 2) if coverage > 0 else "-"
             # row["dRW"] = rString(dRW, 2) if coverage > 0 else "-"
             row["dCW"] = rString(dCW, 2) if coverage > 0 else "-"
-            row["nOfAtoms"] = rString(nOfAtoms, 2) if coverage > 0 else "-"
-            row["traceLength"] = rString(traceLength, 2) if coverage > 0 else "-"
-            row["nOfConditions"] = rString(nOfConditions, 2) if coverage > 0 else "-"
+            domainInfos[domain]["nOfAtoms"] = rString(nOfAtoms, 2) if coverage > 0 else "-"
+            domainInfos[domain]["traceLength"] = rString(traceLength, 2) if coverage > 0 else "-"
+            domainInfos[domain]["nOfConditions"] = rString(nOfConditions, 2) if coverage > 0 else "-"
 
     latex = list()
     latex.append(r"""
@@ -193,20 +200,21 @@ def main():
         \resizebox{\textwidth}{!}{""")
 
     nOfColumns = len(COLUMNS.values())
-    cArray = ["l"] + ["|c" * nOfColumns for e in EXPERIMENTS]
+    cArray = ["l|ccc|"] + ["c" * nOfColumns for e in EXPERIMENTS]
     latex.append(r"\begin{tabular}{|" + ''.join(cArray) + "|}")
 
     latex.append(r"\hline")
-    latex.append(fr"Domain & " + "&".join([c for c in COLUMNS.values() for e in EXPERIMENTS]) + r"\\")
+    latex.append(fr"Domain & " + "&".join(text for (key, text) in DOMAIN_INFOS_COLUMNS.items()) + "&" + "&".join(
+        [c for c in COLUMNS.values() for e in EXPERIMENTS]) + r"\\")
 
     # latex.append(r"\hline")
     for (kind, domains) in DOMAINS_BY_KIND.items():
         latex.append(r"\hline")
-        empty = "".join(["&" for c in COLUMNS.values() for e in EXPERIMENTS])
-        latex.append(r"\textsc{" + kind + "}" + empty + r"\\")
-        latex.append(r"\hline")
+        empty = "".join(["&" for c in COLUMNS.values() for e in EXPERIMENTS] + ["&" for x in DOMAIN_INFOS_COLUMNS])
+        latex.append(r"\textbf{" + kind + "}" + empty + r"\\")
+        # latex.append(r"\hline")
         for d in domains:
-            row = [DOMAINS[d]["text"]]
+            row = [DOMAINS[d]["text"]] + [domainInfos[d][key] for (key, text) in DOMAIN_INFOS_COLUMNS.items()]
             for e in EXPERIMENTS:
                 for c in COLUMNS.keys():
                     v = table[d][e][c] if d in table else "N/D"

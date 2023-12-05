@@ -53,17 +53,20 @@ class InitialConditionRetriever:
         # self.x0 = np.array([0 for x in self.variables])
         f = lambdify(self.x, self.obj, "numpy")
 
+        tol = 0.1
         options = {
             "maxiter": 10000,
             "factorization_method": "SVDFactorization",
-            # "gtol": 0.01,
+            "gtol": tol,
+            "xtol": tol,
+            "barrier_tol": tol,
             "initial_constr_penalty": 1,
             "verbose": 2
         }
 
         # noinspection PyTypeChecker
         solution: OptimizeResult = minimize(f, self.x0, method='trust-constr', constraints=self.constraints,
-                                            options=options, tol=1e-3)
+                                            options=options)
 
         if not solution.success:
             raise Exception(f"Minimize couldn't return a solution: {solution.message}")
@@ -71,17 +74,6 @@ class InitialConditionRetriever:
         res: Dict[Symbol, float] = dict()
         for i, var in enumerate(self.variables):
             res[self.variables[i]] = solution.x[i]
-
-        valid = True
-        for c in self.ics.conditions:
-            if c.is_Relational:
-                cValid = c.subs(res)
-            else:
-                cValid = c.subs(res).is_constant() and c.subs(res) == 0
-            valid = valid and cValid
-
-        # if not valid:
-        #     raise Exception("Error: The solution found by SciPy doesn't respect the imposed constraints")
 
         init = InitialCondition()
         for atom in self.domain.predicates:

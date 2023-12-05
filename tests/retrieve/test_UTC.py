@@ -14,12 +14,12 @@ class TestUTC(TestCase):
 
     def setUp(self) -> None:
         folder = "../../files/hybrid/UTC"
-        problem = "problem"
+        problem = "problem_2"
         self.domain: Domain = Domain.fromFile(f"{folder}/domain.pddl")
         self.problem: Problem = Problem.fromFile(f"{folder}/instances/{problem}.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem, avoidSimplification=True)
 
-        self.trace: Trace = Trace.fromFile(f"{folder}/plans/{problem}.txt", self.gDomain)
+        self.trace: Trace = Trace.fromENHSP(f"{folder}/plans/{problem}.pddl.txt", self.gDomain)
 
         self.ics: InitialConditionSpace = InitialConditionSpace(self.trace, self.problem, self.gDomain)
 
@@ -30,9 +30,12 @@ class TestUTC(TestCase):
         self.assertIsInstance(self.problem, Problem)
         self.assertIsInstance(self.gDomain, GroundedDomain)
 
+    def test_condition(self):
+        self.assertTrue(self.ics.checkInitialCondition(self.problem.init))
+
     def test_solve(self):
-        icr = InitialConditionRetriever(self.ics)
-        init: InitialCondition = icr.solve()
+        icr = InitialConditionRetriever(self.ics, self.problem.init)
+        (init, obj) = icr.solve()
 
         finalState: State = self.trace.apply(init)
 
