@@ -15,19 +15,17 @@ DOMAINS = {
     "fo_counters": "numeric/ipc-2023/fo_counters",
     "hydropower": "numeric/ipc-2023/hydropower",
     "mprime": "numeric/ipc-2023/mprime",
-    "pathwaysmetric": "numeric/ipc-2023/pathwaysmetric",
     "rover": "numeric/ipc-2023/rover",
     "sailing": "numeric/ipc-2023/sailing",
-    "satellite": "numeric/ipc-2023/satellite",
     "sugar": "numeric/ipc-2023/sugar",
-    "tpp": "numeric/ipc-2023/tpp",
+    "zenotravel": "numeric/ipc-2023/zenotravel",
     "Baxter": "hybrid/Baxter",
     "Descent": "hybrid/Descent",
     "HVAC": "hybrid/HVAC",
     "Linear-Car": "hybrid/Linear-Car",
     "Linear-Car-2": "hybrid/Linear-Car-2",
+    "Solar-Rover": "hybrid/Solar-Rover",
     "UTC": "hybrid/UTC",
-    "UTC2": "hybrid/UTC2",
 }
 
 

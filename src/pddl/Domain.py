@@ -59,6 +59,8 @@ class Domain:
 
         gDomain = GroundedDomain(self.name, gActions, gEvents, gProcess)
         gDomain.allAtoms |= problem.allAtoms
+        gDomain.functions |= problem.functions
+        gDomain.predicates |= problem.predicates
 
         if avoidSimplification:
             return gDomain

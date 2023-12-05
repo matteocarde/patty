@@ -13,11 +13,11 @@
 		(has-resource ?r - raw-cane ?m - mill)
 		(produce ?m - mill ?b - brand)
 		(current-process ?m - mill ?b - brand)
-		(change-process ?b1 ?b2 - brand)
+		(change-process ?b1 - brand ?b2 - brand)
 		(place-order ?r - raw-cane ?m - mill)
 		(transport-to ?r - raw-cane ?m - mill)
 		(at-location ?d - loader ?l - location)
-		(connected ?l1 ?l2 - location)
+		(connected ?l1 - location ?l2 - location)
 		(busy ?m - mill)
 		(ready-crane ?c - crane)
 		(service-crane ?c - crane)
@@ -33,7 +33,7 @@
 		(in-truck-sugar ?b - brand ?t - truck)
 		(in-storage ?m - location ?b - brand)
 		(total-distance)
-		(distance ?l1 ?l2 - location)
+		(distance ?l1 - location ?l2 - location)
 		(has-resource ?r - raw-cane ?m - mill)
 		(max-changing ?m - mill)
 		(inventory-cost)
@@ -135,7 +135,7 @@
 	)
 
 	(:action sugar-cane-mills
-		:parameters (?r - raw-cane ?m1 ?m2 - mill)
+		:parameters (?r - raw-cane ?m1 - mill ?m2 - mill)
 		:precondition (and
 			(place-order ?r ?m1)
 			(>(has-resource ?r ?m2)0)
@@ -209,7 +209,7 @@
 	)
 
 	(:action drive_truck
-		:parameters (?t - truck ?y1 ?y2 - location)
+		:parameters (?t - truck ?y1 - location ?y2 - location)
 		:precondition (and
 			(at-location ?t ?y1)
 			(connected ?y1 ?y2)

@@ -22,6 +22,8 @@ class Problem:
 
     def __init__(self):
         self.allAtoms: Set[Atom] = set()
+        self.predicates: Set[Atom] = set()
+        self.functions: Set[Atom] = set()
         self.objectsByType = dict()
 
     @classmethod
@@ -41,6 +43,8 @@ class Problem:
             if isinstance(node, pddlParser.MetricContext):
                 problem.__setMetric(node)
 
+        problem.functions = problem.init.functions
+        problem.predicates = problem.init.predicates
         problem.allAtoms = problem.init.allAtoms
 
         return problem

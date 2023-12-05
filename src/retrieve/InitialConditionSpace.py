@@ -1,12 +1,13 @@
 import sys
 from typing import Dict, List
 
-from sympy import Expr, symbols, S
+from sympy import Expr, symbols, S, Symbol, expand
 
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.Domain import GroundedDomain
 from src.pddl.Goal import Goal
+from src.pddl.InitialCondition import InitialCondition
 from src.pddl.Literal import Literal
 from src.pddl.Operation import Operation
 from src.pddl.Problem import Problem
@@ -84,6 +85,8 @@ class InitialConditionSpace:
                 Xi = self.vg.getXi(i)
                 atom = eff.lhs.getAtom()
                 rhs = eff.rhs.expressify(Xi)
+                if rhs.is_Mul:
+                    rhs = expand(rhs)
                 rhsXi = None
                 if eff.operator == "increase":
                     rhsXi = Xi[atom] + rhs
@@ -147,3 +150,19 @@ class InitialConditionSpace:
                         if c.free_symbols:
                             conditions.append(c)
         return conditions
+
+    def checkInitialCondition(self, init: InitialCondition):
+        sub: Dict[Symbol, float] = dict()
+        for (atom, value) in init.numericAssignments.items():
+            sub[self.vg.getNode(0, atom).var] = value
+
+        for c in self.conditions:
+            res = c.subs(sub)
+            if c.is_Relational and not res:
+                print(c, res)
+                return False
+            elif not c.is_Relational and res != 0:
+                print(c, res)
+                return False
+
+        return True

@@ -16,6 +16,8 @@ class InitialCondition:
 
     def __init__(self):
         self.allAtoms: Set[Atom] = set()
+        self.predicates: Set[Atom] = set()
+        self.functions: Set[Atom] = set()
         self.assignments = []
         self.numericAssignments = dict()
 
@@ -36,6 +38,7 @@ class InitialCondition:
             if isinstance(child, pddlParser.PositiveLiteralContext):
                 lit = Literal.fromNode(child)
                 ic.allAtoms.add(lit.getAtom())
+                ic.predicates.add(lit.getAtom())
                 ic.assignments.append(lit)
             if isinstance(child, pddlParser.AssignmentContext):
                 assignment = BinaryPredicate.fromNode(child)
@@ -44,6 +47,7 @@ class InitialCondition:
                     raise Exception(
                         "At the moment, this tool only support initial conditions with numeric constant assignments")
                 ic.allAtoms.add(assignment.getAtom())
+                ic.functions.add(assignment.getAtom())
                 ic.numericAssignments[assignment.getAtom()] = assignment.rhs.value
 
         return ic

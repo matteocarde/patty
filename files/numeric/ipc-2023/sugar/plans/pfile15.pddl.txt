@@ -1,0 +1,104 @@
+Started Grounding
+Ended Grounding
+Pattern: drive_truck truck2 depot2 mill1; change-product mill2 brand3 brand2; produce_sugar sugar-cane mill3 brand1; drive_truck truck1 depot1 mill3; change-product mill2 brand3 brand4; produce_sugar sugar-cane mill2 brand3; change-product mill1 brand1 brand3; order-sugar-cane sugar-cane mill1; drive_truck truck1 depot1 depot2; change-product mill3 brand1 brand4; change-product mill3 brand1 brand3; produce_sugar_max sugar-cane mill3 brand1; change-product mill1 brand1 brand4; drive_truck truck2 depot2 depot1; change-product mill1 brand1 brand2; drive_truck truck1 depot1 depot3; change-product mill2 brand3 brand1; produce_sugar_max sugar-cane mill2 brand3; drive_truck truck1 depot1 mill1; drive_truck truck2 depot2 mill2; drive_truck truck2 depot2 mill3; change-product mill3 brand1 brand2; drive_truck truck2 depot2 depot3; drive_truck truck1 depot1 mill2; order-sugar-cane sugar-cane mill3; order-sugar-cane sugar-cane mill2; drive_truck truck2 mill3 mill1; sugar-cane-farm sugar-cane mill1; drive_truck truck1 mill1 depot1; drive_truck truck2 depot3 depot1; drive_truck truck1 depot2 mill3; change-product mill3 brand4 brand3; setting-machine mill2; load-truck-manual brand1 truck2 mill3; drive_truck truck1 depot2 depot1; drive_truck truck1 depot2 depot3; change-product mill2 brand1 brand3; load-truck-manual brand3 truck1 mill2; drive_truck truck2 mill3 depot1; load_truck_crane brand3 truck2 mill2 crane2; drive_truck truck1 depot3 depot2; drive_truck truck2 depot1 mill1; drive_truck truck1 depot3 mill3; drive_truck truck1 mill3 depot3; drive_truck truck2 depot1 depot3; produce_sugar_max sugar-cane mill2 brand4; change-product mill2 brand4 brand3; drive_truck truck1 mill1 mill3; load_truck_crane brand3 truck1 mill2 crane2; drive_truck truck2 mill3 mill2; produce_sugar sugar-cane mill2 brand2; change-product mill1 brand2 brand4; drive_truck truck2 depot3 mill2; produce_sugar_max sugar-cane mill2 brand2; change-product mill1 brand4 brand1; drive_truck truck2 mill1 mill2; drive_truck truck2 depot1 depot2; sugar-cane-mills sugar-cane mill1 mill2; change-product mill3 brand2 brand4; drive_truck truck1 mill3 mill1; change-product mill1 brand4 brand2; change-product mill2 brand4 brand1; drive_truck truck1 depot3 depot1; drive_truck truck2 mill2 depot3; sugar-cane-mills sugar-cane mill1 mill3; drive_truck truck2 mill2 mill1; produce_sugar sugar-cane mill2 brand4; change-product mill2 brand2 brand3; change-product mill3 brand2 brand3; change-product mill1 brand3 brand2; drive_truck truck2 depot3 mill1; drive_truck truck2 depot1 mill2; drive_truck truck1 mill2 depot2; change-product mill1 brand3 brand4; load_truck_crane brand1 truck1 mill3 crane3; load-truck-manual brand3 truck2 mill2; change-product mill3 brand3 brand2; drive_truck truck2 depot3 mill3; load_truck_crane brand1 truck2 mill3 crane3; drive_truck truck2 mill3 depot2; drive_truck truck1 mill2 depot3; setting-machine mill3; drive_truck truck1 mill2 mill1; change-product mill3 brand3 brand1; drive_truck truck1 mill1 depot3; drive_truck truck1 mill1 depot2; drive_truck truck1 depot3 mill1; change-product mill2 brand1 brand4; change-product mill1 brand3 brand1; drive_truck truck2 depot1 mill3; drive_truck truck1 mill2 depot1; change-product mill3 brand3 brand4; change-product mill2 brand2 brand1; drive_truck truck2 depot3 depot2; drive_truck truck2 mill1 depot1; produce_sugar sugar-cane mill3 brand2; load-truck-manual brand4 truck1 mill3; change-product mill3 brand4 brand2; drive_truck truck2 mill1 mill3; change-product mill2 brand4 brand2; produce_sugar_max sugar-cane mill3 brand2; drive_truck truck1 depot3 mill2; load-truck-manual brand4 truck2 mill3; drive_truck truck1 depot2 mill1; drive_truck truck2 mill2 mill3; drive_truck truck2 mill1 depot2; drive_truck truck1 mill3 depot2; change-product mill3 brand2 brand1; drive_truck truck1 depot2 mill2; drive_truck truck2 mill3 depot3; drive_truck truck1 mill1 mill2; drive_truck truck2 mill1 depot3; change-product mill2 brand1 brand2; change-product mill1 brand4 brand3; change-product mill1 brand2 brand3; drive_truck truck2 mill2 depot1; change-product mill3 brand4 brand1; load-truck-manual brand1 truck1 mill3; drive_truck truck2 mill2 depot2; drive_truck truck1 mill3 mill2; change-product mill2 brand2 brand4; drive_truck truck1 mill3 depot1; drive_truck truck1 mill2 mill3; change-product mill1 brand2 brand1; unload_truck brand4 truck1 depot1; produce_sugar_max sugar-cane mill1 brand1; unload_truck brand3 truck2 depot2; unload_truck brand4 truck2 depot2; unload_truck brand1 truck2 depot2; produce_sugar sugar-cane mill1 brand1; unload_truck brand3 truck1 depot1; unload_truck brand1 truck1 depot1; unload_truck brand4 truck1 depot2; unload_truck brand3 truck1 mill1; load-truck-manual brand2 truck1 mill2; load_truck_crane brand2 truck2 mill2 crane2; unload_truck brand1 truck2 mill1; unload_truck brand3 truck1 mill2; unload_truck brand3 truck2 depot1; load-truck-manual brand2 truck2 mill3; sugar-cane-mills sugar-cane mill2 mill1; sugar-cane-mills sugar-cane mill3 mill1; unload_truck brand1 truck1 mill1; unload_truck brand1 truck2 mill3; unload_truck brand4 truck2 mill3; load_truck_crane brand2 truck1 mill3 crane3; produce_sugar sugar-cane mill1 brand3; unload_truck brand4 truck2 mill2; unload_truck brand3 truck1 depot2; unload_truck brand4 truck2 depot3; unload_truck brand1 truck1 depot2; load_truck_crane brand2 truck2 mill3 crane3; sugar-cane-mills sugar-cane mill2 mill3; load-truck-manual brand2 truck2 mill2; unload_truck brand4 truck2 mill1; unload_truck brand4 truck1 depot3; unload_truck brand3 truck2 depot3; produce_sugar sugar-cane mill1 brand4; load-truck-manual brand2 truck1 mill3; unload_truck brand3 truck1 mill3; produce_sugar_max sugar-cane mill1 brand3; unload_truck brand1 truck2 depot3; unload_truck brand3 truck1 depot3; unload_truck brand3 truck2 mill1; unload_truck brand4 truck1 mill2; unload_truck brand4 truck1 mill1; unload_truck brand1 truck1 mill3; sugar-cane-farm sugar-cane mill3; unload_truck brand3 truck2 mill3; sugar-cane-mills sugar-cane mill2 mill2; unload_truck brand3 truck2 mill2; load_truck_crane brand2 truck1 mill2 crane2; unload_truck brand1 truck2 depot1; sugar-cane-mills sugar-cane mill3 mill2; produce_sugar_max sugar-cane mill1 brand4; unload_truck brand4 truck1 mill3; sugar-cane-mills sugar-cane mill3 mill3; sugar-cane-farm sugar-cane mill2; unload_truck brand1 truck1 mill2; unload_truck brand1 truck1 depot3; sugar-cane-mills sugar-cane mill1 mill1; unload_truck brand1 truck2 mill2; unload_truck brand4 truck2 depot1; unload_truck brand2 truck1 depot1; load-truck-manual brand4 truck1 depot1; unload_truck brand2 truck2 depot2; load-truck-manual brand3 truck2 depot2; load-truck-manual brand4 truck2 depot2; load-truck-manual brand3 truck1 depot1; load-truck-manual brand1 truck1 depot1; load-truck-manual brand1 truck2 depot2; load-truck-manual brand1 truck1 mill2; load-truck-manual brand1 truck1 depot3; load_truck_crane brand3 truck1 mill1 crane1; load-truck-manual brand4 truck2 mill1; load-truck-manual brand3 truck2 mill1; load-truck-manual brand1 truck2 depot3; unload_truck brand2 truck2 depot3; load-truck-manual brand4 truck2 depot3; load-truck-manual brand4 truck1 mill1; unload_truck brand2 truck2 mill2; load_truck_crane brand1 truck1 mill1 crane1; unload_truck brand2 truck2 mill3; load-truck-manual brand3 truck1 mill1; load-truck-manual brand4 truck2 depot1; load_truck_crane brand3 truck2 mill1 crane1; load_truck_crane brand4 truck1 mill1 crane1; load-truck-manual brand3 truck2 depot3; load-truck-manual brand1 truck2 depot1; unload_truck brand2 truck1 mill2; unload_truck brand2 truck1 mill3; unload_truck brand2 truck1 depot2; load-truck-manual brand3 truck1 depot3; load_truck_crane brand4 truck2 mill3 crane3; setting-machine mill1; load-truck-manual brand3 truck1 depot2; unload_truck brand2 truck1 depot3; unload_truck brand2 truck2 mill1; load-truck-manual brand1 truck2 mill1; load-truck-manual brand4 truck1 depot3; load_truck_crane brand4 truck1 mill3 crane3; load-truck-manual brand4 truck1 depot2; load-truck-manual brand1 truck1 mill1; unload_truck brand2 truck1 mill1; load-truck-manual brand3 truck2 depot1; unload_truck brand2 truck2 depot1; load_truck_crane brand4 truck2 mill1 crane1; load_truck_crane brand1 truck2 mill1 crane1; load_truck_crane brand1 truck2 mill2 crane2; load-truck-manual brand1 truck2 mill2; load-truck-manual brand1 truck1 depot2; load_truck_crane brand1 truck1 mill2 crane2; load-truck-manual brand2 truck2 depot2; load-truck-manual brand2 truck1 depot1; load-truck-manual brand2 truck2 depot1; load-truck-manual brand2 truck1 depot2; load-truck-manual brand2 truck1 depot3; load-truck-manual brand2 truck2 depot3; maintainence-crane crane1 mill1; maintainence-crane crane2 mill2; maintainence-crane crane3 mill3
+Started Conversion to SMT at bound 1
+Ended Conversion to SMT at bound 1
+Started Solving Bound 1
+Ended Solving Bound 1
+Bound 1 - Vars = 513
+Bound 1 - Rules = 1170
+NO SOLUTION: A solution could not be found with bound 1. Try to increase the bound
+Started Conversion to SMT at bound 2
+Ended Conversion to SMT at bound 2
+Started Solving Bound 2
+Ended Solving Bound 2
+Bound 2 - Vars = 890
+Bound 2 - Rules = 2206
+NO SOLUTION: A solution could not be found with bound 2. Try to increase the bound
+Started Conversion to SMT at bound 3
+Ended Conversion to SMT at bound 3
+Started Solving Bound 3
+Ended Solving Bound 3
+Bound 3 - Vars = 1267
+Bound 3 - Rules = 3242
+0: (change-product mill2 brand3 brand2)
+1: (order-sugar-cane sugar-cane mill1)
+2: (drive_truck truck2 depot2 mill3)
+3: (change-product mill3 brand1 brand2)
+4: (drive_truck truck1 depot1 mill2)
+5: (drive_truck truck2 mill3 depot1)
+6: (produce_sugar sugar-cane mill2 brand2)
+7: (sugar-cane-mills sugar-cane mill1 mill2)
+8: (drive_truck truck1 mill2 depot2)
+9: (drive_truck truck2 depot1 mill3)
+10: (produce_sugar_max sugar-cane mill3 brand2)
+11: (load-truck-manual brand4 truck2 mill3)
+12: (load-truck-manual brand4 truck2 mill3)
+13: (drive_truck truck1 depot2 mill2)
+14: (drive_truck truck1 mill2 mill3)
+15: (produce_sugar sugar-cane mill1 brand1)
+16: (unload_truck brand4 truck2 mill3)
+17: (load_truck_crane brand2 truck1 mill3 crane3)
+18: (load_truck_crane brand2 truck1 mill3 crane3)
+19: (setting-machine mill1)
+20: (order-sugar-cane sugar-cane mill1)
+21: (order-sugar-cane sugar-cane mill3)
+22: (sugar-cane-farm sugar-cane mill1)
+23: (setting-machine mill2)
+24: (drive_truck truck2 mill3 depot1)
+25: (drive_truck truck1 mill3 depot3)
+26: (drive_truck truck2 depot1 depot3)
+27: (drive_truck truck2 depot3 mill1)
+28: (setting-machine mill3)
+29: (produce_sugar_max sugar-cane mill1 brand1)
+30: (unload_truck brand4 truck2 mill1)
+31: (sugar-cane-farm sugar-cane mill3)
+32: (unload_truck brand2 truck1 depot3)
+33: (unload_truck brand2 truck1 depot3)
+34: (unload_truck brand2 truck1 depot3)
+35: (unload_truck brand2 truck1 depot3)
+36: (unload_truck brand2 truck1 depot3)
+37: (unload_truck brand2 truck1 depot3)
+38: (unload_truck brand2 truck1 depot3)
+39: (load-truck-manual brand1 truck2 mill1)
+40: (load-truck-manual brand1 truck2 mill1)
+41: (load-truck-manual brand1 truck2 mill1)
+42: (load-truck-manual brand1 truck2 mill1)
+43: (load-truck-manual brand1 truck2 mill1)
+44: (load-truck-manual brand1 truck2 mill1)
+45: (load-truck-manual brand2 truck1 depot3)
+46: (load-truck-manual brand2 truck1 depot3)
+47: (change-product mill1 brand1 brand3)
+48: (drive_truck truck1 depot3 mill3)
+49: (produce_sugar_max sugar-cane mill2 brand2)
+50: (drive_truck truck2 mill1 mill2)
+51: (change-product mill2 brand2 brand3)
+52: (change-product mill1 brand3 brand1)
+53: (drive_truck truck1 mill3 depot2)
+54: (drive_truck truck2 mill2 depot1)
+55: (unload_truck brand1 truck2 depot1)
+56: (unload_truck brand1 truck2 depot1)
+57: (unload_truck brand1 truck2 depot1)
+58: (unload_truck brand1 truck2 depot1)
+59: (unload_truck brand1 truck2 depot1)
+60: (unload_truck brand2 truck1 depot2)
+61: (unload_truck brand2 truck1 depot2)
+62: (unload_truck brand2 truck1 depot2)
+63: (unload_truck brand2 truck1 depot2)
+64: (unload_truck brand2 truck1 depot2)
+65: (setting-machine mill1)
+
+Plan is valid
+Bound: 3
+Grounding: 318ms
+Conversion to SMT at bound 1: 211ms
+Solving Bound 1: 128ms
+Conversion to SMT at bound 2: 429ms
+Solving Bound 2: 662ms
+Conversion to SMT at bound 3: 661ms
+Solving Bound 3: 4875ms
+Overall: 7400ms
+
+real 7.95
+user 7.77
+sys 0.18

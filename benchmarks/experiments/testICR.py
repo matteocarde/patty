@@ -49,7 +49,8 @@ def main():
             if envs.isInsideAWS:
                 print(f"Starting {el} ")
             exp = ICRExp()
-            r: ICRResult = exp.run(expType, domain, domainFile, problemFile, traceFile, cProblemFile, envs.timeout)
+            r: ICRResult = exp.run(expType, domain, domainFile, problemFile, traceFile, cProblemFile, envs.timeout,
+                                   logger)
             print(r)
             if not r.solved:
                 print(r.stdout)

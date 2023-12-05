@@ -17,7 +17,7 @@ class ICRExp:
 
     def run(self, expType: str, domain: str, domainFile: str,
             problemFile: str, traceFile: str, cProblemFile: str,
-            timeout: int) -> ICRResult:
+            timeout: int, logger: CloudLogger) -> ICRResult:
         stdout, code, cmd = self.exec(domainFile, problemFile, traceFile, cProblemFile, timeout)
         r = ICRResult(expType, domain, problemFile)
         r.code = code
@@ -26,6 +26,14 @@ class ICRExp:
         r.solved = r.code == 0
         r.stdout = stdout
         self.parseOutput(r, stdout)
+        if not r.timeout and r.solved:
+            return r
+        if not r.timeout and not r.solved:
+            print(r.stdout)
+            logger.error(r.toJSON())
+        else:
+            r.solved = False
+            r.time = timeout * 1000
 
         return r
 
@@ -54,5 +62,11 @@ class ICRExp:
         r.dRW = -1 if not reDRW else float(reDRW[0])
         reDRC = re.findall(r"Distance Retrieved-Correct: (.*?)$", stdout, re.MULTILINE)
         r.dRC = -1 if not reDRC else float(reDRC[0])
+        reNOfAtoms = re.findall(r"Atoms: (.*?)$", stdout, re.MULTILINE)
+        r.nOfAtoms = -1 if not reNOfAtoms else float(reNOfAtoms[0])
+        reTraceLength = re.findall(r"Trace Length: (.*?)$", stdout, re.MULTILINE)
+        r.traceLength = -1 if not reTraceLength else float(reTraceLength[0])
+        reConditions = re.findall(r"ICS Conditions: (.*?)$", stdout, re.MULTILINE)
+        r.nOfConditions = -1 if not reConditions else float(reConditions[0])
 
         return r

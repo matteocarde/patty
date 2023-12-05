@@ -1,130 +1,105 @@
-Started Grounding
-Ended Grounding
-Pattern: increment c5; increment c1; increment c9; increment c6; increment c7; increment c2; increment c4; increment c10; increment c11; increment c0; increment c8; increment c3; decrement c9; decrement c3; decrement c11; decrement c2; decrement c4; decrement c5; decrement c8; decrement c1; decrement c6; decrement c0; decrement c10; decrement c7
-Started Conversion to SMT at bound 1
-Ended Conversion to SMT at bound 1
-Started Solving Bound 1
-Ended Solving Bound 1
-Bound 1 - Vars = 48
-Bound 1 - Rules = 121
-0: (increment c5)
-1: (increment c5)
-2: (increment c5)
-3: (increment c5)
-4: (increment c5)
-5: (increment c5)
-6: (increment c5)
-7: (increment c1)
-8: (increment c1)
-9: (increment c1)
-10: (increment c9)
-11: (increment c9)
-12: (increment c9)
-13: (increment c9)
-14: (increment c9)
-15: (increment c9)
-16: (increment c9)
-17: (increment c9)
-18: (increment c9)
-19: (increment c9)
-20: (increment c9)
-21: (increment c6)
-22: (increment c6)
-23: (increment c6)
-24: (increment c6)
-25: (increment c6)
-26: (increment c6)
-27: (increment c6)
-28: (increment c6)
-29: (increment c7)
-30: (increment c7)
-31: (increment c7)
-32: (increment c7)
-33: (increment c7)
-34: (increment c7)
-35: (increment c7)
-36: (increment c7)
-37: (increment c7)
-38: (increment c2)
-39: (increment c2)
-40: (increment c2)
-41: (increment c2)
-42: (increment c4)
-43: (increment c4)
-44: (increment c4)
-45: (increment c4)
-46: (increment c4)
-47: (increment c4)
-48: (increment c10)
-49: (increment c10)
-50: (increment c10)
-51: (increment c10)
-52: (increment c10)
-53: (increment c10)
-54: (increment c10)
-55: (increment c10)
-56: (increment c10)
-57: (increment c10)
-58: (increment c10)
-59: (increment c10)
-60: (increment c11)
-61: (increment c11)
-62: (increment c11)
-63: (increment c11)
-64: (increment c11)
-65: (increment c11)
-66: (increment c11)
-67: (increment c11)
-68: (increment c11)
-69: (increment c11)
-70: (increment c11)
-71: (increment c11)
-72: (increment c11)
-73: (increment c8)
-74: (increment c8)
-75: (increment c8)
-76: (increment c8)
-77: (increment c8)
-78: (increment c8)
-79: (increment c8)
-80: (increment c8)
-81: (increment c8)
-82: (increment c8)
-83: (increment c3)
-84: (increment c3)
-85: (increment c3)
-86: (increment c3)
-87: (increment c3)
-88: (decrement c9)
-89: (decrement c9)
-90: (decrement c3)
-91: (decrement c3)
-92: (decrement c11)
-93: (decrement c11)
-94: (decrement c2)
-95: (decrement c2)
-96: (decrement c4)
-97: (decrement c4)
-98: (decrement c5)
-99: (decrement c5)
-100: (decrement c8)
-101: (decrement c8)
-102: (decrement c1)
-103: (decrement c1)
-104: (decrement c6)
-105: (decrement c6)
-106: (decrement c10)
-107: (decrement c10)
-108: (decrement c7)
-109: (decrement c7)
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 78
+Aibr Preprocessing
+|F|:0
+|X|:12
+|A|:24
+|P|:0
+|E|:0
+H1 Setup Time (msec): 5
+Setting horizon to:NaN
+Running Greedy Best First Search
+Problem Solved
 
-Plan is valid
-Bound: 1
-Grounding: 50ms
-Conversion to SMT at bound 1: 10ms
-Solving Bound 1: 59ms
-Overall: 155ms
+Found Plan:
+0.0: (increment c11)
+1.0: (increment c11)
+2.0: (increment c10)
+3.0: (increment c8)
+4.0: (increment c4)
+5.0: (increment c11)
+6.0: (increment c9)
+7.0: (increment c10)
+8.0: (increment c11)
+9.0: (increment c11)
+10.0: (increment c9)
+11.0: (increment c10)
+12.0: (increment c3)
+13.0: (increment c5)
+14.0: (increment c5)
+15.0: (increment c7)
+16.0: (increment c4)
+17.0: (decrement c5)
+18.0: (increment c8)
+19.0: (increment c9)
+20.0: (increment c10)
+21.0: (increment c11)
+22.0: (increment c6)
+23.0: (decrement c4)
+24.0: (decrement c3)
+25.0: (increment c7)
+26.0: (increment c8)
+27.0: (increment c9)
+28.0: (increment c10)
+29.0: (increment c11)
+30.0: (increment c3)
+31.0: (increment c6)
+32.0: (decrement c4)
+33.0: (increment c7)
+34.0: (increment c8)
+35.0: (increment c9)
+36.0: (increment c10)
+37.0: (increment c11)
+38.0: (increment c11)
+39.0: (increment c11)
+40.0: (increment c11)
+41.0: (increment c10)
+42.0: (increment c9)
+43.0: (increment c4)
+44.0: (increment c5)
+45.0: (increment c8)
+46.0: (increment c7)
+47.0: (increment c6)
+48.0: (increment c10)
+49.0: (increment c9)
+50.0: (increment c8)
+51.0: (increment c7)
+52.0: (increment c4)
+53.0: (increment c5)
+54.0: (increment c6)
+55.0: (increment c11)
+56.0: (increment c10)
+57.0: (increment c9)
+58.0: (increment c8)
+59.0: (increment c7)
+60.0: (increment c6)
+61.0: (increment c2)
+62.0: (increment c3)
+63.0: (increment c4)
+64.0: (increment c5)
+65.0: (increment c10)
+66.0: (increment c9)
+67.0: (increment c8)
+68.0: (increment c7)
+69.0: (increment c6)
+70.0: (increment c5)
+71.0: (increment c4)
+72.0: (increment c3)
+73.0: (increment c1)
+74.0: (increment c2)
 
-real 0.70
-user 0.60
-sys 0.09
+Plan-Length:75
+Metric (Search):75.0
+Planning Time (msec): 2403
+Heuristic Time (msec): 1301
+Search Time (msec): 1895
+Expanded Nodes:3102
+States Evaluated:44694
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:0
+Number of Duplicates detected:21781
+real 2.48
+user 1.79
+sys 0.11

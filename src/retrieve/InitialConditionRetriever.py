@@ -94,7 +94,7 @@ class InitialConditionRetriever:
             node = self.ics.vg.getNode(0, atom)
             value = node.value.subs(res)
             value = value if value.is_constant() else 0
-            init.addNumericAssignment(atom, round(value, 2))
+            init.addNumericAssignment(atom, value)
 
         return init, solution.fun
 
@@ -136,16 +136,11 @@ class InitialConditionRetriever:
         lb = 0
         ub = 0
 
-        condition = condition.lhs - condition.rhs
-        eq = None
-        if not condition.is_Relational:
-            eq = condition
-        else:
+        eq = condition.lhs - condition.rhs
+        if condition.is_Relational:
             if condition.rel_op in {"<=", "<"}:
-                eq = condition.rhs - condition.lhs
                 lb = -np.inf
             else:
-                eq = condition.lhs - condition.rhs
                 ub = np.inf
             if condition.rel_op in {">", "<"}:
                 eq = eq - EPSILON

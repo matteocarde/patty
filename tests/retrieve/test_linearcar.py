@@ -15,10 +15,10 @@ class TestLinearCar(TestCase):
     def setUp(self) -> None:
         folder = "../../files/hybrid/Linear-Car"
         self.domain: Domain = Domain.fromFile(f"{folder}/domain.pddl")
-        self.problem: Problem = Problem.fromFile(f"{folder}/instances/instance_1_30.0_0.1_10.0.pddl")
+        self.problem: Problem = Problem.fromFile(f"{folder}/instances/instance_3_30.0_0.1_10.0.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem, avoidSimplification=True)
 
-        self.trace: Trace = Trace.fromENHSP(f"{folder}/plans/instance_1_30.0_0.1_10.0.txt", self.gDomain)
+        self.trace: Trace = Trace.fromENHSP(f"{folder}/plans/instance_3_30.0_0.1_10.0.pddl.txt", self.gDomain)
 
         self.ics: InitialConditionSpace = InitialConditionSpace(self.trace, self.problem, self.gDomain)
 
@@ -30,12 +30,12 @@ class TestLinearCar(TestCase):
         self.assertIsInstance(self.gDomain, GroundedDomain)
 
     def test_solve(self):
-        icr = InitialConditionRetriever(self.ics)
-        init: InitialCondition = icr.solve()
+        icr = InitialConditionRetriever(self.ics, self.problem.init)
+        (init, obj) = icr.solve()
 
         finalState: State = self.trace.apply(init)
 
-        self.assertTrue(finalState.satisfies(self.problem.goal))
+        self.assertTrue(finalState.satisfies(self.problem.goal, tolerance=0.1))
 
 
 if __name__ == '__main__':

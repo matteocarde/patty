@@ -16,6 +16,9 @@ class ICRResult:
     optimum: float = 0
     dRW: float = 0
     dRC: float = 0
+    nOfAtoms: int = 0
+    traceLength: int = 0
+    nOfConditions: int = 0
 
     def __init__(self, expType: str, domain: str, problem: str):
         self.plan = list()
@@ -36,6 +39,9 @@ class ICRResult:
         r.optimum = float(csvLine[6])
         r.dRW = float(csvLine[7])
         r.dRC = float(csvLine[8])
+        r.nOfAtoms = float(csvLine[9])
+        r.traceLength = float(csvLine[10])
+        r.nOfConditions = float(csvLine[11])
 
         return r
 
@@ -56,6 +62,9 @@ class ICRResult:
             (str(self.optimum), 8),
             (str(self.dRW), 8),
             (str(self.dRC), 8),
+            (str(self.nOfAtoms), 8),
+            (str(self.traceLength), 8),
+            (str(self.nOfConditions), 8),
         ]
 
         string = "|" + "|".join(["{:^" + str(n[1]) + "}" for n in row]) + "|"
@@ -76,4 +85,7 @@ class ICRResult:
             str(self.optimum),
             str(self.dRW),
             str(self.dRC),
+            str(self.nOfAtoms),
+            str(self.traceLength),
+            str(self.nOfConditions),
         ])

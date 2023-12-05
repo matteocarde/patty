@@ -1,0 +1,47 @@
+
+        \documentclass[11pt]{article}
+        \usepackage{graphicx}
+        \usepackage{multirow}
+        \usepackage[a4paper,margin=1in]{geometry}
+
+        \begin{document}
+
+        \begin{table*}[tb]
+        \centering
+        \resizebox{\textwidth}{!}{
+\begin{tabular}{|l|c|c|c|c|c|c|}
+\hline
+Domain & $|V_b \cup V_n|$&$|\mathcal{T}|$&$|\mathcal{I}(\mathcal{T}, G)|$&Cov. (\%)&Time (s)&$||I - I_\star||$\\
+\hline
+\textsc{Hybrid}&&&&&&\\
+\hline
+\textsc{Baxter} (L)&105.37&17.58&5.84&100.00&0.27&0.00\\
+\textsc{Descent} (NL)&17.00&15.00&19.00&5.00&114.00&-1.00\\
+\textsc{HVAC} (NL)&9.00&14.00&6.00&5.26&113.79&4.00\\
+\textsc{LinearCar} (L)&8.00&37.00&14.64&100.00&0.16&0.01\\
+\textsc{SolarRover} (L)&20.00&135.00&2.00&100.00&0.12&0.01\\
+\textsc{UTC} (L)&1752.25&48.25&964.50&57.14&51.43&-1.00\\
+\hline
+\textsc{Numeric}&&&&&&\\
+\hline
+\textsc{Counters} (S)&17.00&340.86&355.86&70.00&45.77&0.08\\
+\textsc{Counters} (L)&25.00&219.40&229.90&100.00&4.57&0.03\\
+\textsc{Delivery} (S)&173.89&50.78&13.78&100.00&0.56&-0.11\\
+\textsc{Drone} (S)&129.67&98.27&264.40&93.75&20.05&0.05\\
+\textsc{Expedition} (S)&66.00&214.00&320.00&100.00&3.43&0.03\\
+\textsc{PlantWatering} (S)&39.00&611.17&1154.67&42.86&92.23&0.34\\
+\textsc{Farmland} (S)&42.30&713.70&720.20&100.00&13.61&0.07\\
+\textsc{Farmland} (L)&57.71&748.53&748.71&85.00&36.93&0.04\\
+\textsc{Hydropower} (S)&4059.00&105.90&101.00&100.00&14.40&0.02\\
+\textsc{MPrime} (S)&368.64&172.71&167.64&100.00&4.53&0.14\\
+\textsc{Rover} (S)&465.46&81.85&78.46&86.67&17.71&0.01\\
+\textsc{Sailing} (S)&16.60&3032.60&23.60&100.00&2.21&0.03\\
+\textsc{Sailing} (L)&15.26&587.74&17.21&100.00&0.80&0.01\\
+\textsc{Sugar} (S)&178.85&61.25&60.10&100.00&0.00&-1.00\\
+\textsc{ZenoTravel} (S)&85.67&18.67&10.11&47.37&68.82&16558401.49\\
+\hline
+
+        \end{tabular}} \caption{Something goes here}
+        \label{tab:single-static}
+        \end{table*}
+        \end{document}
