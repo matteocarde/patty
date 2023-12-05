@@ -3,8 +3,8 @@
 	(:objects
 	)
 	(:init
-		(= (max_acceleration) 5.0)
 		(= (a) 0.0)
+		(= (max_speed) 100.0)
 		(= (v) 0.0)
 	)
 	(:goal

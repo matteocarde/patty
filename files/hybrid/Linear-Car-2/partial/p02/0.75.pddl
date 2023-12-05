@@ -5,9 +5,9 @@
 	(:init
 		(= (min_acceleration) -2.0)
 		(engine_stopped)
-		(= (max_speed) 100.0)
-		(= (max_acceleration) 2.0)
+		(= (v) 0.0)
 		(= (a) 0.0)
+		(= (max_acceleration) 2.0)
 	)
 	(:goal
 			(and

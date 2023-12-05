@@ -5,9 +5,9 @@
 		b1 b2 b3 - battery
 	)
 	(:init
-		(= (roverenergy) 0.0)
-		(gboff GB)
+		(datatosend)
 		(off b2)
+		(= (sunexposure_time) 100.0)
 	)
 	(:goal
 			(and

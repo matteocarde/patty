@@ -6,14 +6,14 @@
 	)
 	(:init
 		(= (roverenergy) 0.0)
-		(= (SoC b1) 40.0)
 		(off b3)
-		(= (SoC b2) 80.0)
-		(= (time) 0.0)
+		(= (SoC b1) 40.0)
+		(night)
 		(datatosend)
-		(= (SoC b3) 100.0)
 		(off b1)
-		(off b2)
+		(= (SoC b2) 80.0)
+		(= (SoC b3) 100.0)
+		(= (time) 0.0)
 	)
 	(:goal
 			(and

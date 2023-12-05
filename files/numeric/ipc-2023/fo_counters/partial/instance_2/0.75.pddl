@@ -4,10 +4,10 @@
 		c0 c1 - counter
 	)
 	(:init
-		(= (max_int) 4.0)
-		(= (rate_value c0) 0.0)
 		(= (value c0) 0.0)
-		(= (rate_value c1) 0.0)
+		(= (value c1) 0.0)
+		(= (total-cost) 0.0)
+		(= (max_int) 4.0)
 	)
 	(:goal
 			(and

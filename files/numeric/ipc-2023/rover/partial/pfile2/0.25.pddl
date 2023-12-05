@@ -10,17 +10,17 @@
 		objective0 objective1 - objective
 	)
 	(:init
-		(on_board camera0 rover0)
+		(supports camera0 low_res)
+		(equipped_for_rock_analysis rover0)
+		(visible waypoint3 waypoint0)
+		(channel_free general)
 		(can_traverse rover0 waypoint2 waypoint0)
-		(calibration_target camera1 objective1)
-		(visible waypoint2 waypoint1)
-		(visible waypoint2 waypoint3)
-		(can_traverse rover0 waypoint0 waypoint3)
-		(visible waypoint0 waypoint2)
-		(visible waypoint1 waypoint2)
-		(visible_from objective0 waypoint0)
-		(visible_from objective1 waypoint2)
-		(equipped_for_soil_analysis rover0)
+		(available rover0)
+		(can_traverse rover0 waypoint3 waypoint0)
+		(empty rover0store)
+		(on_board camera0 rover0)
+		(in rover0 waypoint0)
+		(at_lander general waypoint1)
 	)
 	(:goal
 			(and

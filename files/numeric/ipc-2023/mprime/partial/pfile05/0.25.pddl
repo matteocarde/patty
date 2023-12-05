@@ -6,18 +6,18 @@
 		sciatica anxiety grief boils depression abrasion prostatitis angina jealousy laceration anger grief-2 dread loneliness hangover - pain
 	)
 	(:init
-		(craves depression turkey)
-		(= (locale chocolate) 2.0)
-		(craves laceration shrimp)
+		(= (harmony intoxication) 2.0)
+		(eats chocolate broccoli)
+		(craves satisfaction broccoli)
+		(eats scallop cherry)
 		(craves abrasion turkey)
-		(eats chocolate turkey)
-		(craves excitement turkey)
-		(eats shrimp cherry)
-		(= (locale sweetroll) 0.0)
+		(= (locale scallop) 0.0)
+		(eats broccoli chocolate)
 		(craves lubricity sweetroll)
+		(eats scallop sweetroll)
+		(= (locale shrimp) 1.0)
 		(craves dread scallop)
-		(craves hangover scallop)
-		(eats tuna turkey)
+		(eats cherry shrimp)
 	)
 	(:goal
 			(and

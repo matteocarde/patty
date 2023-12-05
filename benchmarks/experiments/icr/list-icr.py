@@ -30,6 +30,12 @@ DOMAINS = {
 
 KINDS = [("partial", "PARTIAL"), ("noise", "NOISE")]
 
+active = {
+    # "TOTAL", 
+    # "PARTIAL",
+    "NOISE"
+}
+
 
 def main():
     instances = list()
@@ -50,14 +56,16 @@ def main():
             # CORRECT: Repair correct init condition
             # PARTIAL: Repair partial correct init condition
             # NOISE: Repair noisy initial condition
-            instances.append(["TOTAL", name, domainFile, problemFile, traceFile, cProblemFile])
+            if "TOTAL" in active:
+                instances.append(["TOTAL", name, domainFile, problemFile, traceFile, cProblemFile])
 
             for (folder, kind) in KINDS:
                 if os.path.exists(f"files/{path}/{folder}") and os.path.exists(f"files/{path}/{folder}/{probName}"):
                     kindList = natsort.natsorted(os.listdir(f"files/{path}/{folder}/{probName}"))
                     for p in kindList:
                         partialFile = f"files/{path}/{folder}/{probName}/{p}"
-                        instances.append([kind, name, domainFile, partialFile, traceFile, cProblemFile])
+                        if kind in active:
+                            instances.append([kind, name, domainFile, partialFile, traceFile, cProblemFile])
 
     random.shuffle(instances)
     print(f"Listing {len(instances)} instances")

@@ -5,7 +5,7 @@
 		k1 - request
 	)
 	(:init
-		(= (temp_sa r1) 10.0)
+		(= (time) 0.0)
 	)
 	(:goal
 			(and

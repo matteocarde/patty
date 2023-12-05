@@ -114,7 +114,7 @@ def main():
         DOMAINS_BY_KIND[kind] = DOMAINS_BY_KIND.setdefault(kind, [])
         DOMAINS_BY_KIND[kind].append(dom)
 
-    filename = "2023-12-05-ICR-ALL-v1.csv"
+    filename = "2023-12-05-ICR-ALL-v2.csv"
     file = f"benchmarks/results/{filename}"
 
     exp = filename.replace(".csv", "")

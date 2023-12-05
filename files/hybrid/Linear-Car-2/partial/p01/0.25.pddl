@@ -3,7 +3,7 @@
 	(:objects
 	)
 	(:init
-		(engine_stopped)
+		(= (max_speed) 100.0)
 	)
 	(:goal
 			(and

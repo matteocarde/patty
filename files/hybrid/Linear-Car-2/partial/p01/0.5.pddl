@@ -4,8 +4,8 @@
 	)
 	(:init
 		(= (v) 0.0)
-		(= (max_speed) 100.0)
-		(= (d) 0.0)
+		(= (a) 0.0)
+		(engine_stopped)
 	)
 	(:goal
 			(and

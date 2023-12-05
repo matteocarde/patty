@@ -5,7 +5,7 @@
 	)
 	(:init
 		(= (value c2) 0.0)
-		(= (value c1) 0.0)
+		(= (value c0) 0.0)
 	)
 	(:goal
 			(and

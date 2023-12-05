@@ -4,17 +4,17 @@
 		x0y0z0 x0y0z1 x0y0z2 x0y0z3 - location
 	)
 	(:init
-		(= (yl x0y0z0) 0.0)
-		(= (x) 0.0)
 		(= (xl x0y0z0) 0.0)
-		(= (xl x0y0z2) 0.0)
-		(= (battery-level-full) 13.0)
-		(= (min_z) 0.0)
-		(= (min_x) 0.0)
-		(= (yl x0y0z2) 0.0)
-		(= (zl x0y0z0) 0.0)
-		(= (battery-level) 13.0)
 		(= (xl x0y0z3) 0.0)
+		(= (max_z) 4.0)
+		(= (yl x0y0z0) 0.0)
+		(= (min_y) 0.0)
+		(= (max_x) 1.0)
+		(= (yl x0y0z2) 0.0)
+		(= (yl x0y0z1) 0.0)
+		(= (yl x0y0z3) 0.0)
+		(= (zl x0y0z2) 2.0)
+		(= (xl x0y0z2) 0.0)
 	)
 	(:goal
 			(and

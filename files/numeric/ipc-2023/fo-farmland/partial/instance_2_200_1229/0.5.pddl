@@ -4,7 +4,7 @@
 		farm0 farm1 - farm
 	)
 	(:init
-		(= (num-of-cars) 0.0)
+		(adj farm1 farm0)
 		(= (x farm0) 200.0)
 		(= (cost) 0.0)
 	)

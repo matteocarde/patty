@@ -5,8 +5,8 @@
 	)
 	(:init
 		(= (rate_value c1) 0.0)
+		(= (value c1) 0.0)
 		(= (rate_value c0) 0.0)
-		(= (max_int) 4.0)
 	)
 	(:goal
 			(and

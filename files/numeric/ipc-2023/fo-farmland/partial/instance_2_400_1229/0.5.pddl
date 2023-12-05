@@ -5,7 +5,7 @@
 	)
 	(:init
 		(= (x farm0) 400.0)
-		(adj farm1 farm0)
+		(= (x farm1) 1.0)
 		(= (cost) 0.0)
 	)
 	(:goal

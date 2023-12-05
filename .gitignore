@@ -21,3 +21,6 @@ benchmarks/planners/cplex/installer.bin
 *.pdf
 
 *.SOL
+
+**/noise/
+**/partial/**

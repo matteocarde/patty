@@ -6,14 +6,14 @@
 		agent1 agent2 - agent
 	)
 	(:init
-		(= (y plant2) 7.0)
-		(= (poured plant1) 0.0)
-		(= (y agent2) 6.0)
-		(= (maxy) 10.0)
-		(= (x plant3) 6.0)
-		(= (y agent1) 7.0)
-		(= (minx) 1.0)
+		(= (carrying agent1) 0.0)
 		(= (poured plant5) 0.0)
+		(= (max_carry agent2) 5.0)
+		(= (x plant4) 8.0)
+		(= (x agent1) 3.0)
+		(= (x tap1) 3.0)
+		(= (poured plant3) 0.0)
+		(= (y tap1) 4.0)
 	)
 	(:goal
 			(and

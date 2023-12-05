@@ -3,7 +3,7 @@
 	(:objects
 	)
 	(:init
-		(engine_stopped)
+		(= (min_acceleration) -1.0)
 	)
 	(:goal
 			(and

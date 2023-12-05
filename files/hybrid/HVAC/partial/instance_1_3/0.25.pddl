@@ -5,8 +5,8 @@
 		k1 k2 k3 - request
 	)
 	(:init
-		(= (time) 0.0)
-		(= (temp r1) 15.0)
+		(= (air_flow r1) 0.0)
+		(= (temp_requested r1 k2) 14.0)
 	)
 	(:goal
 			(and

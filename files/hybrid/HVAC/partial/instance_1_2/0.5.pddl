@@ -5,10 +5,10 @@
 		k1 k2 - request
 	)
 	(:init
-		(= (temp r1) 15.0)
 		(= (time_requested r1 k1) 10.0)
 		(= (temp_requested r1 k1) 20.0)
-		(= (comfort) 2.0)
+		(= (temp_requested r1 k2) 14.0)
+		(= (temp_sa r1) 10.0)
 	)
 	(:goal
 			(and

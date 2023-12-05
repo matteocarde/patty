@@ -5,12 +5,12 @@
 	)
 	(:init
 		(= (total-cost) 0.0)
+		(= (rate_value c0) 0.0)
+		(= (rate_value c5) 0.0)
 		(= (value c2) 0.0)
-		(= (rate_value c3) 0.0)
-		(= (rate_value c2) 0.0)
+		(= (value c3) 0.0)
+		(= (value c1) 0.0)
 		(= (value c4) 0.0)
-		(= (rate_value c4) 0.0)
-		(= (value c5) 0.0)
 	)
 	(:goal
 			(and

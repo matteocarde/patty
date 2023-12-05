@@ -4,9 +4,9 @@
 		c0 c1 c2 c3 c4 c5 c6 c7 c8 c9 c10 c11 - counter
 	)
 	(:init
-		(= (value c0) 0.0)
-		(= (max_int) 24.0)
-		(= (value c1) 0.0)
+		(= (value c8) 0.0)
+		(= (value c9) 0.0)
+		(= (value c5) 0.0)
 	)
 	(:goal
 			(and

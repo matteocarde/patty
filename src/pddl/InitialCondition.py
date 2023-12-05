@@ -5,6 +5,8 @@ import math
 import random
 from typing import List, Dict, Set
 
+import numpy as np
+
 from src.pddl.Atom import Atom
 from src.pddl.Utilities import Utilities
 from src.pddl.BinaryPredicate import BinaryPredicate
@@ -45,7 +47,7 @@ class InitialCondition:
                 n = copy.deepcopy(p)
                 if not isinstance(n.rhs, Constant):
                     raise Exception("Right hand side should be consant")
-                n.rhs.value = n.rhs.value + random.randrange(-amount, amount)
+                n.rhs.value = np.random.normal(n.rhs.value, abs(n.rhs.value * amount / 100))
                 noise.assignments.append(n)
 
         return noise

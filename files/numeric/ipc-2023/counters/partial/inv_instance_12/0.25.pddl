@@ -4,9 +4,9 @@
 		c0 c1 c2 c3 c4 c5 c6 c7 c8 c9 c10 c11 - counter
 	)
 	(:init
-		(= (value c0) 22.0)
-		(= (value c3) 16.0)
-		(= (value c8) 6.0)
+		(= (value c4) 14.0)
+		(= (value c7) 8.0)
+		(= (value c5) 12.0)
 	)
 	(:goal
 			(and

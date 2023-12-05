@@ -6,18 +6,18 @@
 		hangover depression abrasion - pain
 	)
 	(:init
-		(eats lamb pork)
-		(craves abrasion pork)
-		(= (harmony rest) 3.0)
+		(eats pork okra)
 		(eats lamb flounder)
-		(eats pear okra)
-		(craves hangover rice)
+		(eats okra pear)
+		(= (locale pork) 5.0)
 		(eats pear rice)
-		(= (locale lamb) 3.0)
-		(eats pork lamb)
 		(eats rice flounder)
+		(= (locale rice) 1.0)
+		(eats rice pear)
+		(= (harmony rest) 3.0)
+		(eats rice rice)
 		(craves rest pork)
-		(eats flounder rice)
+		(eats pear okra)
 	)
 	(:goal
 			(and

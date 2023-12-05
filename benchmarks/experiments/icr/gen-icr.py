@@ -2,7 +2,9 @@ import copy
 import os
 import random
 import shutil
+from math import floor
 
+import numpy as np
 from natsort import natsort
 
 from src.pddl.InitialCondition import InitialCondition
@@ -37,8 +39,10 @@ DOMAINS = {
 PARTIAL = [0, 0.25, 0.5, 0.75]
 maxPartial = 5
 
-NOISE = [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
+NOISE = [floor(x) for x in np.linspace(0, 500, 51)]
 maxNoise = 1
+
+noiseIterations = 5
 
 
 def main():
@@ -86,15 +90,16 @@ def main():
                 if os.path.exists(noiseFolder):
                     shutil.rmtree(noiseFolder)
                 os.mkdir(noiseFolder)
-                for amount in NOISE:
-                    pw = PDDLWriter()
-                    noiseProb = copy.deepcopy(prob)
-                    noiseProb.init = InitialCondition.noise(noiseProb.init, amount)
-                    noisePDDL: str = noiseProb.toPDDL(pw).toString()
-                    with open(f"{noiseFolder}/{amount}.pddl", "w") as f:
-                        f.write(noisePDDL)
-                    pass
-                nOfNoise += 1
+                for j in range(1, noiseIterations + 1):
+                    for amount in NOISE:
+                        pw = PDDLWriter()
+                        noiseProb = copy.deepcopy(prob)
+                        noiseProb.init = InitialCondition.noise(noiseProb.init, amount)
+                        noisePDDL: str = noiseProb.toPDDL(pw).toString()
+                        with open(f"{noiseFolder}/{j}-{amount}.pddl", "w") as f:
+                            f.write(noisePDDL)
+                        pass
+                    nOfNoise += 1
 
 
 if __name__ == '__main__':

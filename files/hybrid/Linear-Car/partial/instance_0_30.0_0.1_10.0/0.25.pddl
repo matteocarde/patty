@@ -3,7 +3,7 @@
 	(:objects
 	)
 	(:init
-		(engine_stopped)
+		(= (d) 0.0)
 	)
 	(:goal
 			(and

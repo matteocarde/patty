@@ -4,7 +4,7 @@
 		c0 c1 c2 c3 - counter
 	)
 	(:init
-		(= (value c3) 0.0)
+		(= (value c2) 2.0)
 		(= (value c0) 6.0)
 	)
 	(:goal

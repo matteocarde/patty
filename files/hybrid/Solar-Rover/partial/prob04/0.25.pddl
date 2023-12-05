@@ -5,9 +5,9 @@
 		b1 b2 b3 - battery
 	)
 	(:init
-		(= (sunexposure_time) 200.0)
-		(night)
 		(off b2)
+		(night)
+		(off b3)
 	)
 	(:goal
 			(and

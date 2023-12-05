@@ -5,7 +5,7 @@
 		p0 - person
 	)
 	(:init
-		(= (v b0) 1.0)
+		(= (y b1) 0.0)
 	)
 	(:goal
 			(and

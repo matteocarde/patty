@@ -3,7 +3,7 @@
 	(:objects
 	)
 	(:init
-		(= (M_min) 5000.0)
+		(= (M) 10000.0)
 		(= (v_margin) 10.0)
 	)
 	(:goal

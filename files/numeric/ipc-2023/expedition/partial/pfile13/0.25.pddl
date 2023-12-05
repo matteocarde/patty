@@ -5,10 +5,10 @@
 		wa0 wa1 wa2 wa3 wa4 wa5 wa6 - waypoint
 	)
 	(:init
-		(= (waypoint_supplies wa4) 0.0)
-		(= (sled_capacity s1) 4.0)
-		(= (waypoint_supplies wa3) 0.0)
-		(= (sled_supplies s0) 1.0)
+		(is_next wa4 wa5)
+		(= (sled_capacity s0) 4.0)
+		(= (waypoint_supplies wa0) 1000.0)
+		(at s0 wa0)
 	)
 	(:goal
 			(and

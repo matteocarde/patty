@@ -3,9 +3,9 @@
 	(:objects
 	)
 	(:init
-		(= (v) 0.0)
+		(= (d) 0.0)
 		(= (a) 0.0)
-		(= (max_speed) 100.0)
+		(= (v) 0.0)
 	)
 	(:goal
 			(and
