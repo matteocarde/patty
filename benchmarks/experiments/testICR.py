@@ -14,6 +14,12 @@ my_config = Config(
     region_name='eu-central-1',
 )
 
+TOL = {
+    "TOTAL": "0.5",
+    "PARTIAL": "0.01",
+    "NOISE": "0.01",
+}
+
 
 def main():
     print("Started...")
@@ -50,7 +56,7 @@ def main():
                 print(f"Starting {el} ")
             exp = ICRExp()
             r: ICRResult = exp.run(expType, domain, domainFile, problemFile, traceFile, cProblemFile, envs.timeout,
-                                   logger)
+                                   logger, tolerance=TOL[expType])
             print(r)
             if not r.solved:
                 print(r.stdout)

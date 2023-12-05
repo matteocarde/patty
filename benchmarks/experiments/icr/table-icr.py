@@ -16,7 +16,7 @@ def rString(fValue, n):
     return '{:.{n}f}'.format(fValue, n=n)
 
 
-EXPERIMENTS = ["TOTAL"]
+EXPERIMENTS = ["TOTAL", "PARTIAL", "NOISE"]
 DOMAINS = {
     "Baxter": {
         "text": r"\textsc{Baxter} (L)",
@@ -114,7 +114,7 @@ def main():
         DOMAINS_BY_KIND[kind] = DOMAINS_BY_KIND.setdefault(kind, [])
         DOMAINS_BY_KIND[kind].append(dom)
 
-    filename = "2023-12-04-ICR-TOTAL-v5.csv"
+    filename = "2023-12-05-ICR-ALL-v1.csv"
     file = f"benchmarks/results/{filename}"
 
     exp = filename.replace(".csv", "")
@@ -158,7 +158,8 @@ def main():
         # "nOfConditions": "$|\mathcal{I}(\mathcal{T}, G)|$",
         "coverage": "Cov. (\%)",
         "time": "Time (s)",
-        "dCW": "$||I - I_\star||^2$",
+        "dRC": r"$||I - I_\star||^2$",
+        "dRW": r"$||I - \tilde{I}||^2$",
     }
 
     table: Dict[str, Dict[str, Dict[str, float or str]]] = dict()
@@ -174,26 +175,28 @@ def main():
             elements = rDict[experiment][domain]
             time = statistics.mean([r.time if r.solved else TIMEOUT for r in elements])
             coverage = sum([1 if r.solved else 0 for r in elements]) / len(elements)
-            # dRW = myMean([r.dRW for r in elements if r.solved])
+            dRW = myMean([r.dRW for r in elements if r.solved])
             dCW = myMean([r.dRC for r in elements if r.solved])
             nOfAtoms = myMean([r.nOfAtoms for r in elements if r.solved])
             traceLength = myMean([r.traceLength for r in elements if r.solved])
             nOfConditions = myMean([r.nOfConditions for r in elements if r.solved])
             row["coverage"] = rString(coverage * 100, 2) if coverage > 0 else "-"
             row["time"] = rString(time / 1000, 2) if coverage > 0 else "-"
-            # row["dRW"] = rString(dRW, 2) if coverage > 0 else "-"
-            row["dCW"] = rString(dCW, 2) if coverage > 0 else "-"
-            domainInfos[domain]["nOfAtoms"] = rString(nOfAtoms, 2) if coverage > 0 else "-"
-            domainInfos[domain]["traceLength"] = rString(traceLength, 2) if coverage > 0 else "-"
-            domainInfos[domain]["nOfConditions"] = rString(nOfConditions, 2) if coverage > 0 else "-"
-            domainInfos[domain]["nOfProblems"] = rString(len(elements), 0)
+            row["dRW"] = rString(dRW, 2) if coverage > 0 else "-"
+            row["dRC"] = rString(dCW, 2) if coverage > 0 else "-"
+            if experiment == "TOTAL":
+                domainInfos[domain]["nOfAtoms"] = rString(nOfAtoms, 2) if coverage > 0 else "-"
+                domainInfos[domain]["traceLength"] = rString(traceLength, 2) if coverage > 0 else "-"
+                domainInfos[domain]["nOfConditions"] = rString(nOfConditions, 2) if coverage > 0 else "-"
+                domainInfos[domain]["nOfProblems"] = rString(len(elements), 0)
 
     latex = list()
     latex.append(r"""
-        \documentclass[11pt]{article}
+        \documentclass[11pt, landscape]{article}
         \usepackage{graphicx}
         \usepackage{multirow}
-        \usepackage[a4paper,margin=1in]{geometry}
+        \usepackage{lscape}
+        \usepackage[a4paper,margin=1in, landscape]{geometry}
 
         \begin{document}
 
@@ -201,13 +204,16 @@ def main():
         \centering
         \resizebox{\textwidth}{!}{""")
 
+    nOfDomainInfos = len(DOMAIN_INFOS_COLUMNS.items())
     nOfColumns = len(COLUMNS.values())
-    cArray = ["l|" + "c" * len(DOMAIN_INFOS_COLUMNS.items()) + "|"] + ["c" * nOfColumns for e in EXPERIMENTS]
-    latex.append(r"\begin{tabular}{|" + ''.join(cArray) + "|}")
+    cArray = ["l|" + "c" * nOfDomainInfos + "|"] + ["c" * nOfColumns + "|" for e in EXPERIMENTS]
+    latex.append(r"\begin{tabular}{|" + ''.join(cArray) + "}")
 
     latex.append(r"\hline")
+    latex.append(r" & \multicolumn{" + str(nOfDomainInfos) + "}{|c|}{Domain Infos} & " + "&".join(
+        ["\multicolumn{" + str(nOfColumns) + r"}{c|}{\textsc{" + e + r"}}" for e in EXPERIMENTS]) + r"\\")
     latex.append(fr"Domain & " + "&".join(text for (key, text) in DOMAIN_INFOS_COLUMNS.items()) + "&" + "&".join(
-        [c for c in COLUMNS.values() for e in EXPERIMENTS]) + r"\\")
+        [c for e in EXPERIMENTS for c in COLUMNS.values()]) + r"\\")
 
     # latex.append(r"\hline")
     for (kind, domains) in DOMAINS_BY_KIND.items():

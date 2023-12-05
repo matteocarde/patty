@@ -14,7 +14,7 @@ class TestPlantWatering(TestCase):
 
     def setUp(self) -> None:
         folder = "../../files/numeric/ipc-2023/ext-plant-watering/"
-        problem = "instance_10_17_2_1"
+        problem = "instance_10_7_2_1"
         self.domain: Domain = Domain.fromFile(f"{folder}/domain.pddl")
         self.problem: Problem = Problem.fromFile(f"{folder}/instances/{problem}.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem, avoidSimplification=True)
@@ -25,10 +25,8 @@ class TestPlantWatering(TestCase):
 
         pass
 
-    def test_check(self):
-        self.assertIsInstance(self.domain, Domain)
-        self.assertIsInstance(self.problem, Problem)
-        self.assertIsInstance(self.gDomain, GroundedDomain)
+    def test_condition(self):
+        self.assertTrue(self.ics.checkInitialCondition(self.problem.init))
 
     def test_solve(self):
         icr = InitialConditionRetriever(self.ics, self.problem.init)
