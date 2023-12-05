@@ -53,15 +53,15 @@ class InitialConditionRetriever:
         # self.x0 = np.array([0 for x in self.variables])
         f = lambdify(self.x, self.obj, "numpy")
 
-        tol = 0.1
+        tol = 0.5
         options = {
             "maxiter": 10000,
             "factorization_method": "SVDFactorization",
             "gtol": tol,
             "xtol": tol,
-            "barrier_tol": tol,
-            "initial_constr_penalty": 1,
-            "verbose": 2
+            "barrier_tol": 1.1,
+            "initial_constr_penalty": 100,
+            "verbose": 3
         }
 
         # noinspection PyTypeChecker
@@ -108,10 +108,11 @@ class InitialConditionRetriever:
             else:
                 constraints.append(InitialConditionRetriever.toNonLinearConstraint(c, self.x))
 
-        A, b = linear_eq_to_matrix(linear, self.variables)
-        A = np.array(A).astype(np.float64)
-        b = [float(c) for c in b]
-        constraints.append(LinearConstraint(A, lb=b, ub=np.inf))
+        if linear:
+            A, b = linear_eq_to_matrix(linear, self.variables)
+            A = np.array(A).astype(np.float64)
+            b = [float(c) for c in b]
+            constraints.append(LinearConstraint(A, lb=b, ub=np.inf))
 
         return constraints
 

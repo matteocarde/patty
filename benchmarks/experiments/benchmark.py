@@ -36,6 +36,7 @@ PLANNERS: Dict[str, Planner] = {
     "ENHSP-SAT-BLIND": ENHSP(False, settings="-h blind -s gbfs -silent -pp -pe", name="ENHSP-SAT-BLIND"),
 
     "ENHSP-OPT-HMRP": ENHSP(False, settings="-h hmrp -s WAStar -silent -pp -pe", name="ENHSP-OPT-HMRP"),
+    "ENHSP-OPT-HMRPHJ": ENHSP(False, settings="-planner sat-hmrphj -silent -pp -pe", name="ENHSP-OPT-HMRPHJ"),
     "ENHSP-OPT-HADD": ENHSP(False, settings="-h hadd -s WAStar -silent -pp -pe", name="ENHSP-OPT-HADD"),
     "ENHSP-OPT-HMAX": ENHSP(False, settings="-h hadd -s WAStar -silent -pp -pe", name="ENHSP-OPT-HMAX"),
     "ENHSP-OPT-AIBR": ENHSP(False, settings="-h aibr -s WAStar -silent -pp -pe", name="ENHSP-OPT-AIBR"),

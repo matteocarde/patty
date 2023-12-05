@@ -1,5 +1,5 @@
 import sys
-from typing import Dict, List
+from typing import Dict, List, Set
 
 from sympy import Expr, symbols, S, Symbol, expand
 
@@ -33,7 +33,7 @@ class InitialConditionSpace:
 
         self.addVariablesGraphConnections()
         self.updateXis()
-        self.conditions = self.getGoalConditions(self.problem.goal) + self.getTraceConditions(self.trace)
+        self.conditions = self.getGoalConditions(self.problem.goal) | self.getTraceConditions(self.trace)
 
         pass
 
@@ -97,8 +97,8 @@ class InitialConditionSpace:
 
                 self.vg.getNode(i + 1, atom).setValue(rhsXi)
 
-    def getGoalConditions(self, goal: Goal) -> List[Expr]:
-        conditions = []
+    def getGoalConditions(self, goal: Goal) -> Set[Expr]:
+        conditions = set()
         if goal.containsOrs():
             raise Exception("Cannot expressify OR formula")
         Xi = self.vg.getXi(self.m)
@@ -107,38 +107,38 @@ class InitialConditionSpace:
             if isinstance(c, BinaryPredicate):
                 expr = c.expressify(Xi)
                 if isinstance(expr, Expr):
-                    conditions.append(expr)
+                    conditions.add(expr)
 
         return conditions
 
-    def getTraceConditions(self, trace: Trace) -> List[Expr]:
-        conditions: [Expr] = []
+    def getTraceConditions(self, trace: Trace) -> Set[Expr]:
+        conditions: Set[Expr] = set()
 
         log: Log
         for i, log in enumerate(trace):
             Xi = self.vg.getXi(i)
             XiPrime = self.vg.getXi(i + 1)
-            conditions += self.getPreConditions(log.squashed, Xi)
-            conditions += self.getEffConditions(log.squashed, Xi, XiPrime)
+            conditions |= self.getPreConditions(log.squashed, Xi)
+            conditions |= self.getEffConditions(log.squashed, Xi, XiPrime)
 
         return conditions
 
     @staticmethod
-    def getPreConditions(h: Operation, Xi: Dict[Atom, Expr]) -> [Expr]:
-        conditions = []
+    def getPreConditions(h: Operation, Xi: Dict[Atom, Expr]) -> Set[Expr]:
+        conditions = set()
         for pre in h.preconditions:
             if isinstance(pre, BinaryPredicate):
                 f = pre.expressify(Xi)
                 if isinstance(f, Expr):
-                    conditions.append(f)
+                    conditions.add(f)
                 elif isinstance(f, bool):
                     assert f
 
         return conditions
 
     @staticmethod
-    def getEffConditions(h: Operation, Xi: Dict[Atom, Expr], XiPrime: Dict[Atom, Expr]) -> [Expr]:
-        conditions = []
+    def getEffConditions(h: Operation, Xi: Dict[Atom, Expr], XiPrime: Dict[Atom, Expr]) -> Set[Expr]:
+        conditions = set()
         for eff in h.effects:
             if isinstance(eff, BinaryPredicate):
                 rhs: Expr = eff.rhs.expressify(Xi)
@@ -148,7 +148,7 @@ class InitialConditionSpace:
                     if not rhs.free_symbols:
                         c = XiPrime[atom] - rhs
                         if c.free_symbols:
-                            conditions.append(c)
+                            conditions.add(c)
         return conditions
 
     def checkInitialCondition(self, init: InitialCondition):

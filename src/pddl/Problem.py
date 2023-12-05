@@ -106,12 +106,14 @@ class Problem:
 
         distance = 0
 
-        pt = PrettyTable(["Atom", nameA, nameB])
+        pt = PrettyTable(["Atom", nameA, nameB, "Distance"])
         for (atom, valueA) in initA.numericAssignments.items():
+            if atom not in initB.numericAssignments:
+                continue
             valueB = initB.numericAssignments[atom]
             d = (valueA - valueB) ** 2
             distance += d
-            pt.add_row([atom, valueA, valueB])
+            pt.add_row([atom, valueA, valueB, abs(valueB - valueA)])
 
         if verbose:
             print(pt)

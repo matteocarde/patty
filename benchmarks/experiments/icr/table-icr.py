@@ -114,7 +114,7 @@ def main():
         DOMAINS_BY_KIND[kind] = DOMAINS_BY_KIND.setdefault(kind, [])
         DOMAINS_BY_KIND[kind].append(dom)
 
-    filename = "2023-12-04-ICR-TOTAL-v4.csv"
+    filename = "2023-12-04-ICR-TOTAL-v5.csv"
     file = f"benchmarks/results/{filename}"
 
     exp = filename.replace(".csv", "")
@@ -147,6 +147,7 @@ def main():
     pass
 
     DOMAIN_INFOS_COLUMNS = {
+        "nOfProblems": "\#",
         "nOfAtoms": "$|V_b \cup V_n|$",
         "traceLength": "$|\mathcal{T}|$",
         "nOfConditions": "$|\mathcal{I}(\mathcal{T}, G)|$",
@@ -157,7 +158,7 @@ def main():
         # "nOfConditions": "$|\mathcal{I}(\mathcal{T}, G)|$",
         "coverage": "Cov. (\%)",
         "time": "Time (s)",
-        "dCW": "$||I - I_\star||$",
+        "dCW": "$||I - I_\star||^2$",
     }
 
     table: Dict[str, Dict[str, Dict[str, float or str]]] = dict()
@@ -185,6 +186,7 @@ def main():
             domainInfos[domain]["nOfAtoms"] = rString(nOfAtoms, 2) if coverage > 0 else "-"
             domainInfos[domain]["traceLength"] = rString(traceLength, 2) if coverage > 0 else "-"
             domainInfos[domain]["nOfConditions"] = rString(nOfConditions, 2) if coverage > 0 else "-"
+            domainInfos[domain]["nOfProblems"] = rString(len(elements), 0)
 
     latex = list()
     latex.append(r"""
@@ -200,7 +202,7 @@ def main():
         \resizebox{\textwidth}{!}{""")
 
     nOfColumns = len(COLUMNS.values())
-    cArray = ["l|ccc|"] + ["c" * nOfColumns for e in EXPERIMENTS]
+    cArray = ["l|" + "c" * len(DOMAIN_INFOS_COLUMNS.items()) + "|"] + ["c" * nOfColumns for e in EXPERIMENTS]
     latex.append(r"\begin{tabular}{|" + ''.join(cArray) + "|}")
 
     latex.append(r"\hline")

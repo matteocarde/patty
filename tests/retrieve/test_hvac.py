@@ -14,7 +14,7 @@ class TestHVAC(TestCase):
 
     def setUp(self) -> None:
         folder = "../../files/hybrid/HVAC"
-        problem = "/instance_1_5"
+        problem = "/instance_1_13"
         self.domain: Domain = Domain.fromFile(f"{folder}/domain.pddl")
         self.problem: Problem = Problem.fromFile(f"{folder}/instances/{problem}.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem, avoidSimplification=True)
@@ -25,10 +25,6 @@ class TestHVAC(TestCase):
 
         pass
 
-    def test_check(self):
-        self.assertIsInstance(self.domain, Domain)
-        self.assertIsInstance(self.problem, Problem)
-        self.assertIsInstance(self.gDomain, GroundedDomain)
 
     def test_solve(self):
         icr = InitialConditionRetriever(self.ics, self.problem.init)

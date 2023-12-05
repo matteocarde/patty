@@ -1,14 +1,15 @@
+! ====== ! Warning: Unknown planner configuration. Going with default: gbfs with hadd ! ====== !
 Domain parsed
 Problem parsed
 Grounding..
-Grounding Time: 13
+Grounding Time: 64
 Aibr Preprocessing
 |F|:0
 |X|:12
 |A|:24
 |P|:0
 |E|:0
-H1 Setup Time (msec): 8
+H1 Setup Time (msec): 10
 Setting horizon to:NaN
 Running Greedy Best First Search
 Problem Solved
@@ -22,24 +23,24 @@ Found Plan:
 5.0: (increment c3)
 6.0: (decrement c5)
 7.0: (decrement c6)
-8.0: (decrement c8)
+8.0: (decrement c1)
 9.0: (decrement c0)
 10.0: (decrement c1)
-11.0: (decrement c1)
-12.0: (decrement c0)
-13.0: (decrement c1)
-14.0: (decrement c0)
-15.0: (decrement c1)
-16.0: (decrement c0)
-17.0: (decrement c1)
-18.0: (decrement c0)
-19.0: (decrement c1)
-20.0: (decrement c0)
-21.0: (decrement c1)
-22.0: (decrement c0)
-23.0: (decrement c7)
-24.0: (increment c2)
-25.0: (increment c3)
+11.0: (decrement c0)
+12.0: (decrement c1)
+13.0: (decrement c0)
+14.0: (decrement c1)
+15.0: (decrement c0)
+16.0: (decrement c1)
+17.0: (decrement c0)
+18.0: (decrement c1)
+19.0: (decrement c0)
+20.0: (decrement c1)
+21.0: (decrement c0)
+22.0: (decrement c1)
+23.0: (decrement c0)
+24.0: (decrement c1)
+25.0: (decrement c0)
 26.0: (decrement c1)
 27.0: (decrement c0)
 28.0: (decrement c1)
@@ -52,21 +53,21 @@ Found Plan:
 35.0: (decrement c0)
 36.0: (decrement c1)
 37.0: (decrement c0)
-38.0: (decrement c1)
-39.0: (decrement c0)
-40.0: (decrement c1)
-41.0: (decrement c0)
-42.0: (decrement c4)
-43.0: (increment c9)
-44.0: (increment c10)
-45.0: (decrement c5)
-46.0: (decrement c6)
-47.0: (increment c9)
-48.0: (increment c10)
-49.0: (increment c9)
-50.0: (increment c10)
-51.0: (increment c9)
-52.0: (increment c10)
+38.0: (increment c9)
+39.0: (increment c10)
+40.0: (increment c9)
+41.0: (increment c10)
+42.0: (increment c9)
+43.0: (increment c10)
+44.0: (increment c9)
+45.0: (increment c10)
+46.0: (increment c9)
+47.0: (increment c10)
+48.0: (increment c3)
+49.0: (increment c2)
+50.0: (decrement c6)
+51.0: (decrement c5)
+52.0: (decrement c4)
 53.0: (decrement c6)
 54.0: (decrement c5)
 55.0: (decrement c4)
@@ -79,18 +80,18 @@ Found Plan:
 62.0: (decrement c6)
 63.0: (decrement c5)
 64.0: (decrement c4)
-65.0: (increment c10)
-66.0: (increment c9)
-67.0: (increment c8)
+65.0: (decrement c6)
+66.0: (decrement c5)
+67.0: (decrement c4)
 68.0: (decrement c6)
 69.0: (decrement c5)
 70.0: (decrement c4)
-71.0: (decrement c6)
-72.0: (decrement c5)
-73.0: (decrement c4)
-74.0: (decrement c6)
-75.0: (decrement c5)
-76.0: (decrement c4)
+71.0: (increment c8)
+72.0: (increment c9)
+73.0: (increment c10)
+74.0: (increment c8)
+75.0: (increment c9)
+76.0: (increment c10)
 77.0: (increment c8)
 78.0: (increment c9)
 79.0: (increment c10)
@@ -100,27 +101,25 @@ Found Plan:
 83.0: (increment c8)
 84.0: (increment c9)
 85.0: (increment c10)
-86.0: (increment c8)
-87.0: (increment c9)
-88.0: (increment c10)
-89.0: (increment c8)
-90.0: (increment c9)
-91.0: (increment c10)
-92.0: (decrement c7)
-93.0: (decrement c6)
-94.0: (decrement c5)
-95.0: (decrement c4)
+86.0: (decrement c7)
+87.0: (decrement c6)
+88.0: (decrement c5)
+89.0: (decrement c4)
+90.0: (increment c11)
+91.0: (increment c8)
+92.0: (increment c9)
+93.0: (increment c10)
 
-Plan-Length:96
-Metric (Search):96.0
-Planning Time (msec): 1492
-Heuristic Time (msec): 537
-Search Time (msec): 977
-Expanded Nodes:468
-States Evaluated:8526
+Plan-Length:94
+Metric (Search):94.0
+Planning Time (msec): 1224
+Heuristic Time (msec): 426
+Search Time (msec): 736
+Expanded Nodes:519
+States Evaluated:9315
 Fixed constraint violations during search (zero-crossing):0
 Number of Dead-Ends detected:0
-Number of Duplicates detected:2312
-real 1.65
-user 1.19
-sys 0.05
+Number of Duplicates detected:2687
+real 1.37
+user 1.32
+sys 0.06
