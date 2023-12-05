@@ -120,7 +120,7 @@ def main():
         DOMAINS_BY_KIND[kind] = DOMAINS_BY_KIND.setdefault(kind, [])
         DOMAINS_BY_KIND[kind].append(dom)
 
-    filename = "2023-12-05-ICR-NOISE-v1.csv"
+    filename = "2023-12-05-ICR-NOISE-v2.csv"
     file = f"benchmarks/results/{filename}"
 
     exp = filename.replace(".csv", "")
@@ -144,40 +144,43 @@ def main():
         type = r.expType
         domain = r.domain
         domains.add(domain)
-
+        problem = int(r.problem[:-5].split("-")[1])
         if type != "NOISE":
             continue
 
         rDict[domain] = rDict.setdefault(domain, dict())
-        rDict[domain][int(r.problem[:-5])] = r
+        rDict[domain][problem] = rDict[domain].setdefault(problem, [])
+        rDict[domain][problem].append(r)
 
         if r.time > TIMEOUT:
             TIMEOUT = r.time
     pass
 
     domains = sorted(list(domains))
+    byRow = 6
 
-    nOfRows = (len(domains) // 3) + 1
+    nOfRows = (len(domains) // byRow) + 1
 
     plt.rcParams.update({
         "text.usetex": True,
-        "figure.figsize": [7.50, 2 * nOfRows],
+        "figure.figsize": [2.5 * byRow, 2 * nOfRows],
         "figure.autolayout": True
     })
 
-    fig, axs = plt.subplots(nOfRows, 3)
+    fig, axs = plt.subplots(nOfRows, byRow)
     i = 0
 
     for d in domains:
-        ax = axs[i // 3][i % 3]
+        ax = axs[i // byRow][i % byRow]
         ax.grid()
         ax.set_xlabel("Noise")
         ax.set_ylabel("Value")
+        # ax.set_yscale("log")
         ax.set_title(DOMAINS[d]["text"])
 
         x = sorted([k for k in rDict[d].keys()])
-        dRW = [rDict[d][k].dRW for k in rDict[d].keys()]
-        dRC = [rDict[d][k].dRC for k in rDict[d].keys()]
+        dRW = [statistics.mean([r.dRW for r in rDict[d][p]]) for p in x]
+        dRC = [statistics.mean([r.dRC for r in rDict[d][p]]) for p in x]
 
         ax.plot(x, dRW, label=r"$||I - \tilde{I}||^2$")
         ax.plot(x, dRC, label=r"$||I - I_\star||^2$")
