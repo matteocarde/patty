@@ -7,16 +7,16 @@
 		left1 right1 left2 right2 - arm
 	)
 	(:init
-		(= (load_limit bot1) 4.0)
-		(at item11 rooma)
-		(door roomc rooma)
-		(door rooma roomc)
-		(at item10 rooma)
-		(mount right2 bot2)
-		(= (weight item3) 1.0)
-		(free right1)
-		(mount right1 bot1)
 		(= (weight item7) 1.0)
+		(at item4 rooma)
+		(at item1 rooma)
+		(= (weight item3) 1.0)
+		(= (weight item11) 2.0)
+		(at item3 rooma)
+		(door roomb rooma)
+		(at item10 rooma)
+		(at item11 rooma)
+		(at item12 rooma)
 	)
 	(:goal
 			(and

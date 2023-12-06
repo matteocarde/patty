@@ -5,9 +5,9 @@
 		b1 b2 b3 - battery
 	)
 	(:init
-		(off b2)
-		(night)
+		(= (time) 0.0)
 		(off b3)
+		(= (SoC b1) 40.0)
 	)
 	(:goal
 			(and

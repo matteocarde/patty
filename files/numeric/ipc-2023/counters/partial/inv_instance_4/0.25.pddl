@@ -4,7 +4,7 @@
 		c0 c1 c2 c3 - counter
 	)
 	(:init
-		(= (max_int) 8.0)
+		(= (value c2) 2.0)
 	)
 	(:goal
 			(and

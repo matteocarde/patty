@@ -6,11 +6,11 @@
 		city0 city1 city2 - city
 	)
 	(:init
+		(= (distance city1 city2) 631.0)
 		(= (onboard plane1) 0.0)
-		(= (distance city1 city1) 0.0)
-		(located person1 city2)
-		(= (distance city1 city0) 627.0)
-		(= (capacity plane1) 6830.0)
+		(= (fast-burn plane1) 11.0)
+		(= (total-fuel-used) 0.0)
+		(= (distance city2 city2) 0.0)
 	)
 	(:goal
 			(and

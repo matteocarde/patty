@@ -6,8 +6,8 @@
 	)
 	(:init
 		(= (SoC b3) 100.0)
-		(= (time) 0.0)
-		(off b3)
+		(= (roverenergy) 0.0)
+		(night)
 	)
 	(:goal
 			(and

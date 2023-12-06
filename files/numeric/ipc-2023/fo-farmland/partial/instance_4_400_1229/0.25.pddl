@@ -4,9 +4,9 @@
 		farm0 farm1 farm2 farm3 - farm
 	)
 	(:init
-		(adj farm0 farm2)
-		(= (cost) 0.0)
-		(= (x farm0) 400.0)
+		(adj farm2 farm0)
+		(= (num-of-cars) 0.0)
+		(adj farm1 farm0)
 	)
 	(:goal
 			(and

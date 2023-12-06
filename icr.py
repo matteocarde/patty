@@ -3,6 +3,7 @@ import traceback
 from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.Problem import Problem
 from src.pddl.Trace import Trace
+from src.retrieve.Bounds import Bounds
 from src.retrieve.InitialConditionRetriever import InitialConditionRetriever
 from src.retrieve.InitialConditionSpace import InitialConditionSpace
 from src.utils.ICRArguments import ICRArguments
@@ -25,6 +26,7 @@ def main():
         gDomain: GroundedDomain = domain.ground(problem, avoidSimplification=True)
         trace: Trace = Trace.fromPatty(args.trace, gDomain)
         correctProblem: Problem = Problem.fromFile(args.correctProblem) if args.correctProblem else None
+        bounds: Bounds = Bounds.fromFile(args.bounds, gDomain) if args.bounds else None
         ts.end("Grounding")
 
         print(f"Atoms: {len(gDomain.allAtoms)}")
@@ -35,7 +37,7 @@ def main():
         print(f"ICS Conditions: {len(ics.conditions)}")
 
         print("Solving ICR")
-        icr = InitialConditionRetriever(ics, problem.init)
+        icr = InitialConditionRetriever(ics, problem.init, bounds=bounds)
         initSolution, optimum = icr.solve(tol=args.tolerance)
 
         ts.end("Initial Condition Retrieve")

@@ -5,14 +5,14 @@
 	)
 	(:init
 		(= (value c1) 20.0)
-		(= (max_int) 24.0)
-		(= (value c3) 16.0)
-		(= (value c7) 8.0)
-		(= (value c11) 0.0)
-		(= (value c9) 4.0)
-		(= (value c6) 10.0)
-		(= (value c10) 2.0)
 		(= (value c8) 6.0)
+		(= (value c5) 12.0)
+		(= (value c4) 14.0)
+		(= (value c0) 22.0)
+		(= (value c6) 10.0)
+		(= (value c2) 18.0)
+		(= (value c3) 16.0)
+		(= (value c11) 0.0)
 	)
 	(:goal
 			(and

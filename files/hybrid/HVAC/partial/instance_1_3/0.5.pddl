@@ -6,10 +6,10 @@
 	)
 	(:init
 		(= (time) 0.0)
-		(= (temp_sa r1) 10.0)
-		(= (time_requested r1 k2) 20.0)
-		(= (time_requested r1 k1) 10.0)
+		(= (temp r1) 15.0)
+		(= (air_flow r1) 0.0)
 		(= (temp_requested r1 k2) 14.0)
+		(= (time_requested r1 k1) 10.0)
 	)
 	(:goal
 			(and

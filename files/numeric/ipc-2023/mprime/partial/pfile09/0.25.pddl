@@ -6,16 +6,16 @@
 		dread sciatica abrasion prostatitis loneliness anger hangover anxiety laceration boils jealousy angina grief - pain
 	)
 	(:init
-		(craves jealousy guava)
 		(eats flounder wurst)
-		(craves dread flounder)
-		(eats wurst flounder)
-		(eats guava haroset)
-		(eats apple guava)
-		(eats haroset hamburger)
+		(= (harmony intoxication) 1.0)
+		(eats flounder hamburger)
+		(craves jealousy guava)
 		(craves curiosity hotdog)
-		(craves grief guava)
-		(craves anxiety wurst)
+		(craves dread flounder)
+		(eats haroset hamburger)
+		(= (locale haroset) 2.0)
+		(craves excitement guava)
+		(craves intoxication haroset)
 	)
 	(:goal
 			(and

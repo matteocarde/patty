@@ -7,17 +7,18 @@
 
   (:init
     (= (max_int) 8)
-	(= (value c0) 0)
-	(= (value c1) 0)
-	(= (value c2) 0)
-	(= (value c3) 0)
+    (= (value c0) 0)
+    (= (value c1) 0)
+    (= (value c2) 0)
+    (= (value c3) 0)
   )
 
-  (:goal (and 
-    (<= (+ (value c0) 1) (value c1))
-	(<= (+ (value c1) 1) (value c2))
-	(<= (+ (value c2) 1) (value c3))
-  ))
+  (:goal
+    (and
+      (<= (+ (value c0) 1) (value c1))
+      (<= (+ (value c1) 1) (value c2))
+      (<= (+ (value c2) 1) (value c3))
+    )
+  )
 
-  
 )

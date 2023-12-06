@@ -3,7 +3,7 @@
 	(:objects
 	)
 	(:init
-		(= (d) 0.0)
+		(= (a) 0.0)
 	)
 	(:goal
 			(and

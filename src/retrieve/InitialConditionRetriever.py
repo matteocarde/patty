@@ -5,12 +5,14 @@ from typing import Tuple, List, Dict, Set
 import numpy
 import numpy as np
 from scipy.optimize import NonlinearConstraint, minimize, LinearConstraint, OptimizeResult
+from scipy.optimize import Bounds as OptBounds
 from sympy import Expr, Symbol, lambdify, S, simplify
 from sympy.solvers.solveset import linear_coeffs, linear_eq_to_matrix
 
 from src.pddl.Atom import Atom
 from src.pddl.InitialCondition import InitialCondition
 from src.pddl.Literal import Literal
+from src.retrieve.Bounds import Bounds
 from src.retrieve.InitialConditionSpace import InitialConditionSpace
 
 EPSILON = 0.01
@@ -18,7 +20,7 @@ EPSILON = 0.01
 
 class InitialConditionRetriever:
 
-    def __init__(self, ics: InitialConditionSpace, wIc: InitialCondition):
+    def __init__(self, ics: InitialConditionSpace, wIc: InitialCondition, bounds: Bounds or None = None):
         self.conditions = ics.conditions
         self.domain = ics.domain
         self.ics = ics
@@ -40,14 +42,25 @@ class InitialConditionRetriever:
         self.variables: [Symbol] = list(uniqueVars)
         self.x: List[Tuple[Symbol]] = [tuple(self.variables)]
 
+        lb: List[float] = []
+        ub: List[float] = []
         self.x0: List[float] = []
         for var in self.variables:
             if var in self.varsToAtom:
                 atom = self.varsToAtom[var]
                 self.x0.append(wIc.numericAssignments[atom])
+                if bounds and atom in bounds.interval:
+                    lb.append(bounds.interval[atom][0])
+                    ub.append(bounds.interval[atom][1])
+                else:
+                    lb.append(-np.inf)
+                    ub.append(+np.inf)
             else:
                 self.x0.append(randrange(0, 100))
+                lb.append(-np.inf)
+                ub.append(+np.inf)
 
+        self.bounds = OptBounds(lb, ub)
         self.constraints = self.getConstraints()
         pass
 
@@ -67,7 +80,10 @@ class InitialConditionRetriever:
         }
 
         # noinspection PyTypeChecker
-        solution: OptimizeResult = minimize(f, self.x0, method='trust-constr', constraints=self.constraints,
+        solution: OptimizeResult = minimize(f, self.x0,
+                                            method='trust-constr',
+                                            constraints=self.constraints,
+                                            bounds=self.bounds,
                                             options=options)
 
         if not solution.success:

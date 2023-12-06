@@ -5,12 +5,12 @@
 		b1 b2 b3 - battery
 	)
 	(:init
-		(= (sunexposure_time) 50.0)
-		(= (SoC b2) 80.0)
-		(= (roverenergy) 0.0)
 		(off b2)
+		(= (sunexposure_time) 50.0)
 		(gboff GB)
 		(off b1)
+		(off b3)
+		(= (roverenergy) 0.0)
 	)
 	(:goal
 			(and

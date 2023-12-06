@@ -10,18 +10,18 @@
 		objective0 objective1 - objective
 	)
 	(:init
-		(at_soil_sample waypoint0)
-		(channel_free general)
-		(in rover0 waypoint3)
-		(available rover0)
-		(equipped_for_rock_analysis rover0)
-		(at_soil_sample waypoint2)
-		(visible_from objective1 waypoint1)
+		(visible_from objective0 waypoint1)
+		(visible_from objective1 waypoint0)
 		(at_rock_sample waypoint2)
-		(at_rock_sample waypoint3)
+		(visible waypoint3 waypoint2)
+		(equipped_for_rock_analysis rover0)
+		(at_rock_sample waypoint1)
 		(equipped_for_imaging rover0)
-		(visible waypoint1 waypoint3)
-		(visible waypoint0 waypoint1)
+		(can_traverse rover0 waypoint3 waypoint1)
+		(visible waypoint0 waypoint3)
+		(channel_free general)
+		(can_traverse rover0 waypoint1 waypoint3)
+		(visible_from objective1 waypoint2)
 	)
 	(:goal
 			(and

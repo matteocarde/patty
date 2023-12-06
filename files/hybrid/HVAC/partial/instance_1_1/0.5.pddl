@@ -5,9 +5,9 @@
 		k1 - request
 	)
 	(:init
-		(= (time) 0.0)
-		(= (air_flow r1) 0.0)
 		(= (comfort) 2.0)
+		(= (time) 0.0)
+		(= (temp r1) 15.0)
 	)
 	(:goal
 			(and

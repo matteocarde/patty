@@ -3,7 +3,7 @@
 	(:objects
 	)
 	(:init
-		(= (q) 50.0)
+		(= (v) 0.0)
 		(= (v_margin) 10.0)
 	)
 	(:goal

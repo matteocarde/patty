@@ -1,0 +1,6 @@
+{
+  "load_limit": [0, 15],
+  "current_load": [0, 15],
+  "weight": [0, 5],
+  "cost": [0, 5]
+}

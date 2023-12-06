@@ -4,8 +4,8 @@
 		farm0 farm1 - farm
 	)
 	(:init
-		(= (x farm0) 700.0)
 		(= (cost) 0.0)
+		(adj farm1 farm0)
 	)
 	(:goal
 			(and

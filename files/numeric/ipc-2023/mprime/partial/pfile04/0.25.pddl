@@ -6,17 +6,17 @@
 		hangover dread sciatica jealousy loneliness abrasion anger - pain
 	)
 	(:init
-		(eats cherry shrimp)
-		(eats cherry arugula)
-		(= (locale ham) 2.0)
-		(eats muffin scallion)
+		(craves sciatica grapefruit)
+		(eats muffin cherry)
 		(= (locale scallop) 3.0)
-		(= (locale arugula) 4.0)
+		(craves hangover muffin)
+		(eats muffin arugula)
+		(eats cherry ham)
 		(eats bacon arugula)
+		(eats bacon wurst)
 		(craves dread ham)
-		(= (locale scallion) 1.0)
-		(eats grapefruit wurst)
-		(eats scallop grapefruit)
+		(eats ham cherry)
+		(craves loneliness arugula)
 	)
 	(:goal
 			(and

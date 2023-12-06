@@ -4,7 +4,7 @@
 	)
 	(:init
 		(= (M) 10000.0)
-		(= (v_margin) 10.0)
+		(stop)
 	)
 	(:goal
 			(and

@@ -16,7 +16,7 @@ def rString(fValue, n):
     return '{:.{n}f}'.format(fValue, n=n)
 
 
-EXPERIMENTS = ["TOTAL", "PARTIAL", "NOISE"]
+EXPERIMENTS = ["TOTAL", "PARTIAL"]
 DOMAINS = {
     "Baxter": {
         "text": r"\textsc{Baxter} (L)",
@@ -147,7 +147,7 @@ def main():
     pass
 
     DOMAIN_INFOS_COLUMNS = {
-        "nOfProblems": "\#",
+        # "nOfProblems": "\#",
         "nOfAtoms": "$|V_b \cup V_n|$",
         "traceLength": "$|\mathcal{T}|$",
         "nOfConditions": "$|\mathcal{I}(\mathcal{T}, G)|$",
@@ -156,10 +156,10 @@ def main():
         # "nOfAtoms": "$|V_b \cup V_n|$",
         # "traceLength": "$|\mathcal{T}|$",
         # "nOfConditions": "$|\mathcal{I}(\mathcal{T}, G)|$",
-        "coverage": "Cov. (\%)",
+        # "coverage": "Cov. (\%)",
         "time": "Time (s)",
-        "dRC": r"$||I - I_\star||^2$",
-        "dRW": r"$||I - \tilde{I}||^2$",
+        # "dRC": r"$||I - I_\star||^2$",
+        # "dRW": r"$||I - \tilde{I}||^2$",
     }
 
     table: Dict[str, Dict[str, Dict[str, float or str]]] = dict()
@@ -192,11 +192,11 @@ def main():
 
     latex = list()
     latex.append(r"""
-        \documentclass[11pt, landscape]{article}
+        \documentclass[11pt]{article}
         \usepackage{graphicx}
         \usepackage{multirow}
         \usepackage{lscape}
-        \usepackage[a4paper,margin=1in, landscape]{geometry}
+        \usepackage[a4paper,margin=1in]{geometry}
 
         \begin{document}
 

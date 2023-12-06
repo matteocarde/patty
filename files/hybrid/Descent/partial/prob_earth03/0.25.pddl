@@ -3,8 +3,8 @@
 	(:objects
 	)
 	(:init
-		(= (v) 0.0)
-		(= (ISP) 311.0)
+		(= (d_margin) 10.0)
+		(stop)
 	)
 	(:goal
 			(and

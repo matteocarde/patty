@@ -20,6 +20,14 @@ def rString(fValue, n):
 
 
 DOMAINS = {
+    "hydropower": {
+        "text": r"\textsc{Hydropower} (S)",
+        "kind": "Numeric",
+    },
+    "sailing": {
+        "text": r"\textsc{Sailing} (S)",
+        "kind": "Numeric",
+    },
     "Baxter": {
         "text": r"\textsc{Baxter} (L)",
         "kind": "Hybrid",
@@ -28,86 +36,82 @@ DOMAINS = {
         "text": r"\textsc{Descent} (NL)",
         "kind": "Hybrid",
     },
-    "HVAC": {
-        "text": r"\textsc{HVAC} (NL)",
-        "kind": "Hybrid",
-    },
-    "Linear-Car": {
-        "text": r"\textsc{LinearCar} (L)",
-        "kind": "Hybrid",
-    },
-    "Linear-Car-2": {
-        "text": r"\textsc{LinearCar2} (L)",
-        "kind": "Hybrid",
-    },
-    "Solar-Rover": {
-        "text": r"\textsc{SolarRover} (L)",
-        "kind": "Hybrid",
-    },
-    "UTC": {
-        "text": r"\textsc{UTC} (L)",
-        "kind": "Hybrid",
-    },
-    "counters": {
-        "text": r"\textsc{Counters} (S)",
-        "kind": "Numeric",
-    },
-    "fo_counters": {
-        "text": r"\textsc{Counters} (L)",
-        "kind": "Numeric",
-    },
-    "delivery": {
-        "text": r"\textsc{Delivery} (S)",
-        "kind": "Numeric",
-    },
-    "drone": {
-        "text": r"\textsc{Drone} (S)",
-        "kind": "Numeric",
-    },
-    "expedition": {
-        "text": r"\textsc{Expedition} (S)",
-        "kind": "Numeric",
-    },
-    "watering": {
-        "text": r"\textsc{PlantWatering} (S)",
-        "kind": "Numeric",
-    },
-    "farmland": {
-        "text": r"\textsc{Farmland} (S)",
-        "kind": "Numeric",
-    },
-    "fo-farmland": {
-        "text": r"\textsc{Farmland} (L)",
-        "kind": "Numeric",
-    },
-    "hydropower": {
-        "text": r"\textsc{Hydropower} (S)",
-        "kind": "Numeric",
-    },
-    "mprime": {
-        "text": r"\textsc{MPrime} (S)",
-        "kind": "Numeric",
-    },
-    "rover": {
-        "text": r"\textsc{Rover} (S)",
-        "kind": "Numeric",
-    },
-    "sailing": {
-        "text": r"\textsc{Sailing} (S)",
-        "kind": "Numeric",
-    },
-    "fo-sailing": {
-        "text": r"\textsc{Sailing} (L)",
-        "kind": "Numeric",
-    },
-    "sugar": {
-        "text": r"\textsc{Sugar} (S)",
-        "kind": "Numeric",
-    },
-    "zenotravel": {
-        "text": r"\textsc{ZenoTravel} (S)",
-        "kind": "Numeric",
-    },
+    # "HVAC": {
+    #     "text": r"\textsc{HVAC} (NL)",
+    #     "kind": "Hybrid",
+    # },
+    # "Linear-Car": {
+    #     "text": r"\textsc{LinearCar} (L)",
+    #     "kind": "Hybrid",
+    # },
+    # "Linear-Car-2": {
+    #     "text": r"\textsc{LinearCar2} (L)",
+    #     "kind": "Hybrid",
+    # },
+    # "Solar-Rover": {
+    #     "text": r"\textsc{SolarRover} (L)",
+    #     "kind": "Hybrid",
+    # },
+    # "UTC": {
+    #     "text": r"\textsc{UTC} (L)",
+    #     "kind": "Hybrid",
+    # },
+    # "counters": {
+    #     "text": r"\textsc{Counters} (S)",
+    #     "kind": "Numeric",
+    # },
+    # "fo_counters": {
+    #     "text": r"\textsc{Counters} (L)",
+    #     "kind": "Numeric",
+    # },
+    # "delivery": {
+    #     "text": r"\textsc{Delivery} (S)",
+    #     "kind": "Numeric",
+    # },
+    # "drone": {
+    #     "text": r"\textsc{Drone} (S)",
+    #     "kind": "Numeric",
+    # },
+    # "expedition": {
+    #     "text": r"\textsc{Expedition} (S)",
+    #     "kind": "Numeric",
+    # },
+    # "watering": {
+    #     "text": r"\textsc{PlantWatering} (S)",
+    #     "kind": "Numeric",
+    # },
+    # "farmland": {
+    #     "text": r"\textsc{Farmland} (S)",
+    #     "kind": "Numeric",
+    # },
+    # "fo-farmland": {
+    #     "text": r"\textsc{Farmland} (L)",
+    #     "kind": "Numeric",
+    # },
+    # "hydropower": {
+    #     "text": r"\textsc{Hydropower} (S)",
+    #     "kind": "Numeric",
+    # },
+    # "mprime": {
+    #     "text": r"\textsc{MPrime} (S)",
+    #     "kind": "Numeric",
+    # },
+    # "rover": {
+    #     "text": r"\textsc{Rover} (S)",
+    #     "kind": "Numeric",
+    # },
+    # "fo-sailing": {
+    #     "text": r"\textsc{Sailing} (L)",
+    #     "kind": "Numeric",
+    # },
+    # "sugar": {
+    #     "text": r"\textsc{Sugar} (S)",
+    #     "kind": "Numeric",
+    # },
+    # "zenotravel": {
+    #     "text": r"\textsc{ZenoTravel} (S)",
+    #     "kind": "Numeric",
+    # },
 
 }
 
@@ -120,7 +124,7 @@ def main():
         DOMAINS_BY_KIND[kind] = DOMAINS_BY_KIND.setdefault(kind, [])
         DOMAINS_BY_KIND[kind].append(dom)
 
-    filename = "2023-12-05-ICR-NOISE-v2.csv"
+    filename = "2023-12-05-ICR-NOISE-v5.csv"
     file = f"benchmarks/results/{filename}"
 
     exp = filename.replace(".csv", "")
@@ -143,10 +147,10 @@ def main():
     for r in results:
         type = r.expType
         domain = r.domain
-        domains.add(domain)
         problem = int(r.problem[:-5].split("-")[1])
-        if type != "NOISE":
+        if type != "NOISE" or domain not in DOMAINS:
             continue
+        domains.add(domain)
 
         rDict[domain] = rDict.setdefault(domain, dict())
         rDict[domain][problem] = rDict[domain].setdefault(problem, [])
@@ -157,9 +161,9 @@ def main():
     pass
 
     domains = sorted(list(domains))
-    byRow = 6
+    byRow = 4
 
-    nOfRows = (len(domains) // byRow) + 1
+    nOfRows = (len(domains) // byRow)
 
     plt.rcParams.update({
         "text.usetex": True,
@@ -170,21 +174,21 @@ def main():
     fig, axs = plt.subplots(nOfRows, byRow)
     i = 0
 
-    for d in domains:
-        ax = axs[i // byRow][i % byRow]
+    for d in DOMAINS.keys():
+        ax = axs[i % byRow]
         ax.grid()
-        ax.set_xlabel("Noise")
-        ax.set_ylabel("Value")
-        # ax.set_yscale("log")
+        ax.set_xlabel("Noise (\%)")
+        ax.set_ylabel("Distance")
+        ax.set_yscale("log")
         ax.set_title(DOMAINS[d]["text"])
 
-        x = sorted([k for k in rDict[d].keys()])
+        x = sorted([k for k in rDict[d].keys() if k < 750])
         dRW = [statistics.mean([r.dRW for r in rDict[d][p]]) for p in x]
         dRC = [statistics.mean([r.dRC for r in rDict[d][p]]) for p in x]
 
-        ax.plot(x, dRW, label=r"$||I - \tilde{I}||^2$")
-        ax.plot(x, dRC, label=r"$||I - I_\star||^2$")
-        ax.legend(loc="upper left", fontsize="8")
+        ax.plot(x, dRW, label=r"$||I - \tilde{I}||$")
+        ax.plot(x, dRC, label=r"$||I - I_\star||$")
+        ax.legend(loc="lower right", fontsize="8")
         i += 1
         pass
 
@@ -192,7 +196,7 @@ def main():
     if os.path.exists(folder):
         shutil.rmtree(folder)
     os.mkdir(folder)
-    plt.savefig(f'{folder}/plot.pdf', dpi=100)
+    plt.savefig(f'{folder}/{exp}.pdf', dpi=100)
     plt.show()
 
 

@@ -4,16 +4,16 @@
 		c0 c1 c2 c3 c4 c5 c6 c7 c8 c9 c10 c11 c12 c13 c14 c15 c16 c17 c18 c19 c20 c21 c22 c23 c24 c25 c26 c27 c28 c29 c30 c31 c32 c33 c34 c35 c36 c37 c38 c39 - counter
 	)
 	(:init
-		(= (value c18) 0.0)
-		(= (value c5) 0.0)
-		(= (value c25) 0.0)
-		(= (value c24) 0.0)
-		(= (value c32) 0.0)
+		(= (value c7) 0.0)
+		(= (value c35) 0.0)
+		(= (value c6) 0.0)
+		(= (value c17) 0.0)
+		(= (value c27) 0.0)
 		(= (value c19) 0.0)
-		(= (value c12) 0.0)
-		(= (value c10) 0.0)
-		(= (value c37) 0.0)
+		(= (value c22) 0.0)
+		(= (value c36) 0.0)
 		(= (value c39) 0.0)
+		(= (value c24) 0.0)
 	)
 	(:goal
 			(and

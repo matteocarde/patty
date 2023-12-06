@@ -6,18 +6,18 @@
 		agent1 agent2 - agent
 	)
 	(:init
-		(= (y plant10) 6.0)
-		(= (x tap1) 8.0)
-		(= (y plant8) 7.0)
-		(= (poured plant10) 0.0)
-		(= (poured plant4) 0.0)
-		(= (x plant10) 7.0)
 		(= (x plant2) 1.0)
-		(= (x plant5) 5.0)
-		(= (miny) 1.0)
-		(= (x agent2) 3.0)
-		(= (y agent2) 1.0)
+		(= (y plant1) 8.0)
+		(= (total_loaded) 0.0)
+		(= (y agent1) 10.0)
+		(= (y plant6) 7.0)
+		(= (poured plant7) 0.0)
+		(= (y plant2) 1.0)
+		(= (x plant10) 7.0)
+		(= (y plant11) 2.0)
+		(= (y plant7) 3.0)
 		(= (poured plant2) 0.0)
+		(= (miny) 1.0)
 	)
 	(:goal
 			(and

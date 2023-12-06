@@ -3,8 +3,8 @@
 	(:objects
 	)
 	(:init
-		(= (d_final) 500.0)
-		(= (v) 0.0)
+		(= (M_min) 5000.0)
+		(stop)
 	)
 	(:goal
 			(and

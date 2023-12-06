@@ -5,7 +5,7 @@
 		p0 p1 p2 p3 - person
 	)
 	(:init
-		(= (d p1) -58.0)
+		(= (x b0) -7.0)
 	)
 	(:goal
 			(and

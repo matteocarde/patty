@@ -3,11 +3,11 @@
 	(:objects
 	)
 	(:init
-		(= (max_speed) 10.0)
 		(= (v) 0.0)
-		(= (max_acceleration) 1.0)
 		(= (d) 0.0)
-		(= (min_acceleration) -1.0)
+		(= (a) 0.0)
+		(engine_stopped)
+		(= (max_acceleration) 1.0)
 	)
 	(:goal
 			(and

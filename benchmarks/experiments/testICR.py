@@ -50,12 +50,14 @@ def main():
         problemFile = el[3]
         traceFile = el[4]
         cProblemFile = el[5]
+        boundsFile = el[6]
 
         try:
             if envs.isInsideAWS:
                 print(f"Starting {el} ")
             exp = ICRExp()
-            r: ICRResult = exp.run(expType, domain, domainFile, problemFile, traceFile, cProblemFile, envs.timeout,
+            r: ICRResult = exp.run(expType, domain, domainFile, problemFile, traceFile, cProblemFile, boundsFile,
+                                   envs.timeout,
                                    logger, tolerance=TOL[expType])
             print(r)
             if not r.solved:

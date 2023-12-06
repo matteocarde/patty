@@ -4,7 +4,7 @@
 		farm0 farm1 - farm
 	)
 	(:init
-		(= (x farm0) 600.0)
+		(adj farm0 farm1)
 	)
 	(:goal
 			(and

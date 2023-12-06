@@ -4,10 +4,10 @@
 	)
 	(:init
 		(= (d) 0.0)
-		(= (a) 0.0)
-		(= (min_acceleration) -4.0)
+		(= (max_acceleration) 4.0)
 		(= (max_speed) 100.0)
-		(engine_stopped)
+		(= (v) 0.0)
+		(= (min_acceleration) -4.0)
 	)
 	(:goal
 			(and

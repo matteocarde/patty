@@ -5,15 +5,15 @@
 		b1 b2 b3 - battery
 	)
 	(:init
+		(= (SoC b3) 100.0)
 		(= (roverenergy) 0.0)
-		(= (time) 0.0)
-		(off b1)
-		(gboff GB)
-		(datatosend)
-		(night)
-		(off b2)
 		(= (SoC b1) 40.0)
+		(off b2)
 		(= (sunexposure_time) 100.0)
+		(= (SoC b2) 80.0)
+		(= (time) 0.0)
+		(night)
+		(gboff GB)
 	)
 	(:goal
 			(and

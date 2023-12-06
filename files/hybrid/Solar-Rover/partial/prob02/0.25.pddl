@@ -6,8 +6,8 @@
 	)
 	(:init
 		(datatosend)
-		(off b2)
-		(= (sunexposure_time) 100.0)
+		(= (SoC b2) 80.0)
+		(off b3)
 	)
 	(:goal
 			(and

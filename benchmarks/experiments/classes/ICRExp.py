@@ -17,8 +17,10 @@ class ICRExp:
 
     def run(self, expType: str, domain: str, domainFile: str,
             problemFile: str, traceFile: str, cProblemFile: str,
+            boundsFile: str,
             timeout: int, logger: CloudLogger, tolerance: float or None = None) -> ICRResult:
-        stdout, code, cmd = self.exec(domainFile, problemFile, traceFile, cProblemFile, timeout, tolerance=tolerance)
+        stdout, code, cmd = self.exec(domainFile, problemFile, traceFile, cProblemFile, boundsFile, timeout,
+                                      tolerance=tolerance)
         r = ICRResult(expType, domain, problemFile)
         r.code = code
         r.cmd = cmd
@@ -38,16 +40,17 @@ class ICRExp:
         return r
 
     @staticmethod
-    def getCommand(domain: str, problem: str, trace: str, cProblem: str, tolerance=None):
-        cmd = ["icr", "-o", domain, "-f", problem, "-t", trace, "-c", cProblem]
+    def getCommand(domain: str, problem: str, trace: str, cProblem: str, boundsFile: str, tolerance=None):
+        cmd = ["icr", "-o", domain, "-f", problem, "-t", trace, "-c", cProblem, "-b", boundsFile]
         if tolerance:
             cmd += ["-tol", tolerance]
 
         return cmd
 
-    def exec(self, domain: str, problem: str, traceFile: str, cProblemFile: str, timeout: int, tolerance=None) -> (
+    def exec(self, domain: str, problem: str, traceFile: str, cProblemFile: str, boundsFile: str, timeout: int,
+             tolerance=None) -> (
             str, int):
-        cmd: [str] = self.getCommand(domain, problem, traceFile, cProblemFile, tolerance)
+        cmd: [str] = self.getCommand(domain, problem, traceFile, cProblemFile, boundsFile, tolerance)
         output = ""
         command = ["timeout", str(timeout)] + ["time", "-p"] + cmd
         print(" ".join(command))

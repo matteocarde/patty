@@ -6,11 +6,11 @@
 		city0 city1 city2 - city
 	)
 	(:init
-		(= (onboard plane1) 0.0)
-		(= (distance city2 city0) 775.0)
-		(= (distance city1 city2) 810.0)
-		(= (distance city2 city1) 810.0)
 		(located person3 city1)
+		(= (slow-burn plane1) 4.0)
+		(= (zoom-limit plane1) 8.0)
+		(= (distance city0 city0) 0.0)
+		(located plane1 city0)
 	)
 	(:goal
 			(and

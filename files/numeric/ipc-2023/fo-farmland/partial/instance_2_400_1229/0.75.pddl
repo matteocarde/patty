@@ -4,10 +4,10 @@
 		farm0 farm1 - farm
 	)
 	(:init
-		(adj farm0 farm1)
 		(= (x farm0) 400.0)
-		(= (cost) 0.0)
 		(= (num-of-cars) 0.0)
+		(= (x farm1) 1.0)
+		(adj farm1 farm0)
 	)
 	(:goal
 			(and

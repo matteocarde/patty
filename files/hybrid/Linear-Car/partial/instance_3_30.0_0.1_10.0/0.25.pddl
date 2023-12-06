@@ -3,7 +3,7 @@
 	(:objects
 	)
 	(:init
-		(= (max_speed) 10.0)
+		(= (d) 0.0)
 	)
 	(:goal
 			(and

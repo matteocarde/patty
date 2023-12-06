@@ -5,12 +5,12 @@
 		b1 b2 b3 - battery
 	)
 	(:init
-		(off b2)
-		(night)
-		(= (time) 0.0)
-		(gboff GB)
+		(= (SoC b3) 100.0)
+		(= (SoC b1) 40.0)
+		(off b3)
 		(datatosend)
-		(= (SoC b2) 80.0)
+		(gboff GB)
+		(night)
 	)
 	(:goal
 			(and

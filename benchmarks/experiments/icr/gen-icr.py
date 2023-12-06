@@ -39,7 +39,7 @@ DOMAINS = {
 PARTIAL = [0, 0.25, 0.5, 0.75]
 maxPartial = 5
 
-NOISE = [floor(x) for x in np.linspace(0, 500, 51)]
+NOISE = [floor(x) for x in np.linspace(0, 1000, 51)]
 maxNoise = 1
 
 noiseIterations = 5

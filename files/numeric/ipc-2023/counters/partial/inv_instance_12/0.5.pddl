@@ -4,12 +4,12 @@
 		c0 c1 c2 c3 c4 c5 c6 c7 c8 c9 c10 c11 - counter
 	)
 	(:init
-		(= (value c3) 16.0)
-		(= (value c6) 10.0)
 		(= (value c10) 2.0)
+		(= (value c0) 22.0)
+		(= (value c3) 16.0)
+		(= (value c4) 14.0)
+		(= (value c5) 12.0)
 		(= (value c8) 6.0)
-		(= (value c9) 4.0)
-		(= (value c1) 20.0)
 	)
 	(:goal
 			(and

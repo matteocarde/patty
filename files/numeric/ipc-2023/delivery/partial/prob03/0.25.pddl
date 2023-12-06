@@ -7,14 +7,14 @@
 		left1 right1 left2 right2 - arm
 	)
 	(:init
-		(= (cost) 0.0)
-		(at item4 rooma)
-		(= (weight item2) 1.0)
-		(door roomb rooma)
+		(free left2)
+		(= (load_limit bot2) 4.0)
+		(mount left1 bot1)
+		(at item2 rooma)
+		(= (current_load bot1) 0.0)
+		(at item1 rooma)
 		(mount right1 bot1)
-		(at-bot bot1 rooma)
-		(= (current_load bot2) 0.0)
-		(= (load_limit bot1) 4.0)
+		(mount left2 bot2)
 	)
 	(:goal
 			(and

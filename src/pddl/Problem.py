@@ -127,7 +127,7 @@ class Problem:
             if atom not in initB.numericAssignments:
                 continue
             valueB = initB.numericAssignments[atom]
-            d = (valueA - valueB) ** 2
+            d = abs(valueA - valueB)
             distance += d
             pt.add_row([atom, valueA, valueB, abs(valueB - valueA)])
 

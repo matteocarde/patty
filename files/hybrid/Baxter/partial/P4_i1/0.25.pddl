@@ -5,11 +5,11 @@
 		xyaxes ZAXES - axis
 	)
 	(:init
-		(connected L1 L2)
-		(= (angle L1 xyaxes) 64.6)
-		(= (speed-i) 10.0)
-		(freeToMove L3)
+		(= (angle L1 ZAXES) 323.2)
+		(freeToMove L1)
 		(freeToMove L2)
+		(freeToMove L3)
+		(= (angle L1 xyaxes) 64.6)
 	)
 	(:goal
 			(and

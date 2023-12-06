@@ -1,0 +1,5 @@
+{
+  "sled_supplies": [0, 5],
+  "sled_capacity": [0, 5],
+  "waypoint_supplies": [0, 1000]
+}

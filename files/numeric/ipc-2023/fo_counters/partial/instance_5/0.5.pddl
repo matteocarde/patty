@@ -4,12 +4,12 @@
 		c0 c1 c2 c3 c4 - counter
 	)
 	(:init
-		(= (total-cost) 0.0)
-		(= (value c3) 0.0)
+		(= (rate_value c0) 0.0)
 		(= (rate_value c2) 0.0)
 		(= (rate_value c3) 0.0)
-		(= (rate_value c0) 0.0)
-		(= (rate_value c1) 0.0)
+		(= (value c2) 0.0)
+		(= (rate_value c4) 0.0)
+		(= (total-cost) 0.0)
 	)
 	(:goal
 			(and

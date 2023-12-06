@@ -6,7 +6,7 @@
 	)
 	(:init
 		(= (time_requested r1 k1) 10.0)
-		(= (temp_requested r1 k2) 14.0)
+		(= (temp r1) 15.0)
 	)
 	(:goal
 			(and
