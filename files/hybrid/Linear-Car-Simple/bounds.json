@@ -1,0 +1,8 @@
+{
+  "d": [0, 20],
+  "v": [0, 0],
+  "a": [0, 0],
+  "max_acceleration": [0, 10],
+  "min_acceleration": [-10, 0],
+  "max_speed": [0, 100]
+}

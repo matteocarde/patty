@@ -31,9 +31,9 @@ DOMAINS = {
 KINDS = [("partial", "PARTIAL"), ("noise", "NOISE")]
 
 active = {
-    # "TOTAL", 
-    # "PARTIAL",
-    "NOISE"
+    # "TOTAL",
+    "PARTIAL",
+    # "NOISE"
 }
 
 
@@ -58,7 +58,7 @@ def main():
             # PARTIAL: Repair partial correct init condition
             # NOISE: Repair noisy initial condition
             if "TOTAL" in active:
-                instances.append(["TOTAL", name, domainFile, problemFile, traceFile, cProblemFile, boundsFile])
+                instances.append(["100%", name, domainFile, problemFile, traceFile, cProblemFile, boundsFile])
 
             for (folder, kind) in KINDS:
                 if os.path.exists(f"files/{path}/{folder}") and os.path.exists(f"files/{path}/{folder}/{probName}"):
@@ -66,7 +66,8 @@ def main():
                     for p in kindList:
                         partialFile = f"files/{path}/{folder}/{probName}/{p}"
                         if kind in active:
-                            instances.append([kind, name, domainFile, partialFile, traceFile, cProblemFile, boundsFile])
+                            instances.append(
+                                [f"{p[:-5]}%", name, domainFile, partialFile, traceFile, cProblemFile, boundsFile])
 
     random.shuffle(instances)
     print(f"Listing {len(instances)} instances")

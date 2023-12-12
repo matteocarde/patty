@@ -161,7 +161,7 @@ def main():
     pass
 
     domains = sorted(list(domains))
-    byRow = 4
+    byRow = 2
 
     nOfRows = (len(domains) // byRow)
 
@@ -175,7 +175,7 @@ def main():
     i = 0
 
     for d in DOMAINS.keys():
-        ax = axs[i % byRow]
+        ax = axs[i // byRow][i % byRow]
         ax.grid()
         ax.set_xlabel("Noise (\%)")
         ax.set_ylabel("Distance")
@@ -196,7 +196,7 @@ def main():
     if os.path.exists(folder):
         shutil.rmtree(folder)
     os.mkdir(folder)
-    plt.savefig(f'{folder}/{exp}.pdf', dpi=100)
+    plt.savefig(f'{folder}/{exp}.pdf', dpi=100, bbox_inches='tight', pad_inches=0.01)
     plt.show()
 
 

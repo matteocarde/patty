@@ -103,13 +103,13 @@ def main():
 
     plt.rcParams.update({
         "text.usetex": True,
-        "figure.figsize": [7.50, 2 * len(PRINTONLY)],
+        "figure.figsize": [7.50, 2.5 * len(PRINTONLY)],
         "figure.autolayout": True
     })
 
     fig, ax = plt.subplots()
     ax.grid()
-    ax.set_xlabel("Distance between Base Camp and Location ExpB")
+    ax.set_xlabel(r"Distance between Base Camp and Location ExpB ($\alpha$)")
     ax.set_ylabel("Run Time (s)")
     ax.set_xscale("log")
 

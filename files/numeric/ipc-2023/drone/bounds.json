@@ -11,6 +11,6 @@
   "max_y": [0, 12],
   "min_z": [0, 12],
   "max_z": [0, 12],
-  "battery-level": [0, 12],
-  "battery-level-full": [0, 12]
+  "battery-level": [0, 100],
+  "battery-level-full": [0, 100]
 }

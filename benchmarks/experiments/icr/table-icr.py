@@ -16,7 +16,13 @@ def rString(fValue, n):
     return '{:.{n}f}'.format(fValue, n=n)
 
 
-EXPERIMENTS = ["TOTAL", "PARTIAL"]
+EXPERIMENTS = {
+    "100%": r"$100\%$",
+    "75%": r"$75\%$",
+    "50%": r"$50\%$",
+    "25%": r"$25\%$",
+    "0%": r"$0\%$"
+}
 DOMAINS = {
     "Baxter": {
         "text": r"\textsc{Baxter} (L)",
@@ -114,7 +120,7 @@ def main():
         DOMAINS_BY_KIND[kind] = DOMAINS_BY_KIND.setdefault(kind, [])
         DOMAINS_BY_KIND[kind].append(dom)
 
-    filename = "2023-12-05-ICR-ALL-v2.csv"
+    filename = "2023-12-12-ICR-FINAL-v1.csv"
     file = f"benchmarks/results/{filename}"
 
     exp = filename.replace(".csv", "")
@@ -147,26 +153,23 @@ def main():
     pass
 
     DOMAIN_INFOS_COLUMNS = {
-        # "nOfProblems": "\#",
+        "nOfProblems": "\#",
         "nOfAtoms": "$|V_b \cup V_n|$",
         "traceLength": "$|\mathcal{T}|$",
         "nOfConditions": "$|\mathcal{I}(\mathcal{T}, G)|$",
     }
     COLUMNS = {
-        # "nOfAtoms": "$|V_b \cup V_n|$",
-        # "traceLength": "$|\mathcal{T}|$",
-        # "nOfConditions": "$|\mathcal{I}(\mathcal{T}, G)|$",
-        # "coverage": "Cov. (\%)",
+        "coverage": "Cov. (\%)",
         "time": "Time (s)",
-        # "dRC": r"$||I - I_\star||^2$",
-        # "dRW": r"$||I - \tilde{I}||^2$",
+        "dRC": r"$||I - I_\star||^2$",
+        "dRW": r"$||I - \tilde{I}||^2$",
     }
 
     table: Dict[str, Dict[str, Dict[str, float or str]]] = dict()
     domainInfos: Dict[str, Dict[str, float or str]] = dict()
     for domain in DOMAINS:
         domainInfos[domain] = dict()
-        for experiment in EXPERIMENTS:
+        for experiment in EXPERIMENTS.keys():
             if domain not in rDict[experiment]:
                 continue
             table[domain] = table.setdefault(domain, dict())
@@ -184,7 +187,7 @@ def main():
             row["time"] = rString(time / 1000, 2) if coverage > 0 else "-"
             row["dRW"] = rString(dRW, 2) if coverage > 0 else "-"
             row["dRC"] = rString(dCW, 2) if coverage > 0 else "-"
-            if experiment == "TOTAL":
+            if experiment == "100%":
                 domainInfos[domain]["nOfAtoms"] = rString(nOfAtoms, 2) if coverage > 0 else "-"
                 domainInfos[domain]["traceLength"] = rString(traceLength, 2) if coverage > 0 else "-"
                 domainInfos[domain]["nOfConditions"] = rString(nOfConditions, 2) if coverage > 0 else "-"
@@ -192,11 +195,11 @@ def main():
 
     latex = list()
     latex.append(r"""
-        \documentclass[11pt]{article}
+        \documentclass[11pt, landscape]{article}
         \usepackage{graphicx}
         \usepackage{multirow}
         \usepackage{lscape}
-        \usepackage[a4paper,margin=1in]{geometry}
+        \usepackage[a4paper,margin=1in, landscape]{geometry}
 
         \begin{document}
 
@@ -206,12 +209,12 @@ def main():
 
     nOfDomainInfos = len(DOMAIN_INFOS_COLUMNS.items())
     nOfColumns = len(COLUMNS.values())
-    cArray = ["l|" + "c" * nOfDomainInfos + "|"] + ["c" * nOfColumns + "|" for e in EXPERIMENTS]
+    cArray = ["l|" + "c" * nOfDomainInfos + "|"] + ["c" * nOfColumns + "|" for e in EXPERIMENTS.keys()]
     latex.append(r"\begin{tabular}{|" + ''.join(cArray) + "}")
 
     latex.append(r"\hline")
     latex.append(r" & \multicolumn{" + str(nOfDomainInfos) + "}{|c|}{Domain Infos} & " + "&".join(
-        ["\multicolumn{" + str(nOfColumns) + r"}{c|}{\textsc{" + e + r"}}" for e in EXPERIMENTS]) + r"\\")
+        ["\multicolumn{" + str(nOfColumns) + r"}{c|}{\textsc{" + e + r"}}" for e in EXPERIMENTS.values()]) + r"\\")
     latex.append(fr"Domain & " + "&".join(text for (key, text) in DOMAIN_INFOS_COLUMNS.items()) + "&" + "&".join(
         [c for e in EXPERIMENTS for c in COLUMNS.values()]) + r"\\")
 

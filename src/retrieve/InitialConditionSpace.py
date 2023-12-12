@@ -38,15 +38,12 @@ class InitialConditionSpace:
         pass
 
     def addVariablesGraphConnections(self):
-        subs: Dict[Expr, Expr] = dict()
         for (i, log) in enumerate(self.trace):
             untouched = self.domain.allAtoms - log.squashed.influencedAtoms
             for atom in untouched:
                 node = self.vg.getNode(i, atom)
                 nodePrime = self.vg.getNode(i + 1, atom)
                 node.addConnection(nodePrime)
-
-        return subs
 
     def updateXis(self):
         self.getGoalXis(self.problem.goal, self.m)

@@ -36,8 +36,8 @@ DOMAINS = {
     "UTC": "hybrid/UTC",
 }
 
-PARTIAL = [0, 0.25, 0.5, 0.75]
-maxPartial = 5
+PARTIAL = [0, 25, 50, 75, 100]
+maxPartial = 20
 
 NOISE = [floor(x) for x in np.linspace(0, 1000, 51)]
 maxNoise = 1
@@ -78,28 +78,28 @@ def main():
                 for amount in PARTIAL:
                     pw = PDDLWriter()
                     partialProb = copy.deepcopy(prob)
-                    partialProb.init = InitialCondition.partialize(partialProb.init, amount)
+                    partialProb.init = InitialCondition.partialize(partialProb.init, amount / 100)
                     pddl: str = partialProb.toPDDL(pw).toString()
                     with open(f"{partialFolder}/{amount}.pddl", "w") as f:
                         f.write(pddl)
                     pass
                 nOfPartial += 1
 
-            if nOfNoise < maxNoise:
-                noiseFolder = f"files/{path}/noise/{plan[:-9]}"
-                if os.path.exists(noiseFolder):
-                    shutil.rmtree(noiseFolder)
-                os.mkdir(noiseFolder)
-                for j in range(1, noiseIterations + 1):
-                    for amount in NOISE:
-                        pw = PDDLWriter()
-                        noiseProb = copy.deepcopy(prob)
-                        noiseProb.init = InitialCondition.noise(noiseProb.init, amount)
-                        noisePDDL: str = noiseProb.toPDDL(pw).toString()
-                        with open(f"{noiseFolder}/{j}-{amount}.pddl", "w") as f:
-                            f.write(noisePDDL)
-                        pass
-                    nOfNoise += 1
+            # if nOfNoise < maxNoise:
+            #     noiseFolder = f"files/{path}/noise/{plan[:-9]}"
+            #     if os.path.exists(noiseFolder):
+            #         shutil.rmtree(noiseFolder)
+            #     os.mkdir(noiseFolder)
+            #     for j in range(1, noiseIterations + 1):
+            #         for amount in NOISE:
+            #             pw = PDDLWriter()
+            #             noiseProb = copy.deepcopy(prob)
+            #             noiseProb.init = InitialCondition.noise(noiseProb.init, amount)
+            #             noisePDDL: str = noiseProb.toPDDL(pw).toString()
+            #             with open(f"{noiseFolder}/{j}-{amount}.pddl", "w") as f:
+            #                 f.write(noisePDDL)
+            #             pass
+            #         nOfNoise += 1
 
 
 if __name__ == '__main__':
