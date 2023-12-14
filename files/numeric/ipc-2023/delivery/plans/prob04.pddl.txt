@@ -1,0 +1,78 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 173
+Aibr Preprocessing
+|F|:112
+|X|:2
+|A|:412
+|P|:0
+|E|:0
+H1 Setup Time (msec): 94
+Setting horizon to:NaN
+Running Greedy Best First Search
+Problem Solved
+
+Found Plan:
+0.0: (move bot1 rooma roomc)
+1.0: (pick item7 rooma right2 bot2)
+2.0: (pick item6 rooma left2 bot2)
+3.0: (to-tray item6 left2 bot2)
+4.0: (to-tray item7 right2 bot2)
+5.0: (pick item10 rooma left2 bot2)
+6.0: (move bot2 rooma roomb)
+7.0: (drop item10 roomb left2 bot2)
+8.0: (move bot2 roomb rooma)
+9.0: (from-tray item6 right2 bot2)
+10.0: (drop item6 rooma right2 bot2)
+11.0: (pick item9 rooma right2 bot2)
+12.0: (move bot2 rooma roomb)
+13.0: (drop item9 roomb right2 bot2)
+14.0: (move bot1 roomc rooma)
+15.0: (pick item3 rooma right1 bot1)
+16.0: (move bot1 rooma roomc)
+17.0: (drop item3 roomc right1 bot1)
+18.0: (from-tray item7 right2 bot2)
+19.0: (move bot2 roomb rooma)
+20.0: (pick item8 rooma left2 bot2)
+21.0: (to-tray item8 left2 bot2)
+22.0: (pick item5 rooma left2 bot2)
+23.0: (to-tray item5 left2 bot2)
+24.0: (to-tray item7 right2 bot2)
+25.0: (move bot2 rooma roomb)
+26.0: (move bot1 roomc rooma)
+27.0: (pick item4 rooma left1 bot1)
+28.0: (move bot1 rooma roomc)
+29.0: (drop item4 roomc left1 bot1)
+30.0: (move bot1 roomc rooma)
+31.0: (pick item2 rooma left1 bot1)
+32.0: (pick item1 rooma right1 bot1)
+33.0: (move bot1 rooma roomc)
+34.0: (drop item1 roomc right1 bot1)
+35.0: (drop item2 roomc left1 bot1)
+36.0: (move bot1 roomc rooma)
+37.0: (from-tray item8 left2 bot2)
+38.0: (move bot2 roomb roomd)
+39.0: (pick item6 rooma right1 bot1)
+40.0: (drop item8 roomd left2 bot2)
+41.0: (move bot1 rooma roomb)
+42.0: (move bot1 roomb roomd)
+43.0: (drop item6 roomd right1 bot1)
+44.0: (from-tray item5 left2 bot2)
+45.0: (drop item5 roomd left2 bot2)
+46.0: (from-tray item7 left2 bot2)
+47.0: (drop item7 roomd left2 bot2)
+
+Plan-Length:48
+Metric (Search):102.0
+Planning Time (msec): 2897
+Heuristic Time (msec): 1398
+Search Time (msec): 1591
+Expanded Nodes:157
+States Evaluated:1631
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:0
+Number of Duplicates detected:358
+real 3.08
+user 2.93
+sys 0.14

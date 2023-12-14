@@ -1,0 +1,14 @@
+{
+  "maxx": [0, 20],
+  "maxy": [0, 20],
+  "minx": [0, 20],
+  "miny": [0, 20],
+  "x": [0, 20],
+  "y": [0, 20],
+  "max_carry": [0, 10],
+  "water_reserve": [0, 150],
+  "carrying": [0, 10],
+  "poured": [0, 10],
+  "total_poured": [0, 0],
+  "total_loaded": [0, 0]
+}

@@ -1,2 +1,2 @@
 #!/bin/bash
-python benchmarks/benchmark.py
+python benchmarks/experiments/benchmark.py

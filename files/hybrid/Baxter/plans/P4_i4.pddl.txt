@@ -1,0 +1,58 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 26
+Aibr Preprocessing
+|F|:17
+|X|:6
+Aibr Preprocessing
+|A|:24
+|P|:24
+|E|:12
+Delta time heuristic model:1.0
+Delta time planning model:1.0
+Delta time search-execution model:1.0
+Delta time validation model:1
+H1 Setup Time (msec): 11
+Setting horizon to:NaN
+Running WA-STAR
+Extracting plan with execution delta: 1.0
+Problem Solved
+
+Found Plan:
+0: (start_movement_increase L1 L2 ZAXES)
+0: (propagate_move_angle_increase L2 L3 ZAXES)
+0: (move_angle_increase L2 ZAXES)
+0: (propagate_move_angle_increase L2 L4 ZAXES)
+0: -----waiting---- [1.0]
+1.0: (propagate_move_angle_increase L2 L3 ZAXES)
+1.0: (move_angle_increase L2 ZAXES)
+1.0: (propagate_move_angle_increase L2 L4 ZAXES)
+1.0: -----waiting---- [2.0]
+2.0: (propagate_move_angle_increase L2 L3 ZAXES)
+2.0: (move_angle_increase L2 ZAXES)
+2.0: (propagate_move_angle_increase L2 L4 ZAXES)
+2.0: -----waiting---- [3.0]
+3.0: (propagate_move_angle_increase L2 L3 ZAXES)
+3.0: (move_angle_increase L2 ZAXES)
+3.0: (propagate_move_angle_increase L2 L4 ZAXES)
+3.0: -----waiting---- [4.0]
+4.0: (propagate_move_angle_increase L2 L3 ZAXES)
+4.0: (move_angle_increase L2 ZAXES)
+4.0: (propagate_move_angle_increase L2 L4 ZAXES)
+4.0: -----waiting---- [5.0]
+
+Plan-Length:21
+Elapsed Time: 5.0
+Metric (Search):6.0
+Planning Time (msec): 727
+Heuristic Time (msec): 15
+Search Time (msec): 113
+Expanded Nodes:12
+States Evaluated:30
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:0
+Number of Duplicates detected:2
+real 0.89
+user 0.83
+sys 0.07

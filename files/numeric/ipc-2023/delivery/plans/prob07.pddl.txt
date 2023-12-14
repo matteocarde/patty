@@ -1,0 +1,132 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 203
+Aibr Preprocessing
+|F|:172
+|X|:2
+|A|:656
+|P|:0
+|E|:0
+H1 Setup Time (msec): 97
+Setting horizon to:NaN
+Running Greedy Best First Search
+Problem Solved
+
+Found Plan:
+0.0: (move bot1 rooma roomb)
+1.0: (move bot1 roomb roomd)
+2.0: (pick item10 rooma right2 bot2)
+3.0: (pick item3 rooma left2 bot2)
+4.0: (to-tray item3 left2 bot2)
+5.0: (pick item4 rooma left2 bot2)
+6.0: (to-tray item4 left2 bot2)
+7.0: (pick item7 rooma left2 bot2)
+8.0: (to-tray item7 left2 bot2)
+9.0: (drop item10 rooma right2 bot2)
+10.0: (from-tray item3 right2 bot2)
+11.0: (drop item3 rooma right2 bot2)
+12.0: (pick item10 rooma right2 bot2)
+13.0: (to-tray item10 right2 bot2)
+14.0: (pick item9 rooma right2 bot2)
+15.0: (from-tray item4 left2 bot2)
+16.0: (drop item4 rooma left2 bot2)
+17.0: (move bot2 rooma roomb)
+18.0: (drop item9 roomb right2 bot2)
+19.0: (move bot2 roomb rooma)
+20.0: (pick item8 rooma right2 bot2)
+21.0: (move bot2 rooma roomb)
+22.0: (drop item8 roomb right2 bot2)
+23.0: (move bot2 roomb rooma)
+24.0: (pick item4 rooma right2 bot2)
+25.0: (to-tray item4 right2 bot2)
+26.0: (from-tray item10 right2 bot2)
+27.0: (pick item5 rooma left2 bot2)
+28.0: (drop item10 rooma right2 bot2)
+29.0: (to-tray item5 left2 bot2)
+30.0: (from-tray item4 left2 bot2)
+31.0: (from-tray item7 right2 bot2)
+32.0: (drop item4 rooma left2 bot2)
+33.0: (pick item3 rooma left2 bot2)
+34.0: (to-tray item3 left2 bot2)
+35.0: (to-tray item7 right2 bot2)
+36.0: (from-tray item3 right2 bot2)
+37.0: (from-tray item5 left2 bot2)
+38.0: (drop item5 rooma left2 bot2)
+39.0: (pick item6 rooma left2 bot2)
+40.0: (to-tray item6 left2 bot2)
+41.0: (from-tray item7 left2 bot2)
+42.0: (drop item7 rooma left2 bot2)
+43.0: (pick item5 rooma left2 bot2)
+44.0: (move bot2 rooma roomc)
+45.0: (drop item3 roomc right2 bot2)
+46.0: (drop item5 roomc left2 bot2)
+47.0: (move bot2 roomc rooma)
+48.0: (pick item4 rooma left2 bot2)
+49.0: (move bot2 rooma roomc)
+50.0: (drop item4 roomc left2 bot2)
+51.0: (move bot2 roomc rooma)
+52.0: (pick item2 rooma left2 bot2)
+53.0: (move bot2 rooma roomc)
+54.0: (drop item2 roomc left2 bot2)
+55.0: (move bot2 roomc rooma)
+56.0: (pick item7 rooma left2 bot2)
+57.0: (pick item10 rooma right2 bot2)
+58.0: (to-tray item7 left2 bot2)
+59.0: (to-tray item10 right2 bot2)
+60.0: (from-tray item6 left2 bot2)
+61.0: (from-tray item7 right2 bot2)
+62.0: (drop item6 rooma left2 bot2)
+63.0: (move bot2 rooma roomb)
+64.0: (drop item7 roomb right2 bot2)
+65.0: (move bot2 roomb rooma)
+66.0: (pick item12 rooma right2 bot2)
+67.0: (move bot2 rooma roomb)
+68.0: (drop item12 roomb right2 bot2)
+69.0: (move bot2 roomb rooma)
+70.0: (pick item11 rooma right2 bot2)
+71.0: (move bot2 rooma roomb)
+72.0: (drop item11 roomb right2 bot2)
+73.0: (move bot2 roomb rooma)
+74.0: (pick item1 rooma left2 bot2)
+75.0: (to-tray item1 left2 bot2)
+76.0: (from-tray item10 right2 bot2)
+77.0: (pick item6 rooma left2 bot2)
+78.0: (drop item10 rooma right2 bot2)
+79.0: (move bot2 rooma roomc)
+80.0: (drop item6 roomc left2 bot2)
+81.0: (from-tray item1 left2 bot2)
+82.0: (drop item1 roomc left2 bot2)
+83.0: (move bot2 roomc rooma)
+84.0: (pick item14 rooma left2 bot2)
+85.0: (pick item13 rooma right2 bot2)
+86.0: (move bot2 rooma roomb)
+87.0: (move bot2 roomb roomd)
+88.0: (move bot1 roomd roomb)
+89.0: (drop item14 roomd left2 bot2)
+90.0: (move bot1 roomb rooma)
+91.0: (pick item10 rooma left1 bot1)
+92.0: (move bot1 rooma roomb)
+93.0: (drop item10 roomb left1 bot1)
+94.0: (drop item13 roomd right2 bot2)
+95.0: (move bot1 roomb rooma)
+96.0: (pick item15 rooma right1 bot1)
+97.0: (pick item16 rooma left1 bot1)
+98.0: (move bot1 rooma roomb)
+99.0: (move bot1 roomb roomd)
+100.0: (drop item15 roomd right1 bot1)
+101.0: (drop item16 roomd left1 bot1)
+
+Plan-Length:102
+Metric (Search):208.0
+Planning Time (msec): 7140
+Heuristic Time (msec): 5441
+Search Time (msec): 5827
+Expanded Nodes:752
+States Evaluated:8763
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:0
+Number of Duplicates detected:2213
+real 7.27
+user 7.07
+sys 0.18

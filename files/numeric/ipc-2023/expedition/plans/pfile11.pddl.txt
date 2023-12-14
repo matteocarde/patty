@@ -1,0 +1,150 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 83
+Aibr Preprocessing
+|F|:12
+|X|:8
+|A|:44
+|P|:0
+|E|:0
+H1 Setup Time (msec): 74
+Setting horizon to:NaN
+Running Greedy Best First Search
+Problem Solved
+
+Found Plan:
+0.0: (retrieve_supplies s1 wa0)
+1.0: (move_forwards s1 wa0 wa1)
+2.0: (retrieve_supplies s0 wa0)
+3.0: (retrieve_supplies s0 wa0)
+4.0: (retrieve_supplies s0 wa0)
+5.0: (move_forwards s0 wa0 wa1)
+6.0: (store_supplies s0 wa1)
+7.0: (move_forwards s0 wa1 wa2)
+8.0: (retrieve_supplies s1 wa1)
+9.0: (move_backwards s1 wa1 wa0)
+10.0: (retrieve_supplies s1 wa0)
+11.0: (retrieve_supplies s1 wa0)
+12.0: (retrieve_supplies s1 wa0)
+13.0: (move_forwards s1 wa0 wa1)
+14.0: (store_supplies s1 wa1)
+15.0: (move_backwards s1 wa1 wa0)
+16.0: (retrieve_supplies s1 wa0)
+17.0: (retrieve_supplies s1 wa0)
+18.0: (retrieve_supplies s1 wa0)
+19.0: (move_forwards s1 wa0 wa1)
+20.0: (retrieve_supplies s1 wa1)
+21.0: (move_forwards s1 wa1 wa2)
+22.0: (move_backwards s1 wa2 wa1)
+23.0: (move_backwards s1 wa1 wa0)
+24.0: (retrieve_supplies s1 wa0)
+25.0: (retrieve_supplies s1 wa0)
+26.0: (retrieve_supplies s1 wa0)
+27.0: (move_forwards s1 wa0 wa1)
+28.0: (store_supplies s1 wa1)
+29.0: (move_backwards s1 wa1 wa0)
+30.0: (retrieve_supplies s1 wa0)
+31.0: (retrieve_supplies s1 wa0)
+32.0: (retrieve_supplies s1 wa0)
+33.0: (move_forwards s1 wa0 wa1)
+34.0: (retrieve_supplies s1 wa1)
+35.0: (move_forwards s1 wa1 wa2)
+36.0: (move_backwards s1 wa2 wa1)
+37.0: (move_backwards s1 wa1 wa0)
+38.0: (retrieve_supplies s1 wa0)
+39.0: (retrieve_supplies s1 wa0)
+40.0: (retrieve_supplies s1 wa0)
+41.0: (move_forwards s1 wa0 wa1)
+42.0: (store_supplies s1 wa1)
+43.0: (move_backwards s1 wa1 wa0)
+44.0: (retrieve_supplies s1 wa0)
+45.0: (retrieve_supplies s1 wa0)
+46.0: (retrieve_supplies s1 wa0)
+47.0: (move_forwards s1 wa0 wa1)
+48.0: (store_supplies s1 wa1)
+49.0: (move_backwards s1 wa1 wa0)
+50.0: (retrieve_supplies s1 wa0)
+51.0: (retrieve_supplies s1 wa0)
+52.0: (retrieve_supplies s1 wa0)
+53.0: (move_forwards s1 wa0 wa1)
+54.0: (retrieve_supplies s1 wa1)
+55.0: (move_forwards s1 wa1 wa2)
+56.0: (store_supplies s1 wa2)
+57.0: (retrieve_supplies s0 wa2)
+58.0: (move_forwards s0 wa2 wa3)
+59.0: (move_backwards s1 wa2 wa1)
+60.0: (retrieve_supplies s1 wa1)
+61.0: (move_backwards s1 wa1 wa0)
+62.0: (retrieve_supplies s1 wa0)
+63.0: (retrieve_supplies s1 wa0)
+64.0: (retrieve_supplies s1 wa0)
+65.0: (move_forwards s1 wa0 wa1)
+66.0: (move_backwards s1 wa1 wa0)
+67.0: (retrieve_supplies s1 wa0)
+68.0: (retrieve_supplies s1 wa0)
+69.0: (move_forwards s1 wa0 wa1)
+70.0: (move_backwards s1 wa1 wa0)
+71.0: (retrieve_supplies s1 wa0)
+72.0: (move_forwards s1 wa0 wa1)
+73.0: (move_backwards s1 wa1 wa0)
+74.0: (retrieve_supplies s1 wa0)
+75.0: (retrieve_supplies s1 wa0)
+76.0: (move_forwards s1 wa0 wa1)
+77.0: (move_backwards s1 wa1 wa0)
+78.0: (retrieve_supplies s1 wa0)
+79.0: (retrieve_supplies s1 wa0)
+80.0: (retrieve_supplies s1 wa0)
+81.0: (move_forwards s1 wa0 wa1)
+82.0: (store_supplies s1 wa1)
+83.0: (move_backwards s1 wa1 wa0)
+84.0: (retrieve_supplies s1 wa0)
+85.0: (retrieve_supplies s1 wa0)
+86.0: (retrieve_supplies s1 wa0)
+87.0: (move_forwards s1 wa0 wa1)
+88.0: (store_supplies s1 wa1)
+89.0: (move_backwards s1 wa1 wa0)
+90.0: (retrieve_supplies s1 wa0)
+91.0: (retrieve_supplies s1 wa0)
+92.0: (retrieve_supplies s1 wa0)
+93.0: (move_forwards s1 wa0 wa1)
+94.0: (retrieve_supplies s1 wa1)
+95.0: (move_forwards s1 wa1 wa2)
+96.0: (store_supplies s1 wa2)
+97.0: (move_backwards s1 wa2 wa1)
+98.0: (retrieve_supplies s1 wa1)
+99.0: (move_backwards s1 wa1 wa0)
+100.0: (retrieve_supplies s1 wa0)
+101.0: (retrieve_supplies s1 wa0)
+102.0: (retrieve_supplies s1 wa0)
+103.0: (move_forwards s1 wa0 wa1)
+104.0: (store_supplies s1 wa1)
+105.0: (move_backwards s1 wa1 wa0)
+106.0: (retrieve_supplies s1 wa0)
+107.0: (retrieve_supplies s1 wa0)
+108.0: (retrieve_supplies s1 wa0)
+109.0: (move_forwards s1 wa0 wa1)
+110.0: (retrieve_supplies s1 wa1)
+111.0: (move_forwards s1 wa1 wa2)
+112.0: (retrieve_supplies s1 wa2)
+113.0: (move_forwards s1 wa2 wa3)
+114.0: (move_forwards s1 wa3 wa4)
+115.0: (store_supplies s1 wa4)
+116.0: (move_forwards s1 wa4 wa5)
+117.0: (move_forwards s0 wa3 wa4)
+118.0: (retrieve_supplies s0 wa4)
+119.0: (move_forwards s0 wa4 wa5)
+
+Plan-Length:120
+Metric (Search):120.0
+Planning Time (msec): 1650
+Heuristic Time (msec): 894
+Search Time (msec): 1109
+Expanded Nodes:2935
+States Evaluated:10212
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:727
+Number of Duplicates detected:4592
+real 1.81
+user 1.30
+sys 0.10

@@ -1,0 +1,79 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 73
+Aibr Preprocessing
+|F|:17
+|X|:6
+Aibr Preprocessing
+|A|:24
+|P|:24
+|E|:12
+Delta time heuristic model:1.0
+Delta time planning model:1.0
+Delta time search-execution model:1.0
+Delta time validation model:1
+H1 Setup Time (msec): 66
+Setting horizon to:NaN
+Running WA-STAR
+Extracting plan with execution delta: 1.0
+Problem Solved
+
+Found Plan:
+0: (start_movement_increase L1 L2 xyaxes)
+0: (propagate_move_angle_increase L2 L3 xyaxes)
+0: (move_angle_increase L2 xyaxes)
+0: (propagate_move_angle_increase L2 L4 xyaxes)
+0: -----waiting---- [1.0]
+1.0: (back-to-zero L4 xyaxes)
+1.0: (propagate_move_angle_increase L2 L3 xyaxes)
+1.0: (move_angle_increase L2 xyaxes)
+1.0: (propagate_move_angle_increase L2 L4 xyaxes)
+1.0: -----waiting---- [2.0]
+2.0: (propagate_move_angle_increase L2 L3 xyaxes)
+2.0: (move_angle_increase L2 xyaxes)
+2.0: (propagate_move_angle_increase L2 L4 xyaxes)
+2.0: -----waiting---- [3.0]
+3.0: (propagate_move_angle_increase L2 L3 xyaxes)
+3.0: (move_angle_increase L2 xyaxes)
+3.0: (propagate_move_angle_increase L2 L4 xyaxes)
+3.0: -----waiting---- [4.0]
+4.0: (propagate_move_angle_increase L2 L3 xyaxes)
+4.0: (move_angle_increase L2 xyaxes)
+4.0: (propagate_move_angle_increase L2 L4 xyaxes)
+4.0: -----waiting---- [5.0]
+5.0: (propagate_move_angle_increase L2 L3 xyaxes)
+5.0: (move_angle_increase L2 xyaxes)
+5.0: (propagate_move_angle_increase L2 L4 xyaxes)
+5.0: -----waiting---- [6.0]
+6.0: (propagate_move_angle_increase L2 L3 xyaxes)
+6.0: (move_angle_increase L2 xyaxes)
+6.0: (propagate_move_angle_increase L2 L4 xyaxes)
+6.0: -----waiting---- [7.0]
+7.0: (propagate_move_angle_increase L2 L3 xyaxes)
+7.0: (move_angle_increase L2 xyaxes)
+7.0: (propagate_move_angle_increase L2 L4 xyaxes)
+7.0: -----waiting---- [8.0]
+8.0: (propagate_move_angle_increase L2 L3 xyaxes)
+8.0: (move_angle_increase L2 xyaxes)
+8.0: (propagate_move_angle_increase L2 L4 xyaxes)
+8.0: -----waiting---- [9.0]
+9.0: (propagate_move_angle_increase L2 L3 xyaxes)
+9.0: (move_angle_increase L2 xyaxes)
+9.0: (propagate_move_angle_increase L2 L4 xyaxes)
+9.0: -----waiting---- [10.0]
+
+Plan-Length:42
+Elapsed Time: 10.0
+Metric (Search):11.0
+Planning Time (msec): 741
+Heuristic Time (msec): 19
+Search Time (msec): 120
+Expanded Nodes:12
+States Evaluated:31
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:0
+Number of Duplicates detected:1
+real 0.90
+user 0.84
+sys 0.06

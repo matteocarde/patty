@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 import copy
-from sympy import Expr
+from sympy import Expr, Eq
 from typing import Dict, Set, Tuple, List
 
 from src.pddl.Atom import Atom
 from src.pddl.Constant import Constant
 from src.pddl.Predicate import Predicate
+from src.pddl.TypedPredicate import TypedPredicate
 from src.pddl.Utilities import Utilities
 from src.pddl.grammar.pddlParser import pddlParser as p
 
@@ -72,13 +73,12 @@ class Literal(Predicate):
 
     def getLiterals(self) -> Set[Predicate]:
         return {self}
-
-    def ground(self, sub: Dict[str, str]) -> Literal:
+    def ground(self, subs: Dict[str, str], delta=1) -> Literal:
 
         literal = Literal()
         literal.sign = self.sign
 
-        literal.atom = self.atom.ground(sub)
+        literal.atom = self.atom.ground(subs)
         literal.funct = literal.atom.toFunctionName()
         literal.alphaFunct = literal.atom.toAlphaFunctionName()
 
@@ -179,3 +179,13 @@ class Literal(Predicate):
 
     def toExpression(self) -> Expr:
         return self.atom.toExpression()
+
+    def expressify(self, symbols: Dict[Atom, Expr]) -> Expr:
+        return symbols[self.atom]
+
+    def comesFromTypedPredicate(self, tp: TypedPredicate) -> bool:
+        return tp.name == self.atom.name and len(tp.parameters) == len(self.atom.attributes)
+
+    def expressifyWithEquation(self, symbols: Dict[Atom, Expr]) -> Expr:
+        # return Eq(self.expressify(symbols), 1) if self.sign == "+" else Eq(self.expressify(symbols), -1)
+        return self.expressify(symbols) - 1 if self.sign == "+" else self.expressify(symbols) + 1

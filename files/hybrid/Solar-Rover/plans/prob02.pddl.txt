@@ -1,0 +1,247 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 19
+Aibr Preprocessing
+|F|:13
+|X|:5
+Aibr Preprocessing
+|A|:5
+|P|:4
+|E|:5
+Delta time heuristic model:1.0
+Delta time planning model:1.0
+Delta time search-execution model:1.0
+Delta time validation model:1
+H1 Setup Time (msec): 6
+Setting horizon to:NaN
+Running Greedy Best First Search
+Extracting plan with execution delta: 1.0
+Problem Solved
+
+Found Plan:
+0: (start_useBattery b3)
+0: (start_useBattery b1)
+0: (start_useBattery b2)
+0: (end_useBattery b2)
+0: (end_useBattery b3)
+0: (end_useBattery b1)
+0: (passingTime)
+0: -----waiting---- [1.0]
+1.0: (passingTime)
+1.0: -----waiting---- [2.0]
+2.0: (passingTime)
+2.0: -----waiting---- [3.0]
+3.0: (passingTime)
+3.0: -----waiting---- [4.0]
+4.0: (passingTime)
+4.0: -----waiting---- [5.0]
+5.0: (passingTime)
+5.0: -----waiting---- [6.0]
+6.0: (passingTime)
+6.0: -----waiting---- [7.0]
+7.0: (passingTime)
+7.0: -----waiting---- [8.0]
+8.0: (passingTime)
+8.0: -----waiting---- [9.0]
+9.0: (passingTime)
+9.0: -----waiting---- [10.0]
+10.0: (passingTime)
+10.0: -----waiting---- [11.0]
+11.0: (passingTime)
+11.0: -----waiting---- [12.0]
+12.0: (passingTime)
+12.0: -----waiting---- [13.0]
+13.0: (passingTime)
+13.0: -----waiting---- [14.0]
+14.0: (passingTime)
+14.0: -----waiting---- [15.0]
+15.0: (passingTime)
+15.0: -----waiting---- [16.0]
+16.0: (passingTime)
+16.0: -----waiting---- [17.0]
+17.0: (passingTime)
+17.0: -----waiting---- [18.0]
+18.0: (passingTime)
+18.0: -----waiting---- [19.0]
+19.0: (passingTime)
+19.0: -----waiting---- [20.0]
+20.0: (passingTime)
+20.0: -----waiting---- [21.0]
+21.0: (passingTime)
+21.0: -----waiting---- [22.0]
+22.0: (passingTime)
+22.0: -----waiting---- [23.0]
+23.0: (passingTime)
+23.0: -----waiting---- [24.0]
+24.0: (passingTime)
+24.0: -----waiting---- [25.0]
+25.0: (passingTime)
+25.0: -----waiting---- [26.0]
+26.0: (passingTime)
+26.0: -----waiting---- [27.0]
+27.0: (passingTime)
+27.0: -----waiting---- [28.0]
+28.0: (passingTime)
+28.0: -----waiting---- [29.0]
+29.0: (passingTime)
+29.0: -----waiting---- [30.0]
+30.0: (passingTime)
+30.0: -----waiting---- [31.0]
+31.0: (passingTime)
+31.0: -----waiting---- [32.0]
+32.0: (passingTime)
+32.0: -----waiting---- [33.0]
+33.0: (passingTime)
+33.0: -----waiting---- [34.0]
+34.0: (passingTime)
+34.0: -----waiting---- [35.0]
+35.0: (passingTime)
+35.0: -----waiting---- [36.0]
+36.0: (passingTime)
+36.0: -----waiting---- [37.0]
+37.0: (passingTime)
+37.0: -----waiting---- [38.0]
+38.0: (passingTime)
+38.0: -----waiting---- [39.0]
+39.0: (passingTime)
+39.0: -----waiting---- [40.0]
+40.0: (passingTime)
+40.0: -----waiting---- [41.0]
+41.0: (passingTime)
+41.0: -----waiting---- [42.0]
+42.0: (passingTime)
+42.0: -----waiting---- [43.0]
+43.0: (passingTime)
+43.0: -----waiting---- [44.0]
+44.0: (passingTime)
+44.0: -----waiting---- [45.0]
+45.0: (passingTime)
+45.0: -----waiting---- [46.0]
+46.0: (passingTime)
+46.0: -----waiting---- [47.0]
+47.0: (passingTime)
+47.0: -----waiting---- [48.0]
+48.0: (passingTime)
+48.0: -----waiting---- [49.0]
+49.0: (passingTime)
+49.0: -----waiting---- [50.0]
+50.0: (passingTime)
+50.0: -----waiting---- [51.0]
+51.0: (passingTime)
+51.0: -----waiting---- [52.0]
+52.0: (passingTime)
+52.0: -----waiting---- [53.0]
+53.0: (passingTime)
+53.0: -----waiting---- [54.0]
+54.0: (passingTime)
+54.0: -----waiting---- [55.0]
+55.0: (passingTime)
+55.0: -----waiting---- [56.0]
+56.0: (passingTime)
+56.0: -----waiting---- [57.0]
+57.0: (passingTime)
+57.0: -----waiting---- [58.0]
+58.0: (passingTime)
+58.0: -----waiting---- [59.0]
+59.0: (passingTime)
+59.0: -----waiting---- [60.0]
+60.0: (passingTime)
+60.0: -----waiting---- [61.0]
+61.0: (passingTime)
+61.0: -----waiting---- [62.0]
+62.0: (passingTime)
+62.0: -----waiting---- [63.0]
+63.0: (passingTime)
+63.0: -----waiting---- [64.0]
+64.0: (passingTime)
+64.0: -----waiting---- [65.0]
+65.0: (passingTime)
+65.0: -----waiting---- [66.0]
+66.0: (passingTime)
+66.0: -----waiting---- [67.0]
+67.0: (passingTime)
+67.0: -----waiting---- [68.0]
+68.0: (passingTime)
+68.0: -----waiting---- [69.0]
+69.0: (passingTime)
+69.0: -----waiting---- [70.0]
+70.0: (passingTime)
+70.0: -----waiting---- [71.0]
+71.0: (passingTime)
+71.0: -----waiting---- [72.0]
+72.0: (passingTime)
+72.0: -----waiting---- [73.0]
+73.0: (passingTime)
+73.0: -----waiting---- [74.0]
+74.0: (passingTime)
+74.0: -----waiting---- [75.0]
+75.0: (passingTime)
+75.0: -----waiting---- [76.0]
+76.0: (passingTime)
+76.0: -----waiting---- [77.0]
+77.0: (passingTime)
+77.0: -----waiting---- [78.0]
+78.0: (passingTime)
+78.0: -----waiting---- [79.0]
+79.0: (passingTime)
+79.0: -----waiting---- [80.0]
+80.0: (passingTime)
+80.0: -----waiting---- [81.0]
+81.0: (passingTime)
+81.0: -----waiting---- [82.0]
+82.0: (passingTime)
+82.0: -----waiting---- [83.0]
+83.0: (passingTime)
+83.0: -----waiting---- [84.0]
+84.0: (passingTime)
+84.0: -----waiting---- [85.0]
+85.0: (passingTime)
+85.0: -----waiting---- [86.0]
+86.0: (passingTime)
+86.0: -----waiting---- [87.0]
+87.0: (passingTime)
+87.0: -----waiting---- [88.0]
+88.0: (passingTime)
+88.0: -----waiting---- [89.0]
+89.0: (passingTime)
+89.0: -----waiting---- [90.0]
+90.0: (passingTime)
+90.0: -----waiting---- [91.0]
+91.0: (passingTime)
+91.0: -----waiting---- [92.0]
+92.0: (passingTime)
+92.0: -----waiting---- [93.0]
+93.0: (passingTime)
+93.0: -----waiting---- [94.0]
+94.0: (passingTime)
+94.0: -----waiting---- [95.0]
+95.0: (passingTime)
+95.0: -----waiting---- [96.0]
+96.0: (passingTime)
+96.0: -----waiting---- [97.0]
+97.0: (switchGenBatteryOn GB)
+97.0: (passingTime)
+97.0: -----waiting---- [98.0]
+98.0: (passingTime)
+98.0: -----waiting---- [99.0]
+99.0: (passingTime)
+99.0: -----waiting---- [100.0]
+100.0: (sunexposure_event)
+100.0: (sunshine)
+100.0: (sendData)
+
+Plan-Length:210
+Elapsed Time: 100.0
+Metric (Search):105.0
+Planning Time (msec): 655
+Heuristic Time (msec): 65
+Search Time (msec): 101
+Expanded Nodes:106
+States Evaluated:213
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:0
+Number of Duplicates detected:0
+real 0.77
+user 0.70
+sys 0.05

@@ -120,7 +120,11 @@ class Operation:
     def __addEffects(self, node: p.OpEffectContext):
         self.effects = Effects.fromNode(node.getChild(1))
 
-    def getCombinations(self, problem: Problem) -> List[List[str]]:
+    def getSignature(self):
+        params = [p.name for p in self.parameters]
+        return f"{self.name}({','.join(params)})"
+
+    def getCombinations(self, problem: Problem) -> List[Dict[str, str]]:
         subs: List[List[str]] = list()
         for parameter in self.parameters:
             pSubs = list()
@@ -154,7 +158,7 @@ class Operation:
         paths: List[Tuple] = self.__getValidCombinationsSub(problem, tuple(), [], levels, params)
         return paths
 
-    def getGroundedOperations(self, problem, isPredicateStatic: Dict[str, bool]):
+    def getGroundedOperations(self, problem, isPredicateStatic: Dict[str, bool], delta=1):
         levels: List[List[str]] = self.getCombinations(problem)
 
         combinations: List[Tuple]
@@ -173,7 +177,7 @@ class Operation:
         for sub in validCombinations:
             name = self.__getGroundedName(sub)
             planName = self.__getGroundedPlanName(sub)
-            preconditions = self.preconditions.ground(sub)
+            preconditions = self.preconditions.ground(sub, delta=delta)
             effects = self.effects.ground(sub)
             operation: Operation = Operation.fromProperties(name, preconditions, effects, planName)
             gOperations.append(operation)
@@ -376,3 +380,19 @@ class Operation:
 
         o_i.name = f"{o_i.name}_{2 ** i}"
         return o_i
+
+    def isMutex(self, other: Operation) -> bool:
+        mutex = self.addList.intersection(other.delList)
+        mutex |= self.delList.intersection(other.addList)
+        mutex |= self.addList.intersection(other.preB)
+        mutex |= self.delList.intersection(other.preB)
+        mutex |= self.preB.intersection(other.addList)
+        mutex |= self.preB.intersection(other.delList)
+        mutex |= self.assList.intersection(other.assList)
+        return len(mutex) > 0
+
+    def isMutexSet(self, operations: Set[Operation]):
+        isMutex = False
+        for op in operations:
+            isMutex = isMutex or self.isMutex(op)
+        return isMutex

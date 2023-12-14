@@ -1,0 +1,79 @@
+Started Grounding
+Ended Grounding
+Pattern: move-slow farm0 farm1; hire-car; move-slow farm1 farm0; move-by-car farm1 farm0; move-by-car farm0 farm1
+Started Conversion to SMT at bound 1
+Ended Conversion to SMT at bound 1
+Started Solving Bound 1
+Ended Solving Bound 1
+Bound 1 - Vars = 19
+Bound 1 - Rules = 32
+0: (move-slow farm0 farm1)
+1: (move-slow farm0 farm1)
+2: (move-slow farm0 farm1)
+3: (move-slow farm0 farm1)
+4: (move-slow farm0 farm1)
+5: (hire-car)
+6: (move-slow farm1 farm0)
+7: (move-slow farm1 farm0)
+8: (move-by-car farm1 farm0)
+9: (move-by-car farm0 farm1)
+10: (move-by-car farm0 farm1)
+11: (move-by-car farm0 farm1)
+12: (move-by-car farm0 farm1)
+13: (move-by-car farm0 farm1)
+14: (move-by-car farm0 farm1)
+15: (move-by-car farm0 farm1)
+16: (move-by-car farm0 farm1)
+17: (move-by-car farm0 farm1)
+18: (move-by-car farm0 farm1)
+19: (move-by-car farm0 farm1)
+20: (move-by-car farm0 farm1)
+21: (move-by-car farm0 farm1)
+22: (move-by-car farm0 farm1)
+23: (move-by-car farm0 farm1)
+24: (move-by-car farm0 farm1)
+25: (move-by-car farm0 farm1)
+26: (move-by-car farm0 farm1)
+27: (move-by-car farm0 farm1)
+28: (move-by-car farm0 farm1)
+29: (move-by-car farm0 farm1)
+30: (move-by-car farm0 farm1)
+31: (move-by-car farm0 farm1)
+32: (move-by-car farm0 farm1)
+33: (move-by-car farm0 farm1)
+34: (move-by-car farm0 farm1)
+35: (move-by-car farm0 farm1)
+36: (move-by-car farm0 farm1)
+37: (move-by-car farm0 farm1)
+38: (move-by-car farm0 farm1)
+39: (move-by-car farm0 farm1)
+40: (move-by-car farm0 farm1)
+41: (move-by-car farm0 farm1)
+42: (move-by-car farm0 farm1)
+43: (move-by-car farm0 farm1)
+44: (move-by-car farm0 farm1)
+45: (move-by-car farm0 farm1)
+46: (move-by-car farm0 farm1)
+47: (move-by-car farm0 farm1)
+48: (move-by-car farm0 farm1)
+49: (move-by-car farm0 farm1)
+50: (move-by-car farm0 farm1)
+51: (move-by-car farm0 farm1)
+52: (move-by-car farm0 farm1)
+53: (move-by-car farm0 farm1)
+54: (move-by-car farm0 farm1)
+55: (move-by-car farm0 farm1)
+56: (move-by-car farm0 farm1)
+57: (move-by-car farm0 farm1)
+58: (move-by-car farm0 farm1)
+
+Plan is valid
+Bound: 1
+Grounding: 36ms
+Conversion to SMT at bound 1: 5ms
+Solving Bound 1: 48ms
+Overall: 125ms
+
+real 0.70
+user 0.63
+sys 0.07

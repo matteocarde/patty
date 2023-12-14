@@ -1,0 +1,46 @@
+
+        \documentclass[11pt, landscape]{article}
+        \usepackage{graphicx}
+        \usepackage{multirow}
+        \usepackage{lscape}
+        \usepackage[a4paper,margin=1in, landscape]{geometry}
+
+        \begin{document}
+        \begin{table*}[tb]
+        \centering
+        {\tiny
+        \resizebox{\textwidth}{!}{
+\begin{tabular}{|l|cccc|ccc|ccc|ccc|ccc|ccc|}
+\hline
+Domain & \#&$|V_b \cup V_n|$&$|\mathcal{T_\delta}|$&$|\mathcal{I}(\mathcal{T_\delta}, G)|$&$\beta = 1$&$\beta = 0.75$&$\beta = 0.50$&$\beta = 0.25$&$\beta = 0$\\
+\hline
+\textbf{Hybrid}&&&&&&&&&&&&&&&&&&&\\
+\textsc{Baxter} (L)&19&105.37&17.58&5.79&0.23s&0.00s&0.00s&0.35s&378.28s&0.00s&0.39s&637.76s&0.00s&0.42s&1113.95s&0.00s&0.51s&1638.00s&0.00s\\
+\textsc{Descent} (NL)&20&17.00&36.45&52.70&1.35s&0.00s&0.00s&2.87s&1984.29s&0.05s&4.12s&3017.15s&0.03s&3.93s&5904.03s&0.02s&14.02s&7714.73s&0.00s\\
+\textsc{HVAC} (NL)&20&37.50&136.05&43.25&34.32s&0.00s&0.00s&127.43s&12.78s&0.23s&167.37s&44.14s&0.12s&129.22s&75.52s&0.08s&143.75s&126.71s&0.00s\\
+\textsc{LinearCar} (L)&10&8.00&39.90&14.20&0.11s&0.00s&0.00s&0.15s&1.37s&0.17s&0.14s&4.03s&0.06s&0.12s&6.18s&0.00s&0.14s&6.82s&0.00s\\
+\textsc{SolarRover} (L)&20&20.00&533.00&2.00&2.20s&0.00s&0.00s&2.24s&111.33s&0.20s&2.17s&387.56s&0.12s&2.04s&549.73s&0.03s&2.15s&745.00s&0.00s\\
+\hline
+\textbf{Numeric}&&&&&&&&&&&&&&&&&&&\\
+\textsc{Counters} (L)&11&12.27&106.36&114.82&0.41s&0.00s&0.00s&2.42s&23.32s&0.37s&1.70s&38.96s&0.28s&2.46s&51.53s&0.14s&10.60s&99.72s&0.00s\\
+\textsc{Counters} (L)&20&25.00&219.40&219.15&2.25s&0.06s&0.06s&5.52s&62.19s&0.88s&8.30s&79.46s&0.57s&7.78s&271.15s&0.27s&10.61s&59.02s&0.00s\\
+\textsc{Delivery} (L)&9&173.89&50.78&13.56&0.56s&0.00s&0.00s&0.68s&7.53s&0.08s&0.70s&9.65s&0.05s&0.71s&20.37s&0.01s&0.81s&13.54s&0.00s\\
+\textsc{Drone} (L)&16&132.25&99.56&155.88&4.62s&0.00s&0.00s&32.62s&33.41s&0.10s&17.68s&61.67s&0.04s&14.99s&85.75s&0.02s&41.47s&27.29s&0.00s\\
+\textsc{Expedition} (L)&2&66.00&214.00&108.50&0.94s&0.00s&0.00s&1.52s&360.04s&0.21s&2.27s&789.68s&0.26s&2.64s&569.11s&0.14s&8.13s&924.06s&0.00s\\
+\textsc{PlantWatering} (L)&20&50.86&1085.43&201.21&101.22s&0.00s&0.00s&105.50s&19.34s&0.23s&105.69s&47.55s&0.16s&104.88s&72.70s&0.11s&108.92s&66.74s&0.00s\\
+\textsc{Farmland} (L)&20&42.30&290.65&290.10&1.51s&0.00s&0.00s&3.01s&219.62s&0.19s&4.25s&275.89s&0.14s&3.22s&649.97s&0.07s&83.57s&267.95s&0.00s\\
+\textsc{Farmland} (L)&20&56.20&961.50&958.05&18.32s&0.00s&0.00s&70.79s&639.52s&0.41s&83.23s&833.08s&0.28s&107.16s&1649.17s&0.10s&202.21s&262.10s&0.00s\\
+\textsc{Hydropower} (L)&20&4059.00&97.05&66.05&30.30s&0.00s&0.00s&31.09s&114.95s&0.09s&31.27s&399.44s&0.04s&30.64s&704.27s&0.02s&32.33s&991.83s&0.00s\\
+\textsc{MPrime} (L)&14&368.64&126.36&66.14&3.12s&0.47s&0.47s&3.00s&14.42s&0.55s&3.02s&38.94s&0.43s&3.16s&52.23s&0.10s&3.31s&35.69s&0.00s\\
+\textsc{Rover} (L)&15&472.80&86.53&77.87&2.90s&0.00s&0.00s&3.09s&16.36s&0.14s&3.20s&28.19s&0.08s&2.63s&31.29s&0.04s&3.15s&18.08s&0.00s\\
+\textsc{Sailing} (L)&20&16.60&648.35&23.60&1.97s&0.00s&0.00s&3.14s&21.09s&0.16s&3.50s&39.12s&0.04s&3.65s&69.52s&0.00s&3.24s&178.45s&0.00s\\
+\textsc{Sailing} (L)&20&15.00&581.75&16.35&2.86s&0.00s&0.00s&3.55s&10.69s&0.11s&3.78s&92.87s&0.05s&3.44s&180.48s&0.10s&4.73s&416.65s&0.00s\\
+\textsc{Sugar} (L)&20&178.85&61.25&52.60&1.35s&0.00s&0.00s&1.57s&99.57s&0.08s&1.59s&306.18s&0.06s&1.37s&536.53s&0.02s&1.19s&173.27s&0.00s\\
+\textsc{ZenoTravel} (L)&19&535.37&45.95&24.63&24.91s&0.00s&0.00s&90.32s&16667.45s&0.32s&113.97s&28086.09s&0.14s&59.09s&72028.42s&0.47s&19.23s&100320.01s&0.00s\\
+\hline
+
+        \end{tabular}}} 
+        \caption{Experimental analysis on well-known hybrid planning and numeric domains. The domains can be simple $(\textsc{S})$, linear $(\testsc{L})$ or non-linear $(\textsc{NL})$ depending. The value $\beta$ represents the \emph{totalness} of the initial condition}
+        \label{tab:single-static}
+        \end{table*}
+        \end{document}

@@ -7,8 +7,6 @@ src/plan/__pycache__/
 
 *.pyc
 
-experiments/
-
 **/smt_encoding_*
 *.plan
 
@@ -18,7 +16,14 @@ benchmarks/planners/cplex/installer.bin
 
 *.smt
 
+*.sp_log
+
 *.pdf
+
+*.SOL
+
+**/noise/
+**/partial/**
 
 benchmarks/planners/planutils
 

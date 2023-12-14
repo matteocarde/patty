@@ -1,0 +1,8 @@
+{
+  "data_capacity": [0, 20],
+  "data": [0, 20],
+  "slew_time": [0, 20],
+  "data-stored": [0, 20],
+  "fuel-used": [0, 20],
+  "fuel": [0, 20]
+}

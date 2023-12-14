@@ -1,0 +1,149 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 403
+Aibr Preprocessing
+|F|:40
+|X|:4
+|A|:47
+|P|:0
+|E|:0
+H1 Setup Time (msec): 67
+Setting horizon to:NaN
+Running Greedy Best First Search
+Problem Solved
+
+Found Plan:
+0.0: (visit x0y0z0)
+1.0: (increase_z)
+2.0: (visit x0y0z1)
+3.0: (increase_z)
+4.0: (visit x0y0z2)
+5.0: (increase_z)
+6.0: (visit x0y0z3)
+7.0: (increase_y)
+8.0: (visit x0y1z3)
+9.0: (increase_y)
+10.0: (visit x0y2z3)
+11.0: (increase_y)
+12.0: (visit x0y3z3)
+13.0: (increase_y)
+14.0: (visit x0y4z3)
+15.0: (decrease_z)
+16.0: (decrease_z)
+17.0: (visit x0y4z1)
+18.0: (decrease_y)
+19.0: (decrease_y)
+20.0: (decrease_y)
+21.0: (decrease_y)
+22.0: (decrease_z)
+23.0: (recharge)
+24.0: (increase_y)
+25.0: (visit x0y1z0)
+26.0: (increase_z)
+27.0: (visit x0y1z1)
+28.0: (increase_z)
+29.0: (visit x0y1z2)
+30.0: (increase_y)
+31.0: (visit x0y2z2)
+32.0: (increase_y)
+33.0: (visit x0y3z2)
+34.0: (increase_y)
+35.0: (visit x0y4z2)
+36.0: (increase_x)
+37.0: (visit x1y4z2)
+38.0: (decrease_x)
+39.0: (decrease_y)
+40.0: (decrease_y)
+41.0: (decrease_z)
+42.0: (visit x0y2z1)
+43.0: (decrease_z)
+44.0: (visit x0y2z0)
+45.0: (decrease_y)
+46.0: (decrease_y)
+47.0: (recharge)
+48.0: (increase_x)
+49.0: (visit x1y0z0)
+50.0: (increase_z)
+51.0: (visit x1y0z1)
+52.0: (increase_z)
+53.0: (visit x1y0z2)
+54.0: (increase_z)
+55.0: (visit x1y0z3)
+56.0: (increase_y)
+57.0: (visit x1y1z3)
+58.0: (increase_y)
+59.0: (visit x1y2z3)
+60.0: (increase_y)
+61.0: (visit x1y3z3)
+62.0: (decrease_x)
+63.0: (decrease_z)
+64.0: (visit x0y3z2)
+65.0: (decrease_z)
+66.0: (visit x0y3z1)
+67.0: (decrease_z)
+68.0: (decrease_y)
+69.0: (decrease_y)
+70.0: (decrease_y)
+71.0: (recharge)
+72.0: (increase_y)
+73.0: (increase_x)
+74.0: (visit x1y1z0)
+75.0: (increase_z)
+76.0: (visit x1y1z1)
+77.0: (increase_z)
+78.0: (visit x1y1z2)
+79.0: (increase_y)
+80.0: (visit x1y2z2)
+81.0: (increase_y)
+82.0: (visit x1y3z2)
+83.0: (decrease_z)
+84.0: (visit x1y3z1)
+85.0: (increase_y)
+86.0: (visit x1y4z1)
+87.0: (decrease_z)
+88.0: (visit x1y4z0)
+89.0: (decrease_x)
+90.0: (visit x0y4z0)
+91.0: (decrease_y)
+92.0: (decrease_y)
+93.0: (decrease_y)
+94.0: (decrease_y)
+95.0: (recharge)
+96.0: (increase_y)
+97.0: (increase_y)
+98.0: (increase_y)
+99.0: (visit x0y3z0)
+100.0: (increase_x)
+101.0: (visit x1y3z0)
+102.0: (decrease_y)
+103.0: (visit x1y2z0)
+104.0: (increase_z)
+105.0: (visit x1y2z1)
+106.0: (increase_z)
+107.0: (increase_z)
+108.0: (increase_y)
+109.0: (increase_y)
+110.0: (visit x1y4z3)
+111.0: (decrease_z)
+112.0: (decrease_z)
+113.0: (decrease_z)
+114.0: (decrease_x)
+115.0: (decrease_y)
+116.0: (decrease_y)
+117.0: (decrease_y)
+118.0: (decrease_y)
+
+Plan-Length:119
+Metric (Search):119.0
+Planning Time (msec): 3908
+Heuristic Time (msec): 2219
+Search Time (msec): 2841
+Expanded Nodes:7440
+States Evaluated:34403
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:25291
+Number of Duplicates detected:9470
+real 4.05
+user 3.91
+sys 0.11

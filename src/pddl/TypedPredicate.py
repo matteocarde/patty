@@ -6,9 +6,11 @@ from typing import Dict, Tuple, List
 from src.pddl.Atom import Atom
 from src.pddl.Literal import Literal
 from src.pddl.Parameter import Parameter
+from src.pddl.PDDLWriter import PDDLWriter
 from src.pddl.Predicate import Predicate
 from src.pddl.Problem import Problem
 from src.pddl.Type import Type
+from src.pddl.Utilities import Utilities
 
 from src.pddl.grammar.pddlParser import pddlParser
 
@@ -22,8 +24,8 @@ class TypedPredicate(Predicate):
         super().__init__()
 
     def __str__(self):
-        paramString = ' '.join(f"{p}" for p in self.parameters)
-        return f"{self.name} {paramString}"
+        strParameters = [f"{p} - {t.name}" for (p, t) in self.parameters]
+        return f"{self.name}({','.join(strParameters)})"
 
     def __repr__(self):
         return str(self)
@@ -32,7 +34,7 @@ class TypedPredicate(Predicate):
     def fromNode(cls, node: pddlParser.TypedPositiveLiteralContext, types: Dict[str, Type]) -> TypedPredicate:
         typedPredicate = cls()
 
-        atomNode: pddlParser.AtomContext = node.getChild(1)
+        atomNode: pddlParser.TypedAtomContext = node.getChild(1)
         typedPredicate.name = atomNode.getChild(0).getText()
         typedPredicate.parameters = []
 
@@ -76,3 +78,12 @@ class TypedPredicate(Predicate):
         literal.alphaFunct = literal.atom.toAlphaFunctionName()
 
         return literal
+
+    @classmethod
+    def fromString(cls, string: str, types: Dict[str, Type]):
+        return cls.fromNode(Utilities.getParseTree(string).typedPositiveLiteral(), types)
+
+    def toPDDL(self, pw: PDDLWriter = PDDLWriter()):
+        parameters = " ".join([f"{p.name} - {p.type.name}" for p in self.parameters])
+        pw.write(f"({self.name} {parameters})")
+        pass

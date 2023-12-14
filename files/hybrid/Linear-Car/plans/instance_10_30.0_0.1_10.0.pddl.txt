@@ -1,0 +1,129 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 58
+Aibr Preprocessing
+|F|:2
+|X|:3
+Aibr Preprocessing
+|A|:4
+|P|:2
+|E|:1
+Delta time heuristic model:1.0
+Delta time planning model:1.0
+Delta time search-execution model:1.0
+Delta time validation model:1
+AIBR selected
+Setting horizon to:NaN
+Running WA-STAR
+Extracting plan with execution delta: 1.0
+Problem Solved
+
+Found Plan:
+0: (start_car)
+0: (accelerate)
+0: (accelerate)
+0: (accelerate)
+0: (moving)
+0: (displacement)
+0: -----waiting---- [1.0]
+1.0: (moving)
+1.0: (displacement)
+1.0: -----waiting---- [2.0]
+2.0: (moving)
+2.0: (displacement)
+2.0: -----waiting---- [3.0]
+3.0: (moving)
+3.0: (displacement)
+3.0: -----waiting---- [4.0]
+4.0: (moving)
+4.0: (displacement)
+4.0: -----waiting---- [5.0]
+5.0: (decelerate)
+5.0: (moving)
+5.0: (displacement)
+5.0: -----waiting---- [6.0]
+6.0: (decelerate)
+6.0: (moving)
+6.0: (displacement)
+6.0: -----waiting---- [7.0]
+7.0: (moving)
+7.0: (displacement)
+7.0: -----waiting---- [8.0]
+8.0: (moving)
+8.0: (displacement)
+8.0: -----waiting---- [9.0]
+9.0: (decelerate)
+9.0: (moving)
+9.0: (displacement)
+9.0: -----waiting---- [10.0]
+10.0: (moving)
+10.0: (displacement)
+10.0: -----waiting---- [11.0]
+11.0: (moving)
+11.0: (displacement)
+11.0: -----waiting---- [12.0]
+12.0: (decelerate)
+12.0: (moving)
+12.0: (displacement)
+12.0: -----waiting---- [13.0]
+13.0: (moving)
+13.0: (displacement)
+13.0: -----waiting---- [14.0]
+14.0: (moving)
+14.0: (displacement)
+14.0: -----waiting---- [15.0]
+15.0: (decelerate)
+15.0: (moving)
+15.0: (displacement)
+15.0: -----waiting---- [16.0]
+16.0: (moving)
+16.0: (displacement)
+16.0: -----waiting---- [17.0]
+17.0: (moving)
+17.0: (displacement)
+17.0: -----waiting---- [18.0]
+18.0: (moving)
+18.0: (displacement)
+18.0: -----waiting---- [19.0]
+19.0: (moving)
+19.0: (displacement)
+19.0: -----waiting---- [20.0]
+20.0: (moving)
+20.0: (displacement)
+20.0: -----waiting---- [21.0]
+21.0: (moving)
+21.0: (displacement)
+21.0: -----waiting---- [22.0]
+22.0: (accelerate)
+22.0: (moving)
+22.0: (displacement)
+22.0: -----waiting---- [23.0]
+23.0: (moving)
+23.0: (displacement)
+23.0: -----waiting---- [24.0]
+24.0: (accelerate)
+24.0: (moving)
+24.0: (displacement)
+24.0: -----waiting---- [25.0]
+25.0: (decelerate)
+25.0: (moving)
+25.0: (displacement)
+25.0: -----waiting---- [26.0]
+26.0: (idle)
+26.0: (stop_car)
+
+Plan-Length:92
+Elapsed Time: 26.0
+Metric (Search):39.0
+Planning Time (msec): 681
+Heuristic Time (msec): 113
+Search Time (msec): 209
+Expanded Nodes:89
+States Evaluated:210
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:0
+Number of Duplicates detected:54
+real 0.86
+user 0.78
+sys 0.05

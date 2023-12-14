@@ -1,0 +1,69 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 22
+Aibr Preprocessing
+|F|:17
+|X|:6
+Aibr Preprocessing
+|A|:24
+|P|:24
+|E|:12
+Delta time heuristic model:1.0
+Delta time planning model:1.0
+Delta time search-execution model:1.0
+Delta time validation model:1
+H1 Setup Time (msec): 13
+Setting horizon to:NaN
+Running WA-STAR
+Extracting plan with execution delta: 1.0
+Problem Solved
+
+Found Plan:
+0: (start_movement_decrease L1 L2 ZAXES)
+0: (propagate_move_angle_decrease L2 L3 ZAXES)
+0: (move_angle_decrease L2 ZAXES)
+0: (propagate_move_angle_decrease L2 L4 ZAXES)
+0: -----waiting---- [1.0]
+1.0: (propagate_move_angle_decrease L2 L3 ZAXES)
+1.0: (move_angle_decrease L2 ZAXES)
+1.0: (propagate_move_angle_decrease L2 L4 ZAXES)
+1.0: -----waiting---- [2.0]
+2.0: (propagate_move_angle_decrease L2 L3 ZAXES)
+2.0: (move_angle_decrease L2 ZAXES)
+2.0: (propagate_move_angle_decrease L2 L4 ZAXES)
+2.0: -----waiting---- [3.0]
+3.0: (back-to-360 L3 ZAXES)
+3.0: (stop_movement_decrease L1 L2 ZAXES)
+3.0: (start_movement_decrease L2 L3 xyaxes)
+3.0: (propagate_move_angle_decrease L3 L4 xyaxes)
+3.0: (move_angle_decrease L3 xyaxes)
+3.0: -----waiting---- [4.0]
+4.0: (propagate_move_angle_decrease L3 L4 xyaxes)
+4.0: (move_angle_decrease L3 xyaxes)
+4.0: -----waiting---- [5.0]
+5.0: (propagate_move_angle_decrease L3 L4 xyaxes)
+5.0: (move_angle_decrease L3 xyaxes)
+5.0: -----waiting---- [6.0]
+6.0: (back-to-360 L3 xyaxes)
+6.0: (propagate_move_angle_decrease L3 L4 xyaxes)
+6.0: (move_angle_decrease L3 xyaxes)
+6.0: -----waiting---- [7.0]
+7.0: (propagate_move_angle_decrease L3 L4 xyaxes)
+7.0: (move_angle_decrease L3 xyaxes)
+7.0: -----waiting---- [8.0]
+
+Plan-Length:32
+Elapsed Time: 8.0
+Metric (Search):11.0
+Planning Time (msec): 936
+Heuristic Time (msec): 41
+Search Time (msec): 228
+Expanded Nodes:62
+States Evaluated:228
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:0
+Number of Duplicates detected:24
+real 1.12
+user 0.78
+sys 0.06

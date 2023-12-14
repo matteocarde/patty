@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+import copy
 from typing import Dict, List, Set
 
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.Event import Event
 from src.pddl.Operation import Operation
+from src.pddl.PDDLWriter import PDDLWriter
 from src.pddl.Problem import Problem
 from src.pddl.Process import Process
 from src.pddl.State import State
@@ -39,17 +41,32 @@ class Domain:
         self.isPredicateStatic: Dict[str, bool] = dict()
         pass
 
-    def ground(self, problem: Problem, avoidSimplification=False, console: LogPrint = None) -> GroundedDomain:
+    def __deepcopy__(self, m):
+        m = {} if m is None else m
+        domain = Domain()
+        domain.name = self.name
+        domain.requirements = copy.deepcopy(self.requirements, m)
+        domain.types = copy.deepcopy(self.requirements, m)
+        domain.predicates = copy.deepcopy(self.predicates, m)
+        domain.actions = copy.deepcopy(self.actions, m)
+        domain.events = copy.deepcopy(self.events, m)
+        domain.processes = copy.deepcopy(self.processes, m)
+        domain.constants = copy.deepcopy(self.constants, m)
+        return domain
+    def ground(self, problem: Problem, avoidSimplification=False, console: LogPrint = None, delta=1) -> GroundedDomain:
 
         problem.computeWhatCanHappen(self)
 
         gActions: Set[Action] = set(
-            [g for action in self.actions for g in action.ground(problem, self.isPredicateStatic)])
-        gEvents: Set[Event] = set([g for event in self.events for g in event.ground(problem, self.isPredicateStatic)])
+            [g for action in self.actions for g in action.ground(problem, self.isPredicateStatic, delta=delta)])
+        gEvents: Set[Event] = set([g for event in self.events for g in event.ground(problem, self.isPredicateStatic, delta=delta)])
         gProcess: Set[Process] = set(
-            [g for process in self.processes for g in process.ground(problem, self.isPredicateStatic)])
+            [g for process in self.processes for g in process.ground(problem, self.isPredicateStatic, delta=delta)])
 
         gDomain = GroundedDomain(self.name, gActions, gEvents, gProcess)
+        gDomain.allAtoms |= problem.allAtoms
+        gDomain.functions |= problem.functions
+        gDomain.predicates |= problem.predicates
 
         if console:
             console.log("Static Grounding Stats:", LogPrintLevel.STATS)
@@ -184,6 +201,12 @@ class Domain:
                 continue
             self.functions.add(TypedPredicate.fromNode(child, self.types))
 
+    def getSignatures(self) -> Dict[str, Operation]:
+        signatures: Dict[str, Operation] = dict()
+        for h in self.actions | self.events | self.processes:
+            signatures[h.getSignature()] = h
+        return signatures
+
 
 class GroundedDomain(Domain):
     __operationsDict: Dict[str, Operation] = dict()
@@ -261,3 +284,49 @@ class GroundedDomain(Domain):
         stats.append(f"|A|={len(self.actions)}")
         stats.append(f"|Asgn(A)|={len(self.assList)}")
         return "\n".join(stats)
+
+    def toPDDL(self, pw: PDDLWriter = PDDLWriter()):
+        pw.write(f"(define (domain {self.name})")
+        pw.increaseTab()
+        # Types
+        pw.write(f"(:types")
+        pw.increaseTab()
+        for type in self.types.values():
+            type.toPDDL(pw)
+        pw.decreaseTab()
+        pw.write(f")")
+
+        if self.constants:
+            # Constants
+            pw.write(f"(:constants")
+            pw.increaseTab()
+            for (type, objects) in self.constants.items():
+                objStr = " ".join(objects)
+                pw.write(f"{objStr} - {type}")
+            pw.decreaseTab()
+            pw.write(f")")
+
+            # Predicates
+        pw.write(f"(:predicates")
+        pw.increaseTab()
+        for p in self.predicates:
+            p.toPDDL(pw)
+        pw.decreaseTab()
+        pw.write(f")")
+
+        if self.functions:
+            # Functions
+            pw.write(f"(:functions")
+            pw.increaseTab()
+            for f in self.functions:
+                f.toPDDL(pw)
+            pw.decreaseTab()
+            pw.write(f")")
+
+        for h in self.actions | self.events | self.processes:
+            h.toPDDL(pw)
+
+        pw.decreaseTab()
+        pw.write(f")")
+
+        return pw

@@ -84,11 +84,11 @@ class BinaryPredicate(Predicate):
         else:
             raise NotImplemented()
 
-    def ground(self, sub: Dict[str, str]) -> BinaryPredicate:
+    def ground(self, subs: Dict[str, str], delta=1) -> BinaryPredicate:
         bp = BinaryPredicate()
         bp.operator = self.operator
-        bp.lhs = self.lhs.ground(sub)
-        bp.rhs = self.rhs.ground(sub)
+        bp.lhs = self.lhs.ground(subs, delta)
+        bp.rhs = self.rhs.ground(subs, delta)
         bp.type = self.type
 
         return bp
@@ -126,6 +126,8 @@ class BinaryPredicate(Predicate):
         return self.__functions
 
     def __str__(self):
+        if self.operator == "!=":
+            return f"(not (= {self.lhs} {self.rhs}))"
         return f"({self.operator} {self.lhs} {self.rhs})"
 
     def __hash__(self):
@@ -231,6 +233,16 @@ class BinaryPredicate(Predicate):
             raise Exception("Cannot transform", self, " to expression ", self.type)
         return Utilities.op(self.operator, self.lhs.toExpression(), self.rhs.toExpression())
 
+    def expressify(self, symbols: Dict[Atom, Expr]) -> Expr:
+        if self.type == BinaryPredicateType.OPERATION:
+            return Utilities.op(self.operator, self.lhs.expressify(symbols), self.rhs.expressify(symbols))
+        elif self.type == BinaryPredicateType.COMPARATION:
+            if self.operator == "=":
+                return self.lhs.expressify(symbols) - self.rhs.expressify(symbols)
+            return Utilities.compareExpr(self.operator, self.lhs.expressify(symbols), self.rhs.expressify(symbols))
+        else:
+            raise Exception("Cannot expressify assignment")
+
     def getIntervalFromSimpleCondition(self) -> MooreInterval or None:
         if len(self.getFunctions()) > 1:
             return None
@@ -248,6 +260,15 @@ class BinaryPredicate(Predicate):
         ub = float(-q / m) if self.operator in {"<=", "<", "=", "!="} else float("+inf")
 
         return MooreInterval(lb, ub)
+
+    @classmethod
+    def fromAssignment(cls, atom: Atom, value: float):
+        bp = cls()
+        bp.operator = "="
+        bp.lhs = Literal.fromAtom(atom, "+")
+        bp.rhs = Constant(value)
+        bp.type = BinaryPredicateType.MODIFICATION
+        return bp
 
     @classmethod
     def fromOperationString(cls, string: str):

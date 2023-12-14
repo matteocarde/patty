@@ -12,8 +12,9 @@ from src.smt.SMTSolver import SMTSolver
 class TestBlockGrouping(TestCase):
 
     def setUp(self) -> None:
-        self.domain: Domain = Domain.fromFile("../../files/block-grouping/domain.pddl")
-        self.problem: Problem = Problem.fromFile("../../files/block-grouping/instances/instance_7_15_3_1.pddl")
+        self.domain: Domain = Domain.fromFile("../../files/numeric/ipc-2023/block-grouping/domain.pddl")
+        self.problem: Problem = Problem.fromFile(
+            "../../files/numeric/ipc-2023/block-grouping/instances/instance_7_10_2_1.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.horizon = 1
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())

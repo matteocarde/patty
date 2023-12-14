@@ -1,0 +1,6 @@
+{
+  "roverenergy": [0, 100],
+  "SoC": [0, 100],
+  "time": [0, 0],
+  "sunexposure_time": [0, 1000]
+}

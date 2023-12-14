@@ -1,0 +1,104 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 17
+Aibr Preprocessing
+|F|:5
+|X|:5
+Aibr Preprocessing
+|A|:4
+|P|:2
+|E|:3
+Delta time heuristic model:1.0
+Delta time planning model:1.0
+Delta time search-execution model:1.0
+Delta time validation model:1
+AIBR selected
+Setting horizon to:NaN
+Running WA-STAR
+Extracting plan with execution delta: 1.0
+Problem Solved
+
+Found Plan:
+0: (start_descent)
+0: (falling)
+0: -----waiting---- [1.0]
+1.0: (falling)
+1.0: -----waiting---- [2.0]
+2.0: (falling)
+2.0: -----waiting---- [3.0]
+3.0: (falling)
+3.0: -----waiting---- [4.0]
+4.0: (falling)
+4.0: -----waiting---- [5.0]
+5.0: (falling)
+5.0: -----waiting---- [6.0]
+6.0: (falling)
+6.0: -----waiting---- [7.0]
+7.0: (start-thrust)
+7.0: (falling)
+7.0: (thrust)
+7.0: -----waiting---- [8.0]
+8.0: (falling)
+8.0: (thrust)
+8.0: -----waiting---- [9.0]
+9.0: (falling)
+9.0: (thrust)
+9.0: -----waiting---- [10.0]
+10.0: (falling)
+10.0: (thrust)
+10.0: -----waiting---- [11.0]
+11.0: (falling)
+11.0: (thrust)
+11.0: -----waiting---- [12.0]
+12.0: (stop-thrust)
+12.0: (falling)
+12.0: -----waiting---- [13.0]
+13.0: (start-thrust)
+13.0: (falling)
+13.0: (thrust)
+13.0: -----waiting---- [14.0]
+14.0: (falling)
+14.0: (thrust)
+14.0: -----waiting---- [15.0]
+15.0: (falling)
+15.0: (thrust)
+15.0: -----waiting---- [16.0]
+16.0: (falling)
+16.0: (thrust)
+16.0: -----waiting---- [17.0]
+17.0: (falling)
+17.0: (thrust)
+17.0: -----waiting---- [18.0]
+18.0: (falling)
+18.0: (thrust)
+18.0: -----waiting---- [19.0]
+19.0: (falling)
+19.0: (thrust)
+19.0: -----waiting---- [20.0]
+20.0: (stop-thrust)
+20.0: (falling)
+20.0: -----waiting---- [21.0]
+21.0: (start-thrust)
+21.0: (falling)
+21.0: (thrust)
+21.0: -----waiting---- [22.0]
+22.0: (falling)
+22.0: (thrust)
+22.0: -----waiting---- [23.0]
+23.0: (land)
+
+Plan-Length:67
+Elapsed Time: 23.0
+Metric (Search):30.0
+Planning Time (msec): 985
+Heuristic Time (msec): 453
+Search Time (msec): 493
+Expanded Nodes:466
+States Evaluated:761
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:104
+Number of Duplicates detected:169
+real 1.26
+user 1.21
+sys 0.03

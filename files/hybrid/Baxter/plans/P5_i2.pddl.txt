@@ -1,0 +1,73 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 76
+Aibr Preprocessing
+|F|:22
+|X|:8
+Aibr Preprocessing
+|A|:32
+|P|:40
+|E|:16
+Delta time heuristic model:1.0
+Delta time planning model:1.0
+Delta time search-execution model:1.0
+Delta time validation model:1
+H1 Setup Time (msec): 10
+Setting horizon to:NaN
+Running WA-STAR
+Extracting plan with execution delta: 1.0
+Problem Solved
+
+Found Plan:
+0: (start_movement_increase L4 L5 xyaxes)
+0: (move_angle_increase L5 xyaxes)
+0: -----waiting---- [1.0]
+1.0: (move_angle_increase L5 xyaxes)
+1.0: -----waiting---- [2.0]
+2.0: (move_angle_increase L5 xyaxes)
+2.0: -----waiting---- [3.0]
+3.0: (move_angle_increase L5 xyaxes)
+3.0: -----waiting---- [4.0]
+4.0: (move_angle_increase L5 xyaxes)
+4.0: -----waiting---- [5.0]
+5.0: (move_angle_increase L5 xyaxes)
+5.0: -----waiting---- [6.0]
+6.0: (stop_movement_increase L4 L5 xyaxes)
+6.0: (start_movement_decrease L1 L2 ZAXES)
+6.0: (propagate_move_angle_decrease L2 L3 ZAXES)
+6.0: (propagate_move_angle_decrease L2 L5 ZAXES)
+6.0: (move_angle_decrease L2 ZAXES)
+6.0: (propagate_move_angle_decrease L2 L4 ZAXES)
+6.0: -----waiting---- [7.0]
+7.0: (propagate_move_angle_decrease L2 L3 ZAXES)
+7.0: (propagate_move_angle_decrease L2 L5 ZAXES)
+7.0: (move_angle_decrease L2 ZAXES)
+7.0: (propagate_move_angle_decrease L2 L4 ZAXES)
+7.0: -----waiting---- [8.0]
+8.0: (propagate_move_angle_decrease L2 L3 ZAXES)
+8.0: (propagate_move_angle_decrease L2 L5 ZAXES)
+8.0: (move_angle_decrease L2 ZAXES)
+8.0: (propagate_move_angle_decrease L2 L4 ZAXES)
+8.0: -----waiting---- [9.0]
+9.0: (back-to-360 L4 ZAXES)
+9.0: (back-to-360 L3 ZAXES)
+9.0: (stop_movement_decrease L1 L2 ZAXES)
+9.0: (start_movement_increase L4 L5 ZAXES)
+9.0: (move_angle_increase L5 ZAXES)
+9.0: -----waiting---- [10.0]
+
+Plan-Length:36
+Elapsed Time: 10.0
+Metric (Search):15.0
+Planning Time (msec): 1302
+Heuristic Time (msec): 493
+Search Time (msec): 701
+Expanded Nodes:673
+States Evaluated:1684
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:0
+Number of Duplicates detected:388
+real 1.39
+user 1.34
+sys 0.08

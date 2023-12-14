@@ -8,8 +8,11 @@
   },
   "scripts": {
     "experiment": "./exes/experiment.sh",
+    "testICR": "./exes/testICR.sh",
     "push": "./exes/push.sh",
+    "push-icr": "./exes/push-icr.sh",
     "build": "docker build -t patty -f Dockerfile . --progress='plain'",
+    "build-icr": "docker build -t icr -f Dockerfile-icr . --progress='plain'",
     "start": "nodemon app.js"
   },
   "repository": {

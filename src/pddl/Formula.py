@@ -4,9 +4,12 @@ import copy
 from itertools import chain
 from typing import Dict, Set, Tuple, List
 
+from sympy import Expr
+
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.Literal import Literal
+from src.pddl.PDDLWriter import PDDLWriter
 from src.pddl.Predicate import Predicate
 from src.pddl.Utilities import Utilities
 from src.pddl.grammar.pddlParser import pddlParser as p
@@ -18,7 +21,7 @@ class Formula:
 
     def __init__(self):
         self.type = "AND"
-        self.conditions = list()
+        self.conditions: [Formula or Predicate] = list()
 
     def __deepcopy__(self, m=None) -> Formula:
         m = {} if m is None else m
@@ -61,11 +64,11 @@ class Formula:
     def fromString(cls, string: str) -> Formula:
         return Formula.fromNode(Utilities.getParseTree(string).preconditions())
 
-    def ground(self, sub: Dict[str, str]):
+    def ground(self, subs: Dict[str, str], delta=1):
         gFormula = Formula()
         gFormula.type = self.type
         for condition in self.conditions:
-            gFormula.conditions.append(condition.ground(sub))
+            gFormula.conditions.append(condition.ground(subs, delta))
         return gFormula
 
     def getFunctions(self) -> Set[Atom]:
@@ -121,6 +124,11 @@ class Formula:
             f.conditions.append(el.replace(atom, w))
         return f
 
+    def expressify(self, symbols: Dict[Atom, Expr]) -> [Expr]:
+        if self.type == "OR":
+            raise Exception("Cannot expressify OR formula")
+        return [c.expressify(symbols) for c in self.conditions]
+
     def __iter__(self):
         return iter(self.conditions)
 
@@ -161,3 +169,25 @@ class Formula:
 
     def addClause(self, clause: Formula or Predicate):
         self.conditions.append(clause)
+
+    @classmethod
+    def join(cls, formulas: List[Formula]) -> Formula:
+        joinedF = cls()
+        type = formulas[0].type
+        joinedF.conditions = []
+        for f in formulas:
+            if type != f.type:
+                raise Exception("Cannot join together preconditions of different types")
+            joinedF.conditions += f.conditions
+        joinedF.type = type
+        return joinedF
+
+    def toPDDL(self, pw: PDDLWriter = PDDLWriter()):
+        pw.increaseTab()
+        pw.write(f"({self.type.lower()}")
+        pw.increaseTab()
+        for c in self.conditions:
+            c.toPDDL(pw)
+        pw.decreaseTab()
+        pw.write(")")
+        pw.decreaseTab()

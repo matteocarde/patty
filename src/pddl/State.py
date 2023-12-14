@@ -15,10 +15,10 @@ from src.pddl.Utilities import Utilities
 
 
 class State:
-    __assignments: Dict[Atom, bool or float]
+    assignments: Dict[Atom, bool or float]
 
     def __init__(self):
-        self.__assignments: Dict[Atom, bool or float] = dict()
+        self.assignments: Dict[Atom, bool or float] = dict()
 
     def __deepcopy__(self, m=None) -> State:
         m = {} if m is None else m
@@ -33,7 +33,7 @@ class State:
         assignment: Predicate
         for assignment in init.assignments:
             atom = assignment.getAtom()
-            state.__assignments[atom] = state.getRealization(assignment)
+            state.assignments[atom] = state.getRealization(assignment)
 
         return state
 
@@ -42,17 +42,17 @@ class State:
         return self.__assignments
 
     def getAtom(self, atom: Atom) -> bool or float:
-        if atom not in self.__assignments:
+        if atom not in self.assignments:
             return False
-        return self.__assignments[atom]
+        return self.assignments[atom]
 
     def __repr__(self):
-        return repr(self.__assignments)
+        return repr(self.assignments)
 
     def applyAction(self, action: Action):
 
         state = State()
-        state.__assignments = self.__assignments.copy()
+        state.assignments = self.assignments.copy()
 
         if not state.satisfies(action.preconditions):
             raise Exception(
@@ -60,7 +60,7 @@ class State:
 
         effect: Predicate
         for effect in action.effects:
-            state.__assignments[effect.getAtom()] = self.getRealization(effect)
+            state.assignments[effect.getAtom()] = self.getRealization(effect)
 
         return state
 
@@ -70,42 +70,42 @@ class State:
             state = state.applyAction(action)
         return state
 
-    def __satisfiesAnd(self, formula: Formula):
+    def __satisfiesAnd(self, formula: Formula, tolerance=0.0):
         satisfied = True
         for c in formula.conditions:
-            if isinstance(c, Predicate) and not self.satisfiesPredicate(c):
+            if isinstance(c, Predicate) and not self.satisfiesPredicate(c, tolerance=tolerance):
                 return False
-            if isinstance(c, Formula) and c.type == "AND" and not self.__satisfiesAnd(c):
+            if isinstance(c, Formula) and c.type == "AND" and not self.__satisfiesAnd(c, tolerance=tolerance):
                 return False
-            if isinstance(c, Formula) and c.type == "OR" and not self.__satisfiesOr(c):
+            if isinstance(c, Formula) and c.type == "OR" and not self.__satisfiesOr(c, tolerance=tolerance):
                 return False
 
         return satisfied
 
-    def __satisfiesOr(self, formula: Formula):
+    def __satisfiesOr(self, formula: Formula, tolerance=0.0):
         satisfied = False
         for c in formula.conditions:
-            if isinstance(c, Predicate) and self.satisfiesPredicate(c):
+            if isinstance(c, Predicate) and self.satisfiesPredicate(c, tolerance=tolerance):
                 return True
-            if isinstance(c, Formula) and c.type == "AND" and self.__satisfiesAnd(c):
+            if isinstance(c, Formula) and c.type == "AND" and self.__satisfiesAnd(c, tolerance=tolerance):
                 return True
-            if isinstance(c, Formula) and c.type == "OR" and self.__satisfiesOr(c):
+            if isinstance(c, Formula) and c.type == "OR" and self.__satisfiesOr(c, tolerance=tolerance):
                 return True
 
         return satisfied
 
-    def satisfies(self, c: Formula or Predicate) -> bool:
+    def satisfies(self, c: Formula or Predicate, tolerance=0.0) -> bool:
         if isinstance(c, Predicate):
             return self.satisfiesPredicate(c)
-        return self.__satisfiesAnd(c) if c.type == "AND" else self.__satisfiesOr(c)
+        return self.__satisfiesAnd(c, tolerance) if c.type == "AND" else self.__satisfiesOr(c, tolerance)
 
-    def satisfiesPredicate(self, p: Predicate):
+    def satisfiesPredicate(self, p: Predicate, tolerance=0.0):
         if isinstance(p, Literal):
             atom = p.getAtom()
             if p.sign == "+":
-                return atom in self.__assignments and self.__assignments[atom]
+                return atom in self.assignments and self.assignments[atom]
             else:
-                return atom not in self.__assignments or not self.__assignments[atom]
+                return atom not in self.assignments or not self.assignments[atom]
 
         if not isinstance(p, BinaryPredicate):
             raise "Precondition can only be BinaryPredicate or Literal"
@@ -115,6 +115,14 @@ class State:
 
         function: BinaryPredicate = p.lhs - p.rhs
         result = self.substituteInto(function)
+
+        if tolerance:
+            if p.operator == "=":
+                return abs(result) <= tolerance
+            if p.operator in {">", ">=", "!="}:
+                return result >= - tolerance
+            if p.operator in {"<", "<="}:
+                return result <= tolerance
 
         return Utilities.compare(p.operator, result, 0)
 
@@ -126,7 +134,7 @@ class State:
                 raise Exception(f"Operator {p.operator} not allowed in effects")
 
             lhs = self.substituteInto(p.rhs)
-            value = self.__assignments[p.getAtom()] if p.getAtom() in self.__assignments else 0
+            value = self.assignments[p.getAtom()] if p.getAtom() in self.assignments else 0
             if p.operator == "assign" or p.operator == "=":
                 return lhs
             if p.operator == "increase":
@@ -138,7 +146,7 @@ class State:
         if isinstance(p, Constant):
             return p.value
         if isinstance(p, Literal):
-            return self.__assignments[p.getAtom()] if p.getAtom() in self.__assignments else 0
+            return self.assignments[p.getAtom()] if p.getAtom() in self.assignments else 0
         if isinstance(p, BinaryPredicate):
             lhs = self.substituteInto(p.lhs)
             rhs = self.substituteInto(p.rhs)

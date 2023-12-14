@@ -1,0 +1,41 @@
+
+        \documentclass[11pt,landscape]{article}
+        \usepackage{graphicx}
+        \usepackage{lscape}
+        \usepackage{multirow}
+        \usepackage[a4paper,margin=1in,landscape]{geometry}
+        
+        \begin{document}
+    
+        \begin{table*}[tb]
+        \centering
+        \resizebox{\textwidth}{!}{
+\begin{tabular}{cc|ccc|ccc|ccc|ccc|ccc|ccc}
+ & & \multicolumn{3}{|c}{Baxter}&\multicolumn{3}{|c}{Descent}&\multicolumn{3}{|c}{HVAC}&\multicolumn{3}{|c}{Linear-Car}&\multicolumn{3}{|c}{Linear-Car-2}&\multicolumn{3}{|c}{Solar-Rover}\\
+& & $1\delta$&$2\delta$&$K\delta$&$1\delta$&$2\delta$&$K\delta$&$1\delta$&$2\delta$&$K\delta$&$1\delta$&$2\delta$&$K\delta$&$1\delta$&$2\delta$&$K\delta$&$1\delta$&$2\delta$&$K\delta$\\
+\hline
+\multirow{2}{*}{ENHSP-SAT-HMRP}&RT (s)&5.01&\textbf{1.08}&1.42&\textbf{29.14}&-&-&25.98&4.77&\textbf{4.32}&\textbf{3.54}&-&-&\textbf{7.27}&-&-&3.00&\textbf{1.49}&3.71\\
+&Cov. (\%)&88.89&\textbf{100.00}&\textbf{100.00}&\textbf{5.00}&-&-&15.79&\textbf{100.00}&\textbf{100.00}&\textbf{100.00}&-&-&\textbf{100.00}&-&-&\textbf{100.00}&\textbf{100.00}&\textbf{100.00}\\
+\hline
+\multirow{2}{*}{ENHSP-SAT-HADD}&RT (s)&4.57&\textbf{1.05}&1.36&\textbf{29.02}&-&-&25.46&4.01&\textbf{3.60}&\textbf{2.82}&-&-&\textbf{6.51}&-&-&1.29&\textbf{0.92}&1.27\\
+&Cov. (\%)&89.47&\textbf{100.00}&\textbf{100.00}&\textbf{5.56}&-&-&17.65&\textbf{100.00}&\textbf{100.00}&\textbf{100.00}&-&-&\textbf{100.00}&-&-&\textbf{100.00}&\textbf{100.00}&\textbf{100.00}\\
+\hline
+\multirow{2}{*}{ENHSP-SAT-AIBR}&RT (s)&21.36&16.31&\textbf{8.58}&24.24&\textbf{2.66}&6.15&27.18&\textbf{21.26}&24.20&21.35&\textbf{1.00}&19.05&25.25&\textbf{6.16}&26.13&3.67&\textbf{1.82}&7.42\\
+&Cov. (\%)&31.58&52.63&\textbf{77.78}&21.05&\textbf{100.00}&\textbf{100.00}&10.53&\textbf{47.37}&31.58&30.00&\textbf{100.00}&40.00&16.67&\textbf{81.82}&13.64&\textbf{100.00}&\textbf{100.00}&\textbf{100.00}\\
+\hline
+\multirow{2}{*}{ENHSP-OPT-HMRP}&RT (s)&11.60&\textbf{1.67}&6.28&-&\textbf{23.93}&26.64&-&-&-&-&-&-&-&-&-&-&\textbf{27.62}&29.47\\
+&Cov. (\%)&64.71&\textbf{100.00}&84.21&-&\textbf{26.32}&16.67&-&-&-&-&-&-&-&-&-&-&\textbf{10.00}&5.56\\
+\hline
+\multirow{2}{*}{ENHSP-OPT-HADD}&RT (s)&14.17&\textbf{1.95}&3.46&-&\textbf{23.75}&25.38&-&18.63&\textbf{17.14}&-&-&-&-&-&-&-&\textbf{27.43}&29.27\\
+&Cov. (\%)&55.56&\textbf{100.00}&94.12&-&\textbf{26.32}&18.18&-&68.42&\textbf{75.00}&-&-&-&-&-&-&-&\textbf{15.00}&5.00\\
+\hline
+\multirow{2}{*}{ENHSP-OPT-AIBR}&RT (s)&12.71&6.88&\textbf{5.47}&28.80&\textbf{1.39}&4.00&28.47&\textbf{20.68}&25.59&21.68&\textbf{0.94}&16.47&-&\textbf{5.01}&26.10&-&\textbf{25.17}&-\\
+&Cov. (\%)&66.67&84.21&\textbf{94.44}&5.56&\textbf{100.00}&\textbf{100.00}&5.56&\textbf{55.56}&25.00&30.00&\textbf{100.00}&50.00&-&\textbf{90.91}&13.64&-&\textbf{20.00}&-\\
+
+        \end{tabular}} \caption{Average runtime (RT, CPU-time seconds) and coverage (Cov.) achieved by 
+    informed and uninformed search approaches implemented in ENHSP (E) and UPMurphi (U) while relying on different 
+    discretisation approaches on well-known benchmark domains. Average runtime (RT) considers unsolved instances as 
+    cut-off time (300 seconds).} 
+        \label{tab:single-static} 
+        \end{table*}  
+        \end{document}

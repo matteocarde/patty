@@ -1,0 +1,150 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 95
+Aibr Preprocessing
+|F|:32
+|X|:12
+Aibr Preprocessing
+|A|:48
+|P|:84
+|E|:24
+Delta time heuristic model:1.0
+Delta time planning model:1.0
+Delta time search-execution model:1.0
+Delta time validation model:1
+H1 Setup Time (msec): 12
+Setting horizon to:NaN
+Running WA-STAR
+Extracting plan with execution delta: 1.0
+Problem Solved
+
+Found Plan:
+0: (start_movement_decrease L2 L3 xyaxes)
+0: (propagate_move_angle_decrease L3 L5 xyaxes)
+0: (propagate_move_angle_decrease L3 L6 xyaxes)
+0: (propagate_move_angle_decrease L3 L7 xyaxes)
+0: (propagate_move_angle_decrease L3 L4 xyaxes)
+0: (move_angle_decrease L3 xyaxes)
+0: -----waiting---- [1.0]
+1.0: (propagate_move_angle_decrease L3 L5 xyaxes)
+1.0: (propagate_move_angle_decrease L3 L6 xyaxes)
+1.0: (propagate_move_angle_decrease L3 L7 xyaxes)
+1.0: (propagate_move_angle_decrease L3 L4 xyaxes)
+1.0: (move_angle_decrease L3 xyaxes)
+1.0: -----waiting---- [2.0]
+2.0: (propagate_move_angle_decrease L3 L5 xyaxes)
+2.0: (propagate_move_angle_decrease L3 L6 xyaxes)
+2.0: (propagate_move_angle_decrease L3 L7 xyaxes)
+2.0: (propagate_move_angle_decrease L3 L4 xyaxes)
+2.0: (move_angle_decrease L3 xyaxes)
+2.0: -----waiting---- [3.0]
+3.0: (propagate_move_angle_decrease L3 L5 xyaxes)
+3.0: (propagate_move_angle_decrease L3 L6 xyaxes)
+3.0: (propagate_move_angle_decrease L3 L7 xyaxes)
+3.0: (propagate_move_angle_decrease L3 L4 xyaxes)
+3.0: (move_angle_decrease L3 xyaxes)
+3.0: -----waiting---- [4.0]
+4.0: (propagate_move_angle_decrease L3 L5 xyaxes)
+4.0: (propagate_move_angle_decrease L3 L6 xyaxes)
+4.0: (propagate_move_angle_decrease L3 L7 xyaxes)
+4.0: (propagate_move_angle_decrease L3 L4 xyaxes)
+4.0: (move_angle_decrease L3 xyaxes)
+4.0: -----waiting---- [5.0]
+5.0: (propagate_move_angle_decrease L3 L5 xyaxes)
+5.0: (propagate_move_angle_decrease L3 L6 xyaxes)
+5.0: (propagate_move_angle_decrease L3 L7 xyaxes)
+5.0: (propagate_move_angle_decrease L3 L4 xyaxes)
+5.0: (move_angle_decrease L3 xyaxes)
+5.0: -----waiting---- [6.0]
+6.0: (propagate_move_angle_decrease L3 L5 xyaxes)
+6.0: (propagate_move_angle_decrease L3 L6 xyaxes)
+6.0: (propagate_move_angle_decrease L3 L7 xyaxes)
+6.0: (propagate_move_angle_decrease L3 L4 xyaxes)
+6.0: (move_angle_decrease L3 xyaxes)
+6.0: -----waiting---- [7.0]
+7.0: (back-to-360 L3 xyaxes)
+7.0: (propagate_move_angle_decrease L3 L5 xyaxes)
+7.0: (propagate_move_angle_decrease L3 L6 xyaxes)
+7.0: (propagate_move_angle_decrease L3 L7 xyaxes)
+7.0: (propagate_move_angle_decrease L3 L4 xyaxes)
+7.0: (move_angle_decrease L3 xyaxes)
+7.0: -----waiting---- [8.0]
+8.0: (back-to-360 L5 xyaxes)
+8.0: (stop_movement_decrease L2 L3 xyaxes)
+8.0: (start_movement_increase L2 L3 ZAXES)
+8.0: (propagate_move_angle_increase L3 L7 ZAXES)
+8.0: (propagate_move_angle_increase L3 L6 ZAXES)
+8.0: (move_angle_increase L3 ZAXES)
+8.0: (propagate_move_angle_increase L3 L5 ZAXES)
+8.0: (propagate_move_angle_increase L3 L4 ZAXES)
+8.0: -----waiting---- [9.0]
+9.0: (propagate_move_angle_increase L3 L7 ZAXES)
+9.0: (propagate_move_angle_increase L3 L6 ZAXES)
+9.0: (move_angle_increase L3 ZAXES)
+9.0: (propagate_move_angle_increase L3 L5 ZAXES)
+9.0: (propagate_move_angle_increase L3 L4 ZAXES)
+9.0: -----waiting---- [10.0]
+10.0: (propagate_move_angle_increase L3 L7 ZAXES)
+10.0: (propagate_move_angle_increase L3 L6 ZAXES)
+10.0: (move_angle_increase L3 ZAXES)
+10.0: (propagate_move_angle_increase L3 L5 ZAXES)
+10.0: (propagate_move_angle_increase L3 L4 ZAXES)
+10.0: -----waiting---- [11.0]
+11.0: (propagate_move_angle_increase L3 L7 ZAXES)
+11.0: (propagate_move_angle_increase L3 L6 ZAXES)
+11.0: (move_angle_increase L3 ZAXES)
+11.0: (propagate_move_angle_increase L3 L5 ZAXES)
+11.0: (propagate_move_angle_increase L3 L4 ZAXES)
+11.0: -----waiting---- [12.0]
+12.0: (propagate_move_angle_increase L3 L7 ZAXES)
+12.0: (propagate_move_angle_increase L3 L6 ZAXES)
+12.0: (move_angle_increase L3 ZAXES)
+12.0: (propagate_move_angle_increase L3 L5 ZAXES)
+12.0: (propagate_move_angle_increase L3 L4 ZAXES)
+12.0: -----waiting---- [13.0]
+13.0: (propagate_move_angle_increase L3 L7 ZAXES)
+13.0: (propagate_move_angle_increase L3 L6 ZAXES)
+13.0: (move_angle_increase L3 ZAXES)
+13.0: (propagate_move_angle_increase L3 L5 ZAXES)
+13.0: (propagate_move_angle_increase L3 L4 ZAXES)
+13.0: -----waiting---- [14.0]
+14.0: (propagate_move_angle_increase L3 L7 ZAXES)
+14.0: (propagate_move_angle_increase L3 L6 ZAXES)
+14.0: (move_angle_increase L3 ZAXES)
+14.0: (propagate_move_angle_increase L3 L5 ZAXES)
+14.0: (propagate_move_angle_increase L3 L4 ZAXES)
+14.0: -----waiting---- [15.0]
+15.0: (propagate_move_angle_increase L3 L7 ZAXES)
+15.0: (propagate_move_angle_increase L3 L6 ZAXES)
+15.0: (move_angle_increase L3 ZAXES)
+15.0: (propagate_move_angle_increase L3 L5 ZAXES)
+15.0: (propagate_move_angle_increase L3 L4 ZAXES)
+15.0: -----waiting---- [16.0]
+16.0: (propagate_move_angle_increase L3 L7 ZAXES)
+16.0: (propagate_move_angle_increase L3 L6 ZAXES)
+16.0: (move_angle_increase L3 ZAXES)
+16.0: (propagate_move_angle_increase L3 L5 ZAXES)
+16.0: (propagate_move_angle_increase L3 L4 ZAXES)
+16.0: -----waiting---- [17.0]
+17.0: (propagate_move_angle_increase L3 L7 ZAXES)
+17.0: (propagate_move_angle_increase L3 L6 ZAXES)
+17.0: (move_angle_increase L3 ZAXES)
+17.0: (propagate_move_angle_increase L3 L5 ZAXES)
+17.0: (propagate_move_angle_increase L3 L4 ZAXES)
+17.0: -----waiting---- [18.0]
+
+Plan-Length:113
+Elapsed Time: 18.0
+Metric (Search):21.0
+Planning Time (msec): 1072
+Heuristic Time (msec): 36
+Search Time (msec): 220
+Expanded Nodes:36
+States Evaluated:108
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:0
+Number of Duplicates detected:6
+real 1.22
+user 1.17
+sys 0.07

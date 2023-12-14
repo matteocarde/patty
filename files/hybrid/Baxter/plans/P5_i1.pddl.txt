@@ -1,0 +1,83 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 75
+Aibr Preprocessing
+|F|:22
+|X|:8
+Aibr Preprocessing
+|A|:32
+|P|:40
+|E|:16
+Delta time heuristic model:1.0
+Delta time planning model:1.0
+Delta time search-execution model:1.0
+Delta time validation model:1
+H1 Setup Time (msec): 10
+Setting horizon to:NaN
+Running WA-STAR
+Extracting plan with execution delta: 1.0
+Problem Solved
+
+Found Plan:
+0: (start_movement_decrease L2 L3 ZAXES)
+0: (propagate_move_angle_decrease L3 L5 ZAXES)
+0: (propagate_move_angle_decrease L3 L4 ZAXES)
+0: (move_angle_decrease L3 ZAXES)
+0: -----waiting---- [1.0]
+1.0: (propagate_move_angle_decrease L3 L5 ZAXES)
+1.0: (propagate_move_angle_decrease L3 L4 ZAXES)
+1.0: (move_angle_decrease L3 ZAXES)
+1.0: -----waiting---- [2.0]
+2.0: (propagate_move_angle_decrease L3 L5 ZAXES)
+2.0: (propagate_move_angle_decrease L3 L4 ZAXES)
+2.0: (move_angle_decrease L3 ZAXES)
+2.0: -----waiting---- [3.0]
+3.0: (propagate_move_angle_decrease L3 L5 ZAXES)
+3.0: (propagate_move_angle_decrease L3 L4 ZAXES)
+3.0: (move_angle_decrease L3 ZAXES)
+3.0: -----waiting---- [4.0]
+4.0: (propagate_move_angle_decrease L3 L5 ZAXES)
+4.0: (propagate_move_angle_decrease L3 L4 ZAXES)
+4.0: (move_angle_decrease L3 ZAXES)
+4.0: -----waiting---- [5.0]
+5.0: (propagate_move_angle_decrease L3 L5 ZAXES)
+5.0: (propagate_move_angle_decrease L3 L4 ZAXES)
+5.0: (move_angle_decrease L3 ZAXES)
+5.0: -----waiting---- [6.0]
+6.0: (propagate_move_angle_decrease L3 L5 ZAXES)
+6.0: (propagate_move_angle_decrease L3 L4 ZAXES)
+6.0: (move_angle_decrease L3 ZAXES)
+6.0: -----waiting---- [7.0]
+7.0: (propagate_move_angle_decrease L3 L5 ZAXES)
+7.0: (propagate_move_angle_decrease L3 L4 ZAXES)
+7.0: (move_angle_decrease L3 ZAXES)
+7.0: -----waiting---- [8.0]
+8.0: (propagate_move_angle_decrease L3 L5 ZAXES)
+8.0: (propagate_move_angle_decrease L3 L4 ZAXES)
+8.0: (move_angle_decrease L3 ZAXES)
+8.0: -----waiting---- [9.0]
+9.0: (propagate_move_angle_decrease L3 L5 ZAXES)
+9.0: (propagate_move_angle_decrease L3 L4 ZAXES)
+9.0: (move_angle_decrease L3 ZAXES)
+9.0: -----waiting---- [10.0]
+10.0: (propagate_move_angle_decrease L3 L5 ZAXES)
+10.0: (propagate_move_angle_decrease L3 L4 ZAXES)
+10.0: (move_angle_decrease L3 ZAXES)
+10.0: -----waiting---- [11.0]
+11.0: (back-to-360 L5 ZAXES)
+
+Plan-Length:46
+Elapsed Time: 11.0
+Metric (Search):12.0
+Planning Time (msec): 807
+Heuristic Time (msec): 94
+Search Time (msec): 197
+Expanded Nodes:31
+States Evaluated:70
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:0
+Number of Duplicates detected:4
+real 0.91
+user 0.86
+sys 0.07

@@ -2,6 +2,7 @@ import operator
 import re
 
 from antlr4 import *
+from sympy import Eq
 
 from src.pddl.grammar.pddlLexer import pddlLexer
 from src.pddl.grammar.pddlParser import pddlParser
@@ -19,6 +20,15 @@ COMPARATORS = {
     ">": operator.gt,
     "<": operator.lt,
     "=": operator.eq,
+    "!=": operator.ne
+}
+
+COMPARATORS_EXPR = {
+    ">=": operator.ge,
+    "<=": operator.le,
+    ">": operator.gt,
+    "<": operator.lt,
+    "=": Eq,
     "!=": operator.ne
 }
 
@@ -67,6 +77,10 @@ class Utilities:
     @staticmethod
     def compare(op: str, left, right):
         return COMPARATORS[op](left, right)
+
+    @staticmethod
+    def compareExpr(op: str, left, right):
+        return COMPARATORS_EXPR[op](left, right)
 
     @classmethod
     def inverted(cls, op: str):

@@ -1,0 +1,49 @@
+Started Grounding
+Ended Grounding
+Pattern: drink tuna tuna; drink chicken chicken; drink wurst chicken; drink chicken wurst; feast expectation tuna wurst; drink wurst tuna; drink pistachio chicken; drink wurst pistachio; drink tuna wurst; drink pistachio tuna; drink chicken pistachio; feast rest pistachio chicken; drink chicken tuna; drink wurst wurst; drink tuna chicken; feast expectation tuna pistachio; feast rest pistachio tuna; drink tuna pistachio; drink pistachio pistachio; drink pistachio wurst; feast rest pistachio wurst; feast rest tuna wurst; feast expectation pistachio chicken; feast rest chicken wurst; feast expectation pistachio wurst; feast rest wurst pistachio; feast rest wurst chicken; feast expectation wurst pistachio; feast rest chicken pistachio; overcome angina rest chicken; feast expectation pistachio tuna; feast expectation wurst tuna; overcome depression expectation wurst; feast rest tuna pistachio; feast rest wurst tuna; overcome depression rest wurst; feast expectation wurst chicken; succumb depression rest tuna; feast expectation chicken wurst; succumb depression rest chicken; succumb depression rest wurst; succumb depression rest pistachio; succumb angina rest chicken; overcome angina expectation chicken; succumb depression expectation wurst; succumb angina rest tuna; succumb angina rest wurst; feast expectation chicken pistachio; succumb depression expectation pistachio; succumb depression expectation chicken; succumb depression expectation tuna; succumb angina rest pistachio; succumb angina expectation chicken; overcome angina expectation tuna; overcome angina rest wurst; overcome depression rest pistachio; overcome depression rest tuna; succumb angina expectation tuna; overcome depression rest chicken; overcome angina rest pistachio; overcome angina expectation wurst; succumb angina expectation pistachio; overcome depression expectation tuna; overcome angina expectation pistachio; overcome depression expectation pistachio; succumb angina expectation wurst; overcome depression expectation chicken; overcome angina rest tuna
+Started Conversion to SMT at bound 1
+Ended Conversion to SMT at bound 1
+Started Solving Bound 1
+Ended Solving Bound 1
+Bound 1 - Vars = 140
+Bound 1 - Rules = 335
+0: (drink tuna tuna)
+1: (drink tuna tuna)
+2: (drink tuna tuna)
+3: (drink chicken chicken)
+4: (drink chicken chicken)
+5: (drink chicken chicken)
+6: (drink wurst tuna)
+7: (drink wurst tuna)
+8: (drink pistachio chicken)
+9: (drink pistachio chicken)
+10: (drink pistachio chicken)
+11: (drink pistachio chicken)
+12: (drink pistachio chicken)
+13: (drink chicken pistachio)
+14: (drink chicken pistachio)
+15: (feast rest pistachio chicken)
+16: (drink chicken tuna)
+17: (drink chicken tuna)
+18: (feast expectation tuna pistachio)
+19: (drink tuna pistachio)
+20: (drink tuna pistachio)
+21: (drink pistachio wurst)
+22: (drink pistachio wurst)
+23: (feast expectation pistachio wurst)
+24: (overcome angina rest chicken)
+25: (overcome depression expectation wurst)
+26: (feast expectation wurst chicken)
+27: (succumb angina rest chicken)
+28: (succumb depression expectation chicken)
+
+Plan is valid
+Bound: 1
+Grounding: 81ms
+Conversion to SMT at bound 1: 43ms
+Solving Bound 1: 123ms
+Overall: 292ms
+
+real 0.90
+user 0.80
+sys 0.10

@@ -1,0 +1,2 @@
+#!/bin/bash
+      conda run -n patty python /Users/carde/Documents/Workspace/patty/tools.py $@

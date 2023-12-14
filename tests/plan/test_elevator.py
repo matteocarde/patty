@@ -14,8 +14,8 @@ from src.smt.SMTSolver import SMTSolver
 class TestElevator(TestCase):
 
     def setUp(self) -> None:
-        self.domain: Domain = Domain.fromFile("../../files/elevator-num/domain.pddl")
-        self.problem: Problem = Problem.fromFile("../../files/elevator-num/instances/problem-5-3-3.pddl")
+        self.domain: Domain = Domain.fromFile("../../files/numerical/elevator-num/domain.pddl")
+        self.problem: Problem = Problem.fromFile("../../files/numerical/elevator-num/instances/problem-5-3-3.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.horizon = 2
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())

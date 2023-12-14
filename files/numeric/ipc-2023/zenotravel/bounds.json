@@ -1,0 +1,10 @@
+{
+  "fuel": [0, 5000],
+  "distance": [0, 1000],
+  "slow-burn": [0, 5],
+  "fast-burn": [0, 20],
+  "capacity": [0, 20000],
+  "total-fuel-used": [0, 0],
+  "onboard": [0, 0],
+  "zoom-limit": [0, 10]
+}
