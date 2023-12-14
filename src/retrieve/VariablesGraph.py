@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Dict, List, Set
 
-from sympy import symbols, Expr
+from sympy import symbols, Expr, Symbol
 
 from src.pddl.Atom import Atom
 from src.pddl.Domain import GroundedDomain
@@ -54,12 +54,14 @@ class VariablesGraph:
         self.Xis: Dict[int, Dict[Atom, VariablesGraph.Node]] = dict()
         self.m = len(trace)
         self.__fixedXi: Dict[int, Dict[Atom, Expr]] = dict()
+        self.varsToAtom: Dict[Symbol, Atom] = dict()
 
         for i in range(0, self.m + 1):
             Xi: Dict[Atom, VariablesGraph.Node] = dict()
             self.Xis[i] = Xi
             for atom in domain.allAtoms:
                 Xi[atom] = VariablesGraph.Node(atom, i)
+                self.varsToAtom[Xi[atom].var] = atom
 
         pass
 

@@ -20,14 +20,6 @@ def rString(fValue, n):
 
 
 DOMAINS = {
-    "hydropower": {
-        "text": r"\textsc{Hydropower} (S)",
-        "kind": "Numeric",
-    },
-    "sailing": {
-        "text": r"\textsc{Sailing} (S)",
-        "kind": "Numeric",
-    },
     "Baxter": {
         "text": r"\textsc{Baxter} (L)",
         "kind": "Hybrid",
@@ -36,83 +28,74 @@ DOMAINS = {
         "text": r"\textsc{Descent} (NL)",
         "kind": "Hybrid",
     },
-    # "HVAC": {
-    #     "text": r"\textsc{HVAC} (NL)",
-    #     "kind": "Hybrid",
-    # },
-    # "Linear-Car": {
-    #     "text": r"\textsc{LinearCar} (L)",
-    #     "kind": "Hybrid",
-    # },
-    # "Linear-Car-2": {
-    #     "text": r"\textsc{LinearCar2} (L)",
-    #     "kind": "Hybrid",
-    # },
-    # "Solar-Rover": {
-    #     "text": r"\textsc{SolarRover} (L)",
-    #     "kind": "Hybrid",
-    # },
-    # "UTC": {
-    #     "text": r"\textsc{UTC} (L)",
-    #     "kind": "Hybrid",
-    # },
-    # "counters": {
-    #     "text": r"\textsc{Counters} (S)",
-    #     "kind": "Numeric",
-    # },
-    # "fo_counters": {
-    #     "text": r"\textsc{Counters} (L)",
-    #     "kind": "Numeric",
-    # },
-    # "delivery": {
-    #     "text": r"\textsc{Delivery} (S)",
-    #     "kind": "Numeric",
-    # },
-    # "drone": {
-    #     "text": r"\textsc{Drone} (S)",
-    #     "kind": "Numeric",
-    # },
-    # "expedition": {
-    #     "text": r"\textsc{Expedition} (S)",
-    #     "kind": "Numeric",
-    # },
-    # "watering": {
-    #     "text": r"\textsc{PlantWatering} (S)",
-    #     "kind": "Numeric",
-    # },
-    # "farmland": {
-    #     "text": r"\textsc{Farmland} (S)",
-    #     "kind": "Numeric",
-    # },
-    # "fo-farmland": {
-    #     "text": r"\textsc{Farmland} (L)",
-    #     "kind": "Numeric",
-    # },
-    # "hydropower": {
-    #     "text": r"\textsc{Hydropower} (S)",
-    #     "kind": "Numeric",
-    # },
-    # "mprime": {
-    #     "text": r"\textsc{MPrime} (S)",
-    #     "kind": "Numeric",
-    # },
-    # "rover": {
-    #     "text": r"\textsc{Rover} (S)",
-    #     "kind": "Numeric",
-    # },
-    # "fo-sailing": {
-    #     "text": r"\textsc{Sailing} (L)",
-    #     "kind": "Numeric",
-    # },
-    # "sugar": {
-    #     "text": r"\textsc{Sugar} (S)",
-    #     "kind": "Numeric",
-    # },
-    # "zenotravel": {
-    #     "text": r"\textsc{ZenoTravel} (S)",
-    #     "kind": "Numeric",
-    # },
-
+    "HVAC": {
+        "text": r"\textsc{HVAC} (NL)",
+        "kind": "Hybrid",
+    },
+    "Linear-Car": {
+        "text": r"\textsc{LinearCar} (L)",
+        "kind": "Hybrid",
+    },
+    "Solar-Rover": {
+        "text": r"\textsc{SolarRover} (L)",
+        "kind": "Hybrid",
+    },
+    "counters": {
+        "text": r"\textsc{Counters} (L)",
+        "kind": "Numeric",
+    },
+    "fo_counters": {
+        "text": r"\textsc{Counters-FO} (L)",
+        "kind": "Numeric",
+    },
+    "delivery": {
+        "text": r"\textsc{Delivery} (L)",
+        "kind": "Numeric",
+    },
+    "drone": {
+        "text": r"\textsc{Drone} (L)",
+        "kind": "Numeric",
+    },
+    "expedition": {
+        "text": r"\textsc{Expedition} (L)",
+        "kind": "Numeric",
+    },
+    "farmland": {
+        "text": r"\textsc{Farmland} (L)",
+        "kind": "Numeric",
+    },
+    "fo-farmland": {
+        "text": r"\textsc{Farmland-FO} (L)",
+        "kind": "Numeric",
+    },
+    "hydropower": {
+        "text": r"\textsc{Hydropower} (L)",
+        "kind": "Numeric",
+    },
+    "mprime": {
+        "text": r"\textsc{MPrime} (L)",
+        "kind": "Numeric",
+    },
+    "rover": {
+        "text": r"\textsc{Rover} (L)",
+        "kind": "Numeric",
+    },
+    "sailing": {
+        "text": r"\textsc{Sailing} (L)",
+        "kind": "Numeric",
+    },
+    "fo-sailing": {
+        "text": r"\textsc{Sailing-FO} (L)",
+        "kind": "Numeric",
+    },
+    "sugar": {
+        "text": r"\textsc{Sugar} (L)",
+        "kind": "Numeric",
+    },
+    "watering": {
+        "text": r"\textsc{PlantWatering} (L)",
+        "kind": "Numeric",
+    },
 }
 
 
@@ -124,7 +107,7 @@ def main():
         DOMAINS_BY_KIND[kind] = DOMAINS_BY_KIND.setdefault(kind, [])
         DOMAINS_BY_KIND[kind].append(dom)
 
-    filename = "2023-12-05-ICR-NOISE-v5.csv"
+    filename = "2023-12-13-ICR-FINALNOISE-v1.csv"
     file = f"benchmarks/results/{filename}"
 
     exp = filename.replace(".csv", "")
@@ -161,9 +144,9 @@ def main():
     pass
 
     domains = sorted(list(domains))
-    byRow = 2
+    byRow = 4
 
-    nOfRows = (len(domains) // byRow)
+    nOfRows = (len(domains) // byRow) + 1
 
     plt.rcParams.update({
         "text.usetex": True,
@@ -175,9 +158,10 @@ def main():
     i = 0
 
     for d in DOMAINS.keys():
+        print(i, len(DOMAINS.keys()))
         ax = axs[i // byRow][i % byRow]
         ax.grid()
-        ax.set_xlabel("Noise (\%)")
+        ax.set_xlabel("Noise Variance $\eta$ (\%)")
         ax.set_ylabel("Distance")
         ax.set_yscale("log")
         ax.set_title(DOMAINS[d]["text"])
@@ -186,8 +170,8 @@ def main():
         dRW = [statistics.mean([r.dRW for r in rDict[d][p]]) for p in x]
         dRC = [statistics.mean([r.dRC for r in rDict[d][p]]) for p in x]
 
-        ax.plot(x, dRW, label=r"$||I - \tilde{I}||$")
-        ax.plot(x, dRC, label=r"$||I - I_\star||$")
+        ax.plot(x, dRW, label=r"$||I_R - \tilde{I}||$")
+        ax.plot(x, dRC, label=r"$||I_R - I_\star||$")
         ax.legend(loc="lower right", fontsize="8")
         i += 1
         pass

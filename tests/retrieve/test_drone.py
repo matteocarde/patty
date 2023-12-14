@@ -5,6 +5,7 @@ from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.Problem import Problem
 from src.pddl.State import State
 from src.pddl.Trace import Trace
+from src.retrieve.Bounds import Bounds
 from src.retrieve.InitialConditionRetriever import InitialConditionRetriever
 from src.retrieve.InitialConditionSpace import InitialConditionSpace
 

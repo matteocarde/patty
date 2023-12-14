@@ -1,19 +1,16 @@
 Domain parsed
 Problem parsed
 Grounding..
-Grounding Time: 66
+Grounding Time: 75
 Aibr Preprocessing
 |F|:0
 |X|:2
 |A|:4
 |P|:0
 |E|:0
-H1 Setup Time (msec): 7
-Wrong setting for break-ties. Arbitrary tie breaking
+AIBR selected
 Setting horizon to:NaN
-Helpful Action Pruning Activated
 Running Greedy Best First Search
-JUMP for (move-slow farm0 farm1):341
 Problem Solved
 
 Found Plan:
@@ -361,14 +358,14 @@ Found Plan:
 
 Plan-Length:341
 Metric (Search):341.0
-Planning Time (msec): 450
-Heuristic Time (msec): 1
-Search Time (msec): 9
-Expanded Nodes:2
-States Evaluated:2
+Planning Time (msec): 1174
+Heuristic Time (msec): 457
+Search Time (msec): 633
+Expanded Nodes:414
+States Evaluated:831
 Fixed constraint violations during search (zero-crossing):0
 Number of Dead-Ends detected:0
-Number of Duplicates detected:0
-real 0.64
-user 0.62
-sys 0.03
+Number of Duplicates detected:814
+real 1.31
+user 0.93
+sys 0.07

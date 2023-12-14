@@ -15,7 +15,6 @@
    (= (sunexposure_time) 300.0)
    (= (time) 0.0)
 )
-)
 (:goal (datasent))
 (:metric minimize ( total-time ))
 )

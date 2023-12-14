@@ -1,19 +1,16 @@
 Domain parsed
 Problem parsed
 Grounding..
-Grounding Time: 61
+Grounding Time: 15
 Aibr Preprocessing
 |F|:0
 |X|:4
 |A|:8
 |P|:0
 |E|:0
-H1 Setup Time (msec): 6
-Wrong setting for break-ties. Arbitrary tie breaking
+H1 Setup Time (msec): 7
 Setting horizon to:NaN
-Helpful Action Pruning Activated
 Running Greedy Best First Search
-JUMP for (increment c3):6
 Problem Solved
 
 Found Plan:
@@ -23,17 +20,18 @@ Found Plan:
 3.0: (increment c3)
 4.0: (increment c3)
 5.0: (increment c3)
+6.0: (increment c3)
 
-Plan-Length:6
-Metric (Search):6.0
-Planning Time (msec): 432
-Heuristic Time (msec): 2
-Search Time (msec): 11
-Expanded Nodes:2
-States Evaluated:3
+Plan-Length:7
+Metric (Search):7.0
+Planning Time (msec): 437
+Heuristic Time (msec): 10
+Search Time (msec): 19
+Expanded Nodes:8
+States Evaluated:50
 Fixed constraint violations during search (zero-crossing):0
 Number of Dead-Ends detected:0
-Number of Duplicates detected:0
-real 0.57
-user 0.53
-sys 0.05
+Number of Duplicates detected:6
+real 0.58
+user 0.54
+sys 0.04

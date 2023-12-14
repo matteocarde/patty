@@ -1,0 +1,2047 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 16
+Aibr Preprocessing
+|F|:13
+|X|:5
+Aibr Preprocessing
+|A|:5
+|P|:4
+|E|:5
+Delta time heuristic model:1.0
+Delta time planning model:1.0
+Delta time search-execution model:1.0
+Delta time validation model:1
+H1 Setup Time (msec): 7
+Setting horizon to:NaN
+Running Greedy Best First Search
+Extracting plan with execution delta: 1.0
+Problem Solved
+
+Found Plan:
+0: (start_useBattery b3)
+0: (start_useBattery b1)
+0: (start_useBattery b2)
+0: (end_useBattery b2)
+0: (end_useBattery b3)
+0: (end_useBattery b1)
+0: (passingTime)
+0: -----waiting---- [1.0]
+1.0: (passingTime)
+1.0: -----waiting---- [2.0]
+2.0: (passingTime)
+2.0: -----waiting---- [3.0]
+3.0: (passingTime)
+3.0: -----waiting---- [4.0]
+4.0: (passingTime)
+4.0: -----waiting---- [5.0]
+5.0: (passingTime)
+5.0: -----waiting---- [6.0]
+6.0: (passingTime)
+6.0: -----waiting---- [7.0]
+7.0: (passingTime)
+7.0: -----waiting---- [8.0]
+8.0: (passingTime)
+8.0: -----waiting---- [9.0]
+9.0: (passingTime)
+9.0: -----waiting---- [10.0]
+10.0: (passingTime)
+10.0: -----waiting---- [11.0]
+11.0: (passingTime)
+11.0: -----waiting---- [12.0]
+12.0: (passingTime)
+12.0: -----waiting---- [13.0]
+13.0: (passingTime)
+13.0: -----waiting---- [14.0]
+14.0: (passingTime)
+14.0: -----waiting---- [15.0]
+15.0: (passingTime)
+15.0: -----waiting---- [16.0]
+16.0: (passingTime)
+16.0: -----waiting---- [17.0]
+17.0: (passingTime)
+17.0: -----waiting---- [18.0]
+18.0: (passingTime)
+18.0: -----waiting---- [19.0]
+19.0: (passingTime)
+19.0: -----waiting---- [20.0]
+20.0: (passingTime)
+20.0: -----waiting---- [21.0]
+21.0: (passingTime)
+21.0: -----waiting---- [22.0]
+22.0: (passingTime)
+22.0: -----waiting---- [23.0]
+23.0: (passingTime)
+23.0: -----waiting---- [24.0]
+24.0: (passingTime)
+24.0: -----waiting---- [25.0]
+25.0: (passingTime)
+25.0: -----waiting---- [26.0]
+26.0: (passingTime)
+26.0: -----waiting---- [27.0]
+27.0: (passingTime)
+27.0: -----waiting---- [28.0]
+28.0: (passingTime)
+28.0: -----waiting---- [29.0]
+29.0: (passingTime)
+29.0: -----waiting---- [30.0]
+30.0: (passingTime)
+30.0: -----waiting---- [31.0]
+31.0: (passingTime)
+31.0: -----waiting---- [32.0]
+32.0: (passingTime)
+32.0: -----waiting---- [33.0]
+33.0: (passingTime)
+33.0: -----waiting---- [34.0]
+34.0: (passingTime)
+34.0: -----waiting---- [35.0]
+35.0: (passingTime)
+35.0: -----waiting---- [36.0]
+36.0: (passingTime)
+36.0: -----waiting---- [37.0]
+37.0: (passingTime)
+37.0: -----waiting---- [38.0]
+38.0: (passingTime)
+38.0: -----waiting---- [39.0]
+39.0: (passingTime)
+39.0: -----waiting---- [40.0]
+40.0: (passingTime)
+40.0: -----waiting---- [41.0]
+41.0: (passingTime)
+41.0: -----waiting---- [42.0]
+42.0: (passingTime)
+42.0: -----waiting---- [43.0]
+43.0: (passingTime)
+43.0: -----waiting---- [44.0]
+44.0: (passingTime)
+44.0: -----waiting---- [45.0]
+45.0: (passingTime)
+45.0: -----waiting---- [46.0]
+46.0: (passingTime)
+46.0: -----waiting---- [47.0]
+47.0: (passingTime)
+47.0: -----waiting---- [48.0]
+48.0: (passingTime)
+48.0: -----waiting---- [49.0]
+49.0: (passingTime)
+49.0: -----waiting---- [50.0]
+50.0: (passingTime)
+50.0: -----waiting---- [51.0]
+51.0: (passingTime)
+51.0: -----waiting---- [52.0]
+52.0: (passingTime)
+52.0: -----waiting---- [53.0]
+53.0: (passingTime)
+53.0: -----waiting---- [54.0]
+54.0: (passingTime)
+54.0: -----waiting---- [55.0]
+55.0: (passingTime)
+55.0: -----waiting---- [56.0]
+56.0: (passingTime)
+56.0: -----waiting---- [57.0]
+57.0: (passingTime)
+57.0: -----waiting---- [58.0]
+58.0: (passingTime)
+58.0: -----waiting---- [59.0]
+59.0: (passingTime)
+59.0: -----waiting---- [60.0]
+60.0: (passingTime)
+60.0: -----waiting---- [61.0]
+61.0: (passingTime)
+61.0: -----waiting---- [62.0]
+62.0: (passingTime)
+62.0: -----waiting---- [63.0]
+63.0: (passingTime)
+63.0: -----waiting---- [64.0]
+64.0: (passingTime)
+64.0: -----waiting---- [65.0]
+65.0: (passingTime)
+65.0: -----waiting---- [66.0]
+66.0: (passingTime)
+66.0: -----waiting---- [67.0]
+67.0: (passingTime)
+67.0: -----waiting---- [68.0]
+68.0: (passingTime)
+68.0: -----waiting---- [69.0]
+69.0: (passingTime)
+69.0: -----waiting---- [70.0]
+70.0: (passingTime)
+70.0: -----waiting---- [71.0]
+71.0: (passingTime)
+71.0: -----waiting---- [72.0]
+72.0: (passingTime)
+72.0: -----waiting---- [73.0]
+73.0: (passingTime)
+73.0: -----waiting---- [74.0]
+74.0: (passingTime)
+74.0: -----waiting---- [75.0]
+75.0: (passingTime)
+75.0: -----waiting---- [76.0]
+76.0: (passingTime)
+76.0: -----waiting---- [77.0]
+77.0: (passingTime)
+77.0: -----waiting---- [78.0]
+78.0: (passingTime)
+78.0: -----waiting---- [79.0]
+79.0: (passingTime)
+79.0: -----waiting---- [80.0]
+80.0: (passingTime)
+80.0: -----waiting---- [81.0]
+81.0: (passingTime)
+81.0: -----waiting---- [82.0]
+82.0: (passingTime)
+82.0: -----waiting---- [83.0]
+83.0: (passingTime)
+83.0: -----waiting---- [84.0]
+84.0: (passingTime)
+84.0: -----waiting---- [85.0]
+85.0: (passingTime)
+85.0: -----waiting---- [86.0]
+86.0: (passingTime)
+86.0: -----waiting---- [87.0]
+87.0: (passingTime)
+87.0: -----waiting---- [88.0]
+88.0: (passingTime)
+88.0: -----waiting---- [89.0]
+89.0: (passingTime)
+89.0: -----waiting---- [90.0]
+90.0: (passingTime)
+90.0: -----waiting---- [91.0]
+91.0: (passingTime)
+91.0: -----waiting---- [92.0]
+92.0: (passingTime)
+92.0: -----waiting---- [93.0]
+93.0: (passingTime)
+93.0: -----waiting---- [94.0]
+94.0: (passingTime)
+94.0: -----waiting---- [95.0]
+95.0: (passingTime)
+95.0: -----waiting---- [96.0]
+96.0: (passingTime)
+96.0: -----waiting---- [97.0]
+97.0: (passingTime)
+97.0: -----waiting---- [98.0]
+98.0: (passingTime)
+98.0: -----waiting---- [99.0]
+99.0: (passingTime)
+99.0: -----waiting---- [100.0]
+100.0: (passingTime)
+100.0: -----waiting---- [101.0]
+101.0: (passingTime)
+101.0: -----waiting---- [102.0]
+102.0: (passingTime)
+102.0: -----waiting---- [103.0]
+103.0: (passingTime)
+103.0: -----waiting---- [104.0]
+104.0: (passingTime)
+104.0: -----waiting---- [105.0]
+105.0: (passingTime)
+105.0: -----waiting---- [106.0]
+106.0: (passingTime)
+106.0: -----waiting---- [107.0]
+107.0: (passingTime)
+107.0: -----waiting---- [108.0]
+108.0: (passingTime)
+108.0: -----waiting---- [109.0]
+109.0: (passingTime)
+109.0: -----waiting---- [110.0]
+110.0: (passingTime)
+110.0: -----waiting---- [111.0]
+111.0: (passingTime)
+111.0: -----waiting---- [112.0]
+112.0: (passingTime)
+112.0: -----waiting---- [113.0]
+113.0: (passingTime)
+113.0: -----waiting---- [114.0]
+114.0: (passingTime)
+114.0: -----waiting---- [115.0]
+115.0: (passingTime)
+115.0: -----waiting---- [116.0]
+116.0: (passingTime)
+116.0: -----waiting---- [117.0]
+117.0: (passingTime)
+117.0: -----waiting---- [118.0]
+118.0: (passingTime)
+118.0: -----waiting---- [119.0]
+119.0: (passingTime)
+119.0: -----waiting---- [120.0]
+120.0: (passingTime)
+120.0: -----waiting---- [121.0]
+121.0: (passingTime)
+121.0: -----waiting---- [122.0]
+122.0: (passingTime)
+122.0: -----waiting---- [123.0]
+123.0: (passingTime)
+123.0: -----waiting---- [124.0]
+124.0: (passingTime)
+124.0: -----waiting---- [125.0]
+125.0: (passingTime)
+125.0: -----waiting---- [126.0]
+126.0: (passingTime)
+126.0: -----waiting---- [127.0]
+127.0: (passingTime)
+127.0: -----waiting---- [128.0]
+128.0: (passingTime)
+128.0: -----waiting---- [129.0]
+129.0: (passingTime)
+129.0: -----waiting---- [130.0]
+130.0: (passingTime)
+130.0: -----waiting---- [131.0]
+131.0: (passingTime)
+131.0: -----waiting---- [132.0]
+132.0: (passingTime)
+132.0: -----waiting---- [133.0]
+133.0: (passingTime)
+133.0: -----waiting---- [134.0]
+134.0: (passingTime)
+134.0: -----waiting---- [135.0]
+135.0: (passingTime)
+135.0: -----waiting---- [136.0]
+136.0: (passingTime)
+136.0: -----waiting---- [137.0]
+137.0: (passingTime)
+137.0: -----waiting---- [138.0]
+138.0: (passingTime)
+138.0: -----waiting---- [139.0]
+139.0: (passingTime)
+139.0: -----waiting---- [140.0]
+140.0: (passingTime)
+140.0: -----waiting---- [141.0]
+141.0: (passingTime)
+141.0: -----waiting---- [142.0]
+142.0: (passingTime)
+142.0: -----waiting---- [143.0]
+143.0: (passingTime)
+143.0: -----waiting---- [144.0]
+144.0: (passingTime)
+144.0: -----waiting---- [145.0]
+145.0: (passingTime)
+145.0: -----waiting---- [146.0]
+146.0: (passingTime)
+146.0: -----waiting---- [147.0]
+147.0: (passingTime)
+147.0: -----waiting---- [148.0]
+148.0: (passingTime)
+148.0: -----waiting---- [149.0]
+149.0: (passingTime)
+149.0: -----waiting---- [150.0]
+150.0: (passingTime)
+150.0: -----waiting---- [151.0]
+151.0: (passingTime)
+151.0: -----waiting---- [152.0]
+152.0: (passingTime)
+152.0: -----waiting---- [153.0]
+153.0: (passingTime)
+153.0: -----waiting---- [154.0]
+154.0: (passingTime)
+154.0: -----waiting---- [155.0]
+155.0: (passingTime)
+155.0: -----waiting---- [156.0]
+156.0: (passingTime)
+156.0: -----waiting---- [157.0]
+157.0: (passingTime)
+157.0: -----waiting---- [158.0]
+158.0: (passingTime)
+158.0: -----waiting---- [159.0]
+159.0: (passingTime)
+159.0: -----waiting---- [160.0]
+160.0: (passingTime)
+160.0: -----waiting---- [161.0]
+161.0: (passingTime)
+161.0: -----waiting---- [162.0]
+162.0: (passingTime)
+162.0: -----waiting---- [163.0]
+163.0: (passingTime)
+163.0: -----waiting---- [164.0]
+164.0: (passingTime)
+164.0: -----waiting---- [165.0]
+165.0: (passingTime)
+165.0: -----waiting---- [166.0]
+166.0: (passingTime)
+166.0: -----waiting---- [167.0]
+167.0: (passingTime)
+167.0: -----waiting---- [168.0]
+168.0: (passingTime)
+168.0: -----waiting---- [169.0]
+169.0: (passingTime)
+169.0: -----waiting---- [170.0]
+170.0: (passingTime)
+170.0: -----waiting---- [171.0]
+171.0: (passingTime)
+171.0: -----waiting---- [172.0]
+172.0: (passingTime)
+172.0: -----waiting---- [173.0]
+173.0: (passingTime)
+173.0: -----waiting---- [174.0]
+174.0: (passingTime)
+174.0: -----waiting---- [175.0]
+175.0: (passingTime)
+175.0: -----waiting---- [176.0]
+176.0: (passingTime)
+176.0: -----waiting---- [177.0]
+177.0: (passingTime)
+177.0: -----waiting---- [178.0]
+178.0: (passingTime)
+178.0: -----waiting---- [179.0]
+179.0: (passingTime)
+179.0: -----waiting---- [180.0]
+180.0: (passingTime)
+180.0: -----waiting---- [181.0]
+181.0: (passingTime)
+181.0: -----waiting---- [182.0]
+182.0: (passingTime)
+182.0: -----waiting---- [183.0]
+183.0: (passingTime)
+183.0: -----waiting---- [184.0]
+184.0: (passingTime)
+184.0: -----waiting---- [185.0]
+185.0: (passingTime)
+185.0: -----waiting---- [186.0]
+186.0: (passingTime)
+186.0: -----waiting---- [187.0]
+187.0: (passingTime)
+187.0: -----waiting---- [188.0]
+188.0: (passingTime)
+188.0: -----waiting---- [189.0]
+189.0: (passingTime)
+189.0: -----waiting---- [190.0]
+190.0: (passingTime)
+190.0: -----waiting---- [191.0]
+191.0: (passingTime)
+191.0: -----waiting---- [192.0]
+192.0: (passingTime)
+192.0: -----waiting---- [193.0]
+193.0: (passingTime)
+193.0: -----waiting---- [194.0]
+194.0: (passingTime)
+194.0: -----waiting---- [195.0]
+195.0: (passingTime)
+195.0: -----waiting---- [196.0]
+196.0: (passingTime)
+196.0: -----waiting---- [197.0]
+197.0: (passingTime)
+197.0: -----waiting---- [198.0]
+198.0: (passingTime)
+198.0: -----waiting---- [199.0]
+199.0: (passingTime)
+199.0: -----waiting---- [200.0]
+200.0: (passingTime)
+200.0: -----waiting---- [201.0]
+201.0: (passingTime)
+201.0: -----waiting---- [202.0]
+202.0: (passingTime)
+202.0: -----waiting---- [203.0]
+203.0: (passingTime)
+203.0: -----waiting---- [204.0]
+204.0: (passingTime)
+204.0: -----waiting---- [205.0]
+205.0: (passingTime)
+205.0: -----waiting---- [206.0]
+206.0: (passingTime)
+206.0: -----waiting---- [207.0]
+207.0: (passingTime)
+207.0: -----waiting---- [208.0]
+208.0: (passingTime)
+208.0: -----waiting---- [209.0]
+209.0: (passingTime)
+209.0: -----waiting---- [210.0]
+210.0: (passingTime)
+210.0: -----waiting---- [211.0]
+211.0: (passingTime)
+211.0: -----waiting---- [212.0]
+212.0: (passingTime)
+212.0: -----waiting---- [213.0]
+213.0: (passingTime)
+213.0: -----waiting---- [214.0]
+214.0: (passingTime)
+214.0: -----waiting---- [215.0]
+215.0: (passingTime)
+215.0: -----waiting---- [216.0]
+216.0: (passingTime)
+216.0: -----waiting---- [217.0]
+217.0: (passingTime)
+217.0: -----waiting---- [218.0]
+218.0: (passingTime)
+218.0: -----waiting---- [219.0]
+219.0: (passingTime)
+219.0: -----waiting---- [220.0]
+220.0: (passingTime)
+220.0: -----waiting---- [221.0]
+221.0: (passingTime)
+221.0: -----waiting---- [222.0]
+222.0: (passingTime)
+222.0: -----waiting---- [223.0]
+223.0: (passingTime)
+223.0: -----waiting---- [224.0]
+224.0: (passingTime)
+224.0: -----waiting---- [225.0]
+225.0: (passingTime)
+225.0: -----waiting---- [226.0]
+226.0: (passingTime)
+226.0: -----waiting---- [227.0]
+227.0: (passingTime)
+227.0: -----waiting---- [228.0]
+228.0: (passingTime)
+228.0: -----waiting---- [229.0]
+229.0: (passingTime)
+229.0: -----waiting---- [230.0]
+230.0: (passingTime)
+230.0: -----waiting---- [231.0]
+231.0: (passingTime)
+231.0: -----waiting---- [232.0]
+232.0: (passingTime)
+232.0: -----waiting---- [233.0]
+233.0: (passingTime)
+233.0: -----waiting---- [234.0]
+234.0: (passingTime)
+234.0: -----waiting---- [235.0]
+235.0: (passingTime)
+235.0: -----waiting---- [236.0]
+236.0: (passingTime)
+236.0: -----waiting---- [237.0]
+237.0: (passingTime)
+237.0: -----waiting---- [238.0]
+238.0: (passingTime)
+238.0: -----waiting---- [239.0]
+239.0: (passingTime)
+239.0: -----waiting---- [240.0]
+240.0: (passingTime)
+240.0: -----waiting---- [241.0]
+241.0: (passingTime)
+241.0: -----waiting---- [242.0]
+242.0: (passingTime)
+242.0: -----waiting---- [243.0]
+243.0: (passingTime)
+243.0: -----waiting---- [244.0]
+244.0: (passingTime)
+244.0: -----waiting---- [245.0]
+245.0: (passingTime)
+245.0: -----waiting---- [246.0]
+246.0: (passingTime)
+246.0: -----waiting---- [247.0]
+247.0: (passingTime)
+247.0: -----waiting---- [248.0]
+248.0: (passingTime)
+248.0: -----waiting---- [249.0]
+249.0: (passingTime)
+249.0: -----waiting---- [250.0]
+250.0: (passingTime)
+250.0: -----waiting---- [251.0]
+251.0: (passingTime)
+251.0: -----waiting---- [252.0]
+252.0: (passingTime)
+252.0: -----waiting---- [253.0]
+253.0: (passingTime)
+253.0: -----waiting---- [254.0]
+254.0: (passingTime)
+254.0: -----waiting---- [255.0]
+255.0: (passingTime)
+255.0: -----waiting---- [256.0]
+256.0: (passingTime)
+256.0: -----waiting---- [257.0]
+257.0: (passingTime)
+257.0: -----waiting---- [258.0]
+258.0: (passingTime)
+258.0: -----waiting---- [259.0]
+259.0: (passingTime)
+259.0: -----waiting---- [260.0]
+260.0: (passingTime)
+260.0: -----waiting---- [261.0]
+261.0: (passingTime)
+261.0: -----waiting---- [262.0]
+262.0: (passingTime)
+262.0: -----waiting---- [263.0]
+263.0: (passingTime)
+263.0: -----waiting---- [264.0]
+264.0: (passingTime)
+264.0: -----waiting---- [265.0]
+265.0: (passingTime)
+265.0: -----waiting---- [266.0]
+266.0: (passingTime)
+266.0: -----waiting---- [267.0]
+267.0: (passingTime)
+267.0: -----waiting---- [268.0]
+268.0: (passingTime)
+268.0: -----waiting---- [269.0]
+269.0: (passingTime)
+269.0: -----waiting---- [270.0]
+270.0: (passingTime)
+270.0: -----waiting---- [271.0]
+271.0: (passingTime)
+271.0: -----waiting---- [272.0]
+272.0: (passingTime)
+272.0: -----waiting---- [273.0]
+273.0: (passingTime)
+273.0: -----waiting---- [274.0]
+274.0: (passingTime)
+274.0: -----waiting---- [275.0]
+275.0: (passingTime)
+275.0: -----waiting---- [276.0]
+276.0: (passingTime)
+276.0: -----waiting---- [277.0]
+277.0: (passingTime)
+277.0: -----waiting---- [278.0]
+278.0: (passingTime)
+278.0: -----waiting---- [279.0]
+279.0: (passingTime)
+279.0: -----waiting---- [280.0]
+280.0: (passingTime)
+280.0: -----waiting---- [281.0]
+281.0: (passingTime)
+281.0: -----waiting---- [282.0]
+282.0: (passingTime)
+282.0: -----waiting---- [283.0]
+283.0: (passingTime)
+283.0: -----waiting---- [284.0]
+284.0: (passingTime)
+284.0: -----waiting---- [285.0]
+285.0: (passingTime)
+285.0: -----waiting---- [286.0]
+286.0: (passingTime)
+286.0: -----waiting---- [287.0]
+287.0: (passingTime)
+287.0: -----waiting---- [288.0]
+288.0: (passingTime)
+288.0: -----waiting---- [289.0]
+289.0: (passingTime)
+289.0: -----waiting---- [290.0]
+290.0: (passingTime)
+290.0: -----waiting---- [291.0]
+291.0: (passingTime)
+291.0: -----waiting---- [292.0]
+292.0: (passingTime)
+292.0: -----waiting---- [293.0]
+293.0: (passingTime)
+293.0: -----waiting---- [294.0]
+294.0: (passingTime)
+294.0: -----waiting---- [295.0]
+295.0: (passingTime)
+295.0: -----waiting---- [296.0]
+296.0: (passingTime)
+296.0: -----waiting---- [297.0]
+297.0: (passingTime)
+297.0: -----waiting---- [298.0]
+298.0: (passingTime)
+298.0: -----waiting---- [299.0]
+299.0: (passingTime)
+299.0: -----waiting---- [300.0]
+300.0: (passingTime)
+300.0: -----waiting---- [301.0]
+301.0: (passingTime)
+301.0: -----waiting---- [302.0]
+302.0: (passingTime)
+302.0: -----waiting---- [303.0]
+303.0: (passingTime)
+303.0: -----waiting---- [304.0]
+304.0: (passingTime)
+304.0: -----waiting---- [305.0]
+305.0: (passingTime)
+305.0: -----waiting---- [306.0]
+306.0: (passingTime)
+306.0: -----waiting---- [307.0]
+307.0: (passingTime)
+307.0: -----waiting---- [308.0]
+308.0: (passingTime)
+308.0: -----waiting---- [309.0]
+309.0: (passingTime)
+309.0: -----waiting---- [310.0]
+310.0: (passingTime)
+310.0: -----waiting---- [311.0]
+311.0: (passingTime)
+311.0: -----waiting---- [312.0]
+312.0: (passingTime)
+312.0: -----waiting---- [313.0]
+313.0: (passingTime)
+313.0: -----waiting---- [314.0]
+314.0: (passingTime)
+314.0: -----waiting---- [315.0]
+315.0: (passingTime)
+315.0: -----waiting---- [316.0]
+316.0: (passingTime)
+316.0: -----waiting---- [317.0]
+317.0: (passingTime)
+317.0: -----waiting---- [318.0]
+318.0: (passingTime)
+318.0: -----waiting---- [319.0]
+319.0: (passingTime)
+319.0: -----waiting---- [320.0]
+320.0: (passingTime)
+320.0: -----waiting---- [321.0]
+321.0: (passingTime)
+321.0: -----waiting---- [322.0]
+322.0: (passingTime)
+322.0: -----waiting---- [323.0]
+323.0: (passingTime)
+323.0: -----waiting---- [324.0]
+324.0: (passingTime)
+324.0: -----waiting---- [325.0]
+325.0: (passingTime)
+325.0: -----waiting---- [326.0]
+326.0: (passingTime)
+326.0: -----waiting---- [327.0]
+327.0: (passingTime)
+327.0: -----waiting---- [328.0]
+328.0: (passingTime)
+328.0: -----waiting---- [329.0]
+329.0: (passingTime)
+329.0: -----waiting---- [330.0]
+330.0: (passingTime)
+330.0: -----waiting---- [331.0]
+331.0: (passingTime)
+331.0: -----waiting---- [332.0]
+332.0: (passingTime)
+332.0: -----waiting---- [333.0]
+333.0: (passingTime)
+333.0: -----waiting---- [334.0]
+334.0: (passingTime)
+334.0: -----waiting---- [335.0]
+335.0: (passingTime)
+335.0: -----waiting---- [336.0]
+336.0: (passingTime)
+336.0: -----waiting---- [337.0]
+337.0: (passingTime)
+337.0: -----waiting---- [338.0]
+338.0: (passingTime)
+338.0: -----waiting---- [339.0]
+339.0: (passingTime)
+339.0: -----waiting---- [340.0]
+340.0: (passingTime)
+340.0: -----waiting---- [341.0]
+341.0: (passingTime)
+341.0: -----waiting---- [342.0]
+342.0: (passingTime)
+342.0: -----waiting---- [343.0]
+343.0: (passingTime)
+343.0: -----waiting---- [344.0]
+344.0: (passingTime)
+344.0: -----waiting---- [345.0]
+345.0: (passingTime)
+345.0: -----waiting---- [346.0]
+346.0: (passingTime)
+346.0: -----waiting---- [347.0]
+347.0: (passingTime)
+347.0: -----waiting---- [348.0]
+348.0: (passingTime)
+348.0: -----waiting---- [349.0]
+349.0: (passingTime)
+349.0: -----waiting---- [350.0]
+350.0: (passingTime)
+350.0: -----waiting---- [351.0]
+351.0: (passingTime)
+351.0: -----waiting---- [352.0]
+352.0: (passingTime)
+352.0: -----waiting---- [353.0]
+353.0: (passingTime)
+353.0: -----waiting---- [354.0]
+354.0: (passingTime)
+354.0: -----waiting---- [355.0]
+355.0: (passingTime)
+355.0: -----waiting---- [356.0]
+356.0: (passingTime)
+356.0: -----waiting---- [357.0]
+357.0: (passingTime)
+357.0: -----waiting---- [358.0]
+358.0: (passingTime)
+358.0: -----waiting---- [359.0]
+359.0: (passingTime)
+359.0: -----waiting---- [360.0]
+360.0: (passingTime)
+360.0: -----waiting---- [361.0]
+361.0: (passingTime)
+361.0: -----waiting---- [362.0]
+362.0: (passingTime)
+362.0: -----waiting---- [363.0]
+363.0: (passingTime)
+363.0: -----waiting---- [364.0]
+364.0: (passingTime)
+364.0: -----waiting---- [365.0]
+365.0: (passingTime)
+365.0: -----waiting---- [366.0]
+366.0: (passingTime)
+366.0: -----waiting---- [367.0]
+367.0: (passingTime)
+367.0: -----waiting---- [368.0]
+368.0: (passingTime)
+368.0: -----waiting---- [369.0]
+369.0: (passingTime)
+369.0: -----waiting---- [370.0]
+370.0: (passingTime)
+370.0: -----waiting---- [371.0]
+371.0: (passingTime)
+371.0: -----waiting---- [372.0]
+372.0: (passingTime)
+372.0: -----waiting---- [373.0]
+373.0: (passingTime)
+373.0: -----waiting---- [374.0]
+374.0: (passingTime)
+374.0: -----waiting---- [375.0]
+375.0: (passingTime)
+375.0: -----waiting---- [376.0]
+376.0: (passingTime)
+376.0: -----waiting---- [377.0]
+377.0: (passingTime)
+377.0: -----waiting---- [378.0]
+378.0: (passingTime)
+378.0: -----waiting---- [379.0]
+379.0: (passingTime)
+379.0: -----waiting---- [380.0]
+380.0: (passingTime)
+380.0: -----waiting---- [381.0]
+381.0: (passingTime)
+381.0: -----waiting---- [382.0]
+382.0: (passingTime)
+382.0: -----waiting---- [383.0]
+383.0: (passingTime)
+383.0: -----waiting---- [384.0]
+384.0: (passingTime)
+384.0: -----waiting---- [385.0]
+385.0: (passingTime)
+385.0: -----waiting---- [386.0]
+386.0: (passingTime)
+386.0: -----waiting---- [387.0]
+387.0: (passingTime)
+387.0: -----waiting---- [388.0]
+388.0: (passingTime)
+388.0: -----waiting---- [389.0]
+389.0: (passingTime)
+389.0: -----waiting---- [390.0]
+390.0: (passingTime)
+390.0: -----waiting---- [391.0]
+391.0: (passingTime)
+391.0: -----waiting---- [392.0]
+392.0: (passingTime)
+392.0: -----waiting---- [393.0]
+393.0: (passingTime)
+393.0: -----waiting---- [394.0]
+394.0: (passingTime)
+394.0: -----waiting---- [395.0]
+395.0: (passingTime)
+395.0: -----waiting---- [396.0]
+396.0: (passingTime)
+396.0: -----waiting---- [397.0]
+397.0: (passingTime)
+397.0: -----waiting---- [398.0]
+398.0: (passingTime)
+398.0: -----waiting---- [399.0]
+399.0: (passingTime)
+399.0: -----waiting---- [400.0]
+400.0: (passingTime)
+400.0: -----waiting---- [401.0]
+401.0: (passingTime)
+401.0: -----waiting---- [402.0]
+402.0: (passingTime)
+402.0: -----waiting---- [403.0]
+403.0: (passingTime)
+403.0: -----waiting---- [404.0]
+404.0: (passingTime)
+404.0: -----waiting---- [405.0]
+405.0: (passingTime)
+405.0: -----waiting---- [406.0]
+406.0: (passingTime)
+406.0: -----waiting---- [407.0]
+407.0: (passingTime)
+407.0: -----waiting---- [408.0]
+408.0: (passingTime)
+408.0: -----waiting---- [409.0]
+409.0: (passingTime)
+409.0: -----waiting---- [410.0]
+410.0: (passingTime)
+410.0: -----waiting---- [411.0]
+411.0: (passingTime)
+411.0: -----waiting---- [412.0]
+412.0: (passingTime)
+412.0: -----waiting---- [413.0]
+413.0: (passingTime)
+413.0: -----waiting---- [414.0]
+414.0: (passingTime)
+414.0: -----waiting---- [415.0]
+415.0: (passingTime)
+415.0: -----waiting---- [416.0]
+416.0: (passingTime)
+416.0: -----waiting---- [417.0]
+417.0: (passingTime)
+417.0: -----waiting---- [418.0]
+418.0: (passingTime)
+418.0: -----waiting---- [419.0]
+419.0: (passingTime)
+419.0: -----waiting---- [420.0]
+420.0: (passingTime)
+420.0: -----waiting---- [421.0]
+421.0: (passingTime)
+421.0: -----waiting---- [422.0]
+422.0: (passingTime)
+422.0: -----waiting---- [423.0]
+423.0: (passingTime)
+423.0: -----waiting---- [424.0]
+424.0: (passingTime)
+424.0: -----waiting---- [425.0]
+425.0: (passingTime)
+425.0: -----waiting---- [426.0]
+426.0: (passingTime)
+426.0: -----waiting---- [427.0]
+427.0: (passingTime)
+427.0: -----waiting---- [428.0]
+428.0: (passingTime)
+428.0: -----waiting---- [429.0]
+429.0: (passingTime)
+429.0: -----waiting---- [430.0]
+430.0: (passingTime)
+430.0: -----waiting---- [431.0]
+431.0: (passingTime)
+431.0: -----waiting---- [432.0]
+432.0: (passingTime)
+432.0: -----waiting---- [433.0]
+433.0: (passingTime)
+433.0: -----waiting---- [434.0]
+434.0: (passingTime)
+434.0: -----waiting---- [435.0]
+435.0: (passingTime)
+435.0: -----waiting---- [436.0]
+436.0: (passingTime)
+436.0: -----waiting---- [437.0]
+437.0: (passingTime)
+437.0: -----waiting---- [438.0]
+438.0: (passingTime)
+438.0: -----waiting---- [439.0]
+439.0: (passingTime)
+439.0: -----waiting---- [440.0]
+440.0: (passingTime)
+440.0: -----waiting---- [441.0]
+441.0: (passingTime)
+441.0: -----waiting---- [442.0]
+442.0: (passingTime)
+442.0: -----waiting---- [443.0]
+443.0: (passingTime)
+443.0: -----waiting---- [444.0]
+444.0: (passingTime)
+444.0: -----waiting---- [445.0]
+445.0: (passingTime)
+445.0: -----waiting---- [446.0]
+446.0: (passingTime)
+446.0: -----waiting---- [447.0]
+447.0: (passingTime)
+447.0: -----waiting---- [448.0]
+448.0: (passingTime)
+448.0: -----waiting---- [449.0]
+449.0: (passingTime)
+449.0: -----waiting---- [450.0]
+450.0: (passingTime)
+450.0: -----waiting---- [451.0]
+451.0: (passingTime)
+451.0: -----waiting---- [452.0]
+452.0: (passingTime)
+452.0: -----waiting---- [453.0]
+453.0: (passingTime)
+453.0: -----waiting---- [454.0]
+454.0: (passingTime)
+454.0: -----waiting---- [455.0]
+455.0: (passingTime)
+455.0: -----waiting---- [456.0]
+456.0: (passingTime)
+456.0: -----waiting---- [457.0]
+457.0: (passingTime)
+457.0: -----waiting---- [458.0]
+458.0: (passingTime)
+458.0: -----waiting---- [459.0]
+459.0: (passingTime)
+459.0: -----waiting---- [460.0]
+460.0: (passingTime)
+460.0: -----waiting---- [461.0]
+461.0: (passingTime)
+461.0: -----waiting---- [462.0]
+462.0: (passingTime)
+462.0: -----waiting---- [463.0]
+463.0: (passingTime)
+463.0: -----waiting---- [464.0]
+464.0: (passingTime)
+464.0: -----waiting---- [465.0]
+465.0: (passingTime)
+465.0: -----waiting---- [466.0]
+466.0: (passingTime)
+466.0: -----waiting---- [467.0]
+467.0: (passingTime)
+467.0: -----waiting---- [468.0]
+468.0: (passingTime)
+468.0: -----waiting---- [469.0]
+469.0: (passingTime)
+469.0: -----waiting---- [470.0]
+470.0: (passingTime)
+470.0: -----waiting---- [471.0]
+471.0: (passingTime)
+471.0: -----waiting---- [472.0]
+472.0: (passingTime)
+472.0: -----waiting---- [473.0]
+473.0: (passingTime)
+473.0: -----waiting---- [474.0]
+474.0: (passingTime)
+474.0: -----waiting---- [475.0]
+475.0: (passingTime)
+475.0: -----waiting---- [476.0]
+476.0: (passingTime)
+476.0: -----waiting---- [477.0]
+477.0: (passingTime)
+477.0: -----waiting---- [478.0]
+478.0: (passingTime)
+478.0: -----waiting---- [479.0]
+479.0: (passingTime)
+479.0: -----waiting---- [480.0]
+480.0: (passingTime)
+480.0: -----waiting---- [481.0]
+481.0: (passingTime)
+481.0: -----waiting---- [482.0]
+482.0: (passingTime)
+482.0: -----waiting---- [483.0]
+483.0: (passingTime)
+483.0: -----waiting---- [484.0]
+484.0: (passingTime)
+484.0: -----waiting---- [485.0]
+485.0: (passingTime)
+485.0: -----waiting---- [486.0]
+486.0: (passingTime)
+486.0: -----waiting---- [487.0]
+487.0: (passingTime)
+487.0: -----waiting---- [488.0]
+488.0: (passingTime)
+488.0: -----waiting---- [489.0]
+489.0: (passingTime)
+489.0: -----waiting---- [490.0]
+490.0: (passingTime)
+490.0: -----waiting---- [491.0]
+491.0: (passingTime)
+491.0: -----waiting---- [492.0]
+492.0: (passingTime)
+492.0: -----waiting---- [493.0]
+493.0: (passingTime)
+493.0: -----waiting---- [494.0]
+494.0: (passingTime)
+494.0: -----waiting---- [495.0]
+495.0: (passingTime)
+495.0: -----waiting---- [496.0]
+496.0: (passingTime)
+496.0: -----waiting---- [497.0]
+497.0: (passingTime)
+497.0: -----waiting---- [498.0]
+498.0: (passingTime)
+498.0: -----waiting---- [499.0]
+499.0: (passingTime)
+499.0: -----waiting---- [500.0]
+500.0: (passingTime)
+500.0: -----waiting---- [501.0]
+501.0: (passingTime)
+501.0: -----waiting---- [502.0]
+502.0: (passingTime)
+502.0: -----waiting---- [503.0]
+503.0: (passingTime)
+503.0: -----waiting---- [504.0]
+504.0: (passingTime)
+504.0: -----waiting---- [505.0]
+505.0: (passingTime)
+505.0: -----waiting---- [506.0]
+506.0: (passingTime)
+506.0: -----waiting---- [507.0]
+507.0: (passingTime)
+507.0: -----waiting---- [508.0]
+508.0: (passingTime)
+508.0: -----waiting---- [509.0]
+509.0: (passingTime)
+509.0: -----waiting---- [510.0]
+510.0: (passingTime)
+510.0: -----waiting---- [511.0]
+511.0: (passingTime)
+511.0: -----waiting---- [512.0]
+512.0: (passingTime)
+512.0: -----waiting---- [513.0]
+513.0: (passingTime)
+513.0: -----waiting---- [514.0]
+514.0: (passingTime)
+514.0: -----waiting---- [515.0]
+515.0: (passingTime)
+515.0: -----waiting---- [516.0]
+516.0: (passingTime)
+516.0: -----waiting---- [517.0]
+517.0: (passingTime)
+517.0: -----waiting---- [518.0]
+518.0: (passingTime)
+518.0: -----waiting---- [519.0]
+519.0: (passingTime)
+519.0: -----waiting---- [520.0]
+520.0: (passingTime)
+520.0: -----waiting---- [521.0]
+521.0: (passingTime)
+521.0: -----waiting---- [522.0]
+522.0: (passingTime)
+522.0: -----waiting---- [523.0]
+523.0: (passingTime)
+523.0: -----waiting---- [524.0]
+524.0: (passingTime)
+524.0: -----waiting---- [525.0]
+525.0: (passingTime)
+525.0: -----waiting---- [526.0]
+526.0: (passingTime)
+526.0: -----waiting---- [527.0]
+527.0: (passingTime)
+527.0: -----waiting---- [528.0]
+528.0: (passingTime)
+528.0: -----waiting---- [529.0]
+529.0: (passingTime)
+529.0: -----waiting---- [530.0]
+530.0: (passingTime)
+530.0: -----waiting---- [531.0]
+531.0: (passingTime)
+531.0: -----waiting---- [532.0]
+532.0: (passingTime)
+532.0: -----waiting---- [533.0]
+533.0: (passingTime)
+533.0: -----waiting---- [534.0]
+534.0: (passingTime)
+534.0: -----waiting---- [535.0]
+535.0: (passingTime)
+535.0: -----waiting---- [536.0]
+536.0: (passingTime)
+536.0: -----waiting---- [537.0]
+537.0: (passingTime)
+537.0: -----waiting---- [538.0]
+538.0: (passingTime)
+538.0: -----waiting---- [539.0]
+539.0: (passingTime)
+539.0: -----waiting---- [540.0]
+540.0: (passingTime)
+540.0: -----waiting---- [541.0]
+541.0: (passingTime)
+541.0: -----waiting---- [542.0]
+542.0: (passingTime)
+542.0: -----waiting---- [543.0]
+543.0: (passingTime)
+543.0: -----waiting---- [544.0]
+544.0: (passingTime)
+544.0: -----waiting---- [545.0]
+545.0: (passingTime)
+545.0: -----waiting---- [546.0]
+546.0: (passingTime)
+546.0: -----waiting---- [547.0]
+547.0: (passingTime)
+547.0: -----waiting---- [548.0]
+548.0: (passingTime)
+548.0: -----waiting---- [549.0]
+549.0: (passingTime)
+549.0: -----waiting---- [550.0]
+550.0: (passingTime)
+550.0: -----waiting---- [551.0]
+551.0: (passingTime)
+551.0: -----waiting---- [552.0]
+552.0: (passingTime)
+552.0: -----waiting---- [553.0]
+553.0: (passingTime)
+553.0: -----waiting---- [554.0]
+554.0: (passingTime)
+554.0: -----waiting---- [555.0]
+555.0: (passingTime)
+555.0: -----waiting---- [556.0]
+556.0: (passingTime)
+556.0: -----waiting---- [557.0]
+557.0: (passingTime)
+557.0: -----waiting---- [558.0]
+558.0: (passingTime)
+558.0: -----waiting---- [559.0]
+559.0: (passingTime)
+559.0: -----waiting---- [560.0]
+560.0: (passingTime)
+560.0: -----waiting---- [561.0]
+561.0: (passingTime)
+561.0: -----waiting---- [562.0]
+562.0: (passingTime)
+562.0: -----waiting---- [563.0]
+563.0: (passingTime)
+563.0: -----waiting---- [564.0]
+564.0: (passingTime)
+564.0: -----waiting---- [565.0]
+565.0: (passingTime)
+565.0: -----waiting---- [566.0]
+566.0: (passingTime)
+566.0: -----waiting---- [567.0]
+567.0: (passingTime)
+567.0: -----waiting---- [568.0]
+568.0: (passingTime)
+568.0: -----waiting---- [569.0]
+569.0: (passingTime)
+569.0: -----waiting---- [570.0]
+570.0: (passingTime)
+570.0: -----waiting---- [571.0]
+571.0: (passingTime)
+571.0: -----waiting---- [572.0]
+572.0: (passingTime)
+572.0: -----waiting---- [573.0]
+573.0: (passingTime)
+573.0: -----waiting---- [574.0]
+574.0: (passingTime)
+574.0: -----waiting---- [575.0]
+575.0: (passingTime)
+575.0: -----waiting---- [576.0]
+576.0: (passingTime)
+576.0: -----waiting---- [577.0]
+577.0: (passingTime)
+577.0: -----waiting---- [578.0]
+578.0: (passingTime)
+578.0: -----waiting---- [579.0]
+579.0: (passingTime)
+579.0: -----waiting---- [580.0]
+580.0: (passingTime)
+580.0: -----waiting---- [581.0]
+581.0: (passingTime)
+581.0: -----waiting---- [582.0]
+582.0: (passingTime)
+582.0: -----waiting---- [583.0]
+583.0: (passingTime)
+583.0: -----waiting---- [584.0]
+584.0: (passingTime)
+584.0: -----waiting---- [585.0]
+585.0: (passingTime)
+585.0: -----waiting---- [586.0]
+586.0: (passingTime)
+586.0: -----waiting---- [587.0]
+587.0: (passingTime)
+587.0: -----waiting---- [588.0]
+588.0: (passingTime)
+588.0: -----waiting---- [589.0]
+589.0: (passingTime)
+589.0: -----waiting---- [590.0]
+590.0: (passingTime)
+590.0: -----waiting---- [591.0]
+591.0: (passingTime)
+591.0: -----waiting---- [592.0]
+592.0: (passingTime)
+592.0: -----waiting---- [593.0]
+593.0: (passingTime)
+593.0: -----waiting---- [594.0]
+594.0: (passingTime)
+594.0: -----waiting---- [595.0]
+595.0: (passingTime)
+595.0: -----waiting---- [596.0]
+596.0: (passingTime)
+596.0: -----waiting---- [597.0]
+597.0: (passingTime)
+597.0: -----waiting---- [598.0]
+598.0: (passingTime)
+598.0: -----waiting---- [599.0]
+599.0: (passingTime)
+599.0: -----waiting---- [600.0]
+600.0: (passingTime)
+600.0: -----waiting---- [601.0]
+601.0: (passingTime)
+601.0: -----waiting---- [602.0]
+602.0: (passingTime)
+602.0: -----waiting---- [603.0]
+603.0: (passingTime)
+603.0: -----waiting---- [604.0]
+604.0: (passingTime)
+604.0: -----waiting---- [605.0]
+605.0: (passingTime)
+605.0: -----waiting---- [606.0]
+606.0: (passingTime)
+606.0: -----waiting---- [607.0]
+607.0: (passingTime)
+607.0: -----waiting---- [608.0]
+608.0: (passingTime)
+608.0: -----waiting---- [609.0]
+609.0: (passingTime)
+609.0: -----waiting---- [610.0]
+610.0: (passingTime)
+610.0: -----waiting---- [611.0]
+611.0: (passingTime)
+611.0: -----waiting---- [612.0]
+612.0: (passingTime)
+612.0: -----waiting---- [613.0]
+613.0: (passingTime)
+613.0: -----waiting---- [614.0]
+614.0: (passingTime)
+614.0: -----waiting---- [615.0]
+615.0: (passingTime)
+615.0: -----waiting---- [616.0]
+616.0: (passingTime)
+616.0: -----waiting---- [617.0]
+617.0: (passingTime)
+617.0: -----waiting---- [618.0]
+618.0: (passingTime)
+618.0: -----waiting---- [619.0]
+619.0: (passingTime)
+619.0: -----waiting---- [620.0]
+620.0: (passingTime)
+620.0: -----waiting---- [621.0]
+621.0: (passingTime)
+621.0: -----waiting---- [622.0]
+622.0: (passingTime)
+622.0: -----waiting---- [623.0]
+623.0: (passingTime)
+623.0: -----waiting---- [624.0]
+624.0: (passingTime)
+624.0: -----waiting---- [625.0]
+625.0: (passingTime)
+625.0: -----waiting---- [626.0]
+626.0: (passingTime)
+626.0: -----waiting---- [627.0]
+627.0: (passingTime)
+627.0: -----waiting---- [628.0]
+628.0: (passingTime)
+628.0: -----waiting---- [629.0]
+629.0: (passingTime)
+629.0: -----waiting---- [630.0]
+630.0: (passingTime)
+630.0: -----waiting---- [631.0]
+631.0: (passingTime)
+631.0: -----waiting---- [632.0]
+632.0: (passingTime)
+632.0: -----waiting---- [633.0]
+633.0: (passingTime)
+633.0: -----waiting---- [634.0]
+634.0: (passingTime)
+634.0: -----waiting---- [635.0]
+635.0: (passingTime)
+635.0: -----waiting---- [636.0]
+636.0: (passingTime)
+636.0: -----waiting---- [637.0]
+637.0: (passingTime)
+637.0: -----waiting---- [638.0]
+638.0: (passingTime)
+638.0: -----waiting---- [639.0]
+639.0: (passingTime)
+639.0: -----waiting---- [640.0]
+640.0: (passingTime)
+640.0: -----waiting---- [641.0]
+641.0: (passingTime)
+641.0: -----waiting---- [642.0]
+642.0: (passingTime)
+642.0: -----waiting---- [643.0]
+643.0: (passingTime)
+643.0: -----waiting---- [644.0]
+644.0: (passingTime)
+644.0: -----waiting---- [645.0]
+645.0: (passingTime)
+645.0: -----waiting---- [646.0]
+646.0: (passingTime)
+646.0: -----waiting---- [647.0]
+647.0: (passingTime)
+647.0: -----waiting---- [648.0]
+648.0: (passingTime)
+648.0: -----waiting---- [649.0]
+649.0: (passingTime)
+649.0: -----waiting---- [650.0]
+650.0: (passingTime)
+650.0: -----waiting---- [651.0]
+651.0: (passingTime)
+651.0: -----waiting---- [652.0]
+652.0: (passingTime)
+652.0: -----waiting---- [653.0]
+653.0: (passingTime)
+653.0: -----waiting---- [654.0]
+654.0: (passingTime)
+654.0: -----waiting---- [655.0]
+655.0: (passingTime)
+655.0: -----waiting---- [656.0]
+656.0: (passingTime)
+656.0: -----waiting---- [657.0]
+657.0: (passingTime)
+657.0: -----waiting---- [658.0]
+658.0: (passingTime)
+658.0: -----waiting---- [659.0]
+659.0: (passingTime)
+659.0: -----waiting---- [660.0]
+660.0: (passingTime)
+660.0: -----waiting---- [661.0]
+661.0: (passingTime)
+661.0: -----waiting---- [662.0]
+662.0: (passingTime)
+662.0: -----waiting---- [663.0]
+663.0: (passingTime)
+663.0: -----waiting---- [664.0]
+664.0: (passingTime)
+664.0: -----waiting---- [665.0]
+665.0: (passingTime)
+665.0: -----waiting---- [666.0]
+666.0: (passingTime)
+666.0: -----waiting---- [667.0]
+667.0: (passingTime)
+667.0: -----waiting---- [668.0]
+668.0: (passingTime)
+668.0: -----waiting---- [669.0]
+669.0: (passingTime)
+669.0: -----waiting---- [670.0]
+670.0: (passingTime)
+670.0: -----waiting---- [671.0]
+671.0: (passingTime)
+671.0: -----waiting---- [672.0]
+672.0: (passingTime)
+672.0: -----waiting---- [673.0]
+673.0: (passingTime)
+673.0: -----waiting---- [674.0]
+674.0: (passingTime)
+674.0: -----waiting---- [675.0]
+675.0: (passingTime)
+675.0: -----waiting---- [676.0]
+676.0: (passingTime)
+676.0: -----waiting---- [677.0]
+677.0: (passingTime)
+677.0: -----waiting---- [678.0]
+678.0: (passingTime)
+678.0: -----waiting---- [679.0]
+679.0: (passingTime)
+679.0: -----waiting---- [680.0]
+680.0: (passingTime)
+680.0: -----waiting---- [681.0]
+681.0: (passingTime)
+681.0: -----waiting---- [682.0]
+682.0: (passingTime)
+682.0: -----waiting---- [683.0]
+683.0: (passingTime)
+683.0: -----waiting---- [684.0]
+684.0: (passingTime)
+684.0: -----waiting---- [685.0]
+685.0: (passingTime)
+685.0: -----waiting---- [686.0]
+686.0: (passingTime)
+686.0: -----waiting---- [687.0]
+687.0: (passingTime)
+687.0: -----waiting---- [688.0]
+688.0: (passingTime)
+688.0: -----waiting---- [689.0]
+689.0: (passingTime)
+689.0: -----waiting---- [690.0]
+690.0: (passingTime)
+690.0: -----waiting---- [691.0]
+691.0: (passingTime)
+691.0: -----waiting---- [692.0]
+692.0: (passingTime)
+692.0: -----waiting---- [693.0]
+693.0: (passingTime)
+693.0: -----waiting---- [694.0]
+694.0: (passingTime)
+694.0: -----waiting---- [695.0]
+695.0: (passingTime)
+695.0: -----waiting---- [696.0]
+696.0: (passingTime)
+696.0: -----waiting---- [697.0]
+697.0: (passingTime)
+697.0: -----waiting---- [698.0]
+698.0: (passingTime)
+698.0: -----waiting---- [699.0]
+699.0: (passingTime)
+699.0: -----waiting---- [700.0]
+700.0: (passingTime)
+700.0: -----waiting---- [701.0]
+701.0: (passingTime)
+701.0: -----waiting---- [702.0]
+702.0: (passingTime)
+702.0: -----waiting---- [703.0]
+703.0: (passingTime)
+703.0: -----waiting---- [704.0]
+704.0: (passingTime)
+704.0: -----waiting---- [705.0]
+705.0: (passingTime)
+705.0: -----waiting---- [706.0]
+706.0: (passingTime)
+706.0: -----waiting---- [707.0]
+707.0: (passingTime)
+707.0: -----waiting---- [708.0]
+708.0: (passingTime)
+708.0: -----waiting---- [709.0]
+709.0: (passingTime)
+709.0: -----waiting---- [710.0]
+710.0: (passingTime)
+710.0: -----waiting---- [711.0]
+711.0: (passingTime)
+711.0: -----waiting---- [712.0]
+712.0: (passingTime)
+712.0: -----waiting---- [713.0]
+713.0: (passingTime)
+713.0: -----waiting---- [714.0]
+714.0: (passingTime)
+714.0: -----waiting---- [715.0]
+715.0: (passingTime)
+715.0: -----waiting---- [716.0]
+716.0: (passingTime)
+716.0: -----waiting---- [717.0]
+717.0: (passingTime)
+717.0: -----waiting---- [718.0]
+718.0: (passingTime)
+718.0: -----waiting---- [719.0]
+719.0: (passingTime)
+719.0: -----waiting---- [720.0]
+720.0: (passingTime)
+720.0: -----waiting---- [721.0]
+721.0: (passingTime)
+721.0: -----waiting---- [722.0]
+722.0: (passingTime)
+722.0: -----waiting---- [723.0]
+723.0: (passingTime)
+723.0: -----waiting---- [724.0]
+724.0: (passingTime)
+724.0: -----waiting---- [725.0]
+725.0: (passingTime)
+725.0: -----waiting---- [726.0]
+726.0: (passingTime)
+726.0: -----waiting---- [727.0]
+727.0: (passingTime)
+727.0: -----waiting---- [728.0]
+728.0: (passingTime)
+728.0: -----waiting---- [729.0]
+729.0: (passingTime)
+729.0: -----waiting---- [730.0]
+730.0: (passingTime)
+730.0: -----waiting---- [731.0]
+731.0: (passingTime)
+731.0: -----waiting---- [732.0]
+732.0: (passingTime)
+732.0: -----waiting---- [733.0]
+733.0: (passingTime)
+733.0: -----waiting---- [734.0]
+734.0: (passingTime)
+734.0: -----waiting---- [735.0]
+735.0: (passingTime)
+735.0: -----waiting---- [736.0]
+736.0: (passingTime)
+736.0: -----waiting---- [737.0]
+737.0: (passingTime)
+737.0: -----waiting---- [738.0]
+738.0: (passingTime)
+738.0: -----waiting---- [739.0]
+739.0: (passingTime)
+739.0: -----waiting---- [740.0]
+740.0: (passingTime)
+740.0: -----waiting---- [741.0]
+741.0: (passingTime)
+741.0: -----waiting---- [742.0]
+742.0: (passingTime)
+742.0: -----waiting---- [743.0]
+743.0: (passingTime)
+743.0: -----waiting---- [744.0]
+744.0: (passingTime)
+744.0: -----waiting---- [745.0]
+745.0: (passingTime)
+745.0: -----waiting---- [746.0]
+746.0: (passingTime)
+746.0: -----waiting---- [747.0]
+747.0: (passingTime)
+747.0: -----waiting---- [748.0]
+748.0: (passingTime)
+748.0: -----waiting---- [749.0]
+749.0: (passingTime)
+749.0: -----waiting---- [750.0]
+750.0: (passingTime)
+750.0: -----waiting---- [751.0]
+751.0: (passingTime)
+751.0: -----waiting---- [752.0]
+752.0: (passingTime)
+752.0: -----waiting---- [753.0]
+753.0: (passingTime)
+753.0: -----waiting---- [754.0]
+754.0: (passingTime)
+754.0: -----waiting---- [755.0]
+755.0: (passingTime)
+755.0: -----waiting---- [756.0]
+756.0: (passingTime)
+756.0: -----waiting---- [757.0]
+757.0: (passingTime)
+757.0: -----waiting---- [758.0]
+758.0: (passingTime)
+758.0: -----waiting---- [759.0]
+759.0: (passingTime)
+759.0: -----waiting---- [760.0]
+760.0: (passingTime)
+760.0: -----waiting---- [761.0]
+761.0: (passingTime)
+761.0: -----waiting---- [762.0]
+762.0: (passingTime)
+762.0: -----waiting---- [763.0]
+763.0: (passingTime)
+763.0: -----waiting---- [764.0]
+764.0: (passingTime)
+764.0: -----waiting---- [765.0]
+765.0: (passingTime)
+765.0: -----waiting---- [766.0]
+766.0: (passingTime)
+766.0: -----waiting---- [767.0]
+767.0: (passingTime)
+767.0: -----waiting---- [768.0]
+768.0: (passingTime)
+768.0: -----waiting---- [769.0]
+769.0: (passingTime)
+769.0: -----waiting---- [770.0]
+770.0: (passingTime)
+770.0: -----waiting---- [771.0]
+771.0: (passingTime)
+771.0: -----waiting---- [772.0]
+772.0: (passingTime)
+772.0: -----waiting---- [773.0]
+773.0: (passingTime)
+773.0: -----waiting---- [774.0]
+774.0: (passingTime)
+774.0: -----waiting---- [775.0]
+775.0: (passingTime)
+775.0: -----waiting---- [776.0]
+776.0: (passingTime)
+776.0: -----waiting---- [777.0]
+777.0: (passingTime)
+777.0: -----waiting---- [778.0]
+778.0: (passingTime)
+778.0: -----waiting---- [779.0]
+779.0: (passingTime)
+779.0: -----waiting---- [780.0]
+780.0: (passingTime)
+780.0: -----waiting---- [781.0]
+781.0: (passingTime)
+781.0: -----waiting---- [782.0]
+782.0: (passingTime)
+782.0: -----waiting---- [783.0]
+783.0: (passingTime)
+783.0: -----waiting---- [784.0]
+784.0: (passingTime)
+784.0: -----waiting---- [785.0]
+785.0: (passingTime)
+785.0: -----waiting---- [786.0]
+786.0: (passingTime)
+786.0: -----waiting---- [787.0]
+787.0: (passingTime)
+787.0: -----waiting---- [788.0]
+788.0: (passingTime)
+788.0: -----waiting---- [789.0]
+789.0: (passingTime)
+789.0: -----waiting---- [790.0]
+790.0: (passingTime)
+790.0: -----waiting---- [791.0]
+791.0: (passingTime)
+791.0: -----waiting---- [792.0]
+792.0: (passingTime)
+792.0: -----waiting---- [793.0]
+793.0: (passingTime)
+793.0: -----waiting---- [794.0]
+794.0: (passingTime)
+794.0: -----waiting---- [795.0]
+795.0: (passingTime)
+795.0: -----waiting---- [796.0]
+796.0: (passingTime)
+796.0: -----waiting---- [797.0]
+797.0: (passingTime)
+797.0: -----waiting---- [798.0]
+798.0: (passingTime)
+798.0: -----waiting---- [799.0]
+799.0: (passingTime)
+799.0: -----waiting---- [800.0]
+800.0: (passingTime)
+800.0: -----waiting---- [801.0]
+801.0: (passingTime)
+801.0: -----waiting---- [802.0]
+802.0: (passingTime)
+802.0: -----waiting---- [803.0]
+803.0: (passingTime)
+803.0: -----waiting---- [804.0]
+804.0: (passingTime)
+804.0: -----waiting---- [805.0]
+805.0: (passingTime)
+805.0: -----waiting---- [806.0]
+806.0: (passingTime)
+806.0: -----waiting---- [807.0]
+807.0: (passingTime)
+807.0: -----waiting---- [808.0]
+808.0: (passingTime)
+808.0: -----waiting---- [809.0]
+809.0: (passingTime)
+809.0: -----waiting---- [810.0]
+810.0: (passingTime)
+810.0: -----waiting---- [811.0]
+811.0: (passingTime)
+811.0: -----waiting---- [812.0]
+812.0: (passingTime)
+812.0: -----waiting---- [813.0]
+813.0: (passingTime)
+813.0: -----waiting---- [814.0]
+814.0: (passingTime)
+814.0: -----waiting---- [815.0]
+815.0: (passingTime)
+815.0: -----waiting---- [816.0]
+816.0: (passingTime)
+816.0: -----waiting---- [817.0]
+817.0: (passingTime)
+817.0: -----waiting---- [818.0]
+818.0: (passingTime)
+818.0: -----waiting---- [819.0]
+819.0: (passingTime)
+819.0: -----waiting---- [820.0]
+820.0: (passingTime)
+820.0: -----waiting---- [821.0]
+821.0: (passingTime)
+821.0: -----waiting---- [822.0]
+822.0: (passingTime)
+822.0: -----waiting---- [823.0]
+823.0: (passingTime)
+823.0: -----waiting---- [824.0]
+824.0: (passingTime)
+824.0: -----waiting---- [825.0]
+825.0: (passingTime)
+825.0: -----waiting---- [826.0]
+826.0: (passingTime)
+826.0: -----waiting---- [827.0]
+827.0: (passingTime)
+827.0: -----waiting---- [828.0]
+828.0: (passingTime)
+828.0: -----waiting---- [829.0]
+829.0: (passingTime)
+829.0: -----waiting---- [830.0]
+830.0: (passingTime)
+830.0: -----waiting---- [831.0]
+831.0: (passingTime)
+831.0: -----waiting---- [832.0]
+832.0: (passingTime)
+832.0: -----waiting---- [833.0]
+833.0: (passingTime)
+833.0: -----waiting---- [834.0]
+834.0: (passingTime)
+834.0: -----waiting---- [835.0]
+835.0: (passingTime)
+835.0: -----waiting---- [836.0]
+836.0: (passingTime)
+836.0: -----waiting---- [837.0]
+837.0: (passingTime)
+837.0: -----waiting---- [838.0]
+838.0: (passingTime)
+838.0: -----waiting---- [839.0]
+839.0: (passingTime)
+839.0: -----waiting---- [840.0]
+840.0: (passingTime)
+840.0: -----waiting---- [841.0]
+841.0: (passingTime)
+841.0: -----waiting---- [842.0]
+842.0: (passingTime)
+842.0: -----waiting---- [843.0]
+843.0: (passingTime)
+843.0: -----waiting---- [844.0]
+844.0: (passingTime)
+844.0: -----waiting---- [845.0]
+845.0: (passingTime)
+845.0: -----waiting---- [846.0]
+846.0: (passingTime)
+846.0: -----waiting---- [847.0]
+847.0: (passingTime)
+847.0: -----waiting---- [848.0]
+848.0: (passingTime)
+848.0: -----waiting---- [849.0]
+849.0: (passingTime)
+849.0: -----waiting---- [850.0]
+850.0: (passingTime)
+850.0: -----waiting---- [851.0]
+851.0: (passingTime)
+851.0: -----waiting---- [852.0]
+852.0: (passingTime)
+852.0: -----waiting---- [853.0]
+853.0: (passingTime)
+853.0: -----waiting---- [854.0]
+854.0: (passingTime)
+854.0: -----waiting---- [855.0]
+855.0: (passingTime)
+855.0: -----waiting---- [856.0]
+856.0: (passingTime)
+856.0: -----waiting---- [857.0]
+857.0: (passingTime)
+857.0: -----waiting---- [858.0]
+858.0: (passingTime)
+858.0: -----waiting---- [859.0]
+859.0: (passingTime)
+859.0: -----waiting---- [860.0]
+860.0: (passingTime)
+860.0: -----waiting---- [861.0]
+861.0: (passingTime)
+861.0: -----waiting---- [862.0]
+862.0: (passingTime)
+862.0: -----waiting---- [863.0]
+863.0: (passingTime)
+863.0: -----waiting---- [864.0]
+864.0: (passingTime)
+864.0: -----waiting---- [865.0]
+865.0: (passingTime)
+865.0: -----waiting---- [866.0]
+866.0: (passingTime)
+866.0: -----waiting---- [867.0]
+867.0: (passingTime)
+867.0: -----waiting---- [868.0]
+868.0: (passingTime)
+868.0: -----waiting---- [869.0]
+869.0: (passingTime)
+869.0: -----waiting---- [870.0]
+870.0: (passingTime)
+870.0: -----waiting---- [871.0]
+871.0: (passingTime)
+871.0: -----waiting---- [872.0]
+872.0: (passingTime)
+872.0: -----waiting---- [873.0]
+873.0: (passingTime)
+873.0: -----waiting---- [874.0]
+874.0: (passingTime)
+874.0: -----waiting---- [875.0]
+875.0: (passingTime)
+875.0: -----waiting---- [876.0]
+876.0: (passingTime)
+876.0: -----waiting---- [877.0]
+877.0: (passingTime)
+877.0: -----waiting---- [878.0]
+878.0: (passingTime)
+878.0: -----waiting---- [879.0]
+879.0: (passingTime)
+879.0: -----waiting---- [880.0]
+880.0: (passingTime)
+880.0: -----waiting---- [881.0]
+881.0: (passingTime)
+881.0: -----waiting---- [882.0]
+882.0: (passingTime)
+882.0: -----waiting---- [883.0]
+883.0: (passingTime)
+883.0: -----waiting---- [884.0]
+884.0: (passingTime)
+884.0: -----waiting---- [885.0]
+885.0: (passingTime)
+885.0: -----waiting---- [886.0]
+886.0: (passingTime)
+886.0: -----waiting---- [887.0]
+887.0: (passingTime)
+887.0: -----waiting---- [888.0]
+888.0: (passingTime)
+888.0: -----waiting---- [889.0]
+889.0: (passingTime)
+889.0: -----waiting---- [890.0]
+890.0: (passingTime)
+890.0: -----waiting---- [891.0]
+891.0: (passingTime)
+891.0: -----waiting---- [892.0]
+892.0: (passingTime)
+892.0: -----waiting---- [893.0]
+893.0: (passingTime)
+893.0: -----waiting---- [894.0]
+894.0: (passingTime)
+894.0: -----waiting---- [895.0]
+895.0: (passingTime)
+895.0: -----waiting---- [896.0]
+896.0: (passingTime)
+896.0: -----waiting---- [897.0]
+897.0: (passingTime)
+897.0: -----waiting---- [898.0]
+898.0: (passingTime)
+898.0: -----waiting---- [899.0]
+899.0: (passingTime)
+899.0: -----waiting---- [900.0]
+900.0: (passingTime)
+900.0: -----waiting---- [901.0]
+901.0: (passingTime)
+901.0: -----waiting---- [902.0]
+902.0: (passingTime)
+902.0: -----waiting---- [903.0]
+903.0: (passingTime)
+903.0: -----waiting---- [904.0]
+904.0: (passingTime)
+904.0: -----waiting---- [905.0]
+905.0: (passingTime)
+905.0: -----waiting---- [906.0]
+906.0: (passingTime)
+906.0: -----waiting---- [907.0]
+907.0: (passingTime)
+907.0: -----waiting---- [908.0]
+908.0: (passingTime)
+908.0: -----waiting---- [909.0]
+909.0: (passingTime)
+909.0: -----waiting---- [910.0]
+910.0: (passingTime)
+910.0: -----waiting---- [911.0]
+911.0: (passingTime)
+911.0: -----waiting---- [912.0]
+912.0: (passingTime)
+912.0: -----waiting---- [913.0]
+913.0: (passingTime)
+913.0: -----waiting---- [914.0]
+914.0: (passingTime)
+914.0: -----waiting---- [915.0]
+915.0: (passingTime)
+915.0: -----waiting---- [916.0]
+916.0: (passingTime)
+916.0: -----waiting---- [917.0]
+917.0: (passingTime)
+917.0: -----waiting---- [918.0]
+918.0: (passingTime)
+918.0: -----waiting---- [919.0]
+919.0: (passingTime)
+919.0: -----waiting---- [920.0]
+920.0: (passingTime)
+920.0: -----waiting---- [921.0]
+921.0: (passingTime)
+921.0: -----waiting---- [922.0]
+922.0: (passingTime)
+922.0: -----waiting---- [923.0]
+923.0: (passingTime)
+923.0: -----waiting---- [924.0]
+924.0: (passingTime)
+924.0: -----waiting---- [925.0]
+925.0: (passingTime)
+925.0: -----waiting---- [926.0]
+926.0: (passingTime)
+926.0: -----waiting---- [927.0]
+927.0: (passingTime)
+927.0: -----waiting---- [928.0]
+928.0: (passingTime)
+928.0: -----waiting---- [929.0]
+929.0: (passingTime)
+929.0: -----waiting---- [930.0]
+930.0: (passingTime)
+930.0: -----waiting---- [931.0]
+931.0: (passingTime)
+931.0: -----waiting---- [932.0]
+932.0: (passingTime)
+932.0: -----waiting---- [933.0]
+933.0: (passingTime)
+933.0: -----waiting---- [934.0]
+934.0: (passingTime)
+934.0: -----waiting---- [935.0]
+935.0: (passingTime)
+935.0: -----waiting---- [936.0]
+936.0: (passingTime)
+936.0: -----waiting---- [937.0]
+937.0: (passingTime)
+937.0: -----waiting---- [938.0]
+938.0: (passingTime)
+938.0: -----waiting---- [939.0]
+939.0: (passingTime)
+939.0: -----waiting---- [940.0]
+940.0: (passingTime)
+940.0: -----waiting---- [941.0]
+941.0: (passingTime)
+941.0: -----waiting---- [942.0]
+942.0: (passingTime)
+942.0: -----waiting---- [943.0]
+943.0: (passingTime)
+943.0: -----waiting---- [944.0]
+944.0: (passingTime)
+944.0: -----waiting---- [945.0]
+945.0: (passingTime)
+945.0: -----waiting---- [946.0]
+946.0: (passingTime)
+946.0: -----waiting---- [947.0]
+947.0: (passingTime)
+947.0: -----waiting---- [948.0]
+948.0: (passingTime)
+948.0: -----waiting---- [949.0]
+949.0: (passingTime)
+949.0: -----waiting---- [950.0]
+950.0: (passingTime)
+950.0: -----waiting---- [951.0]
+951.0: (passingTime)
+951.0: -----waiting---- [952.0]
+952.0: (passingTime)
+952.0: -----waiting---- [953.0]
+953.0: (passingTime)
+953.0: -----waiting---- [954.0]
+954.0: (passingTime)
+954.0: -----waiting---- [955.0]
+955.0: (passingTime)
+955.0: -----waiting---- [956.0]
+956.0: (passingTime)
+956.0: -----waiting---- [957.0]
+957.0: (passingTime)
+957.0: -----waiting---- [958.0]
+958.0: (passingTime)
+958.0: -----waiting---- [959.0]
+959.0: (passingTime)
+959.0: -----waiting---- [960.0]
+960.0: (passingTime)
+960.0: -----waiting---- [961.0]
+961.0: (passingTime)
+961.0: -----waiting---- [962.0]
+962.0: (passingTime)
+962.0: -----waiting---- [963.0]
+963.0: (passingTime)
+963.0: -----waiting---- [964.0]
+964.0: (passingTime)
+964.0: -----waiting---- [965.0]
+965.0: (passingTime)
+965.0: -----waiting---- [966.0]
+966.0: (passingTime)
+966.0: -----waiting---- [967.0]
+967.0: (passingTime)
+967.0: -----waiting---- [968.0]
+968.0: (passingTime)
+968.0: -----waiting---- [969.0]
+969.0: (passingTime)
+969.0: -----waiting---- [970.0]
+970.0: (passingTime)
+970.0: -----waiting---- [971.0]
+971.0: (passingTime)
+971.0: -----waiting---- [972.0]
+972.0: (passingTime)
+972.0: -----waiting---- [973.0]
+973.0: (passingTime)
+973.0: -----waiting---- [974.0]
+974.0: (passingTime)
+974.0: -----waiting---- [975.0]
+975.0: (passingTime)
+975.0: -----waiting---- [976.0]
+976.0: (passingTime)
+976.0: -----waiting---- [977.0]
+977.0: (passingTime)
+977.0: -----waiting---- [978.0]
+978.0: (passingTime)
+978.0: -----waiting---- [979.0]
+979.0: (passingTime)
+979.0: -----waiting---- [980.0]
+980.0: (passingTime)
+980.0: -----waiting---- [981.0]
+981.0: (passingTime)
+981.0: -----waiting---- [982.0]
+982.0: (passingTime)
+982.0: -----waiting---- [983.0]
+983.0: (passingTime)
+983.0: -----waiting---- [984.0]
+984.0: (passingTime)
+984.0: -----waiting---- [985.0]
+985.0: (passingTime)
+985.0: -----waiting---- [986.0]
+986.0: (passingTime)
+986.0: -----waiting---- [987.0]
+987.0: (passingTime)
+987.0: -----waiting---- [988.0]
+988.0: (passingTime)
+988.0: -----waiting---- [989.0]
+989.0: (passingTime)
+989.0: -----waiting---- [990.0]
+990.0: (passingTime)
+990.0: -----waiting---- [991.0]
+991.0: (passingTime)
+991.0: -----waiting---- [992.0]
+992.0: (passingTime)
+992.0: -----waiting---- [993.0]
+993.0: (passingTime)
+993.0: -----waiting---- [994.0]
+994.0: (passingTime)
+994.0: -----waiting---- [995.0]
+995.0: (passingTime)
+995.0: -----waiting---- [996.0]
+996.0: (passingTime)
+996.0: -----waiting---- [997.0]
+997.0: (switchGenBatteryOn GB)
+997.0: (passingTime)
+997.0: -----waiting---- [998.0]
+998.0: (passingTime)
+998.0: -----waiting---- [999.0]
+999.0: (passingTime)
+999.0: -----waiting---- [1000.0]
+1000.0: (sunexposure_event)
+1000.0: (sunshine)
+1000.0: (sendData)
+
+Plan-Length:2010
+Elapsed Time: 1000.0
+Metric (Search):1005.0
+Planning Time (msec): 795
+Heuristic Time (msec): 90
+Search Time (msec): 288
+Expanded Nodes:1006
+States Evaluated:2013
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:0
+Number of Duplicates detected:0
+real 1.06
+user 0.92
+sys 0.10

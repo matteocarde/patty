@@ -8,16 +8,9 @@ Aibr Preprocessing
 |A|:16
 |P|:0
 |E|:0
-H1 Setup Time (msec): 76
-Wrong setting for break-ties. Arbitrary tie breaking
+H1 Setup Time (msec): 5
 Setting horizon to:NaN
-Helpful Action Pruning Activated
 Running Greedy Best First Search
-JUMP for (increment c7):4
-JUMP for (increment c6):5
-JUMP for (increment c2):8
-JUMP for (increment c4):11
-JUMP for (increment c7):10
 Problem Solved
 
 Found Plan:
@@ -40,9 +33,9 @@ Found Plan:
 16.0: (increment c4)
 17.0: (increment c4)
 18.0: (increment c4)
-19.0: (increment c4)
-20.0: (increment c4)
-21.0: (increment c2)
+19.0: (decrement c3)
+20.0: (decrement c3)
+21.0: (decrement c3)
 22.0: (increment c2)
 23.0: (increment c2)
 24.0: (increment c2)
@@ -50,32 +43,28 @@ Found Plan:
 26.0: (increment c2)
 27.0: (increment c2)
 28.0: (increment c2)
-29.0: (increment c6)
-30.0: (increment c6)
+29.0: (increment c2)
+30.0: (increment c7)
 31.0: (increment c6)
-32.0: (increment c6)
+32.0: (increment c7)
 33.0: (increment c6)
 34.0: (increment c7)
-35.0: (increment c7)
+35.0: (increment c6)
 36.0: (increment c7)
-37.0: (increment c7)
-38.0: (decrement c4)
-39.0: (decrement c3)
-40.0: (decrement c4)
-41.0: (decrement c3)
-42.0: (decrement c4)
-43.0: (decrement c3)
+37.0: (increment c6)
+38.0: (increment c7)
+39.0: (increment c6)
 
-Plan-Length:44
-Metric (Search):44.0
-Planning Time (msec): 425
-Heuristic Time (msec): 9
-Search Time (msec): 17
-Expanded Nodes:16
-States Evaluated:61
+Plan-Length:40
+Metric (Search):40.0
+Planning Time (msec): 344
+Heuristic Time (msec): 18
+Search Time (msec): 97
+Expanded Nodes:42
+States Evaluated:578
 Fixed constraint violations during search (zero-crossing):0
 Number of Dead-Ends detected:0
-Number of Duplicates detected:9
-real 0.56
-user 0.39
-sys 0.05
+Number of Duplicates detected:54
+real 0.50
+user 0.49
+sys 0.03

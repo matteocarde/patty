@@ -1,38 +1,35 @@
 Domain parsed
 Problem parsed
 Grounding..
-Grounding Time: 23
+Grounding Time: 70
 Aibr Preprocessing
 |F|:0
 |X|:4
 |A|:16
 |P|:0
 |E|:0
-H1 Setup Time (msec): 9
-Wrong setting for break-ties. Arbitrary tie breaking
+AIBR selected
 Setting horizon to:NaN
-Helpful Action Pruning Activated
 Running Greedy Best First Search
-JUMP for (move-slow farm0 farm1):341
 Problem Solved
 
 Found Plan:
 0.0: (move-slow farm0 farm1)
-1.0: (move-slow farm0 farm1)
-2.0: (move-slow farm0 farm1)
-3.0: (move-slow farm0 farm1)
-4.0: (move-slow farm0 farm1)
+1.0: (move-slow farm1 farm3)
+2.0: (move-fast farm0 farm1)
+3.0: (move-slow farm0 farm2)
+4.0: (move-slow farm2 farm3)
 5.0: (move-slow farm0 farm1)
 6.0: (move-slow farm0 farm1)
 7.0: (move-slow farm0 farm1)
-8.0: (move-slow farm0 farm1)
-9.0: (move-slow farm0 farm1)
+8.0: (move-slow farm3 farm1)
+9.0: (move-slow farm3 farm1)
 10.0: (move-slow farm0 farm1)
 11.0: (move-slow farm0 farm1)
 12.0: (move-slow farm0 farm1)
-13.0: (move-slow farm0 farm1)
-14.0: (move-slow farm0 farm1)
-15.0: (move-slow farm0 farm1)
+13.0: (move-slow farm0 farm2)
+14.0: (move-slow farm0 farm2)
+15.0: (move-slow farm0 farm2)
 16.0: (move-slow farm0 farm1)
 17.0: (move-slow farm0 farm1)
 18.0: (move-slow farm0 farm1)
@@ -41,8 +38,8 @@ Found Plan:
 21.0: (move-slow farm0 farm1)
 22.0: (move-slow farm0 farm1)
 23.0: (move-slow farm0 farm1)
-24.0: (move-slow farm0 farm1)
-25.0: (move-slow farm0 farm1)
+24.0: (move-slow farm2 farm3)
+25.0: (move-slow farm2 farm3)
 26.0: (move-slow farm0 farm1)
 27.0: (move-slow farm0 farm1)
 28.0: (move-slow farm0 farm1)
@@ -76,12 +73,12 @@ Found Plan:
 56.0: (move-slow farm0 farm1)
 57.0: (move-slow farm0 farm1)
 58.0: (move-slow farm0 farm1)
-59.0: (move-slow farm0 farm1)
-60.0: (move-slow farm0 farm1)
+59.0: (move-slow farm2 farm0)
+60.0: (move-slow farm3 farm1)
 61.0: (move-slow farm0 farm1)
 62.0: (move-slow farm0 farm1)
 63.0: (move-slow farm0 farm1)
-64.0: (move-slow farm0 farm1)
+64.0: (move-slow farm1 farm3)
 65.0: (move-slow farm0 farm1)
 66.0: (move-slow farm0 farm1)
 67.0: (move-slow farm0 farm1)
@@ -302,8 +299,8 @@ Found Plan:
 282.0: (move-slow farm0 farm1)
 283.0: (move-slow farm0 farm1)
 284.0: (move-slow farm0 farm1)
-285.0: (move-slow farm0 farm1)
-286.0: (move-slow farm0 farm1)
+285.0: (move-slow farm0 farm2)
+286.0: (move-fast farm0 farm1)
 287.0: (move-slow farm0 farm1)
 288.0: (move-slow farm0 farm1)
 289.0: (move-slow farm0 farm1)
@@ -358,19 +355,36 @@ Found Plan:
 338.0: (move-slow farm0 farm1)
 339.0: (move-slow farm0 farm1)
 340.0: (move-slow farm0 farm1)
-341.0: (move-slow farm0 farm2)
-342.0: (move-slow farm1 farm3)
+341.0: (move-slow farm0 farm1)
+342.0: (move-slow farm0 farm1)
+343.0: (move-slow farm0 farm1)
+344.0: (move-slow farm0 farm1)
+345.0: (move-slow farm0 farm1)
+346.0: (move-slow farm3 farm1)
+347.0: (move-slow farm3 farm2)
+348.0: (move-slow farm0 farm1)
+349.0: (move-slow farm0 farm1)
+350.0: (move-slow farm0 farm1)
+351.0: (move-slow farm0 farm1)
+352.0: (move-slow farm0 farm1)
+353.0: (move-slow farm0 farm1)
+354.0: (move-slow farm1 farm3)
+355.0: (move-slow farm0 farm1)
+356.0: (move-slow farm0 farm1)
+357.0: (move-slow farm0 farm1)
+358.0: (move-slow farm0 farm1)
+359.0: (move-slow farm0 farm1)
 
-Plan-Length:343
-Metric (Search):343.0
-Planning Time (msec): 477
-Heuristic Time (msec): 5
-Search Time (msec): 16
-Expanded Nodes:4
-States Evaluated:12
+Plan-Length:360
+Metric (Search):360.0
+Planning Time (msec): 2614
+Heuristic Time (msec): 1866
+Search Time (msec): 2181
+Expanded Nodes:1012
+States Evaluated:6517
 Fixed constraint violations during search (zero-crossing):0
 Number of Dead-Ends detected:0
-Number of Duplicates detected:0
-real 0.63
-user 0.59
-sys 0.06
+Number of Duplicates detected:4609
+real 2.80
+user 2.69
+sys 0.13

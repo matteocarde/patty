@@ -32,10 +32,12 @@ def main():
         print(f"Atoms: {len(gDomain.allAtoms)}")
         print(f"Trace Length: {len(trace)}")
 
-        ts.start("Initial Condition Retrieve")
+        ts.start("Initial Condition Space")
         ics: InitialConditionSpace = InitialConditionSpace(trace, problem, gDomain)
         print(f"ICS Conditions: {len(ics.conditions)}")
+        ts.end("Initial Condition Space")
 
+        ts.start("Initial Condition Retrieve")
         print("Solving ICR")
         icr = InitialConditionRetriever(ics, problem.init, bounds=bounds)
         initSolution, optimum = icr.solve(tol=args.tolerance)

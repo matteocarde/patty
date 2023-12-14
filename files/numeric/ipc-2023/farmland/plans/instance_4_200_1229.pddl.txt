@@ -8,23 +8,20 @@ Aibr Preprocessing
 |A|:16
 |P|:0
 |E|:0
-H1 Setup Time (msec): 5
-Wrong setting for break-ties. Arbitrary tie breaking
+AIBR selected
 Setting horizon to:NaN
-Helpful Action Pruning Activated
 Running Greedy Best First Search
-JUMP for (move-slow farm0 farm1):112
 Problem Solved
 
 Found Plan:
-0.0: (move-slow farm0 farm1)
-1.0: (move-slow farm0 farm1)
+0.0: (move-slow farm0 farm2)
+1.0: (move-slow farm0 farm2)
 2.0: (move-slow farm0 farm1)
 3.0: (move-slow farm0 farm1)
 4.0: (move-slow farm0 farm1)
-5.0: (move-slow farm0 farm1)
-6.0: (move-slow farm0 farm1)
-7.0: (move-slow farm0 farm1)
+5.0: (move-slow farm0 farm2)
+6.0: (move-slow farm1 farm3)
+7.0: (move-slow farm2 farm3)
 8.0: (move-slow farm0 farm1)
 9.0: (move-slow farm0 farm1)
 10.0: (move-slow farm0 farm1)
@@ -119,8 +116,8 @@ Found Plan:
 99.0: (move-slow farm0 farm1)
 100.0: (move-slow farm0 farm1)
 101.0: (move-slow farm0 farm1)
-102.0: (move-slow farm0 farm1)
-103.0: (move-slow farm0 farm1)
+102.0: (move-fast farm0 farm1)
+103.0: (move-slow farm3 farm2)
 104.0: (move-slow farm0 farm1)
 105.0: (move-slow farm0 farm1)
 106.0: (move-slow farm0 farm1)
@@ -129,20 +126,25 @@ Found Plan:
 109.0: (move-slow farm0 farm1)
 110.0: (move-slow farm0 farm1)
 111.0: (move-slow farm0 farm1)
-112.0: (move-slow farm0 farm2)
-113.0: (move-slow farm1 farm3)
+112.0: (move-slow farm0 farm1)
+113.0: (move-slow farm0 farm1)
 114.0: (move-slow farm0 farm1)
+115.0: (move-slow farm0 farm1)
+116.0: (move-slow farm0 farm1)
+117.0: (move-slow farm0 farm1)
+118.0: (move-slow farm0 farm1)
+119.0: (move-slow farm0 farm1)
 
-Plan-Length:115
-Metric (Search):115.0
-Planning Time (msec): 311
-Heuristic Time (msec): 3
-Search Time (msec): 9
-Expanded Nodes:5
-States Evaluated:15
+Plan-Length:120
+Metric (Search):120.0
+Planning Time (msec): 988
+Heuristic Time (msec): 592
+Search Time (msec): 702
+Expanded Nodes:426
+States Evaluated:2946
 Fixed constraint violations during search (zero-crossing):0
 Number of Dead-Ends detected:0
-Number of Duplicates detected:1
-real 0.44
-user 0.39
-sys 0.04
+Number of Duplicates detected:2136
+real 1.16
+user 1.10
+sys 0.08

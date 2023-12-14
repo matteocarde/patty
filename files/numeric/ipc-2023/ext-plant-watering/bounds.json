@@ -9,6 +9,6 @@
   "water_reserve": [0, 150],
   "carrying": [0, 10],
   "poured": [0, 10],
-  "total_poured": [0, 150],
-  "total_loaded": [0, 150]
+  "total_poured": [0, 0],
+  "total_loaded": [0, 0]
 }

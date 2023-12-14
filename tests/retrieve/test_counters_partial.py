@@ -14,7 +14,7 @@ class TestCountersPartial(TestCase):
 
     def setUp(self) -> None:
         folder = "../../files/numeric/ipc-2023/counters/"
-        problem = "rnd_instance_32_2"
+        problem = "rnd_instance_4_1"
         self.domain: Domain = Domain.fromFile(f"{folder}/domain.pddl")
         self.problem: Problem = Problem.fromFile(f"{folder}/partial/{problem}/100.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem, avoidSimplification=True)

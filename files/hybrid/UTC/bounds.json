@@ -1,7 +1,7 @@
 {
   "flow": [0, 10],
   "queue": [0, 200],
-  "max_queue": [0, 1000],
+  "max_queue": [0, 10000],
   "maxgreentime": [0, 100],
   "mingreentime": [0, 100],
   "greentime": [0, 100],

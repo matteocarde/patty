@@ -1,4 +1,5 @@
 import math
+import random
 from random import randrange
 from typing import Tuple, List, Dict, Set
 
@@ -25,12 +26,9 @@ class InitialConditionRetriever:
         self.domain = ics.domain
         self.ics = ics
 
-        self.varsToAtom: Dict[Symbol, Atom] = dict()
-
         self.obj: Expr = S(0)
         for (atom, value) in wIc.numericAssignments.items():
             var = self.ics.vg.getNode(0, atom).value
-            self.varsToAtom[var] = atom
             self.obj += (var - value) ** 2
         # self.obj = simplify(self.obj)
 
@@ -46,19 +44,20 @@ class InitialConditionRetriever:
         ub: List[float] = []
         self.x0: List[float] = []
         for var in self.variables:
-            if var in self.varsToAtom:
-                atom = self.varsToAtom[var]
+            lbc, ubc = -np.inf, +np.inf
+            atom = self.ics.vg.varsToAtom[var]
+            if bounds and atom in bounds.interval:
+                lbc = bounds.interval[atom][0]
+                ubc = bounds.interval[atom][1]
+
+            if atom in wIc.numericAssignments:
                 self.x0.append(wIc.numericAssignments[atom])
-                if bounds and atom in bounds.interval:
-                    lb.append(bounds.interval[atom][0])
-                    ub.append(bounds.interval[atom][1])
-                else:
-                    lb.append(-np.inf)
-                    ub.append(+np.inf)
             else:
-                self.x0.append(randrange(0, 100))
-                lb.append(-np.inf)
-                ub.append(+np.inf)
+                rValue = 0 if lbc == -np.inf or ubc == np.inf else random.uniform(lbc, ubc)
+                self.x0.append(rValue)
+
+            lb.append(lbc)
+            ub.append(ubc)
 
         self.bounds = OptBounds(lb, ub)
         self.constraints = self.getConstraints()

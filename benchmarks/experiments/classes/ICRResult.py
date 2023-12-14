@@ -19,6 +19,8 @@ class ICRResult:
     nOfAtoms: int = 0
     traceLength: int = 0
     nOfConditions: int = 0
+    timeICS: int = -1
+    timeICR: int = -1
 
     def __init__(self, expType: str, domain: str, problem: str):
         self.plan = list()
@@ -42,12 +44,15 @@ class ICRResult:
         r.nOfAtoms = float(csvLine[9])
         r.traceLength = float(csvLine[10])
         r.nOfConditions = float(csvLine[11])
+        if len(csvLine) > 12:
+            r.timeICS = float(csvLine[12])
+            r.timeICR = float(csvLine[13])
 
         return r
 
     @classmethod
     def parseTime(cls, stdout):
-        reTime = re.findall(r"Initial Condition Retrieve: (.*?)ms$", stdout, re.MULTILINE)
+        reTime = re.findall(r"Overall: (.*?)ms$", stdout, re.MULTILINE)
         time = reTime[0] if len(reTime) > 0 else 0
         return float(time)
 
@@ -65,6 +70,8 @@ class ICRResult:
             (str(self.nOfAtoms), 8),
             (str(self.traceLength), 8),
             (str(self.nOfConditions), 8),
+            (str(self.timeICS), 8),
+            (str(self.timeICR), 8),
         ]
 
         string = "|" + "|".join(["{:^" + str(n[1]) + "}" for n in row]) + "|"
@@ -88,4 +95,6 @@ class ICRResult:
             str(self.nOfAtoms),
             str(self.traceLength),
             str(self.nOfConditions),
+            str(self.timeICS),
+            str(self.timeICR),
         ])

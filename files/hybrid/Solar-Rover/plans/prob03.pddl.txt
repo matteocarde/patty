@@ -1,7 +1,7 @@
 Domain parsed
 Problem parsed
 Grounding..
-Grounding Time: 13
+Grounding Time: 15
 Aibr Preprocessing
 |F|:13
 |X|:5
@@ -13,23 +13,23 @@ Delta time heuristic model:1.0
 Delta time planning model:1.0
 Delta time search-execution model:1.0
 Delta time validation model:1
-AIBR selected
+H1 Setup Time (msec): 7
 Setting horizon to:NaN
-Running WA-STAR
+Running Greedy Best First Search
 Extracting plan with execution delta: 1.0
 Problem Solved
 
 Found Plan:
+0: (start_useBattery b3)
+0: (start_useBattery b1)
 0: (start_useBattery b2)
 0: (end_useBattery b2)
+0: (end_useBattery b3)
+0: (end_useBattery b1)
 0: (passingTime)
 0: -----waiting---- [1.0]
-1.0: (start_useBattery b3)
-1.0: (end_useBattery b3)
 1.0: (passingTime)
 1.0: -----waiting---- [2.0]
-2.0: (start_useBattery b1)
-2.0: (end_useBattery b1)
 2.0: (passingTime)
 2.0: -----waiting---- [3.0]
 3.0: (passingTime)
@@ -312,7 +312,6 @@ Found Plan:
 141.0: -----waiting---- [142.0]
 142.0: (passingTime)
 142.0: -----waiting---- [143.0]
-143.0: (switchGenBatteryOn GB)
 143.0: (passingTime)
 143.0: -----waiting---- [144.0]
 144.0: (passingTime)
@@ -321,6 +320,7 @@ Found Plan:
 145.0: -----waiting---- [146.0]
 146.0: (passingTime)
 146.0: -----waiting---- [147.0]
+147.0: (switchGenBatteryOn GB)
 147.0: (passingTime)
 147.0: -----waiting---- [148.0]
 148.0: (passingTime)
@@ -334,14 +334,14 @@ Found Plan:
 Plan-Length:310
 Elapsed Time: 150.0
 Metric (Search):155.0
-Planning Time (msec): 4751
-Heuristic Time (msec): 3920
-Search Time (msec): 4246
-Expanded Nodes:6099
-States Evaluated:13249
+Planning Time (msec): 701
+Heuristic Time (msec): 21
+Search Time (msec): 171
+Expanded Nodes:156
+States Evaluated:313
 Fixed constraint violations during search (zero-crossing):0
 Number of Dead-Ends detected:0
-Number of Duplicates detected:4579
-real 4.89
-user 3.47
-sys 0.23
+Number of Duplicates detected:0
+real 0.84
+user 0.59
+sys 0.06

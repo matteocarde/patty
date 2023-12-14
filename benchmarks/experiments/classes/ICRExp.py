@@ -76,4 +76,10 @@ class ICRExp:
         reConditions = re.findall(r"ICS Conditions: (.*?)$", stdout, re.MULTILINE)
         r.nOfConditions = -1 if not reConditions else float(reConditions[0])
 
+        timeICS = re.findall(r"Initial Condition Space: (.*?)ms$", stdout, re.MULTILINE)
+        r.timeICS = -1 if not timeICS else float(timeICS[0])
+
+        timeICR = re.findall(r"Initial Condition Retrieve: (.*?)ms$", stdout, re.MULTILINE)
+        r.timeICR = -1 if not timeICR else float(timeICR[0])
+
         return r
