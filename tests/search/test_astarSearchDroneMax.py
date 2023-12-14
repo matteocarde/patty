@@ -11,8 +11,8 @@ from src.utils.Arguments import Arguments
 class TestAStarDroneMax(TestCase):
 
     def setUp(self) -> None:
-        domainFile = "../../files/ipc-2023/drone/domain.pddl"
-        problemFile = "../../files/ipc-2023/drone/instances/problem_1_8_1.pddl"
+        domainFile = "../../files/numeric/ipc-2023/drone/domain.pddl"
+        problemFile = "../../files/numeric/ipc-2023/drone/instances/problem_1_8_1.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)

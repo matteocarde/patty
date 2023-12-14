@@ -115,11 +115,11 @@ class TestAction(TestCase):
 
     def test_grounding(self):
 
-        gActions1 = self.action1.ground(self.problem)
+        gActions1 = self.action1.ground(self.problem, dict())
         self.assertEqual(len(gActions1), 3)
         self.assertIsInstance(gActions1[0], Action)
 
-        gActions2 = self.action2.ground(self.problem)
+        gActions2 = self.action2.ground(self.problem, dict())
         self.assertEqual(len(gActions2), 3 * 3 * 3)
         self.assertIsInstance(gActions2[0], Action)
 

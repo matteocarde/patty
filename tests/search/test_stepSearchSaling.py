@@ -11,8 +11,8 @@ from src.utils.Arguments import Arguments
 class TestStepSearchSailing(TestCase):
 
     def setUp(self) -> None:
-        domainFile = "../../files/sailing/domain.pddl"
-        problemFile = "../../files/sailing/instances/instance_1_4_1229.pddl"
+        domainFile = "../../files/numeric/ipc-2023/sailing/domain.pddl"
+        problemFile = "../../files/numeric/ipc-2023/sailing/instances/instance_1_4_1229.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)

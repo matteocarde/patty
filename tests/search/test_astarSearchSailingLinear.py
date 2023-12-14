@@ -11,8 +11,8 @@ from src.utils.Arguments import Arguments
 class TestAStarHydroPower(TestCase):
 
     def setUp(self) -> None:
-        domainFile = "../../files/ipc-2023/hydropower/domain.pddl"
-        problemFile = "../../files/ipc-2023/hydropower/instances/pfile01.pddl"
+        domainFile = "../../files/numeric/ipc-2023/hydropower/domain.pddl"
+        problemFile = "../../files/numeric/ipc-2023/hydropower/instances/pfile01.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)

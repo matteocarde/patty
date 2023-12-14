@@ -11,8 +11,8 @@ from src.utils.Arguments import Arguments
 class TestAStarCounters(TestCase):
 
     def setUp(self) -> None:
-        domainFile = "../../files/ipc-2023/counters/domain.pddl"
-        problemFile = "../../files/ipc-2023/counters/instances/rnd_instance_40_3.pddl"
+        domainFile = "../../files/numeric/ipc-2023/counters/domain.pddl"
+        problemFile = "../../files/numeric/ipc-2023/counters/instances/rnd_instance_40_3.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)

@@ -11,8 +11,8 @@ from src.utils.Arguments import Arguments
 class TestAstarTPP(TestCase):
 
     def setUp(self) -> None:
-        domainFile = "../../files/ipc-2023/tpp/domain.pddl"
-        problemFile = "../../files/ipc-2023/tpp/instances/p02.pddl"
+        domainFile = "../../files/numeric/ipc-2023/tpp/domain.pddl"
+        problemFile = "../../files/numeric/ipc-2023/tpp/instances/p02.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)

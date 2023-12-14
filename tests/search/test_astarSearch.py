@@ -11,8 +11,9 @@ from src.utils.Arguments import Arguments
 class TestAStarSearch(TestCase):
 
     def setUp(self) -> None:
-        domainFile = "../../files/plant-watering/domain.pddl"
-        problemFile = "../../files/plant-watering/instances/instance_4_1.pddl"
+        folder = "../../files/numeric/ipc-2023/ext-plant-watering"
+        domainFile = f"{folder}/domain.pddl"
+        problemFile = f"{folder}/instances/instance_10_5_2_1.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)

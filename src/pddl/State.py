@@ -23,7 +23,7 @@ class State:
     def __deepcopy__(self, m=None) -> State:
         m = {} if m is None else m
         s = State()
-        s.__assignments = copy.deepcopy(self.__assignments, m)
+        s.__assignments = copy.deepcopy(self.assignments, m)
         return s
 
     @classmethod
@@ -36,10 +36,6 @@ class State:
             state.assignments[atom] = state.getRealization(assignment)
 
         return state
-
-    @property
-    def assignments(self):
-        return self.__assignments
 
     def getAtom(self, atom: Atom) -> bool or float:
         if atom not in self.assignments:

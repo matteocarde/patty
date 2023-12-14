@@ -17,7 +17,7 @@ from src.pddl.grammar.pddlParser import pddlParser
 
 
 class InitialCondition:
-    assignments: Set[Predicate]
+    assignments: List[Predicate]
     assignmentsByPropertyTree: Dict[str, Dict]
     numericAssignments: Dict[Atom, float]
 
@@ -74,7 +74,7 @@ class InitialCondition:
     @classmethod
     def fromNode(cls, node: pddlParser.InitContext) -> InitialCondition:
         ic = cls()
-        ic.assignments = set()
+        ic.assignments = list()
         for child in node.children:
             if isinstance(child, pddlParser.PositiveLiteralContext):
                 lit = Literal.fromNode(child)
@@ -83,7 +83,7 @@ class InitialCondition:
                 ic.assignments.append(lit)
             if isinstance(child, pddlParser.AssignmentContext):
                 assignment = BinaryPredicate.fromNode(child)
-                ic.assignments.add(assignment)
+                ic.assignments.append(assignment)
                 if not isinstance(assignment.rhs, Constant):
                     raise Exception(
                         "At the moment, this tool only support initial conditions with numeric constant assignments")

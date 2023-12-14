@@ -53,13 +53,15 @@ class Domain:
         domain.processes = copy.deepcopy(self.processes, m)
         domain.constants = copy.deepcopy(self.constants, m)
         return domain
+
     def ground(self, problem: Problem, avoidSimplification=False, console: LogPrint = None, delta=1) -> GroundedDomain:
 
         problem.computeWhatCanHappen(self)
 
         gActions: Set[Action] = set(
             [g for action in self.actions for g in action.ground(problem, self.isPredicateStatic, delta=delta)])
-        gEvents: Set[Event] = set([g for event in self.events for g in event.ground(problem, self.isPredicateStatic, delta=delta)])
+        gEvents: Set[Event] = set(
+            [g for event in self.events for g in event.ground(problem, self.isPredicateStatic, delta=delta)])
         gProcess: Set[Process] = set(
             [g for process in self.processes for g in process.ground(problem, self.isPredicateStatic, delta=delta)])
 
