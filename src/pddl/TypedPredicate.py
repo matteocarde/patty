@@ -4,11 +4,9 @@ import itertools
 from typing import Dict, Tuple, List
 
 from src.pddl.Atom import Atom
-from src.pddl.Literal import Literal
 from src.pddl.Parameter import Parameter
 from src.pddl.PDDLWriter import PDDLWriter
 from src.pddl.Predicate import Predicate
-from src.pddl.Problem import Problem
 from src.pddl.Type import Type
 from src.pddl.Utilities import Utilities
 
@@ -24,7 +22,7 @@ class TypedPredicate(Predicate):
         super().__init__()
 
     def __str__(self):
-        strParameters = [f"{p} - {t.name}" for (p, t) in self.parameters]
+        strParameters = [f"{p.name} - {p.type.name}" for p in self.parameters]
         return f"{self.name}({','.join(strParameters)})"
 
     def __repr__(self):
@@ -54,7 +52,7 @@ class TypedPredicate(Predicate):
 
         return typedPredicate
 
-    def getCombinations(self, problem: Problem) -> List[Tuple]:
+    def getCombinations(self, problem) -> List[Tuple]:
         subs: List[List[str]] = list()
         for parameter in self.parameters:
             pSubs = list()
@@ -68,8 +66,9 @@ class TypedPredicate(Predicate):
 
         return combinations
 
-    def ground(self, subs: Tuple) -> Literal:
+    def ground(self, subs: Dict[Atom, float], delta=1):
 
+        from src.pddl.Literal import Literal
         literal = Literal()
         literal.sign = "+"
 

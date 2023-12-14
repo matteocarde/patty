@@ -13,8 +13,8 @@ from src.smt.SMTSolver import SMTSolver
 class TestDrone(TestCase):
 
     def setUp(self) -> None:
-        self.domain: Domain = Domain.fromFile("../../files/numerical/ipc-2023/drone/domain.pddl")
-        self.problem: Problem = Problem.fromFile("../../files/numerical/ipc-2023/drone/instances/problem_1_1_2.pddl")
+        self.domain: Domain = Domain.fromFile("../../files/numeric/ipc-2023/drone/domain.pddl")
+        self.problem: Problem = Problem.fromFile("../../files/numeric/ipc-2023/drone/instances/problem_1_1_2.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.horizon = 5
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())

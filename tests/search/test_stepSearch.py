@@ -11,8 +11,8 @@ from src.utils.Arguments import Arguments
 class TestStepSearch(TestCase):
 
     def setUp(self) -> None:
-        domainFile = "../../files/block-grouping/domain.pddl"
-        problemFile = "../../files/block-grouping/instances/instance_7_15_3_1.pddl"
+        domainFile = "../../files/numeric/ipc-2023/fo_counters/domain.pddl"
+        problemFile = "../../files/numeric/ipc-2023/fo_counters/instances/instance_10.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)

@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 import copy
-from sympy import Expr, Eq
 from typing import Dict, Set, Tuple, List
+
+from sympy import Expr
 
 from src.pddl.Atom import Atom
 from src.pddl.Constant import Constant

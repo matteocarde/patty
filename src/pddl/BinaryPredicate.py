@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 import copy
-
 from enum import Enum
+from typing import Dict, Set
+
 from sympy import Expr, diff
-from typing import Dict, Set, Tuple
 
 from src.pddl.Atom import Atom
 from src.pddl.Constant import Constant
