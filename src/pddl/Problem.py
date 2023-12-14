@@ -1,6 +1,13 @@
 from __future__ import annotations
-from typing import Dict, List
+from typing import Dict, List, Tuple, Set
 
+import copy
+from typing import Dict, List, Set
+
+from prettytable import PrettyTable
+
+from src.pddl.Atom import Atom
+from src.pddl.PDDLWriter import PDDLWriter
 from src.pddl.Predicate import Predicate
 from src.pddl.InitialCondition import InitialCondition
 from src.pddl.Goal import Goal
@@ -18,7 +25,26 @@ class Problem:
     goal: Goal
 
     def __init__(self):
+        self.allAtoms: Set[Atom] = set()
+        self.predicates: Set[Atom] = set()
+        self.functions: Set[Atom] = set()
         self.objectsByType = dict()
+        self.isPredicateStatic: Dict[str, bool] = dict()
+        self.canHappenValue: Set[str] = set()
+        self.assignmentsTree: Dict = dict()
+
+    def __deepcopy__(self, m):
+        cp = Problem()
+        cp.name = self.name
+        cp.domainName = self.domainName
+        cp.objectsByType = copy.deepcopy(self.objectsByType, m)
+        cp.init = copy.deepcopy(self.init, m)
+        cp.goal = copy.deepcopy(self.goal, m)
+        cp.metric = copy.deepcopy(self.metric, m)
+        cp.allAtoms = copy.deepcopy(self.allAtoms, m)
+        cp.predicates = copy.deepcopy(self.predicates, m)
+        cp.functions = copy.deepcopy(self.functions, m)
+        return cp
 
     @classmethod
     def fromNode(cls, node: pddlParser.ProblemContext) -> Problem:
@@ -36,6 +62,11 @@ class Problem:
                 problem.goal = Goal.fromNode(node)
             if isinstance(node, pddlParser.MetricContext):
                 problem.__setMetric(node)
+
+        problem.functions = problem.init.functions
+        problem.predicates = problem.init.predicates
+        problem.allAtoms = problem.init.allAtoms
+
         return problem
 
     @classmethod
@@ -88,3 +119,78 @@ class Problem:
     def substitute(self, substitutions):
         self.goal = self.goal.substitute(substitutions)
         pass
+
+    def computeWhatCanHappen(self, domain):
+
+        from src.pddl.Domain import Domain
+        domain: Domain
+        self.isPredicateStatic = domain.isPredicateStatic
+
+        for init in self.init.assignments:
+            if isinstance(init, Literal):
+                subStr = ",".join([k for k in init.getAtom().attributes])
+                atomStr = f"{init.getAtom().name}({subStr})"
+                self.canHappenValue.add(atomStr)
+
+                self.assignmentsTree[init.atom.name] = self.assignmentsTree.setdefault(init.atom.name, dict())
+                root = self.assignmentsTree[init.atom.name]
+                for i, attr in enumerate(init.atom.attributes):
+                    root[i] = root.setdefault(i, dict())
+                    root[i][attr] = root[i].setdefault(attr, set())
+                    root[i][attr].add(init)
+
+        pass
+
+    @classmethod
+    def computeDistance(cls, initA: InitialCondition, initB: InitialCondition, verbose=False, nameA="A",
+                        nameB="B") -> float:
+
+        distance = 0
+
+        pt = PrettyTable(["Atom", nameA, nameB, "Distance"])
+        for (atom, valueA) in initA.numericAssignments.items():
+            if atom not in initB.numericAssignments:
+                continue
+            valueB = initB.numericAssignments[atom]
+            d = abs(valueA - valueB)
+            distance += d
+            pt.add_row([atom, valueA, valueB, abs(valueB - valueA)])
+
+        if verbose:
+            print(pt)
+
+        return distance
+
+    def toPDDL(self, pw: PDDLWriter = PDDLWriter()):
+        pw.write(f"(define (problem {self.name})")
+        pw.increaseTab()
+        pw.write(f"(:domain {self.domainName})")
+
+        # Constants
+        pw.write(f"(:objects")
+        pw.increaseTab()
+        for (type, objects) in self.objectsByType.items():
+            objStr = " ".join(objects)
+            pw.write(f"{objStr} - {type}")
+        pw.decreaseTab()
+        pw.write(f")")
+
+        # Init
+        pw.write(f"(:init")
+        pw.increaseTab()
+        for a in self.init.assignments:
+            a.toPDDL(pw)
+        pw.decreaseTab()
+        pw.write(f")")
+
+        # Goal
+        pw.write(f"(:goal")
+        pw.increaseTab()
+        self.goal.toPDDL(pw)
+        pw.decreaseTab()
+        pw.write(f")")
+
+        pw.decreaseTab()
+        pw.write(f")")
+
+        return pw

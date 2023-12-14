@@ -1,0 +1,82 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 109
+Aibr Preprocessing
+|F|:79
+|X|:6
+|A|:379
+|P|:0
+|E|:0
+H1 Setup Time (msec): 82
+Setting horizon to:NaN
+Running Greedy Best First Search
+Problem Solved
+
+Found Plan:
+0.0: (refuel plane2)
+1.0: (fly-slow plane2 city4 city1)
+2.0: (fly-slow plane3 city2 city2)
+3.0: (refuel plane1)
+4.0: (fly-slow plane1 city0 city2)
+5.0: (refuel plane3)
+6.0: (board person7 plane2 city1)
+7.0: (refuel plane2)
+8.0: (fly-slow plane2 city1 city3)
+9.0: (board person2 plane2 city3)
+10.0: (fly-slow plane2 city3 city1)
+11.0: (refuel plane1)
+12.0: (debark person2 plane2 city1)
+13.0: (debark person7 plane2 city1)
+14.0: (fly-slow plane2 city1 city3)
+15.0: (refuel plane2)
+16.0: (fly-slow plane1 city2 city1)
+17.0: (board person2 plane1 city1)
+18.0: (fly-slow plane1 city1 city2)
+19.0: (board person1 plane2 city3)
+20.0: (fly-slow plane2 city3 city1)
+21.0: (board person5 plane2 city1)
+22.0: (debark person2 plane1 city2)
+23.0: (fly-slow plane2 city1 city3)
+24.0: (debark person5 plane2 city3)
+25.0: (fly-slow plane2 city3 city1)
+26.0: (refuel plane2)
+27.0: (debark person1 plane2 city1)
+28.0: (board person2 plane1 city2)
+29.0: (fly-slow plane2 city1 city4)
+30.0: (board person4 plane2 city4)
+31.0: (fly-slow plane2 city4 city1)
+32.0: (board person7 plane2 city1)
+33.0: (debark person4 plane2 city1)
+34.0: (fly-slow plane2 city1 city0)
+35.0: (refuel plane2)
+36.0: (refuel plane1)
+37.0: (fly-slow plane2 city0 city4)
+38.0: (debark person7 plane2 city4)
+39.0: (board person3 plane2 city4)
+40.0: (fly-slow plane2 city4 city3)
+41.0: (refuel plane2)
+42.0: (board person5 plane2 city3)
+43.0: (fly-slow plane2 city3 city0)
+44.0: (board person8 plane2 city0)
+45.0: (board person6 plane2 city0)
+46.0: (debark person5 plane2 city0)
+47.0: (fly-slow plane2 city0 city3)
+48.0: (debark person3 plane2 city3)
+49.0: (debark person8 plane2 city3)
+50.0: (debark person2 plane1 city2)
+51.0: (debark person6 plane2 city3)
+
+Plan-Length:52
+Metric (Search):50618.0
+Planning Time (msec): 17201
+Heuristic Time (msec): 15081
+Search Time (msec): 16184
+Expanded Nodes:12333
+States Evaluated:112973
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:2357
+Number of Duplicates detected:100161
+real 17.32
+user 17.00
+sys 0.33

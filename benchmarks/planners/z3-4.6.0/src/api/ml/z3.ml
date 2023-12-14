@@ -1765,7 +1765,7 @@ struct
 end
 
 
-module Solver =
+module Search =
 struct
   type solver = Z3native.solver
   type status = UNSATISFIABLE | UNKNOWN | SATISFIABLE
@@ -1865,15 +1865,15 @@ struct
 
   let query (x:fixedpoint) (query:expr) =
     match lbool_of_int (Z3native.fixedpoint_query (gc x) x query) with
-    | L_TRUE -> Solver.SATISFIABLE
-    | L_FALSE -> Solver.UNSATISFIABLE
-    | _ -> Solver.UNKNOWN
+    | L_TRUE -> Search.SATISFIABLE
+    | L_FALSE -> Search.UNSATISFIABLE
+    | _ -> Search.UNKNOWN
 
   let query_r (x:fixedpoint) (relations:func_decl list) =
     match lbool_of_int (Z3native.fixedpoint_query_relations (gc x) x (List.length relations) relations) with
-    | L_TRUE -> Solver.SATISFIABLE
-    | L_FALSE -> Solver.UNSATISFIABLE
-    | _ -> Solver.UNKNOWN
+    | L_TRUE -> Search.SATISFIABLE
+    | L_FALSE -> Search.UNSATISFIABLE
+    | _ -> Search.UNKNOWN
 
   let push x = Z3native.fixedpoint_push (gc x) x
   let pop x = Z3native.fixedpoint_pop (gc x) x
@@ -1946,9 +1946,9 @@ struct
   let check (x:optimize) =
     let r = lbool_of_int (Z3native.optimize_check (gc x) x) in
     match r with
-    | L_TRUE -> Solver.SATISFIABLE
-    | L_FALSE -> Solver.UNSATISFIABLE
-    | _ -> Solver.UNKNOWN
+    | L_TRUE -> Search.SATISFIABLE
+    | L_FALSE -> Search.UNSATISFIABLE
+    | _ -> Search.UNKNOWN
 
   let get_model (x:optimize) =
     let q = Z3native.optimize_get_model (gc x) x in

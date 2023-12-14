@@ -1,0 +1,9 @@
+{
+  "air-flow": [0, 20],
+  "temp": [0, 30],
+  "temp_sa": [0, 30],
+  "temp_requested": [0, 30],
+  "comfort": [0, 30],
+  "time": [0, 1000],
+  "time_requested": [0, 1000]
+}

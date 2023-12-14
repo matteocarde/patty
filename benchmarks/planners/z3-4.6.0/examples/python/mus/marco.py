@@ -28,7 +28,7 @@ This implementation contains no tuning. It was contributed by Mark Liffiton and 
 a simplification of one of the versions available from his Marco Polo Web site.
 It illustrates the following features of Z3's Python-based API:
    1. Using assumptions to track unsatisfiable cores. 
-   2. Using multiple solvers and passing constraints between them. 
+   2. Using multiple search and passing constraints between them.
    3. Calling the C-based API from Python. Not all API functions are supported over the
       Python wrappers. This example shows how to get a unique integer identifier of an AST,
       which can be used as a key in a hash-table. 

@@ -1,0 +1,335 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 75
+Aibr Preprocessing
+|F|:9
+|X|:4
+Aibr Preprocessing
+|A|:13
+|P|:2
+|E|:0
+Delta time heuristic model:1.0
+Delta time planning model:1.0
+Delta time search-execution model:1.0
+Delta time validation model:1
+H1 Setup Time (msec): 82
+Setting horizon to:NaN
+Running WA-STAR
+Extracting plan with execution delta: 1.0
+Problem Solved
+
+Found Plan:
+0: (thermal_change r1)
+0: (time_passing)
+0: -----waiting---- [1.0]
+1.0: (thermal_change r1)
+1.0: (time_passing)
+1.0: -----waiting---- [2.0]
+2.0: (thermal_change r1)
+2.0: (time_passing)
+2.0: -----waiting---- [3.0]
+3.0: (thermal_change r1)
+3.0: (time_passing)
+3.0: -----waiting---- [4.0]
+4.0: (thermal_change r1)
+4.0: (time_passing)
+4.0: -----waiting---- [5.0]
+5.0: (thermal_change r1)
+5.0: (time_passing)
+5.0: -----waiting---- [6.0]
+6.0: (thermal_change r1)
+6.0: (time_passing)
+6.0: -----waiting---- [7.0]
+7.0: (thermal_change r1)
+7.0: (time_passing)
+7.0: -----waiting---- [8.0]
+8.0: (thermal_change r1)
+8.0: (time_passing)
+8.0: -----waiting---- [9.0]
+9.0: (increase_temp r1)
+9.0: (increase_air_flow r1)
+9.0: (increase_temp r1)
+9.0: (increase_temp r1)
+9.0: (increase_temp r1)
+9.0: (increase_temp r1)
+9.0: (increase_air_flow r1)
+9.0: (increase_temp r1)
+9.0: (increase_air_flow r1)
+9.0: (thermal_change r1)
+9.0: (time_passing)
+9.0: -----waiting---- [10.0]
+10.0: (satisfier r1 k1)
+10.0: (thermal_change r1)
+10.0: (time_passing)
+10.0: -----waiting---- [11.0]
+11.0: (thermal_change r1)
+11.0: (time_passing)
+11.0: -----waiting---- [12.0]
+12.0: (thermal_change r1)
+12.0: (time_passing)
+12.0: -----waiting---- [13.0]
+13.0: (thermal_change r1)
+13.0: (time_passing)
+13.0: -----waiting---- [14.0]
+14.0: (thermal_change r1)
+14.0: (time_passing)
+14.0: -----waiting---- [15.0]
+15.0: (thermal_change r1)
+15.0: (time_passing)
+15.0: -----waiting---- [16.0]
+16.0: (thermal_change r1)
+16.0: (time_passing)
+16.0: -----waiting---- [17.0]
+17.0: (thermal_change r1)
+17.0: (time_passing)
+17.0: -----waiting---- [18.0]
+18.0: (thermal_change r1)
+18.0: (time_passing)
+18.0: -----waiting---- [19.0]
+19.0: (decrease_air_flow r1)
+19.0: (decrease_air_flow r1)
+19.0: (thermal_change r1)
+19.0: (time_passing)
+19.0: -----waiting---- [20.0]
+20.0: (satisfier r1 k2)
+20.0: (thermal_change r1)
+20.0: (time_passing)
+20.0: -----waiting---- [21.0]
+21.0: (thermal_change r1)
+21.0: (time_passing)
+21.0: -----waiting---- [22.0]
+22.0: (thermal_change r1)
+22.0: (time_passing)
+22.0: -----waiting---- [23.0]
+23.0: (thermal_change r1)
+23.0: (time_passing)
+23.0: -----waiting---- [24.0]
+24.0: (thermal_change r1)
+24.0: (time_passing)
+24.0: -----waiting---- [25.0]
+25.0: (thermal_change r1)
+25.0: (time_passing)
+25.0: -----waiting---- [26.0]
+26.0: (thermal_change r1)
+26.0: (time_passing)
+26.0: -----waiting---- [27.0]
+27.0: (thermal_change r1)
+27.0: (time_passing)
+27.0: -----waiting---- [28.0]
+28.0: (thermal_change r1)
+28.0: (time_passing)
+28.0: -----waiting---- [29.0]
+29.0: (increase_temp r1)
+29.0: (increase_air_flow r1)
+29.0: (thermal_change r1)
+29.0: (time_passing)
+29.0: -----waiting---- [30.0]
+30.0: (satisfier r1 k3)
+30.0: (thermal_change r1)
+30.0: (time_passing)
+30.0: -----waiting---- [31.0]
+31.0: (thermal_change r1)
+31.0: (time_passing)
+31.0: -----waiting---- [32.0]
+32.0: (thermal_change r1)
+32.0: (time_passing)
+32.0: -----waiting---- [33.0]
+33.0: (thermal_change r1)
+33.0: (time_passing)
+33.0: -----waiting---- [34.0]
+34.0: (thermal_change r1)
+34.0: (time_passing)
+34.0: -----waiting---- [35.0]
+35.0: (thermal_change r1)
+35.0: (time_passing)
+35.0: -----waiting---- [36.0]
+36.0: (thermal_change r1)
+36.0: (time_passing)
+36.0: -----waiting---- [37.0]
+37.0: (thermal_change r1)
+37.0: (time_passing)
+37.0: -----waiting---- [38.0]
+38.0: (thermal_change r1)
+38.0: (time_passing)
+38.0: -----waiting---- [39.0]
+39.0: (decrease_temp r1)
+39.0: (thermal_change r1)
+39.0: (time_passing)
+39.0: -----waiting---- [40.0]
+40.0: (satisfier r1 k4)
+40.0: (thermal_change r1)
+40.0: (time_passing)
+40.0: -----waiting---- [41.0]
+41.0: (thermal_change r1)
+41.0: (time_passing)
+41.0: -----waiting---- [42.0]
+42.0: (thermal_change r1)
+42.0: (time_passing)
+42.0: -----waiting---- [43.0]
+43.0: (thermal_change r1)
+43.0: (time_passing)
+43.0: -----waiting---- [44.0]
+44.0: (thermal_change r1)
+44.0: (time_passing)
+44.0: -----waiting---- [45.0]
+45.0: (thermal_change r1)
+45.0: (time_passing)
+45.0: -----waiting---- [46.0]
+46.0: (thermal_change r1)
+46.0: (time_passing)
+46.0: -----waiting---- [47.0]
+47.0: (thermal_change r1)
+47.0: (time_passing)
+47.0: -----waiting---- [48.0]
+48.0: (thermal_change r1)
+48.0: (time_passing)
+48.0: -----waiting---- [49.0]
+49.0: (increase_temp r1)
+49.0: (thermal_change r1)
+49.0: (time_passing)
+49.0: -----waiting---- [50.0]
+50.0: (satisfier r1 k5)
+50.0: (thermal_change r1)
+50.0: (time_passing)
+50.0: -----waiting---- [51.0]
+51.0: (thermal_change r1)
+51.0: (time_passing)
+51.0: -----waiting---- [52.0]
+52.0: (thermal_change r1)
+52.0: (time_passing)
+52.0: -----waiting---- [53.0]
+53.0: (thermal_change r1)
+53.0: (time_passing)
+53.0: -----waiting---- [54.0]
+54.0: (thermal_change r1)
+54.0: (time_passing)
+54.0: -----waiting---- [55.0]
+55.0: (thermal_change r1)
+55.0: (time_passing)
+55.0: -----waiting---- [56.0]
+56.0: (thermal_change r1)
+56.0: (time_passing)
+56.0: -----waiting---- [57.0]
+57.0: (thermal_change r1)
+57.0: (time_passing)
+57.0: -----waiting---- [58.0]
+58.0: (thermal_change r1)
+58.0: (time_passing)
+58.0: -----waiting---- [59.0]
+59.0: (decrease_temp r1)
+59.0: (thermal_change r1)
+59.0: (time_passing)
+59.0: -----waiting---- [60.0]
+60.0: (satisfier r1 k6)
+60.0: (thermal_change r1)
+60.0: (time_passing)
+60.0: -----waiting---- [61.0]
+61.0: (thermal_change r1)
+61.0: (time_passing)
+61.0: -----waiting---- [62.0]
+62.0: (thermal_change r1)
+62.0: (time_passing)
+62.0: -----waiting---- [63.0]
+63.0: (thermal_change r1)
+63.0: (time_passing)
+63.0: -----waiting---- [64.0]
+64.0: (thermal_change r1)
+64.0: (time_passing)
+64.0: -----waiting---- [65.0]
+65.0: (thermal_change r1)
+65.0: (time_passing)
+65.0: -----waiting---- [66.0]
+66.0: (thermal_change r1)
+66.0: (time_passing)
+66.0: -----waiting---- [67.0]
+67.0: (thermal_change r1)
+67.0: (time_passing)
+67.0: -----waiting---- [68.0]
+68.0: (thermal_change r1)
+68.0: (time_passing)
+68.0: -----waiting---- [69.0]
+69.0: (increase_temp r1)
+69.0: (thermal_change r1)
+69.0: (time_passing)
+69.0: -----waiting---- [70.0]
+70.0: (satisfier r1 k7)
+70.0: (thermal_change r1)
+70.0: (time_passing)
+70.0: -----waiting---- [71.0]
+71.0: (thermal_change r1)
+71.0: (time_passing)
+71.0: -----waiting---- [72.0]
+72.0: (thermal_change r1)
+72.0: (time_passing)
+72.0: -----waiting---- [73.0]
+73.0: (thermal_change r1)
+73.0: (time_passing)
+73.0: -----waiting---- [74.0]
+74.0: (thermal_change r1)
+74.0: (time_passing)
+74.0: -----waiting---- [75.0]
+75.0: (thermal_change r1)
+75.0: (time_passing)
+75.0: -----waiting---- [76.0]
+76.0: (thermal_change r1)
+76.0: (time_passing)
+76.0: -----waiting---- [77.0]
+77.0: (thermal_change r1)
+77.0: (time_passing)
+77.0: -----waiting---- [78.0]
+78.0: (thermal_change r1)
+78.0: (time_passing)
+78.0: -----waiting---- [79.0]
+79.0: (decrease_temp r1)
+79.0: (thermal_change r1)
+79.0: (time_passing)
+79.0: -----waiting---- [80.0]
+80.0: (satisfier r1 k8)
+80.0: (thermal_change r1)
+80.0: (time_passing)
+80.0: -----waiting---- [81.0]
+81.0: (thermal_change r1)
+81.0: (time_passing)
+81.0: -----waiting---- [82.0]
+82.0: (thermal_change r1)
+82.0: (time_passing)
+82.0: -----waiting---- [83.0]
+83.0: (thermal_change r1)
+83.0: (time_passing)
+83.0: -----waiting---- [84.0]
+84.0: (thermal_change r1)
+84.0: (time_passing)
+84.0: -----waiting---- [85.0]
+85.0: (thermal_change r1)
+85.0: (time_passing)
+85.0: -----waiting---- [86.0]
+86.0: (thermal_change r1)
+86.0: (time_passing)
+86.0: -----waiting---- [87.0]
+87.0: (thermal_change r1)
+87.0: (time_passing)
+87.0: -----waiting---- [88.0]
+88.0: (thermal_change r1)
+88.0: (time_passing)
+88.0: -----waiting---- [89.0]
+89.0: (increase_temp r1)
+89.0: (thermal_change r1)
+89.0: (time_passing)
+89.0: -----waiting---- [90.0]
+90.0: (satisfier r1 k9)
+
+Plan-Length:298
+Elapsed Time: 90.0
+Metric (Search):118.0
+Planning Time (msec): 1303
+Heuristic Time (msec): 463
+Search Time (msec): 699
+Expanded Nodes:1819
+States Evaluated:4219
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:1624
+Number of Duplicates detected:4167
+real 1.48
+user 1.39
+sys 0.09

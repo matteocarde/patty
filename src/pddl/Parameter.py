@@ -7,4 +7,4 @@ class Parameter:
         self.type = t
 
     def __repr__(self):
-        return f"{self.name} - {self.type}"
+        return f"{self.name} - {self.type.name}"

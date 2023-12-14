@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import List
 
+from src.pddl.PDDLWriter import PDDLWriter
+
 
 class Type:
 
@@ -26,3 +28,10 @@ class Type:
         if not isinstance(other, Type):
             return False
         return self.name == other.name and self.parent == other.parent
+
+    def toPDDL(self, pw=PDDLWriter()):
+        if self.parent:
+            pw.write(f"{self.name} - {self.parent.name}")
+        else:
+            pw.write(f"{self.name}")
+        return pw

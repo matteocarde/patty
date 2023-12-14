@@ -2990,7 +2990,7 @@ public class Context implements AutoCloseable {
      * check-sat commands that take more than a given number of milliseconds to
      * be solved. 
      **/
-    public Solver mkSolver()
+    public Search mkSolver()
     {
         return mkSolver((Symbol) null);
     }
@@ -3002,13 +3002,13 @@ public class Context implements AutoCloseable {
      * check-sat commands that take more than a given number of milliseconds to
      * be solved. 
      **/
-    public Solver mkSolver(Symbol logic)
+    public Search mkSolver(Symbol logic)
     {
 
         if (logic == null)
-            return new Solver(this, Native.mkSolver(nCtx()));
+            return new Search(this, Native.mkSolver(nCtx()));
         else
-            return new Solver(this, Native.mkSolverForLogic(nCtx(),
+            return new Search(this, Native.mkSolverForLogic(nCtx(),
                     logic.getNativeObject()));
     }
 
@@ -3016,7 +3016,7 @@ public class Context implements AutoCloseable {
      * Creates a new (incremental) solver. 
      * @see #mkSolver(Symbol)
      **/
-    public Solver mkSolver(String logic)
+    public Search mkSolver(String logic)
     {
         return mkSolver(mkSymbol(logic));
     }
@@ -3024,9 +3024,9 @@ public class Context implements AutoCloseable {
     /**
      * Creates a new (incremental) solver.
      **/
-    public Solver mkSimpleSolver()
+    public Search mkSimpleSolver()
     {
-        return new Solver(this, Native.mkSimpleSolver(nCtx()));
+        return new Search(this, Native.mkSimpleSolver(nCtx()));
     }
 
     /**
@@ -3035,10 +3035,10 @@ public class Context implements AutoCloseable {
      * The solver supports the commands {@code Push} and {@code Pop},
      * but it will always solve each check from scratch. 
      **/
-    public Solver mkSolver(Tactic t)
+    public Search mkSolver(Tactic t)
     {
 
-        return new Solver(this, Native.mkSolverFromTactic(nCtx(),
+        return new Search(this, Native.mkSolverFromTactic(nCtx(),
                 t.getNativeObject()));
     }
 
@@ -4008,7 +4008,7 @@ public class Context implements AutoCloseable {
         return m_Probe_DRQ;
     }
 
-    public IDecRefQueue<Solver> getSolverDRQ()
+    public IDecRefQueue<Search> getSolverDRQ()
     {
         return m_Solver_DRQ;
     }

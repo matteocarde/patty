@@ -18,7 +18,7 @@ Small example:
 
 >>> x = Int('x')
 >>> y = Int('y')
->>> s = Solver()
+>>> s = Search()
 >>> s.add(x > 0)
 >>> s.add(x < 2)
 >>> s.add(y == x + 1)
@@ -390,7 +390,7 @@ def is_ast(a):
     True
     >>> is_ast("x")
     False
-    >>> is_ast(Solver())
+    >>> is_ast(Search())
     False
     """
     return isinstance(a, AstRef)
@@ -5368,7 +5368,7 @@ class FuncEntry:
         """Return the number of arguments in the given entry.
 
         >>> f = Function('f', IntSort(), IntSort(), IntSort())
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.add(f(0, 1) == 10, f(1, 2) == 20, f(1, 0) == 10)
         >>> s.check()
         sat
@@ -5386,7 +5386,7 @@ class FuncEntry:
         """Return the value of argument `idx`.
 
         >>> f = Function('f', IntSort(), IntSort(), IntSort())
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.add(f(0, 1) == 10, f(1, 2) == 20, f(1, 0) == 10)
         >>> s.check()
         sat
@@ -5417,7 +5417,7 @@ class FuncEntry:
         """Return the value of the function at point `self`.
 
         >>> f = Function('f', IntSort(), IntSort(), IntSort())
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.add(f(0, 1) == 10, f(1, 2) == 20, f(1, 0) == 10)
         >>> s.check()
         sat
@@ -5438,7 +5438,7 @@ class FuncEntry:
     def as_list(self):
         """Return entry `self` as a Python list.
         >>> f = Function('f', IntSort(), IntSort(), IntSort())
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.add(f(0, 1) == 10, f(1, 2) == 20, f(1, 0) == 10)
         >>> s.check()
         sat
@@ -5480,7 +5480,7 @@ class FuncInterp(Z3PPObject):
         this object.
 
         >>> f = Function('f', IntSort(), IntSort())
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.add(f(0) == 1, f(1) == 1, f(2) == 0)
         >>> s.check()
         sat
@@ -5500,7 +5500,7 @@ class FuncInterp(Z3PPObject):
         """Return the number of entries/points in the function interpretation `self`.
 
         >>> f = Function('f', IntSort(), IntSort())
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.add(f(0) == 1, f(1) == 1, f(2) == 0)
         >>> s.check()
         sat
@@ -5516,7 +5516,7 @@ class FuncInterp(Z3PPObject):
         """Return the number of arguments for each entry in the function interpretation `self`.
 
         >>> f = Function('f', IntSort(), IntSort())
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.add(f(0) == 1, f(1) == 1, f(2) == 0)
         >>> s.check()
         sat
@@ -5530,7 +5530,7 @@ class FuncInterp(Z3PPObject):
         """Return an entry at position `idx < self.num_entries()` in the function interpretation `self`.
 
         >>> f = Function('f', IntSort(), IntSort())
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.add(f(0) == 1, f(1) == 1, f(2) == 0)
         >>> s.check()
         sat
@@ -5553,7 +5553,7 @@ class FuncInterp(Z3PPObject):
     def as_list(self):
         """Return the function interpretation as a Python list.
         >>> f = Function('f', IntSort(), IntSort())
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.add(f(0) == 1, f(1) == 1, f(2) == 0)
         >>> s.check()
         sat
@@ -5597,7 +5597,7 @@ class ModelRef(Z3PPObject):
         """Evaluate the expression `t` in the model `self`. If `model_completion` is enabled, then a default interpretation is automatically added for symbols that do not have an interpretation in the model `self`.
 
         >>> x = Int('x')
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.add(x > 0, x < 2)
         >>> s.check()
         sat
@@ -5626,7 +5626,7 @@ class ModelRef(Z3PPObject):
         """Alias for `eval`.
 
         >>> x = Int('x')
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.add(x > 0, x < 2)
         >>> s.check()
         sat
@@ -5653,7 +5653,7 @@ class ModelRef(Z3PPObject):
 
         >>> f = Function('f', IntSort(), IntSort())
         >>> x = Int('x')
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.add(x > 0, f(x) != x)
         >>> s.check()
         sat
@@ -5668,7 +5668,7 @@ class ModelRef(Z3PPObject):
 
         >>> f = Function('f', IntSort(), IntSort())
         >>> x = Int('x')
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.add(x > 0, x < 2, f(x) == 0)
         >>> s.check()
         sat
@@ -5702,7 +5702,7 @@ class ModelRef(Z3PPObject):
 
         >>> A = DeclareSort('A')
         >>> a, b = Consts('a b', A)
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.add(a != b)
         >>> s.check()
         sat
@@ -5719,7 +5719,7 @@ class ModelRef(Z3PPObject):
         >>> B = DeclareSort('B')
         >>> a1, a2 = Consts('a1 a2', A)
         >>> b1, b2 = Consts('b1 b2', B)
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.add(a1 != a2, b1 != b2)
         >>> s.check()
         sat
@@ -5742,7 +5742,7 @@ class ModelRef(Z3PPObject):
         >>> B = DeclareSort('B')
         >>> a1, a2 = Consts('a1 a2', A)
         >>> b1, b2 = Consts('b1 b2', B)
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.add(a1 != a2, b1 != b2)
         >>> s.check()
         sat
@@ -5757,7 +5757,7 @@ class ModelRef(Z3PPObject):
 
         >>> A = DeclareSort('A')
         >>> a, b = Consts('a b', A)
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.add(a != b)
         >>> s.check()
         sat
@@ -5779,7 +5779,7 @@ class ModelRef(Z3PPObject):
 
         >>> f = Function('f', IntSort(), IntSort())
         >>> x = Int('x')
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.add(x > 0, x < 2, f(x) == 0)
         >>> s.check()
         sat
@@ -5820,7 +5820,7 @@ class ModelRef(Z3PPObject):
         """Return a list with all symbols that have an interpreation in the model `self`.
         >>> f = Function('f', IntSort(), IntSort())
         >>> x = Int('x')
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.add(x > 0, x < 2, f(x) == 0)
         >>> s.check()
         sat
@@ -5851,7 +5851,7 @@ def get_as_array_func(n):
 #
 #########################################
 class Statistics:
-    """Statistics for `Solver.check()`."""
+    """Statistics for `Search.check()`."""
 
     def __init__(self, stats, ctx):
         self.stats = stats
@@ -5978,13 +5978,13 @@ class Statistics:
 
 #########################################
 #
-# Solver
+# Search
 #
 #########################################
 class CheckSatResult:
     """Represents the result of a satisfiability check: sat, unsat, unknown.
 
-    >>> s = Solver()
+    >>> s = Search()
     >>> s.check()
     sat
     >>> r = s.check()
@@ -6025,7 +6025,7 @@ unsat   = CheckSatResult(Z3_L_FALSE)
 unknown = CheckSatResult(Z3_L_UNDEF)
 
 class Solver(Z3PPObject):
-    """Solver API provides methods for implementing the main SMT 2.0 commands: push, pop, check, get-model, etc."""
+    """Search API provides methods for implementing the main SMT 2.0 commands: push, pop, check, get-model, etc."""
 
     def __init__(self, solver=None, ctx=None):
         assert solver is None or ctx is not None
@@ -6047,7 +6047,7 @@ class Solver(Z3PPObject):
     def set(self, *args, **keys):
         """Set a configuration option. The method `help()` return a string containing all available options.
 
-        >>> s = Solver()
+        >>> s = Search()
         >>> # The option MBQI can be set using three different approaches.
         >>> s.set(mbqi=True)
         >>> s.set('MBQI', True)
@@ -6060,7 +6060,7 @@ class Solver(Z3PPObject):
         """Create a backtracking point.
 
         >>> x = Int('x')
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.add(x > 0)
         >>> s
         [x > 0]
@@ -6082,7 +6082,7 @@ class Solver(Z3PPObject):
         """Backtrack \c num backtracking points.
 
         >>> x = Int('x')
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.add(x > 0)
         >>> s
         [x > 0]
@@ -6103,7 +6103,7 @@ class Solver(Z3PPObject):
     def num_scopes(self):
         """Return the current number of backtracking points.
 
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.num_scopes()
         0L
         >>> s.push()
@@ -6122,7 +6122,7 @@ class Solver(Z3PPObject):
         """Remove all asserted constraints and backtracking points created using `push()`.
 
         >>> x = Int('x')
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.add(x > 0)
         >>> s
         [x > 0]
@@ -6136,7 +6136,7 @@ class Solver(Z3PPObject):
         """Assert constraints into the solver.
 
         >>> x = Int('x')
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.assert_exprs(x > 0, x < 2)
         >>> s
         [x > 0, x < 2]
@@ -6155,7 +6155,7 @@ class Solver(Z3PPObject):
         """Assert constraints into the solver.
 
         >>> x = Int('x')
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.add(x > 0, x < 2)
         >>> s
         [x > 0, x < 2]
@@ -6170,7 +6170,7 @@ class Solver(Z3PPObject):
         """Assert constraints into the solver.
 
         >>> x = Int('x')
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.append(x > 0, x < 2)
         >>> s
         [x > 0, x < 2]
@@ -6181,7 +6181,7 @@ class Solver(Z3PPObject):
         """Assert constraints into the solver.
 
         >>> x = Int('x')
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.insert(x > 0, x < 2)
         >>> s
         [x > 0, x < 2]
@@ -6195,7 +6195,7 @@ class Solver(Z3PPObject):
 
         >>> x = Int('x')
         >>> p3 = Bool('p3')
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.set(unsat_core=True)
         >>> s.assert_and_track(x > 0,  'p1')
         >>> s.assert_and_track(x != 1, 'p2')
@@ -6222,7 +6222,7 @@ class Solver(Z3PPObject):
         """Check whether the assertions in the given solver plus the optional assumptions are consistent or not.
 
         >>> x = Int('x')
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.check()
         sat
         >>> s.add(x > 0, x < 2)
@@ -6252,7 +6252,7 @@ class Solver(Z3PPObject):
         This function raises an exception if
         a model is not available (e.g., last `check()` returned unsat).
 
-        >>> s = Solver()
+        >>> s = Search()
         >>> a = Int('a')
         >>> s.add(a + 2 == 0)
         >>> s.check()
@@ -6275,7 +6275,7 @@ class Solver(Z3PPObject):
 
         >>> p1, p2, p3 = Bools('p1 p2 p3')
         >>> x, y       = Ints('x y')
-        >>> s          = Solver()
+        >>> s          = Search()
         >>> s.add(Implies(p1, x > 0))
         >>> s.add(Implies(p2, y > x))
         >>> s.add(Implies(p2, y < 1))
@@ -6299,7 +6299,7 @@ class Solver(Z3PPObject):
 
     def consequences(self, assumptions, variables):
         """Determine fixed values for the variables based on the solver state and assumptions.        
-        >>> s = Solver()
+        >>> s = Search()
         >>> a, b, c, d = Bools('a b c d')
         >>> s.add(Implies(a,b), Implies(b, c))
         >>> s.consequences([a],[b,c,d])
@@ -6346,7 +6346,7 @@ class Solver(Z3PPObject):
     def assertions(self):
         """Return an AST vector containing all added constraints.
 
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.assertions()
         []
         >>> a = Int('a')
@@ -6405,7 +6405,7 @@ class Solver(Z3PPObject):
 
         >>> c1 = Context()
         >>> c2 = Context()
-        >>> s1 = Solver(ctx=c1)
+        >>> s1 = Search(ctx=c1)
         >>> s2 = s1.translate(c2)
         """
         if __debug__:
@@ -6417,7 +6417,7 @@ class Solver(Z3PPObject):
         """Return a formatted string (in Lisp-like format) with all added constraints. We say the string is in s-expression format.
 
         >>> x = Int('x')
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.add(x > 0)
         >>> s.add(x < 2)
         >>> r = s.sexpr()
@@ -7133,7 +7133,7 @@ class ApplyResult(Z3PPObject):
         [Or(b == 0, b == 1), Not(1 <= b)]
         >>> # Remark: the subgoal r[0] is unsatisfiable
         >>> # Creating a solver for solving the second subgoal
-        >>> s = Solver()
+        >>> s = Search()
         >>> s.add(r[1])
         >>> s.check()
         sat
@@ -7182,7 +7182,7 @@ class ApplyResult(Z3PPObject):
 #
 #########################################
 class Tactic:
-    """Tactics transform, solver and/or simplify sets of constraints (Goal). A Tactic can be converted into a Solver using the method solver().
+    """Tactics transform, solver and/or simplify sets of constraints (Goal). A Tactic can be converted into a Search using the method solver().
 
     Several combinators are available for creating new tactics using the built-in ones: Then(), OrElse(), FailIf(), Repeat(), When(), Cond().
     """
@@ -7953,7 +7953,7 @@ def solve_using(s, *args, **keywords):
     in `args`, and invokes check.
     """
     if __debug__:
-        _z3_assert(isinstance(s, Solver), "Solver object expected")
+        _z3_assert(isinstance(s, Solver), "Search object expected")
     s.set(**keywords)
     s.add(*args)
     if keywords.get('show', False):
@@ -8025,7 +8025,7 @@ def _solve_html(*args, **keywords):
 def _solve_using_html(s, *args, **keywords):
     """Version of funcion `solve_using` used in RiSE4Fun."""
     if __debug__:
-        _z3_assert(isinstance(s, Solver), "Solver object expected")
+        _z3_assert(isinstance(s, Solver), "Search object expected")
     s.set(**keywords)
     s.add(*args)
     if keywords.get('show', False):
@@ -9379,14 +9379,14 @@ def fpFP(sgn, exp, sig, ctx=None):
     >>> xv = FPVal(-1.5, s)
     >>> print(xv)
     -1.5
-    >>> slvr = Solver()
+    >>> slvr = Search()
     >>> slvr.add(fpEQ(x, xv))
     >>> slvr.check()
     sat
     >>> xv = FPVal(+1.5, s)
     >>> print(xv)
     1.5
-    >>> slvr = Solver()
+    >>> slvr = Search()
     >>> slvr.add(fpEQ(x, xv))
     >>> slvr.check()
     unsat

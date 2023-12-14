@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import copy
-
 from typing import List, Dict, Set, cast
 
 from src.pddl.Atom import Atom
@@ -12,6 +11,7 @@ from src.pddl.Constant import Constant
 from src.pddl.MooreInterval import MooreInterval
 from src.pddl.Operation import Operation
 from src.pddl.OperationType import OperationType
+from src.pddl.PDDLWriter import PDDLWriter
 from src.pddl.Supporter import Supporter, SupporterEffect
 from src.pddl.Type import Type
 from src.pddl.Utilities import Utilities
@@ -47,9 +47,10 @@ class Action(Operation):
     def type(self):
         return OperationType.ACTION
 
-    def ground(self, problem) -> List[Action]:
+    def ground(self, problem, isPredicateStatic: Dict[str, bool], delta=1) -> List[Action]:
         groundOps: List = []
-        for op in self.getGroundedOperations(problem):
+        toGroundOps = self.getGroundedOperations(problem, isPredicateStatic, delta=delta)
+        for op in toGroundOps:
             name = op.name
             preconditions = op.preconditions
             effects = op.effects
@@ -130,3 +131,15 @@ class Action(Operation):
         a_i = super().getBinaryOperation(i)
         a_i.__class__ = Action
         return a_i
+
+    def toPDDL(self, pw: PDDLWriter = PDDLWriter()):
+        pw.write(f"(:action {self.name}")
+        pw.increaseTab()
+        parameters = " ".join([str(p) for p in self.parameters])
+        pw.write(f":parameters ({parameters})")
+        self.preconditions.toPDDL(pw)
+        self.effects.toPDDL(pw)
+
+        pw.decreaseTab()
+        pw.write(")")
+        pass

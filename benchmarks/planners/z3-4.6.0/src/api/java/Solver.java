@@ -4,7 +4,7 @@ Copyright (c) 2012-2014 Microsoft Corporation
    
 Module Name:
 
-    Solver.java
+    Search.java
 
 Abstract:
 
@@ -23,7 +23,7 @@ import com.microsoft.z3.enumerations.Z3_lbool;
 /**
  * Solvers.
  **/
-public class Solver extends Z3Object {
+public class Search extends Z3Object {
     /**
      * A string that describes all available solver parameters.
      **/
@@ -97,7 +97,7 @@ public class Solver extends Z3Object {
     }
 
     /**
-     * Resets the Solver.
+     * Resets the Search.
      * Remarks: This removes all assertions from the
      * solver.
      **/
@@ -318,13 +318,13 @@ public class Solver extends Z3Object {
     /**
      * Create a clone of the current solver with respect to{@code ctx}.
      */
-    public Solver translate(Context ctx) 
+    public Search translate(Context ctx)
     {
-        return new Solver(ctx, Native.solverTranslate(getContext().nCtx(), getNativeObject(), ctx.nCtx()));
+        return new Search(ctx, Native.solverTranslate(getContext().nCtx(), getNativeObject(), ctx.nCtx()));
     }
 
     /**
-     * Solver statistics.
+     * Search statistics.
      * 
      * @throws Z3Exception
      **/
@@ -344,7 +344,7 @@ public class Solver extends Z3Object {
                 .solverToString(getContext().nCtx(), getNativeObject());
     }
 
-    Solver(Context ctx, long obj)
+    Search(Context ctx, long obj)
     {
         super(ctx, obj);
     }

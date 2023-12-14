@@ -15,7 +15,7 @@ def toRHS(other):
     if isinstance(other, SMTExpression):
         return other.expression
     if type(other) == int or (type(other) == float and other.is_integer()):
-        return Int(int(other))
+        return Real(float(other))
     if type(other) == float:
         return Real(other)
 
@@ -55,8 +55,8 @@ class SMTExpression:
         if isinstance(other, SMTExpression):
             rhsType = other.type
         elif type(other) == int or (type(other) == float and other.is_integer()):
-            other = int(other)
-            rhsType = INT
+            other = float(other)
+            rhsType = REAL
         else:
             rhsType = REAL
 
@@ -125,12 +125,16 @@ class SMTExpression:
         return self.__binary(other, Plus, self.expression, toRHS(other))
 
     def __radd__(self, other: SMTExpression or float):
+        if type(other) == float and other == 0:
+            return self
         return self.__binary(other, Plus, self.expression, toRHS(other))
 
     def __mul__(self, other: SMTExpression or float):
         return self.__binary(other, Times, self.expression, toRHS(other))
 
     def __rmul__(self, other: SMTExpression or float):
+        if type(other) == float and other == 1:
+            return self
         return self.__binary(other, Times, self.expression, toRHS(other))
 
     def __truediv__(self, other: SMTExpression or float):

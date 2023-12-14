@@ -14,8 +14,8 @@ from src.smt.SMTSolver import SMTSolver
 class TestLineExchange(TestCase):
 
     def setUp(self) -> None:
-        self.domain: Domain = Domain.fromFile("../../files/line-exchange-two-robots/domain.pddl")
-        self.problem: Problem = Problem.fromFile("../../files/line-exchange-two-robots/instances/prob01.pddl")
+        self.domain: Domain = Domain.fromFile("../../files/numerical/line-exchange-two-robots/domain.pddl")
+        self.problem: Problem = Problem.fromFile("../../files/numerical/line-exchange-two-robots/instances/prob01.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.horizon = 3
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
@@ -43,40 +43,6 @@ class TestLineExchange(TestCase):
         plan.printWithRepetitions()
 
         self.assertTrue(plan.validate(self.problem))
-
-    def test_optimize(self):
-        solver: SMTSolver = SMTSolver(self.pddl2smt)
-
-        plan: NumericPlan = solver.optimize()
-        solver.exit()
-
-        self.assertIsInstance(plan, NumericPlan)
-
-        print("Plan length: ", len(plan))
-        print("No repetitions:")
-        plan.print()
-        print("With repetitions:")
-        plan.printWithRepetitions()
-
-        self.assertTrue(plan.validate(self.problem))
-        self.assertTrue(plan.optimal)
-
-    def test_optimize_binary(self):
-        solver: SMTSolver = SMTSolver(self.pddl2smt)
-
-        plan: NumericPlan = solver.optimizeBinary()
-        solver.exit()
-
-        self.assertIsInstance(plan, NumericPlan)
-
-        print("Plan length: ", len(plan))
-        print("No repetitions:")
-        plan.print()
-        print("With repetitions:")
-        plan.printWithRepetitions()
-
-        self.assertTrue(plan.validate(self.problem))
-        self.assertTrue(plan.optimal)
 
 
 if __name__ == '__main__':

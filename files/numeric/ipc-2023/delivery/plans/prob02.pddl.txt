@@ -1,0 +1,56 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 37
+Aibr Preprocessing
+|F|:64
+|X|:2
+|A|:200
+|P|:0
+|E|:0
+H1 Setup Time (msec): 14
+Setting horizon to:NaN
+Running Greedy Best First Search
+Problem Solved
+
+Found Plan:
+0.0: (move bot1 rooma roomc)
+1.0: (pick item2 rooma left2 bot2)
+2.0: (pick item6 rooma right2 bot2)
+3.0: (to-tray item2 left2 bot2)
+4.0: (pick item3 rooma left2 bot2)
+5.0: (to-tray item3 left2 bot2)
+6.0: (from-tray item2 left2 bot2)
+7.0: (to-tray item6 right2 bot2)
+8.0: (pick item4 rooma right2 bot2)
+9.0: (drop item2 rooma left2 bot2)
+10.0: (move bot2 rooma roomb)
+11.0: (drop item4 roomb right2 bot2)
+12.0: (from-tray item6 left2 bot2)
+13.0: (drop item6 roomb left2 bot2)
+14.0: (from-tray item3 right2 bot2)
+15.0: (drop item3 roomb right2 bot2)
+16.0: (move bot1 roomc rooma)
+17.0: (pick item2 rooma right1 bot1)
+18.0: (pick item1 rooma left1 bot1)
+19.0: (move bot1 rooma roomc)
+20.0: (drop item2 roomc right1 bot1)
+21.0: (drop item1 roomc left1 bot1)
+22.0: (move bot1 roomc rooma)
+23.0: (pick item5 rooma right1 bot1)
+24.0: (move bot1 rooma roomb)
+25.0: (drop item5 roomb right1 bot1)
+
+Plan-Length:26
+Metric (Search):52.0
+Planning Time (msec): 1374
+Heuristic Time (msec): 393
+Search Time (msec): 495
+Expanded Nodes:43
+States Evaluated:352
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:0
+Number of Duplicates detected:78
+real 1.47
+user 1.41
+sys 0.09

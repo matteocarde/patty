@@ -1,0 +1,105 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 15
+Aibr Preprocessing
+|F|:0
+|X|:12
+|A|:24
+|P|:0
+|E|:0
+H1 Setup Time (msec): 7
+Setting horizon to:NaN
+Running Greedy Best First Search
+Problem Solved
+
+Found Plan:
+0.0: (increment c11)
+1.0: (increment c11)
+2.0: (increment c10)
+3.0: (increment c8)
+4.0: (increment c4)
+5.0: (increment c11)
+6.0: (increment c9)
+7.0: (increment c10)
+8.0: (increment c11)
+9.0: (increment c11)
+10.0: (increment c9)
+11.0: (increment c10)
+12.0: (increment c3)
+13.0: (increment c5)
+14.0: (increment c5)
+15.0: (increment c7)
+16.0: (increment c4)
+17.0: (decrement c5)
+18.0: (increment c8)
+19.0: (increment c9)
+20.0: (increment c10)
+21.0: (increment c11)
+22.0: (increment c6)
+23.0: (decrement c4)
+24.0: (decrement c3)
+25.0: (increment c7)
+26.0: (increment c8)
+27.0: (increment c9)
+28.0: (increment c10)
+29.0: (increment c11)
+30.0: (increment c3)
+31.0: (increment c6)
+32.0: (decrement c4)
+33.0: (increment c7)
+34.0: (increment c8)
+35.0: (increment c9)
+36.0: (increment c10)
+37.0: (increment c11)
+38.0: (increment c11)
+39.0: (increment c11)
+40.0: (increment c11)
+41.0: (increment c10)
+42.0: (increment c9)
+43.0: (increment c4)
+44.0: (increment c5)
+45.0: (increment c8)
+46.0: (increment c7)
+47.0: (increment c6)
+48.0: (increment c10)
+49.0: (increment c9)
+50.0: (increment c8)
+51.0: (increment c7)
+52.0: (increment c4)
+53.0: (increment c5)
+54.0: (increment c6)
+55.0: (increment c11)
+56.0: (increment c10)
+57.0: (increment c9)
+58.0: (increment c8)
+59.0: (increment c7)
+60.0: (increment c6)
+61.0: (increment c2)
+62.0: (increment c3)
+63.0: (increment c4)
+64.0: (increment c5)
+65.0: (increment c10)
+66.0: (increment c9)
+67.0: (increment c8)
+68.0: (increment c7)
+69.0: (increment c6)
+70.0: (increment c5)
+71.0: (increment c4)
+72.0: (increment c3)
+73.0: (increment c1)
+74.0: (increment c2)
+
+Plan-Length:75
+Metric (Search):75.0
+Planning Time (msec): 2934
+Heuristic Time (msec): 1927
+Search Time (msec): 2414
+Expanded Nodes:3102
+States Evaluated:44694
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:0
+Number of Duplicates detected:21781
+real 3.08
+user 2.24
+sys 0.07

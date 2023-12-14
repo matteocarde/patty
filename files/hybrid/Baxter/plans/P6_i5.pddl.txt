@@ -1,0 +1,128 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 78
+Aibr Preprocessing
+|F|:27
+|X|:10
+Aibr Preprocessing
+|A|:40
+|P|:60
+|E|:20
+Delta time heuristic model:1.0
+Delta time planning model:1.0
+Delta time search-execution model:1.0
+Delta time validation model:1
+H1 Setup Time (msec): 10
+Setting horizon to:NaN
+Running WA-STAR
+Extracting plan with execution delta: 1.0
+Problem Solved
+
+Found Plan:
+0: (start_movement_decrease L2 L3 ZAXES)
+0: (propagate_move_angle_decrease L3 L5 ZAXES)
+0: (propagate_move_angle_decrease L3 L6 ZAXES)
+0: (propagate_move_angle_decrease L3 L4 ZAXES)
+0: (move_angle_decrease L3 ZAXES)
+0: -----waiting---- [1.0]
+1.0: (propagate_move_angle_decrease L3 L5 ZAXES)
+1.0: (propagate_move_angle_decrease L3 L6 ZAXES)
+1.0: (propagate_move_angle_decrease L3 L4 ZAXES)
+1.0: (move_angle_decrease L3 ZAXES)
+1.0: -----waiting---- [2.0]
+2.0: (propagate_move_angle_decrease L3 L5 ZAXES)
+2.0: (propagate_move_angle_decrease L3 L6 ZAXES)
+2.0: (propagate_move_angle_decrease L3 L4 ZAXES)
+2.0: (move_angle_decrease L3 ZAXES)
+2.0: -----waiting---- [3.0]
+3.0: (propagate_move_angle_decrease L3 L5 ZAXES)
+3.0: (propagate_move_angle_decrease L3 L6 ZAXES)
+3.0: (propagate_move_angle_decrease L3 L4 ZAXES)
+3.0: (move_angle_decrease L3 ZAXES)
+3.0: -----waiting---- [4.0]
+4.0: (propagate_move_angle_decrease L3 L5 ZAXES)
+4.0: (propagate_move_angle_decrease L3 L6 ZAXES)
+4.0: (propagate_move_angle_decrease L3 L4 ZAXES)
+4.0: (move_angle_decrease L3 ZAXES)
+4.0: -----waiting---- [5.0]
+5.0: (back-to-360 L5 ZAXES)
+5.0: (stop_movement_decrease L2 L3 ZAXES)
+5.0: (start_movement_decrease L2 L3 xyaxes)
+5.0: (propagate_move_angle_decrease L3 L5 xyaxes)
+5.0: (propagate_move_angle_decrease L3 L6 xyaxes)
+5.0: (propagate_move_angle_decrease L3 L4 xyaxes)
+5.0: (move_angle_decrease L3 xyaxes)
+5.0: -----waiting---- [6.0]
+6.0: (propagate_move_angle_decrease L3 L5 xyaxes)
+6.0: (propagate_move_angle_decrease L3 L6 xyaxes)
+6.0: (propagate_move_angle_decrease L3 L4 xyaxes)
+6.0: (move_angle_decrease L3 xyaxes)
+6.0: -----waiting---- [7.0]
+7.0: (propagate_move_angle_decrease L3 L5 xyaxes)
+7.0: (propagate_move_angle_decrease L3 L6 xyaxes)
+7.0: (propagate_move_angle_decrease L3 L4 xyaxes)
+7.0: (move_angle_decrease L3 xyaxes)
+7.0: -----waiting---- [8.0]
+8.0: (propagate_move_angle_decrease L3 L5 xyaxes)
+8.0: (propagate_move_angle_decrease L3 L6 xyaxes)
+8.0: (propagate_move_angle_decrease L3 L4 xyaxes)
+8.0: (move_angle_decrease L3 xyaxes)
+8.0: -----waiting---- [9.0]
+9.0: (propagate_move_angle_decrease L3 L5 xyaxes)
+9.0: (propagate_move_angle_decrease L3 L6 xyaxes)
+9.0: (propagate_move_angle_decrease L3 L4 xyaxes)
+9.0: (move_angle_decrease L3 xyaxes)
+9.0: -----waiting---- [10.0]
+10.0: (propagate_move_angle_decrease L3 L5 xyaxes)
+10.0: (propagate_move_angle_decrease L3 L6 xyaxes)
+10.0: (propagate_move_angle_decrease L3 L4 xyaxes)
+10.0: (move_angle_decrease L3 xyaxes)
+10.0: -----waiting---- [11.0]
+11.0: (propagate_move_angle_decrease L3 L5 xyaxes)
+11.0: (propagate_move_angle_decrease L3 L6 xyaxes)
+11.0: (propagate_move_angle_decrease L3 L4 xyaxes)
+11.0: (move_angle_decrease L3 xyaxes)
+11.0: -----waiting---- [12.0]
+12.0: (propagate_move_angle_decrease L3 L5 xyaxes)
+12.0: (propagate_move_angle_decrease L3 L6 xyaxes)
+12.0: (propagate_move_angle_decrease L3 L4 xyaxes)
+12.0: (move_angle_decrease L3 xyaxes)
+12.0: -----waiting---- [13.0]
+13.0: (propagate_move_angle_decrease L3 L5 xyaxes)
+13.0: (propagate_move_angle_decrease L3 L6 xyaxes)
+13.0: (propagate_move_angle_decrease L3 L4 xyaxes)
+13.0: (move_angle_decrease L3 xyaxes)
+13.0: -----waiting---- [14.0]
+14.0: (propagate_move_angle_decrease L3 L5 xyaxes)
+14.0: (propagate_move_angle_decrease L3 L6 xyaxes)
+14.0: (propagate_move_angle_decrease L3 L4 xyaxes)
+14.0: (move_angle_decrease L3 xyaxes)
+14.0: -----waiting---- [15.0]
+15.0: (back-to-360 L6 xyaxes)
+15.0: (propagate_move_angle_decrease L3 L5 xyaxes)
+15.0: (propagate_move_angle_decrease L3 L6 xyaxes)
+15.0: (propagate_move_angle_decrease L3 L4 xyaxes)
+15.0: (move_angle_decrease L3 xyaxes)
+15.0: -----waiting---- [16.0]
+16.0: (propagate_move_angle_decrease L3 L5 xyaxes)
+16.0: (propagate_move_angle_decrease L3 L6 xyaxes)
+16.0: (propagate_move_angle_decrease L3 L4 xyaxes)
+16.0: (move_angle_decrease L3 xyaxes)
+16.0: -----waiting---- [17.0]
+17.0: (back-to-360 L3 xyaxes)
+
+Plan-Length:91
+Elapsed Time: 17.0
+Metric (Search):20.0
+Planning Time (msec): 920
+Heuristic Time (msec): 95
+Search Time (msec): 194
+Expanded Nodes:34
+States Evaluated:96
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:0
+Number of Duplicates detected:6
+real 1.07
+user 1.05
+sys 0.05

@@ -1,0 +1,117 @@
+Started Grounding
+Ended Grounding
+Pattern: navigate rover1 waypoint4 waypoint1; navigate rover0 waypoint1 waypoint0; calibrate rover1 camera2 objective0 waypoint4; sample_soil rover1 rover1store waypoint4; calibrate rover0 camera0 objective0 waypoint1; navigate rover0 waypoint1 waypoint4; recharge rover1 waypoint4; navigate rover1 waypoint4 waypoint5; calibrate rover0 camera1 objective1 waypoint1; navigate rover1 waypoint4 waypoint3; take_image rover1 waypoint4 objective0 camera2 colour; take_image rover0 waypoint1 objective0 camera1 low_res; take_image rover0 waypoint1 objective1 camera1 colour; take_image rover1 waypoint1 objective0 camera2 high_res; navigate rover0 waypoint0 waypoint2; calibrate rover0 camera1 objective1 waypoint0; take_image rover0 waypoint0 objective1 camera0 colour; take_image rover1 waypoint3 objective0 camera2 colour; navigate rover1 waypoint1 waypoint4; take_image rover0 waypoint1 objective1 camera0 colour; navigate rover1 waypoint3 waypoint4; take_image rover0 waypoint4 objective0 camera0 low_res; take_image rover0 waypoint4 objective0 camera0 colour; take_image rover0 waypoint1 objective1 camera1 low_res; calibrate rover1 camera2 objective0 waypoint5; take_image rover0 waypoint0 objective0 camera1 colour; sample_soil rover1 rover1store waypoint5; take_image rover0 waypoint1 objective0 camera0 colour; navigate rover0 waypoint0 waypoint3; navigate rover0 waypoint0 waypoint1; take_image rover0 waypoint0 objective0 camera1 low_res; recharge rover0 waypoint4; calibrate rover1 camera2 objective0 waypoint1; navigate rover1 waypoint5 waypoint2; take_image rover1 waypoint1 objective1 camera2 colour; calibrate rover0 camera0 objective0 waypoint0; sample_soil rover1 rover1store waypoint1; take_image rover1 waypoint1 objective1 camera2 high_res; take_image rover0 waypoint4 objective0 camera1 colour; take_image rover0 waypoint0 objective0 camera0 colour; communicate_soil_data rover1 general waypoint4 waypoint1 waypoint3; calibrate rover1 camera2 objective0 waypoint3; sample_rock rover0 rover0store waypoint0; take_image rover1 waypoint1 objective0 camera2 colour; take_image rover1 waypoint3 objective0 camera2 high_res; drop rover1 rover1store; take_image rover0 waypoint0 objective1 camera1 low_res; take_image rover0 waypoint1 objective1 camera0 low_res; take_image rover0 waypoint1 objective0 camera1 colour; communicate_soil_data rover1 general waypoint4 waypoint4 waypoint3; take_image rover0 waypoint0 objective1 camera1 colour; navigate rover0 waypoint0 waypoint5; navigate rover0 waypoint4 waypoint1; take_image rover0 waypoint0 objective0 camera0 low_res; take_image rover0 waypoint4 objective0 camera1 low_res; take_image rover0 waypoint1 objective0 camera0 low_res; take_image rover1 waypoint5 objective0 camera2 colour; take_image rover1 waypoint4 objective0 camera2 high_res; navigate rover1 waypoint1 waypoint0; take_image rover0 waypoint0 objective1 camera0 low_res; navigate rover1 waypoint5 waypoint4; calibrate rover0 camera0 objective0 waypoint4; sample_soil rover1 rover1store waypoint3; take_image rover1 waypoint5 objective0 camera2 high_res; communicate_soil_data rover1 general waypoint4 waypoint5 waypoint3; take_image rover0 waypoint2 objective0 camera0 colour; communicate_image_data rover1 general objective1 colour waypoint0 waypoint3; take_image rover0 waypoint3 objective0 camera1 colour; communicate_image_data rover1 general objective1 colour waypoint1 waypoint3; communicate_image_data rover0 general objective0 low_res waypoint4 waypoint3; communicate_soil_data rover1 general waypoint5 waypoint4 waypoint3; communicate_soil_data rover1 general waypoint3 waypoint1 waypoint3; communicate_image_data rover0 general objective1 colour waypoint2 waypoint3; navigate rover0 waypoint5 waypoint0; take_image rover0 waypoint5 objective0 camera1 colour; communicate_image_data rover1 general objective0 high_res waypoint5 waypoint3; communicate_soil_data rover1 general waypoint3 waypoint0 waypoint3; sample_rock rover0 rover0store waypoint3; take_image rover1 waypoint2 objective0 camera2 colour; communicate_image_data rover0 general objective0 low_res waypoint5 waypoint3; communicate_rock_data rover0 general waypoint0 waypoint0 waypoint3; calibrate rover0 camera0 objective0 waypoint5; communicate_soil_data rover1 general waypoint3 waypoint5 waypoint3; communicate_image_data rover1 general objective1 colour waypoint2 waypoint3; take_image rover0 waypoint3 objective0 camera0 low_res; communicate_soil_data rover1 general waypoint1 waypoint5 waypoint3; communicate_image_data rover1 general objective0 colour waypoint5 waypoint3; communicate_image_data rover1 general objective1 high_res waypoint2 waypoint3; communicate_image_data rover1 general objective0 high_res waypoint1 waypoint3; take_image rover1 waypoint0 objective0 camera2 high_res; communicate_image_data rover0 general objective0 colour waypoint2 waypoint3; communicate_image_data rover0 general objective0 low_res waypoint0 waypoint3; take_image rover0 waypoint5 objective0 camera1 low_res; communicate_rock_data rover0 general waypoint0 waypoint2 waypoint3; communicate_image_data rover1 general objective1 high_res waypoint4 waypoint3; communicate_image_data rover0 general objective1 low_res waypoint1 waypoint3; communicate_image_data rover1 general objective1 high_res waypoint1 waypoint3; communicate_image_data rover0 general objective1 low_res waypoint2 waypoint3; navigate rover1 waypoint0 waypoint1; communicate_image_data rover0 general objective1 colour waypoint5 waypoint3; communicate_image_data rover0 general objective0 colour waypoint0 waypoint3; communicate_image_data rover0 general objective1 low_res waypoint5 waypoint3; take_image rover0 waypoint2 objective0 camera0 low_res; communicate_image_data rover0 general objective0 low_res waypoint1 waypoint3; communicate_soil_data rover1 general waypoint3 waypoint4 waypoint3; calibrate rover1 camera2 objective0 waypoint2; communicate_soil_data rover1 general waypoint3 waypoint2 waypoint3; communicate_soil_data rover1 general waypoint1 waypoint0 waypoint3; take_image rover1 waypoint0 objective1 camera2 high_res; communicate_soil_data rover1 general waypoint4 waypoint2 waypoint3; communicate_soil_data rover1 general waypoint5 waypoint5 waypoint3; communicate_soil_data rover1 general waypoint1 waypoint2 waypoint3; communicate_image_data rover1 general objective0 colour waypoint4 waypoint3; take_image rover0 waypoint2 objective0 camera1 low_res; take_image rover1 waypoint0 objective1 camera2 colour; communicate_image_data rover1 general objective0 high_res waypoint2 waypoint3; calibrate rover1 camera2 objective0 waypoint0; take_image rover1 waypoint2 objective0 camera2 high_res; communicate_image_data rover0 general objective1 colour waypoint0 waypoint3; communicate_image_data rover0 general objective0 colour waypoint1 waypoint3; communicate_image_data rover0 general objective0 colour waypoint5 waypoint3; take_image rover0 waypoint5 objective0 camera0 colour; communicate_rock_data rover0 general waypoint0 waypoint4 waypoint3; communicate_image_data rover1 general objective1 high_res waypoint0 waypoint3; communicate_soil_data rover1 general waypoint4 waypoint0 waypoint3; communicate_image_data rover1 general objective0 colour waypoint1 waypoint3; communicate_image_data rover1 general objective0 colour waypoint0 waypoint3; communicate_image_data rover1 general objective0 colour waypoint2 waypoint3; calibrate rover0 camera0 objective0 waypoint2; communicate_image_data rover0 general objective0 low_res waypoint2 waypoint3; take_image rover0 waypoint2 objective0 camera1 colour; navigate rover1 waypoint2 waypoint5; take_image rover0 waypoint3 objective0 camera1 low_res; sample_rock rover0 rover0store waypoint2; communicate_soil_data rover1 general waypoint5 waypoint2 waypoint3; communicate_image_data rover1 general objective0 high_res waypoint4 waypoint3; drop rover0 rover0store; communicate_image_data rover0 general objective0 colour waypoint4 waypoint3; navigate rover0 waypoint3 waypoint0; communicate_image_data rover0 general objective1 colour waypoint4 waypoint3; communicate_image_data rover1 general objective1 colour waypoint4 waypoint3; communicate_soil_data rover1 general waypoint5 waypoint1 waypoint3; sample_rock rover0 rover0store waypoint5; communicate_image_data rover0 general objective1 colour waypoint1 waypoint3; communicate_image_data rover1 general objective1 high_res waypoint5 waypoint3; communicate_image_data rover0 general objective1 low_res waypoint4 waypoint3; calibrate rover0 camera0 objective0 waypoint3; take_image rover1 waypoint0 objective0 camera2 colour; communicate_image_data rover1 general objective1 colour waypoint5 waypoint3; sample_soil rover1 rover1store waypoint2; communicate_rock_data rover0 general waypoint0 waypoint5 waypoint3; navigate rover0 waypoint2 waypoint0; take_image rover0 waypoint3 objective0 camera0 colour; communicate_image_data rover1 general objective0 high_res waypoint0 waypoint3; communicate_soil_data rover1 general waypoint5 waypoint0 waypoint3; take_image rover0 waypoint5 objective0 camera0 low_res; communicate_soil_data rover1 general waypoint1 waypoint4 waypoint3; communicate_rock_data rover0 general waypoint0 waypoint1 waypoint3; communicate_image_data rover0 general objective1 low_res waypoint0 waypoint3; communicate_soil_data rover1 general waypoint1 waypoint1 waypoint3; communicate_rock_data rover0 general waypoint5 waypoint1 waypoint3; communicate_rock_data rover0 general waypoint3 waypoint5 waypoint3; communicate_soil_data rover1 general waypoint2 waypoint5 waypoint3; communicate_rock_data rover0 general waypoint5 waypoint4 waypoint3; communicate_rock_data rover0 general waypoint2 waypoint2 waypoint3; communicate_soil_data rover1 general waypoint2 waypoint1 waypoint3; communicate_rock_data rover0 general waypoint5 waypoint2 waypoint3; communicate_soil_data rover1 general waypoint2 waypoint4 waypoint3; communicate_rock_data rover0 general waypoint3 waypoint2 waypoint3; communicate_rock_data rover0 general waypoint2 waypoint5 waypoint3; communicate_rock_data rover0 general waypoint3 waypoint0 waypoint3; communicate_rock_data rover0 general waypoint2 waypoint0 waypoint3; communicate_rock_data rover0 general waypoint5 waypoint5 waypoint3; communicate_rock_data rover0 general waypoint3 waypoint4 waypoint3; communicate_rock_data rover0 general waypoint3 waypoint1 waypoint3; communicate_soil_data rover1 general waypoint2 waypoint2 waypoint3; communicate_rock_data rover0 general waypoint5 waypoint0 waypoint3; communicate_soil_data rover1 general waypoint2 waypoint0 waypoint3; communicate_rock_data rover0 general waypoint2 waypoint4 waypoint3; communicate_rock_data rover0 general waypoint2 waypoint1 waypoint3
+Started Conversion to SMT at bound 1
+Ended Conversion to SMT at bound 1
+Started Solving Bound 1
+Ended Solving Bound 1
+Bound 1 - Vars = 446
+Bound 1 - Rules = 976
+NO SOLUTION: A solution could not be found with bound 1. Try to increase the bound
+Started Conversion to SMT at bound 2
+Ended Conversion to SMT at bound 2
+Started Solving Bound 2
+Ended Solving Bound 2
+Bound 2 - Vars = 759
+Bound 2 - Rules = 1818
+NO SOLUTION: A solution could not be found with bound 2. Try to increase the bound
+Started Conversion to SMT at bound 3
+Ended Conversion to SMT at bound 3
+Started Solving Bound 3
+Ended Solving Bound 3
+Bound 3 - Vars = 1072
+Bound 3 - Rules = 2660
+NO SOLUTION: A solution could not be found with bound 3. Try to increase the bound
+Started Conversion to SMT at bound 4
+Ended Conversion to SMT at bound 4
+Started Solving Bound 4
+Ended Solving Bound 4
+Bound 4 - Vars = 1385
+Bound 4 - Rules = 3502
+0: (calibrate rover1 camera2 objective0 waypoint4)
+1: (calibrate rover1 camera2 objective0 waypoint4)
+2: (calibrate rover1 camera2 objective0 waypoint4)
+3: (calibrate rover1 camera2 objective0 waypoint4)
+4: (sample_soil rover1 rover1store waypoint4)
+5: (calibrate rover0 camera0 objective0 waypoint1)
+6: (calibrate rover0 camera0 objective0 waypoint1)
+7: (calibrate rover0 camera0 objective0 waypoint1)
+8: (calibrate rover0 camera0 objective0 waypoint1)
+9: (calibrate rover0 camera0 objective0 waypoint1)
+10: (calibrate rover0 camera0 objective0 waypoint1)
+11: (calibrate rover0 camera0 objective0 waypoint1)
+12: (calibrate rover0 camera0 objective0 waypoint1)
+13: (calibrate rover0 camera0 objective0 waypoint1)
+14: (calibrate rover0 camera0 objective0 waypoint1)
+15: (calibrate rover0 camera0 objective0 waypoint1)
+16: (navigate rover0 waypoint1 waypoint4)
+17: (recharge rover1 waypoint4)
+18: (recharge rover1 waypoint4)
+19: (recharge rover1 waypoint4)
+20: (navigate rover1 waypoint4 waypoint5)
+21: (take_image rover0 waypoint4 objective0 camera0 low_res)
+22: (recharge rover0 waypoint4)
+23: (recharge rover0 waypoint4)
+24: (recharge rover0 waypoint4)
+25: (recharge rover0 waypoint4)
+26: (navigate rover1 waypoint5 waypoint2)
+27: (drop rover1 rover1store)
+28: (navigate rover0 waypoint4 waypoint1)
+29: (take_image rover1 waypoint2 objective0 camera2 colour)
+30: (sample_soil rover1 rover1store waypoint2)
+31: (navigate rover0 waypoint1 waypoint0)
+32: (navigate rover0 waypoint0 waypoint2)
+33: (drop rover1 rover1store)
+34: (communicate_image_data rover0 general objective0 low_res waypoint2 waypoint3)
+35: (navigate rover1 waypoint2 waypoint5)
+36: (sample_rock rover0 rover0store waypoint2)
+37: (drop rover0 rover0store)
+38: (navigate rover0 waypoint2 waypoint0)
+39: (calibrate rover0 camera1 objective1 waypoint0)
+40: (sample_soil rover1 rover1store waypoint5)
+41: (calibrate rover0 camera0 objective0 waypoint0)
+42: (sample_rock rover0 rover0store waypoint0)
+43: (drop rover1 rover1store)
+44: (take_image rover0 waypoint0 objective1 camera1 low_res)
+45: (take_image rover0 waypoint0 objective0 camera0 low_res)
+46: (navigate rover1 waypoint5 waypoint4)
+47: (communicate_soil_data rover1 general waypoint5 waypoint4 waypoint3)
+48: (communicate_rock_data rover0 general waypoint0 waypoint0 waypoint3)
+49: (communicate_image_data rover0 general objective0 low_res waypoint0 waypoint3)
+50: (communicate_image_data rover1 general objective0 colour waypoint4 waypoint3)
+51: (drop rover0 rover0store)
+52: (communicate_soil_data rover1 general waypoint2 waypoint4 waypoint3)
+53: (navigate rover1 waypoint4 waypoint1)
+54: (navigate rover0 waypoint0 waypoint3)
+55: (calibrate rover1 camera2 objective0 waypoint1)
+56: (sample_soil rover1 rover1store waypoint1)
+57: (communicate_soil_data rover1 general waypoint4 waypoint1 waypoint3)
+58: (take_image rover1 waypoint1 objective0 camera2 colour)
+59: (drop rover1 rover1store)
+60: (navigate rover1 waypoint1 waypoint0)
+61: (sample_rock rover0 rover0store waypoint3)
+62: (navigate rover1 waypoint0 waypoint1)
+63: (navigate rover0 waypoint3 waypoint0)
+64: (communicate_soil_data rover1 general waypoint5 waypoint1 waypoint3)
+65: (communicate_image_data rover0 general objective1 low_res waypoint0 waypoint3)
+66: (communicate_soil_data rover1 general waypoint1 waypoint1 waypoint3)
+67: (communicate_soil_data rover1 general waypoint2 waypoint1 waypoint3)
+68: (communicate_rock_data rover0 general waypoint3 waypoint0 waypoint3)
+69: (communicate_rock_data rover0 general waypoint2 waypoint0 waypoint3)
+
+Plan is valid
+Bound: 4
+Grounding: 700ms
+Conversion to SMT at bound 1: 361ms
+Solving Bound 1: 175ms
+Conversion to SMT at bound 2: 611ms
+Solving Bound 2: 308ms
+Conversion to SMT at bound 3: 850ms
+Solving Bound 3: 503ms
+Conversion to SMT at bound 4: 952ms
+Solving Bound 4: 3266ms
+Overall: 7856ms
+
+real 8.62
+user 8.18
+sys 0.42

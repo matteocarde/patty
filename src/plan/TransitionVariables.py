@@ -75,12 +75,15 @@ class TransitionVariables:
 
     def __computeAuxVariables(self, index) -> Dict[Action, Dict[Atom, SMTVariable]]:
         variables: Dict[Action, Dict[Atom, SMTVariable]] = dict()
-        for (var, actions) in self.assList.items():
-            for a in actions:
-                variables.setdefault(a, dict())
-                variables[a][var] = SMTRealVariable(f"{var}_{a}_{index}")
+        # for (var, actions) in self.assList.items():
+        #     for a in actions:
+        #         variables.setdefault(a, dict())
+        #         variables[a][var] = SMTRealVariable(f"{var}_{a}_{index}")
 
         for a in self.pattern:
+            variables.setdefault(a, dict())
+            for var in a.assList:
+                variables[a][var] = SMTRealVariable(f"{var}_{a}_{index}")
             if not a.hasNonSimpleLinearIncrement():
                 continue
             for eff in a.effects:

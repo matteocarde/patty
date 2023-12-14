@@ -1,34 +1,34 @@
 import sys
-
-import traceback
-
-import os
-
-import boto3
 import time
-from botocore.config import Config
+import traceback
 from typing import Dict
 
-from classes.CloudLogger import CloudLogger
-from classes.ENHSP import ENHSP
-from classes.Envs import Envs
+import boto3
+from botocore.config import Config
+
 from classes.MetricFF import MetricFF
 from classes.NFD import NFD
 from classes.OMT import OMT
+from classes.SpringRoll import SpringRoll
+from classes.CloudLogger import CloudLogger
+from classes.ENHSP import ENHSP
+from classes.Envs import Envs
 from classes.Patty import Patty
 from classes.Planner import Planner
 from classes.Result import Result
-from classes.SpringRoll import SpringRoll
 
 my_config = Config(
     region_name='eu-central-1',
 )
 
 PLANNERS: Dict[str, Planner] = {
-    "PATTY": Patty("PATTY", "arpg", solver="z3", encoding="non-linear"),
-    "PATTY-R": Patty("PATTY-R", "random", solver="z3", encoding="non-linear"),
+    "PATTY": Patty("PATTY", search="step", useSCCs=True),
+    "PATTY-MAX": Patty("PATTY-MAX", search="step", maximize=True),
+    "PATTY-STATIC": Patty("PATTY-STATIC", search="static", useSCCs=True),
+    "PATTY-STATIC-MAX": Patty("PATTY-STATIC-MAX", search="static", maximize=True),
+    "PATTY-ASTAR": Patty("PATTY-ASTAR", search="astar", useSCCs=True),
     "SPRINGROLL": SpringRoll(),
-    "RANTANPLAN": Patty("RANTANPLAN", "arpg", solver="z3", encoding="non-linear", rollBound=1, hasEffectAxioms=True),
+    # "RANTANPLAN": Patty("RANTANPLAN", "arpg", solver="z3", encoding="non-linear", rollBound=1, hasEffectAxioms=True),
     "ENHSP-HADD": ENHSP("sat-hadd"),
     "ENHSP-HRADD": ENHSP("sat-hradd"),
     "ENHSP-HMRP": ENHSP("sat-hmrphj"),
@@ -73,7 +73,7 @@ def main():
                 print(r.stdout)
             logger.log(r.toCSV())
             s3.put_object(
-                Key=f"{envs.experiment}/{r.solver}-{r.domain}-{r.problem}-{time.time_ns()}.txt",
+                Key=f"{envs.experiment}/{r.solver}/{r.domain.replace('/', '_')}/{r.problem.replace('/', '_')}/{time.time_ns()}.txt",
                 Bucket="patty-benchmarks",
                 Body=bytes(r.stdout, 'utf-8')
             )

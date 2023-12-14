@@ -38,7 +38,7 @@ class Numeral:
     Z3 numerals can be used to perform computations with 
     values in a Z3 model.
     
-    >>> s = Solver()
+    >>> s = Search()
     >>> x = Real('x')
     >>> s.add(x*x == 2)
     >>> s.add(x > 0)

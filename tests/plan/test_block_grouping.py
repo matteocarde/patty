@@ -1,6 +1,5 @@
-from unittest import TestCase
-
 import unittest
+from unittest import TestCase
 
 from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
@@ -13,8 +12,9 @@ from src.smt.SMTSolver import SMTSolver
 class TestBlockGrouping(TestCase):
 
     def setUp(self) -> None:
-        self.domain: Domain = Domain.fromFile("../../files/block-grouping/domain.pddl")
-        self.problem: Problem = Problem.fromFile("../../files/block-grouping/instances/instance_7_15_3_1.pddl")
+        self.domain: Domain = Domain.fromFile("../../files/numeric/ipc-2023/block-grouping/domain.pddl")
+        self.problem: Problem = Problem.fromFile(
+            "../../files/numeric/ipc-2023/block-grouping/instances/instance_7_10_2_1.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.horizon = 1
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
@@ -42,41 +42,6 @@ class TestBlockGrouping(TestCase):
         plan.printWithRepetitions()
 
         self.assertTrue(plan.validate(self.problem))
-
-    # def test_optimize(self):
-    #     solver: SMTSolver = SMTSolver(self.pddl2smt)
-    #
-    #     plan: NumericPlan = solver.optimize()
-    #
-    #     solver.exit()
-    #
-    #     self.assertIsInstance(plan, NumericPlan)
-    #
-    #     print("Plan length: ", len(plan))
-    #     print("No repetitions:")
-    #     plan.print()
-    #     print("With repetitions:")
-    #     plan.printWithRepetitions()
-    #
-    #     self.assertTrue(plan.validate(self.problem))
-    #     self.assertTrue(plan.optimal)
-    #
-    # def test_optimize_binary(self):
-    #     solver: SMTSolver = SMTSolver(self.pddl2smt)
-    #
-    #     plan: NumericPlan = solver.optimizeBinary()
-    #     solver.exit()
-    #
-    #     self.assertIsInstance(plan, NumericPlan)
-    #
-    #     print("Plan length: ", len(plan))
-    #     print("No repetitions:")
-    #     plan.print()
-    #     print("With repetitions:")
-    #     plan.printWithRepetitions()
-    #
-    #     self.assertTrue(plan.validate(self.problem))
-    #     self.assertTrue(plan.optimal)
 
 
 if __name__ == '__main__':

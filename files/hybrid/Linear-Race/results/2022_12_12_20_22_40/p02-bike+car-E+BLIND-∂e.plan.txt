@@ -1,0 +1,57 @@
+$ timeout 300 java -jar ~/Bin/ENHSP-22/enhsp.jar --domain Linear-Race/no-delta/domain.pddl --problem Linear-Race/no-delta/p02-bike+car.pddl -de 10  -dh 10 -dp 10 -h blind -s WAStar -wh 1 -silent
+STDOUT
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 10
+Aibr Preprocessing
+|F|:6
+|X|:6
+Aibr Preprocessing
+|A|:10
+|P|:4
+|E|:4
+Delta time heuristic model:10
+Delta time planning model:10
+Delta time search-execution model:10
+Delta time validation model:1
+w_h set to be 1
+Setting horizon to:NaN
+Running WA-STAR
+Extracting plan with execution delta: 10
+Problem Solved
+
+Found Plan:
+0: (on bike)
+0: (full-gas bike)
+0: -----waiting---- [10]
+10: (keep-velocity bike)
+10: -----waiting---- [160]
+160: (on car)
+160: (full-gas car)
+160: -----waiting---- [170]
+170: (full-brake car)
+170: -----waiting---- [880]
+880: (full-gas car)
+880: -----waiting---- [890]
+890: (keep-velocity car)
+890: -----waiting---- [1050]
+1050: (full-brake bike)
+1050: (full-brake car)
+1050: -----waiting---- [1060]
+1060: (off car)
+1060: (off bike)
+
+Plan-Length:121
+Elapsed Time: 1060
+Metric (Search):118.0
+Planning Time (msec): 64193
+Heuristic Time (msec): 316
+Search Time (msec): 64072
+Expanded Nodes:15125002
+States Evaluated:15422566
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:0
+Number of Duplicates detected:66536632
+
+STDERR

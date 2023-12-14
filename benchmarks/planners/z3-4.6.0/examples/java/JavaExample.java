@@ -193,7 +193,7 @@ class JavaExample
 
     Model check(Context ctx, BoolExpr f, Status sat) throws TestFailedException
     {
-        Solver s = ctx.mkSolver();
+        Search s = ctx.mkSolver();
         s.add(f);
         if (s.check() != sat)
             throw new TestFailedException();
@@ -206,12 +206,12 @@ class JavaExample
     void solveTactical(Context ctx, Tactic t, Goal g, Status sat)
             throws TestFailedException
     {
-        Solver s = ctx.mkSolver(t);
+        Search s = ctx.mkSolver(t);
         System.out.println("\nTactical solver: " + s);
 
         for (BoolExpr a : g.getFormulas())
             s.add(a);
-        System.out.println("Solver: " + s);
+        System.out.println("Search: " + s);
 
         if (s.check() != sat)
             throw new TestFailedException();
@@ -257,7 +257,7 @@ class JavaExample
             BoolExpr... assumptions) throws TestFailedException
     {
         System.out.println("Proving: " + f);
-        Solver s = ctx.mkSolver();
+        Search s = ctx.mkSolver();
         Params p = ctx.mkParams();
         p.add("mbqi", useMBQI);
         s.setParameters(p);
@@ -290,7 +290,7 @@ class JavaExample
             BoolExpr... assumptions) throws TestFailedException
     {
         System.out.println("Disproving: " + f);
-        Solver s = ctx.mkSolver();
+        Search s = ctx.mkSolver();
         Params p = ctx.mkParams();
         p.add("mbqi", useMBQI);
         s.setParameters(p);
@@ -338,11 +338,11 @@ class JavaExample
                         .isDecidedUnsat()))
             throw new TestFailedException();
 
-        Solver s = ctx.mkSolver();
+        Search s = ctx.mkSolver();
         for (BoolExpr e : ar.getSubgoals()[0].getFormulas())
             s.add(e);
         Status q = s.check();
-        System.out.println("Solver says: " + q);
+        System.out.println("Search says: " + q);
         System.out.println("Model: \n" + s.getModel());
         System.out.println("Converted Model: \n"
                 + ar.convertModel(0, s.getModel()));
@@ -374,10 +374,10 @@ class JavaExample
 
         g.add(ctx.mkEq(ctx.mkAdd(xc, fapp), ctx.mkInt(123)));
 
-        Solver s = ctx.mkSolver();
+        Search s = ctx.mkSolver();
         for (BoolExpr a : g.getFormulas())
             s.add(a);
-        System.out.println("Solver: " + s);
+        System.out.println("Search: " + s);
 
         Status q = s.check();
         System.out.println("Status: " + q);
@@ -566,7 +566,7 @@ class JavaExample
                                         ctx.mkInt(0)), ctx.mkTrue(),
                                 ctx.mkEq(X[i][j], ctx.mkInt(instance[i][j]))));
 
-        Solver s = ctx.mkSolver();
+        Search s = ctx.mkSolver();
         s.add(sudoku_c);
         s.add(instance_c);
 
@@ -793,7 +793,7 @@ class JavaExample
         g.add(nontrivial_eq);
         System.out.println("Goal: " + g);
 
-        Solver solver = ctx.mkSolver();
+        Search solver = ctx.mkSolver();
 
         for (BoolExpr a : g.getFormulas())
             solver.add(a);
@@ -1069,7 +1069,7 @@ class JavaExample
         System.out.println("SMT2 file test took " + t_diff + " sec");
     }
 
-    // / Shows how to use Solver(logic)
+    // / Shows how to use Search(logic)
 
     // / @param ctx 
     void logicExample(Context ctx) throws TestFailedException
@@ -1085,7 +1085,7 @@ class JavaExample
         BoolExpr eq = ctx.mkEq(x, y);
 
         // Use a solver for QF_BV
-        Solver s = ctx.mkSolver("QF_BV");
+        Search s = ctx.mkSolver("QF_BV");
         s.add(eq);
         Status res = s.check();
         System.out.println("solver result: " + res);
@@ -1307,7 +1307,7 @@ class JavaExample
         /* create x */
         IntExpr x = ctx.mkIntConst("x");
 
-        Solver solver = ctx.mkSolver();
+        Search solver = ctx.mkSolver();
 
         /* assert x >= "big number" */
         BoolExpr c1 = ctx.mkGe(x, big_number);
@@ -1842,7 +1842,7 @@ class JavaExample
         IntExpr y = ctx.mkIntConst("y");
         IntExpr two = ctx.mkInt(2);
 
-        Solver solver = ctx.mkSolver();
+        Search solver = ctx.mkSolver();
 
         /* assert x < y */
         solver.add(ctx.mkLt(x, y));
@@ -1895,7 +1895,7 @@ class JavaExample
         Expr tup1 = ctx.mkConst("t1", tuple);
         Expr tup2 = ctx.mkConst("t2", tuple);
 
-        Solver solver = ctx.mkSolver();
+        Search solver = ctx.mkSolver();
 
         /* assert tup1 != tup2 */
         solver.add(ctx.mkNot(ctx.mkEq(tup1, tup2)));
@@ -1924,7 +1924,7 @@ class JavaExample
     // / control the size of models.
 
     // / <remarks>Note: this test is specialized to 32-bit bitvectors.</remarks>
-    public void checkSmall(Context ctx, Solver solver, BitVecExpr... to_minimize)
+    public void checkSmall(Context ctx, Search solver, BitVecExpr... to_minimize)
     {
         int num_Exprs = to_minimize.length;
         int[] upper = new int[num_Exprs];
@@ -2005,7 +2005,7 @@ class JavaExample
         BitVecExpr y = ctx.mkBVConst("y", 32);
         BitVecExpr z = ctx.mkBVConst("z", 32);
 
-        Solver solver = ctx.mkSolver();
+        Search solver = ctx.mkSolver();
 
         solver.add(ctx.mkBVULE(x, ctx.mkBVAdd(y, z)));
         checkSmall(ctx, solver, x, y, z);
@@ -2036,7 +2036,7 @@ class JavaExample
         System.out.println("UnsatCoreAndProofExample");
         Log.append("UnsatCoreAndProofExample");
 
-        Solver solver = ctx.mkSolver();
+        Search solver = ctx.mkSolver();
 
         BoolExpr pa = ctx.mkBoolConst("PredA");
         BoolExpr pb = ctx.mkBoolConst("PredB");
@@ -2078,7 +2078,7 @@ class JavaExample
         System.out.println("UnsatCoreAndProofExample2");
         Log.append("UnsatCoreAndProofExample2");
 
-        Solver solver = ctx.mkSolver();
+        Search solver = ctx.mkSolver();
 
         BoolExpr pa = ctx.mkBoolConst("PredA");
         BoolExpr pb = ctx.mkBoolConst("PredB");
@@ -2156,7 +2156,7 @@ class JavaExample
         FPExpr nan = ctx.mkFPNaN(s);
 
         /* solver that runs the default tactic for QF_FP. */
-        Solver slvr = ctx.mkSolver("QF_FP");
+        Search slvr = ctx.mkSolver("QF_FP");
         slvr.add(ctx.mkFPEq(nan, k));
         if (slvr.check() != Status.UNSATISFIABLE)
             throw new TestFailedException();
@@ -2203,7 +2203,7 @@ class JavaExample
         System.out.println("c5 = " + c5);
 
         /* Generic solver */
-        Solver s = ctx.mkSolver();
+        Search s = ctx.mkSolver();
         s.add(c5);
 
         if (s.check() != Status.SATISFIABLE)

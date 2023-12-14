@@ -1,0 +1,138 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 21
+Aibr Preprocessing
+|F|:3
+|X|:4
+Aibr Preprocessing
+|A|:7
+|P|:2
+|E|:0
+Delta time heuristic model:1.0
+Delta time planning model:1.0
+Delta time search-execution model:1.0
+Delta time validation model:1
+H1 Setup Time (msec): 72
+Setting horizon to:NaN
+Running WA-STAR
+Extracting plan with execution delta: 1.0
+Problem Solved
+
+Found Plan:
+0: (thermal_change r1)
+0: (time_passing)
+0: -----waiting---- [1.0]
+1.0: (thermal_change r1)
+1.0: (time_passing)
+1.0: -----waiting---- [2.0]
+2.0: (thermal_change r1)
+2.0: (time_passing)
+2.0: -----waiting---- [3.0]
+3.0: (thermal_change r1)
+3.0: (time_passing)
+3.0: -----waiting---- [4.0]
+4.0: (thermal_change r1)
+4.0: (time_passing)
+4.0: -----waiting---- [5.0]
+5.0: (thermal_change r1)
+5.0: (time_passing)
+5.0: -----waiting---- [6.0]
+6.0: (thermal_change r1)
+6.0: (time_passing)
+6.0: -----waiting---- [7.0]
+7.0: (thermal_change r1)
+7.0: (time_passing)
+7.0: -----waiting---- [8.0]
+8.0: (increase_air_flow r1)
+8.0: (increase_air_flow r1)
+8.0: (thermal_change r1)
+8.0: (time_passing)
+8.0: -----waiting---- [9.0]
+9.0: (increase_air_flow r1)
+9.0: (thermal_change r1)
+9.0: (time_passing)
+9.0: -----waiting---- [10.0]
+10.0: (satisfier r1 k1)
+10.0: (thermal_change r1)
+10.0: (time_passing)
+10.0: -----waiting---- [11.0]
+11.0: (thermal_change r1)
+11.0: (time_passing)
+11.0: -----waiting---- [12.0]
+12.0: (thermal_change r1)
+12.0: (time_passing)
+12.0: -----waiting---- [13.0]
+13.0: (thermal_change r1)
+13.0: (time_passing)
+13.0: -----waiting---- [14.0]
+14.0: (thermal_change r1)
+14.0: (time_passing)
+14.0: -----waiting---- [15.0]
+15.0: (thermal_change r1)
+15.0: (time_passing)
+15.0: -----waiting---- [16.0]
+16.0: (thermal_change r1)
+16.0: (time_passing)
+16.0: -----waiting---- [17.0]
+17.0: (thermal_change r1)
+17.0: (time_passing)
+17.0: -----waiting---- [18.0]
+18.0: (decrease_air_flow r1)
+18.0: (decrease_air_flow r1)
+18.0: (thermal_change r1)
+18.0: (time_passing)
+18.0: -----waiting---- [19.0]
+19.0: (increase_air_flow r1)
+19.0: (increase_temp r1)
+19.0: (thermal_change r1)
+19.0: (time_passing)
+19.0: -----waiting---- [20.0]
+20.0: (satisfier r1 k2)
+20.0: (thermal_change r1)
+20.0: (time_passing)
+20.0: -----waiting---- [21.0]
+21.0: (thermal_change r1)
+21.0: (time_passing)
+21.0: -----waiting---- [22.0]
+22.0: (thermal_change r1)
+22.0: (time_passing)
+22.0: -----waiting---- [23.0]
+23.0: (thermal_change r1)
+23.0: (time_passing)
+23.0: -----waiting---- [24.0]
+24.0: (thermal_change r1)
+24.0: (time_passing)
+24.0: -----waiting---- [25.0]
+25.0: (thermal_change r1)
+25.0: (time_passing)
+25.0: -----waiting---- [26.0]
+26.0: (thermal_change r1)
+26.0: (time_passing)
+26.0: -----waiting---- [27.0]
+27.0: (increase_air_flow r1)
+27.0: (thermal_change r1)
+27.0: (time_passing)
+27.0: -----waiting---- [28.0]
+28.0: (thermal_change r1)
+28.0: (time_passing)
+28.0: -----waiting---- [29.0]
+29.0: (thermal_change r1)
+29.0: (time_passing)
+29.0: -----waiting---- [30.0]
+30.0: (satisfier r1 k3)
+
+Plan-Length:101
+Elapsed Time: 30.0
+Metric (Search):41.0
+Planning Time (msec): 1066
+Heuristic Time (msec): 197
+Search Time (msec): 416
+Expanded Nodes:1294
+States Evaluated:3343
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:895
+Number of Duplicates detected:2392
+real 1.23
+user 0.87
+sys 0.05

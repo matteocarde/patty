@@ -23,7 +23,7 @@ class TimeStat:
     def end(self, name: str, console: LogPrint or None = None):
         self.__results[name] = TimeStat.now() - self.__timings[name]
         if console:
-            console.log(f"Ended {name}", LogPrintLevel.STEPS)
+            console.log(f"Ended {name}: {self.__results[name]}", LogPrintLevel.STEPS)
 
     def get(self, name: str) -> int:
         return self.__results[name]

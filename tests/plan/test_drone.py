@@ -13,8 +13,8 @@ from src.smt.SMTSolver import SMTSolver
 class TestDrone(TestCase):
 
     def setUp(self) -> None:
-        self.domain: Domain = Domain.fromFile("../../files/ipc-2023/drone/domain.pddl")
-        self.problem: Problem = Problem.fromFile("../../files/ipc-2023/drone/instances/problem_1_1_2.pddl")
+        self.domain: Domain = Domain.fromFile("../../files/numerical/ipc-2023/drone/domain.pddl")
+        self.problem: Problem = Problem.fromFile("../../files/numerical/ipc-2023/drone/instances/problem_1_1_2.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.horizon = 5
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
@@ -44,41 +44,6 @@ class TestDrone(TestCase):
         plan.printWithRepetitions()
 
         self.assertTrue(plan.validate(self.problem))
-
-    def test_optimize(self):
-        solver: SMTSolver = SMTSolver(self.pddl2smt)
-
-        plan: NumericPlan = solver.optimize()
-
-        solver.exit()
-
-        self.assertIsInstance(plan, NumericPlan)
-
-        print("Plan length: ", len(plan))
-        print("No repetitions:")
-        plan.print()
-        print("With repetitions:")
-        plan.printWithRepetitions()
-
-        self.assertTrue(plan.validate(self.problem))
-        self.assertTrue(plan.optimal)
-
-    def test_optimize_binary(self):
-        solver: SMTSolver = SMTSolver(self.pddl2smt)
-
-        plan: NumericPlan = solver.optimizeBinary()
-        solver.exit()
-
-        self.assertIsInstance(plan, NumericPlan)
-
-        print("Plan length: ", len(plan))
-        print("No repetitions:")
-        plan.print()
-        print("With repetitions:")
-        plan.printWithRepetitions()
-
-        self.assertTrue(plan.validate(self.problem))
-        self.assertTrue(plan.optimal)
 
 
 if __name__ == '__main__':

@@ -299,8 +299,8 @@
     <Compile Include="..\SetSort.cs">
       <Link>SetSort.cs</Link>
     </Compile>
-    <Compile Include="..\Solver.cs">
-      <Link>Solver.cs</Link>
+    <Compile Include="..\Search.cs">
+      <Link>Search.cs</Link>
     </Compile>
     <Compile Include="..\Sort.cs">
       <Link>Sort.cs</Link>

@@ -1,0 +1,37 @@
+$ timeout 300 java -jar ~/Bin/ENHSP-22/enhsp.jar --domain Linear-Race/no-delta/domain.pddl --problem Linear-Race/no-delta/p03-bike+car+f1.pddl -de 6  -dh 6 -dp 6 -h blind -s WAStar -wh 1 -silent
+STDOUT
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 10
+Aibr Preprocessing
+|F|:9
+|X|:9
+Aibr Preprocessing
+|A|:15
+|P|:6
+|E|:6
+Delta time heuristic model:6
+Delta time planning model:6
+Delta time search-execution model:6
+Delta time validation model:1
+w_h set to be 1
+Setting horizon to:NaN
+Running WA-STAR
+
+STDERR
+Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
+	at com.carrotsearch.hppc.DoubleArrayList.clone(DoubleArrayList.java:435)
+	at com.hstairs.ppmajal.problem.PDDLState.<init>(PDDLState.java:46)
+	at com.hstairs.ppmajal.problem.PDDLState.clone(PDDLState.java:113)
+	at com.hstairs.ppmajal.problem.PDDLState.clone(PDDLState.java:36)
+	at com.hstairs.ppmajal.problem.PDDLProblem.simulation(PDDLProblem.java:1607)
+	at com.hstairs.ppmajal.problem.PDDLProblem.simulation(PDDLProblem.java:1604)
+	at com.hstairs.ppmajal.problem.PDDLProblem.intelligentSimulation(PDDLProblem.java:1600)
+	at com.hstairs.ppmajal.problem.PDDLProblem$stateIterator.hasNext(PDDLProblem.java:1443)
+	at com.hstairs.ppmajal.search.SearchEngine.WAStar(SearchEngine.java:555)
+	at com.hstairs.ppmajal.search.SearchEngine.WAStar(SearchEngine.java:596)
+	at com.hstairs.ppmajal.search.SearchEngine.WAStar(SearchEngine.java:592)
+	at planners.ENHSP.search(ENHSP.java:533)
+	at planners.ENHSP.planning(ENHSP.java:179)
+	at main.main(main.java:35)

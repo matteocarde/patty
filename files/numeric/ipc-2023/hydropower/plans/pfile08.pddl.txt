@@ -1,0 +1,69 @@
+Started Grounding
+Ended Grounding
+Pattern: advance_time t0000 t0030; pump_water_up t0000 n7; generate t0000 n7; pump_water_up t0030 n7; advance_time t0030 t0100; generate t0030 n7; advance_time t0100 t0130; generate t0100 n7; pump_water_up t0100 n7; generate t0130 n6; pump_water_up t0130 n6; advance_time t0130 t0200; generate t0200 n6; advance_time t0200 t0230; pump_water_up t0200 n6; pump_water_up t0230 n6; generate t0230 n6; advance_time t0230 t0300; generate t0300 n5; advance_time t0300 t0330; pump_water_up t0300 n5; pump_water_up t0330 n4; advance_time t0330 t0400; generate t0330 n4; generate t0400 n3; pump_water_up t0400 n3; advance_time t0400 t0430; pump_water_up t0430 n3; advance_time t0430 t0500; generate t0430 n3; advance_time t0500 t0530; generate t0500 n4; pump_water_up t0500 n4; advance_time t0530 t0600; generate t0530 n5; pump_water_up t0530 n5; pump_water_up t0600 n9; advance_time t0600 t0630; generate t0600 n9; pump_water_up t0630 n13; generate t0630 n13; advance_time t0630 t0700; pump_water_up t0700 n18; advance_time t0700 t0730; generate t0700 n18; generate t0730 n19; pump_water_up t0730 n19; advance_time t0730 t0800; pump_water_up t0800 n19; advance_time t0800 t0830; generate t0800 n19; advance_time t0830 t0900; generate t0830 n19; pump_water_up t0830 n19; advance_time t0900 t0930; pump_water_up t0900 n19; generate t0900 n19; generate t0930 n19; pump_water_up t0930 n19; advance_time t0930 t1000; advance_time t1000 t1030; pump_water_up t1000 n19; generate t1000 n19; pump_water_up t1030 n19; advance_time t1030 t1100; generate t1030 n19; generate t1100 n19; pump_water_up t1100 n19; advance_time t1100 t1130; advance_time t1130 t1200; pump_water_up t1130 n19; generate t1130 n19; advance_time t1200 t1230; pump_water_up t1200 n19; generate t1200 n19; pump_water_up t1230 n18; advance_time t1230 t1300; generate t1230 n18; advance_time t1300 t1330; pump_water_up t1300 n18; generate t1300 n18; generate t1330 n18; pump_water_up t1330 n18; advance_time t1330 t1400; advance_time t1400 t1430; generate t1400 n18; pump_water_up t1400 n18; pump_water_up t1430 n18; generate t1430 n18; advance_time t1430 t1500; advance_time t1500 t1530; pump_water_up t1500 n19; generate t1500 n19; generate t1530 n20; advance_time t1530 t1600; pump_water_up t1530 n20; generate t1600 n23; advance_time t1600 t1630; pump_water_up t1600 n23; pump_water_up t1630 n25; advance_time t1630 t1700; generate t1630 n25; generate t1700 n26; pump_water_up t1700 n26; advance_time t1700 t1730; generate t1730 n25; advance_time t1730 t1800; pump_water_up t1730 n25; pump_water_up t1800 n24; advance_time t1800 t1830; generate t1800 n24; pump_water_up t1830 n22; advance_time t1830 t1900; generate t1830 n22; pump_water_up t1900 n21; advance_time t1900 t1930; generate t1900 n21; generate t1930 n20; pump_water_up t1930 n20; advance_time t1930 t2000; advance_time t2000 t2030; pump_water_up t2000 n19; generate t2000 n19; pump_water_up t2030 n18; generate t2030 n18; advance_time t2030 t2100; generate t2100 n16; advance_time t2100 t2130; pump_water_up t2100 n16; advance_time t2130 t2200; generate t2130 n14; pump_water_up t2130 n14; pump_water_up t2200 n12; generate t2200 n12; advance_time t2200 t2230; advance_time t2230 t2300; generate t2230 n10; pump_water_up t2230 n10; advance_time t2300 t2330; generate t2300 n6; pump_water_up t2300 n6; advance_time t2330 t2400; pump_water_up t2330 n3; generate t2330 n3; generate t2400 n1; pump_water_up t2400 n1
+Started Conversion to SMT at bound 1
+Ended Conversion to SMT at bound 1
+Started Solving Bound 1
+Ended Solving Bound 1
+Bound 1 - Vars = 444
+Bound 1 - Rules = 788
+0: (advance_time t0000 t0030)
+1: (advance_time t0030 t0100)
+2: (advance_time t0100 t0130)
+3: (advance_time t0130 t0200)
+4: (advance_time t0200 t0230)
+5: (advance_time t0230 t0300)
+6: (advance_time t0300 t0330)
+7: (advance_time t0330 t0400)
+8: (advance_time t0400 t0430)
+9: (pump_water_up t0430 n3)
+10: (pump_water_up t0430 n3)
+11: (pump_water_up t0430 n3)
+12: (pump_water_up t0430 n3)
+13: (advance_time t0430 t0500)
+14: (advance_time t0500 t0530)
+15: (advance_time t0530 t0600)
+16: (advance_time t0600 t0630)
+17: (advance_time t0630 t0700)
+18: (advance_time t0700 t0730)
+19: (generate t0730 n19)
+20: (generate t0730 n19)
+21: (generate t0730 n19)
+22: (advance_time t0730 t0800)
+23: (advance_time t0800 t0830)
+24: (advance_time t0830 t0900)
+25: (advance_time t0900 t0930)
+26: (advance_time t0930 t1000)
+27: (advance_time t1000 t1030)
+28: (advance_time t1030 t1100)
+29: (generate t1100 n19)
+30: (advance_time t1100 t1130)
+31: (advance_time t1130 t1200)
+32: (advance_time t1200 t1230)
+33: (pump_water_up t1230 n18)
+34: (advance_time t1230 t1300)
+35: (advance_time t1300 t1330)
+36: (pump_water_up t1330 n18)
+37: (pump_water_up t1330 n18)
+38: (advance_time t1330 t1400)
+39: (advance_time t1400 t1430)
+40: (pump_water_up t1430 n18)
+41: (advance_time t1430 t1500)
+42: (advance_time t1500 t1530)
+43: (generate t1530 n20)
+44: (advance_time t1530 t1600)
+45: (generate t1600 n23)
+46: (advance_time t1600 t1630)
+47: (generate t1630 n25)
+48: (generate t1630 n25)
+
+Plan is valid
+Bound: 1
+Grounding: 2691ms
+Conversion to SMT at bound 1: 187ms
+Solving Bound 1: 12302ms
+Overall: 15259ms
+
+real 16.36
+user 16.06
+sys 0.29

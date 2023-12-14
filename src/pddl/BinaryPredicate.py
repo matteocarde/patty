@@ -4,7 +4,7 @@ import copy
 
 from enum import Enum
 from sympy import Expr, diff
-from typing import Dict, Set
+from typing import Dict, Set, Tuple
 
 from src.pddl.Atom import Atom
 from src.pddl.Constant import Constant
@@ -84,11 +84,11 @@ class BinaryPredicate(Predicate):
         else:
             raise NotImplemented()
 
-    def ground(self, subs: Dict[str, str]) -> BinaryPredicate:
+    def ground(self, subs: Dict[str, str], delta=1) -> BinaryPredicate:
         bp = BinaryPredicate()
         bp.operator = self.operator
-        bp.lhs = self.lhs.ground(subs)
-        bp.rhs = self.rhs.ground(subs)
+        bp.lhs = self.lhs.ground(subs, delta)
+        bp.rhs = self.rhs.ground(subs, delta)
         bp.type = self.type
 
         return bp
@@ -118,12 +118,20 @@ class BinaryPredicate(Predicate):
             self.__functions = self.lhs.getFunctions() | self.rhs.getFunctions()
         return self.__functions
 
+    def getLiterals(self) -> Set[Predicate]:
+        return {self}
+
     def getFunctionsOverwrite(self) -> Set[Atom]:
         self.__functions = self.lhs.getFunctions() | self.rhs.getFunctions()
         return self.__functions
 
     def __str__(self):
+        if self.operator == "!=":
+            return f"(not (= {self.lhs} {self.rhs}))"
         return f"({self.operator} {self.lhs} {self.rhs})"
+
+    def __hash__(self):
+        return hash(str(self))
 
     def __repr__(self):
         return str(self)
@@ -179,6 +187,19 @@ class BinaryPredicate(Predicate):
             result = Utilities.compare(x.operator, x.lhs.value, x.rhs.value)
             return result
 
+    def canHappenLifted(self, sub, problem, isPredicateStatic: Dict[str, bool]) -> bool:
+        # if all([not isPredicateStatic[f.name] for f in self.getFunctions()]):
+        #     return False
+        return True
+
+    def canHappenLiftedPartial(self, sub, problem, isPredicateStatic: Dict[str, bool]) -> bool:
+        # if all([not isPredicateStatic[f.name] for f in self.getFunctions()]):
+        #     return False
+        return True
+
+    def isDynamicLifted(self, problem) -> bool:
+        return True
+
     def toConstant(self) -> Constant:
         if self.getFunctions():
             raise Exception(f"Cannot transform {self} into a Constant")
@@ -212,6 +233,16 @@ class BinaryPredicate(Predicate):
             raise Exception("Cannot transform", self, " to expression ", self.type)
         return Utilities.op(self.operator, self.lhs.toExpression(), self.rhs.toExpression())
 
+    def expressify(self, symbols: Dict[Atom, Expr]) -> Expr:
+        if self.type == BinaryPredicateType.OPERATION:
+            return Utilities.op(self.operator, self.lhs.expressify(symbols), self.rhs.expressify(symbols))
+        elif self.type == BinaryPredicateType.COMPARATION:
+            if self.operator == "=":
+                return self.lhs.expressify(symbols) - self.rhs.expressify(symbols)
+            return Utilities.compareExpr(self.operator, self.lhs.expressify(symbols), self.rhs.expressify(symbols))
+        else:
+            raise Exception("Cannot expressify assignment")
+
     def getIntervalFromSimpleCondition(self) -> MooreInterval or None:
         if len(self.getFunctions()) > 1:
             return None
@@ -229,6 +260,15 @@ class BinaryPredicate(Predicate):
         ub = float(-q / m) if self.operator in {"<=", "<", "=", "!="} else float("+inf")
 
         return MooreInterval(lb, ub)
+
+    @classmethod
+    def fromAssignment(cls, atom: Atom, value: float):
+        bp = cls()
+        bp.operator = "="
+        bp.lhs = Literal.fromAtom(atom, "+")
+        bp.rhs = Constant(value)
+        bp.type = BinaryPredicateType.MODIFICATION
+        return bp
 
     @classmethod
     def fromOperationString(cls, string: str):

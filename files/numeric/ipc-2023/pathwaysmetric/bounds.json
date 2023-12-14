@@ -1,0 +1,15 @@
+{
+  "duration-association-reaction": [0, 20],
+  "duration-catalyzed-association-reaction": [0, 20],
+  "duration-catalyzed-self-association-reaction": [0, 20],
+  "duration-synthesis-reaction": [0, 20],
+  "need-for-association": [0, 20],
+  "need-for-catalyzed-association": [0, 20],
+  "need-for-catalyzed-self-association": [0, 20],
+  "need-for-synthesis": [0, 20],
+  "prod-by-association": [0, 20],
+  "prod-by-catalyzed-association": [0, 20],
+  "prod-by-catalyzed-self-association": [0, 20],
+  "prod-by-synthesis": [0, 20],
+  "num-subs": [0, 20]
+}

@@ -384,7 +384,7 @@
     <Compile Include="Status.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Probe.cs" />
-    <Compile Include="Solver.cs" />
+    <Compile Include="Search.cs" />
     <Compile Include="StringSymbol.cs" />
     <Compile Include="Tactic.cs" />
     <Compile Include="TupleSort.cs" />

@@ -1,17 +1,21 @@
 from __future__ import annotations
+
+import copy
 from typing import Dict, List, Set
 
-from src.pddl.Atom import Atom
-from src.pddl.Operation import Operation
-from src.pddl.Problem import Problem
-from src.pddl.Utilities import Utilities
 from src.pddl.Action import Action
+from src.pddl.Atom import Atom
 from src.pddl.Event import Event
+from src.pddl.Operation import Operation
+from src.pddl.PDDLWriter import PDDLWriter
+from src.pddl.Problem import Problem
 from src.pddl.Process import Process
+from src.pddl.State import State
 from src.pddl.Type import Type
 from src.pddl.TypedPredicate import TypedPredicate
-
+from src.pddl.Utilities import Utilities
 from src.pddl.grammar.pddlParser import pddlParser
+from src.utils.LogPrint import LogPrint, LogPrintLevel
 
 
 class Domain:
@@ -34,15 +38,39 @@ class Domain:
         self.events = set()
         self.requirements = list()
         self.constants = set()
+        self.isPredicateStatic: Dict[str, bool] = dict()
         pass
 
-    def ground(self, problem: Problem, avoidSimplification=False) -> GroundedDomain:
+    def __deepcopy__(self, m):
+        m = {} if m is None else m
+        domain = Domain()
+        domain.name = self.name
+        domain.requirements = copy.deepcopy(self.requirements, m)
+        domain.types = copy.deepcopy(self.requirements, m)
+        domain.predicates = copy.deepcopy(self.predicates, m)
+        domain.actions = copy.deepcopy(self.actions, m)
+        domain.events = copy.deepcopy(self.events, m)
+        domain.processes = copy.deepcopy(self.processes, m)
+        domain.constants = copy.deepcopy(self.constants, m)
+        return domain
+    def ground(self, problem: Problem, avoidSimplification=False, console: LogPrint = None, delta=1) -> GroundedDomain:
 
-        gActions: Set[Action] = set([g for action in self.actions for g in action.ground(problem)])
-        gEvents: Set[Event] = set([g for event in self.events for g in event.ground(problem)])
-        gProcess: Set[Process] = set([g for process in self.processes for g in process.ground(problem)])
+        problem.computeWhatCanHappen(self)
+
+        gActions: Set[Action] = set(
+            [g for action in self.actions for g in action.ground(problem, self.isPredicateStatic, delta=delta)])
+        gEvents: Set[Event] = set([g for event in self.events for g in event.ground(problem, self.isPredicateStatic, delta=delta)])
+        gProcess: Set[Process] = set(
+            [g for process in self.processes for g in process.ground(problem, self.isPredicateStatic, delta=delta)])
 
         gDomain = GroundedDomain(self.name, gActions, gEvents, gProcess)
+        gDomain.allAtoms |= problem.allAtoms
+        gDomain.functions |= problem.functions
+        gDomain.predicates |= problem.predicates
+
+        if console:
+            console.log("Static Grounding Stats:", LogPrintLevel.STATS)
+            console.log(gDomain.getStats(), LogPrintLevel.STATS)
 
         if avoidSimplification:
             return gDomain
@@ -62,9 +90,10 @@ class Domain:
 
         rpg = RPG(gDomain, problem)
         orderedActions = rpg.getActionsOrder()
-        arpg = ARPG(orderedActions, problem, gDomain)
+        initialState = State.fromInitialCondition(problem.init)
+        gDomain.actions = set(orderedActions)
 
-        gDomain.actions = orderedActions
+        arpg = ARPG(gDomain, initialState, problem.goal)
         constants: Dict[Atom, float] = arpg.getConstantAtoms()
 
         for op in gActions | gEvents | gProcess:
@@ -76,8 +105,17 @@ class Domain:
         gDomain = gDomain.substitute(constants)
         orderedActions = [a.substitute(constants) for a in orderedActions if a.canHappen(constants)]
         problem.substitute(constants)
+        gDomain.actions = set(orderedActions)
 
-        gDomain.arpg = ARPG(orderedActions, problem, gDomain)
+        from src.plan.AffectedGraph import AffectedGraph
+        gDomain.actions = sorted(gDomain.actions, key=lambda a: a.name)
+        gDomain.affectedGraph = AffectedGraph.fromActions(gDomain.actions)
+        gDomain.arpg = ARPG(gDomain, initialState, problem.goal)
+
+        if console:
+            console.log("Dynamic Grounding Stats:", LogPrintLevel.STATS)
+            console.log(gDomain.getStats(), LogPrintLevel.STATS)
+
         return gDomain
 
     @classmethod
@@ -103,6 +141,11 @@ class Domain:
                 domain.events.add(Event.fromNode(child, domain.types))
             elif isinstance(child, pddlParser.ProcessContext):
                 domain.processes.add(Process.fromNode(child, domain.types))
+
+        domain.isPredicateStatic: Dict[str, bool] = dict([(p.name, True) for p in domain.predicates | domain.functions])
+        for action in domain.actions | domain.events | domain.processes:
+            for eff in action.effects.getFunctions() | action.effects.getPredicates():
+                domain.isPredicateStatic[eff.name] = False
 
         return domain
 
@@ -148,15 +191,21 @@ class Domain:
 
     def __setPredicates(self, node: pddlParser.PredicatesContext):
         for child in node.children:
-            if not isinstance(child, pddlParser.PositiveLiteralContext):
+            if not isinstance(child, pddlParser.TypedPositiveLiteralContext):
                 continue
             self.predicates.add(TypedPredicate.fromNode(child, self.types))
 
     def __setFunctions(self, node: pddlParser.FunctionsContext):
         for child in node.children:
-            if not isinstance(child, pddlParser.PositiveLiteralContext):
+            if not isinstance(child, pddlParser.TypedPositiveLiteralContext):
                 continue
             self.functions.add(TypedPredicate.fromNode(child, self.types))
+
+    def getSignatures(self) -> Dict[str, Operation]:
+        signatures: Dict[str, Operation] = dict()
+        for h in self.actions | self.events | self.processes:
+            signatures[h.getSignature()] = h
+        return signatures
 
 
 class GroundedDomain(Domain):
@@ -170,7 +219,7 @@ class GroundedDomain(Domain):
     delList: Dict[Atom, Set[Operation]]
     assList: Dict[Atom, Set[Operation]]
 
-    def __init__(self, name: str, actions: Set[Action], events: Set[Event], process: Set[Process]):
+    def __init__(self, name: str, actions: Set[Action], events: Set[Event], process: Set[Process], affectedGraph=None):
         super().__init__()
 
         self.name = name
@@ -214,14 +263,70 @@ class GroundedDomain(Domain):
         self.allAtoms = self.functions | self.predicates
         self.arpg = None
 
+        from src.plan.AffectedGraph import AffectedGraph
+        self.affectedGraph: AffectedGraph = affectedGraph
+
     def getOperationByPlanName(self, planName) -> Operation:
         return self.__operationsDict[planName]
 
     def substitute(self, sub: Dict[Atom, float], default=None) -> GroundedDomain:
         subActions: Set[Action] = {a.substitute(sub, default) for a in self.actions if a.canHappen(sub, default)}
 
-        return GroundedDomain(self.name, subActions, self.events, self.processes)
-
+        return GroundedDomain(self.name, subActions, self.events, self.processes, self.affectedGraph)
 
     def getARPG(self):
         return self.arpg
+
+    def getStats(self) -> str:
+        stats = []
+        stats.append(f"|V_b|={len(self.predicates)}")
+        stats.append(f"|V_n|={len(self.functions)}")
+        stats.append(f"|A|={len(self.actions)}")
+        stats.append(f"|Asgn(A)|={len(self.assList)}")
+        return "\n".join(stats)
+
+    def toPDDL(self, pw: PDDLWriter = PDDLWriter()):
+        pw.write(f"(define (domain {self.name})")
+        pw.increaseTab()
+        # Types
+        pw.write(f"(:types")
+        pw.increaseTab()
+        for type in self.types.values():
+            type.toPDDL(pw)
+        pw.decreaseTab()
+        pw.write(f")")
+
+        if self.constants:
+            # Constants
+            pw.write(f"(:constants")
+            pw.increaseTab()
+            for (type, objects) in self.constants.items():
+                objStr = " ".join(objects)
+                pw.write(f"{objStr} - {type}")
+            pw.decreaseTab()
+            pw.write(f")")
+
+            # Predicates
+        pw.write(f"(:predicates")
+        pw.increaseTab()
+        for p in self.predicates:
+            p.toPDDL(pw)
+        pw.decreaseTab()
+        pw.write(f")")
+
+        if self.functions:
+            # Functions
+            pw.write(f"(:functions")
+            pw.increaseTab()
+            for f in self.functions:
+                f.toPDDL(pw)
+            pw.decreaseTab()
+            pw.write(f")")
+
+        for h in self.actions | self.events | self.processes:
+            h.toPDDL(pw)
+
+        pw.decreaseTab()
+        pw.write(f")")
+
+        return pw

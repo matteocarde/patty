@@ -3,11 +3,12 @@ from __future__ import annotations
 import copy
 
 from itertools import chain
-from typing import Dict, List, cast, Iterable
+from typing import Dict, List, cast, Iterable, Tuple
 
 from src.pddl.Atom import Atom
-from src.pddl.BinaryPredicate import BinaryPredicate
+from src.pddl.BinaryPredicate import BinaryPredicate, BinaryPredicateType
 from src.pddl.Literal import Literal
+from src.pddl.PDDLWriter import PDDLWriter
 from src.pddl.grammar.pddlParser import pddlParser
 from src.pddl.grammar.pddlParser import pddlParser as p
 
@@ -44,9 +45,9 @@ class Effects:
 
         return effects
 
-    def ground(self, sub: Dict[str, str]) -> Effects:
+    def ground(self, sub: Dict[str, str], delta=1) -> Effects:
         e = Effects()
-        e.assignments = [predicate.ground(sub) for predicate in self.assignments]
+        e.assignments = [predicate.ground(sub, delta=1) for predicate in self.assignments]
         return e
 
     def getFunctions(self):
@@ -78,3 +79,61 @@ class Effects:
 
     def addEffect(self, ass: Literal or BinaryPredicate):
         self.assignments.append(ass)
+
+    @classmethod
+    def __joinFollowingBinaryPredicates(cls, lhs: BinaryPredicate, bps: List[BinaryPredicate],
+                                        signs: Tuple[str, str]) -> BinaryPredicate:
+        first = bps[0]
+        bp = BinaryPredicate()
+        bp.operator = signs[0] if first.operator == "increase" else signs[1]
+        bp.lhs = lhs
+        bp.rhs = Effects.__joinFollowingBinaryPredicates(first.rhs, bps[1:], signs) if len(bps) > 1 else first.rhs
+        bp.type = BinaryPredicateType.OPERATION
+
+        return bp
+
+    # (increase x (f))
+    # (decrease x (g))
+    # -> (increase x (- (f g))
+    @classmethod
+    def joinBinaryPredicates(cls, bps: List[BinaryPredicate]) -> BinaryPredicate:
+        first = bps[0]
+        bp = BinaryPredicate()
+        bp.operator = first.operator
+        bp.lhs = first.lhs
+        signs = ("+", "-") if bp.operator == "increase" else ("-", "+")
+        bp.rhs = Effects.__joinFollowingBinaryPredicates(first.rhs, bps[1:], signs)
+        bp.type = BinaryPredicateType.MODIFICATION
+
+        return bp
+
+    @classmethod
+    def join(cls, effects: List[Effects]) -> Effects:
+        joinedEff = cls()
+        rhs: Dict[Atom, List[BinaryPredicate]] = dict()
+        for e in effects:
+            for c in e.assignments:
+                if isinstance(c, Literal):
+                    joinedEff.assignments.append(c)
+                elif isinstance(c, BinaryPredicate):
+                    atom = c.getAtom()
+                    rhs[atom] = rhs.setdefault(atom, [])
+                    rhs[atom].append(c)
+
+        for (atom, phi) in rhs.items():
+            if len(phi) == 1:
+                joinedEff.assignments += phi
+                continue
+            joinedBp = Effects.joinBinaryPredicates(phi)
+            joinedEff.assignments.append(joinedBp)
+            pass
+
+        return joinedEff
+
+    def toPDDL(self, pw: PDDLWriter = PDDLWriter()):
+        pw.write(f":effect (and")
+        pw.increaseTab()
+        for c in self.assignments:
+            c.toPDDL(pw)
+        pw.decreaseTab()
+        pw.write(")")

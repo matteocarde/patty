@@ -76,7 +76,7 @@ public class Tactic extends Z3Object {
      * @see Context#mkSolver(Tactic)
      * @throws Z3Exception 
      **/
-    public Solver getSolver()
+    public Search getSolver()
     {
         return getContext().mkSolver(this);
     }

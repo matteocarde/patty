@@ -1,0 +1,95 @@
+Started Grounding
+Ended Grounding
+Pattern: drink okra pork; drink flounder rice; drink rice pear; drink pork okra; drink lamb flounder; drink pear pear; drink lamb lamb; drink okra flounder; drink pear pork; drink pear lamb; drink okra pear; drink rice flounder; drink okra rice; drink pork pear; drink lamb pear; drink lamb pork; drink okra lamb; feast rest pork lamb; drink flounder pear; drink pear rice; drink flounder flounder; overcome abrasion rest pork; feast rest pork okra; drink pear flounder; drink pork rice; drink rice pork; drink lamb okra; drink pear okra; drink rice rice; drink okra okra; drink pork flounder; drink rice okra; drink flounder lamb; drink pork pork; drink flounder pork; drink rice lamb; drink lamb rice; drink pork lamb; drink flounder okra; feast rest okra pear; feast rest lamb pork; feast rest okra pork; succumb abrasion rest lamb; feast rest lamb flounder; succumb abrasion rest pork; succumb abrasion rest okra; feast rest pear rice; overcome depression rest flounder; overcome abrasion rest okra; overcome abrasion rest lamb; feast rest flounder lamb; succumb abrasion rest flounder; feast rest pear okra; succumb abrasion rest pear; feast rest flounder rice; succumb abrasion rest rice; overcome abrasion rest pear; succumb depression rest pear; succumb depression rest okra; overcome abrasion rest flounder; succumb depression rest rice; feast rest rice pear; feast rest rice rice; feast rest rice flounder; overcome hangover rest rice; succumb depression rest lamb; succumb depression rest flounder; succumb depression rest pork; succumb hangover rest pork; overcome depression rest lamb; succumb hangover rest lamb; overcome depression rest rice; overcome abrasion rest rice; overcome depression rest pear; succumb hangover rest okra; succumb hangover rest flounder; overcome depression rest pork; succumb hangover rest rice; overcome depression rest okra; succumb hangover rest pear; overcome hangover rest okra; overcome hangover rest lamb; overcome hangover rest pork; overcome hangover rest pear; overcome hangover rest flounder
+Started Conversion to SMT at bound 1
+Ended Conversion to SMT at bound 1
+Started Solving Bound 1
+Ended Solving Bound 1
+Bound 1 - Vars = 179
+Bound 1 - Rules = 406
+0: (drink okra pork)
+1: (drink okra pork)
+2: (drink okra pork)
+3: (drink okra pork)
+4: (drink okra pork)
+5: (drink okra pork)
+6: (drink flounder rice)
+7: (drink flounder rice)
+8: (drink flounder rice)
+9: (drink flounder rice)
+10: (drink rice pear)
+11: (drink rice pear)
+12: (drink rice pear)
+13: (drink rice pear)
+14: (drink rice pear)
+15: (drink pear pear)
+16: (drink pear pear)
+17: (drink pear pear)
+18: (drink lamb lamb)
+19: (drink lamb lamb)
+20: (drink lamb lamb)
+21: (drink lamb lamb)
+22: (drink lamb lamb)
+23: (drink lamb lamb)
+24: (drink lamb lamb)
+25: (drink pear pork)
+26: (drink pear pork)
+27: (drink pear lamb)
+28: (drink pear lamb)
+29: (drink pork pear)
+30: (drink pork pear)
+31: (drink pork pear)
+32: (drink pork pear)
+33: (drink pork pear)
+34: (drink pork pear)
+35: (drink pork pear)
+36: (drink pork pear)
+37: (drink pork pear)
+38: (drink pork pear)
+39: (drink pear rice)
+40: (drink pear rice)
+41: (drink pear rice)
+42: (drink pear rice)
+43: (drink pear rice)
+44: (overcome abrasion rest pork)
+45: (feast rest pork okra)
+46: (drink pear flounder)
+47: (drink pear flounder)
+48: (drink pork rice)
+49: (drink pork rice)
+50: (drink rice pork)
+51: (drink rice pork)
+52: (drink rice pork)
+53: (drink pear okra)
+54: (drink pear okra)
+55: (drink rice rice)
+56: (drink rice rice)
+57: (drink okra okra)
+58: (drink okra okra)
+59: (drink okra okra)
+60: (drink pork flounder)
+61: (drink pork flounder)
+62: (drink rice okra)
+63: (drink rice okra)
+64: (drink flounder lamb)
+65: (drink flounder lamb)
+66: (drink pork pork)
+67: (drink pork pork)
+68: (drink pork pork)
+69: (drink flounder pork)
+70: (drink flounder pork)
+71: (feast rest okra pear)
+72: (feast rest pear rice)
+73: (succumb abrasion rest rice)
+74: (overcome hangover rest rice)
+
+Plan is valid
+Bound: 1
+Grounding: 114ms
+Conversion to SMT at bound 1: 75ms
+Solving Bound 1: 187ms
+Overall: 449ms
+
+real 1.05
+user 0.74
+sys 0.05

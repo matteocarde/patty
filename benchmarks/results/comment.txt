@@ -1,0 +1,17 @@
+DRONE:        Lento se pattern_h viene concatenato ed esplode con tante azioni. Necessita frontier
+HYDROPOWER:   INDAGARE
+COUNTERS(L):  PERCHE' ADESSO E' NORMALE ?
+DELIVERY:     Lento se pattern_h viene concatenato ed esplode con tante azioni. Necessita frontier
+EXPEDITION:   Un solo subgoal. Astar inutile. Necessita frontier
+MPRIME:       Un solo subgoal. Astar inutile. Necessita frontier
+ROVER:        Le variabili sono tante. Se il pattern è bello (SCC) allora trova subito. Se deve fare Astar 
+              la somma di \pattern_h e \pattern_g diventa simile che concatenare sempre lo stesso pattern.
+              Sarebbe utile frontier.
+SUGAR:        INVESTIGARE PERCHE' TEMPO PEGGIORE
+TPP:          Dopo un certo problema (>10%) tantissime azioni che fanno esplodere search. Frontier poco uso
+ZENOTRAVEL:   Dopo un certo problema (>55%) tantissime azioni che fanno esplodere search. Frontier poco uso
+
+
+PATTY-A* vs PATTY: 17 vs 11
+PATTY-A* vs ENHSP: 14 vs 7
+

@@ -14,8 +14,8 @@ from src.smt.SMTSolver import SMTSolver
 class TestLineExchangeGeneral(TestCase):
 
     def setUp(self) -> None:
-        self.domain: Domain = Domain.fromFile("../../files/line-exchange/domain.pddl")
-        self.problem: Problem = Problem.fromFile("../../files/line-exchange/instances/2_10_90_10.pddl")
+        self.domain: Domain = Domain.fromFile("../../files/numerical/line-exchange/domain.pddl")
+        self.problem: Problem = Problem.fromFile("../../files/numerical/line-exchange/instances/2_10_90_10.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.horizon = 5
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())

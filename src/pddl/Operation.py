@@ -3,7 +3,7 @@ from __future__ import annotations
 import copy
 
 import itertools
-from typing import Dict, List, Set
+from typing import Dict, List, Set, Tuple
 
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate, BinaryPredicateType
@@ -46,6 +46,7 @@ class Operation:
         self.assignments = dict()
         self.linearizationOf = self
         self.linearizationTimes = 1
+        self.isFake = False
 
     def __deepcopy__(self, m=None) -> Operation:
         m = {} if m is None else m
@@ -119,6 +120,10 @@ class Operation:
     def __addEffects(self, node: p.OpEffectContext):
         self.effects = Effects.fromNode(node.getChild(1))
 
+    def getSignature(self):
+        params = [p.name for p in self.parameters]
+        return f"{self.name}({','.join(params)})"
+
     def getCombinations(self, problem: Problem) -> List[Dict[str, str]]:
         subs: List[List[str]] = list()
         for parameter in self.parameters:
@@ -129,33 +134,61 @@ class Operation:
                 pSubs += problem.objectsByType[childType.name]
             subs.append(pSubs)
 
-        combinations: List[Dict[str, str]] = list()
-        for sub in itertools.product(*subs):
-            comb: Dict[str, str] = dict()
-            for i, parameter in enumerate(self.parameters):
-                comb[parameter.name] = sub[i]
-            combinations.append(comb)
+        return subs  # list(itertools.product(*subs))
 
-        return combinations
+    def __getValidCombinationsSub(self, problem: Problem, item: Tuple, itemParams: List[str],
+                                  downLevels: List[List[str]], paramsLeft: List[str]) -> List[Tuple]:
 
-    def getGroundedOperations(self, problem):
-        combinations: List[Dict[str, str]] = self.getCombinations(problem)
+        if item and not self.preconditions.canHappenLiftedPartial(item, itemParams, problem):
+            return []
+
+        if not downLevels:
+            return [item]
+
+        paths: List[Tuple] = list()
+        for itemDown in downLevels[0]:
+            paths += self.__getValidCombinationsSub(problem,
+                                                    item + tuple([itemDown]),
+                                                    itemParams + [paramsLeft[0]],
+                                                    downLevels[1:],
+                                                    paramsLeft[1:])
+        return paths
+
+    def __getValidCombinations(self, problem, levels: List[List[str]], params: List[str]) -> List[Tuple]:
+        paths: List[Tuple] = self.__getValidCombinationsSub(problem, tuple(), [], levels, params)
+        return paths
+
+    def getGroundedOperations(self, problem, isPredicateStatic: Dict[str, bool], delta=1):
+        levels: List[List[str]] = self.getCombinations(problem)
+
+        combinations: List[Tuple]
+
+        if self.preconditions.isDynamicLifted(problem):
+            combinations = list(itertools.product(*levels))
+        else:
+            opParams = [p.name for p in self.parameters]
+            combinations = self.__getValidCombinations(problem, levels, opParams)
+
+        validCombinations: List[Dict[str, str]] = []
+        for sub in combinations:
+            validCombinations.append(dict([(p.name, sub[i]) for i, p in enumerate(self.parameters)]))
+
         gOperations = []
-        for subs in combinations:
-            name = self.__getGroundedName(subs)
-            preconditions = self.preconditions.ground(subs)
-            effects = self.effects.ground(subs)
-            planName = self.__getGroundedPlanName(subs)
+        for sub in validCombinations:
+            name = self.__getGroundedName(sub)
+            planName = self.__getGroundedPlanName(sub)
+            preconditions = self.preconditions.ground(sub, delta=delta)
+            effects = self.effects.ground(sub)
             operation: Operation = Operation.fromProperties(name, preconditions, effects, planName)
             gOperations.append(operation)
         return gOperations
 
     def __getGroundedName(self, sub: Dict[str, str]) -> str:
-        parts = [self.name] + [c[1] for c in sub.items()]
+        parts = [self.name] + [str(c) for c in sub.values()]
         return " ".join(parts)
 
     def __getGroundedPlanName(self, sub: Dict[str, str]):
-        parts = [self.name] + [c[1] for c in sub.items()]
+        parts = [self.name] + [str(c) for c in sub.values()]
         return f"({'_'.join(parts)})"
 
     @property
@@ -347,3 +380,19 @@ class Operation:
 
         o_i.name = f"{o_i.name}_{2 ** i}"
         return o_i
+
+    def isMutex(self, other: Operation) -> bool:
+        mutex = self.addList.intersection(other.delList)
+        mutex |= self.delList.intersection(other.addList)
+        mutex |= self.addList.intersection(other.preB)
+        mutex |= self.delList.intersection(other.preB)
+        mutex |= self.preB.intersection(other.addList)
+        mutex |= self.preB.intersection(other.delList)
+        mutex |= self.assList.intersection(other.assList)
+        return len(mutex) > 0
+
+    def isMutexSet(self, operations: Set[Operation]):
+        isMutex = False
+        for op in operations:
+            isMutex = isMutex or self.isMutex(op)
+        return isMutex

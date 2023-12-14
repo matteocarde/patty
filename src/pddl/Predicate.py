@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 from sympy import Expr
-from typing import Dict, Set
+from typing import Dict, Set, Tuple
 
 from src.pddl.Atom import Atom
+from src.pddl.PDDLWriter import PDDLWriter
 
 
 class Predicate:
@@ -11,7 +12,7 @@ class Predicate:
     def __init__(self):
         pass
 
-    def ground(self, subs: Dict[str, str]) -> Predicate:
+    def ground(self, subs: Dict[str, str], delta=1) -> Predicate:
         raise NotImplemented()
 
     def getAtom(self) -> Atom:
@@ -24,6 +25,9 @@ class Predicate:
         raise NotImplemented()
 
     def toLatex(self) -> str:
+        raise NotImplemented
+
+    def expressify(self, symbols: Dict[Atom, Expr]) -> Expr:
         raise NotImplemented
 
     def __eq__(self, other):
@@ -79,3 +83,6 @@ class Predicate:
 
     def toExpression(self) -> Expr or float:
         raise NotImplemented()
+
+    def toPDDL(self, pw: PDDLWriter = PDDLWriter()):
+        pw.write(str(self))

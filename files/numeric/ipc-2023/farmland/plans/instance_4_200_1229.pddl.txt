@@ -1,0 +1,150 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 13
+Aibr Preprocessing
+|F|:0
+|X|:4
+|A|:16
+|P|:0
+|E|:0
+AIBR selected
+Setting horizon to:NaN
+Running Greedy Best First Search
+Problem Solved
+
+Found Plan:
+0.0: (move-slow farm0 farm2)
+1.0: (move-slow farm0 farm2)
+2.0: (move-slow farm0 farm1)
+3.0: (move-slow farm0 farm1)
+4.0: (move-slow farm0 farm1)
+5.0: (move-slow farm0 farm2)
+6.0: (move-slow farm1 farm3)
+7.0: (move-slow farm2 farm3)
+8.0: (move-slow farm0 farm1)
+9.0: (move-slow farm0 farm1)
+10.0: (move-slow farm0 farm1)
+11.0: (move-slow farm0 farm1)
+12.0: (move-slow farm0 farm1)
+13.0: (move-slow farm0 farm1)
+14.0: (move-slow farm0 farm1)
+15.0: (move-slow farm0 farm1)
+16.0: (move-slow farm0 farm1)
+17.0: (move-slow farm0 farm1)
+18.0: (move-slow farm0 farm1)
+19.0: (move-slow farm0 farm1)
+20.0: (move-slow farm0 farm1)
+21.0: (move-slow farm0 farm1)
+22.0: (move-slow farm0 farm1)
+23.0: (move-slow farm0 farm1)
+24.0: (move-slow farm0 farm1)
+25.0: (move-slow farm0 farm1)
+26.0: (move-slow farm0 farm1)
+27.0: (move-slow farm0 farm1)
+28.0: (move-slow farm0 farm1)
+29.0: (move-slow farm0 farm1)
+30.0: (move-slow farm0 farm1)
+31.0: (move-slow farm0 farm1)
+32.0: (move-slow farm0 farm1)
+33.0: (move-slow farm0 farm1)
+34.0: (move-slow farm0 farm1)
+35.0: (move-slow farm0 farm1)
+36.0: (move-slow farm0 farm1)
+37.0: (move-slow farm0 farm1)
+38.0: (move-slow farm0 farm1)
+39.0: (move-slow farm0 farm1)
+40.0: (move-slow farm0 farm1)
+41.0: (move-slow farm0 farm1)
+42.0: (move-slow farm0 farm1)
+43.0: (move-slow farm0 farm1)
+44.0: (move-slow farm0 farm1)
+45.0: (move-slow farm0 farm1)
+46.0: (move-slow farm0 farm1)
+47.0: (move-slow farm0 farm1)
+48.0: (move-slow farm0 farm1)
+49.0: (move-slow farm0 farm1)
+50.0: (move-slow farm0 farm1)
+51.0: (move-slow farm0 farm1)
+52.0: (move-slow farm0 farm1)
+53.0: (move-slow farm0 farm1)
+54.0: (move-slow farm0 farm1)
+55.0: (move-slow farm0 farm1)
+56.0: (move-slow farm0 farm1)
+57.0: (move-slow farm0 farm1)
+58.0: (move-slow farm0 farm1)
+59.0: (move-slow farm0 farm1)
+60.0: (move-slow farm0 farm1)
+61.0: (move-slow farm0 farm1)
+62.0: (move-slow farm0 farm1)
+63.0: (move-slow farm0 farm1)
+64.0: (move-slow farm0 farm1)
+65.0: (move-slow farm0 farm1)
+66.0: (move-slow farm0 farm1)
+67.0: (move-slow farm0 farm1)
+68.0: (move-slow farm0 farm1)
+69.0: (move-slow farm0 farm1)
+70.0: (move-slow farm0 farm1)
+71.0: (move-slow farm0 farm1)
+72.0: (move-slow farm0 farm1)
+73.0: (move-slow farm0 farm1)
+74.0: (move-slow farm0 farm1)
+75.0: (move-slow farm0 farm1)
+76.0: (move-slow farm0 farm1)
+77.0: (move-slow farm0 farm1)
+78.0: (move-slow farm0 farm1)
+79.0: (move-slow farm0 farm1)
+80.0: (move-slow farm0 farm1)
+81.0: (move-slow farm0 farm1)
+82.0: (move-slow farm0 farm1)
+83.0: (move-slow farm0 farm1)
+84.0: (move-slow farm0 farm1)
+85.0: (move-slow farm0 farm1)
+86.0: (move-slow farm0 farm1)
+87.0: (move-slow farm0 farm1)
+88.0: (move-slow farm0 farm1)
+89.0: (move-slow farm0 farm1)
+90.0: (move-slow farm0 farm1)
+91.0: (move-slow farm0 farm1)
+92.0: (move-slow farm0 farm1)
+93.0: (move-slow farm0 farm1)
+94.0: (move-slow farm0 farm1)
+95.0: (move-slow farm0 farm1)
+96.0: (move-slow farm0 farm1)
+97.0: (move-slow farm0 farm1)
+98.0: (move-slow farm0 farm1)
+99.0: (move-slow farm0 farm1)
+100.0: (move-slow farm0 farm1)
+101.0: (move-slow farm0 farm1)
+102.0: (move-fast farm0 farm1)
+103.0: (move-slow farm3 farm2)
+104.0: (move-slow farm0 farm1)
+105.0: (move-slow farm0 farm1)
+106.0: (move-slow farm0 farm1)
+107.0: (move-slow farm0 farm1)
+108.0: (move-slow farm0 farm1)
+109.0: (move-slow farm0 farm1)
+110.0: (move-slow farm0 farm1)
+111.0: (move-slow farm0 farm1)
+112.0: (move-slow farm0 farm1)
+113.0: (move-slow farm0 farm1)
+114.0: (move-slow farm0 farm1)
+115.0: (move-slow farm0 farm1)
+116.0: (move-slow farm0 farm1)
+117.0: (move-slow farm0 farm1)
+118.0: (move-slow farm0 farm1)
+119.0: (move-slow farm0 farm1)
+
+Plan-Length:120
+Metric (Search):120.0
+Planning Time (msec): 988
+Heuristic Time (msec): 592
+Search Time (msec): 702
+Expanded Nodes:426
+States Evaluated:2946
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:0
+Number of Duplicates detected:2136
+real 1.16
+user 1.10
+sys 0.08

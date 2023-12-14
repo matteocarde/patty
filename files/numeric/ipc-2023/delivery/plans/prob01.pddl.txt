@@ -1,0 +1,40 @@
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 91
+Aibr Preprocessing
+|F|:46
+|X|:2
+|A|:136
+|P|:0
+|E|:0
+H1 Setup Time (msec): 14
+Setting horizon to:NaN
+Running Greedy Best First Search
+Problem Solved
+
+Found Plan:
+0.0: (pick item3 rooma left1 bot1)
+1.0: (pick item4 rooma right1 bot1)
+2.0: (move bot1 rooma roomb)
+3.0: (pick item1 rooma left2 bot2)
+4.0: (drop item4 roomb right1 bot1)
+5.0: (drop item3 roomb left1 bot1)
+6.0: (pick item2 rooma right2 bot2)
+7.0: (move bot2 rooma roomc)
+8.0: (drop item2 roomc right2 bot2)
+9.0: (drop item1 roomc left2 bot2)
+
+Plan-Length:10
+Metric (Search):22.0
+Planning Time (msec): 839
+Heuristic Time (msec): 100
+Search Time (msec): 176
+Expanded Nodes:11
+States Evaluated:103
+Fixed constraint violations during search (zero-crossing):0
+Number of Dead-Ends detected:0
+Number of Duplicates detected:14
+real 0.93
+user 0.91
+sys 0.07

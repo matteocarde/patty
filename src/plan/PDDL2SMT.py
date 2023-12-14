@@ -1,6 +1,9 @@
 from typing import List, Dict, Set
 
-from pysmt.shortcuts import TRUE, FALSE
+import pysmt.smtlib.commands as smtcmd
+import pysmt.smtlib.script
+from pysmt.environment import get_env
+from pysmt.logics import QF_NRA
 
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
@@ -25,14 +28,22 @@ class PDDL2SMT:
     domain: GroundedDomain
     problem: Problem
 
-    def __init__(self, domain: GroundedDomain, problem: Problem, pattern: Pattern, bound: int, encoding="non-linear",
-                 binaryActions=10, rollBound=0, hasEffectAxioms=False):
+    def __init__(self, domain: GroundedDomain, problem: Problem, pattern: Pattern, bound: int,
+                 encoding="non-linear",
+                 binaryActions=10,
+                 rollBound=0,
+                 hasEffectAxioms=False,
+                 relaxGoal=False,
+                 subgoalsAchieved: Set[Formula] = None):
+
         self.domain = domain
         self.problem = problem
         self.bound = bound
         self.encoding = encoding
         self.rollBound = rollBound
         self.hasEffectAxioms = hasEffectAxioms
+        self.relaxGoal = relaxGoal
+        self.subgoalsAchieved = subgoalsAchieved
 
         self.transitionVariables: [TransitionVariables] = list()
 
@@ -47,6 +58,7 @@ class PDDL2SMT:
                                       index, hasEffectAxioms)
             self.transitionVariables.append(var)
 
+        self.softRules = []
         self.initial: [SMTExpression] = self.getInitialExpression()
         self.goal: [SMTExpression] = self.getGoalExpression()
 
@@ -55,6 +67,8 @@ class PDDL2SMT:
             self.transitions.extend(stepRules)
 
         self.rules = self.initial + self.transitions + [self.goal]
+
+        pass
 
     def getInitialExpression(self) -> List[SMTExpression]:
         tVars = self.transitionVariables[0]
@@ -82,30 +96,53 @@ class PDDL2SMT:
 
         return rules
 
-    def getGoalRuleFromFormula(self, f: Formula) -> SMTExpression:
+    def getGoalRuleFromFormula(self, f: Formula, level: int) -> SMTExpression:
         tVars = self.transitionVariables[-1]
-        rules: [SMTExpression] = []
+
+        andRules: [SMTExpression] = []
+        orRules: [SMTExpression] = []
+
         for condition in f.conditions:
+            rule: SMTExpression
+
             if isinstance(condition, BinaryPredicate):
-                expr = SMTExpression.fromPddl(condition, tVars.valueVariables)
-                rules.append(expr)
+                rule = SMTExpression.fromPddl(condition, tVars.valueVariables)
             elif isinstance(condition, Literal):
                 if condition.sign == "+":
-                    rules.append(tVars.valueVariables[condition.getAtom()])
+                    rule = tVars.valueVariables[condition.getAtom()]
                 else:
-                    rules.append(tVars.valueVariables[condition.getAtom()].NOT())
+                    rule = tVars.valueVariables[condition.getAtom()].NOT()
             elif isinstance(condition, Formula):
-                rules.append(self.getGoalRuleFromFormula(condition))
+                rule = self.getGoalRuleFromFormula(condition, level + 1)
             else:
                 raise NotImplemented("Shouldn't go here")
 
-        if f.type == "AND":
-            return SMTExpression.andOfExpressionsList(rules)
-        if f.type == "OR":
-            return SMTExpression.orOfExpressionsList(rules)
+            if level == 0 and self.relaxGoal:
+                if condition in self.subgoalsAchieved:
+                    andRules.append(rule)
+                else:
+                    self.softRules.append(rule)
+                    orRules.append(rule)
+            else:
+                if f.type == "AND":
+                    andRules.append(rule)
+                elif f.type == "OR":
+                    orRules.append(rule)
+
+        rules = []
+        if andRules:
+            rules.append(SMTExpression.andOfExpressionsList(andRules))
+        if orRules:
+            rules.append(SMTExpression.orOfExpressionsList(orRules))
+
+        return SMTExpression.andOfExpressionsList(rules)
 
     def getGoalExpression(self) -> SMTExpression:
-        return self.getGoalRuleFromFormula(self.problem.goal)
+
+        if self.relaxGoal and self.problem.goal.type != "AND":
+            raise Exception("At the moment I cannot relax the goal if it is not expressed as a conjunction of formulas")
+
+        return self.getGoalRuleFromFormula(self.problem.goal, 0)
 
     def getMetricExpression(self, metricBound: float) -> SMTExpression or None:
 
@@ -237,6 +274,7 @@ class PDDL2SMT:
             lhs1 = stepVars.actionVariables[a] > 1
             preconditions0 = None
             preconditions1 = None
+            isPre1Impossible = False
             for pre in a.preconditions:
                 if isinstance(pre, Literal):
                     v = pre.getAtom()
@@ -255,30 +293,36 @@ class PDDL2SMT:
                     if not isinstance(eff, BinaryPredicate):
                         continue
                     v = eff.lhs.getAtom()
+                    rhsExpr = SMTNumericVariable.fromPddl(eff.rhs, stepVars.deltaVariables[a])
                     if eff.operator == "assign":
-                        subs[v] = stepVars.valueVariables[v]
+                        subs[v] = rhsExpr
                         continue
                     if eff.operator == "increase":
-                        subs[v] = stepVars.deltaVariables[a][v] + \
-                                  SMTNumericVariable.fromPddl(eff.rhs, stepVars.deltaVariables[a]) * \
-                                  (stepVars.actionVariables[a] - 1)
+                        x = stepVars.deltaVariables[a][v] + rhsExpr * (stepVars.actionVariables[a] - 1)
+                        subs[v] = x
+                        pass
                     else:
-                        subs[v] = stepVars.deltaVariables[a][v] - \
-                                  SMTNumericVariable.fromPddl(eff.rhs, stepVars.deltaVariables[a]) * \
-                                  (stepVars.actionVariables[a] - 1)
+                        subs[v] = stepVars.deltaVariables[a][v] - rhsExpr * (stepVars.actionVariables[a] - 1)
 
                 for v in stepVars.deltaVariables[a].keys():
                     subs[v] = subs[v] if v in subs else stepVars.deltaVariables[a][v]
 
                 # Transformed precondition
                 precondition1 = SMTNumericVariable.fromPddl(pre, subs)
-                preconditions1 = preconditions1.AND(precondition1) if preconditions1 else precondition1
+                if not precondition1:
+                    isPre1Impossible = True
+                else:
+                    preconditions1 = preconditions1.AND(precondition1) if preconditions1 else precondition1
 
             if preconditions0:
                 rules.append(lhs0.implies(preconditions0))
 
-            if preconditions1:
+            if preconditions1 and not isPre1Impossible:
                 rules.append(lhs1.implies(preconditions1))
+
+            if isPre1Impossible:
+                rules.append(lhs1.NOT())
+
         return rules
 
     def getEffStepRules(self, stepVars: TransitionVariables) -> List[SMTExpression]:
@@ -317,12 +361,15 @@ class PDDL2SMT:
     def getFrameStepRules(self, stepVars: TransitionVariables) -> List[SMTExpression]:
         rules: List[SMTExpression] = []
 
-        for v in self.domain.functions:
+        functions = self.domain.functions if self.bound > 1 else self.problem.goal.getFunctions()
+        predicates = self.domain.predicates if self.bound > 1 else self.problem.goal.getPredicates()
+
+        for v in functions:
             v_first = stepVars.valueVariables[v]
             delta_g_v = stepVars.deltaVariables[self.pattern.dummyAction][v]
             rules.append(v_first == delta_g_v)
 
-        for v in self.domain.predicates:
+        for v in predicates:
             v_first = stepVars.valueVariables[v]
             delta_g_v = stepVars.deltaVariables[self.pattern.dummyAction][v]
             rules.append(delta_g_v.coimplies(v_first))
@@ -345,6 +392,34 @@ class PDDL2SMT:
     def printRules(self):
         for rule in self.rules:
             print(rule)
+
+    def writeSMTLIB(self, filename: str):
+        formula = SMTExpression.andOfExpressionsList(self.rules).expression
+        with open(filename, "w") as fout:
+            script = pysmt.smtlib.script.SmtLibScript()
+
+            script.add(name=smtcmd.SET_LOGIC,
+                       args=[QF_NRA])
+
+            # Declare all types
+            types = get_env().typeso.get_types(formula, custom_only=True)
+            for type_ in types:
+                script.add(name=smtcmd.DECLARE_SORT, args=[type_.decl])
+
+            deps = formula.get_free_variables()
+            # Declare all variables
+            for symbol in deps:
+                assert symbol.is_symbol()
+                script.add(name=smtcmd.DECLARE_FUN, args=[symbol])
+
+            for r in self.rules:
+                # Assert formula
+                script.add_command(pysmt.smtlib.script.SmtLibCommand(name=smtcmd.ASSERT,
+                                                                     args=[r.expression]))
+            # check-sat
+            script.add_command(pysmt.smtlib.script.SmtLibCommand(name=smtcmd.CHECK_SAT,
+                                                                 args=[]))
+            script.serialize(fout, daggify=False)
 
     def __str__(self):
         string = ""

@@ -1,0 +1,22 @@
+$ timeout 300 java -jar ~/Bin/ENHSP-22/enhsp.jar --domain Linear-Race/no-delta/domain.pddl --problem Linear-Race/no-delta/p03-bike+car+f1.pddl -de 1  -dh 6 -dp 6 -h blind -s WAStar -wh 1 -silent
+STDOUT
+Domain parsed
+Problem parsed
+Grounding..
+Grounding Time: 10
+Aibr Preprocessing
+|F|:9
+|X|:9
+Aibr Preprocessing
+|A|:15
+|P|:6
+|E|:6
+Delta time heuristic model:6
+Delta time planning model:6
+Delta time search-execution model:1
+Delta time validation model:1
+w_h set to be 1
+Setting horizon to:NaN
+Running WA-STAR
+
+STDERR

@@ -1,0 +1,127 @@
+Started Grounding
+Ended Grounding
+Pattern: increment c3; increment c5; increase_rate c0; increase_rate c5; increase_rate c7; decrement c4; decrement c1; increment c0; increase_rate c1; increase_rate c3; decrement c2; decrement c3; increase_rate c4; decrement c5; decrement c7; decrement c0; increment c1; increase_rate c6; increment c2; decrement c6; increment c6; increment c4; increment c7; increase_rate c2; decrement_rate c2; decrement_rate c0; decrement_rate c1; decrement_rate c5; decrement_rate c6; decrement_rate c4; decrement_rate c3; decrement_rate c7
+Started Conversion to SMT at bound 1
+Ended Conversion to SMT at bound 1
+Started Solving Bound 1
+Ended Solving Bound 1
+Bound 1 - Vars = 66
+Bound 1 - Rules = 148
+NO SOLUTION: A solution could not be found with bound 1. Try to increase the bound
+Started Conversion to SMT at bound 2
+Ended Conversion to SMT at bound 2
+Started Solving Bound 2
+Ended Solving Bound 2
+Bound 2 - Vars = 115
+Bound 2 - Rules = 278
+0: (increase_rate c5)
+1: (increase_rate c5)
+2: (increase_rate c5)
+3: (increase_rate c5)
+4: (increase_rate c5)
+5: (increase_rate c5)
+6: (increase_rate c5)
+7: (increase_rate c5)
+8: (increase_rate c5)
+9: (increase_rate c5)
+10: (increment c0)
+11: (increment c0)
+12: (increase_rate c1)
+13: (increase_rate c1)
+14: (increase_rate c3)
+15: (increase_rate c3)
+16: (increase_rate c3)
+17: (increase_rate c3)
+18: (increase_rate c3)
+19: (increase_rate c3)
+20: (increase_rate c3)
+21: (increase_rate c3)
+22: (increase_rate c3)
+23: (increase_rate c3)
+24: (decrement c0)
+25: (decrement c0)
+26: (increase_rate c6)
+27: (increment c6)
+28: (increment c6)
+29: (increment c6)
+30: (increment c6)
+31: (increment c6)
+32: (increment c6)
+33: (increment c6)
+34: (increment c6)
+35: (increment c6)
+36: (increment c6)
+37: (increase_rate c2)
+38: (increase_rate c2)
+39: (increase_rate c2)
+40: (increase_rate c2)
+41: (increase_rate c2)
+42: (increase_rate c2)
+43: (increase_rate c2)
+44: (increase_rate c2)
+45: (increase_rate c2)
+46: (increase_rate c2)
+47: (decrement_rate c2)
+48: (decrement_rate c2)
+49: (decrement_rate c2)
+50: (decrement_rate c2)
+51: (decrement_rate c2)
+52: (decrement_rate c2)
+53: (decrement_rate c2)
+54: (decrement_rate c2)
+55: (decrement_rate c3)
+56: (decrement_rate c3)
+57: (decrement_rate c3)
+58: (decrement_rate c3)
+59: (decrement_rate c3)
+60: (decrement_rate c3)
+61: (increment c3)
+62: (increment c3)
+63: (increment c5)
+64: (increase_rate c0)
+65: (increase_rate c7)
+66: (increase_rate c7)
+67: (increase_rate c7)
+68: (increase_rate c7)
+69: (increase_rate c7)
+70: (increase_rate c7)
+71: (decrement c4)
+72: (decrement c4)
+73: (increase_rate c4)
+74: (increase_rate c4)
+75: (increase_rate c4)
+76: (increase_rate c4)
+77: (increase_rate c4)
+78: (increase_rate c4)
+79: (increase_rate c4)
+80: (increase_rate c4)
+81: (increase_rate c4)
+82: (increment c1)
+83: (increment c1)
+84: (increment c2)
+85: (increment c2)
+86: (increment c2)
+87: (increment c6)
+88: (increment c4)
+89: (increment c7)
+90: (increment c7)
+91: (decrement_rate c0)
+92: (decrement_rate c1)
+93: (decrement_rate c5)
+94: (decrement_rate c5)
+95: (decrement_rate c6)
+96: (decrement_rate c4)
+97: (decrement_rate c4)
+
+Plan is valid
+Bound: 2
+Grounding: 53ms
+Conversion to SMT at bound 1: 42ms
+Solving Bound 1: 35ms
+Conversion to SMT at bound 2: 28ms
+Solving Bound 2: 360ms
+Overall: 587ms
+
+real 1.19
+user 0.85
+sys 0.06

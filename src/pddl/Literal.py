@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 import copy
-from sympy import Expr
-from typing import Dict, Set
+from sympy import Expr, Eq
+from typing import Dict, Set, Tuple, List
 
 from src.pddl.Atom import Atom
 from src.pddl.Constant import Constant
 from src.pddl.Predicate import Predicate
+from src.pddl.TypedPredicate import TypedPredicate
 from src.pddl.Utilities import Utilities
 from src.pddl.grammar.pddlParser import pddlParser as p
 
@@ -70,7 +71,9 @@ class Literal(Predicate):
     def getAtom(self) -> Atom:
         return self.atom
 
-    def ground(self, subs: Dict[str, str]) -> Literal:
+    def getLiterals(self) -> Set[Predicate]:
+        return {self}
+    def ground(self, subs: Dict[str, str], delta=1) -> Literal:
 
         literal = Literal()
         literal.sign = self.sign
@@ -122,8 +125,67 @@ class Literal(Predicate):
     def canHappen(self, subs: Dict[Atom, float], default=None) -> bool:
         return True
 
+    def canHappenLifted(self, sub: Tuple, params: List[str], problem) -> bool:
+        if not problem.isPredicateStatic[self.atom.name]:
+            return True
+        attSet = set(self.atom.attributes)
+        subStr = ",".join([sub[i] for i, p in enumerate(params) if p in attSet])
+        atomStr = f"{self.atom.name}({subStr})"
+        if self.sign == "+":
+            return atomStr in problem.canHappenValue
+        if self.sign == "-":
+            return atomStr not in problem.canHappenValue
+
+    def canHappenLiftedPartial(self, item: Tuple, params: List[str], problem) -> bool:
+        if not problem.isPredicateStatic[self.atom.name]:
+            return True
+
+        if not set(params).intersection(set(self.atom.attributes)):
+            return True
+
+        if not self.atom.name in problem.assignmentsTree:
+            return False
+
+        from src.pddl.Problem import Problem
+        problem: Problem
+        totalItems = []
+        root = problem.assignmentsTree[self.atom.name]
+        for i in range(len(item)):
+            if params[i] not in self.atom.attributes:
+                continue
+            indexOfParam = self.atom.attributes.index(params[i])
+            if indexOfParam not in root or item[i] not in root[indexOfParam]:
+                totalItems.append(set())
+                continue
+            totalItems.append(root[indexOfParam][item[i]])
+
+        if not totalItems:
+            return False
+
+        if len(totalItems) == 1:
+            return True
+
+        finalSet: Set = totalItems[0]
+        for itemSet in totalItems[1:]:
+            finalSet = finalSet.intersection(itemSet)
+
+        return len(finalSet) > 0
+
+    def isDynamicLifted(self, problem) -> bool:
+        return not problem.isPredicateStatic[self.atom.name]
+
     def getLinearIncrement(self) -> float:
         return 0
 
     def toExpression(self) -> Expr:
         return self.atom.toExpression()
+
+    def expressify(self, symbols: Dict[Atom, Expr]) -> Expr:
+        return symbols[self.atom]
+
+    def comesFromTypedPredicate(self, tp: TypedPredicate) -> bool:
+        return tp.name == self.atom.name and len(tp.parameters) == len(self.atom.attributes)
+
+    def expressifyWithEquation(self, symbols: Dict[Atom, Expr]) -> Expr:
+        # return Eq(self.expressify(symbols), 1) if self.sign == "+" else Eq(self.expressify(symbols), -1)
+        return self.expressify(symbols) - 1 if self.sign == "+" else self.expressify(symbols) + 1
