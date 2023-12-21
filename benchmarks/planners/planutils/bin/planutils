@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Check if the first argument is "activate", and set the PATH environment variable accordingly
+if [ "$1" = "activate" ]; then
+    planutils_activate
+
+# Else, call planutils via python
+else
+    python3 -c "import planutils; planutils.main()" "$@"
+    exit $?
+fi

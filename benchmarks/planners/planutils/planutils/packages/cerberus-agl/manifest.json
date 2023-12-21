@@ -1,0 +1,6 @@
+{
+    "name": "Cerberus -- agile planner, post-IPC18 version",
+    "description": "The configuration runs only the first iteration of the satisficing configurration, which is a greedy best-first search (GBFS) with deferred heuristic evaluation.",
+    "install-size": "20K",
+    "dependencies": ["cerberus"]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "OPTIC: Optimising Preferences and Time-Dependent Costs",
+  "description": "OPTIC is a temporal planner for use in problems where plan cost is determined by preferences or time-dependent goal-collection costs.",
+  "homepage": "https://github.com/roveri-marco/optic",
+  "install-size": "297MB",
+  "dependencies": [],
+  "endpoint": {
+    "services": {
+      "solve": {
+        "template": "planner",
+        "call":"{package_name} {domain} {problem} >> plan",
+        "return": {
+          "type": "log",
+          "files": "*plan*"
+        }
+      }
+    }
+  }
+}

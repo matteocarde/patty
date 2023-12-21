@@ -9,14 +9,18 @@ RUN rm -rf *
 COPY /benchmarks/planners/itsat /var/itsat
 WORKDIR /var/itsat
 RUN ./build
-RUN chmod +x /var/springroll/springroll
-ENV PATH /var/springroll/:${PATH}
+RUN mv plan itsat
+RUN chmod +x /var/itsat/itsat
+ENV PATH /var/itsat/:${PATH}
 
 # Copying
 COPY . .
 
 #Authorizations
 RUN chmod +x exes/*
+
+# RUN itsat -alg time files/temporal/floortile/domain.pddl files/temporal/floortile/instances/p442-1.pddl plan.txt
+# RUN more plan.txt.1
 
 
 #Execution

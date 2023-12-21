@@ -1,0 +1,7 @@
+{
+    "name": "Machetli: helping debugging complex programs",
+    "description": "A Python package for reproducing characteristics of a program (such as bugs) with modified instances.",
+    "homepage": "https://machetli.readthedocs.io/en/latest",
+    "install-size": "3MB",
+    "dependencies": []
+}

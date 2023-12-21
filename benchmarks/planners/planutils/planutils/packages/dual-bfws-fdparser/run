@@ -1,0 +1,7 @@
+#!/bin/bash
+
+DOMAIN=$1
+PROBLEM=$2
+shift 2
+
+planutils run lapkt -- python3 /planner/BFWS/fd-version/bfws.py $DOMAIN $PROBLEM plan $@

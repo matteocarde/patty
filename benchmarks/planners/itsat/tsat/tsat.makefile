@@ -3,20 +3,16 @@ CPP_COMPILER = g++
 C_COMPILER = gcc
 
 # Include paths...
-#Debug_Include_Path=-I /home/ali/Desktop/IPC/temp-sat-itsat
-#Release_Include_Path=-I /home/ali/Desktop/IPC/temp-sat-itsat
 Debug_Include_Path=-I   ../
 Release_Include_Path=-I   ../
 
 # Library paths...
-#Debug_Library_Path=-L /media/software/code/TemporalSat/gccDebug
-#Release_Library_Path=-L /media/software/code/TemporalSat/gccRelease
 Debug_Library_Path=-L  ../gccDebug
 Release_Library_Path=-L   ../gccRelease
 
 # Additional libraries...
-Debug_Libraries=-Wl, -lprecosat -lzchaff -lminisat
-Release_Libraries=-Wl, -lprecosat -lzchaff -lminisat
+Debug_Libraries= -lprecosat -lzchaff -lminisat
+Release_Libraries= -lprecosat -lzchaff -lminisat
 
 # Preprocessor definitions...
 Debug_Preprocessor_Definitions=-D GCC_BUILD -D _DEBUG -D _CONSOLE 
@@ -37,7 +33,7 @@ build_all_configurations: Debug Release
 #### 32Bit x86 ==> Builds the Debug configuration...
 .PHONY: Debug
 Debug: create_folders gccDebug/main.o gccDebug/utils.o gccDebug/val/DebugWriteController.o gccDebug/val/pddl+.o gccDebug/val/ptree.o gccDebug/SatTimePrecosat.o gccDebug/sattime/SatTime.o gccDebug/sattime/SatTimeMinisat.o gccDebug/sattime/SatTimeZchaff.o gccDebug/satlayer/SatLayer.o gccDebug/satlayer/SatLayerMinisat.o gccDebug/satlayer/SatLayerPrecosat.o gccDebug/parser/ParserClasses.o gccDebug/graph/ETGraph.o gccDebug/graph/ITGraph.o gccDebug/alg2layer/Alg2Layer.o gccDebug/alg2layer/EventPlanOrders.o gccDebug/alg2layer/FindTimedPlan.o gccDebug/alg2layer/FSMSpecific.o gccDebug/alg2layer/FSM_General.o gccDebug/alg2layer/ITGraphUsage.o gccDebug/alg2layer/NegativeCycle.o gccDebug/alg2layer/PrintTimedPlan.o gccDebug/alg2layer/PruneTimedPlan.o gccDebug/alg1time/Alg1Time.o gccDebug/alg1time/ETGraphUsage.o 
-	g++ gccDebug/main.o gccDebug/utils.o gccDebug/val/DebugWriteController.o gccDebug/val/pddl+.o gccDebug/val/ptree.o gccDebug/SatTimePrecosat.o gccDebug/sattime/SatTime.o gccDebug/sattime/SatTimeMinisat.o gccDebug/sattime/SatTimeZchaff.o gccDebug/satlayer/SatLayer.o gccDebug/satlayer/SatLayerMinisat.o gccDebug/satlayer/SatLayerPrecosat.o gccDebug/parser/ParserClasses.o gccDebug/graph/ETGraph.o gccDebug/graph/ITGraph.o gccDebug/alg2layer/Alg2Layer.o gccDebug/alg2layer/EventPlanOrders.o gccDebug/alg2layer/FindTimedPlan.o gccDebug/alg2layer/FSMSpecific.o gccDebug/alg2layer/FSM_General.o gccDebug/alg2layer/ITGraphUsage.o gccDebug/alg2layer/NegativeCycle.o gccDebug/alg2layer/PrintTimedPlan.o gccDebug/alg2layer/PruneTimedPlan.o gccDebug/alg1time/Alg1Time.o gccDebug/alg1time/ETGraphUsage.o  $(Debug_Library_Path) $(Debug_Libraries) -Wl,-rpath,./ -o ../gccDebug/tsat.exe
+	g++ gccDebug/main.o gccDebug/utils.o gccDebug/val/DebugWriteController.o gccDebug/val/pddl+.o gccDebug/val/ptree.o gccDebug/SatTimePrecosat.o gccDebug/sattime/SatTime.o gccDebug/sattime/SatTimeMinisat.o gccDebug/sattime/SatTimeZchaff.o gccDebug/satlayer/SatLayer.o gccDebug/satlayer/SatLayerMinisat.o gccDebug/satlayer/SatLayerPrecosat.o gccDebug/parser/ParserClasses.o gccDebug/graph/ETGraph.o gccDebug/graph/ITGraph.o gccDebug/alg2layer/Alg2Layer.o gccDebug/alg2layer/EventPlanOrders.o gccDebug/alg2layer/FindTimedPlan.o gccDebug/alg2layer/FSMSpecific.o gccDebug/alg2layer/FSM_General.o gccDebug/alg2layer/ITGraphUsage.o gccDebug/alg2layer/NegativeCycle.o gccDebug/alg2layer/PrintTimedPlan.o gccDebug/alg2layer/PruneTimedPlan.o gccDebug/alg1time/Alg1Time.o gccDebug/alg1time/ETGraphUsage.o  $(Debug_Library_Path) $(Debug_Libraries) -o ../gccDebug/tsat.exe
 
 # Compiles file main.cpp for the Debug configuration...
 -include gccDebug/main.d

@@ -1,0 +1,28 @@
+{
+  "name": "FI -- top-k planner",
+  "shortname": "fi-topk",
+  "description": "A novel iterative approach to top-k planning, exploiting any cost-optimal planner and reformulating a planning task to forbid exactly the given set of solutions.",
+  "install-size": "20K",
+  "dependencies": ["forbiditerative"],
+  "endpoint": {
+    "services": {
+      "solve": {
+        "template": "planner",
+        "args":[
+          {
+            "name": "number_of_plans",
+            "type": "int",
+            "description": "Number of Plans",
+            "default":3
+          }
+        ],
+        "call":"{package_name} {domain} {problem} {number_of_plans}",
+        "return": {
+          "type": "generic",
+          "files": "found_plans/done/sas_plan.*"
+        }
+      }
+
+    }
+  }
+}
