@@ -1,0 +1,309 @@
+begin_groups
+48
+group
+5
+2 2 painted 2 <tile-0-1> <white> 
+2 1 painted 2 <tile-0-1> <black> 
+0 0 robot-at 2 <robot1> <tile-0-1> 
+1 0 robot-at 2 <robot2> <tile-0-1> 
+2 0 clear 1 <tile-0-1> 
+group
+5
+3 2 painted 2 <tile-0-2> <white> 
+3 1 painted 2 <tile-0-2> <black> 
+0 1 robot-at 2 <robot1> <tile-0-2> 
+1 1 robot-at 2 <robot2> <tile-0-2> 
+3 0 clear 1 <tile-0-2> 
+group
+5
+4 2 painted 2 <tile-0-3> <white> 
+4 1 painted 2 <tile-0-3> <black> 
+0 2 robot-at 2 <robot1> <tile-0-3> 
+1 2 robot-at 2 <robot2> <tile-0-3> 
+4 0 clear 1 <tile-0-3> 
+group
+5
+5 2 painted 2 <tile-0-4> <white> 
+5 1 painted 2 <tile-0-4> <black> 
+0 3 robot-at 2 <robot1> <tile-0-4> 
+1 3 robot-at 2 <robot2> <tile-0-4> 
+5 0 clear 1 <tile-0-4> 
+group
+5
+6 2 painted 2 <tile-1-1> <white> 
+6 1 painted 2 <tile-1-1> <black> 
+0 4 robot-at 2 <robot1> <tile-1-1> 
+1 4 robot-at 2 <robot2> <tile-1-1> 
+6 0 clear 1 <tile-1-1> 
+group
+5
+7 2 painted 2 <tile-1-2> <white> 
+7 1 painted 2 <tile-1-2> <black> 
+0 5 robot-at 2 <robot1> <tile-1-2> 
+1 5 robot-at 2 <robot2> <tile-1-2> 
+7 0 clear 1 <tile-1-2> 
+group
+5
+8 2 painted 2 <tile-1-3> <white> 
+8 1 painted 2 <tile-1-3> <black> 
+0 6 robot-at 2 <robot1> <tile-1-3> 
+1 6 robot-at 2 <robot2> <tile-1-3> 
+8 0 clear 1 <tile-1-3> 
+group
+5
+9 2 painted 2 <tile-1-4> <white> 
+9 1 painted 2 <tile-1-4> <black> 
+0 7 robot-at 2 <robot1> <tile-1-4> 
+1 7 robot-at 2 <robot2> <tile-1-4> 
+9 0 clear 1 <tile-1-4> 
+group
+5
+10 2 painted 2 <tile-2-1> <white> 
+10 1 painted 2 <tile-2-1> <black> 
+0 8 robot-at 2 <robot1> <tile-2-1> 
+1 8 robot-at 2 <robot2> <tile-2-1> 
+10 0 clear 1 <tile-2-1> 
+group
+5
+11 2 painted 2 <tile-2-2> <white> 
+11 1 painted 2 <tile-2-2> <black> 
+0 9 robot-at 2 <robot1> <tile-2-2> 
+1 9 robot-at 2 <robot2> <tile-2-2> 
+11 0 clear 1 <tile-2-2> 
+group
+5
+12 2 painted 2 <tile-2-3> <white> 
+12 1 painted 2 <tile-2-3> <black> 
+0 10 robot-at 2 <robot1> <tile-2-3> 
+1 10 robot-at 2 <robot2> <tile-2-3> 
+12 0 clear 1 <tile-2-3> 
+group
+5
+13 2 painted 2 <tile-2-4> <white> 
+13 1 painted 2 <tile-2-4> <black> 
+0 11 robot-at 2 <robot1> <tile-2-4> 
+1 11 robot-at 2 <robot2> <tile-2-4> 
+13 0 clear 1 <tile-2-4> 
+group
+5
+14 2 painted 2 <tile-3-1> <white> 
+14 1 painted 2 <tile-3-1> <black> 
+0 12 robot-at 2 <robot1> <tile-3-1> 
+1 12 robot-at 2 <robot2> <tile-3-1> 
+14 0 clear 1 <tile-3-1> 
+group
+5
+15 2 painted 2 <tile-3-2> <white> 
+15 1 painted 2 <tile-3-2> <black> 
+0 13 robot-at 2 <robot1> <tile-3-2> 
+1 13 robot-at 2 <robot2> <tile-3-2> 
+15 0 clear 1 <tile-3-2> 
+group
+5
+16 2 painted 2 <tile-3-3> <white> 
+16 1 painted 2 <tile-3-3> <black> 
+0 14 robot-at 2 <robot1> <tile-3-3> 
+1 14 robot-at 2 <robot2> <tile-3-3> 
+16 0 clear 1 <tile-3-3> 
+group
+5
+17 2 painted 2 <tile-3-4> <white> 
+17 1 painted 2 <tile-3-4> <black> 
+0 15 robot-at 2 <robot1> <tile-3-4> 
+1 15 robot-at 2 <robot2> <tile-3-4> 
+17 0 clear 1 <tile-3-4> 
+group
+5
+18 2 painted 2 <tile-4-1> <white> 
+18 1 painted 2 <tile-4-1> <black> 
+0 16 robot-at 2 <robot1> <tile-4-1> 
+1 16 robot-at 2 <robot2> <tile-4-1> 
+18 0 clear 1 <tile-4-1> 
+group
+5
+19 2 painted 2 <tile-4-2> <white> 
+19 1 painted 2 <tile-4-2> <black> 
+0 17 robot-at 2 <robot1> <tile-4-2> 
+1 17 robot-at 2 <robot2> <tile-4-2> 
+19 0 clear 1 <tile-4-2> 
+group
+5
+20 2 painted 2 <tile-4-3> <white> 
+20 1 painted 2 <tile-4-3> <black> 
+0 18 robot-at 2 <robot1> <tile-4-3> 
+1 18 robot-at 2 <robot2> <tile-4-3> 
+20 0 clear 1 <tile-4-3> 
+group
+5
+21 2 painted 2 <tile-4-4> <white> 
+21 1 painted 2 <tile-4-4> <black> 
+0 19 robot-at 2 <robot1> <tile-4-4> 
+1 19 robot-at 2 <robot2> <tile-4-4> 
+21 0 clear 1 <tile-4-4> 
+group
+20
+0 0 robot-at 2 <robot1> <tile-0-1> 
+0 1 robot-at 2 <robot1> <tile-0-2> 
+0 2 robot-at 2 <robot1> <tile-0-3> 
+0 3 robot-at 2 <robot1> <tile-0-4> 
+0 4 robot-at 2 <robot1> <tile-1-1> 
+0 5 robot-at 2 <robot1> <tile-1-2> 
+0 6 robot-at 2 <robot1> <tile-1-3> 
+0 7 robot-at 2 <robot1> <tile-1-4> 
+0 8 robot-at 2 <robot1> <tile-2-1> 
+0 9 robot-at 2 <robot1> <tile-2-2> 
+0 10 robot-at 2 <robot1> <tile-2-3> 
+0 11 robot-at 2 <robot1> <tile-2-4> 
+0 12 robot-at 2 <robot1> <tile-3-1> 
+0 13 robot-at 2 <robot1> <tile-3-2> 
+0 14 robot-at 2 <robot1> <tile-3-3> 
+0 15 robot-at 2 <robot1> <tile-3-4> 
+0 16 robot-at 2 <robot1> <tile-4-1> 
+0 17 robot-at 2 <robot1> <tile-4-2> 
+0 18 robot-at 2 <robot1> <tile-4-3> 
+0 19 robot-at 2 <robot1> <tile-4-4> 
+group
+20
+1 0 robot-at 2 <robot2> <tile-0-1> 
+1 1 robot-at 2 <robot2> <tile-0-2> 
+1 2 robot-at 2 <robot2> <tile-0-3> 
+1 3 robot-at 2 <robot2> <tile-0-4> 
+1 4 robot-at 2 <robot2> <tile-1-1> 
+1 5 robot-at 2 <robot2> <tile-1-2> 
+1 6 robot-at 2 <robot2> <tile-1-3> 
+1 7 robot-at 2 <robot2> <tile-1-4> 
+1 8 robot-at 2 <robot2> <tile-2-1> 
+1 9 robot-at 2 <robot2> <tile-2-2> 
+1 10 robot-at 2 <robot2> <tile-2-3> 
+1 11 robot-at 2 <robot2> <tile-2-4> 
+1 12 robot-at 2 <robot2> <tile-3-1> 
+1 13 robot-at 2 <robot2> <tile-3-2> 
+1 14 robot-at 2 <robot2> <tile-3-3> 
+1 15 robot-at 2 <robot2> <tile-3-4> 
+1 16 robot-at 2 <robot2> <tile-4-1> 
+1 17 robot-at 2 <robot2> <tile-4-2> 
+1 18 robot-at 2 <robot2> <tile-4-3> 
+1 19 robot-at 2 <robot2> <tile-4-4> 
+group
+3
+0 0 robot-at 2 <robot1> <tile-0-1> 
+1 0 robot-at 2 <robot2> <tile-0-1> 
+2 0 clear 1 <tile-0-1> 
+group
+3
+0 1 robot-at 2 <robot1> <tile-0-2> 
+1 1 robot-at 2 <robot2> <tile-0-2> 
+3 0 clear 1 <tile-0-2> 
+group
+3
+0 2 robot-at 2 <robot1> <tile-0-3> 
+1 2 robot-at 2 <robot2> <tile-0-3> 
+4 0 clear 1 <tile-0-3> 
+group
+3
+0 3 robot-at 2 <robot1> <tile-0-4> 
+1 3 robot-at 2 <robot2> <tile-0-4> 
+5 0 clear 1 <tile-0-4> 
+group
+3
+0 4 robot-at 2 <robot1> <tile-1-1> 
+1 4 robot-at 2 <robot2> <tile-1-1> 
+6 0 clear 1 <tile-1-1> 
+group
+3
+0 5 robot-at 2 <robot1> <tile-1-2> 
+1 5 robot-at 2 <robot2> <tile-1-2> 
+7 0 clear 1 <tile-1-2> 
+group
+3
+0 6 robot-at 2 <robot1> <tile-1-3> 
+1 6 robot-at 2 <robot2> <tile-1-3> 
+8 0 clear 1 <tile-1-3> 
+group
+3
+0 7 robot-at 2 <robot1> <tile-1-4> 
+1 7 robot-at 2 <robot2> <tile-1-4> 
+9 0 clear 1 <tile-1-4> 
+group
+3
+0 8 robot-at 2 <robot1> <tile-2-1> 
+1 8 robot-at 2 <robot2> <tile-2-1> 
+10 0 clear 1 <tile-2-1> 
+group
+3
+0 9 robot-at 2 <robot1> <tile-2-2> 
+1 9 robot-at 2 <robot2> <tile-2-2> 
+11 0 clear 1 <tile-2-2> 
+group
+3
+0 10 robot-at 2 <robot1> <tile-2-3> 
+1 10 robot-at 2 <robot2> <tile-2-3> 
+12 0 clear 1 <tile-2-3> 
+group
+3
+0 11 robot-at 2 <robot1> <tile-2-4> 
+1 11 robot-at 2 <robot2> <tile-2-4> 
+13 0 clear 1 <tile-2-4> 
+group
+3
+0 12 robot-at 2 <robot1> <tile-3-1> 
+1 12 robot-at 2 <robot2> <tile-3-1> 
+14 0 clear 1 <tile-3-1> 
+group
+3
+0 13 robot-at 2 <robot1> <tile-3-2> 
+1 13 robot-at 2 <robot2> <tile-3-2> 
+15 0 clear 1 <tile-3-2> 
+group
+3
+0 14 robot-at 2 <robot1> <tile-3-3> 
+1 14 robot-at 2 <robot2> <tile-3-3> 
+16 0 clear 1 <tile-3-3> 
+group
+3
+0 15 robot-at 2 <robot1> <tile-3-4> 
+1 15 robot-at 2 <robot2> <tile-3-4> 
+17 0 clear 1 <tile-3-4> 
+group
+3
+0 16 robot-at 2 <robot1> <tile-4-1> 
+1 16 robot-at 2 <robot2> <tile-4-1> 
+18 0 clear 1 <tile-4-1> 
+group
+3
+0 17 robot-at 2 <robot1> <tile-4-2> 
+1 17 robot-at 2 <robot2> <tile-4-2> 
+19 0 clear 1 <tile-4-2> 
+group
+3
+0 18 robot-at 2 <robot1> <tile-4-3> 
+1 18 robot-at 2 <robot2> <tile-4-3> 
+20 0 clear 1 <tile-4-3> 
+group
+3
+0 19 robot-at 2 <robot1> <tile-4-4> 
+1 19 robot-at 2 <robot2> <tile-4-4> 
+21 0 clear 1 <tile-4-4> 
+group
+1
+23 0 robot-has 2 <robot1> <white> 
+group
+2
+23 0 robot-has 2 <robot1> <white> 
+22 0 robot-has 2 <robot1> <black> 
+group
+1
+22 1 robot-has 2 <robot2> <black> 
+group
+2
+23 1 robot-has 2 <robot2> <white> 
+22 1 robot-has 2 <robot2> <black> 
+group
+2
+22 0 robot-has 2 <robot1> <black> 
+22 1 robot-has 2 <robot2> <black> 
+group
+2
+23 0 robot-has 2 <robot1> <white> 
+23 1 robot-has 2 <robot2> <white> 
+end_groups

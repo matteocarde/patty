@@ -196,6 +196,9 @@ class Invariant(object):
         self.predicate_to_part = dict([(part.predicate, part) for part in parts])
         assert len(self.parts) == len(self.predicates)
 
+    def __lt__(self, other):
+        return len(self.predicates) < len(other.predicates)
+
     def __eq__(self, other):
         return self.__class__ == other.__class__ and self.parts == other.parts
 
@@ -209,7 +212,7 @@ class Invariant(object):
         return "{%s}" % ", ".join(map(str, self.parts))
 
     def arity(self):
-        return iter(self.parts).next().arity()
+        return next(iter(self.parts)).arity()
 
     def get_parameters(self, atom):
         return self.predicate_to_part[atom.predicate].get_parameters(atom)

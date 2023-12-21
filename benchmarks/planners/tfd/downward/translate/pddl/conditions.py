@@ -667,7 +667,10 @@ class Variable(Term):
                 self.name == other.name)
 
     def __cmp__(self, other):
-        return cmp(self.name, other.name)
+        return (self.name > other.name) - (self.name < other.name) 
+    
+    def __lt__(self, other):
+        return len(self.name) < len(other.name)
 
     def __hash__(self):
         return self.hash

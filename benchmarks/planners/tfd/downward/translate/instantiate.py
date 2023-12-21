@@ -6,6 +6,7 @@ from collections import defaultdict
 import build_model
 import normalize  # because of "get_function_predicate"
 import pddl_to_prolog
+import pddl
 
 
 def get_fluent_facts(task, model):

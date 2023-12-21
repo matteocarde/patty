@@ -7,6 +7,7 @@ from collections import deque, defaultdict
 
 import invariants
 import timers
+import pddl
 
 
 class BalanceChecker(object):
@@ -117,10 +118,10 @@ def find_invariants(task, safe, reachable_action_params):
             candidates.append(invariant)
             seen_candidates.add(invariant)
 
-    start_time = time.clock()
+    start_time = time.perf_counter()
     while candidates:
         candidate = candidates.popleft()
-        if time.clock() - start_time > MAX_TIME:
+        if time.perf_counter() - start_time > MAX_TIME:
             print("Time limit reached, aborting invariant generation")
             return
         if candidate.check_balance(balance_checker, enqueue_func):
@@ -158,7 +159,6 @@ def get_groups(task, safe=True, reachable_action_params=None):
 
 
 if __name__ == "__main__":
-    import pddl
 
     print("Parsing...")
     task = pddl.pddl_open()

@@ -133,6 +133,9 @@ class Effect(object):
                 self.parameters == other.parameters and
                 self.condition == other.condition and
                 self.peffect == other.peffect)
+    
+    def __hash__(self):
+        return hash(self.peffect)
 
     def dump(self):
         indent = "  "
