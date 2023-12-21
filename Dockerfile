@@ -13,14 +13,23 @@ RUN mv plan itsat
 RUN chmod +x /var/itsat/itsat
 ENV PATH /var/itsat/:${PATH}
 
-# Copying
-COPY . .
+# Install optic
+COPY /benchmarks/planners/optic /var/optic
+WORKDIR /var/optic
 
+RUN apt-get install -y cmake coinor-libcbc-dev coinor-libclp-dev coinor-libcoinutils-dev libbz2-dev
+RUN ./run-cmake-debug
+RUN ./build-debugging
+RUN ls -la
+
+COPY . .
 #Authorizations
 RUN chmod +x exes/*
 
 # RUN itsat -alg time files/temporal/floortile/domain.pddl files/temporal/floortile/instances/p442-1.pddl plan.txt
 # RUN more plan.txt.1
+
+# RUN planutils run optic 
 
 
 #Execution
