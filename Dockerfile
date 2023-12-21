@@ -17,11 +17,26 @@ ENV PATH /var/itsat/:${PATH}
 COPY /benchmarks/planners/optic /var/optic
 WORKDIR /var/optic
 
-RUN apt-get install -y cmake coinor-libcbc-dev coinor-libclp-dev coinor-libcoinutils-dev libbz2-dev
+RUN apt-get install -y cmake coinor-libcbc-dev coinor-libclp-dev coinor-libcoinutils-dev libbz2-dev libgsl-dev
+RUN export CFLAGS=-m32
+RUN export CXXFLAGS=-m32
+RUN export LDFLAGS=-m32
 RUN ./run-cmake-debug
-RUN ./build-debugging
-RUN ls -la
+RUN ./build-debug
+RUN ls -la debug/optic
+RUN cp debug/optic/optic-clp optic
+RUN chmod +x optic
+ENV PATH /var/optic/:${PATH}
 
+# Install tfd
+COPY /benchmarks/planners/tfd /var/tfd
+WORKDIR /var/tfd
+RUN ./build
+RUN chmod +x tfd
+ENV PATH /var/tfd/:${PATH}
+
+
+WORKDIR /project
 COPY . .
 #Authorizations
 RUN chmod +x exes/*
@@ -29,7 +44,7 @@ RUN chmod +x exes/*
 # RUN itsat -alg time files/temporal/floortile/domain.pddl files/temporal/floortile/instances/p442-1.pddl plan.txt
 # RUN more plan.txt.1
 
-# RUN planutils run optic 
+RUN tfd files/temporal/parking/domain.pddl files/temporal/parking/instances/p15-9-3.pddl plan.txt
 
 
 #Execution
