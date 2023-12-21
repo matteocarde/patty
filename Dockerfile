@@ -2,9 +2,16 @@
 FROM 775013819650.dkr.ecr.eu-south-1.amazonaws.com/patty:stable
 
 WORKDIR /project
-RUN pip install tarjan
+RUN pip install tarjan prettytable
 RUN rm -rf *
-RUN pip install prettytable
+
+# Install itsat
+COPY /benchmarks/planners/itsat /var/itsat
+WORKDIR /var/itsat
+RUN ./build
+RUN chmod +x /var/springroll/springroll
+ENV PATH /var/springroll/:${PATH}
+
 # Copying
 COPY . .
 

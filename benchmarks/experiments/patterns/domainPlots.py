@@ -6,7 +6,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from natsort import natsorted
 
-from experiments.classes.Result import Result
+from classes.Result import Result
 
 SOLVERS = {
     # 'PATTY-R': "P_r",
@@ -108,28 +108,31 @@ def main():
     plt.rcParams.update({
         "text.usetex": True,
         "figure.figsize": [7.50, 3.50],
-        "figure.autolayout": True
+        "figure.autolayout": True,
+        'font.size': 16
     })
 
     i = 1
     for domain in DOMAINS.keys():
-        plt.figure(num=i, figsize=(8, 5))
-        plt.title(rf"${DOMAINS[domain]}$")
+        plt.figure(num=i)
+        # plt.title(rf"${DOMAINS[domain]}$")
         plt.grid()
         plt.xlabel("Number of objects")
         plt.ylabel("Planning Time (s)")
+        plt.ylim([-4, 180])
         for solver in SOLVERS:
             tuple = rDomain[domain][solver]
             x = np.linspace(1, len(xAxes[domain]), len(xAxes[domain]))
             y = [tuple[prob].time / 1000 if prob in tuple and tuple[prob].solved else 300 for prob in xAxes[domain]]
             ticks = [tick.replace(".pddl", "").replace("_", "\_") for tick in xAxes[domain]]
-            ticks = [t if int(t) % 2 == 0 else "" for t in ticks]
+            ticks = [t if int(t) % 5 == 0 else "" for t in ticks]
             plt.xticks(x, ticks)
-            plt.plot(x, y, label=rf"${SOLVERS[solver]}$")
+            plt.plot(x, y, label=rf"${SOLVERS[solver]}$", linewidth=2)
 
         # plt.ylim([0, 100])
-        plt.legend(loc="upper right")
-        plt.savefig(f'benchmarks/figures/{domain}-{time.time_ns()}.pdf')
+        plt.legend(loc="upper center",
+                   ncol=4, fancybox=True, fontsize="x-small")
+        plt.savefig(f'benchmarks/figures/plot-line-exchange.pdf', dpi=100, bbox_inches='tight', pad_inches=0.01)
         plt.show()
         i += 1
 
