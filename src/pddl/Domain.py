@@ -5,6 +5,7 @@ from typing import Dict, List, Set
 
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
+from src.pddl.DurativeAction import DurativeAction
 from src.pddl.Event import Event
 from src.pddl.Operation import Operation
 from src.pddl.PDDLWriter import PDDLWriter
@@ -34,6 +35,7 @@ class Domain:
         self.predicates = set()
         self.functions = set()
         self.actions = set()
+        self.durativeActions = set()
         self.processes = set()
         self.events = set()
         self.requirements = list()
@@ -139,6 +141,8 @@ class Domain:
                 domain.__setFunctions(child)
             elif isinstance(child, pddlParser.ActionContext):
                 domain.actions.add(Action.fromNode(child, domain.types))
+            elif isinstance(child, pddlParser.DurativeActionContext):
+                domain.durativeActions.add(DurativeAction.fromNode(child, domain.types))
             elif isinstance(child, pddlParser.EventContext):
                 domain.events.add(Event.fromNode(child, domain.types))
             elif isinstance(child, pddlParser.ProcessContext):

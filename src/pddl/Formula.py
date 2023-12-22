@@ -41,9 +41,7 @@ class Formula:
 
         formulaComponent = node.getChild(0) if type(node) == p.PreconditionsContext else node
         formula.type = "OR" if type(formulaComponent) == p.OrClauseContext else "AND"
-        if isinstance(formulaComponent, p.BooleanLiteralContext):
-            clauses.append(formulaComponent)
-        elif type(formulaComponent) in {p.ComparationContext, p.NegatedComparationContext}:
+        if type(formulaComponent) in {p.BooleanLiteralContext, p.ComparationContext, p.NegatedComparationContext}:
             clauses.append(formulaComponent)
         elif type(formulaComponent) in {p.AndClauseContext, p.OrClauseContext}:
             clauses = formulaComponent.children

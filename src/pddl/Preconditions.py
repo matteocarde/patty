@@ -21,7 +21,7 @@ class Preconditions(Formula):
         return cast(Preconditions, p)
 
     @classmethod
-    def fromNode(cls, node: pddlParser.PreconditionsContext) -> Preconditions:
+    def fromNode(cls, node: pddlParser.PreconditionsContext or pddlParser.OpDurativeConditionContext) -> Preconditions:
         p = super().fromNode(node)
         p.__class__ = Preconditions
         return cast(Preconditions, p)

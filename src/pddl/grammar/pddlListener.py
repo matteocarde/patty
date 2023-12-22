@@ -296,6 +296,15 @@ class pddlListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by pddlParser#durationAssignment.
+    def enterDurationAssignment(self, ctx:pddlParser.DurationAssignmentContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#durationAssignment.
+    def exitDurationAssignment(self, ctx:pddlParser.DurationAssignmentContext):
+        pass
+
+
     # Enter a parse tree produced by pddlParser#comparation.
     def enterComparation(self, ctx:pddlParser.ComparationContext):
         pass
@@ -386,6 +395,105 @@ class pddlListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by pddlParser#andDurClause.
+    def enterAndDurClause(self, ctx:pddlParser.AndDurClauseContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#andDurClause.
+    def exitAndDurClause(self, ctx:pddlParser.AndDurClauseContext):
+        pass
+
+
+    # Enter a parse tree produced by pddlParser#atStartPre.
+    def enterAtStartPre(self, ctx:pddlParser.AtStartPreContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#atStartPre.
+    def exitAtStartPre(self, ctx:pddlParser.AtStartPreContext):
+        pass
+
+
+    # Enter a parse tree produced by pddlParser#overAllPre.
+    def enterOverAllPre(self, ctx:pddlParser.OverAllPreContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#overAllPre.
+    def exitOverAllPre(self, ctx:pddlParser.OverAllPreContext):
+        pass
+
+
+    # Enter a parse tree produced by pddlParser#atEndPre.
+    def enterAtEndPre(self, ctx:pddlParser.AtEndPreContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#atEndPre.
+    def exitAtEndPre(self, ctx:pddlParser.AtEndPreContext):
+        pass
+
+
+    # Enter a parse tree produced by pddlParser#durativeConditions.
+    def enterDurativeConditions(self, ctx:pddlParser.DurativeConditionsContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#durativeConditions.
+    def exitDurativeConditions(self, ctx:pddlParser.DurativeConditionsContext):
+        pass
+
+
+    # Enter a parse tree produced by pddlParser#atStartEffect.
+    def enterAtStartEffect(self, ctx:pddlParser.AtStartEffectContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#atStartEffect.
+    def exitAtStartEffect(self, ctx:pddlParser.AtStartEffectContext):
+        pass
+
+
+    # Enter a parse tree produced by pddlParser#overAllEffect.
+    def enterOverAllEffect(self, ctx:pddlParser.OverAllEffectContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#overAllEffect.
+    def exitOverAllEffect(self, ctx:pddlParser.OverAllEffectContext):
+        pass
+
+
+    # Enter a parse tree produced by pddlParser#atEndEffect.
+    def enterAtEndEffect(self, ctx:pddlParser.AtEndEffectContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#atEndEffect.
+    def exitAtEndEffect(self, ctx:pddlParser.AtEndEffectContext):
+        pass
+
+
+    # Enter a parse tree produced by pddlParser#durativeEffect.
+    def enterDurativeEffect(self, ctx:pddlParser.DurativeEffectContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#durativeEffect.
+    def exitDurativeEffect(self, ctx:pddlParser.DurativeEffectContext):
+        pass
+
+
+    # Enter a parse tree produced by pddlParser#andDurativeEffect.
+    def enterAndDurativeEffect(self, ctx:pddlParser.AndDurativeEffectContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#andDurativeEffect.
+    def exitAndDurativeEffect(self, ctx:pddlParser.AndDurativeEffectContext):
+        pass
+
+
+    # Enter a parse tree produced by pddlParser#durativeEffects.
+    def enterDurativeEffects(self, ctx:pddlParser.DurativeEffectsContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#durativeEffects.
+    def exitDurativeEffects(self, ctx:pddlParser.DurativeEffectsContext):
+        pass
+
+
     # Enter a parse tree produced by pddlParser#parameters.
     def enterParameters(self, ctx:pddlParser.ParametersContext):
         pass
@@ -422,6 +530,15 @@ class pddlListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by pddlParser#opDurativeCondition.
+    def enterOpDurativeCondition(self, ctx:pddlParser.OpDurativeConditionContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#opDurativeCondition.
+    def exitOpDurativeCondition(self, ctx:pddlParser.OpDurativeConditionContext):
+        pass
+
+
     # Enter a parse tree produced by pddlParser#opEffect.
     def enterOpEffect(self, ctx:pddlParser.OpEffectContext):
         pass
@@ -431,12 +548,39 @@ class pddlListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by pddlParser#opDurativeEffect.
+    def enterOpDurativeEffect(self, ctx:pddlParser.OpDurativeEffectContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#opDurativeEffect.
+    def exitOpDurativeEffect(self, ctx:pddlParser.OpDurativeEffectContext):
+        pass
+
+
+    # Enter a parse tree produced by pddlParser#opDuration.
+    def enterOpDuration(self, ctx:pddlParser.OpDurationContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#opDuration.
+    def exitOpDuration(self, ctx:pddlParser.OpDurationContext):
+        pass
+
+
     # Enter a parse tree produced by pddlParser#action.
     def enterAction(self, ctx:pddlParser.ActionContext):
         pass
 
     # Exit a parse tree produced by pddlParser#action.
     def exitAction(self, ctx:pddlParser.ActionContext):
+        pass
+
+
+    # Enter a parse tree produced by pddlParser#durativeAction.
+    def enterDurativeAction(self, ctx:pddlParser.DurativeActionContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#durativeAction.
+    def exitDurativeAction(self, ctx:pddlParser.DurativeActionContext):
         pass
 
 
