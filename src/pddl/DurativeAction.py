@@ -1,19 +1,22 @@
-from typing import Dict, List
+from __future__ import annotations
 
-from src.pddl.Action import Action
+from typing import Dict, List
 from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.Constant import Constant
-from src.pddl.Effects import Effects
 from src.pddl.Literal import Literal
 from src.pddl.Parameter import Parameter
-from src.pddl.Preconditions import Preconditions
-from src.pddl.Predicate import Predicate
-from src.pddl.TimePredicate import TimePredicate
+from src.pddl.TimePredicate import TimePredicate, TimePredicateType
 from src.pddl.Type import Type
 from src.pddl.grammar.pddlParser import pddlParser as p
 
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from src.pddl.SnapAction import SnapAction
+
 
 class DurativeAction:
+    name: str
 
     def __init__(self):
         self.name: str
@@ -21,6 +24,7 @@ class DurativeAction:
         self.duration: BinaryPredicate
         self.timedPreconditions: List[TimePredicate] = list()
         self.timedEffects: List[TimePredicate] = list()
+        self.snapActions: Dict[TimePredicateType, SnapAction] = dict()
 
     @classmethod
     def fromNode(cls, node: p.DurativeActionContext, types: Dict[str, Type]):
@@ -84,3 +88,6 @@ class DurativeAction:
 
             for name in varNames:
                 self.parameters.append(Parameter(name, varType))
+
+    def addSnapAction(self, t: TimePredicateType, a: SnapAction):
+        self.snapActions[t] = a

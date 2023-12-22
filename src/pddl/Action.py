@@ -36,8 +36,9 @@ class Action(Operation):
         return super().fromNode(node, types)
 
     @classmethod
-    def fromProperties(cls, name, preconditions, effects, planName):
-        return super().fromProperties(name, preconditions, effects, planName)
+    def fromProperties(cls, name, parameters, preconditions, effects, planName) -> Action:
+        return super().fromProperties(name, parameters, preconditions, effects, planName)
+
 
     @classmethod
     def fromString(cls, string: str, types: Dict[str, Type]) -> Action:
@@ -55,7 +56,7 @@ class Action(Operation):
             preconditions = op.preconditions
             effects = op.effects
             planName = op.planName
-            action = Action.fromProperties(name, preconditions, effects, planName)
+            action = Action.fromProperties(name, [], preconditions, effects, planName)
             groundOps.append(action)
         return groundOps
 
@@ -121,7 +122,7 @@ class Action(Operation):
         preconditions = self.preconditions.substitute(sub, default)
         effects = self.effects.substitute(sub, default)
         planName = self.planName
-        action = Action.fromProperties(name, preconditions, effects, planName)
+        action = Action.fromProperties(name, [], preconditions, effects, planName)
         return action
 
     def canHappen(self, sub: Dict[Atom, float], default=None) -> bool:

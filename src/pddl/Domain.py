@@ -11,7 +11,9 @@ from src.pddl.Operation import Operation
 from src.pddl.PDDLWriter import PDDLWriter
 from src.pddl.Problem import Problem
 from src.pddl.Process import Process
+from src.pddl.SnapAction import SnapAction
 from src.pddl.State import State
+from src.pddl.TimePredicate import TimePredicateType
 from src.pddl.Type import Type
 from src.pddl.TypedPredicate import TypedPredicate
 from src.pddl.Utilities import Utilities
@@ -147,6 +149,15 @@ class Domain:
                 domain.events.add(Event.fromNode(child, domain.types))
             elif isinstance(child, pddlParser.ProcessContext):
                 domain.processes.add(Process.fromNode(child, domain.types))
+
+            dAction: DurativeAction
+            for dAction in domain.durativeActions:
+                types = [TimePredicateType.AT_START, TimePredicateType.OVER_ALL, TimePredicateType.AT_END]
+                for t in types:
+                    a: SnapAction = SnapAction.fromDurativeAction(dAction, t)
+                    if a.predicates or a.functions:
+                        domain.actions.add(a)
+                        dAction.addSnapAction(t, a)
 
         domain.isPredicateStatic: Dict[str, bool] = dict([(p.name, True) for p in domain.predicates | domain.functions])
         for action in domain.actions | domain.events | domain.processes:

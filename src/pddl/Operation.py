@@ -90,9 +90,11 @@ class Operation:
         return operation
 
     @classmethod
-    def fromProperties(cls, name: str, preconditions: Preconditions, effects: Effects, planName: str):
+    def fromProperties(cls, name: str, parameters: List[Parameter], preconditions: Preconditions, effects: Effects,
+                       planName: str):
         operation = cls()
         operation.name = name
+        operation.parameters = parameters
         operation.preconditions = preconditions
         operation.effects = effects
         operation.planName = planName
@@ -178,7 +180,7 @@ class Operation:
             planName = self.__getGroundedPlanName(sub)
             preconditions = self.preconditions.ground(sub, delta=delta)
             effects = self.effects.ground(sub)
-            operation: Operation = Operation.fromProperties(name, preconditions, effects, planName)
+            operation: Operation = Operation.fromProperties(name, [], preconditions, effects, planName)
             gOperations.append(operation)
         return gOperations
 

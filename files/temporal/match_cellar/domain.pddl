@@ -10,7 +10,7 @@
 		(light ?match - match)
 	)
 
-	(:durative-action LIGHT_MATCH
+	(:durative-action light_match
 		:parameters (?match - match)
 		:duration (= ?duration 5)
 		:condition (and
@@ -21,7 +21,7 @@
 			(at end (not (light ?match))))
 	)
 
-	(:durative-action MEND_FUSE
+	(:durative-action mend_fuse
 		:parameters (?fuse - fuse ?match - match)
 		:duration (= ?duration 2)
 		:condition (and
