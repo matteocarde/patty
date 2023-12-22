@@ -22,6 +22,7 @@ class Operation:
     valName: str
     planName: str
     parameters: List[Parameter]
+    duration: Predicate
     preconditions: Preconditions
     effects: Effects
 
@@ -29,6 +30,7 @@ class Operation:
         self.name: str = ""
         self.valName: str = ""
         self.parameters = list()
+        self.duration: Predicate
         self.preconditions = Preconditions()
         self.effects = Effects()
         self.functions = set()
@@ -80,28 +82,29 @@ class Operation:
             if isinstance(child, p.OpNameContext):
                 operation.name = child.getText()
             elif isinstance(child, p.OpParametersContext):
-                operation.__setParameters(child.getChild(1), types)
+                operation.setParameters(child.getChild(1), types)
             elif isinstance(child, p.OpPreconditionContext):
-                operation.__addPreconditions(child)
+                operation.addPreconditions(child)
             elif isinstance(child, p.OpEffectContext):
-                operation.__addEffects(child)
+                operation.addEffects(child)
 
         operation.__cacheLists()
         return operation
 
     @classmethod
     def fromProperties(cls, name: str, parameters: List[Parameter], preconditions: Preconditions, effects: Effects,
-                       planName: str):
+                       planName: str, duration=Predicate or None):
         operation = cls()
         operation.name = name
         operation.parameters = parameters
         operation.preconditions = preconditions
         operation.effects = effects
         operation.planName = planName
+        operation.duration = duration
         operation.__cacheLists()
         return operation
 
-    def __setParameters(self, node: p.ParametersContext, types: Dict[str, Type]):
+    def setParameters(self, node: p.ParametersContext, types: Dict[str, Type]):
         for child in node.children:
             if not isinstance(child, p.TypedAtomParameterContext):
                 continue
@@ -115,17 +118,17 @@ class Operation:
             for name in varNames:
                 self.parameters.append(Parameter(name, varType))
 
-    def __addPreconditions(self, node: p.OpPreconditionContext):
+    def addPreconditions(self, node: p.OpPreconditionContext or p.OpDurativeConditionContext):
         self.preconditions = Preconditions.fromNode(node.getChild(1))
 
-    def __addEffects(self, node: p.OpEffectContext):
+    def addEffects(self, node: p.OpEffectContext or p.OpDurativeEffectContext):
         self.effects = Effects.fromNode(node.getChild(1))
 
     def getSignature(self):
         params = [p.name for p in self.parameters]
         return f"{self.name}({','.join(params)})"
 
-    def getCombinations(self, problem: Problem) -> List[Dict[str, str]]:
+    def getCombinations(self, problem: Problem) -> List[List[str, str]]:
         subs: List[List[str]] = list()
         for parameter in self.parameters:
             pSubs = list()
@@ -159,7 +162,7 @@ class Operation:
         paths: List[Tuple] = self.__getValidCombinationsSub(problem, tuple(), [], levels, params)
         return paths
 
-    def getGroundedOperations(self, problem, isPredicateStatic: Dict[str, bool], delta=1):
+    def getGroundedOperations(self, problem, delta=1):
         levels: List[List[str]] = self.getCombinations(problem)
 
         combinations: List[Tuple]
@@ -180,7 +183,11 @@ class Operation:
             planName = self.__getGroundedPlanName(sub)
             preconditions = self.preconditions.ground(sub, delta=delta)
             effects = self.effects.ground(sub)
-            operation: Operation = Operation.fromProperties(name, [], preconditions, effects, planName)
+            duration = None
+            if self.duration:
+                duration = self.duration.ground(sub)
+            operation: Operation = Operation.fromProperties(name, [], preconditions, effects, planName,
+                                                            duration=duration)
             gOperations.append(operation)
         return gOperations
 

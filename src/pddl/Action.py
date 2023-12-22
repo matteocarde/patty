@@ -36,9 +36,8 @@ class Action(Operation):
         return super().fromNode(node, types)
 
     @classmethod
-    def fromProperties(cls, name, parameters, preconditions, effects, planName) -> Action:
-        return super().fromProperties(name, parameters, preconditions, effects, planName)
-
+    def fromProperties(cls, name, parameters, preconditions, effects, planName, duration=None) -> Action:
+        return super().fromProperties(name, parameters, preconditions, effects, planName, duration=duration)
 
     @classmethod
     def fromString(cls, string: str, types: Dict[str, Type]) -> Action:
@@ -48,16 +47,12 @@ class Action(Operation):
     def type(self):
         return OperationType.ACTION
 
-    def ground(self, problem, isPredicateStatic: Dict[str, bool], delta=1) -> List[Action]:
+    def ground(self, problem, delta=1) -> List[Action]:
         groundOps: List = []
-        toGroundOps = self.getGroundedOperations(problem, isPredicateStatic, delta=delta)
+        toGroundOps = self.getGroundedOperations(problem, delta=delta)
         for op in toGroundOps:
-            name = op.name
-            preconditions = op.preconditions
-            effects = op.effects
-            planName = op.planName
-            action = Action.fromProperties(name, [], preconditions, effects, planName)
-            groundOps.append(action)
+            op.__class__ = Action
+            groundOps.append(op)
         return groundOps
 
     def getSupporters(self) -> Set[Supporter]:

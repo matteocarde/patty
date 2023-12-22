@@ -11,6 +11,7 @@ from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.Literal import Literal
 from src.pddl.PDDLWriter import PDDLWriter
 from src.pddl.Predicate import Predicate
+from src.pddl.TimePredicate import TimePredicate
 from src.pddl.Utilities import Utilities
 from src.pddl.grammar.pddlParser import pddlParser as p
 
@@ -39,11 +40,12 @@ class Formula:
 
         clauses = []
 
-        formulaComponent = node.getChild(0) if type(node) == p.PreconditionsContext else node
+        formulaComponent = node.getChild(0) if type(node) in {p.PreconditionsContext,
+                                                              p.DurativeConditionsContext} else node
         formula.type = "OR" if type(formulaComponent) == p.OrClauseContext else "AND"
         if type(formulaComponent) in {p.BooleanLiteralContext, p.ComparationContext, p.NegatedComparationContext}:
             clauses.append(formulaComponent)
-        elif type(formulaComponent) in {p.AndClauseContext, p.OrClauseContext}:
+        elif type(formulaComponent) in {p.AndClauseContext, p.OrClauseContext, p.AndDurClauseContext}:
             clauses = formulaComponent.children
         else:
             raise Exception("Unexpected clause in precondition")
@@ -55,6 +57,8 @@ class Formula:
                 formula.conditions.append(Literal.fromNode(clause.getChild(0)))
             elif type(clause) in {p.ComparationContext, p.NegatedComparationContext}:
                 formula.conditions.append(BinaryPredicate.fromNode(clause))
+            elif type(clause) in {p.AtStartPreContext, p.OverAllPreContext, p.AtEndPreContext}:
+                formula.conditions.append(TimePredicate.fromNode(clause))
 
         return formula
 

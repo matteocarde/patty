@@ -2,8 +2,9 @@ from __future__ import annotations
 
 import copy
 from enum import Enum
-from typing import Dict
+from typing import Dict, Tuple, List, Set
 
+from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.Literal import Literal
 from src.pddl.Predicate import Predicate
@@ -53,7 +54,23 @@ class TimePredicate(Predicate):
         return tp
 
     def ground(self, subs: Dict[str, str], delta=1) -> TimePredicate:
-        raise Exception("Time predicate cannot be grounded")
+        tp = TimePredicate()
+        tp.type = self.type
+        tp.subPredicate = self.subPredicate.ground(subs, delta)
+
+        return tp
+
+    def getPredicates(self) -> Set[Atom]:
+        return self.subPredicate.getPredicates()
+
+    def getFunctions(self) -> Set[Atom]:
+        return self.subPredicate.getFunctions()
+
+    def isDynamicLifted(self, problem) -> bool:
+        return self.subPredicate.isDynamicLifted(problem)
+
+    def canHappenLiftedPartial(self, item: Tuple, params: List[str], problem) -> bool:
+        return self.subPredicate.canHappenLiftedPartial(item, params, problem)
 
     def __str__(self):
         return f"({self.type} {self.subPredicate})"

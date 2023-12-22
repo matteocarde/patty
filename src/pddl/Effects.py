@@ -9,6 +9,7 @@ from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate, BinaryPredicateType
 from src.pddl.Literal import Literal
 from src.pddl.PDDLWriter import PDDLWriter
+from src.pddl.TimePredicate import TimePredicate
 from src.pddl.grammar.pddlParser import pddlParser
 from src.pddl.grammar.pddlParser import pddlParser as p
 
@@ -32,7 +33,7 @@ class Effects:
         effects = cls()
         nodes: [p.EffectContext] = []
 
-        if isinstance(node.getChild(0), p.AndEffectContext):
+        if type(node.getChild(0)) in {p.AndEffectContext, p.AndDurativeEffectContext}:
             nodes.extend([n.getChild(0) for n in node.getChild(0).children[2:-1]])
         else:
             nodes.append(node.getChild(0))
@@ -40,6 +41,8 @@ class Effects:
         for n in nodes:
             if isinstance(n, p.BooleanLiteralContext):
                 effects.assignments.append(Literal.fromNode(n.getChild(0)))
+            elif type(n) in {p.AtStartEffectContext, p.OverAllEffectContext, p.AtEndEffectContext}:
+                effects.assignments.append(TimePredicate.fromNode(n))
             else:
                 effects.assignments.append(BinaryPredicate.fromNode(n))
 
