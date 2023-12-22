@@ -35,6 +35,18 @@ RUN ./build
 RUN chmod +x tfd
 ENV PATH /var/tfd/:${PATH}
 
+# Install lpg-td
+COPY /benchmarks/planners/lpg-td /var/lpg-td
+WORKDIR /var/lpg-td
+RUN chmod +x lpg-td
+ENV PATH /var/lpg-td/:${PATH}
+
+# Install ANMLSMT
+COPY /benchmarks/planners/anmlsmt /var/anmlsmt
+WORKDIR /var/anmlsmt
+RUN chmod +x anmlsmt
+ENV PATH /var/anmlsmt/:${PATH}
+
 
 WORKDIR /project
 COPY . .
@@ -44,7 +56,8 @@ RUN chmod +x exes/*
 # RUN itsat -alg time files/temporal/floortile/domain.pddl files/temporal/floortile/instances/p442-1.pddl plan.txt
 # RUN more plan.txt.1
 
-RUN tfd files/temporal/parking/domain.pddl files/temporal/parking/instances/p15-9-3.pddl plan.txt
+#RUN lpg-td -o files/temporal/parking/domain.pddl -f files/temporal/parking/instances/p15-9-3.pddl -n 1
+RUN anmlsmt -l 3 --pddl -a smt solve files/temporal/parking/domain.pddl files/temporal/parking/instances/p15-9-3.pddl
 
 
 #Execution
