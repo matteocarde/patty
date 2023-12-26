@@ -72,6 +72,7 @@ class Operation:
         a.assignments = copy.deepcopy(self.assignments, m)
         a.linearizationOf = self.linearizationOf
         a.linearizationTimes = self.linearizationTimes
+        a.duration = self.duration
 
         return a
 
@@ -87,6 +88,7 @@ class Operation:
                 operation.addPreconditions(child)
             elif isinstance(child, p.OpEffectContext):
                 operation.addEffects(child)
+        operation.duration = 0
 
         operation.__cacheLists()
         return operation
