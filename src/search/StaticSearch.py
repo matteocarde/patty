@@ -2,7 +2,7 @@ from src.pddl.Domain import GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
 from src.pddl.State import State
-from src.plan.PDDL2SMT import PDDL2SMT
+from src.plan.NumericEncoding import NumericEncoding
 from src.plan.Pattern import Pattern
 from src.search.Search import Search
 from src.smt.SMTSolver import SMTSolver
@@ -44,7 +44,7 @@ class StaticSearch(Search):
                 self.console.log("Pattern: " + str(fPattern), LogPrintLevel.PLAN)
 
             self.ts.start(f"Conversion to SMT at bound {bound}", console=self.console)
-            pddl2smt: PDDL2SMT = PDDL2SMT(
+            pddl2smt: NumericEncoding = NumericEncoding(
                 domain=self.domain,
                 problem=self.problem,
                 pattern=fPattern,

@@ -85,5 +85,8 @@ class Constant(Predicate):
     def replace(self, atom: Atom, w):
         return copy.deepcopy(self)
 
+    def replaceDict(self, r: Dict[Atom, Predicate]):
+        return copy.deepcopy(self)
+
     def toLatex(self) -> str:
         return r"\delta_e" if self.isDelta else str(self.value)

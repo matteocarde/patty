@@ -10,13 +10,11 @@ if TYPE_CHECKING:
 
 
 class SnapAction(Action):
-    timeType: TimePredicateType or None
-    durativeAction: DurativeAction or None
+    timeType: TimePredicateType
+    durativeAction: DurativeAction
 
     def __init__(self):
         super().__init__()
-        self.timeType = None
-        self.durativeAction = None
 
     def substitute(self, sub: Dict[Atom, float], default=None) -> Action:
         name = self.name

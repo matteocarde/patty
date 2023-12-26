@@ -1,6 +1,6 @@
 from src.pddl.Domain import GroundedDomain
 from src.pddl.Problem import Problem
-from src.plan.PDDL2SMT import PDDL2SMT
+from src.plan.NumericEncoding import NumericEncoding
 from src.utils.Arguments import Arguments
 from src.utils.LogPrint import LogPrint, LogPrintLevel
 from src.utils.TimeStat import TimeStat
@@ -25,7 +25,7 @@ class Search:
     def solve(self):
         raise NotImplementedError
 
-    def saveSMT(self, bound: int, pddl2smt: PDDL2SMT, callsToSolver=0):
+    def saveSMT(self, bound: int, pddl2smt: NumericEncoding, callsToSolver=0):
         filename = f"{self.args.saveSMT}-{bound}-{callsToSolver}.smt"
         self.console.log(f"Saving to {filename}", LogPrintLevel.STATS)
         pddl2smt.writeSMTLIB(filename)

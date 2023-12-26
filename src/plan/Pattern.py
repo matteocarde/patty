@@ -30,6 +30,9 @@ class Pattern:
     def __getitem__(self, item):
         return self.__order[item]
 
+    def __len__(self):
+        return len(self.__order)
+
     @property
     def order(self):
         return self.__order

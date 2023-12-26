@@ -260,7 +260,7 @@ class GroundedDomain(Domain):
         self.operations.update(self.actions)
         self.operations.update(self.events)
         self.operations.update(self.processes)
-        self.operations.update(self.durativeActions)
+        # self.operations.update(self.durativeActions)
 
         self.functions: Set[Atom] = set()
         self.predicates: Set[Atom] = set()
@@ -287,6 +287,8 @@ class GroundedDomain(Domain):
             for v in op.getAssList():
                 self.assList.setdefault(v, set())
                 self.assList[v].add(op)
+
+            pass
 
         self.allAtoms = self.functions | self.predicates
         self.arpg = None

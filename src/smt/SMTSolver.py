@@ -5,7 +5,7 @@ from typing import Set, List, Dict
 from z3 import Optimize
 
 from src.pddl.NumericPlan import NumericPlan
-from src.plan.PDDL2SMT import PDDL2SMT
+from src.plan.NumericEncoding import NumericEncoding
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTSolution import SMTSolution
 from src.smt.SMTVariable import SMTVariable
@@ -15,12 +15,12 @@ class SMTSolver:
     solver: Portfolio
     variables: Set[SMTVariable]
 
-    def __init__(self, pddl2smt: PDDL2SMT = None, maximize=False):
+    def __init__(self, pddl2smt: NumericEncoding = None, maximize=False):
         self.variables: Set[SMTVariable] = set()
         self.variablesByName: Dict[str, SMTVariable] = dict()
         self.assertions: List[SMTExpression] = list()
         self.softAssertions: List[SMTExpression] = list()
-        self.pddl2smt: PDDL2SMT = pddl2smt
+        self.pddl2smt: NumericEncoding = pddl2smt
         self.maximize = True
 
         if self.maximize:

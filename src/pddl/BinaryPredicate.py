@@ -93,7 +93,16 @@ class BinaryPredicate(Predicate):
 
         return bp
 
-    def replace(self, atom: Atom, w: BinaryPredicate):
+    def replaceDict(self, r: Dict[Atom, Predicate]) -> BinaryPredicate:
+        bp = BinaryPredicate()
+        bp.operator = self.operator
+        bp.lhs = self.lhs.replaceDict(r)
+        bp.rhs = self.lhs.replaceDict(r)
+        bp.type = self.type
+
+        return bp
+
+    def replace(self, atom: Atom, w: Predicate):
         bp = BinaryPredicate()
         bp.operator = self.operator
         bp.lhs = self.lhs.replace(atom, w)

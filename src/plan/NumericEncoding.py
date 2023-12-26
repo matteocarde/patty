@@ -15,7 +15,7 @@ from src.pddl.Literal import Literal
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
 from src.plan.Pattern import Pattern
-from src.plan.TransitionVariables import TransitionVariables
+from src.plan.NumericTransitionVariables import NumericTransitionVariables
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTNumericVariable import SMTNumericVariable
 from src.smt.SMTSolution import SMTSolution
@@ -24,7 +24,7 @@ from src.smt.SMTSolution import SMTSolution
 EXPLICIT_DELTA = False
 
 
-class PDDL2SMT:
+class NumericEncoding:
     domain: GroundedDomain
     problem: Problem
 
@@ -45,7 +45,7 @@ class PDDL2SMT:
         self.relaxGoal = relaxGoal
         self.subgoalsAchieved = subgoalsAchieved
 
-        self.transitionVariables: [TransitionVariables] = list()
+        self.transitionVariables: [NumericTransitionVariables] = list()
 
         self.transitions: [SMTExpression] = []
 
@@ -54,8 +54,8 @@ class PDDL2SMT:
             self.pattern.extendNonLinearities(binaryActions)
 
         for index in range(0, bound + 1):
-            var = TransitionVariables(self.domain.predicates, self.domain.functions, self.domain.assList, self.pattern,
-                                      index, hasEffectAxioms)
+            var = NumericTransitionVariables(self.domain.predicates, self.domain.functions, self.domain.assList, self.pattern,
+                                             index, hasEffectAxioms)
             self.transitionVariables.append(var)
 
         self.softRules = []
@@ -159,7 +159,7 @@ class PDDL2SMT:
                     sumOfActions += stepVar.actionVariables[action] * action.linearizationTimes
             return sumOfActions < metricBound
 
-    def getDeltaStepRules(self, prevVars: TransitionVariables, stepVars: TransitionVariables) -> List[SMTExpression]:
+    def getDeltaStepRules(self, prevVars: NumericTransitionVariables, stepVars: NumericTransitionVariables) -> List[SMTExpression]:
         rules: List[SMTExpression] = []
 
         prevAction: Action or None = None
@@ -239,7 +239,7 @@ class PDDL2SMT:
 
         return rules
 
-    def getActStepRules(self, stepVars: TransitionVariables) -> List[SMTExpression]:
+    def getActStepRules(self, stepVars: NumericTransitionVariables) -> List[SMTExpression]:
         rules: List[SMTExpression] = []
 
         for a in self.pattern:
@@ -263,7 +263,7 @@ class PDDL2SMT:
 
         return rules
 
-    def getPreStepRules(self, stepVars: TransitionVariables) -> List[SMTExpression]:
+    def getPreStepRules(self, stepVars: NumericTransitionVariables) -> List[SMTExpression]:
         rules: List[SMTExpression] = []
 
         for a in self.pattern:
@@ -325,7 +325,7 @@ class PDDL2SMT:
 
         return rules
 
-    def getEffStepRules(self, stepVars: TransitionVariables) -> List[SMTExpression]:
+    def getEffStepRules(self, stepVars: NumericTransitionVariables) -> List[SMTExpression]:
         rules: List[SMTExpression] = []
 
         for a in self.pattern:
@@ -358,7 +358,7 @@ class PDDL2SMT:
 
         return rules
 
-    def getFrameStepRules(self, stepVars: TransitionVariables) -> List[SMTExpression]:
+    def getFrameStepRules(self, stepVars: NumericTransitionVariables) -> List[SMTExpression]:
         rules: List[SMTExpression] = []
 
         functions = self.domain.functions if self.bound > 1 else self.problem.goal.getFunctions()

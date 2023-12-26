@@ -23,7 +23,9 @@ class DurativeAction(Operation):
         self.name: str
         self.parameters = list()
         self.duration: Predicate
-        self.snapActions: Dict[TimePredicateType, SnapAction] = dict()
+        self.start: SnapAction
+        self.overall: SnapAction
+        self.end: SnapAction
 
     @classmethod
     def fromNode(cls, node: p.DurativeActionContext, types: Dict[str, Type]):
@@ -58,8 +60,16 @@ class DurativeAction(Operation):
                 effects.addEffect(e.subPredicate)
         planName = self.planName
         sa = SnapAction.fromProperties(name, parameters, preconditions, effects, planName, duration=0)
-        self.snapActions[type] = sa
+
+        if type == TimePredicateType.AT_START:
+            self.start = sa
+        elif type == TimePredicateType.OVER_ALL:
+            self.overall = sa
+        elif type == TimePredicateType.AT_END:
+            self.end = sa
+
         sa.durativeAction = self
+        sa.timeType = type
         return sa
 
     def __setDuration(self, node: p.DurationAssignmentContext):
@@ -79,3 +89,7 @@ class DurativeAction(Operation):
             op.snapActions = dict()
             groundOps.append(op)
         return groundOps
+
+    def areStartAndEndInMutex(self):
+        return self.start.isMutex(self.end)
+        pass

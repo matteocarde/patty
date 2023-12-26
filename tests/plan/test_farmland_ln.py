@@ -5,7 +5,7 @@ import unittest
 from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
-from src.plan.PDDL2SMT import PDDL2SMT
+from src.plan.NumericEncoding import NumericEncoding
 from src.plan.Pattern import Pattern
 from src.smt.SMTSolver import SMTSolver
 
@@ -18,7 +18,7 @@ class TestFarmlandLinear(TestCase):
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.horizon = 2
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
-        self.pddl2smt: PDDL2SMT = PDDL2SMT(self.gDomain, self.problem, self.pattern, self.horizon)
+        self.pddl2smt: NumericEncoding = NumericEncoding(self.gDomain, self.problem, self.pattern, self.horizon)
         print(self.pddl2smt.pattern)
         pass
 

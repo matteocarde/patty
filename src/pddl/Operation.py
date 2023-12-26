@@ -399,6 +399,7 @@ class Operation:
         mutex |= self.preB.intersection(other.addList)
         mutex |= self.preB.intersection(other.delList)
         mutex |= self.assList.intersection(other.assList)
+
         return len(mutex) > 0
 
     def isMutexSet(self, operations: Set[Operation]):

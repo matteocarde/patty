@@ -1,7 +1,9 @@
 (define (domain match_makespan)
     (:requirements :fluents :equality :typing :durative-actions :negative-preconditions)
 
-    (:types Match Fuse)
+    (:types
+        Match Fuse
+    )
 
     (:predicates
         (handfree)
@@ -19,41 +21,37 @@
     (:durative-action light_match
         :parameters (?m - Match)
         :duration (= ?duration (light_duration ?m))
-        :condition
-            (and
-                (at start (and
-                              (match_unused ?m)
-                              (dark)))
-            )
-        :effect
-            (and
-                (at start (and
-                              (not (match_unused ?m))
-                              (not (dark))
-                              (light)))
-                (at end (and
-                            (dark)
-                            (not (light))))
-            )
+        :condition (and
+            (at start (and
+                    (match_unused ?m)
+                    (dark)))
+        )
+        :effect (and
+            (at start (and
+                    (not (match_unused ?m))
+                    (not (dark))
+                    (light)))
+            (at end (and
+                    (dark)
+                    (not (light))))
+        )
     )
 
     (:durative-action mend_fuse
         :parameters (?f - Fuse)
         :duration (= ?duration (mend_duration ?f))
-        :condition
-            (and
-                (at start (and
-                              (handfree)
-                              (light)))
-                (over all (light))
-            )
-        :effect
-            (and
-                (at start (and
-                              (not (handfree))))
-                (at end (and
-                            (fuse_mended ?f)
-                            (handfree)))
-            )
+        :condition (and
+            (at start (and
+                    (handfree)
+                    (light)))
+            (over all (light))
+        )
+        :effect (and
+            (at start (and
+                    (not (handfree))))
+            (at end (and
+                    (fuse_mended ?f)
+                    (handfree)))
+        )
     )
 )

@@ -38,12 +38,17 @@ class Literal(Predicate):
         lit.alphaFunct = lit.atom.toAlphaFunctionName()
         return lit
 
-    def replace(self, atom: Atom, w):
+    def replace(self, atom: Atom, w: Predicate):
         if self.atom != atom:
             return copy.deepcopy(self)
         if self.sign != "+":
             raise Exception(f"Cannot replace {atom} with {w} since it appears as negated")
         return copy.deepcopy(w)
+
+    def replaceDict(self, r: Dict[Atom, Predicate]):
+        if self.atom in r:
+            return copy.deepcopy(r[self.atom])
+        return copy.deepcopy(self.atom)
 
     def isLinearIncrement(self):
         return False
@@ -74,6 +79,7 @@ class Literal(Predicate):
 
     def getLiterals(self) -> Set[Predicate]:
         return {self}
+
     def ground(self, subs: Dict[str, str], delta=1) -> Literal:
 
         literal = Literal()

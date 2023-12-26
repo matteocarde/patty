@@ -6,7 +6,7 @@ from src.pddl.Constant import Constant
 from src.pddl.Literal import Literal
 from pysmt.fnode import FNode
 from pysmt.shortcuts import And, Or, Equals, LE, LT, GE, GT, Implies, Real, Times, Minus, Plus, Div, TRUE, ToReal, Int, \
-    NotEquals, Iff
+    NotEquals, Iff, FALSE
 from pysmt.typing import REAL, INT, BOOL
 from typing import Set, Dict
 
@@ -23,7 +23,8 @@ def toRHS(other):
 def getVars(obj):
     from src.smt.SMTNegation import SMTNegation
     if isinstance(obj, SMTExpression):
-        return obj.variables if obj.variables else {obj} if not isinstance(obj, SMTNegation) else {obj.positive}
+        return obj.variables if obj.variables or obj.isConstant else {obj} if not isinstance(obj, SMTNegation) else {
+            obj.positive}
     return set()
 
 
@@ -32,6 +33,7 @@ class SMTExpression:
     variables: Set
     lhs: SMTExpression
     rhs: SMTExpression
+    isConstant: bool
 
     def __init__(self):
         self.variables = set()
@@ -39,6 +41,7 @@ class SMTExpression:
         self.lhs: SMTExpression
         self.rhs: SMTExpression
         self.expression = TRUE()
+        self.isConstant = False
 
     def __str__(self):
         return str(self.expression.serialize())
@@ -200,6 +203,8 @@ class SMTExpression:
 
     @classmethod
     def andOfExpressionsList(cls, rules: [SMTExpression]):
+        if not rules:
+            return SMTExpression.FALSE()
         final: SMTExpression = rules[0]
         for rule in rules[1:]:
             final = final.AND(rule)
@@ -207,7 +212,23 @@ class SMTExpression:
 
     @classmethod
     def orOfExpressionsList(cls, rules: [SMTExpression]):
+        if not rules:
+            return SMTExpression.FALSE()
         final: SMTExpression = rules[0]
         for rule in rules[1:]:
             final = final.OR(rule)
         return final
+
+    @classmethod
+    def FALSE(cls):
+        exp = cls()
+        exp.expression = FALSE()
+        exp.isConstant = True
+        return exp
+
+    @classmethod
+    def TRUE(cls):
+        exp = cls()
+        exp.expression = TRUE()
+        exp.isConstant = True
+        return exp
