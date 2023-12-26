@@ -47,6 +47,8 @@ class Formula:
             clauses.append(formulaComponent)
         elif type(formulaComponent) in {p.AndClauseContext, p.OrClauseContext, p.AndDurClauseContext}:
             clauses = formulaComponent.children
+        elif type(formulaComponent) in {p.AtStartPreContext, p.OverAllPreContext, p.AtEndPreContext}:
+            clauses.append(formulaComponent)
         else:
             raise Exception("Unexpected clause in precondition")
 

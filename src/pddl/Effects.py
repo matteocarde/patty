@@ -36,7 +36,7 @@ class Effects:
         if type(node.getChild(0)) in {p.AndEffectContext, p.AndDurativeEffectContext}:
             nodes.extend([n.getChild(0) for n in node.getChild(0).children[2:-1]])
         else:
-            nodes.append(node.getChild(0))
+            nodes.append(node.getChild(0).getChild(0))
 
         for n in nodes:
             if isinstance(n, p.BooleanLiteralContext):

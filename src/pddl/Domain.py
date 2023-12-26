@@ -247,6 +247,13 @@ class GroundedDomain(Domain):
         self.processes = process
         self.durativeActions = durativeActions
 
+        types = [TimePredicateType.AT_START, TimePredicateType.OVER_ALL, TimePredicateType.AT_END]
+        for dAction in self.durativeActions:
+            for type in types:
+                sa = dAction.getSnapAction(type)
+                if sa.predicates or sa.functions:
+                    self.actions.add(sa)
+
         self.substitutions = dict()
 
         self.operations: Set[Operation] = set()

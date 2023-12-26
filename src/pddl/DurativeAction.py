@@ -1,22 +1,18 @@
 from __future__ import annotations
 
 from typing import Dict, List
+
 from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.Constant import Constant
 from src.pddl.Effects import Effects
 from src.pddl.Literal import Literal
 from src.pddl.Operation import Operation
-from src.pddl.Parameter import Parameter
 from src.pddl.Preconditions import Preconditions
 from src.pddl.Predicate import Predicate
+from src.pddl.SnapAction import SnapAction
 from src.pddl.TimePredicate import TimePredicate, TimePredicateType
 from src.pddl.Type import Type
 from src.pddl.grammar.pddlParser import pddlParser as p
-
-from typing import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from src.pddl.SnapAction import SnapAction
 
 
 class DurativeAction(Operation):
@@ -27,6 +23,7 @@ class DurativeAction(Operation):
         self.name: str
         self.parameters = list()
         self.duration: Predicate
+        self.snapActions: Dict[TimePredicateType, SnapAction] = dict()
 
     @classmethod
     def fromNode(cls, node: p.DurativeActionContext, types: Dict[str, Type]):
@@ -44,6 +41,27 @@ class DurativeAction(Operation):
                 da.addEffects(child)
         return da
 
+    def getSnapAction(self, type: TimePredicateType) -> SnapAction:
+        name = self.name + "_" + type.value.replace(" ", "_")
+        parameters = self.parameters
+        preconditions = Preconditions()
+        effects = Effects()
+        for p in self.preconditions:
+            if not isinstance(p, TimePredicate):
+                raise Exception("Durative actions should contain only TimePredicate")
+            if p.type == type:
+                preconditions.addPrecondition(p.subPredicate)
+        for e in self.effects:
+            if not isinstance(e, TimePredicate):
+                raise Exception("Durative actions should contain only TimePredicate")
+            if e.type == type:
+                effects.addEffect(e.subPredicate)
+        planName = self.planName
+        sa = SnapAction.fromProperties(name, parameters, preconditions, effects, planName, duration=0)
+        self.snapActions[type] = sa
+        sa.durativeAction = self
+        return sa
+
     def __setDuration(self, node: p.DurationAssignmentContext):
         op = node.op.getChild(0)
         if isinstance(op, p.OperationContext):
@@ -58,5 +76,6 @@ class DurativeAction(Operation):
         toGroundOps = self.getGroundedOperations(problem, delta=delta)
         for op in toGroundOps:
             op.__class__ = DurativeAction
+            op.snapActions = dict()
             groundOps.append(op)
         return groundOps

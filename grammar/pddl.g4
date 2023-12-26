@@ -96,7 +96,7 @@ durativeConditions: andDurClause | atStartPre | overAllPre | atEndPre | emptyPre
 atStartEffect: LP 'at start' (booleanLiteral | modification) RP;
 overAllEffect: LP 'overall' (booleanLiteral | modification) RP;
 atEndEffect: LP 'at end' (booleanLiteral | modification) RP;
-durativeEffect: (atStartEffect | overAllEffect | atEndEffect);
+durativeEffect: atStartEffect | overAllEffect | atEndEffect;
 andDurativeEffect: LP 'and' durativeEffect+ RP;
 durativeEffects: durativeEffect | andDurativeEffect;
 

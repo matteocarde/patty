@@ -3773,21 +3773,23 @@ class pddlParser ( Parser ):
         localctx = pddlParser.DurativeEffectContext(self, self._ctx, self.state)
         self.enterRule(localctx, 102, self.RULE_durativeEffect)
         try:
-            self.enterOuterAlt(localctx, 1)
             self.state = 473
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,38,self._ctx)
             if la_ == 1:
+                self.enterOuterAlt(localctx, 1)
                 self.state = 470
                 self.atStartEffect()
                 pass
 
             elif la_ == 2:
+                self.enterOuterAlt(localctx, 2)
                 self.state = 471
                 self.overAllEffect()
                 pass
 
             elif la_ == 3:
+                self.enterOuterAlt(localctx, 3)
                 self.state = 472
                 self.atEndEffect()
                 pass

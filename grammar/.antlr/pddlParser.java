@@ -2893,30 +2893,30 @@ public class pddlParser extends Parser {
 		DurativeEffectContext _localctx = new DurativeEffectContext(_ctx, getState());
 		enterRule(_localctx, 102, RULE_durativeEffect);
 		try {
-			enterOuterAlt(_localctx, 1);
-			{
 			setState(473);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,38,_ctx) ) {
 			case 1:
+				enterOuterAlt(_localctx, 1);
 				{
 				setState(470);
 				atStartEffect();
 				}
 				break;
 			case 2:
+				enterOuterAlt(_localctx, 2);
 				{
 				setState(471);
 				overAllEffect();
 				}
 				break;
 			case 3:
+				enterOuterAlt(_localctx, 3);
 				{
 				setState(472);
 				atEndEffect();
 				}
 				break;
-			}
 			}
 		}
 		catch (RecognitionException re) {
