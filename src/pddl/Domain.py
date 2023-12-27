@@ -112,7 +112,6 @@ class Domain:
         gDomain = gDomain.substitute(constants)
         orderedActions = [a.substitute(constants) for a in orderedActions if a.canHappen(constants)]
         problem.substitute(constants)
-        orderedActions = set(orderedActions)
         gDomain.actions = set()
         for a in orderedActions:
             if not isinstance(a, SnapAction):
@@ -120,8 +119,6 @@ class Domain:
                 continue
             if a.durativeAction.start in orderedActions:
                 gDomain.actions.add(a)
-
-        # gDomain.actions = set(orderedActions)
 
         from src.plan.AffectedGraph import AffectedGraph
         gDomain.actions = sorted(gDomain.actions, key=lambda a: a.name)
@@ -251,16 +248,23 @@ class GroundedDomain(Domain):
         super().__init__()
 
         self.name = name
-        self.actions = actions
         self.events = events
         self.processes = process
         self.durativeActions = durativeActions
 
-        types = [TimePredicateType.AT_START, TimePredicateType.OVER_ALL, TimePredicateType.AT_END]
-        for dAction in self.durativeActions:
-            for type in types:
-                sa = dAction.getSnapAction(type)
-                if sa.predicates or sa.functions:
+        if not self.durativeActions:
+            self.actions = actions
+        else:
+            self.actions = set()
+            for action in actions:
+                if isinstance(action, SnapAction):
+                    continue
+                self.durativeActions.add(DurativeAction.fromAction(action))
+
+            types = [TimePredicateType.AT_START, TimePredicateType.OVER_ALL, TimePredicateType.AT_END]
+            for dAction in self.durativeActions:
+                for type in types:
+                    sa = dAction.getSnapAction(type)
                     self.actions.add(sa)
 
         self.substitutions = dict()

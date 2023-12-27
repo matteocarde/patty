@@ -33,6 +33,13 @@ class Predicate:
     def isDynamicLifted(self, problem) -> bool:
         raise NotImplemented
 
+    def toTimePredicate(self, t):
+        from src.pddl.TimePredicate import TimePredicate
+        tp = TimePredicate()
+        tp.type = t
+        tp.subPredicate = self
+        return tp
+
     def canHappenLiftedPartial(self, item: Tuple, params: List[str], problem) -> bool:
         raise NotImplemented
 

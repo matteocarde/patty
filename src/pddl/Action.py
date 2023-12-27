@@ -139,3 +139,13 @@ class Action(Operation):
         pw.decreaseTab()
         pw.write(")")
         pass
+
+    def toSnapActions(self):
+
+        from src.pddl.DurativeAction import DurativeAction
+        dAction = DurativeAction.fromProperties(self.name, self.parameters, self.preconditions, self.effects,
+                                                self.planName, duration=0)
+        from src.pddl.SnapAction import SnapAction
+        start = SnapAction.fromProperties(self.name + "")
+
+        pass

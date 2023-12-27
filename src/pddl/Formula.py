@@ -11,7 +11,7 @@ from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.Literal import Literal
 from src.pddl.PDDLWriter import PDDLWriter
 from src.pddl.Predicate import Predicate
-from src.pddl.TimePredicate import TimePredicate
+from src.pddl.TimePredicate import TimePredicate, TimePredicateType
 from src.pddl.Utilities import Utilities
 from src.pddl.grammar.pddlParser import pddlParser as p
 
@@ -30,6 +30,29 @@ class Formula:
         f.type = self.type
         f.conditions = copy.deepcopy(self.conditions, m)
         return f
+
+    def __iter__(self):
+        return iter(self.conditions)
+
+    def __str__(self):
+        return f"({self.type.lower()} {' '.join([str(c) for c in self.conditions])})"
+
+    def __eq__(self, other):
+        return str(self) == str(other)
+
+    def __hash__(self):
+        return hash(str(self))
+
+    def __repr__(self):
+        return str(self.conditions)
+
+    def __add__(self, other):
+        c = Formula()
+        c.conditions = self.conditions + other
+        return c
+
+    def __len__(self):
+        return len(self.conditions)
 
     @classmethod
     def fromNode(cls, node) -> Formula:
@@ -78,7 +101,7 @@ class Formula:
     def getFunctions(self) -> Set[Atom]:
         functions = set()
         for c in self.conditions:
-            if isinstance(c, Literal):
+            if isinstance(c, Literal) or (isinstance(c, TimePredicate) and isinstance(c.subPredicate, Literal)):
                 continue
             functions |= c.getFunctions()
         return functions
@@ -133,28 +156,11 @@ class Formula:
             raise Exception("Cannot expressify OR formula")
         return [c.expressify(symbols) for c in self.conditions]
 
-    def __iter__(self):
-        return iter(self.conditions)
-
-    def __str__(self):
-        return f"({self.type.lower()} {' '.join([str(c) for c in self.conditions])})"
-
-    def __eq__(self, other):
-        return str(self) == str(other)
-
-    def __hash__(self):
-        return hash(str(self))
-
-    def __repr__(self):
-        return str(self.conditions)
-
-    def __add__(self, other):
-        c = Formula()
-        c.conditions = self.conditions + other
-        return c
-
-    def __len__(self):
-        return len(self.conditions)
+    def toTimePredicate(self, type: TimePredicateType) -> Formula:
+        f = Formula()
+        f.type = self.type
+        f.conditions = [c.toTimePredicate(type) for c in self.conditions]
+        return f
 
     def toLatex(self):
         if not self.conditions:

@@ -46,6 +46,7 @@ class Operation:
         self.decreases = dict()
         self.assignments = dict()
         self.linearizationOf = self
+        self.originalName: str = ""
         self.linearizationTimes = 1
         self.isFake = False
 
@@ -71,7 +72,9 @@ class Operation:
         a.decreases = copy.deepcopy(self.decreases, m)
         a.assignments = copy.deepcopy(self.assignments, m)
         a.linearizationOf = self.linearizationOf
+        a.originalName = self.originalName
         a.linearizationTimes = self.linearizationTimes
+        a.originalName = self.originalName
         a.duration = self.duration
 
         return a
@@ -103,6 +106,7 @@ class Operation:
         operation.effects = effects
         operation.planName = planName
         operation.duration = duration
+        operation.originalName = name
         operation.__cacheLists()
         return operation
 

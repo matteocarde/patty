@@ -367,7 +367,7 @@ class TemporalEncoding:
 
             for j in range(i + 1, len(self.pattern)):
                 end = self.pattern[j]
-                if not start.durativeAction.end == end:
+                if not isinstance(end, SnapAction) or not end.isSame(start.durativeAction.end):
                     continue
                 a_j = stepVars.actionVariables[end]
                 t_j = stepVars.timeVariables[end]
@@ -394,7 +394,7 @@ class TemporalEncoding:
 
             for i in range(0, j):
                 start = self.pattern[i]
-                if not end.durativeAction.start == start:
+                if not isinstance(start, SnapAction) or not start.isSame(end.durativeAction.start):
                     continue
                 a_i = stepVars.actionVariables[start]
                 t_i = stepVars.timeVariables[start]
@@ -424,7 +424,7 @@ class TemporalEncoding:
             for j, action_j in enumerate(self.pattern):
                 if not isOk(action_j):
                     continue
-                if action_i == action_j and i < j:
+                if action_i.isSame(action_j) and i < j:
                     if action_i.timeType == TimePredicateType.AT_START:
                         startPairs.append((action_i, action_j))
                     if action_i.timeType == TimePredicateType.AT_END:
@@ -493,7 +493,7 @@ class TemporalEncoding:
                 action_j = self.pattern[j]
                 if not isinstance(action_j, SnapAction) or action_j.timeType != TimePredicateType.AT_END:
                     continue
-                if not action_i.durativeAction.end == action_j:
+                if not action_j.isSame(action_i.durativeAction.end):
                     continue
                 pairs.append((i, j))
 

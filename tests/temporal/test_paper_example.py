@@ -17,7 +17,8 @@ class TestPaperExample(TestCase):
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.horizon = 2
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
-        self.encoding: TemporalEncoding = TemporalEncoding(self.gDomain, self.problem, self.pattern, self.horizon)
+        self.pattern = self.pattern.multiply(self.horizon)
+        self.encoding: TemporalEncoding = TemporalEncoding(self.gDomain, self.problem, self.pattern, 1)
         print(self.pattern)
         self.encoding.printRules()
         pass

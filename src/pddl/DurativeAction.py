@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 from typing import Dict, List
 
 from src.pddl.BinaryPredicate import BinaryPredicate
@@ -20,12 +21,21 @@ class DurativeAction(Operation):
 
     def __init__(self):
         super().__init__()
-        self.name: str
-        self.parameters = list()
         self.duration: Predicate
         self.start: SnapAction
         self.overall: SnapAction
         self.end: SnapAction
+
+    def __deepcopy__(self, m=None):
+        if m is None:
+            m = {}
+        c = super().__deepcopy__(m)
+        c.duration = copy.deepcopy(self.duration, m)
+        m["durative"] = c
+        c.start = copy.deepcopy(self.start, m)
+        c.overall = copy.deepcopy(self.overall, m)
+        c.end = copy.deepcopy(self.end, m)
+        return c
 
     @classmethod
     def fromNode(cls, node: p.DurativeActionContext, types: Dict[str, Type]):
@@ -93,3 +103,13 @@ class DurativeAction(Operation):
     def areStartAndEndInMutex(self):
         return self.start.isMutex(self.end)
         pass
+
+    @classmethod
+    def fromAction(cls, action) -> DurativeAction:
+        from src.pddl.Action import Action
+        action: Action
+        preconditions = action.preconditions.toTimePredicate(TimePredicateType.AT_START)
+        effects = action.effects.toTimePredicate(TimePredicateType.AT_START)
+        dAction = cls.fromProperties(action.name, action.parameters, preconditions, effects, action.planName)
+        dAction.duration = Constant(0)
+        return dAction

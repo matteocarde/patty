@@ -9,7 +9,7 @@ from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate, BinaryPredicateType
 from src.pddl.Literal import Literal
 from src.pddl.PDDLWriter import PDDLWriter
-from src.pddl.TimePredicate import TimePredicate
+from src.pddl.TimePredicate import TimePredicate, TimePredicateType
 from src.pddl.grammar.pddlParser import pddlParser
 from src.pddl.grammar.pddlParser import pddlParser as p
 
@@ -140,3 +140,8 @@ class Effects:
             c.toPDDL(pw)
         pw.decreaseTab()
         pw.write(")")
+
+    def toTimePredicate(self, type: TimePredicateType) -> Effects:
+        eff = Effects()
+        eff.assignments = [a.toTimePredicate(type) for a in self.assignments]
+        return eff

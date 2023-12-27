@@ -89,7 +89,6 @@ class Pattern:
             for item in self.__order[:-1]:
                 a = copy.deepcopy(item)
                 a.name = f"{a.name}_{i}" if times > 1 else f"{a.name}"
-                # a.name = f"{a.name}_{i}"
                 order.append(a)
 
         return Pattern.fromOrder(order)

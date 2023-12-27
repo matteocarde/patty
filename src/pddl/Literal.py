@@ -53,6 +53,8 @@ class Literal(Predicate):
     def isLinearIncrement(self):
         return False
 
+
+
     @classmethod
     def fromNode(cls, node: p.PositiveLiteralContext or p.NegativeLiteralContext) -> Literal:
         literal = cls()
