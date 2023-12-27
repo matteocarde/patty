@@ -412,20 +412,25 @@ class TemporalEncoding:
 
         rules: List[SMTExpression] = []
 
-        isOk = lambda a: isinstance(a_i, SnapAction) and a_i.timeType not in {TimePredicateType.AT_START,
-                                                                              TimePredicateType.AT_END}
-        pairs: List[Tuple[SnapAction, SnapAction]] = []
-        for i, a_i in enumerate(self.pattern):
-            if not isOk(a_i):
-                continue
-            for j, a_j in enumerate(self.pattern):
-                if not isOk(a_j):
-                    continue
-                if a_i == a_j and i != j:
-                    pairs.append((a_i, a_j))
-
+        isOk = lambda a: isinstance(a, SnapAction) and a.timeType in {TimePredicateType.AT_START,
+                                                                      TimePredicateType.AT_END}
+        startPairs: List[Tuple[SnapAction, SnapAction]] = []
+        endPairs: List[Tuple[SnapAction, SnapAction]] = []
         action_i: SnapAction
-        for (action_i, action_j) in pairs:
+        action_j: SnapAction
+        for i, action_i in enumerate(self.pattern):
+            if not isOk(action_i):
+                continue
+            for j, action_j in enumerate(self.pattern):
+                if not isOk(action_j):
+                    continue
+                if action_i == action_j and i < j:
+                    if action_i.timeType == TimePredicateType.AT_START:
+                        startPairs.append((action_i, action_j))
+                    if action_i.timeType == TimePredicateType.AT_END:
+                        endPairs.append((action_i, action_j))
+
+        for (action_i, action_j) in startPairs:
             a_i = stepVars.actionVariables[action_i]
             a_j = stepVars.actionVariables[action_j]
             t_i = stepVars.timeVariables[action_i]
@@ -437,6 +442,16 @@ class TemporalEncoding:
             rhs = (t_j >= t_i + self.getDelta(a_i, d_i, b))
             rules.append(lhs.implies(rhs))
 
+        for (action_i, action_j) in endPairs:
+            a_i = stepVars.actionVariables[action_i]
+            a_j = stepVars.actionVariables[action_j]
+            t_i = stepVars.timeVariables[action_i]
+            t_j = stepVars.timeVariables[action_j]
+
+            lhs = (a_i > 0).AND(a_j > 0)
+            rhs = (t_j > t_i)
+            rules.append(lhs.implies(rhs))
+
         return rules
 
     def getEpsilonSeparationRules(self, stepVars: TemporalTransitionVariables) -> List[SMTExpression]:
@@ -446,12 +461,14 @@ class TemporalEncoding:
         action_i: SnapAction
         action_j: SnapAction
         for j, action_j in enumerate(self.pattern):
+            if action_j.isFake:
+                continue
             a_j = stepVars.actionVariables[action_j]
             t_j = stepVars.timeVariables[action_j]
             rules.append((a_j == 0).implies(t_j == 0))
-
             mutexes = []
             for i, action_i in enumerate(self.pattern):
+                mutexes.append(t_j >= self.epsilon)
                 if i < j and action_i.isMutex(action_j):
                     t_i = stepVars.timeVariables[action_i]
                     mutexes.append(t_j >= t_i + self.epsilon)
@@ -463,9 +480,83 @@ class TemporalEncoding:
 
     def getLastingActionsRules(self, stepVars: TemporalTransitionVariables) -> List[SMTExpression]:
 
+        k = len(self.pattern)
         rules: List[SMTExpression] = []
+        pairs: List[Tuple[int, int]] = []
 
+        action_i: SnapAction
+        action_j: SnapAction
+        for i, action_i in enumerate(self.pattern):
+            if not isinstance(action_i, SnapAction) or action_i.timeType != TimePredicateType.AT_START:
+                continue
+            for j in range(i + 1, k):
+                action_j = self.pattern[j]
+                if not isinstance(action_j, SnapAction) or action_j.timeType != TimePredicateType.AT_END:
+                    continue
+                if not action_i.durativeAction.end == action_j:
+                    continue
+                pairs.append((i, j))
 
+        for (i, j) in pairs:
+
+            action_i: SnapAction = self.pattern[i]
+            action_j: SnapAction = self.pattern[j]
+
+            a_i = stepVars.actionVariables[action_i]
+            t_i = stepVars.timeVariables[action_i]
+            t_j = stepVars.timeVariables[action_j]
+            d_i = stepVars.durVariables[action_i]
+            b = action_i.durativeAction
+            sigma_i = stepVars.sigmaVariables[action_i]
+
+            preAnd = []
+            lasting = action_i.durativeAction.overall
+            if not lasting:
+                continue
+            for pre in lasting.preconditions:
+                if isinstance(pre, Literal):
+                    v = pre.getAtom()
+                    if pre.sign == "+":
+                        preAnd.append(sigma_i[v])
+                    elif pre.sign == "-":
+                        preAnd.append(sigma_i[v].NOT())
+                if isinstance(pre, BinaryPredicate):
+                    preAnd.append(self.getSigmaPsi(pre, sigma_i, 1, action_i, 0, action_j))
+
+            rules.append((a_i > 0).implies(SMTExpression.andOfExpressionsList(preAnd)))
+
+            isMutex = lambda l: self.pattern[l].isMutex(action_i) \
+                                or self.pattern[l].isMutex(action_j) \
+                                or self.pattern[l].isMutex(lasting)
+
+            L_i = [self.pattern[l] for l in range(i + 1, k) if isMutex(l)]
+
+            times = []
+            for action_l in L_i:
+                t_l = stepVars.timeVariables[action_l]
+                times.append((t_l < t_i).OR(t_l >= t_j))
+
+            lhs1 = (t_j == t_i + self.getDelta(a_i, d_i, b)).AND(SMTExpression.andOfExpressionsList(times))
+
+            preLasting = []
+            for pre in lasting.preconditions:
+                if not isinstance(pre, BinaryPredicate):
+                    continue
+                preLasting.append(self.getSigmaPsi(pre, sigma_i, a_i, action_i, a_i - 1, action_j))
+            rhs1 = SMTExpression.andOfExpressionsList(preLasting)
+            rules.append(lhs1.implies(rhs1))
+
+            for action_l in L_i:
+                t_l = stepVars.timeVariables[action_l]
+                sigma_l = stepVars.sigmaVariables[action_l]
+                lhs2 = SMTExpression.andOfExpressionsList(
+                    [t_j == t_i + self.getDelta(a_i, d_i, b), t_l >= t_i, t_l < t_j])
+                rhs2And = [a_i <= 1]
+                for pre in lasting.preconditions:
+                    if not isinstance(pre, BinaryPredicate):
+                        continue
+                    rhs2And.append(SMTExpression.fromPddl(pre, sigma_l))
+                rules.append(lhs2.implies(SMTExpression.andOfExpressionsList(rhs2And)))
 
         return rules
 

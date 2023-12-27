@@ -112,7 +112,16 @@ class Domain:
         gDomain = gDomain.substitute(constants)
         orderedActions = [a.substitute(constants) for a in orderedActions if a.canHappen(constants)]
         problem.substitute(constants)
-        gDomain.actions = set(orderedActions)
+        orderedActions = set(orderedActions)
+        gDomain.actions = set()
+        for a in orderedActions:
+            if not isinstance(a, SnapAction):
+                gDomain.actions.add(a)
+                continue
+            if a.durativeAction.start in orderedActions:
+                gDomain.actions.add(a)
+
+        # gDomain.actions = set(orderedActions)
 
         from src.plan.AffectedGraph import AffectedGraph
         gDomain.actions = sorted(gDomain.actions, key=lambda a: a.name)

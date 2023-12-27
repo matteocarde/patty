@@ -204,7 +204,7 @@ class SMTExpression:
     @classmethod
     def andOfExpressionsList(cls, rules: [SMTExpression]):
         if not rules:
-            return SMTExpression.FALSE()
+            return SMTExpression.TRUE()
         final: SMTExpression = rules[0]
         for rule in rules[1:]:
             final = final.AND(rule)
@@ -213,7 +213,7 @@ class SMTExpression:
     @classmethod
     def orOfExpressionsList(cls, rules: [SMTExpression]):
         if not rules:
-            return SMTExpression.FALSE()
+            return SMTExpression.TRUE()
         final: SMTExpression = rules[0]
         for rule in rules[1:]:
             final = final.OR(rule)

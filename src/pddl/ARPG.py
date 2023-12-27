@@ -31,9 +31,10 @@ class ARPG:
         for a in self.actions:
             supporters |= a.getSupporters()
 
+        usedActions = set()
         state: RelaxedIntervalState = RelaxedIntervalState.fromState(state, domain.predicates)
-        activeSupporters = {s for s in supporters if s.isSatisfiedBy(state)}
-
+        activeSupporters = {s for s in supporters if s.isSatisfiedBy(state) and s.respectsTemporal(usedActions)}
+        usedActions = usedActions | {s.originatingAction for s in activeSupporters}
         self.supporterLevels.append(activeSupporters)
         self.stateLevels.append(state)
 
@@ -43,7 +44,9 @@ class ARPG:
         while activeSupporters and not isFixpoint:
             supporters = supporters - activeSupporters
             newState = state.applySupporters(activeSupporters)
-            activeSupporters = {s for s in supporters if s.isSatisfiedBy(newState)}
+            activeSupporters = {s for s in supporters if
+                                s.isSatisfiedBy(newState) and s.respectsTemporal(usedActions)}
+            usedActions = usedActions | {s.originatingAction for s in activeSupporters}
 
             self.supporterLevels.append(activeSupporters)
             self.stateLevels.append(newState)
