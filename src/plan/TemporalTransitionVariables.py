@@ -55,7 +55,7 @@ class TemporalTransitionVariables:
         for action in self.pattern:
             if action.isFake:
                 continue
-            variables[action] = SMTIntVariable(f"time_{action.name}_{index}")
+            variables[action] = SMTRealVariable(f"time_{action.name}_{index}")
 
         return variables
 
@@ -65,7 +65,7 @@ class TemporalTransitionVariables:
         for action in self.pattern:
             if action.isFake or not isinstance(action, SnapAction) or action.timeType != TimePredicateType.AT_START:
                 continue
-            variables[action] = SMTIntVariable(f"dur_{action.name}_{index}")
+            variables[action] = SMTRealVariable(f"dur_{action.name}_{index}")
 
         return variables
 

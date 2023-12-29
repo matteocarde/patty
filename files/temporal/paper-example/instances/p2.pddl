@@ -12,11 +12,14 @@
     (= (index b1) 1)
     (= (index b2) 2)
     (= (p) 1)
+    (capped b2)
   )
 
   (:goal
     (and
-      (= (litres b1) 0)
+      ; (= (litres b1) 1)
+      (= (litres b2) 1)
+      ; (capped b2)
     )
   )
 )

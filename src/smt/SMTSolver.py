@@ -5,6 +5,8 @@ from typing import Set, List, Dict
 from z3 import Optimize
 
 from src.pddl.NumericPlan import NumericPlan
+from src.pddl.Plan import Plan
+from src.plan.Encoding import Encoding
 from src.plan.NumericEncoding import NumericEncoding
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTSolution import SMTSolution
@@ -15,12 +17,12 @@ class SMTSolver:
     solver: Portfolio
     variables: Set[SMTVariable]
 
-    def __init__(self, pddl2smt: NumericEncoding = None, maximize=False):
+    def __init__(self, encoding: Encoding = None, maximize=False):
         self.variables: Set[SMTVariable] = set()
         self.variablesByName: Dict[str, SMTVariable] = dict()
         self.assertions: List[SMTExpression] = list()
         self.softAssertions: List[SMTExpression] = list()
-        self.pddl2smt: NumericEncoding = pddl2smt
+        self.encoding: Encoding = encoding
         self.maximize = True
 
         if self.maximize:
@@ -35,9 +37,9 @@ class SMTSolver:
                                                incremental=True,
                                                generate_models=True)
 
-        if self.pddl2smt:
-            self.addAssertions(self.pddl2smt.rules)
-            self.addSoftAssertions(self.pddl2smt.softRules)
+        if self.encoding:
+            self.addAssertions(self.encoding.rules)
+            self.addSoftAssertions(self.encoding.softRules)
 
     def addAssertion(self, expr: SMTExpression, push=True):
         self.assertions.append(expr)
@@ -124,13 +126,13 @@ class SMTSolver:
 
         return solution
 
-    def solve(self) -> NumericPlan or bool:
+    def solve(self) -> Plan or bool:
 
         solution = self.getSolution()
         if not solution:
             return False
-        plan = self.pddl2smt.getPlanFromSolution(solution)
-        plan.quality = plan.getMetric(self.pddl2smt.problem)
+        plan = self.encoding.getPlanFromSolution(solution)
+        # plan.quality = plan.getMetric(self.encoding.problem)
 
         return plan
 
@@ -142,9 +144,9 @@ class SMTSolver:
             return False
 
         while True:
-            assert lastPlanFound.validate(self.pddl2smt.problem)
+            assert lastPlanFound.validate(self.encoding.problem)
             print(f"Found plan with quality {lastPlanFound.quality}. Improving...")
-            self.addAssertion(self.pddl2smt.getMetricExpression(lastPlanFound.quality))
+            self.addAssertion(self.encoding.getMetricExpression(lastPlanFound.quality))
 
             plan = self.solve()
             if not plan or plan.quality == lastPlanFound.quality:
@@ -156,7 +158,7 @@ class SMTSolver:
 
     def __solveBelowQuality(self, quality: float):
         # print("Searching below", quality)
-        self.addAssertion(self.pddl2smt.getMetricExpression(quality), push=False)
+        self.addAssertion(self.encoding.getMetricExpression(quality), push=False)
         plan = self.solve()
         self.popLastAssertion()
         return plan

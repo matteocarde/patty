@@ -16,9 +16,10 @@ from src.pddl.Literal import Literal
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
 from src.pddl.SnapAction import SnapAction
+from src.pddl.TemporalPlan import TemporalPlan
 from src.pddl.TimePredicate import TimePredicateType
+from src.plan.Encoding import Encoding
 from src.plan.Pattern import Pattern
-from src.plan.NumericTransitionVariables import NumericTransitionVariables
 from src.plan.TemporalTransitionVariables import TemporalTransitionVariables
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTNumericVariable import SMTNumericVariable
@@ -29,12 +30,14 @@ from src.smt.SMTVariable import SMTVariable
 EXPLICIT_DELTA = False
 
 
-class TemporalEncoding:
+class TemporalEncoding(Encoding):
     domain: GroundedDomain
     problem: Problem
+    rules: List[SMTExpression]
 
     def __init__(self, domain: GroundedDomain, problem: Problem, pattern: Pattern, bound: int, epsilon=0.001):
 
+        super().__init__(domain, problem, pattern, bound)
         self.domain = domain
         self.problem = problem
         self.bound = bound
@@ -59,8 +62,6 @@ class TemporalEncoding:
             self.transitions.extend(stepRules)
 
         self.rules = self.initial + self.transitions + [self.goal]
-
-        pass
 
     def getInitialExpression(self) -> List[SMTExpression]:
         tVars = self.transitionVariables[0]
@@ -226,7 +227,6 @@ class TemporalEncoding:
                 rules.append(lhs.implies(rhs))
 
             # 2) Start or end action
-            ## DEAL ALSO WITH ORDINARY ACTIONS !!
             if not isinstance(a, SnapAction) or a.timeType == TimePredicateType.OVER_ALL:
                 continue
 
@@ -265,9 +265,9 @@ class TemporalEncoding:
                     if eff.operator == "assign":
                         replacements[atom] = SMTExpression.fromPddl(eff.rhs, sigmas)
                     elif eff.operator == "increase":
-                        replacements[atom] = sigmas[atom] + times * SMTExpression.fromPddl(eff.lhs, sigmas)
+                        replacements[atom] = sigmas[atom] + times * SMTExpression.fromPddl(eff.rhs, sigmas)
                     elif eff.operator == "decrease":
-                        replacements[atom] = sigmas[atom] - times * SMTExpression.fromPddl(eff.lhs, sigmas)
+                        replacements[atom] = sigmas[atom] - times * SMTExpression.fromPddl(eff.rhs, sigmas)
 
         for (atom, expr) in sigmas.items():
             if atom not in replacements:
@@ -348,7 +348,7 @@ class TemporalEncoding:
 
         return rules
 
-    def getDelta(self, a_i: SMTVariable, d_i: SMTVariable, b: DurativeAction) -> SMTExpression:
+    def getDelta(self, a_i: SMTVariable or float, d_i: SMTVariable or float, b: DurativeAction) -> SMTExpression:
         epsilon = self.epsilon if b.areStartAndEndInMutex() else 0
         return a_i * d_i + (a_i - 1) * epsilon
 
@@ -613,14 +613,8 @@ class TemporalEncoding:
                                                                  args=[]))
             script.serialize(fout, daggify=False)
 
-    def __str__(self):
-        string = ""
-        for rule in self.rules:
-            string += str(rule) + "\n"
-        return string
-
-    def getPlanFromSolution(self, solution: SMTSolution) -> NumericPlan:
-        plan = NumericPlan()
+    def getPlanFromSolution(self, solution: SMTSolution) -> TemporalPlan:
+        plan = TemporalPlan()
 
         if not solution:
             return plan
@@ -628,19 +622,16 @@ class TemporalEncoding:
         for i in range(1, self.bound + 1):
             stepVar = self.transitionVariables[i]
             for a in self.pattern:
-                if a.isFake:
+                if a.isFake or not isinstance(a, SnapAction) or a.timeType != TimePredicateType.AT_START:
                     continue
-                repetitions = int(str(solution.getVariable(stepVar.actionVariables[a]))) * a.linearizationTimes
-                if repetitions > 0:
-                    plan.addRepeatedAction(a.linearizationOf, repetitions)
+
+                b = a.durativeAction
+                repetitions = int(str(solution.getVariable(stepVar.actionVariables[a])))
+                time = solution.getVariable(stepVar.timeVariables[a])
+                duration = solution.getVariable(stepVar.durVariables[a])
+
+                for i in range(0, repetitions):
+                    t = time + self.getDelta(i, duration, b)
+                    plan.addAction(b, t, duration)
 
         return plan
-
-    def getNVars(self):
-        variables = set()
-        for rule in self.rules:
-            variables |= rule.variables
-        return len(variables)
-
-    def getNRules(self):
-        return len(self.rules)

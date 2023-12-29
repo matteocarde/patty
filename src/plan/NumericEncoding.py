@@ -1,10 +1,5 @@
 from typing import List, Dict, Set
 
-import pysmt.smtlib.commands as smtcmd
-import pysmt.smtlib.script
-from pysmt.environment import get_env
-from pysmt.logics import QF_NRA
-
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
@@ -14,8 +9,9 @@ from src.pddl.Formula import Formula
 from src.pddl.Literal import Literal
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
-from src.plan.Pattern import Pattern
+from src.plan.Encoding import Encoding
 from src.plan.NumericTransitionVariables import NumericTransitionVariables
+from src.plan.Pattern import Pattern
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTNumericVariable import SMTNumericVariable
 from src.smt.SMTSolution import SMTSolution
@@ -24,18 +20,15 @@ from src.smt.SMTSolution import SMTSolution
 EXPLICIT_DELTA = False
 
 
-class NumericEncoding:
+class NumericEncoding(Encoding):
     domain: GroundedDomain
     problem: Problem
 
-    def __init__(self, domain: GroundedDomain, problem: Problem, pattern: Pattern, bound: int,
-                 encoding="non-linear",
-                 binaryActions=10,
-                 rollBound=0,
-                 hasEffectAxioms=False,
-                 relaxGoal=False,
+    def __init__(self, domain: GroundedDomain, problem: Problem, pattern: Pattern, bound: int, encoding="non-linear",
+                 binaryActions=10, rollBound=0, hasEffectAxioms=False, relaxGoal=False,
                  subgoalsAchieved: Set[Formula] = None):
 
+        super().__init__(domain, problem, pattern, bound)
         self.domain = domain
         self.problem = problem
         self.bound = bound
@@ -54,7 +47,8 @@ class NumericEncoding:
             self.pattern.extendNonLinearities(binaryActions)
 
         for index in range(0, bound + 1):
-            var = NumericTransitionVariables(self.domain.predicates, self.domain.functions, self.domain.assList, self.pattern,
+            var = NumericTransitionVariables(self.domain.predicates, self.domain.functions, self.domain.assList,
+                                             self.pattern,
                                              index, hasEffectAxioms)
             self.transitionVariables.append(var)
 
@@ -67,8 +61,6 @@ class NumericEncoding:
             self.transitions.extend(stepRules)
 
         self.rules = self.initial + self.transitions + [self.goal]
-
-        pass
 
     def getInitialExpression(self) -> List[SMTExpression]:
         tVars = self.transitionVariables[0]
@@ -159,7 +151,8 @@ class NumericEncoding:
                     sumOfActions += stepVar.actionVariables[action] * action.linearizationTimes
             return sumOfActions < metricBound
 
-    def getDeltaStepRules(self, prevVars: NumericTransitionVariables, stepVars: NumericTransitionVariables) -> List[SMTExpression]:
+    def getDeltaStepRules(self, prevVars: NumericTransitionVariables, stepVars: NumericTransitionVariables) -> List[
+        SMTExpression]:
         rules: List[SMTExpression] = []
 
         prevAction: Action or None = None
@@ -389,44 +382,6 @@ class NumericEncoding:
 
         return rules
 
-    def printRules(self):
-        for rule in self.rules:
-            print(rule)
-
-    def writeSMTLIB(self, filename: str):
-        formula = SMTExpression.andOfExpressionsList(self.rules).expression
-        with open(filename, "w") as fout:
-            script = pysmt.smtlib.script.SmtLibScript()
-
-            script.add(name=smtcmd.SET_LOGIC,
-                       args=[QF_NRA])
-
-            # Declare all types
-            types = get_env().typeso.get_types(formula, custom_only=True)
-            for type_ in types:
-                script.add(name=smtcmd.DECLARE_SORT, args=[type_.decl])
-
-            deps = formula.get_free_variables()
-            # Declare all variables
-            for symbol in deps:
-                assert symbol.is_symbol()
-                script.add(name=smtcmd.DECLARE_FUN, args=[symbol])
-
-            for r in self.rules:
-                # Assert formula
-                script.add_command(pysmt.smtlib.script.SmtLibCommand(name=smtcmd.ASSERT,
-                                                                     args=[r.expression]))
-            # check-sat
-            script.add_command(pysmt.smtlib.script.SmtLibCommand(name=smtcmd.CHECK_SAT,
-                                                                 args=[]))
-            script.serialize(fout, daggify=False)
-
-    def __str__(self):
-        string = ""
-        for rule in self.rules:
-            string += str(rule) + "\n"
-        return string
-
     def getPlanFromSolution(self, solution: SMTSolution) -> NumericPlan:
         plan = NumericPlan()
 
@@ -443,12 +398,3 @@ class NumericEncoding:
                     plan.addRepeatedAction(a.linearizationOf, repetitions)
 
         return plan
-
-    def getNVars(self):
-        variables = set()
-        for rule in self.rules:
-            variables |= rule.variables
-        return len(variables)
-
-    def getNRules(self):
-        return len(self.rules)
