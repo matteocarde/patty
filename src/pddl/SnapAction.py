@@ -26,6 +26,13 @@ class SnapAction(Action):
         c.durativeAction = self.durativeAction
         return c
 
+    def __lt__(self, other):
+        if not isinstance(other, SnapAction):
+            return True
+        if self.durativeAction.name == other.durativeAction.name:
+            return TimePredicateType.order(self.timeType) < TimePredicateType.order(other.timeType)
+        return self.durativeAction.name < other.durativeAction.name
+
     def substitute(self, sub: Dict[Atom, float], default=None) -> Action:
         name = self.name
         preconditions = self.preconditions.substitute(sub, default)

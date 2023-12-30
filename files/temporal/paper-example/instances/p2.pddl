@@ -18,8 +18,8 @@
   (:goal
     (and
       ; (= (litres b1) 1)
-      (= (litres b2) 1)
-      ; (capped b2)
+      (= (litres b2) 5)
+      (capped b2)
     )
   )
 )

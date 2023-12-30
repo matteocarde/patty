@@ -25,6 +25,7 @@ class Operation:
     duration: Predicate
     preconditions: Preconditions
     effects: Effects
+    __hash: int
 
     def __init__(self):
         self.name: str = ""
@@ -77,6 +78,8 @@ class Operation:
         a.originalName = self.originalName
         a.duration = self.duration
 
+        a.cacheLists()
+
         return a
 
     @classmethod
@@ -93,7 +96,7 @@ class Operation:
                 operation.addEffects(child)
         operation.duration = 0
 
-        operation.__cacheLists()
+        operation.cacheLists()
         return operation
 
     @classmethod
@@ -107,7 +110,7 @@ class Operation:
         operation.planName = planName
         operation.duration = duration
         operation.originalName = name
-        operation.__cacheLists()
+        operation.cacheLists()
         return operation
 
     def setParameters(self, node: p.ParametersContext, types: Dict[str, Type]):
@@ -326,7 +329,8 @@ class Operation:
     def substitute(self, sub: Dict[Atom, float], default=None) -> Operation:
         raise NotImplemented()
 
-    def __cacheLists(self):
+    def cacheLists(self):
+        self.__hash = hash(self.name)
         self.functions = self.__getFunctions()
         self.predicates = self.__getPredicates()
         self.preB = self.__getPreB()
@@ -341,7 +345,7 @@ class Operation:
         self.assignments = self.__getAssignments()
 
     def __hash__(self):
-        return hash(self.name)
+        return self.__hash
 
     def __eq__(self, other: Operation):
         if not isinstance(other, Operation):

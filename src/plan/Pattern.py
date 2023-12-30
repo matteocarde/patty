@@ -43,6 +43,7 @@ class Pattern:
         p.dummyAction = Action()
         p.dummyAction.isFake = True
         p.dummyAction.name = "final_dummy_g"
+        p.dummyAction.cacheLists()
 
         order.append(p.dummyAction)
         p.__order = order
@@ -130,3 +131,6 @@ class Pattern:
             order.append(a)
 
         return Pattern.fromOrder(order)
+
+    def index(self, a):
+        return self.__order.index(a)

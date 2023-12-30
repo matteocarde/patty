@@ -16,6 +16,15 @@ class TimePredicateType(Enum):
     OVER_ALL = "over all"
     AT_END = "at end"
 
+    @staticmethod
+    def order(type: TimePredicateType):
+        if type == TimePredicateType.AT_START:
+            return 1
+        if type == TimePredicateType.OVER_ALL:
+            return 2
+        if type == TimePredicateType.AT_END:
+            return 3
+
 
 class TimePredicate(Predicate):
     type: TimePredicateType

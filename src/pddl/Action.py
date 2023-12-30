@@ -25,11 +25,15 @@ class Action(Operation):
         super().__init__()
 
     def __deepcopy__(self, m=None):
+
         m = {} if m is None else m
-        a = copy.deepcopy(super(), m)
+        a = super().__deepcopy__(m)
         a.__class__ = Action
         a.isFake = self.isFake
-        return cast(Action, a)
+        return a
+
+    def __lt__(self, other):
+        return self.name < other.name
 
     @classmethod
     def fromNode(cls, node: p.ActionContext, types: Dict[str, Type]):
@@ -113,6 +117,13 @@ class Action(Operation):
         return supporters
 
     def substitute(self, sub: Dict[Atom, float], default=None) -> Action:
+
+        atoms = self.functions | self.predicates
+        subAtoms = sub.keys()
+
+        if not atoms.intersection(subAtoms):
+            return self
+
         name = self.name
         preconditions = self.preconditions.substitute(sub, default)
         effects = self.effects.substitute(sub, default)
@@ -138,14 +149,4 @@ class Action(Operation):
 
         pw.decreaseTab()
         pw.write(")")
-        pass
-
-    def toSnapActions(self):
-
-        from src.pddl.DurativeAction import DurativeAction
-        dAction = DurativeAction.fromProperties(self.name, self.parameters, self.preconditions, self.effects,
-                                                self.planName, duration=0)
-        from src.pddl.SnapAction import SnapAction
-        start = SnapAction.fromProperties(self.name + "")
-
         pass

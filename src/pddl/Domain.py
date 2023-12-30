@@ -82,48 +82,32 @@ class Domain:
         if avoidSimplification:
             return gDomain
 
-        from src.pddl.RPG import RPG
         from src.pddl.ARPG import ARPG
 
-        constants: Dict[Atom, float] = dict()
-
-        for op in gActions | gEvents | gProcess:
-            for fun in op.getFunctions():
-                if fun not in problem.init.numericAssignments:
-                    # print(f"WARNING: {fun} was not initialized. Substituting it with 0")
-                    constants[fun] = 0
-
-        gDomain = gDomain.substitute(constants)
-
-        rpg = RPG(gDomain, problem)
-        orderedActions = rpg.getActionsOrder()
         initialState = State.fromInitialCondition(problem.init)
-        gDomain.actions = set(orderedActions)
-
         arpg = ARPG(gDomain, initialState, problem.goal)
         constants: Dict[Atom, float] = arpg.getConstantAtoms()
+        for fun in gDomain.functions:
+            if fun not in problem.init.numericAssignments:
+                # print(f"WARNING: {fun} was not initialized. Substituting it with 0")
+                constants[fun] = 0
 
-        for op in gActions | gEvents | gProcess:
-            for fun in op.getFunctions():
-                if fun not in problem.init.numericAssignments:
-                    # print(f"WARNING: {fun} was not initialized. Substituting it with 0")
-                    constants[fun] = 0
-
-        gDomain = gDomain.substitute(constants)
-        orderedActions = [a.substitute(constants) for a in orderedActions if a.canHappen(constants)]
+        gDomain.substitute(constants)
         problem.substitute(constants)
+
+        actions = [a for a in gDomain.actions]
+
         gDomain.actions = set()
-        for a in orderedActions:
-            if not isinstance(a, SnapAction):
+        starts = set([a for a in actions if isinstance(a, SnapAction) and a.timeType == TimePredicateType.AT_START])
+        for a in actions:
+            if not isinstance(a, SnapAction) or a.timeType == TimePredicateType.AT_START:
                 gDomain.actions.add(a)
                 continue
-            if a.durativeAction.start in orderedActions:
+            if a.durativeAction.start in starts:
                 gDomain.actions.add(a)
 
-        from src.plan.AffectedGraph import AffectedGraph
-        gDomain.actions = sorted(gDomain.actions, key=lambda a: a.name)
-        gDomain.affectedGraph = AffectedGraph.fromActions(gDomain.actions)
         gDomain.arpg = ARPG(gDomain, initialState, problem.goal)
+        gDomain.computeLists()
 
         if console:
             console.log("Dynamic Grounding Stats:", LogPrintLevel.STATS)
@@ -268,13 +252,7 @@ class GroundedDomain(Domain):
                     self.actions.add(sa)
 
         self.substitutions = dict()
-
         self.operations: Set[Operation] = set()
-        self.operations.update(self.actions)
-        self.operations.update(self.events)
-        self.operations.update(self.processes)
-        # self.operations.update(self.durativeActions)
-
         self.functions: Set[Atom] = set()
         self.predicates: Set[Atom] = set()
         self.allAtoms: Set[Atom] = set()
@@ -282,6 +260,14 @@ class GroundedDomain(Domain):
         self.addList: Dict[Atom, Set[Operation]] = dict()
         self.delList: Dict[Atom, Set[Operation]] = dict()
         self.assList: Dict[Atom, Set[Operation]] = dict()
+        self.arpg = None
+
+    def computeLists(self):
+
+        self.operations.update(self.actions)
+        self.operations.update(self.events)
+        self.operations.update(self.processes)
+        # self.operations.update(self.durativeActions)
 
         for op in self.operations:
             self.__operationsDict[op.planName] = op
@@ -304,19 +290,12 @@ class GroundedDomain(Domain):
             pass
 
         self.allAtoms = self.functions | self.predicates
-        self.arpg = None
-
-        from src.plan.AffectedGraph import AffectedGraph
-        self.affectedGraph: AffectedGraph = affectedGraph
 
     def getOperationByPlanName(self, planName) -> Operation:
         return self.__operationsDict[planName]
 
-    def substitute(self, sub: Dict[Atom, float], default=None) -> GroundedDomain:
-        subActions: Set[Action] = {a.substitute(sub, default) for a in self.actions if a.canHappen(sub, default)}
-
-        return GroundedDomain(self.name, subActions, self.events, self.processes, self.durativeActions,
-                              self.affectedGraph)
+    def substitute(self, sub: Dict[Atom, float], default=None):
+        self.actions = {a.substitute(sub, default) for a in self.actions if a.canHappen(sub, default)}
 
     def getARPG(self):
         return self.arpg

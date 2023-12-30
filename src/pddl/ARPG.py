@@ -23,7 +23,7 @@ class ARPG:
         self.supporterLevels = list()
         self.stateLevels = list()
         self.actions: List[Action] = list(domain.actions)
-        self.affectedGraph: AffectedGraph = domain.affectedGraph
+        # self.affectedGraph: AffectedGraph = domain.affectedGraph
 
         self.originalOrder = dict([(action, i) for (i, action) in enumerate(self.actions)])
 
@@ -80,7 +80,7 @@ class ARPG:
                     partialOrder.add(supporter.originatingAction)
                 usedActions.add(supporter.originatingAction)
             if not useSCCs:
-                sortOrder = sorted(partialOrder, key=lambda a: a.name)
+                sortOrder = sorted(partialOrder)
                 order += sortOrder
             else:
                 subGraph = self.affectedGraph.getSubGraph(partialOrder)
@@ -88,7 +88,7 @@ class ARPG:
                 order += graphOrder
         leftActions = set(self.actions) - usedActions
         if not useSCCs:
-            sortOrder = sorted(leftActions, key=lambda a: a.name)
+            sortOrder = sorted(leftActions)
             order += sortOrder
         else:
             graphOrder = self.affectedGraph.getSubGraph(leftActions).getOrderFromGraph()

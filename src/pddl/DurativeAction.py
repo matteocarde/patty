@@ -51,6 +51,8 @@ class DurativeAction(Operation):
                 da.addPreconditions(child)
             elif isinstance(child, p.OpDurativeEffectContext):
                 da.addEffects(child)
+
+        da.cacheLists()
         return da
 
     def getSnapAction(self, type: TimePredicateType) -> SnapAction:
