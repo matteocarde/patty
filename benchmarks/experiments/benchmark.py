@@ -23,10 +23,10 @@ my_config = Config(
 )
 
 PLANNERS: Dict[str, Planner] = {
-    "PATTY": Patty("PATTY", "arpg", solver="z3", encoding="non-linear"),
-    "PATTY-R": Patty("PATTY-R", "random", solver="z3", encoding="non-linear"),
+    "PATTY": Patty("PATTY", "arpg"),
+    "PATTY-R": Patty("PATTY-R", "random"),
     "SPRINGROLL": SpringRoll(),
-    "RANTANPLAN": Patty("RANTANPLAN", "arpg", solver="z3", encoding="non-linear", rollBound=1, hasEffectAxioms=True),
+    "RANTANPLAN": Patty("RANTANPLAN", "arpg"),
 
     "ENHSP-SAT-HMRP": ENHSP(False, settings="-h hmrp -s gbfs -silent -pp -pe", name="ENHSP-SAT-HMRP"),
     "ENHSP-SAT-HADD": ENHSP(False, settings="-h hadd -s gbfs -silent -pp -pe", name="ENHSP-SAT-HADD"),

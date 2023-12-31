@@ -487,12 +487,12 @@ class TemporalEncoding(Encoding):
             rules.append((a_j == 0).implies(t_j == 0))
             mutexes = [t_j >= self.epsilon]
             for i, action_i in enumerate(self.pattern):
-                if i < j and action_i.isMutex(action_j):
+                if i < j:
                     t_i = stepVars.timeVariables[action_i]
+                    epsilon = self.epsilon if action_i.isMutex(action_j) else 0
                     mutexes.append(t_j >= t_i + self.epsilon)
 
-            if mutexes:
-                rules.append((a_j > 0).implies(SMTExpression.andOfExpressionsList(mutexes)))
+            rules.append((a_j > 0).implies(SMTExpression.andOfExpressionsList(mutexes)))
 
         return rules
 

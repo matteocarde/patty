@@ -53,11 +53,12 @@ COPY . .
 #Authorizations
 RUN chmod +x exes/*
 
-# RUN itsat -alg time files/temporal/floortile/domain.pddl files/temporal/floortile/instances/p442-1.pddl plan.txt
+#RUN tfd files/temporal/match-ms/domain.pddl files/temporal/match-ms/instances/match-ms_2_1.pddl plan.txt
+RUN tfd files/temporal/parking/domain.pddl files/temporal/parking/instances/p6-6-6.pddl plan.txt
 # RUN more plan.txt.1
 
-#RUN lpg-td -o files/temporal/parking/domain.pddl -f files/temporal/parking/instances/p15-9-3.pddl -n 1
-RUN anmlsmt -l 3 --pddl -a smt solve files/temporal/parking/domain.pddl files/temporal/parking/instances/p15-9-3.pddl
+# RUN lpg-td -o files/temporal/parking/domain.pddl -f files/temporal/parking/instances/p6-6-6.pddl -n 1
+# RUN anmlsmt solve -l 3 -a smt --pddl  files/temporal/match-ac/domain.pddl files/temporal/match-ac/instances/match-ac_2_1.pddl
 
 
 #Execution

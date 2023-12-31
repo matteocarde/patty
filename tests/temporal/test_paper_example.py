@@ -22,8 +22,8 @@ class TestPaperExample(TestCase):
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
         self.pattern = self.pattern.multiply(self.horizon)
         self.encoding: TemporalEncoding = TemporalEncoding(self.gDomain, self.problem, self.pattern, 1)
-        # print(self.pattern)
-        self.encoding.printRules()
+        print(self.pattern)
+        # self.encoding.printRules()
         pass
 
     def test_check(self):
