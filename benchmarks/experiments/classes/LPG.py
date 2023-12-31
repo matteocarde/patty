@@ -23,4 +23,4 @@ class LPG(Planner):
         return r
 
     def getCommand(self, domain: str, problem: str):
-        return ["lpg-td", "-o", domain, "-f", problem, "-n 1"]
+        return ["lpg-td", "-o", domain, "-f", problem, "-n", "1"]

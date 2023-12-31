@@ -23,4 +23,4 @@ class ITSAT(Planner):
         return r
 
     def getCommand(self, domain: str, problem: str):
-        return ["itsat -alg layer ", domain, problem, "\*"]
+        return ["itsat", "-alg", "layer", domain, problem, "\*"]

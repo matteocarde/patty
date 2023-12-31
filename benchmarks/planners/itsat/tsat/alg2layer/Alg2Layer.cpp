@@ -29,7 +29,7 @@ bool Alg2Layer(AlgCommonParams p)
 
 	bool solutionFound = false;
 	int solfoundStep = 1; // 1 => -2 => 3 => -4 => 5 ...
-	int maxLookingAround = 30; // FIXME: move this to the program switches
+	int maxLookingAround = 1; // FIXME: move this to the program switches
 	double bestMakeSpan = DBL_MAX;
 	vector<SATResults *> elapsed;
 	SatLayer *solver = NULL;

@@ -10,13 +10,17 @@ from botocore.config import Config
 from classes.CloudLogger import CloudLogger
 from classes.ENHSP import ENHSP
 from classes.Envs import Envs
+from classes.ITSAT import ITSAT
+from classes.LPG import LPG
 from classes.MetricFF import MetricFF
 from classes.NFD import NFD
 from classes.OMT import OMT
+from classes.Optic import Optic
 from classes.Patty import Patty
 from classes.Planner import Planner
 from classes.Result import Result
 from classes.SpringRoll import SpringRoll
+from classes.TFD import TFD
 
 my_config = Config(
     region_name='eu-central-1',
@@ -46,6 +50,11 @@ PLANNERS: Dict[str, Planner] = {
     "METRIC-FF": MetricFF(),
     "NFD": NFD(),
     "OMT": OMT(),
+
+    "LPG": LPG(),
+    "TFD": TFD(),
+    "Optic": Optic(),
+    "ITSAT": ITSAT(),
 }
 
 
@@ -57,7 +66,7 @@ def main():
     if envs.isInsideAWS:
         time.sleep(envs.index / 4)
     else:
-        envs.file = "benchmarks/instances/icr-plan.csv"
+        envs.file = "benchmarks/instances/temporal.csv"
 
     logger = CloudLogger(envs.experiment)
 

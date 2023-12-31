@@ -23,4 +23,4 @@ class Optic(Planner):
         return r
 
     def getCommand(self, domain: str, problem: str):
-        return ["optic -N", domain, problem]
+        return ["optic", "-N", domain, problem]
