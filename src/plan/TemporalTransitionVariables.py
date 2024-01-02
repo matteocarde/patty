@@ -1,13 +1,11 @@
-from typing import Dict, Set, List
+from typing import Dict, Set
 
-from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.Operation import Operation
 from src.pddl.SnapAction import SnapAction
 from src.pddl.TimePredicate import TimePredicateType
 from src.plan.Pattern import Pattern
 from src.smt.SMTBoolVariable import SMTBoolVariable
-
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTNumericVariable import SMTRealVariable, SMTIntVariable
 from src.smt.SMTVariable import SMTVariable
@@ -22,12 +20,12 @@ class TemporalTransitionVariables:
         self.assList: Dict[Atom, Set[Operation]] = assList
         self.pattern: Pattern = pattern
         self.valueVariables: Dict[Atom, SMTVariable] = self.__computeValueVariables(index)
-        self.sigmaVariables: Dict[Action, Dict[Atom, SMTExpression]] = self.__computeSigmaVariables()
+        self.sigmaVariables: Dict[int, Dict[Atom, SMTExpression]] = self.__computeSigmaVariables()
         if index > 0:
-            self.actionVariables: Dict[Action, SMTVariable] = self.__computeActionVariables(index)
-            self.auxVariables: Dict[Action, Dict[Atom, SMTVariable]] = self.__computeAuxVariables(index)
-            self.timeVariables: Dict[Action, SMTVariable] = self.__computeTimeVariables(index)
-            self.durVariables: Dict[Action, SMTVariable] = self.__computeDurVariables(index)
+            self.actionVariables: Dict[int, SMTVariable] = self.__computeActionVariables(index)
+            self.auxVariables: Dict[int, Dict[Atom, SMTVariable]] = self.__computeAuxVariables(index)
+            self.timeVariables: Dict[int, SMTVariable] = self.__computeTimeVariables(index)
+            self.durVariables: Dict[int, SMTVariable] = self.__computeDurVariables(index)
 
     def __computeValueVariables(self, index: int) -> Dict[Atom, SMTVariable]:
         variables: Dict[Atom, SMTVariable] = dict()
@@ -39,47 +37,48 @@ class TemporalTransitionVariables:
 
         return variables
 
-    def __computeActionVariables(self, index: int) -> Dict[Action, SMTVariable]:
-        variables: Dict[Action, SMTVariable] = dict()
+    def __computeActionVariables(self, index: int) -> Dict[int, SMTVariable]:
+        variables: Dict[int, SMTVariable] = dict()
 
-        for action in self.pattern:
+        for i, action in enumerate(self.pattern):
             if action.isFake:
                 continue
-            variables[action] = SMTIntVariable(f"{action.name}_n")
+            variables[i] = SMTIntVariable(f"{action.name}_n")
 
         return variables
 
-    def __computeTimeVariables(self, index: int) -> Dict[Action, SMTVariable]:
-        variables: Dict[Action, SMTVariable] = dict()
+    def __computeTimeVariables(self, index: int) -> Dict[int, SMTVariable]:
+        variables: Dict[int, SMTVariable] = dict()
 
-        for action in self.pattern:
+        for i, action in enumerate(self.pattern):
             if action.isFake:
                 continue
-            variables[action] = SMTRealVariable(f"time_{action.name}")
+            variables[i] = SMTRealVariable(f"time_{action.name}")
 
         return variables
 
-    def __computeDurVariables(self, index: int) -> Dict[Action, SMTVariable]:
-        variables: Dict[Action, SMTVariable] = dict()
+    def __computeDurVariables(self, index: int) -> Dict[int, SMTVariable]:
+        variables: Dict[int, SMTVariable] = dict()
 
-        for action in self.pattern:
+        for i, action in enumerate(self.pattern):
             if action.isFake or not isinstance(action, SnapAction) or action.timeType != TimePredicateType.AT_START:
                 continue
-            variables[action] = SMTRealVariable(f"dur_{action.name}")
+            variables[i] = SMTRealVariable(f"dur_{action.name}")
 
         return variables
 
-    def __computeSigmaVariables(self) -> Dict[Action, Dict[Atom, SMTVariable]]:
-        variables: Dict[Action, Dict[Atom, SMTVariable]] = dict([(action, dict()) for action in self.pattern])
+    def __computeSigmaVariables(self) -> Dict[int, Dict[Atom, SMTVariable]]:
+        variables: Dict[int, Dict[Atom, SMTVariable]] = dict([(i, dict()) for i, action in enumerate(self.pattern)])
+        variables[-1] = dict()
         return variables
 
-    def __computeAuxVariables(self, index) -> Dict[Action, Dict[Atom, SMTVariable]]:
-        variables: Dict[Action, Dict[Atom, SMTVariable]] = dict()
+    def __computeAuxVariables(self, index) -> Dict[int, Dict[Atom, SMTVariable]]:
+        variables: Dict[int, Dict[Atom, SMTVariable]] = dict()
 
-        for a in self.pattern:
-            variables.setdefault(a, dict())
+        for i, a in enumerate(self.pattern):
+            variables.setdefault(i, dict())
             for var in a.assList:
-                variables[a][var] = SMTRealVariable(f"{var}_{a}")
+                variables[i][var] = SMTRealVariable(f"{var}_{a}")
             if not a.hasNonSimpleLinearIncrement():
                 continue
             for eff in a.effects:
@@ -87,6 +86,6 @@ class TemporalTransitionVariables:
                     continue
                 var = eff.getAtom()
                 variables.setdefault(a, dict())
-                variables[a][var] = SMTRealVariable(f"{var}_{a}")
+                variables[i][var] = SMTRealVariable(f"{var}_{a}")
 
         return variables

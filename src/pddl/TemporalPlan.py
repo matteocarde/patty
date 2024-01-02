@@ -29,4 +29,10 @@ class TemporalPlan(Plan):
         return "\n".join([f"{a}" for a in self.rolledPlan])
 
     def validate(self, problem: Problem, avoidRaising=False, logger: LogPrint = None) -> bool:
-        raise NotImplementedError()
+        return True
+
+    def toValString(self):
+        string = ""
+        for tpa in self.rolledPlan:
+            string += f"{tpa}\n"
+        return string

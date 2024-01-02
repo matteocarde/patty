@@ -128,7 +128,7 @@ class Action(Operation):
         preconditions = self.preconditions.substitute(sub, default)
         effects = self.effects.substitute(sub, default)
         planName = self.planName
-        action = Action.fromProperties(name, [], preconditions, effects, planName)
+        action = Action.fromProperties(name, [], preconditions, effects, planName, duration=duration)
         return action
 
     def canHappen(self, sub: Dict[Atom, float], default=None) -> bool:

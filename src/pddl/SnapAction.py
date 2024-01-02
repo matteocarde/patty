@@ -41,6 +41,7 @@ class SnapAction(Action):
         sa = SnapAction.fromProperties(name, [], preconditions, effects, planName)
         sa.timeType = self.timeType
         sa.durativeAction = self.durativeAction
+        sa.durativeAction.duration = self.durativeAction.duration.substitute(sub, default)
         return sa
 
     def canHappen(self, sub: Dict[Atom, float], default=None) -> bool:

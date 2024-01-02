@@ -2,10 +2,11 @@ import traceback
 
 from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
+from src.pddl.Plan import Plan
 from src.pddl.Problem import Problem
 from src.search.AStarSearchMax import AStarSearchMax
 from src.search.Search import Search
-from src.search.StaticSearch import StaticSearch
+from src.search.ChainSearch import ChainSearch
 from src.search.StepSearch import StepSearch
 from src.utils.Arguments import Arguments
 from src.utils.LogPrint import LogPrint, LogPrintLevel
@@ -29,14 +30,16 @@ def main():
         gDomain: GroundedDomain = domain.ground(problem, console=console)
         ts.end("Grounding", console=console)
 
+        isTemporal = len(gDomain.durativeActions) > 0
         solver: Search
+
         if args.search == "astar":
             solver = AStarSearchMax(gDomain, problem, args)
         elif args.search == "step":
             solver = StepSearch(gDomain, problem, args)
         else:
-            solver = StaticSearch(gDomain, problem, args)
-        plan: NumericPlan = solver.solve()
+            solver = ChainSearch(gDomain, problem, args)
+        plan: Plan = solver.solve()
 
         console.log(plan.toValString(), LogPrintLevel.PLAN)
         isValid = plan.validate(problem, avoidRaising=True, logger=console)

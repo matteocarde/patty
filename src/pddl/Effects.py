@@ -42,7 +42,7 @@ class Effects:
             if isinstance(n, p.BooleanLiteralContext):
                 effects.assignments.append(Literal.fromNode(n.getChild(0)))
             elif type(n) in {p.AtStartEffectContext, p.OverAllEffectContext, p.AtEndEffectContext}:
-                effects.assignments.append(TimePredicate.fromNode(n))
+                effects.assignments += TimePredicate.fromNode(n)
             else:
                 effects.assignments.append(BinaryPredicate.fromNode(n))
 

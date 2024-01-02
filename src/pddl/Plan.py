@@ -1,6 +1,5 @@
-from typing import List, Tuple
+from typing import List
 
-from src.pddl.Action import Action
 from src.pddl.Problem import Problem
 from src.utils.LogPrint import LogPrint
 

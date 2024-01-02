@@ -27,6 +27,7 @@ PLANNERS: Dict[str, Planner] = {
     "PATTY-STATIC": Patty("PATTY-STATIC", search="static", useSCCs=True),
     "PATTY-STATIC-MAX": Patty("PATTY-STATIC-MAX", search="static", maximize=True),
     "PATTY-ASTAR": Patty("PATTY-ASTAR", search="astar", useSCCs=True),
+    "PATTY-TEMPORAL": Patty("PATTY-TEMPORAL"),
     "SPRINGROLL": SpringRoll(),
     # "RANTANPLAN": Patty("RANTANPLAN", "arpg", solver="z3", encoding="non-linear", rollBound=1, hasEffectAxioms=True),
     "ENHSP-HADD": ENHSP("sat-hadd"),

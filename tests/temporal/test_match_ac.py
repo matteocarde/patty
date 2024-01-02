@@ -9,11 +9,11 @@ from src.plan.TemporalEncoding import TemporalEncoding
 from src.smt.SMTSolver import SMTSolver
 
 
-class TestMajsp(TestCase):
+class TestMatchAC(TestCase):
 
     def setUp(self) -> None:
-        folder = "../../files/temporal/majsp"
-        problem = "instance_1_1_2_1"
+        folder = "../../files/temporal/match-ac"
+        problem = "match-ac_2_1"
         self.domain: Domain = Domain.fromFile(f"{folder}/domain.pddl")
         self.problem: Problem = Problem.fromFile(f"{folder}/instances/{problem}.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
@@ -22,7 +22,7 @@ class TestMajsp(TestCase):
         self.pattern = self.pattern.multiply(self.horizon, addFake=False)
         self.encoding: TemporalEncoding = TemporalEncoding(self.gDomain, self.problem, self.pattern, 1)
         print(self.pattern)
-        self.encoding.printRules()
+        # self.encoding.printRules()
         pass
 
     def test_check(self):

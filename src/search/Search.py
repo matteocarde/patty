@@ -13,6 +13,7 @@ class Search:
         self.problem = problem
 
         self.args = args
+        self.isTemporal = len(domain.durativeActions) > 0
 
         self.startBound = 1
         self.maxBound = args.bound if args.bound else 1000

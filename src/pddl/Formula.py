@@ -83,7 +83,7 @@ class Formula:
             elif type(clause) in {p.ComparationContext, p.NegatedComparationContext}:
                 formula.conditions.append(BinaryPredicate.fromNode(clause))
             elif type(clause) in {p.AtStartPreContext, p.OverAllPreContext, p.AtEndPreContext}:
-                formula.conditions.append(TimePredicate.fromNode(clause))
+                formula.conditions += TimePredicate.fromNode(clause)
 
         return formula
 

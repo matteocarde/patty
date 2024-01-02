@@ -42,25 +42,51 @@ class TimePredicate(Predicate):
 
     @classmethod
     def fromNode(cls, node: p.AtStartPreContext or p.OverAllPreContext or p.AtEndPreContext or p.AtStartEffectContext
-                            or p.OverAllEffectContext or p.AtEndEffectContext) -> TimePredicate:
+                            or p.OverAllEffectContext or p.AtEndEffectContext) -> [TimePredicate]:
 
-        tp = cls()
+        # tp = cls()
+        tpType = TimePredicateType
         if type(node) in {p.AtStartPreContext, p.AtStartEffectContext}:
-            tp.type = TimePredicateType.AT_START
+            tpType = TimePredicateType.AT_START
 
         if type(node) in {p.OverAllPreContext, p.OverAllEffectContext}:
-            tp.type = TimePredicateType.OVER_ALL
+            tpType = TimePredicateType.OVER_ALL
 
         if type(node) in {p.AtEndPreContext, p.AtEndEffectContext}:
-            tp.type = TimePredicateType.AT_END
+            tpType = TimePredicateType.AT_END
 
+        subPredicates = []
         predicate = node.getChild(2)
         if isinstance(predicate, p.BooleanLiteralContext):
-            tp.subPredicate = Literal.fromNode(predicate.getChild(0))
+            subPredicates.append(Literal.fromNode(predicate.getChild(0)))
+        elif isinstance(predicate, p.AndClauseContext):
+            from src.pddl.Formula import Formula
+            f = Formula.fromNode(predicate)
+            subPredicates += f.conditions
+        elif isinstance(predicate, p.AndEffectContext):
+            nodes = [n.getChild(0) for n in predicate.children[2:-1]]
+            for n in nodes:
+                if isinstance(n, p.BooleanLiteralContext):
+                    subPredicates.append(Literal.fromNode(n.getChild(0)))
+                else:
+                    subPredicates.append(BinaryPredicate.fromNode(n))
         else:
-            tp.subPredicate = BinaryPredicate.fromNode(predicate)
+            subPredicates.append(BinaryPredicate.fromNode(predicate))
 
-        return tp
+        timePredicates = []
+        for subP in subPredicates:
+            tp = cls()
+            tp.type = tpType
+            tp.subPredicate = subP
+            timePredicates.append(tp)
+
+        return timePredicates
+
+    @classmethod
+    def multipleFromNode(cls,
+                         node: p.AtStartPreContext or p.OverAllPreContext or p.AtEndPreContext or p.AtStartEffectContext
+                               or p.OverAllEffectContext or p.AtEndEffectContext):
+        pass
 
     def ground(self, subs: Dict[str, str], delta=1) -> TimePredicate:
         tp = TimePredicate()

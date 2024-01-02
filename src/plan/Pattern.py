@@ -38,14 +38,15 @@ class Pattern:
         return self.__order
 
     @classmethod
-    def fromOrder(cls, order: List[Operation]):
+    def fromOrder(cls, order: List[Operation], addFake=True):
         p = cls()
-        p.dummyAction = Action()
-        p.dummyAction.isFake = True
-        p.dummyAction.name = "final_dummy_g"
-        p.dummyAction.cacheLists()
+        if addFake:
+            p.dummyAction = Action()
+            p.dummyAction.isFake = True
+            p.dummyAction.name = "final_dummy_g"
+            p.dummyAction.cacheLists()
 
-        order.append(p.dummyAction)
+            order.append(p.dummyAction)
         p.__order = order
 
         return p
@@ -83,16 +84,18 @@ class Pattern:
 
         self.__order = newOrder
 
-    def multiply(self, times: int) -> Pattern:
+    def multiply(self, times: int, addFake=True) -> Pattern:
 
         order = []
         for i in range(0, times):
-            for item in self.__order[:-1]:
+            for item in self.__order:
+                if item.isFake:
+                    continue
                 a = copy.deepcopy(item)
                 a.name = f"{a.name}_{i}" if times > 1 else f"{a.name}"
                 order.append(a)
 
-        return Pattern.fromOrder(order)
+        return Pattern.fromOrder(order, addFake=addFake)
 
     @classmethod
     def fromARPG(cls, gDomain: GroundedDomain, useSCCs=False) -> Pattern:

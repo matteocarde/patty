@@ -88,14 +88,14 @@ preconditions: andClause | orClause | booleanLiteral | negatedComparation | comp
 effects: effect | andEffect;
 
 andDurClause: LP 'and' (atStartPre | overAllPre | atEndPre)+ RP;
-atStartPre: LP 'at start' (booleanLiteral | negatedComparation | comparation) RP;
-overAllPre: LP 'over all' (booleanLiteral | negatedComparation | comparation) RP;
-atEndPre: LP 'at end' (booleanLiteral| negatedComparation | comparation) RP;
+atStartPre: LP 'at start' (booleanLiteral | negatedComparation | comparation | andClause) RP;
+overAllPre: LP 'over all' (booleanLiteral | negatedComparation | comparation | andClause) RP;
+atEndPre: LP 'at end' (booleanLiteral| negatedComparation | comparation | andClause) RP;
 durativeConditions: andDurClause | atStartPre | overAllPre | atEndPre | emptyPrecondition;
 
-atStartEffect: LP 'at start' (booleanLiteral | modification) RP;
-overAllEffect: LP 'overall' (booleanLiteral | modification) RP;
-atEndEffect: LP 'at end' (booleanLiteral | modification) RP;
+atStartEffect: LP 'at start' (booleanLiteral | modification | andEffect) RP;
+overAllEffect: LP 'overall' (booleanLiteral | modification | andEffect) RP;
+atEndEffect: LP 'at end' (booleanLiteral | modification | andEffect) RP;
 durativeEffect: atStartEffect | overAllEffect | atEndEffect;
 andDurativeEffect: LP 'and' durativeEffect+ RP;
 durativeEffects: durativeEffect | andDurativeEffect;

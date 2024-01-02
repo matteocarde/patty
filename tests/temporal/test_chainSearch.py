@@ -3,17 +3,18 @@ from unittest import TestCase
 
 from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
+from src.pddl.Plan import Plan
 from src.pddl.Problem import Problem
-from src.search.AStarSearchMax import AStarSearchMax
+from src.pddl.TemporalPlan import TemporalPlan
 from src.search.ChainSearch import ChainSearch
 from src.utils.Arguments import Arguments
 
 
-class TestAStarHydroPowerSCC(TestCase):
+class TestStaticSearch(TestCase):
 
     def setUp(self) -> None:
-        domainFile = "../../files/numeric/ipc-2023/hydropower/domain.pddl"
-        problemFile = "../../files/numeric/ipc-2023/hydropower/instances/pfile12.pddl"
+        domainFile = "../../files/temporal/paper-example/domain.pddl"
+        problemFile = "../../files/temporal/paper-example/instances/p2.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)
@@ -22,17 +23,14 @@ class TestAStarHydroPowerSCC(TestCase):
         pass
 
     def test_solve(self):
-        self.args.useSCCs = True
         solver = ChainSearch(self.gDomain, self.problem, self.args)
-        plan: NumericPlan = solver.solve()
+        plan: Plan = solver.solve()
 
-        self.assertIsInstance(plan, NumericPlan)
+        self.assertIsInstance(plan, TemporalPlan)
 
         print("Plan length: ", len(plan))
         print("No repetitions:")
         plan.print()
-        print("With repetitions:")
-        plan.printWithRepetitions()
 
         self.assertTrue(plan.validate(self.problem))
 

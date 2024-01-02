@@ -4,10 +4,11 @@ import random
 from natsort import natsort
 
 PLANNERS = [
-    "TFD",
-    "LPG",
-    "ITSAT",
-    "Optic"
+    # "TFD",
+    # "LPG",
+    # "ITSAT",
+    # "Optic",
+    "PATTY"
 ]
 
 
