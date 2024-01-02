@@ -112,6 +112,10 @@ def main():
             if isinstance(error, KeyboardInterrupt):
                 print("Interrupted by user...")
                 break
+            r: Result = Result(domainFile, problemFile)
+            r.solver = benchmark
+            print(r)
+            logger.log(r.toCSV())
             logger.error(traceback.format_exc())
             print(traceback.format_exc(), file=sys.stderr)
 
