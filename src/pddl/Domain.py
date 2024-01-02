@@ -106,6 +106,11 @@ class Domain:
             if a.durativeAction.start in starts:
                 gDomain.actions.add(a)
 
+        gDomain.durativeActions = set()
+        action: SnapAction
+        for action in gDomain.actions:
+            gDomain.durativeActions.add(action.durativeAction)
+
         gDomain.arpg = ARPG(gDomain, initialState, problem.goal)
         gDomain.computeLists()
 
@@ -250,6 +255,7 @@ class GroundedDomain(Domain):
                 for type in types:
                     sa = dAction.getSnapAction(type)
                     self.actions.add(sa)
+            pass
 
         self.substitutions = dict()
         self.operations: Set[Operation] = set()

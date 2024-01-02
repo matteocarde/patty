@@ -7,8 +7,10 @@ from src.pddl.Domain import GroundedDomain
 from src.pddl.Goal import Goal
 from src.pddl.PDDLException import PDDLException
 from src.pddl.RelaxedIntervalState import RelaxedIntervalState
+from src.pddl.SnapAction import SnapAction
 from src.pddl.State import State
 from src.pddl.Supporter import Supporter
+from src.pddl.TimePredicate import TimePredicateType
 from src.plan.AffectedGraph import AffectedGraph
 
 SEED = 0
@@ -86,9 +88,11 @@ class ARPG:
                 subGraph = self.affectedGraph.getSubGraph(partialOrder)
                 graphOrder = subGraph.getOrderFromGraph()
                 order += graphOrder
+
         leftActions = set(self.actions) - usedActions
         if not useSCCs:
-            sortOrder = sorted(leftActions)
+            sortOrder = sorted(
+                [a for a in leftActions if not isinstance(a, SnapAction) or a.timeType != TimePredicateType.OVER_ALL])
             order += sortOrder
         else:
             graphOrder = self.affectedGraph.getSubGraph(leftActions).getOrderFromGraph()

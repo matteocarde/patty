@@ -45,7 +45,7 @@ class TemporalTransitionVariables:
         for action in self.pattern:
             if action.isFake:
                 continue
-            variables[action] = SMTIntVariable(f"{action.name}_{index}_n")
+            variables[action] = SMTIntVariable(f"{action.name}_n")
 
         return variables
 
@@ -55,7 +55,7 @@ class TemporalTransitionVariables:
         for action in self.pattern:
             if action.isFake:
                 continue
-            variables[action] = SMTRealVariable(f"time_{action.name}_{index}")
+            variables[action] = SMTRealVariable(f"time_{action.name}")
 
         return variables
 
@@ -65,7 +65,7 @@ class TemporalTransitionVariables:
         for action in self.pattern:
             if action.isFake or not isinstance(action, SnapAction) or action.timeType != TimePredicateType.AT_START:
                 continue
-            variables[action] = SMTRealVariable(f"dur_{action.name}_{index}")
+            variables[action] = SMTRealVariable(f"dur_{action.name}")
 
         return variables
 
@@ -79,7 +79,7 @@ class TemporalTransitionVariables:
         for a in self.pattern:
             variables.setdefault(a, dict())
             for var in a.assList:
-                variables[a][var] = SMTRealVariable(f"{var}_{a}_{index}")
+                variables[a][var] = SMTRealVariable(f"{var}_{a}")
             if not a.hasNonSimpleLinearIncrement():
                 continue
             for eff in a.effects:
@@ -87,6 +87,6 @@ class TemporalTransitionVariables:
                     continue
                 var = eff.getAtom()
                 variables.setdefault(a, dict())
-                variables[a][var] = SMTRealVariable(f"{var}_{a}_{index}")
+                variables[a][var] = SMTRealVariable(f"{var}_{a}")
 
         return variables

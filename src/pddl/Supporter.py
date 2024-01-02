@@ -48,7 +48,7 @@ class Supporter:
         if self.originatingAction.timeType == TimePredicateType.AT_START:
             return True
         if self.originatingAction.timeType == TimePredicateType.OVER_ALL:
-            return self.originatingAction.durativeAction.start in usedActions
+            return False
         if self.originatingAction.timeType == TimePredicateType.AT_END:
-            return self.originatingAction.durativeAction.overall in usedActions
+            return self.originatingAction.durativeAction.start in usedActions
         raise Exception("This should not be reached")

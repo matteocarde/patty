@@ -3,6 +3,7 @@ from __future__ import annotations
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.Constant import Constant
+from src.pddl.Formula import Formula
 from src.pddl.Literal import Literal
 from pysmt.fnode import FNode
 from pysmt.shortcuts import And, Or, Equals, LE, LT, GE, GT, Implies, Real, Times, Minus, Plus, Div, TRUE, ToReal, Int, \
@@ -197,9 +198,26 @@ class SMTExpression:
             result = SMTExpression.opByString(predicate.operator, lhs, rhs)
             return result
         if isinstance(predicate, Literal):
-            return variables[predicate.getAtom()]
+            if predicate.sign == "+":
+                return variables[predicate.getAtom()]
+            else:
+                return variables[predicate.getAtom()].NOT()
         if isinstance(predicate, Constant):
             return predicate.value
+
+    @classmethod
+    def fromFormula(cls, formula: Formula,
+                    variables: Dict[Atom, SMTExpression]) -> SMTExpression or float:
+        preRules = []
+        for pre in formula:
+            if isinstance(pre, Formula):
+                preRules += [SMTExpression.fromFormula(pre, variables)]
+            else:
+                preRules += [SMTExpression.fromPddl(pre, variables)]
+        if formula.type == "AND":
+            return SMTExpression.andOfExpressionsList(preRules)
+        else:
+            return SMTExpression.andOfExpressionsList(preRules)
 
     @classmethod
     def andOfExpressionsList(cls, rules: [SMTExpression]):
