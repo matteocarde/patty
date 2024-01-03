@@ -77,7 +77,7 @@ class Operation:
         a.originalName = self.originalName
         a.linearizationTimes = self.linearizationTimes
         a.originalName = self.originalName
-        a.duration = self.duration
+        a.duration = copy.deepcopy(self.duration)
 
         a.cacheLists()
 
@@ -221,7 +221,7 @@ class Operation:
 
     def __getFunctions(self) -> Set[Atom]:
         functions = self.preconditions.getFunctions() | self.effects.getFunctions()
-        if self.duration:
+        if self.duration and isinstance(self.duration, Predicate):
             functions |= self.duration.getFunctions()
         return functions
 
