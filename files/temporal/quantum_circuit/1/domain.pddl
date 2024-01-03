@@ -18,7 +18,7 @@
 		:duration (= ?duration 4)
 		:condition (and (at start (located_at_1 ?q1))
 			(at start (located_at_2 ?q2))
-			(at start (not_U_GOAL ?q1 ?q2)))
+			(at start (NOT_U_GOAL ?q1 ?q2)))
 		:effect (and (at start (not (located_at_1 ?q1)))
 			(at start (not (located_at_2 ?q2)))
 			(at end (located_at_1 ?q1))

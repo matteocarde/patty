@@ -14,7 +14,7 @@ PLANNERS = [
 
 def main():
     domains = [
-        "temporal/airport",
+        # "temporal/airport",
         "temporal/cushing",
         "temporal/driverlog",
         "temporal/floortile",
@@ -25,7 +25,7 @@ def main():
         "temporal/match-ms",
         "temporal/match_cellar",
         "temporal/oversub",
-        "temporal/painter",
+        # "temporal/painter",
         "temporal/paper-example",
         "temporal/parking",
         "temporal/quantum_circuit",
@@ -55,6 +55,8 @@ def main():
             for folder in folders:
                 domainFile = f"files/{domain}/{folder}/domain.pddl"
                 problemFile = f"files/{domain}/{folder}/problem.pddl"
+                if not os.path.exists(domainFile):
+                    continue
 
                 for planner in PLANNERS:
                     instances.append([planner, domain, domainFile, problemFile])

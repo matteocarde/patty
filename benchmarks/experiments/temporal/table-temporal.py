@@ -8,6 +8,7 @@ from classes.Result import Result
 # SMT_SOLVERS = {'SpringRoll', 'PATTY', 'RANTANPLAN', "OMT"}
 
 SOLVERS = {
+    "PATTY": r"\textsc{Patty}",
     "ITSAT": r"\textsc{ITSat}",
     "LPG": r"\textsc{LPG}",
     "Optic": r"\textsc{Optic}",
@@ -42,8 +43,8 @@ TIMEOUT = 300 * 1000
 
 
 def main():
-    filename = "2023-12-31-TEMPORAL-v1.csv"
-    files = [f"benchmarks/results/{filename}"]
+    filename = "2023-12-31-TEMPORAL-v2.csv"
+    files = [f"benchmarks/results/2023-12-31-TEMPORAL-v1.csv", f"benchmarks/results/{filename}"]
 
     results: [Result] = []
     for file in files:
@@ -182,7 +183,8 @@ def main():
             # "nOfRules": ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}),
         },
         "solvers": {
-            "ITSAT": r"SEARCH",
+            "PATTY": r"SMT",
+            "ITSAT": r"SMT",
             "LPG": r"SEARCH",
             "Optic": r"SEARCH",
             "TFD": r"SEARCH",

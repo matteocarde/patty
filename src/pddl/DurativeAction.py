@@ -71,7 +71,7 @@ class DurativeAction(Operation):
             if e.type == type:
                 effects.addEffect(e.subPredicate)
         planName = self.planName
-        sa = SnapAction.fromProperties(name, parameters, preconditions, effects, planName, duration=0)
+        sa = SnapAction.fromProperties(name, parameters, preconditions, effects, planName, duration=Constant(0))
 
         if type == TimePredicateType.AT_START:
             self.start = sa

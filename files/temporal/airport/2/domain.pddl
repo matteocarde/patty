@@ -313,7 +313,7 @@
 
 		:parameters (?a - airplane)
 
-		:duration
+		:duration (= ?duration 1)
 		;; length of the segment divided through the speed of an airplane (fixed 30 m/s) (= ?duration 1)
 
 		:condition (and
@@ -347,7 +347,7 @@
 
 		:parameters (?a - airplane)
 
-		:duration
+		:duration (= ?duration 13)
 		;; length of the segment divided through the speed of an airplane (fixed 30 m/s) (= ?duration 13)
 
 		:condition (and
@@ -379,7 +379,7 @@
 
 		:parameters (?a - airplane)
 
-		:duration
+		:duration (= ?duration 1)
 		;; length of the segment divided through the speed of an airplane (fixed 30 m/s) (= ?duration 1)
 
 		:condition (and
@@ -420,7 +420,7 @@
 
 		:parameters (?a - airplane)
 
-		:duration
+		:duration (= ?duration 1)
 		;; length of the segment divided through the speed of an airplane (fixed 30 m/s) (= ?duration 1)
 
 		:condition (and
@@ -456,7 +456,7 @@
 
 		:parameters (?a - airplane)
 
-		:duration
+		:duration (= ?duration 1)
 		;; length of the segment divided through the speed of an airplane (fixed 30 m/s) (= ?duration 1)
 
 		:condition (and
@@ -490,7 +490,7 @@
 
 		:parameters (?a - airplane)
 
-		:duration
+		:duration (= ?duration 1)
 		;; length of the segment divided through the speed of an airplane (fixed 30 m/s) (= ?duration 1)
 
 		:condition (and
@@ -524,7 +524,7 @@
 
 		:parameters (?a - airplane)
 
-		:duration
+		:duration (= ?duration 6)
 		;; length of the segment divided through the speed of an airplane (fixed 30 m/s) (= ?duration 6)
 
 		:condition (and
@@ -563,7 +563,7 @@
 
 		:parameters (?a - airplane)
 
-		:duration
+		:duration (= ?duration 1)
 		;; length of the segment divided through the speed of an airplane (fixed 30 m/s) (= ?duration 1)
 
 		:condition (and
@@ -599,7 +599,7 @@
 
 		:parameters (?a - airplane)
 
-		:duration
+		:duration (= ?duration 12)
 		;; length of the segment divided through the pushbackspeed of an airplane (fixed 5 m/s) (= ?duration 12)
 
 		:condition (and
@@ -631,7 +631,7 @@
 
 		:parameters (?a - airplane)
 
-		:duration
+		:duration (= ?duration 8)
 		;; length of the segment divided through the pushbackspeed of an airplane (fixed 5 m/s) (= ?duration 8)
 
 		:condition (and

@@ -71,6 +71,7 @@ class Domain:
             [g for dAction in self.durativeActions for g in dAction.ground(problem, delta=delta)])
 
         gDomain = GroundedDomain(self.name, gActions, gEvents, gProcess, gDurativeActions)
+        gDomain.computeLists()
         gDomain.allAtoms |= problem.allAtoms
         gDomain.functions |= problem.functions
         gDomain.predicates |= problem.predicates
@@ -273,7 +274,7 @@ class GroundedDomain(Domain):
         self.operations.update(self.actions)
         self.operations.update(self.events)
         self.operations.update(self.processes)
-        # self.operations.update(self.durativeActions)
+        self.operations.update(self.durativeActions)
 
         for op in self.operations:
             self.__operationsDict[op.planName] = op

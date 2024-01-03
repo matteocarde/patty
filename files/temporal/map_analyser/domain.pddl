@@ -32,6 +32,7 @@
 		:duration (= ?duration (/ (distance ?xy_initial ?xy_final) (speed ?machine)))
 		:condition (and
 			(at start (at_jun ?machine ?xy_initial))
+			(at start (connected ?xy_initial ?xy_final))
 			(at start (road_connect ?r1 ?xy_initial ?xy_final))
 			(at start (in_place ?r1))
 			(at end (clear ?xy_final))

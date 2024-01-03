@@ -6,6 +6,7 @@ from typing import Dict, List, Set, Tuple
 
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate, BinaryPredicateType
+from src.pddl.Constant import Constant
 from src.pddl.Effects import Effects
 from src.pddl.Literal import Literal
 from src.pddl.OperationType import OperationType
@@ -31,7 +32,7 @@ class Operation:
         self.name: str = ""
         self.valName: str = ""
         self.parameters = list()
-        self.duration: Predicate
+        self.duration: Predicate = Constant(0)
         self.preconditions = Preconditions()
         self.effects = Effects()
         self.functions = set()
@@ -94,7 +95,7 @@ class Operation:
                 operation.addPreconditions(child)
             elif isinstance(child, p.OpEffectContext):
                 operation.addEffects(child)
-        operation.duration = 0
+        operation.duration = Constant(0)
 
         operation.cacheLists()
         return operation
@@ -219,7 +220,10 @@ class Operation:
         return str(self)
 
     def __getFunctions(self) -> Set[Atom]:
-        return self.preconditions.getFunctions() | self.effects.getFunctions()
+        functions = self.preconditions.getFunctions() | self.effects.getFunctions()
+        if self.duration:
+            functions |= self.duration.getFunctions()
+        return functions
 
     def __getPredicates(self) -> Set[Atom]:
         return self.preconditions.getPredicates() | self.effects.getPredicates()
