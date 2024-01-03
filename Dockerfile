@@ -47,6 +47,11 @@ WORKDIR /var/anmlsmt
 RUN chmod +x anmlsmt
 ENV PATH /var/anmlsmt/:${PATH}
 
+# Install PyPy
+COPY /benchmarks/planners/pypy /var/pypy
+WORKDIR /var/pypy
+RUN chmod +x pypy
+ENV PATH /var/pypy/:${PATH}
 
 WORKDIR /project
 COPY . .

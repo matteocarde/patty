@@ -5,7 +5,7 @@ import statistics
 
 from classes.Result import Result
 
-# SMT_SOLVERS = {'SpringRoll', 'PATTY', 'RANTANPLAN', "OMT"}
+SMT_SOLVERS = {'PATTY'}
 
 SOLVERS = {
     "PATTY": r"\textsc{Patty}",
@@ -16,7 +16,7 @@ SOLVERS = {
 }
 
 DOMAINS = {
-    "temporal/airport": r"\textsc{Airport}",
+    # "temporal/airport": r"\textsc{Airport}",
     "temporal/cushing": r"\textsc{Cushing}",
     "temporal/driverlog": r"\textsc{DriverLog}",
     "temporal/floortile": r"\textsc{Floortile}",
@@ -27,7 +27,7 @@ DOMAINS = {
     "temporal/match-ms": r"\textsc{MatchMS}",
     "temporal/match_cellar": r"\textsc{MatchCellar}",
     "temporal/oversub": r"\textsc{Oversub}",
-    "temporal/painter": r"\textsc{Painter}",
+    # "temporal/painter": r"\textsc{Painter}",
     "temporal/parking": r"\textsc{Parking}",
     "temporal/quantum_circuit": r"\textsc{QuantumCircuit}",
     "temporal/road_traffic_accident": r"\textsc{RoadTrafficAccident}",
@@ -39,11 +39,11 @@ DOMAINS = {
     "temporal/paper-example": r"\textsc{Bottles}",
 }
 
-TIMEOUT = 300 * 1000
+TIMEOUT = 30 * 1000
 
 
 def main():
-    filename = "2023-12-31-TEMPORAL-v2.csv"
+    filename = "2023-12-31-TEMPORAL-v4.csv"
     files = [f"benchmarks/results/2023-12-31-TEMPORAL-v1.csv", f"benchmarks/results/{filename}"]
 
     results: [Result] = []
@@ -57,6 +57,8 @@ def main():
     domains = set()
     d = dict()
     for r in results:
+        if r.domain not in DOMAINS:
+            continue
         d[r.domain] = d.setdefault(r.domain, dict())
         solvers.add(r.solver)
         domains.add(r.domain)
@@ -93,15 +95,15 @@ def main():
             "nOfRules": dict(),
         }
 
-        # commonlySolved = {}
-        # commonlyGrounded = {}
-        # for solver in SMT_SOLVERS:
-        #     solved = {r.problem for r in domainDict[solver] if r.solved}
-        #     grounded = {r.problem for r in domainDict[solver] if r.nOfVars > 0}
-        #     if solved:
-        #         commonlySolved = solved if not commonlySolved else commonlySolved.intersection(solved)
-        #     if grounded:
-        #         commonlyGrounded = solved if not commonlyGrounded else commonlyGrounded.intersection(grounded)
+        commonlySolved = {}
+        commonlyGrounded = {}
+        for solver in SMT_SOLVERS:
+            solved = {r.problem for r in domainDict[solver] if r.solved}
+            grounded = {r.problem for r in domainDict[solver] if r.nOfVars > 0}
+            if solved:
+                commonlySolved = solved if not commonlySolved else commonlySolved.intersection(solved)
+            if grounded:
+                commonlyGrounded = solved if not commonlyGrounded else commonlyGrounded.intersection(grounded)
 
         for solver in solvers:
             if solver not in domainDict:
@@ -119,14 +121,14 @@ def main():
             # t[domain]["length"][solver] = r(statistics.mean([r.planLength for r in pResult if r.solved]), 0) if \
             #     t[domain]["coverage"][solver] != "-" else "-"
             #
-            # v = [r.nOfVars for r in pResult if r.nOfVars > 0 and r.problem in commonlyGrounded]
-            # t[domain]["nOfVars"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
-            # v = [r.nOfRules for r in pResult if r.nOfRules > 0 and r.problem in commonlyGrounded]
-            # t[domain]["nOfRules"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
+            v = [r.nOfVars for r in pResult if r.nOfVars > 0 and r.problem in commonlyGrounded]
+            t[domain]["nOfVars"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
+            v = [r.nOfRules for r in pResult if r.nOfRules > 0 and r.problem in commonlyGrounded]
+            t[domain]["nOfRules"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
 
     domainsClusters = {
         r"\textit{Temporal}": [
-            "temporal/airport",
+            # "temporal/airport",
             "temporal/cushing",
             "temporal/driverlog",
             "temporal/floortile",
@@ -137,7 +139,7 @@ def main():
             "temporal/match-ms",
             "temporal/match_cellar",
             "temporal/oversub",
-            "temporal/painter",
+            # "temporal/painter",
             "temporal/parking",
             "temporal/quantum_circuit",
             "temporal/road_traffic_accident",
@@ -179,12 +181,12 @@ def main():
             "coverage": ("Coverage (\%)", {"SMT", "SEARCH"}),
             "time": ("Time (s)", {"SMT", "SEARCH"}),
             # "bound": ("Bound (Common)", {"SMT"}),
-            # "nOfVars": ("$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$", {"SMT"}),
-            # "nOfRules": ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}),
+            "nOfVars": ("$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$", {"SMT"}),
+            "nOfRules": ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}),
         },
         "solvers": {
             "PATTY": r"SMT",
-            "ITSAT": r"SMT",
+            "ITSAT": r"SEARCH",
             "LPG": r"SEARCH",
             "Optic": r"SEARCH",
             "TFD": r"SEARCH",
@@ -286,6 +288,8 @@ def main():
                     row.append(r"\textbf{" + str(nOfBest) + "}")
             latex.append("&".join(row) + r"\\\hline")
             for domain in clusterDomains:
+                if domain not in DOMAINS:
+                    continue
                 row = [DOMAINS[domain]]
                 for (stat, (name, statTypes)) in table["columns"].items():
                     for (solver, type) in table["solvers"].items():

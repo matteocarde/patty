@@ -1,2 +1,2 @@
 #!/bin/bash
-      conda run --no-capture-output -n patty python /Users/carde/Documents/Workspace/patty/main.py $@
+      conda run --no-capture-output -n patty pypy /Users/carde/Documents/Workspace/patty/main.py $@
