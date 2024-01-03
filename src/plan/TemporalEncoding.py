@@ -1,4 +1,4 @@
-from typing import List, Dict, Set
+from typing import List, Dict, Set, Tuple
 
 import pysmt.smtlib.commands as smtcmd
 import pysmt.smtlib.script
@@ -523,15 +523,18 @@ class TemporalEncoding(Encoding):
                     rules.append((a_i > 0).implies(SMTExpression.andOfExpressionsList(preEndRules)))
 
             # 2) Rolling end
-            mutexWithAll = set()
-            mutexWithLasting = set()
-            for action in self.pattern:
-                if action.isMutex(b.overall):
-                    mutexWithAll.add(action)
-                    mutexWithLasting.add(action)
+            spanFrom = self.action2index[self.dur2start[b][0]]
+            spanTo = self.action2index[self.dur2end[b][-1]]
+            mutexWithAll: List[int] = list()
+            mutexWithLasting: Set[int] = set()
+            for l in range(spanFrom + 1, spanTo):
+                action_l = self.pattern[l]
+                if action_l.isMutex(b.overall):
+                    mutexWithAll.append(l)
+                    mutexWithLasting.add(l)
                     continue
-                if action.isMutex(b.start) or action.isMutex(b.end):
-                    mutexWithAll.add(action)
+                if action_l.isMutex(b.start) or action_l.isMutex(b.end):
+                    mutexWithAll.append(l)
 
             action_i: SnapAction
             action_j: SnapAction
@@ -544,16 +547,18 @@ class TemporalEncoding(Encoding):
                 for action_j in self.start2end[action_i]:
                     j = self.action2index[action_j]
                     t_j = stepVars.timeVariables[j]
-                    for action_l in mutexWithAll:
+                    for l in mutexWithAll:
+                        if not i <= l <= j:
+                            continue
+                        action_l = self.pattern[l]
                         if action_i.isSame(action_l):
                             continue
-                        l = self.action2index[action_l]
                         a_l = stepVars.actionVariables[l]
                         t_l = stepVars.timeVariables[l]
                         lhs = (t_j == t_i + self.getDelta(a_i, d_i, b)).AND(t_i <= t_l).AND(t_l < t_j)
                         rhs = (a_i <= 1).AND(a_l <= 1)
                         rules.append(lhs.implies(rhs))
-                        if action_l in mutexWithLasting:
+                        if l in mutexWithLasting:
                             sigma_l = stepVars.sigmaVariables[l]
                             rhs = SMTExpression.fromFormula(lastingPre, sigma_l)
                             rule = lhs.implies(rhs)
@@ -565,20 +570,27 @@ class TemporalEncoding(Encoding):
         prevVars = self.transitionVariables[index - 1]
         stepVars = self.transitionVariables[index]
 
-        rules: List[SMTExpression] = []
+        rulesDict = dict()
         self.computeSigmas(prevVars, stepVars)
         # Pattern State Encoding
-        rules += self.getPreStepRules(stepVars)
-        rules += self.getEffStepRules(stepVars)
-        rules += self.getAmoStepRules(stepVars)
-        rules += self.getFrameStepRules(stepVars)
+        rulesDict["pre"] = self.getPreStepRules(stepVars)
+        rulesDict["eff"] = self.getEffStepRules(stepVars)
+        rulesDict["amo"] = self.getAmoStepRules(stepVars)
+        rulesDict["frame"] = self.getFrameStepRules(stepVars)
         # Pattern Time Encoding
-        rules += self.getDurationRules(stepVars)
-        rules += self.getStartConnectionRules(stepVars)
-        rules += self.getEndConnectionRules(stepVars)
-        rules += self.getNoOverlappingRules(stepVars)
-        rules += self.getEpsilonSeparationRules(stepVars)
-        rules += self.getLastingActionsRules(stepVars)
+        rulesDict["dur"] = self.getDurationRules(stepVars)
+        rulesDict["start"] = self.getStartConnectionRules(stepVars)
+        rulesDict["end"] = self.getEndConnectionRules(stepVars)
+        rulesDict["overlap"] = self.getNoOverlappingRules(stepVars)
+        rulesDict["epsilon"] = self.getEpsilonSeparationRules(stepVars)
+        rulesDict["lasting"] = self.getLastingActionsRules(stepVars)
+
+        # for rule in rulesDict["lasting"]:
+        #     print(rule)
+
+        rules: List[SMTExpression] = []
+        for dRules in rulesDict.values():
+            rules += dRules
 
         return rules
 
