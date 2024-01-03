@@ -14,7 +14,7 @@ class TestPaperExample(TestCase):
 
     def setUp(self) -> None:
         folder = "../../files/temporal/paper-example"
-        problem = "p10"
+        problem = "p2"
         self.domain: Domain = Domain.fromFile(f"{folder}/domain.pddl")
         self.problem: Problem = Problem.fromFile(f"{folder}/instances/{problem}.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
@@ -22,8 +22,8 @@ class TestPaperExample(TestCase):
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
         self.pattern = self.pattern.multiply(self.horizon, addFake=False)
         self.encoding: TemporalEncoding = TemporalEncoding(self.gDomain, self.problem, self.pattern, 1)
-        # print(self.pattern)
-        # self.encoding.printRules()
+        print(self.pattern)
+        self.encoding.printRules()
         pass
 
     def test_check(self):
@@ -36,6 +36,7 @@ class TestPaperExample(TestCase):
         solution: TemporalPlan = solver.solve()
 
         self.assertIsInstance(solution, TemporalPlan)
+        # self.assertTrue(solution.validate(self.problem, avoidRaising=True))
 
         print(solution)
         pass

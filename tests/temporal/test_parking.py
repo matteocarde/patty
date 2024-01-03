@@ -19,22 +19,23 @@ class TestTemporalParking(TestCase):
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.horizon = 1
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
-        self.pattern = self.pattern.multiply(self.horizon)
+        self.pattern = self.pattern.multiply(self.horizon, addFake=False)
         self.encoding: TemporalEncoding = TemporalEncoding(self.gDomain, self.problem, self.pattern, 1)
-        # print(self.pattern)
-        self.encoding.printRules()
+        print(f"vars: {self.encoding.getNVars()}")
+        print(f"rules: {self.encoding.getNRules()}")
+        # self.encoding.printRules()
         pass
 
     def test_solve(self):
         self.assertIsInstance(self.domain, Domain)
         self.assertIsInstance(self.problem, Problem)
         self.assertIsInstance(self.gDomain, GroundedDomain)
-        # solver: SMTSolver = SMTSolver(self.encoding)
-        # solution: TemporalPlan = solver.solve()
-        #
-        # self.assertIsInstance(solution, TemporalPlan)
-        #
-        # print(solution)
+        solver: SMTSolver = SMTSolver(self.encoding)
+        solution: TemporalPlan = solver.solve()
+
+        self.assertIsInstance(solution, TemporalPlan)
+
+        print(solution)
         pass
 
 

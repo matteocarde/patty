@@ -23,6 +23,7 @@
       (at start (> (index ?b) (p)))
       (at start (> (litres ?a) 0))
       (at start (not (capped ?b)))
+      ; (at end (not (capped ?b)))
       (over all (not (capped ?b)))
     )
     :effect (and

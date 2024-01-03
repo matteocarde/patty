@@ -404,18 +404,17 @@ class Operation:
         return o_i
 
     def isMutex(self, other: Operation) -> bool:
-        mutex = self.addList.intersection(other.delList)
-        mutex |= self.delList.intersection(other.addList)
-        mutex |= self.addList.intersection(other.preB)
-        mutex |= self.delList.intersection(other.preB)
-        mutex |= self.preB.intersection(other.addList)
-        mutex |= self.preB.intersection(other.delList)
-        mutex |= self.assList.intersection(other.assList)
+        return True if self.addList.intersection(other.delList) or \
+                       self.delList.intersection(other.addList) or \
+                       self.addList.intersection(other.preB) or \
+                       self.delList.intersection(other.preB) or \
+                       self.preB.intersection(other.addList) or \
+                       self.preB.intersection(other.delList) or \
+                       self.assList.intersection(other.assList) else False
 
-        return len(mutex) > 0
 
-    def isMutexSet(self, operations: Set[Operation]):
-        isMutex = False
-        for op in operations:
-            isMutex = isMutex or self.isMutex(op)
-        return isMutex
+def isMutexSet(self, operations: Set[Operation]):
+    isMutex = False
+    for op in operations:
+        isMutex = isMutex or self.isMutex(op)
+    return isMutex

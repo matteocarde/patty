@@ -220,22 +220,26 @@ class SMTExpression:
             return SMTExpression.andOfExpressionsList(preRules)
 
     @classmethod
-    def andOfExpressionsList(cls, rules: [SMTExpression]):
+    def __connectiveOfExpressionList(cls, rules: [SMTExpression], connective):
         if not rules:
             return SMTExpression.TRUE()
-        final: SMTExpression = rules[0]
-        for rule in rules[1:]:
-            final = final.AND(rule)
-        return final
+        e = cls()
+        e.variables = set()
+        expressions = list()
+        r: SMTExpression
+        for r in rules:
+            e.variables |= getVars(r)
+            expressions.append(r.expression)
+        e.expression = connective(expressions)
+        return e
+
+    @classmethod
+    def andOfExpressionsList(cls, rules: [SMTExpression]):
+        return cls.__connectiveOfExpressionList(rules, And)
 
     @classmethod
     def orOfExpressionsList(cls, rules: [SMTExpression]):
-        if not rules:
-            return SMTExpression.TRUE()
-        final: SMTExpression = rules[0]
-        for rule in rules[1:]:
-            final = final.OR(rule)
-        return final
+        return cls.__connectiveOfExpressionList(rules, Or)
 
     @classmethod
     def FALSE(cls):
