@@ -110,7 +110,8 @@ class Domain:
         gDomain.durativeActions = set()
         action: SnapAction
         for action in gDomain.actions:
-            gDomain.durativeActions.add(action.durativeAction)
+            if isinstance(action, SnapAction):
+                gDomain.durativeActions.add(action.durativeAction)
 
         gDomain.arpg = ARPG(gDomain, initialState, problem.goal)
         gDomain.computeLists()
@@ -241,16 +242,9 @@ class GroundedDomain(Domain):
         self.events = events
         self.processes = process
         self.durativeActions = durativeActions
+        self.actions = actions
 
-        if not self.durativeActions:
-            self.actions = actions
-        else:
-            self.actions = set()
-            for action in actions:
-                if isinstance(action, SnapAction):
-                    continue
-                self.durativeActions.add(DurativeAction.fromAction(action))
-
+        if self.durativeActions:
             types = [TimePredicateType.AT_START, TimePredicateType.OVER_ALL, TimePredicateType.AT_END]
             for dAction in self.durativeActions:
                 for type in types:

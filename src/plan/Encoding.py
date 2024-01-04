@@ -72,7 +72,7 @@ class Encoding:
 
     def getNVars(self):
         variables = set()
-        for rule in self.rules:
+        for i, rule in enumerate(self.rules):
             variables |= rule.variables
         return len(variables)
 

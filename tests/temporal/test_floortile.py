@@ -17,10 +17,11 @@ class TestFloortile(TestCase):
         self.domain: Domain = Domain.fromFile(f"{folder}/domain.pddl")
         self.problem: Problem = Problem.fromFile(f"{folder}/instances/{problem}.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
-        self.horizon = 1
+        self.horizon = 3
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
         self.pattern = self.pattern.multiply(self.horizon, addFake=False)
         self.encoding: TemporalEncoding = TemporalEncoding(self.gDomain, self.problem, self.pattern, 1)
+        # self.encoding.printRules()
         print(f"N of vars: {self.encoding.getNVars()}")
         print(f"N of rules: {self.encoding.getNRules()}")
         pass

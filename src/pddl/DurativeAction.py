@@ -25,6 +25,7 @@ class DurativeAction(Operation):
         self.start: SnapAction
         self.overall: SnapAction
         self.end: SnapAction
+        self.canBeRolled = False
 
     def __deepcopy__(self, m=None):
         if m is None:
@@ -35,6 +36,7 @@ class DurativeAction(Operation):
         c.start = copy.deepcopy(self.start, m)
         c.overall = copy.deepcopy(self.overall, m)
         c.end = copy.deepcopy(self.end, m)
+        c.canBeRolled = self.canBeRolled
         return c
 
     @classmethod
@@ -83,6 +85,9 @@ class DurativeAction(Operation):
         sa.durativeAction = self
         sa.timeType = type
         return sa
+
+    def couldBeRepeated(self) -> bool:
+        return self.start.couldBeRepeated() or self.end.couldBeRepeated()
 
     def __setDuration(self, node: p.DurationAssignmentContext):
         op = node.op.getChild(0)

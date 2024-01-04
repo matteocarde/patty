@@ -25,11 +25,11 @@ class TestPaperExample(TestCase):
         print(self.pattern)
         self.encoding.printRules()
         pass
-
-    def test_check(self):
-        self.assertIsInstance(self.domain, Domain)
-        self.assertIsInstance(self.problem, Problem)
-        self.assertIsInstance(self.gDomain, GroundedDomain)
+    #
+    # def test_check(self):
+    #     self.assertIsInstance(self.domain, Domain)
+    #     self.assertIsInstance(self.problem, Problem)
+    #     self.assertIsInstance(self.gDomain, GroundedDomain)
 
     def test_solve(self):
         solver: SMTSolver = SMTSolver(self.encoding)

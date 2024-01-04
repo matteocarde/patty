@@ -27,6 +27,13 @@ class Effects:
         eff.__class__ = Effects
         return cast(Effects, eff)
 
+    def __add__(self, other):
+        if not isinstance(other, Effects):
+            raise Exception("Cannot add if other is not Effects")
+        eff = Effects()
+        eff.assignments = self.assignments + other.assignments
+        return eff
+
     @classmethod
     def fromNode(cls, node: pddlParser.EffectsContext) -> Effects:
 

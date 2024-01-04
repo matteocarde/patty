@@ -50,6 +50,9 @@ class SMTExpression:
     def __repr__(self):
         return str(self)
 
+    def __hash__(self):
+        return hash(str(self))
+
     def __binary(self, other: SMTExpression or float, operation, lhsExpression: FNode,
                  rhsExpression: FNode) -> SMTExpression:
         expr = SMTExpression()

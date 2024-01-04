@@ -50,6 +50,7 @@ class Operation:
         self.linearizationOf = self
         self.originalName: str = ""
         self.linearizationTimes = 1
+        self.__couldBeRepeated = False
         self.isFake = False
 
     def __deepcopy__(self, m=None) -> Operation:
@@ -327,8 +328,7 @@ class Operation:
         return self.assignments
 
     def couldBeRepeated(self) -> bool:
-        return len(self.getIncrList() | self.getDecrList()) > 0 and \
-            len(self.getPreB().intersection(self.getAddList() | self.getDelList())) == 0
+        return self.__couldBeRepeated
 
     def substitute(self, sub: Dict[Atom, float], default=None) -> Operation:
         raise NotImplemented()
@@ -347,6 +347,8 @@ class Operation:
         self.increases = self.__getIncreases()
         self.decreases = self.__getDecreases()
         self.assignments = self.__getAssignments()
+        self.__couldBeRepeated = len(self.getIncrList() | self.getDecrList()) > 0 and \
+                                 len(self.getPreB().intersection(self.getAddList() | self.getDelList())) == 0
 
     def __hash__(self):
         return self.__hash

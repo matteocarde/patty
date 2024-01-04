@@ -128,6 +128,7 @@ class Action(Operation):
         preconditions = self.preconditions.substitute(sub, default)
         effects = self.effects.substitute(sub, default)
         planName = self.planName
+        duration = self.duration.substitute(sub, default)
         action = Action.fromProperties(name, [], preconditions, effects, planName, duration=duration)
         return action
 
