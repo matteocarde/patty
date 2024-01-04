@@ -43,7 +43,7 @@ TIMEOUT = 30 * 1000
 
 
 def main():
-    filename = "2023-12-31-TEMPORAL-v4.csv"
+    filename = "2023-12-31-TEMPORAL-v6.csv"
     files = [f"benchmarks/results/2023-12-31-TEMPORAL-v1.csv", f"benchmarks/results/{filename}"]
 
     results: [Result] = []

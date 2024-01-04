@@ -296,6 +296,8 @@ class TemporalEncoding(Encoding):
 
         groups = [(p, start), (q, end)]
         for (times, action) in groups:
+            if times:
+                continue
             for eff in action.effects:
                 if isinstance(eff, BinaryPredicate):
                     atom = eff.lhs.getAtom()

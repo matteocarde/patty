@@ -20,9 +20,9 @@ class TestMajsp(TestCase):
         self.horizon = 3
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
         self.pattern = self.pattern.multiply(self.horizon, addFake=False)
-        self.encoding: TemporalEncoding = TemporalEncoding(self.gDomain, self.problem, self.pattern, 1)
         print(self.pattern)
-        self.encoding.printRules()
+        self.encoding: TemporalEncoding = TemporalEncoding(self.gDomain, self.problem, self.pattern, 1)
+        # self.encoding.printRules()
         pass
 
     def test_check(self):

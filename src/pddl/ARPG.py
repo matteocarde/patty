@@ -1,4 +1,3 @@
-import random
 from typing import Set, List, Dict
 
 from src.pddl.Action import Action
@@ -11,7 +10,6 @@ from src.pddl.SnapAction import SnapAction
 from src.pddl.State import State
 from src.pddl.Supporter import Supporter
 from src.pddl.TimePredicate import TimePredicateType
-from src.plan.AffectedGraph import AffectedGraph
 
 SEED = 0
 
@@ -91,8 +89,11 @@ class ARPG:
 
         leftActions = set(self.actions) - usedActions
         if not useSCCs:
-            sortOrder = sorted(
-                [a for a in leftActions if not isinstance(a, SnapAction) or a.timeType != TimePredicateType.OVER_ALL])
+            orderIstant = sorted([a for a in leftActions if not isinstance(a, SnapAction)])
+            orderSnap = sorted(
+                [a for a in leftActions if isinstance(a, SnapAction) and a.timeType != TimePredicateType.OVER_ALL])
+            sortOrder = orderIstant + orderSnap
+            print("Left", sortOrder)
             order += sortOrder
         else:
             graphOrder = self.affectedGraph.getSubGraph(leftActions).getOrderFromGraph()
