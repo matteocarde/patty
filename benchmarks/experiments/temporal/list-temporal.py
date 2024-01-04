@@ -6,7 +6,7 @@ from natsort import natsort
 PLANNERS = [
     # "TFD",
     # "LPG",
-    # "ITSAT",
+    "ITSAT",
     # "Optic",
     "PATTY"
 ]
