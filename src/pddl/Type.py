@@ -8,7 +8,7 @@ from src.pddl.PDDLWriter import PDDLWriter
 class Type:
 
     def __init__(self, name: str, parent: Type = None):
-        self.name: str = name
+        self.name: str = name.lower()
         self.parent: Type = parent
         self.children: List[Type] = list()
 

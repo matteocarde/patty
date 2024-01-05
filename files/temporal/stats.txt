@@ -1,0 +1,18 @@
+cushing: RISOLVE BENE
+driverlog: Istanza più semplice 16k azioni, non termina creazione encoding
+floortile: Dominio alla plant-watering, richiede A* o frontiera, 780 azioni
+machine_shop: Istanza più semplice 80k azioni ->  termina creazione encoding
+majsp: RISOLVE BENE
+map_analyser: Istanza più semplice 3k azioni, richede A* o frontiera
+match-ac: RISOLVE BENE
+match-ms: RISOLVE BENE
+match_cellar: Il pattern non è performante
+oversub: RISOLVE BENE
+parking: Istanza più semplice 2.5k azioni -> 9.6k regole
+road_traffic_accident: Istanza più semplice 8.8k azioni -> Non termina encoding
+satellite: Istanza più semplice 16k azioni
+sokoban: Istanza più semplice 2.5k azioni -> 11k regole
+storage: Istanza pià semplice 10k azioni
+trucks: Richiede A*
+turn_and_open: Istanza più semplice 4.5k azioni -> 17k regole
+bottles: RISOLVE BENE

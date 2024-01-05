@@ -96,7 +96,7 @@ class Domain:
         gDomain.substitute(constants)
         problem.substitute(constants)
 
-        actions = [a for a in gDomain.actions]
+        actions = arpg.getActionsOrder()
 
         gDomain.actions = set()
         starts = set([a for a in actions if isinstance(a, SnapAction) and a.timeType == TimePredicateType.AT_START])
@@ -190,14 +190,14 @@ class Domain:
 
             parent = None
             if typeRows.parent:
-                name = typeRows.parent.getChild(1).getText()
+                name = typeRows.parent.getChild(1).getText().lower()
                 self.types[name] = self.types.setdefault(name, Type(name))
                 parent = self.types[name]
 
             for t in typeRows.children:
                 if not isinstance(t, pddlParser.TypeNameContext):
                     continue
-                name = t.getText()
+                name = t.getText().lower()
                 self.types[name] = self.types.setdefault(name, Type(name, parent))
                 if parent:
                     parent.addChild(self.types[name])

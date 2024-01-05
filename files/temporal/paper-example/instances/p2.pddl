@@ -1,4 +1,4 @@
-(define (problem p_2_1)
+(define (problem p_2)
 
   (:domain bottles)
 

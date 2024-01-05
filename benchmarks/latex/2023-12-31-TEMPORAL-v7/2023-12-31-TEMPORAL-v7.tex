@@ -1,0 +1,45 @@
+
+            \documentclass[11pt,landscape]{article}
+            \usepackage{graphicx}
+            \usepackage{lscape}
+            \usepackage{multirow}
+            \usepackage[a4paper,margin=1in,landscape]{geometry}
+
+            \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||ccccc||ccccc||c||c||}
+\hline
+ & \multicolumn{5}{c||}{Coverage (\%)}&\multicolumn{5}{c||}{Time (s)}&\multicolumn{1}{c||}{$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$}&\multicolumn{1}{c||}{$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$}\\
+Domain & $\textsc{Patty}$&$\textsc{ITSat}$&$\textsc{LPG}$&$\textsc{Optic}$&$\textsc{TFD}$&$\textsc{Patty}$&$\textsc{ITSat}$&$\textsc{LPG}$&$\textsc{Optic}$&$\textsc{TFD}$&$\textsc{Patty}$&$\textsc{Patty}$\\
+\hline
+\textit{Temporal}&\textbf{4}&\textbf{5}&\textbf{10}&\textbf{6}&\textbf{4}&\textbf{4}&\textbf{1}&\textbf{9}&\textbf{2}&\textbf{3}&\textbf{6}&\textbf{6}\\\hline
+\textsc{Cushing}&\textbf{100.0}&-&-&\textbf{100.0}&10.0&\textbf{1.19}&-&-&3.06&27.02&\textbf{357}&\textbf{877}\\
+\textsc{DriverLog}&-&15.0&\textbf{45.0}&-&-&-&27.95&\textbf{19.38}&-&-&-&-\\
+\textsc{Floortile}&-&\textbf{100.0}&\textbf{100.0}&-&-&-&2.29&\textbf{0.21}&-&-&-&-\\
+\textsc{MachineShop}&-&\textbf{100.0}&-&-&-&-&\textbf{6.18}&-&-&-&-&-\\
+\textsc{Majsp}&\textbf{48.8}&-&-&-&-&\textbf{19.26}&-&-&-&-&\textbf{756}&\textbf{2220}\\
+\textsc{MapAnalyser}&-&50.0&\textbf{100.0}&-&-&-&22.69&\textbf{0.29}&-&-&-&-\\
+\textsc{MatchAC}&87.5&\textbf{100.0}&-&\textbf{100.0}&-&9.24&0.65&-&\textbf{0.01}&-&\textbf{176}&\textbf{888}\\
+\textsc{MatchMS}&90.0&\textbf{100.0}&-&\textbf{100.0}&-&8.85&0.64&-&\textbf{0.01}&-&\textbf{174}&\textbf{947}\\
+\textsc{MatchCellar}&-&65.0&-&-&\textbf{100.0}&-&18.25&-&-&\textbf{0.58}&-&-\\
+\textsc{Oversub}&\textbf{96.8}&-&\textbf{96.8}&\textbf{96.8}&-&\textbf{0.89}&-&1.04&0.98&-&\textbf{118}&\textbf{240}\\
+\textsc{Parking}&-&30.0&\textbf{100.0}&90.0&\textbf{100.0}&-&25.33&\textbf{0.67}&3.90&10.82&-&-\\
+\textsc{QuantumCircuit}&-&45.5&\textbf{72.7}&\textbf{72.7}&45.5&-&16.77&\textbf{9.08}&13.42&16.58&-&-\\
+\textsc{RoadTrafficAccident}&-&-&\textbf{80.0}&-&-&-&-&\textbf{13.01}&-&-&-&-\\
+\textsc{Satellite}&-&25.0&\textbf{100.0}&5.0&60.0&-&25.65&\textbf{0.39}&28.80&19.56&-&-\\
+\textsc{Sokoban}&-&\textbf{10.0}&-&-&\textbf{10.0}&-&28.22&-&-&\textbf{28.19}&-&-\\
+\textsc{Storage}&-&45.0&\textbf{65.0}&-&-&-&23.78&\textbf{15.21}&-&-&-&-\\
+\textsc{Trucks}&-&-&\textbf{90.9}&\textbf{90.9}&54.5&-&-&\textbf{2.86}&4.21&15.34&-&-\\
+\textsc{TurnAndOpen}&-&10.0&-&17.5&\textbf{25.0}&-&27.41&-&22.42&\textbf{15.80}&-&-\\
+\textsc{Bottles}&\textbf{100.0}&-&TBD&-&-&\textbf{1.03}&-&TBD&-&-&\textbf{108}&\textbf{381}
+\\\hline
+
+        \end{tabular}}
+        \caption{Comparative analysis between ...}
+        \label{tab:experiments}
+        \end{table*}
+        
+\end{document}

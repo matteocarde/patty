@@ -79,25 +79,20 @@ class ARPG:
                 if supporter.originatingAction not in usedActions:
                     partialOrder.add(supporter.originatingAction)
                 usedActions.add(supporter.originatingAction)
-            if not useSCCs:
-                sortOrder = sorted(partialOrder)
-                order += sortOrder
-            else:
-                subGraph = self.affectedGraph.getSubGraph(partialOrder)
-                graphOrder = subGraph.getOrderFromGraph()
-                order += graphOrder
+            sortOrder = sorted(partialOrder)
+            order += sortOrder
 
         leftActions = set(self.actions) - usedActions
-        if not useSCCs:
-            orderIstant = sorted([a for a in leftActions if not isinstance(a, SnapAction)])
-            orderSnap = sorted(
-                [a for a in leftActions if isinstance(a, SnapAction) and a.timeType != TimePredicateType.OVER_ALL])
-            sortOrder = orderIstant + orderSnap
-            print("Left", sortOrder)
-            order += sortOrder
-        else:
-            graphOrder = self.affectedGraph.getSubGraph(leftActions).getOrderFromGraph()
-            order += graphOrder
+        print(f"# of left actions from ARPG: {len(leftActions)}")
+        # if not useSCCs:
+        #     orderIstant = sorted([a for a in leftActions if not isinstance(a, SnapAction)])
+        #     orderSnap = sorted(
+        #         [a for a in leftActions if isinstance(a, SnapAction) and a.timeType != TimePredicateType.OVER_ALL])
+        #     sortOrder = orderIstant + orderSnap
+        #     order += sortOrder
+        # else:
+        #     graphOrder = self.affectedGraph.getSubGraph(leftActions).getOrderFromGraph()
+        #     order += graphOrder
         return order
 
     def getConstantAtoms(self) -> Dict[Atom, float]:

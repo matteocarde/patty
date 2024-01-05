@@ -90,7 +90,7 @@ class Problem:
                 if isinstance(child, pddlParser.GroundAtomParameterContext):
                     objects.append(child.getText())
                 elif isinstance(child, pddlParser.TypeNameContext):
-                    typeStr = child.getText()
+                    typeStr = child.getText().lower()
             self.objectsByType.setdefault(typeStr, [])
             self.objectsByType[typeStr].extend(objects)
 

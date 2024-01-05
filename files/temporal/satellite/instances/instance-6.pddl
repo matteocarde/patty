@@ -5,187 +5,209 @@
 	instrument0 - instrument
 	satellite1 - satellite
 	instrument1 - instrument
-	satellite2 - satellite
 	instrument2 - instrument
 	instrument3 - instrument
+	satellite2 - satellite
 	instrument4 - instrument
-	instrument5 - instrument
-	instrument6 - instrument
-	satellite3 - satellite
-	instrument7 - instrument
-	instrument8 - instrument
-	instrument9 - instrument
-	instrument10 - instrument
-	instrument11 - instrument
-	satellite4 - satellite
-	instrument12 - instrument
-	thermograph7 - mode
-	image0 - mode
-	spectrograph1 - mode
+	thermograph2 - mode
+	spectrograph0 - mode
+	infrared1 - mode
 	infrared3 - mode
-	image4 - mode
-	thermograph5 - mode
-	thermograph6 - mode
-	spectrograph2 - mode
-	Star1 - direction
-	Star11 - direction
-	Star5 - direction
-	GroundStation4 - direction
-	GroundStation8 - direction
-	Star9 - direction
 	GroundStation3 - direction
-	Star12 - direction
-	GroundStation2 - direction
-	Star6 - direction
-	Star13 - direction
-	GroundStation14 - direction
-	Star7 - direction
-	GroundStation10 - direction
+	Star1 - direction
+	Star2 - direction
 	Star0 - direction
-	Planet15 - direction
-	Star16 - direction
-	Star17 - direction
-	Phenomenon18 - direction
-	Planet19 - direction
-	Star20 - direction
-	Planet21 - direction
-	Phenomenon22 - direction
-	Planet23 - direction
-	Planet24 - direction
-	Phenomenon25 - direction
-	Planet26 - direction
-	Planet27 - direction
-	Star28 - direction
-	Star29 - direction
-	Star30 - direction
-	Star31 - direction
-	Star32 - direction
-	Planet33 - direction
-	Star34 - direction
-	Star35 - direction
-	Star36 - direction
-	Phenomenon37 - direction
-	Planet38 - direction
-	Star39 - direction
+	Planet4 - direction
+	Planet5 - direction
+	Star6 - direction
+	Star7 - direction
+	Phenomenon8 - direction
+	Star9 - direction
+	Star10 - direction
 )
 (:init
-	(supports instrument0 image0)
-	(calibration_target instrument0 GroundStation2)
-	(calibration_target instrument0 Star13)
-	(calibration_target instrument0 GroundStation3)
+	(supports instrument0 infrared1)
+	(supports instrument0 spectrograph0)
+	(calibration_target instrument0 Star1)
+	(= (calibration_time instrument0 Star1) 25.4)
 	(on_board instrument0 satellite0)
 	(power_avail satellite0)
-	(pointing satellite0 Phenomenon37)
-	(supports instrument1 thermograph7)
+	(pointing satellite0 Phenomenon8)
+	(= (data_capacity satellite0) 1000)
 	(supports instrument1 infrared3)
-	(calibration_target instrument1 GroundStation10)
-	(calibration_target instrument1 Star6)
+	(calibration_target instrument1 Star2)
+	(= (calibration_time instrument1 Star2) 48.4)
+	(supports instrument2 infrared1)
+	(supports instrument2 infrared3)
+	(supports instrument2 thermograph2)
+	(calibration_target instrument2 Star2)
+	(= (calibration_time instrument2 Star2) 2.04)
+	(supports instrument3 infrared1)
+	(supports instrument3 infrared3)
+	(supports instrument3 spectrograph0)
+	(calibration_target instrument3 Star2)
+	(= (calibration_time instrument3 Star2) 67.9)
 	(on_board instrument1 satellite1)
+	(on_board instrument2 satellite1)
+	(on_board instrument3 satellite1)
 	(power_avail satellite1)
-	(pointing satellite1 GroundStation14)
-	(supports instrument2 thermograph7)
-	(calibration_target instrument2 Star9)
-	(calibration_target instrument2 GroundStation2)
-	(calibration_target instrument2 Star1)
-	(calibration_target instrument2 GroundStation4)
-	(calibration_target instrument2 GroundStation10)
-	(supports instrument3 thermograph7)
-	(supports instrument3 spectrograph2)
-	(supports instrument3 spectrograph1)
-	(calibration_target instrument3 Star12)
-	(supports instrument4 spectrograph1)
-	(supports instrument4 spectrograph2)
-	(supports instrument4 image4)
+	(pointing satellite1 Star6)
+	(= (data_capacity satellite1) 1000)
+	(supports instrument4 infrared3)
 	(calibration_target instrument4 Star0)
-	(calibration_target instrument4 GroundStation8)
-	(calibration_target instrument4 Star7)
-	(calibration_target instrument4 Star5)
-	(supports instrument5 image4)
-	(supports instrument5 spectrograph2)
-	(calibration_target instrument5 Star7)
-	(calibration_target instrument5 Star5)
-	(calibration_target instrument5 Star6)
-	(calibration_target instrument5 Star11)
-	(supports instrument6 image0)
-	(supports instrument6 infrared3)
-	(calibration_target instrument6 GroundStation8)
-	(calibration_target instrument6 Star6)
-	(calibration_target instrument6 GroundStation4)
-	(calibration_target instrument6 GroundStation10)
-	(on_board instrument2 satellite2)
-	(on_board instrument3 satellite2)
+	(= (calibration_time instrument4 Star0) 27.9)
 	(on_board instrument4 satellite2)
-	(on_board instrument5 satellite2)
-	(on_board instrument6 satellite2)
 	(power_avail satellite2)
-	(pointing satellite2 Planet21)
-	(supports instrument7 spectrograph2)
-	(calibration_target instrument7 Star6)
-	(calibration_target instrument7 Star9)
-	(supports instrument8 image0)
-	(supports instrument8 infrared3)
-	(calibration_target instrument8 GroundStation3)
-	(supports instrument9 spectrograph1)
-	(supports instrument9 infrared3)
-	(calibration_target instrument9 Star12)
-	(supports instrument10 infrared3)
-	(calibration_target instrument10 GroundStation2)
-	(calibration_target instrument10 GroundStation10)
-	(calibration_target instrument10 Star12)
-	(supports instrument11 thermograph6)
-	(supports instrument11 thermograph5)
-	(supports instrument11 image4)
-	(calibration_target instrument11 Star7)
-	(calibration_target instrument11 GroundStation14)
-	(calibration_target instrument11 Star13)
-	(calibration_target instrument11 Star6)
-	(on_board instrument7 satellite3)
-	(on_board instrument8 satellite3)
-	(on_board instrument9 satellite3)
-	(on_board instrument10 satellite3)
-	(on_board instrument11 satellite3)
-	(power_avail satellite3)
-	(pointing satellite3 Star16)
-	(supports instrument12 spectrograph2)
-	(calibration_target instrument12 Star0)
-	(calibration_target instrument12 GroundStation10)
-	(on_board instrument12 satellite4)
-	(power_avail satellite4)
-	(pointing satellite4 Planet26)
+	(pointing satellite2 Star6)
+	(= (data_capacity satellite2) 1000)
+	(= (data Planet4 thermograph2) 194)
+	(= (data Planet5 thermograph2) 65)
+	(= (data Star6 thermograph2) 228)
+	(= (data Star7 thermograph2) 86)
+	(= (data Phenomenon8 thermograph2) 58)
+	(= (data Star9 thermograph2) 25)
+	(= (data Star10 thermograph2) 150)
+	(= (data Planet4 spectrograph0) 258)
+	(= (data Planet5 spectrograph0) 112)
+	(= (data Star6 spectrograph0) 250)
+	(= (data Star7 spectrograph0) 64)
+	(= (data Phenomenon8 spectrograph0) 251)
+	(= (data Star9 spectrograph0) 172)
+	(= (data Star10 spectrograph0) 130)
+	(= (data Planet4 infrared1) 176)
+	(= (data Planet5 infrared1) 33)
+	(= (data Star6 infrared1) 107)
+	(= (data Star7 infrared1) 86)
+	(= (data Phenomenon8 infrared1) 30)
+	(= (data Star9 infrared1) 274)
+	(= (data Star10 infrared1) 187)
+	(= (data Planet4 infrared3) 80)
+	(= (data Planet5 infrared3) 257)
+	(= (data Star6 infrared3) 243)
+	(= (data Star7 infrared3) 267)
+	(= (data Phenomenon8 infrared3) 19)
+	(= (data Star9 infrared3) 9)
+	(= (data Star10 infrared3) 2)
+	(= (slew_time GroundStation3 Star0) 91.43)
+	(= (slew_time Star0 GroundStation3) 91.43)
+	(= (slew_time GroundStation3 Star1) 0.8978)
+	(= (slew_time Star1 GroundStation3) 0.8978)
+	(= (slew_time GroundStation3 Star2) 42.86)
+	(= (slew_time Star2 GroundStation3) 42.86)
+	(= (slew_time Star1 Star0) 15.4)
+	(= (slew_time Star0 Star1) 15.4)
+	(= (slew_time Star2 Star0) 31.5)
+	(= (slew_time Star0 Star2) 31.5)
+	(= (slew_time Star2 Star1) 38.38)
+	(= (slew_time Star1 Star2) 38.38)
+	(= (slew_time Planet4 Star0) 12.36)
+	(= (slew_time Star0 Planet4) 12.36)
+	(= (slew_time Planet4 Star1) 38.9)
+	(= (slew_time Star1 Planet4) 38.9)
+	(= (slew_time Planet4 Star2) 12.54)
+	(= (slew_time Star2 Planet4) 12.54)
+	(= (slew_time Planet4 GroundStation3) 91.11)
+	(= (slew_time GroundStation3 Planet4) 91.11)
+	(= (slew_time Planet5 Star0) 21.35)
+	(= (slew_time Star0 Planet5) 21.35)
+	(= (slew_time Planet5 Star1) 29.31)
+	(= (slew_time Star1 Planet5) 29.31)
+	(= (slew_time Planet5 Star2) 58.6)
+	(= (slew_time Star2 Planet5) 58.6)
+	(= (slew_time Planet5 GroundStation3) 16.51)
+	(= (slew_time GroundStation3 Planet5) 16.51)
+	(= (slew_time Planet5 Planet4) 0.5007)
+	(= (slew_time Planet4 Planet5) 0.5007)
+	(= (slew_time Star6 Star0) 31.83)
+	(= (slew_time Star0 Star6) 31.83)
+	(= (slew_time Star6 Star1) 20.17)
+	(= (slew_time Star1 Star6) 20.17)
+	(= (slew_time Star6 Star2) 45.21)
+	(= (slew_time Star2 Star6) 45.21)
+	(= (slew_time Star6 GroundStation3) 0.9333)
+	(= (slew_time GroundStation3 Star6) 0.9333)
+	(= (slew_time Star6 Planet4) 52.09)
+	(= (slew_time Planet4 Star6) 52.09)
+	(= (slew_time Star6 Planet5) 59)
+	(= (slew_time Planet5 Star6) 59)
+	(= (slew_time Star7 Star0) 60.97)
+	(= (slew_time Star0 Star7) 60.97)
+	(= (slew_time Star7 Star1) 1.436)
+	(= (slew_time Star1 Star7) 1.436)
+	(= (slew_time Star7 Star2) 1.722)
+	(= (slew_time Star2 Star7) 1.722)
+	(= (slew_time Star7 GroundStation3) 88.88)
+	(= (slew_time GroundStation3 Star7) 88.88)
+	(= (slew_time Star7 Planet4) 65.17)
+	(= (slew_time Planet4 Star7) 65.17)
+	(= (slew_time Star7 Planet5) 10.54)
+	(= (slew_time Planet5 Star7) 10.54)
+	(= (slew_time Star7 Star6) 27.25)
+	(= (slew_time Star6 Star7) 27.25)
+	(= (slew_time Phenomenon8 Star0) 14.15)
+	(= (slew_time Star0 Phenomenon8) 14.15)
+	(= (slew_time Phenomenon8 Star1) 89.14)
+	(= (slew_time Star1 Phenomenon8) 89.14)
+	(= (slew_time Phenomenon8 Star2) 59.01)
+	(= (slew_time Star2 Phenomenon8) 59.01)
+	(= (slew_time Phenomenon8 GroundStation3) 54.13)
+	(= (slew_time GroundStation3 Phenomenon8) 54.13)
+	(= (slew_time Phenomenon8 Planet4) 1.242)
+	(= (slew_time Planet4 Phenomenon8) 1.242)
+	(= (slew_time Phenomenon8 Planet5) 31.54)
+	(= (slew_time Planet5 Phenomenon8) 31.54)
+	(= (slew_time Phenomenon8 Star6) 4.542)
+	(= (slew_time Star6 Phenomenon8) 4.542)
+	(= (slew_time Phenomenon8 Star7) 24.51)
+	(= (slew_time Star7 Phenomenon8) 24.51)
+	(= (slew_time Star9 Star0) 18.25)
+	(= (slew_time Star0 Star9) 18.25)
+	(= (slew_time Star9 Star1) 4.277)
+	(= (slew_time Star1 Star9) 4.277)
+	(= (slew_time Star9 Star2) 35.22)
+	(= (slew_time Star2 Star9) 35.22)
+	(= (slew_time Star9 GroundStation3) 37.77)
+	(= (slew_time GroundStation3 Star9) 37.77)
+	(= (slew_time Star9 Planet4) 9.467)
+	(= (slew_time Planet4 Star9) 9.467)
+	(= (slew_time Star9 Planet5) 37.19)
+	(= (slew_time Planet5 Star9) 37.19)
+	(= (slew_time Star9 Star6) 11.69)
+	(= (slew_time Star6 Star9) 11.69)
+	(= (slew_time Star9 Star7) 32.47)
+	(= (slew_time Star7 Star9) 32.47)
+	(= (slew_time Star9 Phenomenon8) 67.96)
+	(= (slew_time Phenomenon8 Star9) 67.96)
+	(= (slew_time Star10 Star0) 73.19)
+	(= (slew_time Star0 Star10) 73.19)
+	(= (slew_time Star10 Star1) 25.39)
+	(= (slew_time Star1 Star10) 25.39)
+	(= (slew_time Star10 Star2) 63.89)
+	(= (slew_time Star2 Star10) 63.89)
+	(= (slew_time Star10 GroundStation3) 4.717)
+	(= (slew_time GroundStation3 Star10) 4.717)
+	(= (slew_time Star10 Planet4) 3.602)
+	(= (slew_time Planet4 Star10) 3.602)
+	(= (slew_time Star10 Planet5) 4.892)
+	(= (slew_time Planet5 Star10) 4.892)
+	(= (slew_time Star10 Star6) 20.13)
+	(= (slew_time Star6 Star10) 20.13)
+	(= (slew_time Star10 Star7) 17.21)
+	(= (slew_time Star7 Star10) 17.21)
+	(= (slew_time Star10 Phenomenon8) 17.16)
+	(= (slew_time Phenomenon8 Star10) 17.16)
+	(= (slew_time Star10 Star9) 59.61)
+	(= (slew_time Star9 Star10) 59.61)
+	(= (data-stored) 0)
 )
 (:goal (and
-	(have_image Planet15 thermograph5)
-	(have_image Planet15 image4)
-	(have_image Star16 spectrograph1)
-	(have_image Star17 spectrograph2)
-	(have_image Phenomenon18 image0)
-	(have_image Planet19 image4)
-	(have_image Planet19 image0)
-	(have_image Star20 spectrograph2)
-	(have_image Planet21 image0)
-	(have_image Planet21 thermograph6)
-	(have_image Phenomenon22 spectrograph1)
-	(have_image Planet23 image4)
-	(have_image Planet23 thermograph5)
-	(have_image Planet24 infrared3)
-	(have_image Planet24 thermograph5)
-	(have_image Phenomenon25 spectrograph2)
-	(have_image Phenomenon25 thermograph6)
-	(have_image Planet26 thermograph7)
-	(have_image Planet26 image4)
-	(have_image Star29 thermograph7)
-	(have_image Star29 spectrograph1)
-	(have_image Star30 spectrograph1)
-	(have_image Star31 thermograph6)
-	(have_image Star31 thermograph7)
-	(have_image Star32 image4)
-	(have_image Planet33 infrared3)
-	(have_image Planet33 thermograph6)
-	(have_image Star35 thermograph6)
-	(have_image Star35 spectrograph2)
-	(have_image Phenomenon37 spectrograph2)
-	(have_image Planet38 infrared3)
-	(have_image Star39 spectrograph2)
+	(have_image Planet4 thermograph2)
+	(have_image Planet5 spectrograph0)
+	(have_image Star6 thermograph2)
+	(have_image Star7 infrared3)
+	(have_image Phenomenon8 spectrograph0)
+	(have_image Star9 infrared1)
+	(have_image Star10 infrared3)
 ))
 (:metric minimize (total-time))
 

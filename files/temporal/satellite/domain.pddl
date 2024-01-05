@@ -1,6 +1,5 @@
-
 (define (domain satellite)
-  (:requirements :strips :equality :typing :durative-actions)
+  (:requirements :strips :equality :typing :fluents :durative-actions)
   (:types
     satellite direction instrument mode
   )
@@ -15,14 +14,20 @@
     (calibration_target ?i - instrument ?d - direction)
   )
 
+  (:functions
+    (slew_time ?a ?b - direction)
+    (calibration_time ?a - instrument ?d - direction)
+    (data_capacity ?s - satellite)
+    (data ?d - direction ?m - mode)
+    (data-stored)
+  )
+
   (:durative-action turn_to
     :parameters (?s - satellite ?d_new - direction ?d_prev - direction)
-    :duration (= ?duration 5)
-    :condition (and
-      (at start (pointing ?s ?d_prev))
+    :duration (= ?duration (slew_time ?d_prev ?d_new))
+    :condition (and (at start (pointing ?s ?d_prev))
     )
-    :effect (and
-      (at end (pointing ?s ?d_new))
+    :effect (and (at end (pointing ?s ?d_new))
       (at start (not (pointing ?s ?d_prev)))
     )
   )
@@ -52,7 +57,7 @@
 
   (:durative-action calibrate
     :parameters (?s - satellite ?i - instrument ?d - direction)
-    :duration (= ?duration 5)
+    :duration (= ?duration (calibration_time ?i ?d))
     :condition (and (over all (on_board ?i ?s))
       (over all (calibration_target ?i ?d))
       (at start (pointing ?s ?d))
@@ -71,7 +76,11 @@
       (over all (power_on ?i))
       (over all (pointing ?s ?d))
       (at end (power_on ?i))
+      (at start (>= (data_capacity ?s) (data ?d ?m)))
     )
-    :effect (at end (have_image ?d ?m))
+    :effect (and (at start (decrease (data_capacity ?s) (data ?d ?m)))
+      (at end (have_image ?d ?m))
+      (at end (increase (data-stored) (data ?d ?m)))
+    )
   )
 )

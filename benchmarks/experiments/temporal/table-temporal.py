@@ -17,33 +17,34 @@ SOLVERS = {
 
 DOMAINS = {
     # "temporal/airport": r"\textsc{Airport}",
-    "temporal/cushing": r"\textsc{Cushing}",
-    "temporal/driverlog": r"\textsc{DriverLog}",
-    "temporal/floortile": r"\textsc{Floortile}",
-    "temporal/machine_shop": r"\textsc{MachineShop}",
-    "temporal/majsp": r"\textsc{Majsp}",
-    "temporal/map_analyser": r"\textsc{MapAnalyser}",
-    "temporal/match-ac": r"\textsc{MatchAC}",
-    "temporal/match-ms": r"\textsc{MatchMS}",
-    "temporal/match_cellar": r"\textsc{MatchCellar}",
-    "temporal/oversub": r"\textsc{Oversub}",
+    "temporal/cushing": r"\textsc{Cushing} (B)",
+    "temporal/paper-example": r"\textsc{Bottles} (N)",
+    "temporal/driverlog": r"\textsc{DriverLog} (B)",
+    "temporal/floortile": r"\textsc{Floortile} (B)",
+    "temporal/machine_shop": r"\textsc{MachineShop} (B)",
+    "temporal/majsp": r"\textsc{Majsp} (N)",
+    "temporal/map_analyser": r"\textsc{MapAnalyser} (B)",
+    "temporal/match-ac": r"\textsc{MatchAC} (B)",
+    "temporal/match-ms": r"\textsc{MatchMS} (B)",
+    "temporal/match_cellar": r"\textsc{MatchCellar} (B)",
+    "temporal/oversub": r"\textsc{Oversub} (B)",
     # "temporal/painter": r"\textsc{Painter}",
-    "temporal/parking": r"\textsc{Parking}",
-    "temporal/quantum_circuit": r"\textsc{QuantumCircuit}",
-    "temporal/road_traffic_accident": r"\textsc{RoadTrafficAccident}",
-    "temporal/satellite": r"\textsc{Satellite}",
-    "temporal/sokoban": r"\textsc{Sokoban}",
-    "temporal/storage": r"\textsc{Storage}",
-    "temporal/trucks": r"\textsc{Trucks}",
-    "temporal/turn_and_open": r"\textsc{TurnAndOpen}",
-    "temporal/paper-example": r"\textsc{Bottles}",
+    "temporal/parking": r"\textsc{Parking} (B)",
+    "temporal/quantum_circuit": r"\textsc{QuantumCircuit} (B)",
+    "temporal/road_traffic_accident": r"\textsc{RoadTrafficAccident} (B)",
+    "temporal/rovers": r"\textsc{Rovers} (N)",
+    "temporal/satellite": r"\textsc{Satellite} (N)",
+    "temporal/sokoban": r"\textsc{Sokoban} (B)",
+    "temporal/storage": r"\textsc{Storage} (B)",
+    "temporal/trucks": r"\textsc{Trucks} (B)",
+    "temporal/turn_and_open": r"\textsc{TurnAndOpen} (B)",
 }
 
 TIMEOUT = 30 * 1000
 
 
 def main():
-    filename = "2023-12-31-TEMPORAL-v6.csv"
+    filename = "2023-12-31-TEMPORAL-v7.csv"
     files = [f"benchmarks/results/2023-12-31-TEMPORAL-v1.csv", f"benchmarks/results/{filename}"]
 
     results: [Result] = []

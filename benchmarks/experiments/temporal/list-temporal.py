@@ -4,10 +4,10 @@ import random
 from natsort import natsort
 
 PLANNERS = [
-    # "TFD",
-    # "LPG",
+    "TFD",
+    "LPG",
     "ITSAT",
-    # "Optic",
+    "Optic",
     "PATTY"
 ]
 
@@ -33,8 +33,10 @@ def main():
         "temporal/satellite",
         "temporal/sokoban",
         "temporal/storage",
+        "temporal/rovers",
         "temporal/trucks",
         "temporal/turn_and_open",
+        "temporal/zenotravel",
     ]
 
     instances = list()
