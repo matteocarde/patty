@@ -1,5 +1,5 @@
 (define (domain bottles)
-  (:requirements :durative-actions :typing :fluents)
+  (:requirements :fluents :equality :typing :durative-actions)
 
   (:types
     bottle

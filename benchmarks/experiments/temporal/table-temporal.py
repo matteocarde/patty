@@ -38,14 +38,15 @@ DOMAINS = {
     "temporal/storage": r"\textsc{Storage} (B)",
     "temporal/trucks": r"\textsc{Trucks} (B)",
     "temporal/turn_and_open": r"\textsc{TurnAndOpen} (B)",
+    "temporal/zenotravel": r"\textsc{ZenoTravel} (N)",
 }
 
 TIMEOUT = 30 * 1000
 
 
 def main():
-    filename = "2023-12-31-TEMPORAL-v7.csv"
-    files = [f"benchmarks/results/2023-12-31-TEMPORAL-v1.csv", f"benchmarks/results/{filename}"]
+    filename = "2024-01-05-TEMPNUM-v1.csv"
+    files = [f"benchmarks/results/{filename}"]
 
     results: [Result] = []
     for file in files:
@@ -130,6 +131,7 @@ def main():
     domainsClusters = {
         r"\textit{Temporal}": [
             # "temporal/airport",
+            "temporal/paper-example",
             "temporal/cushing",
             "temporal/driverlog",
             "temporal/floortile",
@@ -144,12 +146,13 @@ def main():
             "temporal/parking",
             "temporal/quantum_circuit",
             "temporal/road_traffic_accident",
+            "temporal/rovers",
             "temporal/satellite",
             "temporal/sokoban",
             "temporal/storage",
             "temporal/trucks",
             "temporal/turn_and_open",
-            "temporal/paper-example",
+            "temporal/zenotravel",
         ],
         # r"\textit{Lowly Numeric}": [
         #     "ipc-2023/delivery",

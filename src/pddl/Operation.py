@@ -120,7 +120,7 @@ class Operation:
             if not isinstance(child, p.TypedAtomParameterContext):
                 continue
             varNames = []
-            varType = types[child.atomsType.getText()]
+            varType = types[child.atomsType.getText().lower()]
 
             for x in child.children:
                 if isinstance(x, p.LiftedAtomParameterContext):
