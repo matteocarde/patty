@@ -79,7 +79,7 @@ class AStarSearchMax(Search):
                 subgoalsAchieved = subgoalsAchievedNow
                 self.console.log(f"Subgoals achieved: {len(subgoalsAchieved)}/{len(totalSubgoals)}: {subgoalsAchieved}",
                                  LogPrintLevel.STATS)
-                patG = Pattern.fromPlan(plan)
+                patG = Pattern.fromPlan(plan) if not self.args.noCompression else patF
                 patG.addPostfix("G")
                 patH = Pattern.fromState(state, self.problem.goal, self.domain, useSCCs=self.useSCCs)
             else:

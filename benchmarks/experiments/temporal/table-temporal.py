@@ -17,36 +17,36 @@ SOLVERS = {
 
 DOMAINS = {
     # "temporal/airport": r"\textsc{Airport}",
-    "temporal/cushing": r"\textsc{Cushing} (B)",
-    "temporal/paper-example": r"\textsc{Bottles} (N)",
-    "temporal/driverlog": r"\textsc{DriverLog} (B)",
-    "temporal/floortile": r"\textsc{Floortile} (B)",
-    "temporal/machine_shop": r"\textsc{MachineShop} (B)",
-    "temporal/majsp": r"\textsc{Majsp} (N)",
-    "temporal/map_analyser": r"\textsc{MapAnalyser} (B)",
-    "temporal/match-ac": r"\textsc{MatchAC} (B)",
-    "temporal/match-ms": r"\textsc{MatchMS} (B)",
-    "temporal/match_cellar": r"\textsc{MatchCellar} (B)",
-    "temporal/oversub": r"\textsc{Oversub} (B)",
+    "temporal/cushing": r"\textsc{Cushing}",
+    "temporal/paper-example": r"\textsc{Bottles}",
+    "temporal/driverlog": r"\textsc{DriverLog}",
+    "temporal/floortile": r"\textsc{Floortile}",
+    "temporal/machine_shop": r"\textsc{MachineShop}",
+    "temporal/majsp": r"\textsc{Majsp}",
+    "temporal/map_analyser": r"\textsc{MapAnalyser}",
+    "temporal/match-ac": r"\textsc{MatchAC}",
+    "temporal/match-ms": r"\textsc{MatchMS}",
+    "temporal/match_cellar": r"\textsc{MatchCellar}",
+    "temporal/oversub": r"\textsc{Oversub}",
     # "temporal/painter": r"\textsc{Painter}",
-    "temporal/parking": r"\textsc{Parking} (B)",
-    "temporal/quantum_circuit": r"\textsc{QuantumCircuit} (B)",
-    "temporal/road_traffic_accident": r"\textsc{RoadTrafficAccident} (B)",
-    "temporal/rovers": r"\textsc{Rovers} (N)",
-    "temporal/satellite": r"\textsc{Satellite} (N)",
-    "temporal/sokoban": r"\textsc{Sokoban} (B)",
-    "temporal/storage": r"\textsc{Storage} (B)",
-    "temporal/trucks": r"\textsc{Trucks} (B)",
-    "temporal/turn_and_open": r"\textsc{TurnAndOpen} (B)",
-    "temporal/zenotravel": r"\textsc{ZenoTravel} (N)",
+    "temporal/parking": r"\textsc{Parking}",
+    "temporal/quantum_circuit": r"\textsc{QuantumCircuit}",
+    "temporal/road_traffic_accident": r"\textsc{RoadTrafficAccident}",
+    "temporal/rovers": r"\textsc{Rovers}",
+    "temporal/satellite": r"\textsc{Satellite}",
+    "temporal/sokoban": r"\textsc{Sokoban}",
+    "temporal/storage": r"\textsc{Storage}",
+    "temporal/trucks": r"\textsc{Trucks}",
+    "temporal/turn_and_open": r"\textsc{TurnAndOpen}",
+    "temporal/zenotravel": r"\textsc{ZenoTravel}",
 }
 
 TIMEOUT = 30 * 1000
 
 
 def main():
-    filename = "2024-01-05-TEMPNUM-v1.csv"
-    files = [f"benchmarks/results/{filename}"]
+    filename = "2024-01-05-TEMPNUM-v2.csv"
+    files = [f"benchmarks/results/2024-01-05-TEMPNUM-v1.csv", f"benchmarks/results/{filename}"]
 
     results: [Result] = []
     for file in files:
@@ -129,14 +129,12 @@ def main():
             t[domain]["nOfRules"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
 
     domainsClusters = {
-        r"\textit{Temporal}": [
+        r"\textit{Temporal Classic}": [
             # "temporal/airport",
-            "temporal/paper-example",
             "temporal/cushing",
             "temporal/driverlog",
             "temporal/floortile",
             "temporal/machine_shop",
-            "temporal/majsp",
             "temporal/map_analyser",
             "temporal/match-ac",
             "temporal/match-ms",
@@ -146,27 +144,18 @@ def main():
             "temporal/parking",
             "temporal/quantum_circuit",
             "temporal/road_traffic_accident",
-            "temporal/rovers",
-            "temporal/satellite",
             "temporal/sokoban",
             "temporal/storage",
             "temporal/trucks",
             "temporal/turn_and_open",
-            "temporal/zenotravel",
         ],
-        # r"\textit{Lowly Numeric}": [
-        #     "ipc-2023/delivery",
-        #     "ipc-2023/expedition",
-        #     # "ipc-2023/markettrader",
-        #     "ipc-2023/mprime",
-        #     "ipc-2023/pathwaysmetric",
-        #     "ipc-2023/rover",
-        #     "ipc-2023/satellite",
-        #     # "ipc-2023/settlers",
-        #     "ipc-2023/sugar",
-        #     "ipc-2023/tpp",
-        #     "ipc-2023/zenotravel"
-        # ]
+        r"\textit{Temporal Numeric}": [
+            "temporal/paper-example",
+            "temporal/majsp",
+            "temporal/rovers",
+            "temporal/satellite",
+            "temporal/zenotravel",
+        ]
     }
 
     winners = {
@@ -300,7 +289,7 @@ def main():
                         if type not in statTypes:
                             continue
                         if solver not in t[domain][stat]:
-                            row.append("TBD")
+                            row.append("-")
                             continue
                         if solver in best[domain][stat]:
                             row.append(r"\textbf{" + t[domain][stat][solver] + "}")

@@ -39,6 +39,8 @@ class Arguments:
                             action="store_true", default=False)
         parser.add_argument('--use-sccs', help="Use SCCs when computing pattern",
                             action="store_true", default=False)
+        parser.add_argument('--no-compression', help="Avoid using compression when is doing A*",
+                            action="store_true", default=False)
 
         args = parser.parse_args()
         self.isHelp = "help" in args
@@ -61,3 +63,4 @@ class Arguments:
         self.concatPattern = args.concat
         self.maximize = args.maximize
         self.useSCCs = args.use_sccs
+        self.noCompression = args.no_compression

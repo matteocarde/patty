@@ -28,6 +28,7 @@ my_config = Config(
 
 PLANNERS: Dict[str, Planner] = {
     "PATTY": Patty("PATTY"),
+    "PATTY-G": Patty("PATTY-G", search="astar", noCompression=True),
     "SPRINGROLL": SpringRoll(),
 
     "ENHSP-SAT-HMRP": ENHSP(False, settings="-h hmrp -s gbfs -silent -pp -pe", name="ENHSP-SAT-HMRP"),
