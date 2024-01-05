@@ -18,11 +18,12 @@ SOLVERS = {
     'NFD': "\mathrm{NFD}",
     'SMTPLAN+': "\mathrm{SMTP}^+",
     'OMT': "\mathrm{OMT}",
-    "PATTY": "P",
+    "PATTY": "P_G",
+    "PATTY-H": "P_H",
     "PATTY-MAX": "P^{max}",
-    "PATTY-STATIC": "P_{cat}",
+    "PATTY-STATIC": "P_G",
     "PATTY-STATIC-MAX": "P_{cat}^{max}",
-    "PATTY-ASTAR": "P_{A^*}",
+    "PATTY-ASTAR": "P_F",
 }
 
 DOMAINS = {
@@ -195,7 +196,7 @@ def main():
             "ipc-2023/hydropower",
             "ipc-2023/sailing",
             "ipc-2023/fo-sailing",
-            "line-exchange",
+            # "line-exchange",
             # "line-exchange-quantity"
         ],
         r"\textit{Lowly Numeric}": [
@@ -235,8 +236,8 @@ def main():
             # "lastCallsToSolver": (r"$\textsc{Solve}(\Pi^\prec)$ calls", {"SMT"}),
         },
         "planners": [{
-            'PATTY': "SMT",
             'PATTY-STATIC': "SMT",
+            'PATTY-H': "SMT",
             'PATTY-ASTAR': "SMT"
         }, {
             'PATTY-ASTAR': "SEARCH",
@@ -244,11 +245,7 @@ def main():
             'METRIC-FF': "SEARCH",
             "NFD": "SEARCH",
         }],
-        "caption": r"Comparative analysis between the search-based solver $\textsc{ENHSP}$ and  $\textsc{Patty}$ run "
-                   r"with the standard algorithm ($P$),  $\textsc{SolveConcat}$ ($P_{cat}$), \textsc{SolveGBFS} ("
-                   r"$P_\text{gbfs}$), \textsc{SolveA}$^*$ ($P_{A^*}$), \textsc{SolveGBFSMax} ($P_\text{gbfs}^{"
-                   r"max}$), \textsc{SolveA*Max} ($P_{A^*}^{max}$). ''Best numbers'' are in bold.  The numbers in the "
-                   r"Highly and Lowly Numeric rows are the number of bolds in the subcolumn."
+        "caption": r"Comparative analysis between ..."
     }]
 
     latex = []

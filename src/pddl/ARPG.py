@@ -83,7 +83,6 @@ class ARPG:
             order += sortOrder
 
         leftActions = set(self.actions) - usedActions
-        print(f"# of left actions from ARPG: {len(leftActions)}")
         # if not useSCCs:
         #     orderIstant = sorted([a for a in leftActions if not isinstance(a, SnapAction)])
         #     orderSnap = sorted(
