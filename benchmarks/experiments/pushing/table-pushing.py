@@ -6,8 +6,7 @@ from typing import Dict, List
 
 from classes.Result import Result
 
-SMT_SOLVERS = {'SpringRoll', "PATTY", "PATTY-MAX", "PATTY-ASTAR", "PATTY-STATIC", "PATTY-STATIC-MAX",
-               'RANTANPLAN', "OMT"}
+SMT_SOLVERS = {'SpringRoll', "PATTY-G", "PATTY-H", "PATTY-F", 'RANTANPLAN', "OMT"}
 TIME_LIMIT = 300 * 1000
 
 SOLVERS = {
@@ -18,12 +17,9 @@ SOLVERS = {
     'NFD': "\mathrm{NFD}",
     'SMTPLAN+': "\mathrm{SMTP}^+",
     'OMT': "\mathrm{OMT}",
-    "PATTY": "P_G",
+    "PATTY-G": "P_G",
     "PATTY-H": "P_H",
-    "PATTY-MAX": "P^{max}",
-    "PATTY-STATIC": "P_G",
-    "PATTY-STATIC-MAX": "P_{cat}^{max}",
-    "PATTY-ASTAR": "P_F",
+    "PATTY-F": "P_F",
 }
 
 DOMAINS = {
@@ -81,7 +77,7 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2023-10-22-FINAL-v1"
+    exp = "2024-01-05-PUSHING-v1"
     file = f"benchmarks/results/{exp}.csv"
 
     joinWith = ["benchmarks/results/SEARCH-300.csv"] + [file]
@@ -236,15 +232,17 @@ def main():
             # "lastCallsToSolver": (r"$\textsc{Solve}(\Pi^\prec)$ calls", {"SMT"}),
         },
         "planners": [{
-            'PATTY-STATIC': "SMT",
+            'PATTY-G': "SMT",
             'PATTY-H': "SMT",
-            'PATTY-ASTAR': "SMT"
-        }, {
-            'PATTY-ASTAR': "SEARCH",
-            'ENHSP': "SEARCH",
-            'METRIC-FF': "SEARCH",
-            "NFD": "SEARCH",
-        }],
+            'PATTY-F': "SMT"
+        },
+            #     {
+            #     'PATTY-F': "SEARCH",
+            #     'ENHSP': "SEARCH",
+            #     'METRIC-FF': "SEARCH",
+            #     "NFD": "SEARCH",
+            # }
+        ],
         "caption": r"Comparative analysis between ..."
     }]
 

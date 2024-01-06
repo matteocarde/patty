@@ -96,8 +96,7 @@ class Domain:
         gDomain.substitute(constants)
         problem.substitute(constants)
 
-        usefulActions = set(arpg.getActionsOrder())
-        actions = [a for a in gDomain.actions if a in usefulActions]
+        actions = [a for a in gDomain.actions if a in arpg.getUsefulActions()]
 
         gDomain.actions = set()
         starts = set([a for a in actions if isinstance(a, SnapAction) and a.timeType == TimePredicateType.AT_START])

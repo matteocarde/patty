@@ -66,6 +66,13 @@ class ARPG:
                 order.append(action)
         return order
 
+    def getUsefulActions(self) -> Set[Action]:
+        usefulActions: Set[Action] = set()
+        for supporters in self.supporterLevels:
+            for supporter in supporters:
+                usefulActions.add(supporter.originatingAction)
+        return usefulActions
+
     def getActionsOrder(self, useSCCs=False) -> List[Action] or bool:
 
         # if self.goalNotReachable:
@@ -83,15 +90,11 @@ class ARPG:
             order += sortOrder
 
         leftActions = set(self.actions) - usedActions
-        # if not useSCCs:
-        #     orderIstant = sorted([a for a in leftActions if not isinstance(a, SnapAction)])
-        #     orderSnap = sorted(
-        #         [a for a in leftActions if isinstance(a, SnapAction) and a.timeType != TimePredicateType.OVER_ALL])
-        #     sortOrder = orderIstant + orderSnap
-        #     order += sortOrder
-        # else:
-        #     graphOrder = self.affectedGraph.getSubGraph(leftActions).getOrderFromGraph()
-        #     order += graphOrder
+        orderIstant = sorted([a for a in leftActions if not isinstance(a, SnapAction)])
+        orderSnap = sorted(
+            [a for a in leftActions if isinstance(a, SnapAction) and a.timeType != TimePredicateType.OVER_ALL])
+        sortOrder = orderIstant + orderSnap
+        order += sortOrder
         return order
 
     def getConstantAtoms(self) -> Dict[Atom, float]:
