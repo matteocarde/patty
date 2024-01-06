@@ -1,0 +1,48 @@
+
+           \documentclass[11pt,landscape]{article}
+           \usepackage{graphicx}
+           \usepackage{lscape}
+           \usepackage{multirow}
+           \usepackage[a4paper,margin=1in,landscape]{geometry}
+
+           \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||ccc||ccc||ccc||ccc||ccc||}
+\hline
+ & \multicolumn{3}{c||}{Coverage (\%)}&\multicolumn{3}{c||}{Time (s)}&\multicolumn{3}{c||}{Calls to \textsc{Solve}}&\multicolumn{3}{c||}{$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$}&\multicolumn{3}{c||}{$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$}\\
+Domain & $P_G$&$P_H$&$P_F$&$P_G$&$P_H$&$P_F$&$P_G$&$P_H$&$P_F$&$P_G$&$P_H$&$P_F$&$P_G$&$P_H$&$P_F$\\
+\hline
+\textit{Highly Numeric}&\textbf{7}&\textbf{7}&\textbf{10}&\textbf{4}&\textbf{3}&\textbf{5}&\textbf{10}&\textbf{9}&\textbf{8}&\textbf{6}&\textbf{6}&\textbf{10}&\textbf{6}&\textbf{6}&\textbf{10}\\\hline
+\textsc{BlockGrouping} (S)&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{1.60}&1.84&1.77&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{182}&\textbf{182}&\textbf{182}&\textbf{448}&\textbf{448}&\textbf{448}\\
+\textsc{Counters} (S)&\textbf{100.0}&95.0&\textbf{100.0}&\textbf{0.93}&0.96&0.95&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{95}&\textbf{95}&\textbf{95}&\textbf{238}&\textbf{238}&\textbf{238}\\
+\textsc{Counters} (L)&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{0.98}&1.10&1.00&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{96}&\textbf{96}&\textbf{96}&\textbf{202}&\textbf{202}&\textbf{202}\\
+\textsc{Drone} (S)&15.0&15.0&\textbf{80.0}&255.28&252.98&\textbf{82.46}&\textbf{5.67}&\textbf{5.67}&8.33&137&137&\textbf{94}&322&322&\textbf{193}\\
+\textsc{PlantWatering} (S)&25.0&30.0&\textbf{100.0}&226.57&218.98&\textbf{10.24}&\textbf{7.60}&8.40&9.60&303&329&\textbf{216}&804&881&\textbf{543}\\
+\textsc{Farmland} (S)&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{0.94}&\textbf{0.94}&0.96&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{50}&\textbf{50}&\textbf{50}&\textbf{107}&\textbf{107}&\textbf{107}\\
+\textsc{Farmland} (L)&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&6.33&\textbf{2.18}&\textbf{2.18}&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{64}&\textbf{64}&\textbf{64}&\textbf{129}&\textbf{129}&\textbf{129}\\
+\textsc{HydroPower} (S)&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&12.83&\textbf{12.75}&12.82&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{352}&\textbf{352}&\textbf{352}&\textbf{725}&\textbf{725}&\textbf{725}\\
+\textsc{Sailing} (S)&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&1.14&1.33&\textbf{0.97}&\textbf{3.30}&\textbf{3.30}&\textbf{3.30}&117&117&\textbf{72}&254&254&\textbf{134}\\
+\textsc{Sailing} (L)&95.0&\textbf{100.0}&\textbf{100.0}&22.41&4.66&\textbf{1.95}&\textbf{1.47}&\textbf{1.47}&\textbf{1.47}&65&65&\textbf{61}&165&165&\textbf{151}
+\\\hline
+\textit{Lowly Numeric}&\textbf{6}&\textbf{6}&\textbf{9}&\textbf{3}&\textbf{0}&\textbf{6}&\textbf{7}&\textbf{6}&\textbf{3}&\textbf{2}&\textbf{2}&\textbf{8}&\textbf{2}&\textbf{2}&\textbf{8}\\\hline
+\textsc{Delivery} (S)&15.0&20.0&\textbf{40.0}&255.67&245.57&\textbf{191.32}&\textbf{3.33}&\textbf{3.33}&\textbf{3.33}&809&809&\textbf{508}&2946&2946&\textbf{1741}\\
+\textsc{Expedition} (S)&\textbf{15.0}&\textbf{15.0}&\textbf{15.0}&\textbf{263.30}&264.39&267.54&\textbf{7.67}&8.00&8.33&420&434&\textbf{410}&1333&1383&\textbf{1299}\\
+\textsc{MPrime} (S)&\textbf{50.0}&\textbf{50.0}&\textbf{50.0}&\textbf{155.19}&155.53&155.63&\textbf{2.00}&\textbf{2.00}&2.20&\textbf{1318}&\textbf{1318}&1320&\textbf{4645}&\textbf{4645}&4652\\
+\textsc{PathwaysMetric} (S)&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&\textbf{6.10}&6.44&6.46&\textbf{1.00}&\textbf{1.00}&\textbf{1.00}&\textbf{3079}&\textbf{3079}&\textbf{3079}&\textbf{4834}&\textbf{4834}&\textbf{4834}\\
+\textsc{Rover} (S)&55.0&50.0&\textbf{65.0}&148.31&165.99&\textbf{128.78}&\textbf{2.30}&2.50&3.40&749&830&\textbf{646}&2543&2860&\textbf{2132}\\
+\textsc{Satellite} (S)&30.0&25.0&\textbf{35.0}&248.33&236.89&\textbf{209.63}&3.00&\textbf{2.60}&3.60&1401&1266&\textbf{793}&4524&4021&\textbf{2225}\\
+\textsc{Sugar} (S)&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&8.87&9.65&\textbf{6.10}&\textbf{3.15}&3.20&4.20&920&931&\textbf{737}&2792&2830&\textbf{2144}\\
+\textsc{TPP} (L)&\textbf{10.0}&\textbf{10.0}&\textbf{10.0}&272.37&270.38&\textbf{268.55}&2.50&\textbf{2.00}&\textbf{2.00}&288&251&\textbf{196}&703&588&\textbf{408}\\
+\textsc{ZenoTravel} (S)&\textbf{55.0}&\textbf{55.0}&\textbf{55.0}&139.09&138.48&\textbf{136.74}&\textbf{1.64}&\textbf{1.64}&1.73&515&515&\textbf{376}&1707&1707&\textbf{1148}
+\\\hline
+\textit{Total}&\textbf{13}&\textbf{13}&\textbf{19}&\textbf{7}&\textbf{3}&\textbf{11}&\textbf{17}&\textbf{15}&\textbf{11}&\textbf{8}&\textbf{8}&\textbf{18}&\textbf{8}&\textbf{8}&\textbf{18}\\\hline
+
+        \end{tabular}}
+        \caption{Comparative analysis between \pattyg, \pattyh, \pattyf and the search based planners \textsc{ENHSP}, \textsc{MetricFF} and \textsc{NFD}.}
+        \label{tab:experiments}
+        \end{table*}
+        
+\end{document}

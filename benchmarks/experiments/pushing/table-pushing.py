@@ -77,7 +77,7 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2024-01-05-PUSHING-v1"
+    exp = "2024-01-05-PUSHING-v3"
     file = f"benchmarks/results/{exp}.csv"
 
     joinWith = ["benchmarks/results/SEARCH-300.csv"] + [file]
@@ -192,7 +192,7 @@ def main():
             "ipc-2023/hydropower",
             "ipc-2023/sailing",
             "ipc-2023/fo-sailing",
-            # "line-exchange",
+            "line-exchange",
             # "line-exchange-quantity"
         ],
         r"\textit{Lowly Numeric}": [
@@ -243,7 +243,7 @@ def main():
             #     "NFD": "SEARCH",
             # }
         ],
-        "caption": r"Comparative analysis between ..."
+        "caption": r"Comparative analysis between \pattyg, \pattyh, \pattyf and the search based planners \textsc{ENHSP}, \textsc{MetricFF} and \textsc{NFD}."
     }]
 
     latex = []
