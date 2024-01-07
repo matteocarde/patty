@@ -236,12 +236,12 @@ def main():
             'PATTY-H': "SMT",
             'PATTY-F': "SMT"
         },
-            #     {
-            #     'PATTY-F': "SEARCH",
-            #     'ENHSP': "SEARCH",
-            #     'METRIC-FF': "SEARCH",
-            #     "NFD": "SEARCH",
-            # }
+            {
+                'PATTY-F': "SEARCH",
+                'ENHSP': "SEARCH",
+                'METRIC-FF': "SEARCH",
+                "NFD": "SEARCH",
+            }
         ],
         "caption": r"Comparative analysis between \pattyg, \pattyh, \pattyf and the search based planners \textsc{ENHSP}, \textsc{MetricFF} and \textsc{NFD}."
     }]

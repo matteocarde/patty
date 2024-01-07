@@ -1,4 +1,4 @@
-(define (domain Rover)
+(define (domain jdlkajsdlkajs)
 	(:requirements :typing :durative-actions :fluents)
 	(:types
 		rover waypoint store camera mode lander objective
