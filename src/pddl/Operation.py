@@ -38,11 +38,13 @@ class Operation:
         self.functions = set()
         self.predicates = set()
         self.preB = set()
+        self.preN = set()
         self.addList = set()
         self.delList = set()
         self.assList = set()
         self.incrList = set()
         self.decrList = set()
+        self.numEffList = set()
         self.influencedAtoms = set()
         self.increases = dict()
         self.decreases = dict()
@@ -62,18 +64,19 @@ class Operation:
         a.parameters = copy.deepcopy(self.parameters, m)
         a.preconditions = copy.deepcopy(self.preconditions, m)
         a.effects = copy.deepcopy(self.effects, m)
-        a.functions = copy.deepcopy(self.functions, m)
-        a.predicates = copy.deepcopy(self.predicates, m)
-        a.preB = copy.deepcopy(self.preB, m)
-        a.addList = copy.deepcopy(self.addList, m)
-        a.delList = copy.deepcopy(self.delList, m)
-        a.assList = copy.deepcopy(self.assList, m)
-        a.incrList = copy.deepcopy(self.incrList, m)
-        a.decrList = copy.deepcopy(self.decrList, m)
-        a.influencedAtoms = copy.deepcopy(self.influencedAtoms, m)
-        a.increases = copy.deepcopy(self.increases, m)
-        a.decreases = copy.deepcopy(self.decreases, m)
-        a.assignments = copy.deepcopy(self.assignments, m)
+        # a.functions = copy.deepcopy(self.functions, m)
+        # a.predicates = copy.deepcopy(self.predicates, m)
+        # a.preB = copy.deepcopy(self.preB, m)
+        # a.preN = copy.deepcopy(self.preN, m)
+        # a.addList = copy.deepcopy(self.addList, m)
+        # a.delList = copy.deepcopy(self.delList, m)
+        # a.assList = copy.deepcopy(self.assList, m)
+        # a.incrList = copy.deepcopy(self.incrList, m)
+        # a.decrList = copy.deepcopy(self.decrList, m)
+        # a.influencedAtoms = copy.deepcopy(self.influencedAtoms, m)
+        # a.increases = copy.deepcopy(self.increases, m)
+        # a.decreases = copy.deepcopy(self.decreases, m)
+        # a.assignments = copy.deepcopy(self.assignments, m)
         a.linearizationOf = self.linearizationOf
         a.originalName = self.originalName
         a.linearizationTimes = self.linearizationTimes
@@ -245,6 +248,14 @@ class Operation:
             atomList = atomList | {c.getAtom()}
         return atomList
 
+    def __getEffectFunctions(self) -> Set[Atom]:
+        atomList: Set[Atom] = set()
+        for c in self.effects:
+            if not isinstance(c, BinaryPredicate):
+                continue
+            atomList |= c.getFunctions()
+        return atomList
+
     def __getModifiedFunctions(self, operator: str = None) -> Set[Atom]:
         atomList: Set[Atom] = set()
         for c in self.effects:
@@ -263,6 +274,9 @@ class Operation:
 
     def __getPreB(self) -> Set[Atom]:
         return self.__getPreconditionAtoms(Literal)
+
+    def __getPreN(self) -> Set[Atom]:
+        return self.__getPreconditionAtoms(BinaryPredicate)
 
     def __getAddList(self) -> Set[Atom]:
         return self.__getModifiedPredicates("+")
@@ -338,11 +352,15 @@ class Operation:
         self.functions = self.__getFunctions()
         self.predicates = self.__getPredicates()
         self.preB = self.__getPreB()
+        self.preN = self.__getPreN()
+        self.effN = self.__getEffectFunctions()
         self.addList = self.__getAddList()
         self.delList = self.__getDelList()
         self.assList = self.__getAssList()
         self.incrList = self.__getIncrList()
         self.decrList = self.__getDecrList()
+        self.numEffList = self.assList | self.incrList | self.decrList
+        self.effRhs = self.effN - self.numEffList
         self.influencedAtoms = self.__getInfluencedAtoms()
         self.increases = self.__getIncreases()
         self.decreases = self.__getDecreases()
@@ -405,14 +423,28 @@ class Operation:
         o_i.name = f"{o_i.name}_{2 ** i}"
         return o_i
 
+    @staticmethod
+    def __isMutex(a_i: Operation, a_j: Operation) -> bool:
+        # Condition 1 - Paper Temporal
+        if a_i.addList.intersection(a_j.preB) or \
+                a_i.delList.intersection(a_j.preB) or \
+                a_i.numEffList.intersection(a_j.preN):
+            # print(f"{a_i} and {a_j} are in mutex due to C1")
+            return True
+        # Condition 2 - Paper Temporal
+        if a_i.addList.intersection(a_j.delList) or a_i.delList.intersection(a_j.addList):
+            # print(f"{a_i} and {a_j} are in mutex due to C2")
+            return True
+        # Condition 3 - Paper Temporal
+        if a_i.assList.intersection(a_j.assList) or a_i.effRhs.intersection(a_j.numEffList):
+            # print(f"{a_i} and {a_j} are in mutex due to C3")
+            return True
+
+        # print(f"{a_i} and {a_j} are NOT in mutex")
+        return False
+
     def isMutex(self, other: Operation) -> bool:
-        return True if self.addList.intersection(other.delList) or \
-                       self.delList.intersection(other.addList) or \
-                       self.addList.intersection(other.preB) or \
-                       self.delList.intersection(other.preB) or \
-                       self.preB.intersection(other.addList) or \
-                       self.preB.intersection(other.delList) or \
-                       self.assList.intersection(other.assList) else False
+        return Operation.__isMutex(self, other) or Operation.__isMutex(other, self)
 
 
 def isMutexSet(self, operations: Set[Operation]):

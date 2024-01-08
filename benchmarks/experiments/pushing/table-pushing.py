@@ -161,14 +161,14 @@ def main():
             if solver not in domainDict:
                 continue
             pResult = domainDict[solver]
-            t[domain]["coverage"][solver] = r(sum([r.solved for r in pResult]) / TOTALS[domain] * 100, 1)
-            t[domain]["coverage"][solver] = "-" if t[domain]["coverage"][solver] == "0.0" else t[domain]["coverage"][
+            t[domain]["coverage"][solver] = r(sum([r.solved for r in pResult]) / TOTALS[domain] * 100, 0)
+            t[domain]["coverage"][solver] = "-" if t[domain]["coverage"][solver] == "0" else t[domain]["coverage"][
                 solver]
             bounds = [r.bound for r in pResult if r.solved if r.problem in commonlySolved]
-            t[domain]["bound"][solver] = r(statistics.mean(bounds), 2) if t[domain]["coverage"][
+            t[domain]["bound"][solver] = r(statistics.mean(bounds), 1) if t[domain]["coverage"][
                                                                               solver] != "-" and bounds else "-"
             t[domain]["time"][solver] = r(statistics.mean([r.time if r.solved else TIME_LIMIT for r in pResult]) / 1000,
-                                          2) if \
+                                          1) if \
                 t[domain]["coverage"][solver] != "-" else "-"
             t[domain]["length"][solver] = r(statistics.mean([r.planLength for r in pResult if r.solved]), 0) if \
                 t[domain]["coverage"][solver] != "-" else "-"

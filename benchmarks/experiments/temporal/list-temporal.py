@@ -4,39 +4,38 @@ import random
 from natsort import natsort
 
 PLANNERS = [
-    # "TFD",
-    # "LPG",
-    # "ITSAT",
-    # "Optic",
+    "TFD",
+    "LPG",
+    "ITSAT",
+    "Optic",
     "PATTY"
 ]
 
 
 def main():
     domains = [
-        # "temporal/airport",
-        "temporal/cushing",
-        "temporal/driverlog",
-        "temporal/floortile",
-        "temporal/machine_shop",
-        "temporal/majsp",
-        "temporal/map_analyser",
-        "temporal/match-ac",
-        "temporal/match-ms",
-        "temporal/match_cellar",
-        "temporal/oversub",
-        # "temporal/painter",
-        "temporal/paper-example",
-        "temporal/parking",
-        "temporal/quantum_circuit",
-        "temporal/road_traffic_accident",
-        "temporal/satellite",
-        "temporal/sokoban",
-        "temporal/storage",
-        "temporal/rovers",
-        "temporal/trucks",
-        "temporal/turn_and_open",
-        "temporal/zenotravel",
+        # "temporal/cushing",
+        # "temporal/driverlog",
+        # "temporal/floortile",
+        # "temporal/machine_shop",
+        # "temporal/majsp",
+        # "temporal/map_analyser",
+        # "temporal/match-ac",
+        # "temporal/match-ms",
+        # "temporal/match_cellar",
+        # "temporal/oversub",
+        # "temporal/paper-example",
+        "temporal/required",
+        # "temporal/parking",
+        # "temporal/quantum_circuit",
+        # "temporal/road_traffic_accident",
+        # "temporal/satellite",
+        # "temporal/sokoban",
+        # "temporal/storage",
+        # "temporal/rovers",
+        # "temporal/trucks",
+        # "temporal/turn_and_open",
+        # "temporal/zenotravel",
     ]
 
     instances = list()

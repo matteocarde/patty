@@ -1,3 +1,4 @@
+import copy
 from typing import List, Dict, Set
 
 import pysmt.smtlib.commands as smtcmd
@@ -41,7 +42,6 @@ class TemporalEncoding(Encoding):
         self.bound = bound
         self.pattern = pattern
         self.epsilon = epsilon
-        self.epsilonVar = SMTRealVariable("eps")
 
         self.transitionVariables: [TemporalTransitionVariables] = list()
 
@@ -121,7 +121,6 @@ class TemporalEncoding(Encoding):
         for v in self.domain.predicates - trueAtoms:
             rules.append(tVars.valueVariables[v].NOT())
 
-        rules.append(self.epsilonVar == self.epsilon)
         return rules
 
     def getGoalRuleFromFormula(self, f: Formula, level: int) -> SMTExpression:
@@ -296,21 +295,18 @@ class TemporalEncoding(Encoding):
 
         groups = [(p, start), (q, end)]
         for (times, action) in groups:
-            if times:
+            if not times:
                 continue
             for eff in action.effects:
                 if isinstance(eff, BinaryPredicate):
                     atom = eff.lhs.getAtom()
-                    if atom in replacements:
-                        raise Exception(f"{atom} is already replaced in psi")
+                    x = replacements[atom] if atom in replacements else sigmas[atom]
                     if eff.operator == "assign":
                         replacements[atom] = SMTExpression.fromPddl(eff.rhs, sigmas)
                     elif eff.operator == "increase" and times:
-                        replacements[atom] = sigmas[atom] + times * SMTExpression.fromPddl(eff.rhs, sigmas)
+                        replacements[atom] = x + times * SMTExpression.fromPddl(eff.rhs, sigmas)
                     elif eff.operator == "decrease" and times:
-                        replacements[atom] = sigmas[atom] - times * SMTExpression.fromPddl(eff.rhs, sigmas)
-                    elif not times:
-                        replacements[atom] = sigmas[atom]
+                        replacements[atom] = x - times * SMTExpression.fromPddl(eff.rhs, sigmas)
 
         for (atom, expr) in sigmas.items():
             if atom not in replacements:
@@ -389,9 +385,12 @@ class TemporalEncoding(Encoding):
 
         return rules
 
-    def getDelta(self, a_i: SMTVariable or float, d_i: SMTVariable or float, b: DurativeAction) -> SMTExpression:
+    def getDelta(self, a_i: SMTVariable or float, d_i: SMTVariable or float,
+                 b: DurativeAction) -> SMTExpression or float:
+        if not isinstance(a_i, SMTVariable) and a_i == 0:
+            return 0
         if b.areStartAndEndInMutex():
-            return a_i * d_i + (a_i - 1) * self.epsilonVar
+            return a_i * d_i + (a_i - 1) * self.epsilon
         else:
             return a_i * d_i
 
@@ -414,6 +413,7 @@ class TemporalEncoding(Encoding):
                 t_j = stepVars.timeVariables[j]
 
                 rhsList.append((a_i == a_j).AND(t_j == t_i + self.getDelta(a_i, d_i, b)))
+                pass
 
             lhs = a_i > 0
             rhs = SMTExpression.orOfExpressionsList(rhsList)
@@ -495,13 +495,14 @@ class TemporalEncoding(Encoding):
             a_i = stepVars.actionVariables[i]
             t_i = stepVars.timeVariables[i]
             rules.append((a_i == 0).implies(t_i == 0))
-            mutexes = [t_i >= self.epsilonVar]
+            mutexes = [t_i >= self.epsilon]
             for j in range(0, i):
                 action_j = self.pattern[j]
                 if not action_i.isMutex(action_j):
                     continue
                 t_j = stepVars.timeVariables[j]
-                mutexes.append(t_i >= t_j + self.epsilonVar)
+                # print(t_i >= t_j + SMTRealVariable("eps"))
+                mutexes.append(t_i >= t_j + self.epsilon)
 
             rules.append((a_i > 0).implies(SMTExpression.andOfExpressionsList(mutexes)))
 
@@ -667,11 +668,11 @@ class TemporalEncoding(Encoding):
 
                 b = a.durativeAction if isSnap else a
                 repetitions = int(str(solution.getVariable(stepVar.actionVariables[i])))
-                time = solution.getVariable(stepVar.timeVariables[i])
-                duration = stepVar.durVariables[i] if isSnap else 0.0  # solution.getVariable()
+                time = round(solution.getVariable(stepVar.timeVariables[i]), 3)
+                duration = round(stepVar.durVariables[i], 3) if isSnap else 0.0  # solution.getVariable()
 
                 for i in range(0, repetitions):
-                    t = time + self.getDelta(i, duration, b) if isSnap else time
+                    t = round(time + self.getDelta(i, duration, b), 3) if isSnap else time
                     plan.addAction(b, t, duration)
 
         return plan
