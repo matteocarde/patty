@@ -1,4 +1,5 @@
 ﻿(define (domain majsp)
+  (:requirements :fluents :equality :typing :durative-actions)
 
 	(:types
 		Robot - object

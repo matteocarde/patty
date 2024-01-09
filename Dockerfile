@@ -58,7 +58,7 @@ COPY . .
 #Authorizations
 RUN chmod +x exes/*
 
-#RUN anmlsmt solve -l 3 -a smt-incr -q mathsat -P files/temporal/oversub/oversub_1_1/domain.pddl files/temporal/oversub/oversub_1_1/problem.pddl
+#RUN anmlsmt solve -l 3 -a smt-incr -q mathsat files/temporal/majsp/anml/domain.anml files/temporal/majsp/anml/instances/majsp_p_1_1_2_1.anml
 #RUN anmlsmt solve -l 3 -a smt-incr -q mathsat -P files/temporal/parking/domain.pddl files/temporal/parking/instances/p6-6-6.pddl -O
 #RUN itsat -alg layer files/temporal/parking/domain.pddl files/temporal/parking/instances/p6-6-6.pddl \*
 

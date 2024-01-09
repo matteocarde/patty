@@ -8,19 +8,20 @@ import boto3
 from botocore.config import Config
 
 from classes.CloudLogger import CloudLogger
-from classes.ENHSP import ENHSP
+from classes.planners.AnmlSMT import AnmlSMT
+from classes.planners.ENHSP import ENHSP
 from classes.Envs import Envs
-from classes.ITSAT import ITSAT
-from classes.LPG import LPG
-from classes.MetricFF import MetricFF
-from classes.NFD import NFD
-from classes.OMT import OMT
-from classes.Optic import Optic
-from classes.Patty import Patty
-from classes.Planner import Planner
+from classes.planners.ITSAT import ITSAT
+from classes.planners.LPG import LPG
+from classes.planners.MetricFF import MetricFF
+from classes.planners.NFD import NFD
+from classes.planners.OMT import OMT
+from classes.planners.Optic import Optic
+from classes.planners.Patty import Patty
+from classes.planners.Planner import Planner
 from classes.Result import Result
-from classes.SpringRoll import SpringRoll
-from classes.TFD import TFD
+from classes.planners.SpringRoll import SpringRoll
+from classes.planners.TFD import TFD
 
 my_config = Config(
     region_name='eu-central-1',
@@ -30,6 +31,8 @@ PLANNERS: Dict[str, Planner] = {
     "PATTY-G": Patty("PATTY-G", search="static"),
     "PATTY-H": Patty("PATTY-H", search="astar", noCompression=True),
     "PATTY-F": Patty("PATTY-F", search="astar", noCompression=False),
+    "PATTY-T-OR": Patty("PATTY-T-OR"),
+    "PATTY-T-SIGMA": Patty("PATTY-T-SIGMA"),
     "SPRINGROLL": SpringRoll(),
 
     "ENHSP-SAT-HMRP": ENHSP(False, settings="-h hmrp -s gbfs -silent -pp -pe", name="ENHSP-SAT-HMRP"),
@@ -53,8 +56,9 @@ PLANNERS: Dict[str, Planner] = {
 
     "LPG": LPG(),
     "TFD": TFD(),
-    "Optic": Optic(),
+    "OPTIC": Optic(),
     "ITSAT": ITSAT(),
+    "ANMLSMT": AnmlSMT(),
 }
 
 

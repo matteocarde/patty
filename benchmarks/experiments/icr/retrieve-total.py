@@ -8,15 +8,15 @@ import boto3
 from botocore.config import Config
 
 from classes.CloudLogger import CloudLogger
-from classes.ENHSP import ENHSP
+from classes.planners.ENHSP import ENHSP
 from classes.Envs import Envs
-from classes.MetricFF import MetricFF
-from classes.NFD import NFD
-from classes.OMT import OMT
-from classes.Patty import Patty
-from classes.Planner import Planner
+from classes.planners.MetricFF import MetricFF
+from classes.planners.NFD import NFD
+from classes.planners.OMT import OMT
+from classes.planners.Patty import Patty
+from classes.planners.Planner import Planner
 from classes.Result import Result
-from classes.SpringRoll import SpringRoll
+from classes.planners.SpringRoll import SpringRoll
 
 my_config = Config(
     region_name='eu-central-1',

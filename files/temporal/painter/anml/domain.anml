@@ -1,0 +1,30 @@
+type Item;
+type Treatment;
+
+fluent boolean busy;
+fluent boolean treated(Item i, Treatment t);
+fluent boolean started(Item i, Treatment t);
+fluent boolean ready(Item i, Treatment t);
+fluent integer[0, 31] counter(Treatment t);
+
+constant integer[0, 31] item_id(Item i);
+constant boolean consecutive(Treatment t1, Treatment t2);
+
+action make_treatment(Item i, Treatment t, Treatment next) {
+   duration := 15;
+   [start] item_id(i) == counter(t);
+   [start] consecutive(t, next) == true;
+   [start] busy == false;
+   [start] treated(i, t) == false;
+   [start] started(i, t) == false;
+   [start] ready(i, t) == true;
+   [start] counter(t) := counter(t) + 1;
+   [start] busy := true;
+   [start] started(i, t) := true;
+   [start + 4] treated(i, t) := true;
+   [start + 4] busy := false;
+   [start + 10] ready(i, next) := true;
+   [end] started(i, next) == true;
+};
+
+::("metric", "minimize-makespan");

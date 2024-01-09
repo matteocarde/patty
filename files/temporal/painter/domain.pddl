@@ -27,10 +27,6 @@
 		(item_id ?i - Item)
 	)
 
-	(:constants
-		last_t - Treatment
-	)
-
 	(:durative-action make_treatment1
 		:parameters (?i - Item ?t ?next - Treatment)
 		:duration (= ?duration 4)

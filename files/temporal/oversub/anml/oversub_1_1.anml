@@ -1,0 +1,40 @@
+fluent boolean x1;
+fluent boolean y;
+
+fluent boolean g1;
+
+
+action set_x1() ::("cost", 1) {
+  duration := 1;
+  [start] not x1;
+  [start] x1 := true;
+};
+
+action set_y() ::("cost", 1) {
+  duration := 1;
+  [start] not y;
+  [start] y := true;
+};
+
+action goal1() ::("cost", 1) {
+  duration := 1;
+  [start] x1;
+  [start] not g1;
+  [end] g1 := true;
+};
+
+action goal1_fake() ::("cost", 200) {
+  duration := 1;
+  [start] not g1;
+  [end] g1 := true;
+};
+
+[start] x1 := false;
+[start] y := false;
+
+[start] g1 := false;
+
+[end] y;
+[end] g1;
+
+::("metric", "minimize-action-cost", 0);
