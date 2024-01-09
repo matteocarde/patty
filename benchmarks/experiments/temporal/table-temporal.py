@@ -5,48 +5,37 @@ import statistics
 
 from classes.Result import Result
 
-SMT_SOLVERS = {'PATTY'}
+SMT_SOLVERS = {'PATTY-T-OR', 'PATTY-T-SIGMA', 'ANMLSMT'}
 
 SOLVERS = {
-    "PATTY": r"\textsc{Patty}",
+    "PATTY-T-OR": r"\textsc{Patty}_\vee",
+    "PATTY-T-SIGMA": r"\textsc{Patty}_\Sigma",
+    "ANMLSMT": r"\textsc{AnmlSMT}",
     "ITSAT": r"\textsc{ITSat}",
     "LPG": r"\textsc{LPG}",
-    "Optic": r"\textsc{Optic}",
+    "OPTIC": r"\textsc{Optic}",
     "TFD": r"\textsc{TFD}",
 }
 
 DOMAINS = {
-    # "temporal/airport": r"\textsc{Airport}",
-    "temporal/cushing": r"\textsc{Cushing}",
-    "temporal/paper-example": r"\textsc{Bottles}",
-    "temporal/driverlog": r"\textsc{DriverLog}",
-    "temporal/floortile": r"\textsc{Floortile}",
-    "temporal/machine_shop": r"\textsc{MachineShop}",
-    "temporal/majsp": r"\textsc{Majsp}",
-    "temporal/map_analyser": r"\textsc{MapAnalyser}",
-    "temporal/match-ac": r"\textsc{MatchAC}",
-    "temporal/match-ms": r"\textsc{MatchMS}",
-    "temporal/match_cellar": r"\textsc{MatchCellar}",
-    "temporal/oversub": r"\textsc{Oversub}",
-    # "temporal/painter": r"\textsc{Painter}",
-    "temporal/parking": r"\textsc{Parking}",
-    "temporal/quantum_circuit": r"\textsc{QuantumCircuit}",
-    "temporal/road_traffic_accident": r"\textsc{RoadTrafficAccident}",
-    "temporal/rovers": r"\textsc{Rovers}",
-    "temporal/satellite": r"\textsc{Satellite}",
-    "temporal/sokoban": r"\textsc{Sokoban}",
-    "temporal/storage": r"\textsc{Storage}",
-    "temporal/trucks": r"\textsc{Trucks}",
-    "temporal/turn_and_open": r"\textsc{TurnAndOpen}",
-    "temporal/zenotravel": r"\textsc{ZenoTravel}",
+    "temporal/cushing": r"\textsc{Cushing} (B)",
+    "temporal/bottles-pour": r"\textsc{BottlesPour} (N)",
+    "temporal/bottles-shake": r"\textsc{BottlesShake} (N)",
+    "temporal/bottles-pack": r"\textsc{BottlesPack} (N)",
+    "temporal/bottles-all": r"\textsc{BottlesAll} (N)",
+    "temporal/majsp": r"\textsc{Majsp} (N)",
+    "temporal/match-ac": r"\textsc{MatchAC} (B)",
+    "temporal/match-ms": r"\textsc{MatchMS} (B)",
+    "temporal/oversub": r"\textsc{Oversub} (B)",
+    "temporal/painter": r"\textsc{Painter} (B)",
 }
 
 TIMEOUT = 30 * 1000
 
 
 def main():
-    filename = "2024-01-05-TEMPNUM-v2.csv"
-    files = [f"benchmarks/results/2024-01-05-TEMPNUM-v1.csv", f"benchmarks/results/{filename}"]
+    filename = "2024-01-09-ALL-v2.csv"
+    files = [f"benchmarks/results/{filename}"]
 
     results: [Result] = []
     for file in files:
@@ -78,7 +67,7 @@ def main():
     for domain in domains:
         DOMAINS_STATS[domain] = 0
         for solver in solvers:
-            if solver not in d[domain]:
+            if domain not in d or solver not in d[domain]:
                 continue
             DOMAINS_STATS[domain] = max(DOMAINS_STATS[domain], len(d[domain][solver]))
 
@@ -100,6 +89,8 @@ def main():
         commonlySolved = {}
         commonlyGrounded = {}
         for solver in SMT_SOLVERS:
+            if solver not in domainDict:
+                continue
             solved = {r.problem for r in domainDict[solver] if r.solved}
             grounded = {r.problem for r in domainDict[solver] if r.nOfVars > 0}
             if solved:
@@ -114,48 +105,40 @@ def main():
             t[domain]["coverage"][solver] = r(sum([r.solved for r in pResult]) / DOMAINS_STATS[domain] * 100, 1)
             t[domain]["coverage"][solver] = "-" if t[domain]["coverage"][solver] == "0.0" else t[domain]["coverage"][
                 solver]
-            # bounds = [r.bound for r in pResult if r.solved if r.problem in commonlySolved]
-            # t[domain]["bound"][solver] = r(statistics.mean(bounds), 2) if t[domain]["coverage"][
-            #                                                                   solver] != "-" and bounds else "-"
+            bounds = [r.bound for r in pResult if r.solved if r.problem in commonlySolved]
+            t[domain]["bound"][solver] = r(statistics.mean(bounds), 2) if t[domain]["coverage"][
+                                                                              solver] != "-" and bounds else "-"
             t[domain]["time"][solver] = r(statistics.mean([r.time if r.solved else TIMEOUT for r in pResult]) / 1000,
                                           2) if \
                 t[domain]["coverage"][solver] != "-" else "-"
-            # t[domain]["length"][solver] = r(statistics.mean([r.planLength for r in pResult if r.solved]), 0) if \
-            #     t[domain]["coverage"][solver] != "-" else "-"
-            #
+            t[domain]["length"][solver] = r(statistics.mean([r.planLength for r in pResult if r.solved]), 0) if \
+                t[domain]["coverage"][solver] != "-" else "-"
+
             v = [r.nOfVars for r in pResult if r.nOfVars > 0 and r.problem in commonlyGrounded]
             t[domain]["nOfVars"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
             v = [r.nOfRules for r in pResult if r.nOfRules > 0 and r.problem in commonlyGrounded]
             t[domain]["nOfRules"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
 
     domainsClusters = {
-        r"\textit{Temporal Classic}": [
-            # "temporal/airport",
+        r"\textit{Temporal}": [
             "temporal/cushing",
-            "temporal/driverlog",
-            "temporal/floortile",
-            "temporal/machine_shop",
-            "temporal/map_analyser",
+            "temporal/bottles-pour",
+            "temporal/bottles-shake",
+            "temporal/bottles-pack",
+            "temporal/bottles-all",
+            "temporal/majsp",
             "temporal/match-ac",
             "temporal/match-ms",
-            "temporal/match_cellar",
             "temporal/oversub",
-            # "temporal/painter",
-            "temporal/parking",
-            "temporal/quantum_circuit",
-            "temporal/road_traffic_accident",
-            "temporal/sokoban",
-            "temporal/storage",
-            "temporal/trucks",
-            "temporal/turn_and_open",
+            "temporal/painter"
         ],
-        r"\textit{Temporal Numeric}": [
-            "temporal/paper-example",
-            "temporal/majsp",
-            "temporal/rovers",
-            "temporal/satellite",
-            "temporal/zenotravel",
-        ]
+        # r"\textit{Temporal Numeric}": [
+        #     "temporal/paper-example",
+        #     "temporal/majsp",
+        #     "temporal/rovers",
+        #     "temporal/satellite",
+        #     "temporal/zenotravel",
+        # ]
     }
 
     winners = {
@@ -173,15 +156,17 @@ def main():
         "columns": {
             "coverage": ("Coverage (\%)", {"SMT", "SEARCH"}),
             "time": ("Time (s)", {"SMT", "SEARCH"}),
-            # "bound": ("Bound (Common)", {"SMT"}),
-            "nOfVars": ("$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$", {"SMT"}),
-            "nOfRules": ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}),
+            "bound": ("Bound (Common)", {"SMT"}),
+            # "nOfVars": ("$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$", {"SMT"}),
+            # "nOfRules": ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}),
         },
         "solvers": {
-            "PATTY": r"SMT",
+            "PATTY-T-OR": r"SMT",
+            "PATTY-T-SIGMA": r"SMT",
+            "ANMLSMT": r"SMT",
             "ITSAT": r"SEARCH",
             "LPG": r"SEARCH",
-            "Optic": r"SEARCH",
+            "OPTIC": r"SEARCH",
             "TFD": r"SEARCH",
         },
         "caption": r"Comparative analysis between ..."
@@ -276,7 +261,7 @@ def main():
                         continue
                     nOfBest = 0
                     for domain in clusterDomains:
-                        if solver in best[domain][stat]:
+                        if domain in best and solver in best[domain][stat]:
                             nOfBest += 1
                     row.append(r"\textbf{" + str(nOfBest) + "}")
             latex.append("&".join(row) + r"\\\hline")
@@ -288,7 +273,7 @@ def main():
                     for (solver, type) in table["solvers"].items():
                         if type not in statTypes:
                             continue
-                        if solver not in t[domain][stat]:
+                        if domain not in t or solver not in t[domain][stat]:
                             row.append("-")
                             continue
                         if solver in best[domain][stat]:
