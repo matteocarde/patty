@@ -3,7 +3,8 @@
   (:domain bottles)
 
   (:objects
-    b1 b2 - bottle
+    b1 - bottleleft
+    b2 - bottleright
   )
 
   (:init
@@ -11,9 +12,6 @@
     (= (litres b2) 0)
     (capped b1)
     (capped b2)
-    (= (index b1) 1)
-    (= (index b2) 2)
-    (= (p) 1)
     (= (on-scale) 0)
   )
 

@@ -1,3 +1,16 @@
+ANMLSMT,temporal/match-ac,,files/temporal/match-ac/anml/match-ac_2_1.anml
+ANMLSMT,temporal/match-ac,,files/temporal/match-ac/anml/match-ac_2_10.anml
+ANMLSMT,temporal/match-ac,,files/temporal/match-ac/anml/match-ac_2_2.anml
+ANMLSMT,temporal/match-ac,,files/temporal/match-ac/anml/match-ac_2_3.anml
+ANMLSMT,temporal/match-ac,,files/temporal/match-ac/anml/match-ac_2_4.anml
+ANMLSMT,temporal/match-ac,,files/temporal/match-ac/anml/match-ac_2_5.anml
+ANMLSMT,temporal/match-ac,,files/temporal/match-ac/anml/match-ac_2_6.anml
+ANMLSMT,temporal/match-ac,,files/temporal/match-ac/anml/match-ac_2_7.anml
+ANMLSMT,temporal/match-ac,,files/temporal/match-ac/anml/match-ac_2_8.anml
+ANMLSMT,temporal/match-ac,,files/temporal/match-ac/anml/match-ac_2_9.anml
+ANMLSMT,temporal/match-ac,,files/temporal/match-ac/anml/match-ac_3_1.anml
+ANMLSMT,temporal/match-ac,,files/temporal/match-ac/anml/match-ac_3_10.anml
+ANMLSMT,temporal/match-ac,,files/temporal/match-ac/anml/match-ac_3_2.anml
 ANMLSMT,temporal/majsp,files/temporal/majsp/anml/domain.anml,files/temporal/majsp/anml/instances/majsp_p_1_1_2_1.anml
 ANMLSMT,temporal/majsp,files/temporal/majsp/anml/domain.anml,files/temporal/majsp/anml/instances/majsp_p_1_1_2_2.anml
 ANMLSMT,temporal/majsp,files/temporal/majsp/anml/domain.anml,files/temporal/majsp/anml/instances/majsp_p_1_1_2_3.anml
