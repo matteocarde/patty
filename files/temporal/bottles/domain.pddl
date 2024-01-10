@@ -14,7 +14,6 @@
 
   (:functions
     (litres ?a - bottle)
-    (on-scale)
   )
 
   ; Case 1) Pour must start and end between uncap-cap 

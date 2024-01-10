@@ -5,9 +5,9 @@
 		 r1 r2 r3 r4 r5 r6 - bottleright
 	)
 	(:init
-		(= (litres l1) 3)
-		(= (litres l2) 39)
-		(= (litres l3) 3)
+		(= (litres l1) 8)
+		(= (litres l2) 2)
+		(= (litres l3) 17)
 		(= (litres r1) 0)
 		(= (litres r2) 0)
 		(= (litres r3) 0)
@@ -26,12 +26,12 @@
 	)
 	(:goal
 		(and
-			(= (litres r1) 7)
-			(= (litres r2) 3)
+			(= (litres r1) 4)
+			(= (litres r2) 1)
 			(= (litres r3) 1)
-			(= (litres r4) 4)
-			(= (litres r5) 2)
-			(= (litres r6) 28)
+			(= (litres r4) 14)
+			(= (litres r5) 4)
+			(= (litres r6) 3)
 		)
 	)
 )

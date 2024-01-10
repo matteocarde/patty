@@ -5,6 +5,7 @@ import shutil
 
 def generate_random_array(total_sum, array_size):
     # Generate array with random integers
+
     random_array = [random.randint(1, int(total_sum / array_size)) for _ in range(array_size - 1)]
 
     # Adjust the last element to ensure the total sum is N
@@ -16,18 +17,21 @@ def generate_random_array(total_sum, array_size):
 
 
 def main():
-    avgLitresPerBottle = 5
+    avgLitresPerBottle = 3
     minBottles = 2
     maxBottles = 9
 
-    folder = "instances/"
-    if os.path.exists(folder):
-        shutil.rmtree(folder)
-    os.mkdir(folder)
+    pddlFolder = "instances/"
+    anmlFolder = "anml/instances"
+    if os.path.exists(pddlFolder):
+        shutil.rmtree(pddlFolder)
+    if os.path.exists(anmlFolder):
+        shutil.rmtree(anmlFolder)
+    os.mkdir(pddlFolder)
+    os.mkdir(anmlFolder)
     instances = 0
 
     for bottles in range(minBottles, maxBottles + 1, 1):
-
         totalLitres = avgLitresPerBottle * bottles
 
         for left in range(1, bottles, 2):
@@ -62,9 +66,35 @@ def main():
             pddl.append("\t)")
             pddl.append(")")
 
+            for i in range(0, left):
+                anml.append(f"instance bottle l{i + 1};")
+            for i in range(0, right):
+                anml.append(f"instance bottle r{i + 1};")
+
+            for i in range(0, left):
+                anml.append(f"[start] litres(l{i + 1}) := {initLitresLeft[i]};")
+            for i in range(0, right):
+                anml.append(f"[start] litres(r{i + 1}) := 0;")
+            for i in range(0, left):
+                anml.append(f"[start] capped(l{i + 1}) := true;")
+            for i in range(0, right):
+                anml.append(f"[start] capped(r{i + 1}) := true;")
+            for i in range(0, left):
+                anml.append(f"left(l{i + 1}) := true;")
+            for i in range(0, right):
+                anml.append(f"right(r{i + 1}) := true;")
+
+            for i in range(0, left):
+                anml.append(f"[end] litres(l{i + 1}) == 0;")
+            for i in range(0, right):
+                anml.append(f"[end] litres(r{i + 1}) == {goalLitresRight[i]};")
+
             with open(f"instances/problem_{bottles}_{left}_{right}.pddl", "w") as f:
                 f.write("\n".join(pddl))
                 instances += 1
+
+            with open(f"anml/instances/problem_{bottles}_{left}_{right}.anml", "w") as f:
+                f.write("\n".join(anml))
 
     print(f"Generated {instances} problems")
 
