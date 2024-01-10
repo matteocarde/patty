@@ -653,7 +653,7 @@ class TemporalEncoding(Encoding):
             script.serialize(fout, daggify=False)
 
     def getPlanFromSolution(self, solution: SMTSolution) -> TemporalPlan:
-        plan = TemporalPlan()
+        plan = TemporalPlan(self.epsilon)
 
         if not solution:
             return plan
@@ -661,18 +661,19 @@ class TemporalEncoding(Encoding):
         for i in range(1, self.bound + 1):
             stepVar = self.transitionVariables[i]
             for i, a in enumerate(self.pattern):
-                if isinstance(a, SnapAction) and a.timeType != TimePredicateType.AT_START:
-                    continue
 
                 isSnap = isinstance(a, SnapAction)
 
                 b = a.durativeAction if isSnap else a
                 repetitions = int(str(solution.getVariable(stepVar.actionVariables[i])))
                 time = round(solution.getVariable(stepVar.timeVariables[i]), 3)
-                duration = round(stepVar.durVariables[i], 3) if isSnap else 0.0  # solution.getVariable()
+                duration = round(stepVar.durVariables[i],
+                                 3) if isSnap and a.timeType == TimePredicateType.AT_START else 0.0
 
                 for i in range(0, repetitions):
                     t = round(time + self.getDelta(i, duration, b), 3) if isSnap else time
-                    plan.addAction(b, t, duration)
+                    plan.addTimedAction(a, t)
+                    if not isinstance(a, SnapAction) or a.timeType == TimePredicateType.AT_START:
+                        plan.addAction(b, t, duration)
 
         return plan
