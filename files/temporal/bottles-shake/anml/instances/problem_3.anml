@@ -1,0 +1,9 @@
+instance bottle b1;
+instance bottle b2;
+instance bottle b3;
+[start] litres(b1) := 5;
+[start] litres(b2) := 5;
+[start] litres(b3) := 5;
+[end] litres(b1) == 0;
+[end] litres(b2) == 0;
+[end] litres(b3) == 0;

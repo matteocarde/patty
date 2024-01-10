@@ -58,7 +58,7 @@ COPY . .
 #Authorizations
 RUN chmod +x exes/*
 
-RUN anmlsmt solve -l 3 -a smt-incr -q mathsat files/temporal/bottles-pour/anml/domain.anml files/temporal/bottles-pour/anml/instances/problem_2_1_1.anml
+RUN anmlsmt solve -l 3 -a smt-incr -q mathsat files/temporal/bottles-shake/anml/domain.anml files/temporal/bottles-shake/anml/instances/problem_5.anml
 #RUN anmlsmt solve -l 3 -a smt-incr -q mathsat -P files/temporal/parking/domain.pddl files/temporal/parking/instances/p6-6-6.pddl -O
 #RUN itsat -alg layer files/temporal/parking/domain.pddl files/temporal/parking/instances/p6-6-6.pddl \*
 

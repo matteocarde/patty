@@ -8,13 +8,10 @@
 
   (:predicates
     (capped ?a - bottle)
-    (packed ?a - bottle)
-    (packing)
   )
 
   (:functions
     (litres ?a - bottle)
-    (on-scale)
   )
 
   (:durative-action uncap-cap
