@@ -7,7 +7,6 @@
 		(norepeat ?var - variable)
 		(condition1 ?var - variable)
 		(condition2 ?var - variable)
-		(condition3 ?var - variable)
 		(target1 ?var - variable)
 		(target2 ?var - variable)
 		(target3 ?var - variable)

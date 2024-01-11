@@ -664,16 +664,13 @@ class TemporalEncoding(Encoding):
                     raise Exception("I cannot handle yet durations which are not constants")
                 duration = b.duration.value
 
-                print(a, time, repetitions)
                 for i in range(0, repetitions):
                     t = round(time + self.getDelta(i, duration, b), 3) if isSnap else time
                     tEnd = round(time - duration * i, 3) if isSnap else time
                     if not isSnap or a.timeType == TimePredicateType.AT_START:
                         plan.addAction(b, t, duration)
                         plan.addTimedAction(a, t)
-                        print(a, t)
                     elif a.timeType == TimePredicateType.AT_END:
                         plan.addTimedAction(a, tEnd)
-                        print(a, tEnd)
 
         return plan
