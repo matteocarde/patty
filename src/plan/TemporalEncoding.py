@@ -35,7 +35,7 @@ class TemporalEncoding(Encoding):
     rules: List[SMTExpression]
 
     def __init__(self, domain: GroundedDomain, problem: Problem, pattern: Pattern, bound: int, epsilon=0.001,
-                 constraints: str = "numerical"):
+                 constraints: str = "logical"):
 
         super().__init__(domain, problem, pattern, bound)
         self.domain = domain
@@ -383,7 +383,7 @@ class TemporalEncoding(Encoding):
                 d_i = stepVars.durVariables[i]
                 e_b = self.getEpsilonB(a.durativeAction)
                 rules.append((a_i == 0).implies((t_i == 0).AND(d_i == 0)))
-                rhs = (a_i * (D + e_b) <= d_i + e_b).AND(d_i + e_b >= a_i * (D + e_b))
+                rhs = (a_i * (D + e_b) <= d_i + e_b).AND(d_i + e_b <= a_i * (D + e_b))
                 rules.append((a_i > 0).implies(rhs))
             elif a.timeType == TimePredicateType.AT_END:
                 a_j = stepVars.actionVariables[i]
@@ -538,10 +538,10 @@ class TemporalEncoding(Encoding):
             start: SnapAction
             for action_i in self.dur2start[b]:
                 i = self.action2index[action_i]
-                # Case i)
+                # Preconditions
                 a_i = stepVars.actionVariables[i]
                 t_i = stepVars.timeVariables[i]
-                d_i = stepVars.timeVariables[i]
+                d_i = stepVars.durVariables[i]
                 sigma_i = stepVars.sigmaVariables[i]
                 sigma_im1 = stepVars.sigmaVariables[i - 1]
                 preStartRules = []
@@ -559,13 +559,23 @@ class TemporalEncoding(Encoding):
                 if preEndRules:
                     rules.append((a_i > 1).implies(SMTExpression.andOfExpressionsList(preEndRules)))
 
-                # Case ii)
+                mutexWithLasting = set()
+                for j, action_j in enumerate(self.pattern):
+                    if j != i and action_i.isMutex(action_j):
+                        mutexWithLasting.add(j)
+
                 for j in range(0, i):
                     action_j = self.pattern[j]
+                    t_j = stepVars.timeVariables[j]
+
+                    # Case i)
+                    if j in mutexWithLasting:
+                        rules.append((a_i > 0).implies(t_j <= t_i))
+
+                    # Case ii)
                     if (not isinstance(action_j, SnapAction) or action_j.timeType == TimePredicateType.AT_START) \
-                            and action_j.isMutex(lasting) and action_j.couldBeRepeated():
+                            and j in mutexWithLasting and action_j.couldBeRepeated():
                         a_j = stepVars.actionVariables[j]
-                        t_j = stepVars.timeVariables[j]
                         d_j = stepVars.durVariables[j]
                         lhs = (a_i > 0).AND(a_j > 1)
                         rhs = t_j + d_j <= t_i
@@ -574,11 +584,11 @@ class TemporalEncoding(Encoding):
                 # Case iii)
                 for j in range(i + 1, self.k):
                     action_j = self.pattern[j]
-                    if action_j.isMutex(lasting):
+                    if j in mutexWithLasting:
                         a_j = stepVars.actionVariables[j]
                         t_j = stepVars.timeVariables[j]
                         sigma_j = stepVars.sigmaVariables[j]
-                        interval = (t_i <= t_j).AND(t_j <= t_i + d_i)
+                        interval = (t_i <= t_j).AND(t_j < t_i + d_i)
                         rhsList = []
                         for pre in lastingPre:
                             if isinstance(pre, Literal):
@@ -703,11 +713,15 @@ class TemporalEncoding(Encoding):
             if a_i != a_j:
                 raise Exception(f"Action {b} has different executions for start and end: a_i={a_i}, a_j={a_j}")
 
-            if t_j != t_i + d_i:
+            if round(t_j, 3) != round(t_i + d_i, 3):
                 raise Exception(
                     f"Action {b} has wrong timings t_j: {t_j}, t_i: {t_i}, d_i = {d_i} -> {t_j} != {t_i} + {d_i}")
 
             d = ((d_i + e_b) / a_i) - e_b
+
+            if isinstance(b.duration, Constant) and round(d, 3) != round(b.duration.value, 3):
+                raise Exception(
+                    f"Action {b} has a different duration than the one specified in the domain: {d}!={b.duration.value}")
 
             for p in range(0, a_i):
                 t = t_i + p * (d + e_b)

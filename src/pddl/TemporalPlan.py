@@ -62,35 +62,51 @@ class TemporalPlan(Plan):
 
         active: Dict[DurativeAction, int] = dict()
 
+        groupedTimedPlan: List[Set[TemporalPlanInstantAction]] = []
+        currentGroup: Set[TemporalPlanInstantAction] = set()
+        lastTime = None
+        for tpia in timedPlan:
+            if lastTime and tpia.time != lastTime:
+                groupedTimedPlan.append(currentGroup)
+                currentGroup = set()
+            lastTime = tpia.time
+            currentGroup.add(tpia)
+        groupedTimedPlan.append(currentGroup)
+
         # Condition 1) The preconditions are respected
-        for i, tpia in enumerate(timedPlan):
-            action = tpia.action
-            if not state.satisfies(action.preconditions):
-                validateError(f"Plan doesn't satisfies preconditions of {action}@{i}. "
-                              f"pre({action})={action.preconditions} at state {state}", avoidRaising, logger)
-                return False
+        for group in groupedTimedPlan:
 
-            if isinstance(action, SnapAction) and action.timeType == TimePredicateType.AT_END:
-                dAction = action.durativeAction
-                if dAction not in active or active[dAction] == 0:
-                    validateError(f"{dAction} finishes without a starting", avoidRaising, logger)
-                    return False
-                active[dAction] -= 1
-
-            for dAction in active:
-                if active[dAction] == 0:
-                    continue
-                lasting = dAction.overall
-                if not state.satisfies(lasting.preconditions):
-                    validateError(f"The lasting preconditions of {dAction} are not respected", avoidRaising, logger)
+            tmpState = state
+            for tpia in group:
+                action = tpia.action
+                if not state.satisfies(action.preconditions):
+                    validateError(f"Plan doesn't satisfies preconditions of {action}@{i}. "
+                                  f"pre({action})={action.preconditions} at state {state}", avoidRaising, logger)
                     return False
 
-            state = state.applyAction(action)
-            if isinstance(action, SnapAction) and action.timeType == TimePredicateType.AT_START:
-                dAction = action.durativeAction
+                if isinstance(action, SnapAction) and action.timeType == TimePredicateType.AT_END:
+                    dAction = action.durativeAction
+                    if dAction not in active or active[dAction] == 0:
+                        validateError(f"{dAction} finishes without a starting", avoidRaising, logger)
+                        return False
+                    active[dAction] -= 1
 
-                active[dAction] = active.setdefault(dAction, 0)
-                active[dAction] += 1
+                for dAction in active:
+                    if active[dAction] == 0:
+                        continue
+                    lasting = dAction.overall
+                    if not state.satisfies(lasting.preconditions):
+                        validateError(f"The lasting preconditions of {dAction} are not respected", avoidRaising, logger)
+                        return False
+
+                if isinstance(action, SnapAction) and action.timeType == TimePredicateType.AT_START:
+                    dAction = action.durativeAction
+
+                    active[dAction] = active.setdefault(dAction, 0)
+                    active[dAction] += 1
+
+                tmpState = tmpState.applyAction(action)
+            state = tmpState
 
         for dAction, value in active.items():
             if value > 0:
