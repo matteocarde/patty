@@ -1,13 +1,15 @@
-from typing import List, Tuple, Set
+from typing import List, Tuple, Set, Dict
 
 from src.pddl.Action import Action
 from src.pddl.DurativeAction import DurativeAction
 from src.pddl.PDDLException import PDDLException
 from src.pddl.Plan import Plan
 from src.pddl.Problem import Problem
+from src.pddl.SnapAction import SnapAction
 from src.pddl.State import State
 from src.pddl.TemporalPlanAction import TemporalPlanAction
 from src.pddl.TemporalPlanInstantAction import TemporalPlanInstantAction
+from src.pddl.TimePredicate import TimePredicateType
 from src.utils.LogPrint import LogPrint, LogPrintLevel
 
 
@@ -33,6 +35,10 @@ class TemporalPlan(Plan):
     def rolledPlan(self):
         return sorted(self.__plan)
 
+    @property
+    def timedPlan(self):
+        return sorted(self.__timedPlan)
+
     def addAction(self, action: DurativeAction, time: float, duration: float):
         tpa = TemporalPlanAction(action, time, duration)
         self.__plan.append(tpa)
@@ -54,6 +60,8 @@ class TemporalPlan(Plan):
         timedPlan: List[TemporalPlanInstantAction] = sorted(self.__timedPlan)
         state = State.fromInitialCondition(problem.init)
 
+        active: Dict[DurativeAction, int] = dict()
+
         # Condition 1) The preconditions are respected
         for i, tpia in enumerate(timedPlan):
             action = tpia.action
@@ -61,7 +69,33 @@ class TemporalPlan(Plan):
                 validateError(f"Plan doesn't satisfies preconditions of {action}@{i}. "
                               f"pre({action})={action.preconditions} at state {state}", avoidRaising, logger)
                 return False
+
+            if isinstance(action, SnapAction) and action.timeType == TimePredicateType.AT_END:
+                dAction = action.durativeAction
+                if dAction not in active or active[dAction] == 0:
+                    validateError(f"{dAction} finishes without a starting", avoidRaising, logger)
+                    return False
+                active[dAction] -= 1
+
+            for dAction in active:
+                if active[dAction] == 0:
+                    continue
+                lasting = dAction.overall
+                if not state.satisfies(lasting.preconditions):
+                    validateError(f"The lasting preconditions of {dAction} are not respected", avoidRaising, logger)
+                    return False
+
             state = state.applyAction(action)
+            if isinstance(action, SnapAction) and action.timeType == TimePredicateType.AT_START:
+                dAction = action.durativeAction
+
+                active[dAction] = active.setdefault(dAction, 0)
+                active[dAction] += 1
+
+        for dAction, value in active.items():
+            if value > 0:
+                validateError(f"Action {dAction} starts without finishing", avoidRaising, logger)
+                return False
 
         # Condition 2) Epsilon separation
         for tpia_i in timedPlan:

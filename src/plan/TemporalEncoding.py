@@ -546,19 +546,10 @@ class TemporalEncoding(Encoding):
                 if preEndRules:
                     rules.append((a_i > 0).implies(SMTExpression.andOfExpressionsList(preEndRules)))
 
-            mutexWithStart: Set[int] = set()
             mutexWithAll: List[int] = list()
-            mutexWithEnd: Set[int] = set()
             for l in range(0, self.k):
                 action_l = self.pattern[l]
-                isMutex = False
-                if action_l.isMutex(b.start):
-                    mutexWithStart.add(l)
-                    isMutex = True
-                if action_l.isMutex(b.end):
-                    mutexWithEnd.add(l)
-                    isMutex = True
-                if isMutex:
+                if action_l.isMutex(b.start) or action_l.isMutex(b.end) or action_l.isMutex(b.overall):
                     mutexWithAll.append(l)
 
             action_i: SnapAction
@@ -576,8 +567,8 @@ class TemporalEncoding(Encoding):
 
                     t_l = stepVars.timeVariables[l]
                     if action_l.addList.intersection(lastingDel) or action_l.delList.intersection(lastingAdd):
-                        r = (t_i <= t_l).AND(t_l < t_i + self.getDelta(a_i, d_i, b))
-                        rules.append(r.NOT())
+                        r = (t_i <= t_l).AND(t_l < t_i + self.getDelta(a_i, d_i, b)).NOT()
+                        rules.append(r)
 
                     if action_i.couldBeRepeated():
                         a_l = stepVars.actionVariables[l]
@@ -658,8 +649,10 @@ class TemporalEncoding(Encoding):
         if not solution:
             return plan
 
+        durations: Dict[DurativeAction, float] = dict()
         for i in range(1, self.bound + 1):
             stepVar = self.transitionVariables[i]
+
             for i, a in enumerate(self.pattern):
 
                 isSnap = isinstance(a, SnapAction)
@@ -667,13 +660,20 @@ class TemporalEncoding(Encoding):
                 b = a.durativeAction if isSnap else a
                 repetitions = int(str(solution.getVariable(stepVar.actionVariables[i])))
                 time = round(solution.getVariable(stepVar.timeVariables[i]), 3)
-                duration = round(stepVar.durVariables[i],
-                                 3) if isSnap and a.timeType == TimePredicateType.AT_START else 0.0
+                if not isinstance(b.duration, Constant):
+                    raise Exception("I cannot handle yet durations which are not constants")
+                duration = b.duration.value
 
+                print(a, time, repetitions)
                 for i in range(0, repetitions):
                     t = round(time + self.getDelta(i, duration, b), 3) if isSnap else time
-                    plan.addTimedAction(a, t)
-                    if not isinstance(a, SnapAction) or a.timeType == TimePredicateType.AT_START:
+                    tEnd = round(time - duration * i, 3) if isSnap else time
+                    if not isSnap or a.timeType == TimePredicateType.AT_START:
                         plan.addAction(b, t, duration)
+                        plan.addTimedAction(a, t)
+                        print(a, t)
+                    elif a.timeType == TimePredicateType.AT_END:
+                        plan.addTimedAction(a, tEnd)
+                        print(a, tEnd)
 
         return plan
