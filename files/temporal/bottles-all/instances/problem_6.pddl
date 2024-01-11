@@ -6,9 +6,9 @@
 	)
 	(:init
 		(= (on-platform) 0)
-		(= (litres l1) 5)
-		(= (litres l2) 3)
-		(= (litres l3) 10)
+		(= (litres l1) 16)
+		(= (litres l2) 1)
+		(= (litres l3) 1)
 		(= (litres r1) 0)
 		(= (litres r2) 0)
 		(= (litres r3) 0)
@@ -21,9 +21,9 @@
 	)
 	(:goal
 		(and
-			(= (litres r1) 10)
-			(= (litres r2) 2)
-			(= (litres r3) 6)
+			(= (litres r1) 2)
+			(= (litres r2) 3)
+			(= (litres r3) 13)
 			(packed l1)
 			(packed l2)
 			(packed l3)

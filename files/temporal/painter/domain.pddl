@@ -2,7 +2,7 @@
 	(:requirements :fluents :equality :typing :durative-actions)
 
 	(:types
-		Item Treatment
+		Item Treatment - object
 	)
 
 	(:predicates
@@ -13,13 +13,13 @@
 		(started ?i - Item ?t - Treatment)
 		(not_started ?i - Item ?t - Treatment)
 		(ready ?i - Item ?t - Treatment)
-		(consecutive ?t ?next - Treatment)
-		(clip_s_1 ?i - Item ?t ?next - Treatment)
-		(clip_c_1 ?i - Item ?t ?next - Treatment)
-		(clip_e_1 ?i - Item ?t ?next - Treatment)
-		(clip_s_2 ?i - Item ?t ?next - Treatment)
-		(clip_c_2 ?i - Item ?t ?next - Treatment)
-		(clip_e_2 ?i - Item ?t ?next - Treatment)
+		(consecutive ?t - Treatment ?next - Treatment)
+		(clip_s_1 ?i - Item ?t - Treatment ?next - Treatment)
+		(clip_c_1 ?i - Item ?t - Treatment ?next - Treatment)
+		(clip_e_1 ?i - Item ?t - Treatment ?next - Treatment)
+		(clip_s_2 ?i - Item ?t - Treatment ?next - Treatment)
+		(clip_c_2 ?i - Item ?t - Treatment ?next - Treatment)
+		(clip_e_2 ?i - Item ?t - Treatment ?next - Treatment)
 	)
 
 	(:functions
@@ -28,11 +28,11 @@
 	)
 
 	(:durative-action make_treatment1
-		:parameters (?i - Item ?t ?next - Treatment)
+		:parameters (?i - Item ?t - Treatment ?next - Treatment)
 		:duration (= ?duration 4)
 		:condition (and
 			(at start (and
-					(= (item_id ?i) (counter ?t))
+					(= (counter ?t) (item_id ?i))
 					(not_busy)
 					(consecutive ?t ?next)
 					(not_treated ?i ?t)
@@ -57,10 +57,12 @@
 	)
 
 	(:durative-action clip_1
-		:parameters (?i - Item ?t ?next - Treatment)
+		:parameters (?i - Item ?t - Treatment ?next - Treatment)
 		:duration (= ?duration 0.002)
 		:condition (and
-			(at end (and (clip_s_1 ?i ?t ?next) (clip_e_1 ?i ?t ?next)))
+			(at end (and
+					(clip_s_1 ?i ?t ?next)
+					(clip_e_1 ?i ?t ?next)))
 			(over all (clip_c_1 ?i ?t ?next))
 		)
 		:effect (and
@@ -73,7 +75,7 @@
 	)
 
 	(:durative-action make_treatment2
-		:parameters (?i - Item ?t ?next - Treatment)
+		:parameters (?i - Item ?t - Treatment ?next - Treatment)
 		:duration (= ?duration 6)
 		:condition (and
 			(at start (clip_c_1 ?i ?t ?next))
@@ -89,7 +91,7 @@
 	)
 
 	(:durative-action clip_2
-		:parameters (?i - Item ?t ?next - Treatment)
+		:parameters (?i - Item ?t - Treatment ?next - Treatment)
 		:duration (= ?duration 0.002)
 		:condition (and
 			(at end (and (clip_s_2 ?i ?t ?next) (clip_e_2 ?i ?t ?next)))
@@ -105,7 +107,7 @@
 	)
 
 	(:durative-action make_treatment3
-		:parameters (?i - Item ?t ?next - Treatment)
+		:parameters (?i - Item ?t - Treatment ?next - Treatment)
 		:duration (= ?duration 5)
 		:condition (and
 			(at start (clip_c_2 ?i ?t ?next))

@@ -1,10 +1,8 @@
 (define (problem p_2_1)
-
 	(:domain new)
-
 	(:objects
 		i0 - Item
-		t0 t1 - Treatment
+		t0 t1 last_t - Treatment
 	)
 
 	(:init
