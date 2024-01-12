@@ -32,7 +32,7 @@
     )
   )
 
-  (:durative-action ncap-cap
+  (:durative-action uncap-cap
     :parameters (?a - bottle)
     :duration (= ?duration 5)
     :condition (and
