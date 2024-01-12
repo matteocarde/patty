@@ -733,7 +733,7 @@ class TemporalEncoding(Encoding):
                 raise Exception(
                     f"Action {b} has wrong timings t_j: {t_j}, t_i: {t_i}, d_i = {d_i} -> {t_j} != {t_i} + {d_i}")
 
-            d = ((d_i + e_b) / a_i) - e_b
+            d = round(((d_i + e_b) / a_i) - e_b, 3)
 
             if isinstance(b.duration, Constant) and round(d, 3) != round(b.duration.value, 3):
                 raise Exception(

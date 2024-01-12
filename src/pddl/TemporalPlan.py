@@ -65,7 +65,9 @@ class TemporalPlan(Plan):
         groupedTimedPlan: List[Set[TemporalPlanInstantAction]] = []
         currentGroup: Set[TemporalPlanInstantAction] = set()
         lastTime = None
+
         for tpia in timedPlan:
+            print(tpia)
             if lastTime and tpia.time != lastTime:
                 groupedTimedPlan.append(currentGroup)
                 currentGroup = set()
@@ -75,7 +77,6 @@ class TemporalPlan(Plan):
 
         # Condition 1) The preconditions are respected
         for group in groupedTimedPlan:
-            # print(state, group)
             tmpState = state
             for tpia in group:
                 action = tpia.action
@@ -99,13 +100,16 @@ class TemporalPlan(Plan):
                         validateError(f"The lasting preconditions of {dAction} are not respected", avoidRaising, logger)
                         return False
 
+                tmpState = tmpState.applyAction(action)
+
+            for tpia in group:
+                action = tpia.action
                 if isinstance(action, SnapAction) and action.timeType == TimePredicateType.AT_START:
                     dAction = action.durativeAction
 
                     active[dAction] = active.setdefault(dAction, 0)
                     active[dAction] += 1
 
-                tmpState = tmpState.applyAction(action)
             state = tmpState
 
         for dAction, value in active.items():
