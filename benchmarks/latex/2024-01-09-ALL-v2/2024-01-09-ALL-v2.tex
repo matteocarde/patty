@@ -10,25 +10,26 @@
             \begin{table*}[tb]
             \centering
             \resizebox{\textwidth}{!}{
-\begin{tabular}{|l||ccccccc||ccccccc||ccc||}
+\Huge{
+\begin{tabular}{|l||ccccccc||ccccccc||cccc||}
 \hline
- & \multicolumn{7}{c||}{Coverage (\%)}&\multicolumn{7}{c||}{Time (s)}&\multicolumn{3}{c||}{Bound (Common)}\\
-Domain & $\textsc{Patty}_\vee$&$\textsc{Patty}_\Sigma$&$\textsc{AnmlSMT}$&$\textsc{ITSat}$&$\textsc{LPG}$&$\textsc{Optic}$&$\textsc{TFD}$&$\textsc{Patty}_\vee$&$\textsc{Patty}_\Sigma$&$\textsc{AnmlSMT}$&$\textsc{ITSat}$&$\textsc{LPG}$&$\textsc{Optic}$&$\textsc{TFD}$&$\textsc{Patty}_\vee$&$\textsc{Patty}_\Sigma$&$\textsc{AnmlSMT}$\\
+ & \multicolumn{7}{c||}{Coverage (\%)}&\multicolumn{7}{c||}{Time (s)}&\multicolumn{4}{c||}{Bound (Common)}\\
+Domain & $\textsc{Patty}_\vee$&$\textsc{Patty}_\Sigma$&$\textsc{AnmlSMT}$&$\textsc{ITSat}$&$\textsc{LPG}$&$\textsc{Optic}$&$\textsc{TFD}$&$\textsc{Patty}_\vee$&$\textsc{Patty}_\Sigma$&$\textsc{AnmlSMT}$&$\textsc{ITSat}$&$\textsc{LPG}$&$\textsc{Optic}$&$\textsc{TFD}$&$\textsc{Patty}_\vee$&$\textsc{Patty}_\Sigma$&$\textsc{AnmlSMT}$&$\textsc{ITSat}$\\
 \hline
-\textit{Temporal}&\textbf{0}&\textbf{0}&\textbf{5}&\textbf{1}&\textbf{1}&\textbf{2}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{2}&\textbf{0}&\textbf{0}&\textbf{3}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{5}\\\hline
-\textsc{Cushing} (B)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
-\textsc{BottlesPour} (N)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
-\textsc{BottlesShake} (N)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
-\textsc{BottlesPack} (N)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
-\textsc{BottlesAll} (N)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
-\textsc{Majsp} (N)&-&-&\textbf{75.0}&-&-&-&-&-&-&\textbf{9.92}&-&-&-&-&-&-&\textbf{11.10}\\
-\textsc{MatchAC} (B)&-&-&\textbf{100.0}&75.5&-&75.5&-&-&-&0.33&0.64&-&\textbf{0.00}&-&-&-&\textbf{9.38}\\
-\textsc{MatchMS} (B)&-&-&\textbf{100.0}&\textbf{100.0}&-&\textbf{100.0}&-&-&-&0.36&0.62&-&\textbf{0.00}&-&-&-&\textbf{10.00}\\
-\textsc{Oversub} (B)&-&-&\textbf{100.0}&-&\textbf{100.0}&\textbf{100.0}&-&-&-&0.03&-&0.06&\textbf{0.01}&-&-&-&\textbf{4.00}\\
-\textsc{Painter} (B)&-&-&\textbf{40.0}&-&-&-&-&-&-&\textbf{20.28}&-&-&-&-&-&-&\textbf{16.92}
+\textit{Temporal}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}\\\hline
+\textsc{Cushing} (B)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{BottlesPour} (N)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{BottlesShake} (N)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{BottlesPack} (N)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{BottlesAll} (N)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{Majsp} (N)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{MatchAC} (B)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{MatchMS} (B)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{Oversub} (B)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{Painter} (B)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-
 \\\hline
 
-        \end{tabular}}
+        \end{tabular}}}
         \caption{Comparative analysis between ...}
         \label{tab:experiments}
         \end{table*}

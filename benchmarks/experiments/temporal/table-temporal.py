@@ -57,6 +57,7 @@ def main():
         # d[r.domain][r.solver][r.problem] = d[r.domain][r.solver].setdefault(r.problem, list())
         d[r.domain][r.solver].append(r)
 
+    d = dict()
     solvers = list(solvers)
     solvers.sort()
     domains = list(domains)
@@ -164,7 +165,7 @@ def main():
             "PATTY-T-OR": r"SMT",
             "PATTY-T-SIGMA": r"SMT",
             "ANMLSMT": r"SMT",
-            "ITSAT": r"SEARCH",
+            "ITSAT": r"SMT",
             "LPG": r"SEARCH",
             "OPTIC": r"SEARCH",
             "TFD": r"SEARCH",
@@ -245,7 +246,7 @@ def main():
             cString += f"|{nCells * 'c'}|"
 
         columns = f"|l|{cString}" + "|"
-
+        latex.append("\Huge{")
         latex.append(r"\begin{tabular}{" + columns + "}")
         latex.append(r"\hline")
         latex.append(fr" & " + "&".join(mString) + r"\\")
@@ -285,7 +286,7 @@ def main():
             latex.append(fr"\\\hline")
 
         latex.append(r"""
-        \end{tabular}}
+        \end{tabular}}}
         \caption{""" + table["caption"] + """}
         \label{""" + table["name"] + """}
         \end{""" + table["type"] + """}
