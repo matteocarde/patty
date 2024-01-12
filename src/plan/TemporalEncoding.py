@@ -729,6 +729,6 @@ class TemporalEncoding(Encoding):
                 t = round(t_i + p * (d + e_b), 3)
                 plan.addAction(b, t, d)
                 plan.addTimedAction(start, t)
-                plan.addTimedAction(end, t + d)
+                plan.addTimedAction(end, round(t + d, 3))
 
         return plan
