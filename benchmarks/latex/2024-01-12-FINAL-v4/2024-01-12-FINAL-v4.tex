@@ -1,0 +1,37 @@
+
+            \documentclass[11pt,landscape]{article}
+            \usepackage{graphicx}
+            \usepackage{lscape}
+            \usepackage{multirow}
+            \usepackage[a4paper,margin=1in,landscape]{geometry}
+
+            \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\Huge{
+\begin{tabular}{|l||ccccccc||ccccccc||cccc||}
+\hline
+ & \multicolumn{7}{c||}{Coverage (\%)}&\multicolumn{7}{c||}{Time (s)}&\multicolumn{4}{c||}{Bound (Common)}\\
+Domain & $\textsc{Patty}_\vee$&$\textsc{Patty}_\Sigma$&$\textsc{AnmlSMT}$&$\textsc{ITSat}$&$\textsc{LPG}$&$\textsc{Optic}$&$\textsc{TFD}$&$\textsc{Patty}_\vee$&$\textsc{Patty}_\Sigma$&$\textsc{AnmlSMT}$&$\textsc{ITSat}$&$\textsc{LPG}$&$\textsc{Optic}$&$\textsc{TFD}$&$\textsc{Patty}_\vee$&$\textsc{Patty}_\Sigma$&$\textsc{AnmlSMT}$&$\textsc{ITSat}$\\
+\hline
+\textit{Temporal}&\textbf{5}&\textbf{6}&\textbf{5}&\textbf{2}&\textbf{1}&\textbf{4}&\textbf{0}&\textbf{3}&\textbf{2}&\textbf{2}&\textbf{0}&\textbf{0}&\textbf{3}&\textbf{0}&\textbf{6}&\textbf{6}&\textbf{0}&\textbf{2}\\\hline
+\textsc{Cushing} (B)&\textbf{100.0}&\textbf{100.0}&20.0&-&-&\textbf{100.0}&10.0&\textbf{1.21}&1.24&24.12&-&-&3.34&27.01&\textbf{2.00}&\textbf{2.00}&9.50&-\\
+\textsc{BottlesPour} (N)&70.0&\textbf{80.0}&5.0&-&-&-&-&12.90&\textbf{12.44}&29.29&-&-&-&-&\textbf{2.00}&\textbf{2.00}&15.00&-\\
+\textsc{BottlesShake} (N)&\textbf{100.0}&\textbf{100.0}&45.0&-&-&-&-&\textbf{1.11}&1.16&17.39&-&-&-&-&\textbf{2.00}&\textbf{2.00}&9.00&-\\
+\textsc{BottlesPack} (N)&15.0&\textbf{20.0}&5.0&-&-&-&-&25.69&\textbf{24.56}&28.50&-&-&-&-&\textbf{1.00}&\textbf{1.00}&6.00&-\\
+\textsc{BottlesAll} (N)&\textbf{10.0}&\textbf{10.0}&5.0&-&-&-&-&\textbf{27.36}&27.45&29.94&-&-&-&-&\textbf{3.00}&\textbf{3.00}&18.00&-\\
+\textsc{Majsp} (N)&52.5&47.5&\textbf{75.0}&-&-&-&-&17.85&18.44&\textbf{10.08}&-&-&-&-&-&-&-&-\\
+\textsc{MatchAC} (B)&87.5&87.5&\textbf{100.0}&\textbf{100.0}&-&\textbf{100.0}&-&8.91&8.83&0.44&0.64&-&\textbf{0.01}&-&4.29&4.29&9.57&\textbf{4.00}\\
+\textsc{MatchMS} (B)&\textbf{100.0}&92.5&\textbf{100.0}&\textbf{100.0}&-&\textbf{100.0}&-&4.60&8.53&0.41&0.66&-&\textbf{0.01}&-&4.38&4.38&9.76&\textbf{4.00}\\
+\textsc{Oversub} (B)&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&-&\textbf{100.0}&\textbf{100.0}&-&0.90&0.91&0.04&-&0.07&\textbf{0.01}&-&-&-&-&-\\
+\textsc{Painter} (B)&30.0&20.0&\textbf{36.7}&-&-&13.3&-&23.50&24.71&\textbf{20.93}&-&-&26.02&-&\textbf{1.83}&\textbf{1.83}&12.50&-
+\\\hline
+
+        \end{tabular}}}
+        \caption{Comparative analysis between ...}
+        \label{tab:experiments}
+        \end{table*}
+        
+\end{document}

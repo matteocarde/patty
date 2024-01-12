@@ -32,7 +32,7 @@
     )
   )
 
-  (:durative-action uncap-cap
+  (:durative-action ncap-cap
     :parameters (?a - bottle)
     :duration (= ?duration 5)
     :condition (and
@@ -77,7 +77,7 @@
     )
   )
 
-  (:durative-action pack
+  (:durative-action zpack
     :parameters (?a - bottle)
     :duration (= ?duration 3)
     :condition (and

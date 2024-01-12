@@ -67,7 +67,6 @@ class TemporalPlan(Plan):
         lastTime = None
 
         for tpia in timedPlan:
-            print(tpia)
             if lastTime and tpia.time != lastTime:
                 groupedTimedPlan.append(currentGroup)
                 currentGroup = set()

@@ -5,7 +5,7 @@ import statistics
 
 from classes.Result import Result
 
-SMT_SOLVERS = {'PATTY-T-OR', 'PATTY-T-SIGMA', 'ANMLSMT'}
+SMT_SOLVERS = {'PATTY-T-OR', 'PATTY-T-SIGMA', 'ANMLSMT', 'ITSAT'}
 
 SOLVERS = {
     "PATTY-T-OR": r"\textsc{Patty}_\vee",
@@ -34,7 +34,7 @@ TIMEOUT = 30 * 1000
 
 
 def main():
-    filename = "2024-01-09-ALL-v2.csv"
+    filename = "2024-01-12-FINAL-v4.csv"
     files = [f"benchmarks/results/{filename}"]
 
     results: [Result] = []
@@ -54,7 +54,6 @@ def main():
         solvers.add(r.solver)
         domains.add(r.domain)
         d[r.domain][r.solver] = d[r.domain].setdefault(r.solver, [])
-        # d[r.domain][r.solver][r.problem] = d[r.domain][r.solver].setdefault(r.problem, list())
         d[r.domain][r.solver].append(r)
 
     solvers = list(solvers)
@@ -91,8 +90,8 @@ def main():
         for solver in SMT_SOLVERS:
             if solver not in domainDict:
                 continue
-            solved = {r.problem for r in domainDict[solver] if r.solved}
-            grounded = {r.problem for r in domainDict[solver] if r.nOfVars > 0}
+            solved = {r.problem[:-5] for r in domainDict[solver] if r.solved}
+            grounded = {r.problem[:-5] for r in domainDict[solver] if r.nOfVars > 0}
             if solved:
                 commonlySolved = solved if not commonlySolved else commonlySolved.intersection(solved)
             if grounded:
@@ -105,7 +104,7 @@ def main():
             t[domain]["coverage"][solver] = r(sum([r.solved for r in pResult]) / DOMAINS_STATS[domain] * 100, 1)
             t[domain]["coverage"][solver] = "-" if t[domain]["coverage"][solver] == "0.0" else t[domain]["coverage"][
                 solver]
-            bounds = [r.bound for r in pResult if r.solved if r.problem in commonlySolved]
+            bounds = [r.bound for r in pResult if r.solved if r.problem[:-5] in commonlySolved]
             t[domain]["bound"][solver] = r(statistics.mean(bounds), 2) if t[domain]["coverage"][
                                                                               solver] != "-" and bounds else "-"
             t[domain]["time"][solver] = r(statistics.mean([r.time if r.solved else TIMEOUT for r in pResult]) / 1000,

@@ -39,7 +39,7 @@ TIMEOUT = 30 * 1000
 
 
 def main():
-    filename = "2024-01-09-ALL-v2.csv"
+    filename = "2024-01-12-FINAL-v4.csv"
     files = [f"benchmarks/results/{filename}"]
 
     results: [Result] = []
@@ -81,6 +81,13 @@ def main():
     plt.xlabel("Instances solved")
     plt.ylabel("Time to solve [s]")
     plt.legend(loc='upper left')
+
+    exp = filename.replace(".csv", "")
+    folder = f'benchmarks/figures/{exp}'
+    if os.path.exists(folder):
+        shutil.rmtree(folder)
+    os.mkdir(folder)
+    plt.savefig(f'{folder}/plot-{exp}.pdf', dpi=100, bbox_inches='tight', pad_inches=0.01)
     plt.show()
 
 

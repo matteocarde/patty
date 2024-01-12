@@ -56,7 +56,7 @@
 		)
 	)
 
-	(:durative-action clip_1
+	(:durative-action zclip_1
 		:parameters (?i - Item ?t - Treatment ?next - Treatment)
 		:duration (= ?duration 0.002)
 		:condition (and
@@ -90,7 +90,7 @@
 		)
 	)
 
-	(:durative-action clip_2
+	(:durative-action zclip_2
 		:parameters (?i - Item ?t - Treatment ?next - Treatment)
 		:duration (= ?duration 0.002)
 		:condition (and
