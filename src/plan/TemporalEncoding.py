@@ -2,6 +2,7 @@ from typing import List, Dict, Set, Tuple
 
 import pysmt.smtlib.commands as smtcmd
 import pysmt.smtlib.script
+from prettytable import PrettyTable
 from pysmt.environment import get_env
 from pysmt.logics import QF_NRA
 
@@ -504,8 +505,11 @@ class TemporalEncoding(Encoding):
                 if action_i.isSame(action_j):
                     if not isinstance(action_i, SnapAction) or action_i.timeType == TimePredicateType.AT_START:
                         B_i.add(j)
-                    if isinstance(action_i, SnapAction) and action_i.timeType == TimePredicateType.AT_END:
+                    if isinstance(action_i, SnapAction) and action_i.timeType == TimePredicateType.AT_END \
+                            and self.constraints == "logical":
                         F_i.add(j)
+
+            # print(f"i={self.pattern[i]}, B_i = {[self.pattern[j] for j in B_i]}")
 
             lhs = a_i > 0
             rhsList = [t_i >= self.epsilon]
@@ -673,7 +677,18 @@ class TemporalEncoding(Encoding):
             return plan
 
         stepVar = self.transitionVariables[1]
-        started: Dict[DurativeAction, SnapAction] = dict()
+
+        x = PrettyTable()
+        x.field_names = ["i", "Action", "a_i", "t_i", "d_i"]
+        for i, action in enumerate(self.pattern):
+            a_i = int(str(solution.getVariable(stepVar.actionVariables[i])))
+            t_i = round(solution.getVariable(stepVar.timeVariables[i]), 3)
+            d_i = round(solution.getVariable(stepVar.durVariables[i]), 3) if i in stepVar.durVariables else 0.0
+
+            x.add_row([i, action, a_i, t_i, d_i])
+        # print(x)
+
+        started: Dict[DurativeAction, List[SnapAction]] = dict()
         pairs: List[Tuple[SnapAction, SnapAction]] = list()
         for i, action in enumerate(self.pattern):
 
@@ -691,14 +706,13 @@ class TemporalEncoding(Encoding):
 
             b = action.durativeAction
             if action.timeType == TimePredicateType.AT_START:
-                if b in started:
-                    raise Exception(f"Action {b} starts again before ending")
-                started[b] = action
+                started.setdefault(b, [])
+                started[b].append(action)
             elif action.timeType == TimePredicateType.AT_END:
-                if not b in started:
+                if not b in started or not started[b]:
                     raise Exception(f"Action {b} ends without starting")
-                pairs.append((started[b], action))
-                del started[b]
+                pairs.append((started[b][0], action))
+                started[b].pop(0)
 
         for start, end in pairs:
             i = self.action2index[start]

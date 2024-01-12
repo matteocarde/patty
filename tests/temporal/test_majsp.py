@@ -13,28 +13,25 @@ class TestMajsp(TestCase):
 
     def setUp(self) -> None:
         folder = "../../files/temporal/majsp"
-        problem = "instance_1_1_2_1"
+        problem = "instance_2_1_2_4"
         self.domain: Domain = Domain.fromFile(f"{folder}/domain.pddl")
         self.problem: Problem = Problem.fromFile(f"{folder}/instances/{problem}.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
-        self.horizon = 3
+        self.horizon = 5
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
         self.pattern = self.pattern.multiply(self.horizon, addFake=False)
-        print(self.pattern)
-        self.encoding: TemporalEncoding = TemporalEncoding(self.gDomain, self.problem, self.pattern, 1)
+        self.encoding: TemporalEncoding = TemporalEncoding(self.gDomain, self.problem, self.pattern, 1,
+                                                           constraints="logical")
+        # print(self.pattern)
         # self.encoding.printRules()
         pass
-
-    def test_check(self):
-        self.assertIsInstance(self.domain, Domain)
-        self.assertIsInstance(self.problem, Problem)
-        self.assertIsInstance(self.gDomain, GroundedDomain)
 
     def test_solve(self):
         solver: SMTSolver = SMTSolver(self.encoding)
         solution: TemporalPlan = solver.solve()
 
         self.assertIsInstance(solution, TemporalPlan)
+        self.assertTrue(solution.validate(self.problem))
 
         print(solution)
         pass
