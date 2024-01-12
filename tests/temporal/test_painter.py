@@ -22,6 +22,7 @@ class TestPainter(TestCase):
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
         self.pattern = self.pattern.multiply(self.horizon, addFake=False)
         self.encoding: TemporalEncoding = TemporalEncoding(self.gDomain, self.problem, self.pattern, 1)
+
         # print(self.pattern)
         # self.encoding.printRules()
         pass
