@@ -57,7 +57,6 @@ def main():
         # d[r.domain][r.solver][r.problem] = d[r.domain][r.solver].setdefault(r.problem, list())
         d[r.domain][r.solver].append(r)
 
-    d = dict()
     solvers = list(solvers)
     solvers.sort()
     domains = list(domains)
