@@ -34,7 +34,7 @@ TIMEOUT = 30 * 1000
 
 
 def main():
-    filename = "2024-01-12-FINAL-v5.csv"
+    filename = "2024-01-12-FINAL-v6.csv"
     files = [f"benchmarks/results/{filename}"]
 
     results: [Result] = []
@@ -104,7 +104,8 @@ def main():
             t[domain]["coverage"][solver] = r(sum([r.solved for r in pResult]) / DOMAINS_STATS[domain] * 100, 1)
             t[domain]["coverage"][solver] = "-" if t[domain]["coverage"][solver] == "0.0" else t[domain]["coverage"][
                 solver]
-            bounds = [r.bound for r in pResult if r.solved if r.problem[:-5] in commonlySolved]
+            bounds = [r.bound for r in pResult if r.solved if
+                      r.problem[:-5] in commonlySolved or r.domain == "temporal/oversub"]
             t[domain]["bound"][solver] = r(statistics.mean(bounds), 2) if t[domain]["coverage"][
                                                                               solver] != "-" and bounds else "-"
             t[domain]["time"][solver] = r(statistics.mean([r.time if r.solved else TIMEOUT for r in pResult]) / 1000,
