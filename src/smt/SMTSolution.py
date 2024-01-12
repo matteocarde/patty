@@ -19,7 +19,7 @@ class SMTSolution:
         node = self.__variables[var]
         if isinstance(var, SMTNumericVariable):
             if isinstance(node, RatNumRef):
-                return float(node.as_decimal(dec).replace("?", ""))
+                return float(node.as_fraction())
             return node
         if isinstance(var, SMTBoolVariable):
             raise NotImplemented("TODO")

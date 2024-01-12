@@ -74,7 +74,6 @@ class Encoding:
         variables = set()
         for i, rule in enumerate(self.rules):
             variables |= rule.variables
-        # print(variables)
         return len(variables)
 
     def getNRules(self):

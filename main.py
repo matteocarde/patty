@@ -17,6 +17,7 @@ def main():
     if args.isHelp:
         exit(0)
 
+    solver: Search or None = None
     try:
 
         console: LogPrint = LogPrint(args.verboseLevel)
@@ -30,7 +31,6 @@ def main():
         ts.end("Grounding", console=console)
 
         isTemporal = len(gDomain.durativeActions) > 0
-        solver: Search
 
         if args.search == "astar":
             solver = AStarSearchMax(gDomain, problem, args)

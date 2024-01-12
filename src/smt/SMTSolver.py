@@ -2,7 +2,7 @@ from pysmt.logics import QF_LRA, QF_NRA
 from pysmt.shortcuts import Portfolio, write_smtlib, Solver
 from typing import Set, List, Dict
 
-from z3 import Optimize
+from z3 import Optimize, z3
 
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Plan import Plan
@@ -100,6 +100,7 @@ class SMTSolver:
     def getSolution(self) -> SMTSolution or bool:
 
         if self.maximize:
+            # z3.set_option(verbose=10)
             res = self.solver.check()
 
             if str(res) != "sat":

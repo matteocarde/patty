@@ -75,12 +75,12 @@ class TemporalPlan(Plan):
 
         # Condition 1) The preconditions are respected
         for group in groupedTimedPlan:
-
+            # print(state, group)
             tmpState = state
             for tpia in group:
                 action = tpia.action
                 if not state.satisfies(action.preconditions):
-                    validateError(f"Plan doesn't satisfies preconditions of {action}@{i}. "
+                    validateError(f"Plan doesn't satisfies preconditions of {action}. "
                                   f"pre({action})={action.preconditions} at state {state}", avoidRaising, logger)
                     return False
 

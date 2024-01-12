@@ -9,6 +9,7 @@
     (packed ?a - bottle)
     (packing ?a - bottle)
     (is-packing)
+    (cleared)
   )
 
   (:functions
@@ -22,10 +23,12 @@
       (at start (not (packed ?a)))
       (at start (not (packing ?a)))
       (at start (< (on-platform) 2))
+      (over all (not (cleared)))
       (at end (= (on-platform) 2))
     )
     :effect (and
       (at start (is-packing))
+      (at start (not(cleared)))
       (at start (packing ?a))
       (at start (increase (on-platform) 1))
       (at end (packed ?a))
@@ -39,6 +42,7 @@
       (not (is-packing))
     )
     :effect (and
+      (cleared)
       (assign (on-platform) 0)
     )
   )

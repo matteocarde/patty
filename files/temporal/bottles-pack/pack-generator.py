@@ -56,6 +56,7 @@ def main():
             anml.append(f"instance bottle b{i + 1};")
 
         anml.append(f"[start] on_platform := 0;")
+        anml.append(f"[start] cleared := false;")
         for i in range(0, bottles):
             anml.append(f"[start] packed(b{i + 1}) == false;")
         for i in range(0, bottles):

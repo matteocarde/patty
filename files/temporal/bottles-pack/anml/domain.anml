@@ -3,6 +3,7 @@ type bottle;
 fluent boolean packed(bottle a);
 fluent boolean packing(bottle a);
 fluent boolean is_packing;
+fluent boolean cleared;
 
 fluent integer on_platform;
 
@@ -11,9 +12,11 @@ action pack(bottle a) {
    [start] packed(a) == false;
    [start] packing(a) == false;
    [start] on_platform < 2;
+   [all] cleared == false;
    [end] on_platform == 2;
 
    [start] is_packing := true;
+   [start] cleared := false;
    [start] packing(a) := true;
    [start] on_platform := on_platform + 1;
    [end] packed(a) := true;
@@ -24,4 +27,5 @@ action clear_platform() {
    duration := 1.0;
    [start] is_packing == false;
    [start] on_platform := 0;
+   [start] cleared := true;
 };

@@ -9,12 +9,14 @@ NAME = "PATTY"
 class Patty(Planner):
     name = NAME
 
-    def __init__(self, name, search="static", maximize=False, useSCCs=False, noCompression=False):
+    def __init__(self, name, search="static", maximize=False, useSCCs=False, noCompression=False,
+                 temporalConstraints=None):
         self.search = search
         self.maximize = maximize
         self.name = name
         self.useSCCs = useSCCs
         self.noCompression = noCompression
+        self.temporalConstraints = temporalConstraints
         super().__init__()
 
     @staticmethod
@@ -50,4 +52,6 @@ class Patty(Planner):
             cmd += ["--maximize"]
         if self.useSCCs:
             cmd += ["--use-sccs"]
+        if self.temporalConstraints:
+            cmd += ["--temporal-constraints", self.temporalConstraints]
         return cmd

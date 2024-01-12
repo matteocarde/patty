@@ -1,4 +1,3 @@
-import copy
 from typing import List, Dict, Set, Tuple
 
 import pysmt.smtlib.commands as smtcmd
@@ -21,9 +20,7 @@ from src.plan.Encoding import Encoding
 from src.plan.Pattern import Pattern
 from src.plan.TemporalTransitionVariables import TemporalTransitionVariables
 from src.smt.SMTExpression import SMTExpression
-from src.smt.SMTNumericVariable import SMTRealVariable
 from src.smt.SMTSolution import SMTSolution
-from src.smt.SMTVariable import SMTVariable
 
 # BOUND = 1000
 EXPLICIT_DELTA = False
@@ -35,7 +32,7 @@ class TemporalEncoding(Encoding):
     rules: List[SMTExpression]
 
     def __init__(self, domain: GroundedDomain, problem: Problem, pattern: Pattern, bound: int, epsilon=0.001,
-                 constraints: str = "logical"):
+                 constraints: str = "numerical"):
 
         super().__init__(domain, problem, pattern, bound)
         self.domain = domain
@@ -340,7 +337,6 @@ class TemporalEncoding(Encoding):
         for i, a in enumerate(self.pattern):
 
             a_i = stepVars.actionVariables[i]
-            rules.append(a_i >= 0)
             if not a.couldBeRepeated():
                 rules.append((a_i >= 0).AND(a_i <= 1))
             else:
@@ -372,6 +368,9 @@ class TemporalEncoding(Encoding):
 
         for i, a in enumerate(self.pattern):
             if not isinstance(a, SnapAction):
+                a_i = stepVars.actionVariables[i]
+                t_i = stepVars.timeVariables[i]
+                rules.append((a_i == 0).implies((t_i == 0)))
                 continue
             if not isinstance(a.durativeAction.duration, Constant):
                 raise Exception("I cannot handle durations which are not constants yet... but it is easy to add")
@@ -383,23 +382,17 @@ class TemporalEncoding(Encoding):
                 d_i = stepVars.durVariables[i]
                 e_b = self.getEpsilonB(a.durativeAction)
                 rules.append((a_i == 0).implies((t_i == 0).AND(d_i == 0)))
-                rhs = (a_i * (D + e_b) <= d_i + e_b).AND(d_i + e_b <= a_i * (D + e_b))
-                rules.append((a_i > 0).implies(rhs))
+                if a.durativeAction.couldBeRepeated():
+                    rhs = (a_i * (D + e_b) <= d_i + e_b).AND(d_i + e_b <= a_i * (D + e_b))
+                    rules.append((a_i > 0).implies(rhs))
+                else:
+                    rules.append((a_i > 0).implies(d_i == D))
             elif a.timeType == TimePredicateType.AT_END:
                 a_j = stepVars.actionVariables[i]
                 t_j = stepVars.timeVariables[i]
                 rules.append((a_j == 0).implies(t_j == 0))
 
         return rules
-
-    # def getDelta(self, a_i: SMTVariable or float, d_i: SMTVariable or float,
-    #              b: DurativeAction) -> SMTExpression or float:
-    #     if not isinstance(a_i, SMTVariable) and a_i == 0:
-    #         return 0
-    #     if b.areStartAndEndInMutex():
-    #         return a_i * d_i + (a_i - 1) * self.epsilon
-    #     else:
-    #         return a_i * d_i
 
     def getStartEndLogicalRules(self, stepVars: TemporalTransitionVariables) -> List[SMTExpression]:
 
@@ -460,8 +453,13 @@ class TemporalEncoding(Encoding):
                 i = self.action2index[action]
                 a_i = stepVars.actionVariables[i]
 
-                S_i = [self.action2index[a] for a in self.end2start[self.start2end[action][0]]]
+                S_i = [self.action2index[a] for a in self.end2start[self.start2end[action][-1]] if
+                       self.action2index[a] >= i]
                 E_i = [self.action2index[a] for a in self.start2end[action]]
+
+                # print(
+                #     f"i: {self.pattern[i]}, S_i = {[self.pattern[j] for j in S_i]}, E_i = {[self.pattern[j] for j in E_i]}")
+
                 sumActionS_i = sum([stepVars.actionVariables[j] for j in S_i])
                 sumActionE_i = sum([stepVars.actionVariables[j] for j in E_i])
                 sumTimeS_i = sum([stepVars.timeVariables[j] + stepVars.durVariables[j] for j in S_i])
@@ -470,6 +468,7 @@ class TemporalEncoding(Encoding):
                 lhs = a_i > 0
                 rhs = (sumActionS_i == sumActionE_i).AND(sumTimeS_i == sumTimeE_i)
                 rules.append(lhs.implies(rhs))
+                # print(lhs.implies(rhs))
             elif action.timeType == TimePredicateType.AT_END:
                 j = self.action2index[action]
                 a_j = stepVars.actionVariables[j]
@@ -477,9 +476,13 @@ class TemporalEncoding(Encoding):
                 S_j = [self.action2index[a] for a in self.end2start[action]]
                 E_j = [self.action2index[a] for a in self.start2end[self.end2start[action][0]] if
                        self.action2index[a] <= j]
+
+                # print(f"j: {self.pattern[j]}, S_j = {[self.pattern[i] for i in S_j]}, E_j = {[self.pattern[i] for i in E_j]}")
+
                 sumActionS_j = sum([stepVars.actionVariables[i] for i in S_j])
                 sumActionE_j = sum([stepVars.actionVariables[i] for i in E_j])
                 rules.append((a_j > 0).implies(sumActionS_j == sumActionE_j))
+                # print((a_j > 0).implies(sumActionS_j == sumActionE_j))
 
         return rules
 
@@ -488,8 +491,6 @@ class TemporalEncoding(Encoding):
         rules: List[SMTExpression] = []
 
         for i, action_i in enumerate(self.pattern):
-            if not isinstance(action_i, SnapAction):
-                continue
             a_i = stepVars.actionVariables[i]
             t_i = stepVars.timeVariables[i]
 
@@ -500,10 +501,11 @@ class TemporalEncoding(Encoding):
                 action_j = self.pattern[j]
                 if action_j.isMutex(action_i):
                     M_i.add(j)
-                if action_i.timeType == TimePredicateType.AT_START and action_i.isSame(action_j):
-                    B_i.add(j)
-                if action_i.timeType == TimePredicateType.AT_END and action_i.isSame(action_j):
-                    F_i.add(j)
+                if action_i.isSame(action_j):
+                    if not isinstance(action_i, SnapAction) or action_i.timeType == TimePredicateType.AT_START:
+                        B_i.add(j)
+                    if isinstance(action_i, SnapAction) and action_i.timeType == TimePredicateType.AT_END:
+                        F_i.add(j)
 
             lhs = a_i > 0
             rhsList = [t_i >= self.epsilon]
@@ -512,7 +514,7 @@ class TemporalEncoding(Encoding):
                 rhsList.append(t_i >= t_j + self.epsilon)
             for j in B_i:
                 t_j = stepVars.timeVariables[j]
-                d_j = stepVars.durVariables[j]
+                d_j = stepVars.durVariables[j] if j in stepVars.durVariables else 0.0
                 rhsList.append(t_i >= t_j + d_j)
             rules.append(lhs.implies(SMTExpression.andOfExpressionsList(rhsList)))
 
@@ -724,7 +726,7 @@ class TemporalEncoding(Encoding):
                     f"Action {b} has a different duration than the one specified in the domain: {d}!={b.duration.value}")
 
             for p in range(0, a_i):
-                t = t_i + p * (d + e_b)
+                t = round(t_i + p * (d + e_b), 3)
                 plan.addAction(b, t, d)
                 plan.addTimedAction(start, t)
                 plan.addTimedAction(end, t + d)

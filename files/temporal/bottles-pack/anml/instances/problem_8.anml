@@ -7,6 +7,7 @@ instance bottle b6;
 instance bottle b7;
 instance bottle b8;
 [start] on_platform := 0;
+[start] cleared := false;
 [start] packed(b1) == false;
 [start] packed(b2) == false;
 [start] packed(b3) == false;

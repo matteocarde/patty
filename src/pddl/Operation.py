@@ -446,9 +446,5 @@ class Operation:
     def isMutex(self, other: Operation) -> bool:
         return Operation.__isMutex(self, other) or Operation.__isMutex(other, self)
 
-
-def isMutexSet(self, operations: Set[Operation]):
-    isMutex = False
-    for op in operations:
-        isMutex = isMutex or self.isMutex(op)
-    return isMutex
+    def isSame(self, end: Operation):
+        return self.originalName == end.originalName

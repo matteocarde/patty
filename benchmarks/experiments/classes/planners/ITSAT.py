@@ -19,6 +19,8 @@ class ITSAT(Planner):
         r.time = Result.parseTime(stdout)
         r.plan = re.findall(r"^(\d.*?.\d.*?): \((.*?)\) \[(.*?)\]", stdout, re.MULTILINE)
         r.planLength = len(r.plan)
+        reBound = re.findall(r"^A plan found with layers = (.*?)$", stdout, re.MULTILINE)
+        r.bound = -1 if not reBound else int(reBound[-1])
 
         return r
 

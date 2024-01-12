@@ -52,6 +52,7 @@ class ChainSearch(Search):
                     domain=self.domain,
                     problem=self.problem,
                     pattern=fPattern,
+                    constraints=self.args.temporalConstraints,
                     bound=1)
             else:
                 encoding: NumericEncoding = NumericEncoding(

@@ -10,15 +10,19 @@ PLANNERS = [
     "ITSAT",
     "OPTIC",
     "ANMLSMT",
-    # "PATTY-T-OR",
-    # "PATTY-T-SIGMA"
+    "PATTY-T-OR",
+    "PATTY-T-SIGMA"
 ]
 
 
 def main():
     domains = [
-        # "temporal/cushing",
+        "temporal/cushing",
         "temporal/majsp",
+        "temporal/bottles-all",
+        "temporal/bottles-pack",
+        "temporal/bottles-pour",
+        "temporal/bottles-shake",
         "temporal/match-ac",
         "temporal/match-ms",
         "temporal/oversub",

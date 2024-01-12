@@ -1,6 +1,7 @@
 instance bottle b1;
 instance bottle b2;
 [start] on_platform := 0;
+[start] cleared := false;
 [start] packed(b1) == false;
 [start] packed(b2) == false;
 [end] packed(b1) == true;
