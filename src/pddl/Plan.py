@@ -43,3 +43,6 @@ class Plan:
             return len(self.__rolledPlan)
 
         raise Exception("Not yet implemented")
+
+    def getActionsList(self):
+        raise NotImplementedError()

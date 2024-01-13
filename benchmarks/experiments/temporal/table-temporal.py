@@ -19,10 +19,10 @@ SOLVERS = {
 
 DOMAINS = {
     "temporal/cushing": r"\textsc{Cushing} (B)",
-    "temporal/bottles-pour": r"\textsc{BottlesPour} (N)",
-    "temporal/bottles-shake": r"\textsc{BottlesShake} (N)",
-    "temporal/bottles-pack": r"\textsc{BottlesPack} (N)",
-    "temporal/bottles-all": r"\textsc{BottlesAll} (N)",
+    "temporal/bottles-pour": r"\textsc{Pour} (N)",
+    "temporal/bottles-shake": r"\textsc{Shake} (N)",
+    "temporal/bottles-pack": r"\textsc{Pack} (N)",
+    "temporal/bottles-all": r"\textsc{Bottles} (N)",
     "temporal/majsp": r"\textsc{Majsp} (N)",
     "temporal/match-ac": r"\textsc{MatchAC} (B)",
     "temporal/match-ms": r"\textsc{MatchMS} (B)",
@@ -34,7 +34,7 @@ TIMEOUT = 30 * 1000
 
 
 def main():
-    filename = "2024-01-12-FINAL-v6.csv"
+    filename = "2024-01-12-FINAL-v7.csv"
     files = [f"benchmarks/results/{filename}"]
 
     results: [Result] = []

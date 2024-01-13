@@ -33,7 +33,8 @@ class TemporalEncoding(Encoding):
     rules: List[SMTExpression]
 
     def __init__(self, domain: GroundedDomain, problem: Problem, pattern: Pattern, bound: int, epsilon=0.001,
-                 constraints: str = "numerical"):
+                 constraints: str = "numerical", relaxGoal=False,
+                 subgoalsAchieved: Set[Formula] = None):
 
         super().__init__(domain, problem, pattern, bound)
         self.domain = domain
@@ -42,6 +43,8 @@ class TemporalEncoding(Encoding):
         self.pattern = pattern
         self.epsilon = epsilon
         self.constraints = constraints
+        self.relaxGoal = relaxGoal
+        self.subgoalsAchieved = subgoalsAchieved
 
         self.transitionVariables: [TemporalTransitionVariables] = list()
 
@@ -144,17 +147,17 @@ class TemporalEncoding(Encoding):
             else:
                 raise NotImplemented("Shouldn't go here")
 
-            # if level == 0 and self.relaxGoal:
-            #     if condition in self.subgoalsAchieved:
-            #         andRules.append(rule)
-            #     else:
-            #         self.softRules.append(rule)
-            #         orRules.append(rule)
-            # else:
-            if f.type == "AND":
-                andRules.append(rule)
-            elif f.type == "OR":
-                orRules.append(rule)
+            if level == 0 and self.relaxGoal:
+                if condition in self.subgoalsAchieved:
+                    andRules.append(rule)
+                else:
+                    self.softRules.append(rule)
+                    orRules.append(rule)
+            else:
+                if f.type == "AND":
+                    andRules.append(rule)
+                elif f.type == "OR":
+                    orRules.append(rule)
 
         rules = []
         if andRules:
@@ -629,6 +632,8 @@ class TemporalEncoding(Encoding):
             rulesDict["start-end"] = self.getStartEndLogicalRules(stepVars)
         elif self.constraints == "numerical":
             rulesDict["start-end"] = self.getStartEndNumericalRules(stepVars)
+        else:
+            raise Exception("Constraint type not specified for temporal planning")
         rulesDict["overlap-epsilon"] = self.getEpsilonNoOverlappingRules(stepVars)
         rulesDict["lasting"] = self.getLastingActionsRules(stepVars)
 
@@ -699,6 +704,7 @@ class TemporalEncoding(Encoding):
                 continue
 
             if not isinstance(action, SnapAction):
+                plan.addUnrolledTimedAction(action, t_i)
                 for p in range(0, a_i):
                     plan.addAction(action, t_i, 0)
                     plan.addTimedAction(action, t_i)
@@ -739,6 +745,8 @@ class TemporalEncoding(Encoding):
                 raise Exception(
                     f"Action {b} has a different duration than the one specified in the domain: {d}!={b.duration.value}")
 
+            plan.addUnrolledTimedAction(start, t_i)
+            plan.addUnrolledTimedAction(end, t_j)
             for p in range(0, a_i):
                 t = round(t_i + p * (d + e_b), 3)
                 plan.addAction(b, t, d)

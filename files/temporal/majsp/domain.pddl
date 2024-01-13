@@ -1,5 +1,5 @@
 ﻿(define (domain majsp)
-  (:requirements :fluents :equality :typing :durative-actions)
+	(:requirements :fluents :equality :typing :durative-actions)
 
 	(:types
 		Robot - object
@@ -37,7 +37,7 @@
 	)
 
 	(:action move
-		:parameters (?r - Robot ?from ?to - Position)
+		:parameters (?r - Robot ?from - Position ?to - Position)
 		:precondition (and
 			(not (robot-at ?r ?to))
 			(robot-at ?r ?from)
@@ -46,10 +46,7 @@
 		:effect (and
 			(not (robot-at ?r ?from))
 			(robot-at ?r ?to)
-			(decrease
-				(battery-level ?r)
-				(distance ?from ?to)
-				)
+			(decrease (battery-level ?r) (distance ?from ?to))
 		)
 	)
 

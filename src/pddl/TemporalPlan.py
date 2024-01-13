@@ -27,6 +27,7 @@ class TemporalPlan(Plan):
         super().__init__()
         self.__plan: List[TemporalPlanAction] = list()
         self.__timedPlan: List[TemporalPlanInstantAction] = list()
+        self.__unrolledTimedPlan: List[TemporalPlanInstantAction] = list()
         self.quality: float
         self.epsilon: float = epsilon
         self.optimal = False
@@ -39,12 +40,22 @@ class TemporalPlan(Plan):
     def timedPlan(self):
         return sorted(self.__timedPlan)
 
+    @property
+    def unrolledTimedPlan(self):
+        return sorted(self.__unrolledTimedPlan)
+
     def addAction(self, action: DurativeAction, time: float, duration: float):
         tpa = TemporalPlanAction(action, time, duration)
         self.__plan.append(tpa)
 
     def __str__(self):
         return "\n".join([f"{a}" for a in self.rolledPlan])
+
+    def __iter__(self):
+        return iter([tpia.action for tpia in self.timedPlan])
+
+    def getActionsList(self):
+        return [tpia.action for tpia in self.unrolledTimedPlan]
 
     def toValString(self):
         string = ""
@@ -55,6 +66,10 @@ class TemporalPlan(Plan):
     def addTimedAction(self, a: Action, t: float):
         tpia = TemporalPlanInstantAction(a, t)
         self.__timedPlan.append(tpia)
+
+    def addUnrolledTimedAction(self, a: Action, t: float):
+        tpia = TemporalPlanInstantAction(a, t)
+        self.__unrolledTimedPlan.append(tpia)
 
     def validate(self, problem: Problem, avoidRaising=False, logger: LogPrint = None) -> bool:
         timedPlan: List[TemporalPlanInstantAction] = sorted(self.__timedPlan)

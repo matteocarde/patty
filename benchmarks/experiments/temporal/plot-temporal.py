@@ -39,7 +39,7 @@ TIMEOUT = 30 * 1000
 
 
 def main():
-    filename = "2024-01-12-FINAL-v6.csv"
+    filename = "2024-01-12-FINAL-v7.csv"
     files = [f"benchmarks/results/{filename}"]
 
     results: [Result] = []
@@ -75,8 +75,7 @@ def main():
     plt.grid()
     for solver in SOLVERS.keys():
         xs = xsSolver[solver]
-        # ys = ys / 1000
-        plt.plot(xs, ys, label=f"${SOLVERS[solver]}$")
+        plt.plot(xs, ys/1000, label=f"${SOLVERS[solver]}$")
         pass
     plt.xlabel("Instances solved")
     plt.ylabel("Time to solve [s]")

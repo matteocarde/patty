@@ -19,6 +19,9 @@ class NumericPlan:
     def __len__(self):
         return len(self.__rolledPlan)
 
+    def getActionsList(self):
+        return self.rolledPlan
+
     @property
     def rolledPlan(self):
         return self.__rolledPlan
