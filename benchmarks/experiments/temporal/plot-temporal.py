@@ -10,11 +10,9 @@ from matplotlib import pyplot as plt
 
 from classes.Result import Result
 
-SMT_SOLVERS = {'PATTY-T-OR', 'PATTY-T-SIGMA', 'ANMLSMT'}
-
 SOLVERS = {
-    "PATTY-T-OR": r"\textsc{Patty}_\vee",
-    "PATTY-T-SIGMA": r"\textsc{Patty}_\Sigma",
+    "PATTY-T-OR-ASTAR": r"\textsc{Patty}_\vee",
+    "PATTY-T-SIGMA-ASTAR": r"\textsc{Patty}_\Sigma",
     "ANMLSMT": r"\textsc{AnmlSMT}",
     "ITSAT": r"\textsc{ITSat}",
     "LPG": r"\textsc{LPG}",
@@ -35,11 +33,11 @@ DOMAINS = {
     "temporal/painter": r"\textsc{Painter} (B)",
 }
 
-TIMEOUT = 30 * 1000
+TIMEOUT = 300 * 1000
 
 
 def main():
-    filename = "2024-01-12-FINAL-v7.csv"
+    filename = "2024-01-14-TOTAL-v1.csv"
     files = [f"benchmarks/results/{filename}"]
 
     results: [Result] = []
@@ -75,7 +73,7 @@ def main():
     plt.grid()
     for solver in SOLVERS.keys():
         xs = xsSolver[solver]
-        plt.plot(xs, ys/1000, label=f"${SOLVERS[solver]}$")
+        plt.plot(xs, ys / 1000, label=f"${SOLVERS[solver]}$")
         pass
     plt.xlabel("Instances solved")
     plt.ylabel("Time to solve [s]")

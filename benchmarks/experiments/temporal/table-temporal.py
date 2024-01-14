@@ -10,8 +10,8 @@ SMT_SOLVERS = {'PATTY-T-OR', 'PATTY-T-SIGMA', 'PATTY-T-OR-ASTAR', 'PATTY-T-SIGMA
 SOLVERS = {
     "PATTY-T-OR": r"\textsc{Patty}_{\vee}",
     "PATTY-T-SIGMA": r"\textsc{Patty}_{\Sigma}",
-    "PATTY-T-OR-ASTAR": r"\textsc{Patty}_{\vee}^*",
-    "PATTY-T-SIGMA-ASTAR": r"\textsc{Patty}_{\Sigma}^*",
+    "PATTY-T-OR-ASTAR": r"\textsc{Patty}_{\vee}",
+    "PATTY-T-SIGMA-ASTAR": r"\textsc{Patty}_{\Sigma}",
     "ANMLSMT": r"\textsc{AnmlSMT}",
     "ITSAT": r"\textsc{ITSat}",
     "LPG": r"\textsc{LPG}",
@@ -20,24 +20,24 @@ SOLVERS = {
 }
 
 DOMAINS = {
-    "temporal/cushing": r"\textsc{Cushing} (B)",
-    "temporal/bottles-pour": r"\textsc{Pour} (N)",
-    "temporal/bottles-shake": r"\textsc{Shake} (N)",
-    "temporal/bottles-pack": r"\textsc{Pack} (N)",
-    "temporal/bottles-all": r"\textsc{Bottles} (N)",
-    "temporal/majsp": r"\textsc{Majsp} (N)",
-    "temporal/match-ac": r"\textsc{MatchAC} (B)",
-    "temporal/match-ms": r"\textsc{MatchMS} (B)",
-    "temporal/oversub": r"\textsc{Oversub} (B)",
-    "temporal/painter": r"\textsc{Painter} (B)",
+    "temporal/bottles-all": r"\textsc{Bottles}",
+    "temporal/cushing": r"\textsc{Cushing}",
+    "temporal/majsp": r"\textsc{Majsp}",
+    "temporal/match-ac": r"\textsc{MatchAC}",
+    "temporal/match-ms": r"\textsc{MatchMS}",
+    "temporal/oversub": r"\textsc{Oversub}",
+    "temporal/painter": r"\textsc{Painter}",
+    "temporal/bottles-pack": r"\textsc{Pack}",
+    "temporal/bottles-pour": r"\textsc{Pour}",
+    "temporal/bottles-shake": r"\textsc{Shake}",
 }
 
-TIMEOUT = 30 * 1000
+TIMEOUT = 300 * 1000
 
 
 def main():
-    filename = "2024-01-13-ASTAR-v4.csv"
-    files = [f"benchmarks/results/{filename}", f"benchmarks/results/2024-01-12-FINAL-v7.csv"]
+    filename = "2024-01-14-TOTAL-v1.csv"
+    files = [f"benchmarks/results/{filename}"]
 
     results: [Result] = []
     for file in files:
@@ -169,9 +169,9 @@ def main():
             "PATTY-T-SIGMA-ASTAR": r"SMT",
             "ANMLSMT": r"SMT",
             "ITSAT": r"SMT",
-            "LPG": r"SEARCH",
+            # "LPG": r"SEARCH",
             "OPTIC": r"SEARCH",
-            "TFD": r"SEARCH",
+            # "TFD": r"SEARCH",
         },
         "caption": r"Comparative analysis between ..."
     },

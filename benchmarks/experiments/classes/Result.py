@@ -25,6 +25,9 @@ class Result:
     nOfRules: int = -1
     lastSearchedBound: int = -1
     lastCallsToSolver: int = -1
+    boolVariables: int = -1
+    numVariables: int = -1
+    actions: int = -1
 
     def __init__(self, domain: str, problem: str):
         self.plan = list()
@@ -48,6 +51,10 @@ class Result:
         r.lastSearchedBound = int(csvLine[10])
         if len(csvLine) > 11:
             r.lastCallsToSolver = int(csvLine[11])
+        if len(csvLine) > 12:
+            r.boolVariables = int(csvLine[12])
+            r.numVariables = int(csvLine[13])
+            r.actions = int(csvLine[14])
 
         return r
 
@@ -70,7 +77,10 @@ class Result:
             (str(self.nOfVars), 5),
             (str(self.nOfRules), 5),
             (str(self.lastSearchedBound), 5),
-            (str(self.lastCallsToSolver), 5)
+            (str(self.lastCallsToSolver), 5),
+            (str(self.boolVariables), 5),
+            (str(self.numVariables), 5),
+            (str(self.actions), 5)
         ]
 
         string = "|" + "|".join(["{:^" + str(n[1]) + "}" for n in row]) + "|"
@@ -94,6 +104,9 @@ class Result:
             str(self.nOfRules),
             str(self.lastSearchedBound),
             str(self.lastCallsToSolver),
+            str(self.boolVariables),
+            str(self.numVariables),
+            str(self.actions),
         ])
 
     @classmethod
