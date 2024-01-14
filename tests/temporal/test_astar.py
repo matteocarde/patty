@@ -15,7 +15,7 @@ class TestAStar(TestCase):
 
     def setUp(self) -> None:
         folder = "../../files/temporal/bottles-pour"
-        problem = "problem_2_1_1"
+        problem = "problem_9_5_4"
         self.domain: Domain = Domain.fromFile(f"{folder}/domain.pddl")
         self.problem: Problem = Problem.fromFile(f"{folder}/instances/{problem}.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)

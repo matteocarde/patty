@@ -31,8 +31,10 @@ PLANNERS: Dict[str, Planner] = {
     "PATTY-G": Patty("PATTY-G", search="static"),
     "PATTY-H": Patty("PATTY-H", search="astar", noCompression=True),
     "PATTY-F": Patty("PATTY-F", search="astar", noCompression=False),
-    "PATTY-T-OR": Patty("PATTY-T-OR", temporalConstraints='logical', search="astar"),
-    "PATTY-T-SIGMA": Patty("PATTY-T-SIGMA", temporalConstraints='numerical', search="astar"),
+    "PATTY-T-OR": Patty("PATTY-T-OR", temporalConstraints='logical'),
+    "PATTY-T-SIGMA": Patty("PATTY-T-SIGMA", temporalConstraints='numerical'),
+    "PATTY-T-OR-ASTAR": Patty("PATTY-T-OR", temporalConstraints='logical', search="astar"),
+    "PATTY-T-SIGMA-ASTAR": Patty("PATTY-T-SIGMA", temporalConstraints='numerical', search="astar"),
     "SPRINGROLL": SpringRoll(),
 
     "ENHSP-SAT-HMRP": ENHSP(False, settings="-h hmrp -s gbfs -silent -pp -pe", name="ENHSP-SAT-HMRP"),

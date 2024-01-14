@@ -77,7 +77,7 @@
     )
   )
 
-  (:durative-action zpack
+  (:durative-action pack
     :parameters (?a - bottle)
     :duration (= ?duration 3)
     :condition (and

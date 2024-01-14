@@ -5,11 +5,13 @@ import statistics
 
 from classes.Result import Result
 
-SMT_SOLVERS = {'PATTY-T-OR', 'PATTY-T-SIGMA', 'ANMLSMT', 'ITSAT'}
+SMT_SOLVERS = {'PATTY-T-OR', 'PATTY-T-SIGMA', 'PATTY-T-OR-ASTAR', 'PATTY-T-SIGMA-ASTAR', 'ANMLSMT', 'ITSAT'}
 
 SOLVERS = {
-    "PATTY-T-OR": r"\textsc{Patty}_\vee",
-    "PATTY-T-SIGMA": r"\textsc{Patty}_\Sigma",
+    "PATTY-T-OR": r"\textsc{Patty}_{\vee}",
+    "PATTY-T-SIGMA": r"\textsc{Patty}_{\Sigma}",
+    "PATTY-T-OR-ASTAR": r"\textsc{Patty}_{\vee}^*",
+    "PATTY-T-SIGMA-ASTAR": r"\textsc{Patty}_{\Sigma}^*",
     "ANMLSMT": r"\textsc{AnmlSMT}",
     "ITSAT": r"\textsc{ITSat}",
     "LPG": r"\textsc{LPG}",
@@ -34,8 +36,8 @@ TIMEOUT = 30 * 1000
 
 
 def main():
-    filename = "2024-01-12-FINAL-v7.csv"
-    files = [f"benchmarks/results/{filename}"]
+    filename = "2024-01-13-ASTAR-v1.csv"
+    files = [f"benchmarks/results/{filename}", f"benchmarks/results/2024-01-12-FINAL-v7.csv"]
 
     results: [Result] = []
     for file in files:
@@ -161,8 +163,10 @@ def main():
             # "nOfRules": ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}),
         },
         "solvers": {
-            "PATTY-T-OR": r"SMT",
-            "PATTY-T-SIGMA": r"SMT",
+            # "PATTY-T-OR": r"SMT",
+            # "PATTY-T-SIGMA": r"SMT",
+            "PATTY-T-OR-ASTAR": r"SMT",
+            "PATTY-T-SIGMA-ASTAR": r"SMT",
             "ANMLSMT": r"SMT",
             "ITSAT": r"SMT",
             "LPG": r"SEARCH",

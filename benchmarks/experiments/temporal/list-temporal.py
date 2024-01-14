@@ -10,8 +10,8 @@ PLANNERS = [
     # "ITSAT",
     # "OPTIC",
     # "ANMLSMT",
-    "PATTY-T-OR",
-    "PATTY-T-SIGMA"
+    "PATTY-T-OR-ASTAR",
+    "PATTY-T-SIGMA-ASTAR"
 ]
 
 

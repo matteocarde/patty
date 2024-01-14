@@ -99,7 +99,7 @@
 		)
 	)
 
-	(:durative-action unload_clip
+	(:durative-action zzunload_clip
 		:parameters (?b - Pallet ?p - Position ?t - Treatment)
 		:duration (= ?duration 0.03)
 		:condition (and
@@ -118,7 +118,7 @@
 		)
 	)
 
-	(:durative-action unload_min_timeout
+	(:durative-action zunload_min_timeout
 		:parameters (?b - Pallet ?p - Position ?t - Treatment)
 		:duration (= ?duration 1)
 		:condition (and
@@ -131,7 +131,7 @@
 		)
 	)
 
-	(:durative-action unload_max_timeout
+	(:durative-action zunload_max_timeout
 		:parameters (?b - Pallet ?p - Position ?t - Treatment)
 		:duration (= ?duration 2)
 		:condition (and
