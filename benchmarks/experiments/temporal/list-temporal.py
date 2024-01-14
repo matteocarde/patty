@@ -5,11 +5,11 @@ from typing import Tuple, List
 from natsort import natsort
 
 PLANNERS = [
-    # "TFD",
-    # "LPG",
-    # "ITSAT",
-    # "OPTIC",
-    # "ANMLSMT",
+    "TFD",
+    "LPG",
+    "ITSAT",
+    "OPTIC",
+    "ANMLSMT",
     "PATTY-T-OR-ASTAR",
     "PATTY-T-SIGMA-ASTAR"
 ]

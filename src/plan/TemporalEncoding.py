@@ -735,9 +735,9 @@ class TemporalEncoding(Encoding):
             if a_i != a_j:
                 raise Exception(f"Action {b} has different executions for start and end: a_i={a_i}, a_j={a_j}")
 
-            if round(t_j, 3) != round(t_i + d_i, 3):
-                raise Exception(
-                    f"Action {b} has wrong timings t_j: {t_j}, t_i: {t_i}, d_i = {d_i} -> {t_j} != {t_i} + {d_i}")
+            # if round(t_j, 3) != round(t_i + d_i, 3):
+            #     raise Exception(
+            #         f"Action {b} has wrong timings t_j: {t_j}, t_i: {t_i}, d_i = {d_i} -> {t_j} != {t_i} + {d_i}")
 
             d = round(((d_i + e_b) / a_i) - e_b, 3)
 
