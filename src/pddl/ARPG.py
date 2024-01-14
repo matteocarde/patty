@@ -47,9 +47,6 @@ class ARPG:
             activeSupporters = {s for s in supporters if
                                 s.isSatisfiedBy(newState) and s.respectsTemporal(usedActions)}
             usedActions = usedActions | {s.originatingAction for s in activeSupporters}
-            activeSupporters = {s for s in supporters if
-                                s.isSatisfiedBy(newState) and s.respectsTemporal(usedActions)}
-            usedActions = usedActions | {s.originatingAction for s in activeSupporters}
 
             self.supporterLevels.append(activeSupporters)
             self.stateLevels.append(newState)
