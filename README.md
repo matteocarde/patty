@@ -18,6 +18,6 @@ The Symbolic Pattern Planner
 patty -o domain.pddl -f problem.pddl
 ~~~
 
-## Additional material
+## Questions ?
 
-The domain LineExchange, presented in the paper "Symbolic Numeric Planning with Patterns" under revision at AAAI-24 can be found under ```files/line-exchange-quantity```
+Please contact me at me@matteocardellini.it
