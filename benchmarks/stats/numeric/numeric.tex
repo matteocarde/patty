@@ -1,0 +1,45 @@
+
+                \documentclass[11pt]{article}
+                \usepackage{graphicx}
+                \usepackage{multirow}
+                \usepackage[a4paper,margin=1in]{geometry}
+
+                \begin{document}
+
+                \begin{table}[tb]
+                \centering
+                \resizebox{\textwidth}{!}{
+\begin{tabular}{|l|cccc|}
+\hline
+Domain & $|V_B|$&$|V_N|$&$|A|$&$|V_B|/|V_N|$\\
+\hline
+\textit{Highly Numeric}&&&&\\\hline
+\textsc{BlockGrouping} (S)&0.0&47.5&87.0&0.0\\
+\textsc{Counters} (S)&0.0&23.4&44.8&0.0\\
+\textsc{Counters} (L)&0.0&25.0&46.0&0.0\\
+\textsc{Drone} (S)&66.1&209.3&73.1&0.3\\
+\textsc{PlantWatering} (S)&0.0&56.6&44.4&0.0\\
+\textsc{Farmland} (S)&12.5&6.5&25.0&1.9\\
+\textsc{Farmland} (L)&16.2&8.4&31.4&1.9\\
+\textsc{HydroPower} (S)&150.0&30.0&146.0&5.0\\
+\textsc{Sailing} (S)&5.9&10.7&30.8&0.6\\
+\textsc{Sailing} (L)&3.5&11.5&34.5&0.3
+\\\hline
+\textit{Lowly Numeric}&&&&\\\hline
+\textsc{Delivery} (S)&368.6&29.0&2016.7&12.7\\
+\textsc{Expedition} (S)&45.8&19.8&80.0&2.3\\
+\textsc{MPrime} (S)&479.3&18.8&4105.1&25.5\\
+\textsc{PathwaysMetric} (S)&352.9&1186.7&352.9&0.3\\
+\textsc{Rover} (S)&465.9&4.8&774.3&98.1\\
+\textsc{Satellite} (S)&270.9&489.9&2653.1&0.6\\
+\textsc{Sugar} (S)&104.8&59.2&228.9&1.8\\
+\textsc{TPP} (L)&26.5&2326.5&1559.1&0.0\\
+\textsc{ZenoTravel} (S)&399.1&261.0&4972.3&1.5
+\\\hline
+
+            \end{tabular}}
+            \caption{Statistic on domains of the 2023 IPC.}
+            \label{tab:domains}
+            \end{table}
+            
+\end{document}

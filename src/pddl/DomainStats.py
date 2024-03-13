@@ -23,7 +23,7 @@ class DomainStats:
 
     def toJSON(self):
         return {
-            "nOfFunction": self.nOfFunctions,
+            "nOfFunctions": self.nOfFunctions,
             "nOfPredicates": self.nOfPredicates,
             "nOfSnapActions": self.nOfSnapActions
         }

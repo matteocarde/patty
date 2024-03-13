@@ -1,2140 +1,2140 @@
 {
   "numeric/ipc-2023/block-grouping": {
     "instance_5_25_6_1.pddl": {
-      "nOfFunction": 54,
+      "nOfFunctions": 54,
       "nOfPredicates": 0,
       "nOfSnapActions": 100
     },
     "instance_7_10_2_1.pddl": {
-      "nOfFunction": 24,
+      "nOfFunctions": 24,
       "nOfPredicates": 0,
       "nOfSnapActions": 40
     },
     "instance_11_10_2_3.pddl": {
-      "nOfFunction": 24,
+      "nOfFunctions": 24,
       "nOfPredicates": 0,
       "nOfSnapActions": 40
     },
     "instance_11_30_7_2.pddl": {
-      "nOfFunction": 64,
+      "nOfFunctions": 64,
       "nOfPredicates": 0,
       "nOfSnapActions": 120
     },
     "instance_11_35_8_3.pddl": {
-      "nOfFunction": 74,
+      "nOfFunctions": 74,
       "nOfPredicates": 0,
       "nOfSnapActions": 140
     },
     "instance_11_40_10_1.pddl": {
-      "nOfFunction": 84,
+      "nOfFunctions": 84,
       "nOfPredicates": 0,
       "nOfSnapActions": 160
     },
     "instance_15_10_2_3.pddl": {
-      "nOfFunction": 24,
+      "nOfFunctions": 24,
       "nOfPredicates": 0,
       "nOfSnapActions": 40
     },
     "instance_15_25_6_3.pddl": {
-      "nOfFunction": 54,
+      "nOfFunctions": 54,
       "nOfPredicates": 0,
       "nOfSnapActions": 100
     },
     "instance_20_5_2_1.pddl": {
-      "nOfFunction": 14,
+      "nOfFunctions": 14,
       "nOfPredicates": 0,
       "nOfSnapActions": 20
     },
     "instance_20_5_2_2.pddl": {
-      "nOfFunction": 14,
+      "nOfFunctions": 14,
       "nOfPredicates": 0,
       "nOfSnapActions": 20
     },
     "instance_20_10_2_1.pddl": {
-      "nOfFunction": 24,
+      "nOfFunctions": 24,
       "nOfPredicates": 0,
       "nOfSnapActions": 40
     },
     "instance_20_10_2_3.pddl": {
-      "nOfFunction": 24,
+      "nOfFunctions": 24,
       "nOfPredicates": 0,
       "nOfSnapActions": 40
     },
     "instance_20_15_3_2.pddl": {
-      "nOfFunction": 34,
+      "nOfFunctions": 34,
       "nOfPredicates": 0,
       "nOfSnapActions": 60
     },
     "instance_20_30_7_2.pddl": {
-      "nOfFunction": 64,
+      "nOfFunctions": 64,
       "nOfPredicates": 0,
       "nOfSnapActions": 120
     },
     "instance_20_40_10_2.pddl": {
-      "nOfFunction": 84,
+      "nOfFunctions": 84,
       "nOfPredicates": 0,
       "nOfSnapActions": 160
     },
     "instance_25_15_3_1.pddl": {
-      "nOfFunction": 34,
+      "nOfFunctions": 34,
       "nOfPredicates": 0,
       "nOfSnapActions": 60
     },
     "instance_25_35_8_1.pddl": {
-      "nOfFunction": 74,
+      "nOfFunctions": 74,
       "nOfPredicates": 0,
       "nOfSnapActions": 140
     },
     "instance_25_40_10_3.pddl": {
-      "nOfFunction": 84,
+      "nOfFunctions": 84,
       "nOfPredicates": 0,
       "nOfSnapActions": 160
     },
     "instance_100_20_5_1.pddl": {
-      "nOfFunction": 44,
+      "nOfFunctions": 44,
       "nOfPredicates": 0,
       "nOfSnapActions": 80
     },
     "instance_100_25_6_2.pddl": {
-      "nOfFunction": 54,
+      "nOfFunctions": 54,
       "nOfPredicates": 0,
       "nOfSnapActions": 100
     }
   },
   "numeric/ipc-2023/counters": {
     "fz_instance_4.pddl": {
-      "nOfFunction": 5,
+      "nOfFunctions": 5,
       "nOfPredicates": 0,
       "nOfSnapActions": 8
     },
     "fz_instance_12.pddl": {
-      "nOfFunction": 13,
+      "nOfFunctions": 13,
       "nOfPredicates": 0,
       "nOfSnapActions": 24
     },
     "fz_instance_40.pddl": {
-      "nOfFunction": 41,
+      "nOfFunctions": 41,
       "nOfPredicates": 0,
       "nOfSnapActions": 80
     },
     "inv_instance_4.pddl": {
-      "nOfFunction": 5,
+      "nOfFunctions": 5,
       "nOfPredicates": 0,
       "nOfSnapActions": 8
     },
     "inv_instance_12.pddl": {
-      "nOfFunction": 13,
+      "nOfFunctions": 13,
       "nOfPredicates": 0,
       "nOfSnapActions": 24
     },
     "inv_instance_16.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 0,
       "nOfSnapActions": 32
     },
     "inv_instance_36.pddl": {
-      "nOfFunction": 37,
+      "nOfFunctions": 37,
       "nOfPredicates": 0,
       "nOfSnapActions": 72
     },
     "rnd_instance_4_1.pddl": {
-      "nOfFunction": 5,
+      "nOfFunctions": 5,
       "nOfPredicates": 0,
       "nOfSnapActions": 8
     },
     "rnd_instance_8_2.pddl": {
-      "nOfFunction": 9,
+      "nOfFunctions": 9,
       "nOfPredicates": 0,
       "nOfSnapActions": 16
     },
     "rnd_instance_8_3.pddl": {
-      "nOfFunction": 9,
+      "nOfFunctions": 9,
       "nOfPredicates": 0,
       "nOfSnapActions": 16
     },
     "rnd_instance_12_3.pddl": {
-      "nOfFunction": 13,
+      "nOfFunctions": 13,
       "nOfPredicates": 0,
       "nOfSnapActions": 24
     },
     "rnd_instance_20_1.pddl": {
-      "nOfFunction": 21,
+      "nOfFunctions": 21,
       "nOfPredicates": 0,
       "nOfSnapActions": 40
     },
     "rnd_instance_24_1.pddl": {
-      "nOfFunction": 25,
+      "nOfFunctions": 25,
       "nOfPredicates": 0,
       "nOfSnapActions": 48
     },
     "rnd_instance_28_1.pddl": {
-      "nOfFunction": 29,
+      "nOfFunctions": 29,
       "nOfPredicates": 0,
       "nOfSnapActions": 56
     },
     "rnd_instance_32_1.pddl": {
-      "nOfFunction": 33,
+      "nOfFunctions": 33,
       "nOfPredicates": 0,
       "nOfSnapActions": 64
     },
     "rnd_instance_32_2.pddl": {
-      "nOfFunction": 33,
+      "nOfFunctions": 33,
       "nOfPredicates": 0,
       "nOfSnapActions": 64
     },
     "rnd_instance_36_2.pddl": {
-      "nOfFunction": 37,
+      "nOfFunctions": 37,
       "nOfPredicates": 0,
       "nOfSnapActions": 72
     },
     "rnd_instance_40_1.pddl": {
-      "nOfFunction": 41,
+      "nOfFunctions": 41,
       "nOfPredicates": 0,
       "nOfSnapActions": 80
     },
     "rnd_instance_40_2.pddl": {
-      "nOfFunction": 41,
+      "nOfFunctions": 41,
       "nOfPredicates": 0,
       "nOfSnapActions": 80
     },
     "rnd_instance_40_3.pddl": {
-      "nOfFunction": 41,
+      "nOfFunctions": 41,
       "nOfPredicates": 0,
       "nOfSnapActions": 80
     }
   },
   "numeric/ipc-2023/delivery": {
     "prob01.pddl": {
-      "nOfFunction": 9,
+      "nOfFunctions": 9,
       "nOfPredicates": 54,
       "nOfSnapActions": 136
     },
     "prob02.pddl": {
-      "nOfFunction": 11,
+      "nOfFunctions": 11,
       "nOfPredicates": 72,
       "nOfSnapActions": 200
     },
     "prob03.pddl": {
-      "nOfFunction": 13,
+      "nOfFunctions": 13,
       "nOfPredicates": 90,
       "nOfSnapActions": 264
     },
     "prob04.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 142,
       "nOfSnapActions": 412
     },
     "prob05.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 126,
       "nOfSnapActions": 392
     },
     "prob06.pddl": {
-      "nOfFunction": 19,
+      "nOfFunctions": 19,
       "nOfPredicates": 164,
       "nOfSnapActions": 576
     },
     "prob07.pddl": {
-      "nOfFunction": 21,
+      "nOfFunctions": 21,
       "nOfPredicates": 184,
       "nOfSnapActions": 656
     },
     "prob08.pddl": {
-      "nOfFunction": 23,
+      "nOfFunctions": 23,
       "nOfPredicates": 204,
       "nOfSnapActions": 736
     },
     "prob09.pddl": {
-      "nOfFunction": 25,
+      "nOfFunctions": 25,
       "nOfPredicates": 248,
       "nOfSnapActions": 980
     },
     "prob10.pddl": {
-      "nOfFunction": 29,
+      "nOfFunctions": 29,
       "nOfPredicates": 345,
       "nOfSnapActions": 1614
     },
     "prob11.pddl": {
-      "nOfFunction": 27,
+      "nOfFunctions": 27,
       "nOfPredicates": 284,
       "nOfSnapActions": 1154
     },
     "prob12.pddl": {
-      "nOfFunction": 33,
+      "nOfFunctions": 33,
       "nOfPredicates": 396,
       "nOfSnapActions": 1887
     },
     "prob13.pddl": {
-      "nOfFunction": 35,
+      "nOfFunctions": 35,
       "nOfPredicates": 424,
       "nOfSnapActions": 2031
     },
     "prob14.pddl": {
-      "nOfFunction": 37,
+      "nOfFunctions": 37,
       "nOfPredicates": 487,
       "nOfSnapActions": 2541
     },
     "prob15.pddl": {
-      "nOfFunction": 39,
+      "nOfFunctions": 39,
       "nOfPredicates": 517,
       "nOfSnapActions": 2709
     },
     "prob16.pddl": {
-      "nOfFunction": 41,
+      "nOfFunctions": 41,
       "nOfPredicates": 655,
       "nOfSnapActions": 4305
     },
     "prob17.pddl": {
-      "nOfFunction": 43,
+      "nOfFunctions": 43,
       "nOfPredicates": 691,
       "nOfSnapActions": 4557
     },
     "prob18.pddl": {
-      "nOfFunction": 45,
+      "nOfFunctions": 45,
       "nOfPredicates": 727,
       "nOfSnapActions": 4809
     },
     "prob19.pddl": {
-      "nOfFunction": 47,
+      "nOfFunctions": 47,
       "nOfPredicates": 763,
       "nOfSnapActions": 5061
     },
     "prob20.pddl": {
-      "nOfFunction": 49,
+      "nOfFunctions": 49,
       "nOfPredicates": 799,
       "nOfSnapActions": 5313
     }
   },
   "numeric/ipc-2023/drone": {
     "problem_1_1_2.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 2,
       "nOfSnapActions": 9
     },
     "problem_1_1_4.pddl": {
-      "nOfFunction": 23,
+      "nOfFunctions": 23,
       "nOfPredicates": 4,
       "nOfSnapActions": 11
     },
     "problem_1_8_1.pddl": {
-      "nOfFunction": 35,
+      "nOfFunctions": 35,
       "nOfPredicates": 8,
       "nOfSnapActions": 15
     },
     "problem_1_9_3.pddl": {
-      "nOfFunction": 92,
+      "nOfFunctions": 92,
       "nOfPredicates": 27,
       "nOfSnapActions": 34
     },
     "problem_2_5_4.pddl": {
-      "nOfFunction": 131,
+      "nOfFunctions": 131,
       "nOfPredicates": 40,
       "nOfSnapActions": 47
     },
     "problem_2_8_3.pddl": {
-      "nOfFunction": 155,
+      "nOfFunctions": 155,
       "nOfPredicates": 48,
       "nOfSnapActions": 55
     },
     "problem_2_9_1.pddl": {
-      "nOfFunction": 65,
+      "nOfFunctions": 65,
       "nOfPredicates": 18,
       "nOfSnapActions": 25
     },
     "problem_3_3_4.pddl": {
-      "nOfFunction": 119,
+      "nOfFunctions": 119,
       "nOfPredicates": 36,
       "nOfSnapActions": 43
     },
     "problem_4_2_5.pddl": {
-      "nOfFunction": 131,
+      "nOfFunctions": 131,
       "nOfPredicates": 40,
       "nOfSnapActions": 47
     },
     "problem_4_9_5.pddl": {
-      "nOfFunction": 551,
+      "nOfFunctions": 551,
       "nOfPredicates": 180,
       "nOfSnapActions": 187
     },
     "problem_5_2_2.pddl": {
-      "nOfFunction": 71,
+      "nOfFunctions": 71,
       "nOfPredicates": 20,
       "nOfSnapActions": 27
     },
     "problem_5_10_1.pddl": {
-      "nOfFunction": 161,
+      "nOfFunctions": 161,
       "nOfPredicates": 50,
       "nOfSnapActions": 57
     },
     "problem_6_8_1.pddl": {
-      "nOfFunction": 155,
+      "nOfFunctions": 155,
       "nOfPredicates": 48,
       "nOfSnapActions": 55
     },
     "problem_7_6_4.pddl": {
-      "nOfFunction": 515,
+      "nOfFunctions": 515,
       "nOfPredicates": 168,
       "nOfSnapActions": 175
     },
     "problem_8_1_2.pddl": {
-      "nOfFunction": 59,
+      "nOfFunctions": 59,
       "nOfPredicates": 16,
       "nOfSnapActions": 23
     },
     "problem_8_1_4.pddl": {
-      "nOfFunction": 107,
+      "nOfFunctions": 107,
       "nOfPredicates": 32,
       "nOfSnapActions": 39
     },
     "problem_8_1_5.pddl": {
-      "nOfFunction": 131,
+      "nOfFunctions": 131,
       "nOfPredicates": 40,
       "nOfSnapActions": 47
     },
     "problem_8_7_1.pddl": {
-      "nOfFunction": 179,
+      "nOfFunctions": 179,
       "nOfPredicates": 56,
       "nOfSnapActions": 63
     },
     "problem_9_7_3.pddl": {
-      "nOfFunction": 578,
+      "nOfFunctions": 578,
       "nOfPredicates": 189,
       "nOfSnapActions": 196
     },
     "problem_10_10_3.pddl": {
-      "nOfFunction": 911,
+      "nOfFunctions": 911,
       "nOfPredicates": 300,
       "nOfSnapActions": 307
     }
   },
   "numeric/ipc-2023/expedition": {
     "pfile1.pddl": {
-      "nOfFunction": 16,
+      "nOfFunctions": 16,
       "nOfPredicates": 34,
       "nOfSnapActions": 44
     },
     "pfile2.pddl": {
-      "nOfFunction": 34,
+      "nOfFunctions": 34,
       "nOfPredicates": 88,
       "nOfSnapActions": 116
     },
     "pfile3.pddl": {
-      "nOfFunction": 18,
+      "nOfFunctions": 18,
       "nOfPredicates": 40,
       "nOfSnapActions": 52
     },
     "pfile4.pddl": {
-      "nOfFunction": 20,
+      "nOfFunctions": 20,
       "nOfPredicates": 46,
       "nOfSnapActions": 60
     },
     "pfile5.pddl": {
-      "nOfFunction": 22,
+      "nOfFunctions": 22,
       "nOfPredicates": 52,
       "nOfSnapActions": 68
     },
     "pfile6.pddl": {
-      "nOfFunction": 24,
+      "nOfFunctions": 24,
       "nOfPredicates": 58,
       "nOfSnapActions": 76
     },
     "pfile7.pddl": {
-      "nOfFunction": 26,
+      "nOfFunctions": 26,
       "nOfPredicates": 64,
       "nOfSnapActions": 84
     },
     "pfile8.pddl": {
-      "nOfFunction": 28,
+      "nOfFunctions": 28,
       "nOfPredicates": 70,
       "nOfSnapActions": 92
     },
     "pfile9.pddl": {
-      "nOfFunction": 30,
+      "nOfFunctions": 30,
       "nOfPredicates": 76,
       "nOfSnapActions": 100
     },
     "pfile10.pddl": {
-      "nOfFunction": 32,
+      "nOfFunctions": 32,
       "nOfPredicates": 82,
       "nOfSnapActions": 108
     },
     "pfile11.pddl": {
-      "nOfFunction": 10,
+      "nOfFunctions": 10,
       "nOfPredicates": 17,
       "nOfSnapActions": 44
     },
     "pfile12.pddl": {
-      "nOfFunction": 19,
+      "nOfFunctions": 19,
       "nOfPredicates": 44,
       "nOfSnapActions": 116
     },
     "pfile13.pddl": {
-      "nOfFunction": 11,
+      "nOfFunctions": 11,
       "nOfPredicates": 20,
       "nOfSnapActions": 52
     },
     "pfile14.pddl": {
-      "nOfFunction": 12,
+      "nOfFunctions": 12,
       "nOfPredicates": 23,
       "nOfSnapActions": 60
     },
     "pfile15.pddl": {
-      "nOfFunction": 13,
+      "nOfFunctions": 13,
       "nOfPredicates": 26,
       "nOfSnapActions": 68
     },
     "pfile16.pddl": {
-      "nOfFunction": 14,
+      "nOfFunctions": 14,
       "nOfPredicates": 29,
       "nOfSnapActions": 76
     },
     "pfile17.pddl": {
-      "nOfFunction": 15,
+      "nOfFunctions": 15,
       "nOfPredicates": 32,
       "nOfSnapActions": 84
     },
     "pfile18.pddl": {
-      "nOfFunction": 16,
+      "nOfFunctions": 16,
       "nOfPredicates": 35,
       "nOfSnapActions": 92
     },
     "pfile19.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 38,
       "nOfSnapActions": 100
     },
     "pfile20.pddl": {
-      "nOfFunction": 18,
+      "nOfFunctions": 18,
       "nOfPredicates": 41,
       "nOfSnapActions": 108
     }
   },
   "numeric/ipc-2023/ext-plant-watering": {
     "instance_10_5_2_1.pddl": {
-      "nOfFunction": 32,
+      "nOfFunctions": 32,
       "nOfPredicates": 0,
       "nOfSnapActions": 28
     },
     "instance_10_7_2_1.pddl": {
-      "nOfFunction": 38,
+      "nOfFunctions": 38,
       "nOfPredicates": 0,
       "nOfSnapActions": 32
     },
     "instance_10_11_2_1.pddl": {
-      "nOfFunction": 50,
+      "nOfFunctions": 50,
       "nOfPredicates": 0,
       "nOfSnapActions": 40
     },
     "instance_10_17_2_1.pddl": {
-      "nOfFunction": 68,
+      "nOfFunctions": 68,
       "nOfPredicates": 0,
       "nOfSnapActions": 52
     },
     "instance_11_5_2_1.pddl": {
-      "nOfFunction": 32,
+      "nOfFunctions": 32,
       "nOfPredicates": 0,
       "nOfSnapActions": 28
     },
     "instance_11_17_2_1.pddl": {
-      "nOfFunction": 68,
+      "nOfFunctions": 68,
       "nOfPredicates": 0,
       "nOfSnapActions": 52
     },
     "instance_12_7_2_1.pddl": {
-      "nOfFunction": 38,
+      "nOfFunctions": 38,
       "nOfPredicates": 0,
       "nOfSnapActions": 32
     },
     "instance_12_15_2_1.pddl": {
-      "nOfFunction": 62,
+      "nOfFunctions": 62,
       "nOfPredicates": 0,
       "nOfSnapActions": 48
     },
     "instance_12_17_2_1.pddl": {
-      "nOfFunction": 68,
+      "nOfFunctions": 68,
       "nOfPredicates": 0,
       "nOfSnapActions": 52
     },
     "instance_12_19_2_1.pddl": {
-      "nOfFunction": 74,
+      "nOfFunctions": 74,
       "nOfPredicates": 0,
       "nOfSnapActions": 56
     },
     "instance_13_9_2_1.pddl": {
-      "nOfFunction": 44,
+      "nOfFunctions": 44,
       "nOfPredicates": 0,
       "nOfSnapActions": 36
     },
     "instance_13_13_2_1.pddl": {
-      "nOfFunction": 56,
+      "nOfFunctions": 56,
       "nOfPredicates": 0,
       "nOfSnapActions": 44
     },
     "instance_13_15_2_1.pddl": {
-      "nOfFunction": 62,
+      "nOfFunctions": 62,
       "nOfPredicates": 0,
       "nOfSnapActions": 48
     },
     "instance_14_13_2_1.pddl": {
-      "nOfFunction": 56,
+      "nOfFunctions": 56,
       "nOfPredicates": 0,
       "nOfSnapActions": 44
     },
     "instance_14_17_2_1.pddl": {
-      "nOfFunction": 68,
+      "nOfFunctions": 68,
       "nOfPredicates": 0,
       "nOfSnapActions": 52
     },
     "instance_14_19_2_1.pddl": {
-      "nOfFunction": 74,
+      "nOfFunctions": 74,
       "nOfPredicates": 0,
       "nOfSnapActions": 56
     },
     "instance_15_7_2_1.pddl": {
-      "nOfFunction": 38,
+      "nOfFunctions": 38,
       "nOfPredicates": 0,
       "nOfSnapActions": 32
     },
     "instance_15_15_2_1.pddl": {
-      "nOfFunction": 62,
+      "nOfFunctions": 62,
       "nOfPredicates": 0,
       "nOfSnapActions": 48
     },
     "instance_15_17_2_1.pddl": {
-      "nOfFunction": 68,
+      "nOfFunctions": 68,
       "nOfPredicates": 0,
       "nOfSnapActions": 52
     },
     "instance_15_19_2_1.pddl": {
-      "nOfFunction": 74,
+      "nOfFunctions": 74,
       "nOfPredicates": 0,
       "nOfSnapActions": 56
     }
   },
   "numeric/ipc-2023/farmland": {
     "instance_2_300_1229.pddl": {
-      "nOfFunction": 3,
+      "nOfFunctions": 3,
       "nOfPredicates": 2,
       "nOfSnapActions": 4
     },
     "instance_2_600_1229.pddl": {
-      "nOfFunction": 3,
+      "nOfFunctions": 3,
       "nOfPredicates": 2,
       "nOfSnapActions": 4
     },
     "instance_2_700_1229.pddl": {
-      "nOfFunction": 3,
+      "nOfFunctions": 3,
       "nOfPredicates": 2,
       "nOfSnapActions": 4
     },
     "instance_4_200_1229.pddl": {
-      "nOfFunction": 5,
+      "nOfFunctions": 5,
       "nOfPredicates": 8,
       "nOfSnapActions": 16
     },
     "instance_4_300_1229.pddl": {
-      "nOfFunction": 5,
+      "nOfFunctions": 5,
       "nOfPredicates": 8,
       "nOfSnapActions": 16
     },
     "instance_4_400_1229.pddl": {
-      "nOfFunction": 5,
+      "nOfFunctions": 5,
       "nOfPredicates": 8,
       "nOfSnapActions": 16
     },
     "instance_4_600_1229.pddl": {
-      "nOfFunction": 5,
+      "nOfFunctions": 5,
       "nOfPredicates": 8,
       "nOfSnapActions": 16
     },
     "instance_4_700_1229.pddl": {
-      "nOfFunction": 5,
+      "nOfFunctions": 5,
       "nOfPredicates": 8,
       "nOfSnapActions": 16
     },
     "instance_4_800_1229.pddl": {
-      "nOfFunction": 5,
+      "nOfFunctions": 5,
       "nOfPredicates": 8,
       "nOfSnapActions": 16
     },
     "instance_6_100_1229.pddl": {
-      "nOfFunction": 7,
+      "nOfFunctions": 7,
       "nOfPredicates": 14,
       "nOfSnapActions": 28
     },
     "instance_6_200_1229.pddl": {
-      "nOfFunction": 7,
+      "nOfFunctions": 7,
       "nOfPredicates": 14,
       "nOfSnapActions": 28
     },
     "instance_6_400_1229.pddl": {
-      "nOfFunction": 7,
+      "nOfFunctions": 7,
       "nOfPredicates": 14,
       "nOfSnapActions": 28
     },
     "instance_6_500_1229.pddl": {
-      "nOfFunction": 7,
+      "nOfFunctions": 7,
       "nOfPredicates": 14,
       "nOfSnapActions": 28
     },
     "instance_6_600_1229.pddl": {
-      "nOfFunction": 7,
+      "nOfFunctions": 7,
       "nOfPredicates": 14,
       "nOfSnapActions": 28
     },
     "instance_6_900_1229.pddl": {
-      "nOfFunction": 7,
+      "nOfFunctions": 7,
       "nOfPredicates": 14,
       "nOfSnapActions": 28
     },
     "instance_8_200_1229.pddl": {
-      "nOfFunction": 9,
+      "nOfFunctions": 9,
       "nOfPredicates": 20,
       "nOfSnapActions": 40
     },
     "instance_8_400_1229.pddl": {
-      "nOfFunction": 9,
+      "nOfFunctions": 9,
       "nOfPredicates": 20,
       "nOfSnapActions": 40
     },
     "instance_8_700_1229.pddl": {
-      "nOfFunction": 9,
+      "nOfFunctions": 9,
       "nOfPredicates": 20,
       "nOfSnapActions": 40
     },
     "instance_10_500_1229.pddl": {
-      "nOfFunction": 11,
+      "nOfFunctions": 11,
       "nOfPredicates": 26,
       "nOfSnapActions": 52
     },
     "instance_10_700_1229.pddl": {
-      "nOfFunction": 11,
+      "nOfFunctions": 11,
       "nOfPredicates": 26,
       "nOfSnapActions": 52
     }
   },
   "numeric/ipc-2023/fo-farmland": {
     "instance_2_200_1229.pddl": {
-      "nOfFunction": 4,
+      "nOfFunctions": 4,
       "nOfPredicates": 3,
       "nOfSnapActions": 5
     },
     "instance_2_400_1229.pddl": {
-      "nOfFunction": 4,
+      "nOfFunctions": 4,
       "nOfPredicates": 3,
       "nOfSnapActions": 5
     },
     "instance_4_300_1229.pddl": {
-      "nOfFunction": 6,
+      "nOfFunctions": 6,
       "nOfPredicates": 9,
       "nOfSnapActions": 17
     },
     "instance_4_400_1229.pddl": {
-      "nOfFunction": 6,
+      "nOfFunctions": 6,
       "nOfPredicates": 9,
       "nOfSnapActions": 17
     },
     "instance_4_800_1229.pddl": {
-      "nOfFunction": 6,
+      "nOfFunctions": 6,
       "nOfPredicates": 9,
       "nOfSnapActions": 17
     },
     "instance_4_1000_1229.pddl": {
-      "nOfFunction": 6,
+      "nOfFunctions": 6,
       "nOfPredicates": 9,
       "nOfSnapActions": 17
     },
     "instance_6_100_1229.pddl": {
-      "nOfFunction": 8,
+      "nOfFunctions": 8,
       "nOfPredicates": 15,
       "nOfSnapActions": 29
     },
     "instance_6_400_1229.pddl": {
-      "nOfFunction": 8,
+      "nOfFunctions": 8,
       "nOfPredicates": 15,
       "nOfSnapActions": 29
     },
     "instance_6_600_1229.pddl": {
-      "nOfFunction": 8,
+      "nOfFunctions": 8,
       "nOfPredicates": 15,
       "nOfSnapActions": 29
     },
     "instance_6_800_1229.pddl": {
-      "nOfFunction": 8,
+      "nOfFunctions": 8,
       "nOfPredicates": 15,
       "nOfSnapActions": 29
     },
     "instance_6_900_1229.pddl": {
-      "nOfFunction": 8,
+      "nOfFunctions": 8,
       "nOfPredicates": 15,
       "nOfSnapActions": 29
     },
     "instance_8_300_1229.pddl": {
-      "nOfFunction": 10,
+      "nOfFunctions": 10,
       "nOfPredicates": 21,
       "nOfSnapActions": 41
     },
     "instance_8_400_1229.pddl": {
-      "nOfFunction": 10,
+      "nOfFunctions": 10,
       "nOfPredicates": 21,
       "nOfSnapActions": 41
     },
     "instance_8_500_1229.pddl": {
-      "nOfFunction": 10,
+      "nOfFunctions": 10,
       "nOfPredicates": 21,
       "nOfSnapActions": 41
     },
     "instance_8_600_1229.pddl": {
-      "nOfFunction": 10,
+      "nOfFunctions": 10,
       "nOfPredicates": 21,
       "nOfSnapActions": 41
     },
     "instance_8_700_1229.pddl": {
-      "nOfFunction": 10,
+      "nOfFunctions": 10,
       "nOfPredicates": 21,
       "nOfSnapActions": 41
     },
     "instance_8_900_1229.pddl": {
-      "nOfFunction": 10,
+      "nOfFunctions": 10,
       "nOfPredicates": 21,
       "nOfSnapActions": 41
     },
     "instance_10_100_1229.pddl": {
-      "nOfFunction": 12,
+      "nOfFunctions": 12,
       "nOfPredicates": 27,
       "nOfSnapActions": 53
     },
     "instance_10_200_1229.pddl": {
-      "nOfFunction": 12,
+      "nOfFunctions": 12,
       "nOfPredicates": 27,
       "nOfSnapActions": 53
     },
     "instance_10_400_1229.pddl": {
-      "nOfFunction": 12,
+      "nOfFunctions": 12,
       "nOfPredicates": 27,
       "nOfSnapActions": 53
     }
   },
   "numeric/ipc-2023/fo-sailing": {
     "instance_1_1_1229.pddl": {
-      "nOfFunction": 4,
+      "nOfFunctions": 4,
       "nOfPredicates": 2,
       "nOfSnapActions": 10
     },
     "instance_1_2_1229.pddl": {
-      "nOfFunction": 5,
+      "nOfFunctions": 5,
       "nOfPredicates": 3,
       "nOfSnapActions": 11
     },
     "instance_1_3_1229.pddl": {
-      "nOfFunction": 6,
+      "nOfFunctions": 6,
       "nOfPredicates": 4,
       "nOfSnapActions": 12
     },
     "instance_1_4_1229.pddl": {
-      "nOfFunction": 7,
+      "nOfFunctions": 7,
       "nOfPredicates": 5,
       "nOfSnapActions": 13
     },
     "instance_2_1_1229.pddl": {
-      "nOfFunction": 7,
+      "nOfFunctions": 7,
       "nOfPredicates": 2,
       "nOfSnapActions": 20
     },
     "instance_2_2_1229.pddl": {
-      "nOfFunction": 8,
+      "nOfFunctions": 8,
       "nOfPredicates": 3,
       "nOfSnapActions": 22
     },
     "instance_2_3_1229.pddl": {
-      "nOfFunction": 9,
+      "nOfFunctions": 9,
       "nOfPredicates": 4,
       "nOfSnapActions": 24
     },
     "instance_2_4_1229.pddl": {
-      "nOfFunction": 10,
+      "nOfFunctions": 10,
       "nOfPredicates": 5,
       "nOfSnapActions": 26
     },
     "instance_3_1_1229.pddl": {
-      "nOfFunction": 10,
+      "nOfFunctions": 10,
       "nOfPredicates": 2,
       "nOfSnapActions": 30
     },
     "instance_3_2_1229.pddl": {
-      "nOfFunction": 11,
+      "nOfFunctions": 11,
       "nOfPredicates": 3,
       "nOfSnapActions": 33
     },
     "instance_3_3_1229.pddl": {
-      "nOfFunction": 12,
+      "nOfFunctions": 12,
       "nOfPredicates": 4,
       "nOfSnapActions": 36
     },
     "instance_3_4_1229.pddl": {
-      "nOfFunction": 13,
+      "nOfFunctions": 13,
       "nOfPredicates": 5,
       "nOfSnapActions": 39
     },
     "instance_4_1_1229.pddl": {
-      "nOfFunction": 13,
+      "nOfFunctions": 13,
       "nOfPredicates": 2,
       "nOfSnapActions": 40
     },
     "instance_4_2_1229.pddl": {
-      "nOfFunction": 14,
+      "nOfFunctions": 14,
       "nOfPredicates": 3,
       "nOfSnapActions": 44
     },
     "instance_4_3_1229.pddl": {
-      "nOfFunction": 15,
+      "nOfFunctions": 15,
       "nOfPredicates": 4,
       "nOfSnapActions": 48
     },
     "instance_4_4_1229.pddl": {
-      "nOfFunction": 16,
+      "nOfFunctions": 16,
       "nOfPredicates": 5,
       "nOfSnapActions": 52
     },
     "instance_5_1_1229.pddl": {
-      "nOfFunction": 16,
+      "nOfFunctions": 16,
       "nOfPredicates": 2,
       "nOfSnapActions": 50
     },
     "instance_5_2_1229.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 3,
       "nOfSnapActions": 55
     },
     "instance_5_3_1229.pddl": {
-      "nOfFunction": 18,
+      "nOfFunctions": 18,
       "nOfPredicates": 4,
       "nOfSnapActions": 60
     },
     "instance_5_4_1229.pddl": {
-      "nOfFunction": 19,
+      "nOfFunctions": 19,
       "nOfPredicates": 5,
       "nOfSnapActions": 65
     }
   },
   "numeric/ipc-2023/fo_counters": {
     "instance_2.pddl": {
-      "nOfFunction": 6,
+      "nOfFunctions": 6,
       "nOfPredicates": 0,
       "nOfSnapActions": 8
     },
     "instance_3.pddl": {
-      "nOfFunction": 8,
+      "nOfFunctions": 8,
       "nOfPredicates": 0,
       "nOfSnapActions": 12
     },
     "instance_4.pddl": {
-      "nOfFunction": 10,
+      "nOfFunctions": 10,
       "nOfPredicates": 0,
       "nOfSnapActions": 16
     },
     "instance_5.pddl": {
-      "nOfFunction": 12,
+      "nOfFunctions": 12,
       "nOfPredicates": 0,
       "nOfSnapActions": 20
     },
     "instance_6.pddl": {
-      "nOfFunction": 14,
+      "nOfFunctions": 14,
       "nOfPredicates": 0,
       "nOfSnapActions": 24
     },
     "instance_7.pddl": {
-      "nOfFunction": 16,
+      "nOfFunctions": 16,
       "nOfPredicates": 0,
       "nOfSnapActions": 28
     },
     "instance_8.pddl": {
-      "nOfFunction": 18,
+      "nOfFunctions": 18,
       "nOfPredicates": 0,
       "nOfSnapActions": 32
     },
     "instance_9.pddl": {
-      "nOfFunction": 20,
+      "nOfFunctions": 20,
       "nOfPredicates": 0,
       "nOfSnapActions": 36
     },
     "instance_10.pddl": {
-      "nOfFunction": 22,
+      "nOfFunctions": 22,
       "nOfPredicates": 0,
       "nOfSnapActions": 40
     },
     "instance_11.pddl": {
-      "nOfFunction": 24,
+      "nOfFunctions": 24,
       "nOfPredicates": 0,
       "nOfSnapActions": 44
     },
     "instance_12.pddl": {
-      "nOfFunction": 26,
+      "nOfFunctions": 26,
       "nOfPredicates": 0,
       "nOfSnapActions": 48
     },
     "instance_13.pddl": {
-      "nOfFunction": 28,
+      "nOfFunctions": 28,
       "nOfPredicates": 0,
       "nOfSnapActions": 52
     },
     "instance_14.pddl": {
-      "nOfFunction": 30,
+      "nOfFunctions": 30,
       "nOfPredicates": 0,
       "nOfSnapActions": 56
     },
     "instance_15.pddl": {
-      "nOfFunction": 32,
+      "nOfFunctions": 32,
       "nOfPredicates": 0,
       "nOfSnapActions": 60
     },
     "instance_16.pddl": {
-      "nOfFunction": 34,
+      "nOfFunctions": 34,
       "nOfPredicates": 0,
       "nOfSnapActions": 64
     },
     "instance_17.pddl": {
-      "nOfFunction": 36,
+      "nOfFunctions": 36,
       "nOfPredicates": 0,
       "nOfSnapActions": 68
     },
     "instance_18.pddl": {
-      "nOfFunction": 38,
+      "nOfFunctions": 38,
       "nOfPredicates": 0,
       "nOfSnapActions": 72
     },
     "instance_19.pddl": {
-      "nOfFunction": 40,
+      "nOfFunctions": 40,
       "nOfPredicates": 0,
       "nOfSnapActions": 76
     },
     "instance_20.pddl": {
-      "nOfFunction": 42,
+      "nOfFunctions": 42,
       "nOfPredicates": 0,
       "nOfSnapActions": 80
     },
     "instance_21.pddl": {
-      "nOfFunction": 44,
+      "nOfFunctions": 44,
       "nOfPredicates": 0,
       "nOfSnapActions": 84
     }
   },
   "numeric/ipc-2023/hydropower": {
     "pfile01.pddl": {
-      "nOfFunction": 30,
+      "nOfFunctions": 30,
       "nOfPredicates": 150,
       "nOfSnapActions": 146
     },
     "pfile02.pddl": {
-      "nOfFunction": 30,
+      "nOfFunctions": 30,
       "nOfPredicates": 150,
       "nOfSnapActions": 146
     },
     "pfile04.pddl": {
-      "nOfFunction": 30,
+      "nOfFunctions": 30,
       "nOfPredicates": 150,
       "nOfSnapActions": 146
     },
     "pfile05.pddl": {
-      "nOfFunction": 30,
+      "nOfFunctions": 30,
       "nOfPredicates": 150,
       "nOfSnapActions": 146
     },
     "pfile06.pddl": {
-      "nOfFunction": 30,
+      "nOfFunctions": 30,
       "nOfPredicates": 150,
       "nOfSnapActions": 146
     },
     "pfile07.pddl": {
-      "nOfFunction": 30,
+      "nOfFunctions": 30,
       "nOfPredicates": 150,
       "nOfSnapActions": 146
     },
     "pfile08.pddl": {
-      "nOfFunction": 30,
+      "nOfFunctions": 30,
       "nOfPredicates": 150,
       "nOfSnapActions": 146
     },
     "pfile09.pddl": {
-      "nOfFunction": 30,
+      "nOfFunctions": 30,
       "nOfPredicates": 150,
       "nOfSnapActions": 146
     },
     "pfile11.pddl": {
-      "nOfFunction": 30,
+      "nOfFunctions": 30,
       "nOfPredicates": 150,
       "nOfSnapActions": 146
     },
     "pfile12.pddl": {
-      "nOfFunction": 30,
+      "nOfFunctions": 30,
       "nOfPredicates": 150,
       "nOfSnapActions": 146
     },
     "pfile13.pddl": {
-      "nOfFunction": 30,
+      "nOfFunctions": 30,
       "nOfPredicates": 150,
       "nOfSnapActions": 146
     },
     "pfile14.pddl": {
-      "nOfFunction": 30,
+      "nOfFunctions": 30,
       "nOfPredicates": 150,
       "nOfSnapActions": 146
     },
     "pfile18.pddl": {
-      "nOfFunction": 30,
+      "nOfFunctions": 30,
       "nOfPredicates": 150,
       "nOfSnapActions": 146
     },
     "pfile19.pddl": {
-      "nOfFunction": 30,
+      "nOfFunctions": 30,
       "nOfPredicates": 150,
       "nOfSnapActions": 146
     },
     "pfile20.pddl": {
-      "nOfFunction": 30,
+      "nOfFunctions": 30,
       "nOfPredicates": 150,
       "nOfSnapActions": 146
     },
     "pfile22.pddl": {
-      "nOfFunction": 30,
+      "nOfFunctions": 30,
       "nOfPredicates": 150,
       "nOfSnapActions": 146
     },
     "pfile23.pddl": {
-      "nOfFunction": 30,
+      "nOfFunctions": 30,
       "nOfPredicates": 150,
       "nOfSnapActions": 146
     },
     "pfile24.pddl": {
-      "nOfFunction": 30,
+      "nOfFunctions": 30,
       "nOfPredicates": 150,
       "nOfSnapActions": 146
     },
     "pfile27.pddl": {
-      "nOfFunction": 30,
+      "nOfFunctions": 30,
       "nOfPredicates": 150,
       "nOfSnapActions": 146
     },
     "pfile28.pddl": {
-      "nOfFunction": 30,
+      "nOfFunctions": 30,
       "nOfPredicates": 150,
       "nOfSnapActions": 146
     }
   },
   "numeric/ipc-2023/mprime": {
     "pfile01.pddl": {
-      "nOfFunction": 7,
+      "nOfFunctions": 7,
       "nOfPredicates": 40,
       "nOfSnapActions": 85
     },
     "pfile02.pddl": {
-      "nOfFunction": 11,
+      "nOfFunctions": 11,
       "nOfPredicates": 268,
       "nOfSnapActions": 1249
     },
     "pfile04.pddl": {
-      "nOfFunction": 11,
+      "nOfFunctions": 11,
       "nOfPredicates": 115,
       "nOfSnapActions": 268
     },
     "pfile05.pddl": {
-      "nOfFunction": 12,
+      "nOfFunctions": 12,
       "nOfPredicates": 230,
       "nOfSnapActions": 1096
     },
     "pfile09.pddl": {
-      "nOfFunction": 11,
+      "nOfFunctions": 11,
       "nOfPredicates": 185,
       "nOfSnapActions": 833
     },
     "pfile13.pddl": {
-      "nOfFunction": 29,
+      "nOfFunctions": 29,
       "nOfPredicates": 1538,
       "nOfSnapActions": 15002
     },
     "pfile14.pddl": {
-      "nOfFunction": 30,
+      "nOfFunctions": 30,
       "nOfPredicates": 1567,
       "nOfSnapActions": 17595
     },
     "pfile15.pddl": {
-      "nOfFunction": 28,
+      "nOfFunctions": 28,
       "nOfPredicates": 593,
       "nOfSnapActions": 5613
     },
     "pfile16.pddl": {
-      "nOfFunction": 18,
+      "nOfFunctions": 18,
       "nOfPredicates": 263,
       "nOfSnapActions": 1675
     },
     "pfile18.pddl": {
-      "nOfFunction": 29,
+      "nOfFunctions": 29,
       "nOfPredicates": 469,
       "nOfSnapActions": 3634
     },
     "pfile19.pddl": {
-      "nOfFunction": 23,
+      "nOfFunctions": 23,
       "nOfPredicates": 480,
       "nOfSnapActions": 3889
     },
     "pfile20.pddl": {
-      "nOfFunction": 29,
+      "nOfFunctions": 29,
       "nOfPredicates": 362,
       "nOfSnapActions": 2436
     },
     "pfile21.pddl": {
-      "nOfFunction": 18,
+      "nOfFunctions": 18,
       "nOfPredicates": 714,
       "nOfSnapActions": 5220
     },
     "pfile22.pddl": {
-      "nOfFunction": 37,
+      "nOfFunctions": 37,
       "nOfPredicates": 1066,
       "nOfSnapActions": 13561
     },
     "pfile23.pddl": {
-      "nOfFunction": 26,
+      "nOfFunctions": 26,
       "nOfPredicates": 597,
       "nOfSnapActions": 4953
     },
     "pfile24.pddl": {
-      "nOfFunction": 18,
+      "nOfFunctions": 18,
       "nOfPredicates": 749,
       "nOfSnapActions": 3669
     },
     "pfile25.pddl": {
-      "nOfFunction": 6,
+      "nOfFunctions": 6,
       "nOfPredicates": 30,
       "nOfSnapActions": 68
     },
     "pfile26.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 162,
       "nOfSnapActions": 794
     },
     "pfile27.pddl": {
-      "nOfFunction": 10,
+      "nOfFunctions": 10,
       "nOfPredicates": 99,
       "nOfSnapActions": 355
     },
     "pfile28.pddl": {
-      "nOfFunction": 6,
+      "nOfFunctions": 6,
       "nOfPredicates": 59,
       "nOfSnapActions": 107
     }
   },
   "numeric/ipc-2023/pathwaysmetric": {
     "pfile01.pddl": {
-      "nOfFunction": 75,
+      "nOfFunctions": 75,
       "nOfPredicates": 44,
       "nOfSnapActions": 44
     },
     "pfile03.pddl": {
-      "nOfFunction": 189,
+      "nOfFunctions": 189,
       "nOfPredicates": 74,
       "nOfSnapActions": 74
     },
     "pfile04.pddl": {
-      "nOfFunction": 274,
+      "nOfFunctions": 274,
       "nOfPredicates": 101,
       "nOfSnapActions": 101
     },
     "pfile06.pddl": {
-      "nOfFunction": 495,
+      "nOfFunctions": 495,
       "nOfPredicates": 166,
       "nOfSnapActions": 166
     },
     "pfile07.pddl": {
-      "nOfFunction": 672,
+      "nOfFunctions": 672,
       "nOfPredicates": 215,
       "nOfSnapActions": 215
     },
     "pfile08.pddl": {
-      "nOfFunction": 947,
+      "nOfFunctions": 947,
       "nOfPredicates": 276,
       "nOfSnapActions": 276
     },
     "pfile09.pddl": {
-      "nOfFunction": 868,
+      "nOfFunctions": 868,
       "nOfPredicates": 269,
       "nOfSnapActions": 269
     },
     "pfile10.pddl": {
-      "nOfFunction": 896,
+      "nOfFunctions": 896,
       "nOfPredicates": 288,
       "nOfSnapActions": 288
     },
     "pfile11.pddl": {
-      "nOfFunction": 772,
+      "nOfFunctions": 772,
       "nOfPredicates": 274,
       "nOfSnapActions": 274
     },
     "pfile13.pddl": {
-      "nOfFunction": 924,
+      "nOfFunctions": 924,
       "nOfPredicates": 303,
       "nOfSnapActions": 303
     },
     "pfile14.pddl": {
-      "nOfFunction": 1043,
+      "nOfFunctions": 1043,
       "nOfPredicates": 306,
       "nOfSnapActions": 306
     },
     "pfile15.pddl": {
-      "nOfFunction": 1165,
+      "nOfFunctions": 1165,
       "nOfPredicates": 371,
       "nOfSnapActions": 371
     },
     "pfile16.pddl": {
-      "nOfFunction": 1959,
+      "nOfFunctions": 1959,
       "nOfPredicates": 550,
       "nOfSnapActions": 550
     },
     "pfile18.pddl": {
-      "nOfFunction": 1383,
+      "nOfFunctions": 1383,
       "nOfPredicates": 381,
       "nOfSnapActions": 381
     },
     "pfile20.pddl": {
-      "nOfFunction": 1600,
+      "nOfFunctions": 1600,
       "nOfPredicates": 436,
       "nOfSnapActions": 436
     },
     "pfile21.pddl": {
-      "nOfFunction": 1957,
+      "nOfFunctions": 1957,
       "nOfPredicates": 574,
       "nOfSnapActions": 574
     },
     "pfile23.pddl": {
-      "nOfFunction": 1651,
+      "nOfFunctions": 1651,
       "nOfPredicates": 511,
       "nOfSnapActions": 511
     },
     "pfile24.pddl": {
-      "nOfFunction": 1853,
+      "nOfFunctions": 1853,
       "nOfPredicates": 494,
       "nOfSnapActions": 494
     },
     "pfile26.pddl": {
-      "nOfFunction": 2300,
+      "nOfFunctions": 2300,
       "nOfPredicates": 659,
       "nOfSnapActions": 659
     },
     "pfile27.pddl": {
-      "nOfFunction": 2711,
+      "nOfFunctions": 2711,
       "nOfPredicates": 767,
       "nOfSnapActions": 767
     }
   },
   "numeric/ipc-2023/rover": {
     "pfile1.pddl": {
-      "nOfFunction": 2,
+      "nOfFunctions": 2,
       "nOfPredicates": 84,
       "nOfSnapActions": 64
     },
     "pfile2.pddl": {
-      "nOfFunction": 2,
+      "nOfFunctions": 2,
       "nOfPredicates": 85,
       "nOfSnapActions": 55
     },
     "pfile3.pddl": {
-      "nOfFunction": 3,
+      "nOfFunctions": 3,
       "nOfPredicates": 114,
       "nOfSnapActions": 80
     },
     "pfile4.pddl": {
-      "nOfFunction": 3,
+      "nOfFunctions": 3,
       "nOfPredicates": 126,
       "nOfSnapActions": 89
     },
     "pfile5.pddl": {
-      "nOfFunction": 3,
+      "nOfFunctions": 3,
       "nOfPredicates": 135,
       "nOfSnapActions": 146
     },
     "pfile6.pddl": {
-      "nOfFunction": 3,
+      "nOfFunctions": 3,
       "nOfPredicates": 165,
       "nOfSnapActions": 180
     },
     "pfile7.pddl": {
-      "nOfFunction": 4,
+      "nOfFunctions": 4,
       "nOfPredicates": 200,
       "nOfSnapActions": 154
     },
     "pfile8.pddl": {
-      "nOfFunction": 5,
+      "nOfFunctions": 5,
       "nOfPredicates": 271,
       "nOfSnapActions": 340
     },
     "pfile9.pddl": {
-      "nOfFunction": 5,
+      "nOfFunctions": 5,
       "nOfPredicates": 314,
       "nOfSnapActions": 366
     },
     "pfile10.pddl": {
-      "nOfFunction": 5,
+      "nOfFunctions": 5,
       "nOfPredicates": 319,
       "nOfSnapActions": 388
     },
     "pfile11.pddl": {
-      "nOfFunction": 5,
+      "nOfFunctions": 5,
       "nOfPredicates": 343,
       "nOfSnapActions": 452
     },
     "pfile12.pddl": {
-      "nOfFunction": 5,
+      "nOfFunctions": 5,
       "nOfPredicates": 355,
       "nOfSnapActions": 374
     },
     "pfile13.pddl": {
-      "nOfFunction": 5,
+      "nOfFunctions": 5,
       "nOfPredicates": 402,
       "nOfSnapActions": 757
     },
     "pfile14.pddl": {
-      "nOfFunction": 5,
+      "nOfFunctions": 5,
       "nOfPredicates": 441,
       "nOfSnapActions": 533
     },
     "pfile15.pddl": {
-      "nOfFunction": 5,
+      "nOfFunctions": 5,
       "nOfPredicates": 503,
       "nOfSnapActions": 775
     },
     "pfile16.pddl": {
-      "nOfFunction": 5,
+      "nOfFunctions": 5,
       "nOfPredicates": 528,
       "nOfSnapActions": 683
     },
     "pfile17.pddl": {
-      "nOfFunction": 7,
+      "nOfFunctions": 7,
       "nOfPredicates": 853,
       "nOfSnapActions": 1245
     },
     "pfile18.pddl": {
-      "nOfFunction": 7,
+      "nOfFunctions": 7,
       "nOfPredicates": 1142,
       "nOfSnapActions": 1873
     },
     "pfile19.pddl": {
-      "nOfFunction": 7,
+      "nOfFunctions": 7,
       "nOfPredicates": 1186,
       "nOfSnapActions": 2892
     },
     "pfile20.pddl": {
-      "nOfFunction": 9,
+      "nOfFunctions": 9,
       "nOfPredicates": 1751,
       "nOfSnapActions": 4040
     }
   },
   "numeric/ipc-2023/sailing": {
     "instance_1_4_1229.pddl": {
-      "nOfFunction": 6,
+      "nOfFunctions": 6,
       "nOfPredicates": 4,
       "nOfSnapActions": 11
     },
     "instance_1_5_1229.pddl": {
-      "nOfFunction": 7,
+      "nOfFunctions": 7,
       "nOfPredicates": 5,
       "nOfSnapActions": 12
     },
     "instance_1_6_1229.pddl": {
-      "nOfFunction": 8,
+      "nOfFunctions": 8,
       "nOfPredicates": 6,
       "nOfSnapActions": 13
     },
     "instance_1_7_1229.pddl": {
-      "nOfFunction": 9,
+      "nOfFunctions": 9,
       "nOfPredicates": 7,
       "nOfSnapActions": 14
     },
     "instance_1_10_1229.pddl": {
-      "nOfFunction": 12,
+      "nOfFunctions": 12,
       "nOfPredicates": 10,
       "nOfSnapActions": 17
     },
     "instance_2_1_1229.pddl": {
-      "nOfFunction": 5,
+      "nOfFunctions": 5,
       "nOfPredicates": 1,
       "nOfSnapActions": 16
     },
     "instance_2_2_1229.pddl": {
-      "nOfFunction": 6,
+      "nOfFunctions": 6,
       "nOfPredicates": 2,
       "nOfSnapActions": 18
     },
     "instance_2_4_1229.pddl": {
-      "nOfFunction": 8,
+      "nOfFunctions": 8,
       "nOfPredicates": 4,
       "nOfSnapActions": 22
     },
     "instance_2_7_1229.pddl": {
-      "nOfFunction": 11,
+      "nOfFunctions": 11,
       "nOfPredicates": 7,
       "nOfSnapActions": 28
     },
     "instance_2_8_1229.pddl": {
-      "nOfFunction": 12,
+      "nOfFunctions": 12,
       "nOfPredicates": 8,
       "nOfSnapActions": 30
     },
     "instance_2_9_1229.pddl": {
-      "nOfFunction": 13,
+      "nOfFunctions": 13,
       "nOfPredicates": 9,
       "nOfSnapActions": 32
     },
     "instance_2_10_1229.pddl": {
-      "nOfFunction": 14,
+      "nOfFunctions": 14,
       "nOfPredicates": 10,
       "nOfSnapActions": 34
     },
     "instance_3_4_1229.pddl": {
-      "nOfFunction": 10,
+      "nOfFunctions": 10,
       "nOfPredicates": 4,
       "nOfSnapActions": 33
     },
     "instance_3_5_1229.pddl": {
-      "nOfFunction": 11,
+      "nOfFunctions": 11,
       "nOfPredicates": 5,
       "nOfSnapActions": 36
     },
     "instance_3_6_1229.pddl": {
-      "nOfFunction": 12,
+      "nOfFunctions": 12,
       "nOfPredicates": 6,
       "nOfSnapActions": 39
     },
     "instance_4_2_1229.pddl": {
-      "nOfFunction": 10,
+      "nOfFunctions": 10,
       "nOfPredicates": 2,
       "nOfSnapActions": 36
     },
     "instance_4_5_1229.pddl": {
-      "nOfFunction": 13,
+      "nOfFunctions": 13,
       "nOfPredicates": 5,
       "nOfSnapActions": 48
     },
     "instance_4_6_1229.pddl": {
-      "nOfFunction": 14,
+      "nOfFunctions": 14,
       "nOfPredicates": 6,
       "nOfSnapActions": 52
     },
     "instance_4_7_1229.pddl": {
-      "nOfFunction": 15,
+      "nOfFunctions": 15,
       "nOfPredicates": 7,
       "nOfSnapActions": 56
     },
     "instance_4_10_1229.pddl": {
-      "nOfFunction": 18,
+      "nOfFunctions": 18,
       "nOfPredicates": 10,
       "nOfSnapActions": 68
     }
   },
   "numeric/ipc-2023/satellite": {
     "pfile1.pddl": {
-      "nOfFunction": 68,
+      "nOfFunctions": 68,
       "nOfPredicates": 20,
       "nOfSnapActions": 49
     },
     "pfile2.pddl": {
-      "nOfFunction": 92,
+      "nOfFunctions": 92,
       "nOfPredicates": 46,
       "nOfSnapActions": 87
     },
     "pfile3.pddl": {
-      "nOfFunction": 94,
+      "nOfFunctions": 94,
       "nOfPredicates": 66,
       "nOfSnapActions": 164
     },
     "pfile4.pddl": {
-      "nOfFunction": 136,
+      "nOfFunctions": 136,
       "nOfPredicates": 71,
       "nOfSnapActions": 238
     },
     "pfile5.pddl": {
-      "nOfFunction": 138,
+      "nOfFunctions": 138,
       "nOfPredicates": 119,
       "nOfSnapActions": 437
     },
     "pfile6.pddl": {
-      "nOfFunction": 173,
+      "nOfFunctions": 173,
       "nOfPredicates": 110,
       "nOfSnapActions": 415
     },
     "pfile7.pddl": {
-      "nOfFunction": 202,
+      "nOfFunctions": 202,
       "nOfPredicates": 149,
       "nOfSnapActions": 671
     },
     "pfile8.pddl": {
-      "nOfFunction": 295,
+      "nOfFunctions": 295,
       "nOfPredicates": 185,
       "nOfSnapActions": 1080
     },
     "pfile9.pddl": {
-      "nOfFunction": 312,
+      "nOfFunctions": 312,
       "nOfPredicates": 225,
       "nOfSnapActions": 1343
     },
     "pfile10.pddl": {
-      "nOfFunction": 386,
+      "nOfFunctions": 386,
       "nOfPredicates": 242,
       "nOfSnapActions": 1669
     },
     "pfile11.pddl": {
-      "nOfFunction": 512,
+      "nOfFunctions": 512,
       "nOfPredicates": 259,
       "nOfSnapActions": 2197
     },
     "pfile12.pddl": {
-      "nOfFunction": 762,
+      "nOfFunctions": 762,
       "nOfPredicates": 316,
       "nOfSnapActions": 3450
     },
     "pfile13.pddl": {
-      "nOfFunction": 1062,
+      "nOfFunctions": 1062,
       "nOfPredicates": 359,
       "nOfSnapActions": 4827
     },
     "pfile14.pddl": {
-      "nOfFunction": 764,
+      "nOfFunctions": 764,
       "nOfPredicates": 356,
       "nOfSnapActions": 4176
     },
     "pfile15.pddl": {
-      "nOfFunction": 768,
+      "nOfFunctions": 768,
       "nOfPredicates": 440,
       "nOfSnapActions": 5477
     },
     "pfile16.pddl": {
-      "nOfFunction": 772,
+      "nOfFunctions": 772,
       "nOfPredicates": 522,
       "nOfSnapActions": 6969
     },
     "pfile17.pddl": {
-      "nOfFunction": 776,
+      "nOfFunctions": 776,
       "nOfPredicates": 575,
       "nOfSnapActions": 8112
     },
     "pfile18.pddl": {
-      "nOfFunction": 762,
+      "nOfFunctions": 762,
       "nOfPredicates": 329,
       "nOfSnapActions": 3479
     },
     "pfile19.pddl": {
-      "nOfFunction": 837,
+      "nOfFunctions": 837,
       "nOfPredicates": 479,
       "nOfSnapActions": 4055
     },
     "pfile20.pddl": {
-      "nOfFunction": 887,
+      "nOfFunctions": 887,
       "nOfPredicates": 550,
       "nOfSnapActions": 4167
     }
   },
   "numeric/ipc-2023/sugar": {
     "pfile01.pddl": {
-      "nOfFunction": 51,
+      "nOfFunctions": 51,
       "nOfPredicates": 82,
       "nOfSnapActions": 172
     },
     "pfile02.pddl": {
-      "nOfFunction": 59,
+      "nOfFunctions": 59,
       "nOfPredicates": 97,
       "nOfSnapActions": 200
     },
     "pfile03.pddl": {
-      "nOfFunction": 59,
+      "nOfFunctions": 59,
       "nOfPredicates": 97,
       "nOfSnapActions": 198
     },
     "pfile04.pddl": {
-      "nOfFunction": 59,
+      "nOfFunctions": 59,
       "nOfPredicates": 107,
       "nOfSnapActions": 221
     },
     "pfile05.pddl": {
-      "nOfFunction": 60,
+      "nOfFunctions": 60,
       "nOfPredicates": 107,
       "nOfSnapActions": 238
     },
     "pfile06.pddl": {
-      "nOfFunction": 60,
+      "nOfFunctions": 60,
       "nOfPredicates": 107,
       "nOfSnapActions": 238
     },
     "pfile07.pddl": {
-      "nOfFunction": 59,
+      "nOfFunctions": 59,
       "nOfPredicates": 107,
       "nOfSnapActions": 221
     },
     "pfile08.pddl": {
-      "nOfFunction": 59,
+      "nOfFunctions": 59,
       "nOfPredicates": 107,
       "nOfSnapActions": 238
     },
     "pfile09.pddl": {
-      "nOfFunction": 60,
+      "nOfFunctions": 60,
       "nOfPredicates": 107,
       "nOfSnapActions": 238
     },
     "pfile10.pddl": {
-      "nOfFunction": 59,
+      "nOfFunctions": 59,
       "nOfPredicates": 107,
       "nOfSnapActions": 238
     },
     "pfile11.pddl": {
-      "nOfFunction": 59,
+      "nOfFunctions": 59,
       "nOfPredicates": 107,
       "nOfSnapActions": 234
     },
     "pfile12.pddl": {
-      "nOfFunction": 60,
+      "nOfFunctions": 60,
       "nOfPredicates": 107,
       "nOfSnapActions": 238
     },
     "pfile13.pddl": {
-      "nOfFunction": 60,
+      "nOfFunctions": 60,
       "nOfPredicates": 107,
       "nOfSnapActions": 238
     },
     "pfile14.pddl": {
-      "nOfFunction": 60,
+      "nOfFunctions": 60,
       "nOfPredicates": 107,
       "nOfSnapActions": 238
     },
     "pfile15.pddl": {
-      "nOfFunction": 60,
+      "nOfFunctions": 60,
       "nOfPredicates": 107,
       "nOfSnapActions": 238
     },
     "pfile16.pddl": {
-      "nOfFunction": 60,
+      "nOfFunctions": 60,
       "nOfPredicates": 107,
       "nOfSnapActions": 238
     },
     "pfile17.pddl": {
-      "nOfFunction": 60,
+      "nOfFunctions": 60,
       "nOfPredicates": 107,
       "nOfSnapActions": 238
     },
     "pfile18.pddl": {
-      "nOfFunction": 60,
+      "nOfFunctions": 60,
       "nOfPredicates": 107,
       "nOfSnapActions": 238
     },
     "pfile19.pddl": {
-      "nOfFunction": 60,
+      "nOfFunctions": 60,
       "nOfPredicates": 107,
       "nOfSnapActions": 238
     },
     "pfile20.pddl": {
-      "nOfFunction": 60,
+      "nOfFunctions": 60,
       "nOfPredicates": 107,
       "nOfSnapActions": 238
     }
   },
   "numeric/ipc-2023/tpp": {
     "p02.pddl": {
-      "nOfFunction": 61,
+      "nOfFunctions": 61,
       "nOfPredicates": 6,
       "nOfSnapActions": 44
     },
     "p04.pddl": {
-      "nOfFunction": 85,
+      "nOfFunctions": 85,
       "nOfPredicates": 6,
       "nOfSnapActions": 52
     },
     "p06.pddl": {
-      "nOfFunction": 254,
+      "nOfFunctions": 254,
       "nOfPredicates": 11,
       "nOfSnapActions": 176
     },
     "p07.pddl": {
-      "nOfFunction": 276,
+      "nOfFunctions": 276,
       "nOfPredicates": 11,
       "nOfSnapActions": 182
     },
     "p17.pddl": {
-      "nOfFunction": 1156,
+      "nOfFunctions": 1156,
       "nOfPredicates": 21,
       "nOfSnapActions": 790
     },
     "p18.pddl": {
-      "nOfFunction": 1198,
+      "nOfFunctions": 1198,
       "nOfPredicates": 21,
       "nOfSnapActions": 808
     },
     "p20.pddl": {
-      "nOfFunction": 1282,
+      "nOfFunctions": 1282,
       "nOfPredicates": 21,
       "nOfSnapActions": 848
     },
     "p21.pddl": {
-      "nOfFunction": 1769,
+      "nOfFunctions": 1769,
       "nOfPredicates": 26,
       "nOfSnapActions": 1236
     },
     "p22.pddl": {
-      "nOfFunction": 1821,
+      "nOfFunctions": 1821,
       "nOfPredicates": 26,
       "nOfSnapActions": 1260
     },
     "p24.pddl": {
-      "nOfFunction": 1925,
+      "nOfFunctions": 1925,
       "nOfPredicates": 26,
       "nOfSnapActions": 1300
     },
     "p25.pddl": {
-      "nOfFunction": 1977,
+      "nOfFunctions": 1977,
       "nOfPredicates": 26,
       "nOfSnapActions": 1320
     },
     "p28.pddl": {
-      "nOfFunction": 2698,
+      "nOfFunctions": 2698,
       "nOfPredicates": 31,
       "nOfSnapActions": 1824
     },
     "p29.pddl": {
-      "nOfFunction": 2760,
+      "nOfFunctions": 2760,
       "nOfPredicates": 31,
       "nOfSnapActions": 1860
     },
     "p30.pddl": {
-      "nOfFunction": 2822,
+      "nOfFunctions": 2822,
       "nOfPredicates": 31,
       "nOfSnapActions": 1882
     },
     "p33.pddl": {
-      "nOfFunction": 3673,
+      "nOfFunctions": 3673,
       "nOfPredicates": 36,
       "nOfSnapActions": 2472
     },
     "p34.pddl": {
-      "nOfFunction": 3745,
+      "nOfFunctions": 3745,
       "nOfPredicates": 36,
       "nOfSnapActions": 2504
     },
     "p36.pddl": {
-      "nOfFunction": 4634,
+      "nOfFunctions": 4634,
       "nOfPredicates": 41,
       "nOfSnapActions": 3104
     },
     "p37.pddl": {
-      "nOfFunction": 4716,
+      "nOfFunctions": 4716,
       "nOfPredicates": 41,
       "nOfSnapActions": 3134
     },
     "p38.pddl": {
-      "nOfFunction": 4798,
+      "nOfFunctions": 4798,
       "nOfPredicates": 41,
       "nOfSnapActions": 3170
     },
     "p39.pddl": {
-      "nOfFunction": 4880,
+      "nOfFunctions": 4880,
       "nOfPredicates": 41,
       "nOfSnapActions": 3216
     }
   },
   "numeric/ipc-2023/zenotravel": {
     "pfile1.pddl": {
-      "nOfFunction": 16,
+      "nOfFunctions": 16,
       "nOfPredicates": 15,
       "nOfSnapActions": 31
     },
     "pfile2.pddl": {
-      "nOfFunction": 16,
+      "nOfFunctions": 16,
       "nOfPredicates": 15,
       "nOfSnapActions": 31
     },
     "pfile3.pddl": {
-      "nOfFunction": 22,
+      "nOfFunctions": 22,
       "nOfPredicates": 26,
       "nOfSnapActions": 74
     },
     "pfile4.pddl": {
-      "nOfFunction": 22,
+      "nOfFunctions": 22,
       "nOfPredicates": 31,
       "nOfSnapActions": 86
     },
     "pfile5.pddl": {
-      "nOfFunction": 29,
+      "nOfFunctions": 29,
       "nOfPredicates": 32,
       "nOfSnapActions": 114
     },
     "pfile6.pddl": {
-      "nOfFunction": 29,
+      "nOfFunctions": 29,
       "nOfPredicates": 38,
       "nOfSnapActions": 130
     },
     "pfile8.pddl": {
-      "nOfFunction": 44,
+      "nOfFunctions": 44,
       "nOfPredicates": 63,
       "nOfSnapActions": 303
     },
     "pfile10.pddl": {
-      "nOfFunction": 44,
+      "nOfFunctions": 44,
       "nOfPredicates": 79,
       "nOfSnapActions": 363
     },
     "pfile11.pddl": {
-      "nOfFunction": 55,
+      "nOfFunctions": 55,
       "nOfPredicates": 81,
       "nOfSnapActions": 435
     },
     "pfile12.pddl": {
-      "nOfFunction": 55,
+      "nOfFunctions": 55,
       "nOfPredicates": 90,
       "nOfSnapActions": 471
     },
     "pfile13.pddl": {
-      "nOfFunction": 55,
+      "nOfFunctions": 55,
       "nOfPredicates": 108,
       "nOfSnapActions": 543
     },
     "pfile15.pddl": {
-      "nOfFunction": 175,
+      "nOfFunctions": 175,
       "nOfPredicates": 315,
       "nOfSnapActions": 3125
     },
     "pfile16.pddl": {
-      "nOfFunction": 227,
+      "nOfFunctions": 227,
       "nOfPredicates": 355,
       "nOfSnapActions": 3925
     },
     "pfile17.pddl": {
-      "nOfFunction": 287,
+      "nOfFunctions": 287,
       "nOfPredicates": 500,
       "nOfSnapActions": 5605
     },
     "pfile18.pddl": {
-      "nOfFunction": 355,
+      "nOfFunctions": 355,
       "nOfPredicates": 550,
       "nOfSnapActions": 6665
     },
     "pfile19.pddl": {
-      "nOfFunction": 431,
+      "nOfFunctions": 431,
       "nOfPredicates": 725,
       "nOfSnapActions": 8805
     },
     "pfile20.pddl": {
-      "nOfFunction": 515,
+      "nOfFunctions": 515,
       "nOfPredicates": 785,
       "nOfSnapActions": 10125
     },
     "pfile21.pddl": {
-      "nOfFunction": 656,
+      "nOfFunctions": 656,
       "nOfPredicates": 1025,
       "nOfSnapActions": 13505
     },
     "pfile22.pddl": {
-      "nOfFunction": 931,
+      "nOfFunctions": 931,
       "nOfPredicates": 1375,
       "nOfSnapActions": 19205
     },
     "pfile23.pddl": {
-      "nOfFunction": 1256,
+      "nOfFunctions": 1256,
       "nOfPredicates": 1775,
       "nOfSnapActions": 25905
     }
   },
   "numeric/line-exchange-quantity": {
     "1.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "2.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "3.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "4.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "5.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "6.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "7.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "8.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "9.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "10.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "11.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "12.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "13.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "14.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "15.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "16.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "17.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "18.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "19.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "20.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "21.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "22.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "23.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "24.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "25.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "26.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "27.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "28.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "29.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "30.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "31.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "32.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "33.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "34.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "35.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "36.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "37.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "38.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "39.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     },
     "40.pddl": {
-      "nOfFunction": 17,
+      "nOfFunctions": 17,
       "nOfPredicates": 10,
       "nOfSnapActions": 23
     }

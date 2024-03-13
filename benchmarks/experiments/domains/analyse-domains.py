@@ -1,5 +1,6 @@
 import json
 import os
+import shutil
 from typing import Dict
 
 from natsort import natsort
@@ -35,6 +36,7 @@ DOMAINS = [
 
 
 def main():
+    statsName = "numeric"
     stats: Dict[str, Dict[str, Dict]] = dict()
 
     for domainName in DOMAINS:
@@ -54,7 +56,11 @@ def main():
 
             stats[domainName][problemName] = DomainStats.fromGroundedDomain(gDomain).toJSON()
 
-    with open("benchmarks/stats/numeric.json", "w") as f:
+    folder = f'benchmarks/stats/{statsName}'
+    if os.path.exists(folder):
+        shutil.rmtree(folder)
+    os.mkdir(folder)
+    with open(f"{folder}/{statsName}.json", "w") as f:
         json.dump(stats, f)
 
 
