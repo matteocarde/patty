@@ -1,7 +1,9 @@
 import csv
+import os
+import shutil
 import statistics
 
-from experiments.classes.Result import Result
+from classes.Result import Result
 
 SMT_SOLVERS = {'SpringRoll', 'PATTY', 'RANTANPLAN', "OMT"}
 
@@ -72,8 +74,9 @@ TOTALS = {
 
 def main():
     ## Parsing the results
+    exp = "FINAL"
     files = [
-        "benchmarks/results/FINAL.csv"
+        f"benchmarks/results/{exp}.csv"
     ]
 
     aResults: [Result] = []
@@ -146,22 +149,21 @@ def main():
             if solver not in domainDict:
                 continue
             pResult = domainDict[solver]
-            t[domain]["coverage"][solver] = r(sum([r.solved for r in pResult]) / TOTALS[domain] * 100, 1)
-            t[domain]["coverage"][solver] = "-" if t[domain]["coverage"][solver] == "0.0" else t[domain]["coverage"][
-                solver]
-            bounds = [r.bound for r in pResult if r.solved if r.problem in commonlySolved]
-            t[domain]["bound"][solver] = r(statistics.mean(bounds), 2) if t[domain]["coverage"][
-                                                                              solver] != "-" and bounds else "-"
-            t[domain]["time"][solver] = r(statistics.mean([r.time if r.solved else 300000 for r in pResult]) / 1000,
-                                          2) if \
-                t[domain]["coverage"][solver] != "-" else "-"
-            t[domain]["length"][solver] = r(statistics.mean([r.planLength for r in pResult if r.solved]), 0) if \
-                t[domain]["coverage"][solver] != "-" else "-"
+            coverage = r(sum([r.solved for r in pResult]) / TOTALS[domain] * 100, 1)
+            t[domain]["coverage"][solver] = "-" if coverage == "0.0" else coverage
+
+            bounds = [r.bound for r in pResult if r.solved and r.problem in commonlySolved]
+            t[domain]["bound"][solver] = r(statistics.mean(bounds), 1) if coverage != "-" and bounds else "-"
+            v = [r.time if r.solved else 300000 for r in pResult]
+            t[domain]["time"][solver] = r(statistics.mean(v) / 1000, 1) if coverage != "-" else "-"
+
+            v = [r.planLength for r in pResult if r.solved and r.problem in commonlySolved]
+            t[domain]["length"][solver] = r(statistics.mean(v), 1) if coverage != "-" and v else "-"
 
             v = [r.nOfVars for r in pResult if r.nOfVars > 0 and r.problem in commonlyGrounded]
-            t[domain]["nOfVars"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
+            t[domain]["nOfVars"][solver] = r(statistics.mean(v), 1) if len(v) else "-"
             v = [r.nOfRules for r in pResult if r.nOfRules > 0 and r.problem in commonlyGrounded]
-            t[domain]["nOfRules"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
+            t[domain]["nOfRules"][solver] = r(statistics.mean(v), 1) if len(v) else "-"
 
     domainsClusters = {
         r"\textit{Highly Numeric}": [
@@ -197,20 +199,19 @@ def main():
         "coverage": +1,
         "bound": -1,
         "time": -1,
+        "length": -1,
         "nOfVars": -1,
         "nOfRules": -1,
     }
 
     tables = [{
-        "name": "tab:experiments",
+        "name": "tab:experiments-all",
         "type": "table*",
         "width": r"\textwidth",
         "columns": {
             "coverage": ("Coverage (\%)", {"SMT", "SEARCH"}),
             "time": ("Time (s)", {"SMT", "SEARCH"}),
-            "bound": ("Bound (Common)", {"SMT"}),
-            "nOfVars": ("$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$", {"SMT"}),
-            "nOfRules": ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}),
+            "length": ("Plan Length", {"SMT", "SEARCH"}),
         },
         "solvers": {
             'PATTY': "SMT",
@@ -222,36 +223,40 @@ def main():
             'METRIC-FF': "SEARCH",
             "NFD": "SEARCH"
         },
-        "caption": r"Comparative analysis between the \textsc{Patty} (P) planner, the symbolic planners \textsc{\re{"
-                   r"}} (\re), \textsc{SpringRoll} (SR), \textsc{OMTPlan} (OMT) and the search-based planners "
-                   r"\textsc{ENHSP} (E), \textsc{MetricFF} (FF) and \textsc{NumericFastDownward} (NFD). The labels S "
-                   r"and L specify if the domain presents simple or linear effects, respectively, see \cite{ipc2023}. "
-                   r"''Best numbers'' are in bold. The numbers in the Highly and Lowly Numeric rows are the number of "
-                   r"bolds in the subcolumn."
+        "caption": r""
     },
-        #     {
-        #     "name": "tab:exp-search",
-        #     "type": "table",
-        #     "width": r"\columnwidth",
-        #     "columns": {
-        #         "coverage": "Coverage (\%)",
-        #         "time": "Time (s)",
-        #         # "length": "Plan Length"
-        #     },
-        #     "solvers": [
-        #         # 'PATTY-arpg-yices-binary',
-        #         'PATTY',
-        #         # 'RANTANPLAN',
-        #         # 'SpringRoll',
-        #         'ENHSP',
-        #         'METRIC-FF',
-        #         "NFD"
-        #     ],
-        #     "caption": r"Comparative analysis between \textsc{Patty} and the search-based solvers \textsc{ENHSP} (E), "
-        #                r"\textsc{MetricFF} (FF) and \textsc{NumericFastDownward} (NFD)."
-        # }
+        {
+            "name": "tab:experiments-smt",
+            "type": "table*",
+            "width": r"\textwidth",
+            "columns": {
+                "bound": ("Bound (Common)", {"SMT"}),
+                "nOfVars": ("$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$", {"SMT"}),
+                "nOfRules": ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}),
+            },
+            "solvers": {
+                'PATTY': "SMT",
+                # 'PATTY-R',
+                'RANTANPLAN': "SMT",
+                'SpringRoll': "SMT",
+                "OMT": "SMT",
+                'ENHSP': "SEARCH",
+                'METRIC-FF': "SEARCH",
+                "NFD": "SEARCH"
+            },
+            "caption": r""
+        }
     ]
 
+    latex = []
+    latex.append(r"""
+              \documentclass[11pt,landscape]{article}
+              \usepackage{graphicx}
+              \usepackage{lscape}
+              \usepackage{multirow}
+              \usepackage[a4paper,margin=1in,landscape]{geometry}
+
+              \begin{document}""")
     for table in tables:
         stats = table["columns"].keys()
         solvers = table["solvers"].keys()
@@ -275,7 +280,7 @@ def main():
                         better |= {solver}
                 best[domain][stat] = better
 
-        print(r"""
+        latex.append(r"""
             \begin{""" + table["type"] + r"""}[tb]
             \centering
             \resizebox{""" + table["width"] + r"""}{!}{""")
@@ -295,11 +300,11 @@ def main():
 
         columns = f"|l|{cString}" + "|"
 
-        print(r"\begin{tabular}{" + columns + "}")
-        print(r"\hline")
-        print(fr" & " + "&".join(mString) + r"\\")
-        print(fr"Domain & " + "&".join(solversHeader) + r"\\")
-        print(fr"\hline")
+        latex.append(r"\begin{tabular}{" + columns + "}")
+        latex.append(r"\hline")
+        latex.append(fr" & " + "&".join(mString) + r"\\")
+        latex.append(fr"Domain & " + "&".join(solversHeader) + r"\\")
+        latex.append(fr"\hline")
 
         for (cluster, clusterDomains) in domainsClusters.items():
             rows = []
@@ -313,7 +318,7 @@ def main():
                         if solver in best[domain][stat]:
                             nOfBest += 1
                     row.append(r"\textbf{" + str(nOfBest) + "}")
-            print("&".join(row) + r"\\\hline")
+            latex.append("&".join(row) + r"\\\hline")
             for domain in clusterDomains:
                 row = [DOMAINS[domain]]
                 for (stat, (name, statTypes)) in table["columns"].items():
@@ -328,15 +333,43 @@ def main():
                         else:
                             row.append(t[domain][stat][solver])
                 rows.append("&".join(row))
-            print("\\\\\n".join(rows))
-            print(fr"\\\hline")
+            latex.append("\\\\\n".join(rows))
+            latex.append(fr"\\\hline")
 
-        print(r"""
+        row = ["$\emph{Total}$"]
+        for (stat, (name, statTypes)) in table["columns"].items():
+            for (solver, type) in table["solvers"].items():
+                if type not in statTypes:
+                    continue
+                nOfBest = 0
+                for (cluster, clusterDomains) in domainsClusters.items():
+                    for domain in clusterDomains:
+                        if solver in best[domain][stat]:
+                            nOfBest += 1
+                row.append(r"\textbf{" + str(nOfBest) + "}")
+        latex.append("&".join(row) + r"\\\hline")
+
+        latex.append(r"""
         \end{tabular}}
         \caption{""" + table["caption"] + """}
         \label{""" + table["name"] + """}
         \end{""" + table["type"] + """}
         """)
+
+    latex.append(r"""\end{document}""")
+
+    latexStr = "\n".join(latex)
+
+    folder = f'benchmarks/latex/{exp}'
+    if os.path.exists(folder):
+        shutil.rmtree(folder)
+    os.mkdir(folder)
+    with open(f"{folder}/{exp}.tex", "w") as f:
+        f.write(latexStr)
+    os.system(f"pdflatex -interaction=nonstopmode --output-directory='{folder}' {folder}/{exp}.tex ")
+
+    os.remove(f"{folder}/{exp}.aux")
+    os.remove(f"{folder}/{exp}.log")
 
     pass
 

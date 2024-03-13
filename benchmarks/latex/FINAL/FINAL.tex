@@ -1,0 +1,87 @@
+
+              \documentclass[11pt,landscape]{article}
+              \usepackage{graphicx}
+              \usepackage{lscape}
+              \usepackage{multirow}
+              \usepackage[a4paper,margin=1in,landscape]{geometry}
+
+              \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||ccccccc||ccccccc||ccccccc||}
+\hline
+ & \multicolumn{7}{c||}{Coverage (\%)}&\multicolumn{7}{c||}{Time (s)}&\multicolumn{7}{c||}{Plan Length}\\
+Domain & $P$&$\mathrm{R^2\exists}$&$SR$&$\mathrm{OMT}$&$\mathrm{ENHSP}$&$\mathrm{FF}$&$\mathrm{NFD}$&$P$&$\mathrm{R^2\exists}$&$SR$&$\mathrm{OMT}$&$\mathrm{ENHSP}$&$\mathrm{FF}$&$\mathrm{NFD}$&$P$&$\mathrm{R^2\exists}$&$SR$&$\mathrm{OMT}$&$\mathrm{ENHSP}$&$\mathrm{FF}$&$\mathrm{NFD}$\\
+\hline
+\textit{Highly Numeric}&\textbf{8}&\textbf{0}&\textbf{3}&\textbf{0}&\textbf{6}&\textbf{0}&\textbf{0}&\textbf{7}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{3}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{1}&\textbf{1}&\textbf{7}&\textbf{3}\\\hline
+\textsc{BlockGrouping} (S)&\textbf{100.0}&65.0&\textbf{100.0}&10.0&\textbf{100.0}&10.0&-&\textbf{1.5}&126.5&2.1&270.2&48.0&270.2&300.0&129.5&74.5&54.5&62.0&25.0&\textbf{23.5}&-\\
+\textsc{Counters} (S)&\textbf{100.0}&60.0&\textbf{100.0}&90.0&\textbf{100.0}&60.0&50.0&\textbf{0.8}&153.4&1.2&89.7&6.9&129.0&149.1&289.0&379.4&141.2&208.4&146.2&127.9&\textbf{84.3}\\
+\textsc{Counters} (L)&\textbf{95.0}&60.0&35.0&10.0&45.0&40.0&25.0&\textbf{4.6}&152.2&204.1&268.7&180.5&180.0&225.4&45.0&14.0&9.5&\textbf{5.5}&6.5&\textbf{5.5}&\textbf{5.5}\\
+\textsc{Drone} (S)&25.0&15.0&15.0&15.0&\textbf{85.0}&10.0&80.0&242.8&255.6&257.3&256.4&\textbf{59.9}&270.0&65.4&21.7&16.0&13.3&12.3&16.3&\textbf{7.0}&16.3\\
+\textsc{PlantWatering} (S)&25.0&-&-&-&\textbf{100.0}&10.0&60.0&226.8&300.0&300.0&300.0&\textbf{9.8}&276.5&185.2&363.8&-&-&-&552.0&\textbf{363.0}&573.4\\
+\textsc{Farmland} (S)&\textbf{100.0}&-&\textbf{100.0}&-&\textbf{100.0}&35.0&75.0&0.9&300.0&1.6&300.0&\textbf{0.7}&206.8&85.5&809.6&-&549.3&-&\textbf{272.4}&283.9&277.5\\
+\textsc{Farmland} (L)&\textbf{100.0}&10.0&-&5.0&75.0&75.0&55.0&\textbf{1.6}&275.1&300.0&286.2&96.8&90.7&151.7&125.0&23.0&-&19.0&112.0&14.0&\textbf{12.0}\\
+\textsc{HydroPower} (S)&\textbf{100.0}&25.0&-&-&10.0&5.0&5.0&\textbf{14.8}&233.3&300.0&300.0&270.4&285.0&285.1&49.2&42.0&-&-&38.0&\textbf{16.0}&35.0\\
+\textsc{Sailing} (S)&\textbf{100.0}&-&90.0&-&\textbf{100.0}&5.0&50.0&\textbf{1.0}&300.0&20.1&300.0&1.5&285.0&150.3&1915.9&-&1090.8&-&640.2&\textbf{179.0}&540.1\\
+\textsc{Sailing} (L)&\textbf{95.0}&5.0&-&5.0&20.0&40.0&70.0&\textbf{1.0}&297.9&300.0&285.2&241.2&182.9&109.4&285.0&86.0&-&58.0&-&\textbf{13.0}&23.0
+\\\hline
+\textit{Lowly Numeric}&\textbf{3}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{5}&\textbf{1}&\textbf{1}&\textbf{3}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{4}&\textbf{2}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{1}&\textbf{3}&\textbf{3}&\textbf{2}&\textbf{4}\\\hline
+\textsc{Delivery} (S)&25.0&20.0&-&5.0&65.0&\textbf{95.0}&45.0&232.7&256.0&300.0&295.1&121.2&\textbf{48.5}&165.2&11.0&21.0&-&\textbf{10.0}&12.0&\textbf{10.0}&\textbf{10.0}\\
+\textsc{Expedition} (S)&\textbf{15.0}&5.0&-&10.0&10.0&-&\textbf{15.0}&\textbf{253.5}&289.0&300.0&275.9&270.3&300.0&253.7&46.0&36.0&-&\textbf{30.0}&-&-&-\\
+\textsc{MPrime} (S)&55.0&35.0&50.0&30.0&\textbf{85.0}&80.0&65.0&139.8&205.4&171.2&229.1&49.7&\textbf{47.5}&133.6&122.3&48.8&37.3&8.2&\textbf{6.3}&7.2&6.8\\
+\textsc{PathwaysMetric} (S)&10.0&5.0&5.0&15.0&\textbf{60.0}&50.0&5.0&278.4&286.7&286.5&263.2&\textbf{133.9}&154.9&285.0&112.0&48.0&59.0&29.0&\textbf{12.0}&14.0&\textbf{12.0}\\
+\textsc{Rover} (S)&\textbf{85.0}&45.0&55.0&35.0&35.0&50.0&20.0&\textbf{77.6}&194.5&185.5&230.5&204.5&142.1&241.0&50.7&22.0&19.9&17.6&16.8&15.1&\textbf{9.2}\\
+\textsc{Satellite} (S)&10.0&5.0&15.0&15.0&\textbf{30.0}&20.0&20.0&277.3&292.6&267.7&262.6&\textbf{222.6}&229.4&242.2&13.0&13.0&\textbf{11.0}&\textbf{11.0}&\textbf{11.0}&-&-\\
+\textsc{Sugar} (S)&\textbf{100.0}&25.0&-&90.0&95.0&65.0&25.0&\textbf{6.8}&247.3&300.0&110.4&23.7&119.9&232.9&50.6&43.6&-&27.4&17.4&17.0&\textbf{13.5}\\
+\textsc{TPP} (L)&10.0&5.0&-&-&\textbf{20.0}&10.0&10.0&275.3&284.4&300.0&300.0&\textbf{244.3}&268.4&270.0&-&-&-&-&-&-&-\\
+\textsc{ZenoTravel} (S)&55.0&55.0&-&35.0&\textbf{100.0}&55.0&45.0&119.3&129.8&300.0&208.6&\textbf{20.4}&135.0&178.5&21.0&19.9&-&12.9&12.7&\textbf{11.4}&16.0
+\\\hline
+$\emph{Total}$&\textbf{11}&\textbf{0}&\textbf{3}&\textbf{0}&\textbf{11}&\textbf{1}&\textbf{1}&\textbf{10}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{7}&\textbf{2}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{1}&\textbf{4}&\textbf{4}&\textbf{9}&\textbf{7}\\\hline
+
+        \end{tabular}}
+        \caption{}
+        \label{tab:experiments-all}
+        \end{table*}
+        
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||cccc||cccc||cccc||}
+\hline
+ & \multicolumn{4}{c||}{Bound (Common)}&\multicolumn{4}{c||}{$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$}&\multicolumn{4}{c||}{$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$}\\
+Domain & $P$&$\mathrm{R^2\exists}$&$SR$&$\mathrm{OMT}$&$P$&$\mathrm{R^2\exists}$&$SR$&$\mathrm{OMT}$&$P$&$\mathrm{R^2\exists}$&$SR$&$\mathrm{OMT}$\\
+\hline
+\textit{Highly Numeric}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{5}&\textbf{0}&\textbf{7}&\textbf{10}&\textbf{10}&\textbf{0}&\textbf{0}&\textbf{0}\\\hline
+\textsc{BlockGrouping} (S)&1.0&6.0&1.0&8.5&\textbf{40.0}&250.0&\textbf{40.0}&\textbf{40.0}&\textbf{101.0}&331.0&122.0&105.5\\
+\textsc{Counters} (S)&1.0&14.8&1.0&14.8&\textbf{89.6}&1478.4&\textbf{89.6}&\textbf{89.6}&\textbf{201.0}&1634.6&270.8&225.0\\
+\textsc{Counters} (L)&2.0&2.0&2.5&5.5&\textbf{44.7}&336.3&\textbf{44.7}&\textbf{44.7}&\textbf{100.0}&413.0&196.0&648.3\\
+\textsc{Drone} (S)&4.7&7.7&9.7&12.3&30.0&146.0&\textbf{29.0}&\textbf{29.0}&\textbf{64.3}&191.0&211.0&335.7\\
+\textsc{PlantWatering} (S)&8.4&-&-&-&\textbf{60.8}&540.0&\textbf{60.8}&\textbf{60.8}&\textbf{144.8}&654.4&610.4&740.2\\
+\textsc{Farmland} (S)&1.0&-&2.2&-&14.0&39.0&14.0&\textbf{10.0}&\textbf{26.0}&55.0&52.0&45.0\\
+\textsc{Farmland} (L)&1.0&8.0&-&12.0&19.0&61.0&17.0&\textbf{13.0}&\textbf{32.0}&79.0&62.0&50.0\\
+\textsc{HydroPower} (S)&1.0&1.0&-&-&448.0&22347.0&448.0&\textbf{250.0}&\textbf{788.0}&22789.0&11028.0&19943.0\\
+\textsc{Sailing} (S)&3.2&-&7.2&-&\textbf{48.7}&379.8&\textbf{48.7}&\textbf{48.7}&\textbf{86.2}&433.7&292.8&287.0\\
+\textsc{Sailing} (L)&1.0&5.0&-&13.0&58.6&569.5&\textbf{56.6}&\textbf{56.6}&\textbf{140.8}&678.2&389.6&346.9
+\\\hline
+\textit{Lowly Numeric}&\textbf{1}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{1}&\textbf{8}&\textbf{9}&\textbf{0}&\textbf{0}&\textbf{0}\\\hline
+\textsc{Delivery} (S)&1.0&2.0&-&10.0&472.4&30442.6&-&\textbf{455.6}&\textbf{1318.8}&31289.0&-&117393.8\\
+\textsc{Expedition} (S)&\textbf{5.0}&10.0&-&15.0&115.3&1772.3&-&\textbf{97.3}&\textbf{243.7}&1926.0&-&2485.0\\
+\textsc{MPrime} (S)&1.5&1.5&5.2&4.2&700.8&82886.6&700.8&\textbf{664.0}&\textbf{2003.6}&84257.4&53022.5&99021.0\\
+\textsc{PathwaysMetric} (S)&1.0&6.0&3.0&9.0&186.0&3381.0&186.0&\textbf{162.0}&\textbf{318.0}&3541.0&521.0&631.0\\
+\textsc{Rover} (S)&1.9&2.0&7.7&7.7&577.0&54890.5&588.5&\textbf{402.8}&\textbf{1289.5}&55621.7&27530.4&53633.6\\
+\textsc{Satellite} (S)&4.0&4.0&10.0&7.0&296.0&12882.7&251.7&\textbf{230.3}&\textbf{800.7}&13448.7&10653.7&30085.7\\
+\textsc{Sugar} (S)&2.0&2.2&-&5.2&496.4&31430.3&-&\textbf{420.2}&\textbf{1128.5}&32170.3&-&18151.8\\
+\textsc{TPP} (L)&-&-&-&-&355.0&9943.0&\textbf{278.0}&-&\textbf{917.0}&10582.0&4091.0&-\\
+\textsc{ZenoTravel} (S)&2.1&2.3&-&5.3&374.5&21608.5&-&\textbf{372.3}&\textbf{1151.6}&22407.0&-&45209.5
+\\\hline
+$\emph{Total}$&\textbf{1}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{5}&\textbf{0}&\textbf{8}&\textbf{18}&\textbf{19}&\textbf{0}&\textbf{0}&\textbf{0}\\\hline
+
+        \end{tabular}}
+        \caption{}
+        \label{tab:experiments-smt}
+        \end{table*}
+        
+\end{document}
