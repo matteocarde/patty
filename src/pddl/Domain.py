@@ -5,8 +5,10 @@ from typing import Dict, List, Set
 
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
+from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.DurativeAction import DurativeAction
 from src.pddl.Event import Event
+from src.pddl.Literal import Literal
 from src.pddl.Operation import Operation
 from src.pddl.PDDLWriter import PDDLWriter
 from src.pddl.Problem import Problem
@@ -237,6 +239,8 @@ class GroundedDomain(Domain):
     addList: Dict[Atom, Set[Operation]]
     delList: Dict[Atom, Set[Operation]]
     assList: Dict[Atom, Set[Operation]]
+    effN: Set[Operation]
+    effB: Set[Literal]
 
     def __init__(self, name: str, actions: Set[Action], events: Set[Event], process: Set[Process],
                  durativeActions: Set[DurativeAction], affectedGraph=None):

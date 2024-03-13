@@ -1,19 +1,20 @@
 import json
 import os
 import shutil
-from typing import Dict
+from typing import Dict, List, Tuple
 
 from natsort import natsort
 
 from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.DomainStats import DomainStats
 from src.pddl.Problem import Problem
+from utilties.utilities import r
 
 DOMAINS = [
+    "numeric/ipc-2023/drone",
     "numeric/ipc-2023/block-grouping",
     "numeric/ipc-2023/counters",
     "numeric/ipc-2023/delivery",
-    "numeric/ipc-2023/drone",
     "numeric/ipc-2023/expedition",
     "numeric/ipc-2023/ext-plant-watering",
     "numeric/ipc-2023/farmland",
@@ -39,22 +40,30 @@ def main():
     statsName = "numeric"
     stats: Dict[str, Dict[str, Dict]] = dict()
 
+    pList: List[Tuple[str, str]] = list()
+
     for domainName in DOMAINS:
-        print(f"\t {domainName}")
         problems = natsort.natsorted(os.listdir(f"files/{domainName}/instances"))
-        stats[domainName] = dict()
         for problemName in problems:
-            print(f"\t\t {problemName}")
             if problemName[-5:] != ".pddl":
                 continue
-            domainFile = f"files/{domainName}/domain.pddl"
-            problemFile = f"files/{domainName}/instances/{problemName}"
+            pList.append((domainName, problemName))
 
-            domain: Domain = Domain.fromFile(domainFile)
-            problem: Problem = Problem.fromFile(problemFile)
-            gDomain: GroundedDomain = domain.ground(problem)
+    total = len(pList)
+    index = 0
 
-            stats[domainName][problemName] = DomainStats.fromGroundedDomain(gDomain).toJSON()
+    for (domainName, problemName) in pList:
+        stats[domainName] = stats.setdefault(domainName, dict())
+        print(f"{domainName} - {problemName}: {r(index / total * 100, 2)}%")
+        domainFile = f"files/{domainName}/domain.pddl"
+        problemFile = f"files/{domainName}/instances/{problemName}"
+
+        domain: Domain = Domain.fromFile(domainFile)
+        problem: Problem = Problem.fromFile(problemFile)
+        gDomain: GroundedDomain = domain.ground(problem)
+
+        stats[domainName][problemName] = DomainStats.fromGroundedDomain(gDomain).toJSON()
+        index += 1
 
     folder = f'benchmarks/stats/{statsName}'
     if os.path.exists(folder):
@@ -62,6 +71,8 @@ def main():
     os.mkdir(folder)
     with open(f"{folder}/{statsName}.json", "w") as f:
         json.dump(stats, f)
+
+    print("Finished")
 
 
 if __name__ == '__main__':

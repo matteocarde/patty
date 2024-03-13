@@ -1,40 +1,41 @@
 
                 \documentclass[11pt]{article}
                 \usepackage{graphicx}
+                \usepackage{lscape}
                 \usepackage{multirow}
-                \usepackage[a4paper,margin=1in]{geometry}
+                \usepackage[a4paper,margin=1in,landscape]{geometry}
 
                 \begin{document}
 
                 \begin{table}[tb]
                 \centering
                 \resizebox{\textwidth}{!}{
-\begin{tabular}{|l|cccc|}
+\begin{tabular}{|l|ccc|ccc|ccc|}
 \hline
-Domain & $|V_B|$&$|V_N|$&$|A|$&$|V_B|/|V_N|$\\
+Domain & $|V_B|$&$|V_N|$&$|V_B|/|V_N|$&$|\mathit{Eff_B}|$&$|\mathit{Eff_N}|$&$|\mathit{Eff_B}|/|\mathit{Eff_N}|$&$|\mathrm{amo}|$&$|A|$&$|\mathrm{amo}|/|A|$\\
 \hline
-\textit{Highly Numeric}&&&&\\\hline
-\textsc{BlockGrouping} (S)&0.0&47.5&87.0&0.0\\
-\textsc{Counters} (S)&0.0&23.4&44.8&0.0\\
-\textsc{Counters} (L)&0.0&25.0&46.0&0.0\\
-\textsc{Drone} (S)&66.1&209.3&73.1&0.3\\
-\textsc{PlantWatering} (S)&0.0&56.6&44.4&0.0\\
-\textsc{Farmland} (S)&12.5&6.5&25.0&1.9\\
-\textsc{Farmland} (L)&16.2&8.4&31.4&1.9\\
-\textsc{HydroPower} (S)&150.0&30.0&146.0&5.0\\
-\textsc{Sailing} (S)&5.9&10.7&30.8&0.6\\
-\textsc{Sailing} (L)&3.5&11.5&34.5&0.3
+\textit{Highly Numeric}&&&&&&&&&\\\hline
+\textsc{BlockGrouping} (S)&0.0&47.5&0.00&0.0&87.0&0.00&0.0&87.0&0.00\\
+\textsc{Counters} (S)&0.0&23.4&0.00&0.0&44.8&0.00&0.0&44.8&0.00\\
+\textsc{Counters} (L)&0.0&25.0&0.00&0.0&92.0&0.00&0.0&46.0&0.00\\
+\textsc{Drone} (S)&66.1&209.3&0.32&66.1&79.1&0.84&1.0&73.1&0.01\\
+\textsc{PlantWatering} (S)&0.0&56.6&0.00&0.0&109.2&0.00&0.0&44.4&0.00\\
+\textsc{Farmland} (S)&12.5&6.5&1.92&0.0&62.5&0.00&0.0&25.0&0.00\\
+\textsc{Farmland} (L)&16.2&8.4&1.93&0.0&77.0&0.00&0.0&31.4&0.00\\
+\textsc{HydroPower} (S)&150.0&30.0&5.00&96.0&306.0&0.31&48.0&150.0&0.32\\
+\textsc{Sailing} (S)&5.9&10.7&0.55&13.9&26.4&0.53&13.9&30.8&0.45\\
+\textsc{Sailing} (L)&3.5&11.5&0.30&7.5&39.0&0.19&7.5&34.5&0.22
 \\\hline
-\textit{Lowly Numeric}&&&&\\\hline
-\textsc{Delivery} (S)&368.6&29.0&2016.7&12.7\\
-\textsc{Expedition} (S)&45.8&19.8&80.0&2.3\\
-\textsc{MPrime} (S)&479.3&18.8&4105.1&25.5\\
-\textsc{PathwaysMetric} (S)&352.9&1186.7&352.9&0.3\\
-\textsc{Rover} (S)&465.9&4.8&774.3&98.1\\
-\textsc{Satellite} (S)&270.9&489.9&2653.1&0.6\\
-\textsc{Sugar} (S)&104.8&59.2&228.9&1.8\\
-\textsc{TPP} (L)&26.5&2326.5&1559.1&0.0\\
-\textsc{ZenoTravel} (S)&399.1&261.0&4972.3&1.5
+\textit{Lowly Numeric}&&&&&&&&&\\\hline
+\textsc{Delivery} (S)&368.6&29.0&12.71&6045.9&3708.2&1.63&2020.7&2020.7&1.00\\
+\textsc{Expedition} (S)&45.8&19.8&2.32&114.0&183.0&0.62&57.0&120.0&0.47\\
+\textsc{MPrime} (S)&479.3&18.8&25.49&7803.1&4308.6&1.81&3901.6&4105.1&0.95\\
+\textsc{PathwaysMetric} (S)&352.9&1186.7&0.30&91.2&681.9&0.13&45.6&352.9&0.13\\
+\textsc{Rover} (S)&465.9&4.8&98.07&2776.3&1399.5&1.98&1282.6&1358.1&0.94\\
+\textsc{Satellite} (S)&270.9&489.9&0.55&5234.4&5661.6&0.92&2368.1&2866.3&0.83\\
+\textsc{Sugar} (S)&104.8&59.2&1.77&290.3&1039.8&0.28&143.6&399.4&0.36\\
+\textsc{TPP} (L)&26.5&2326.5&0.01&1654.0&5181.5&0.32&827.0&2278.5&0.36\\
+\textsc{ZenoTravel} (S)&399.1&261.0&1.53&10153.2&7416.3&1.37&5080.1&5080.1&1.00
 \\\hline
 
             \end{tabular}}

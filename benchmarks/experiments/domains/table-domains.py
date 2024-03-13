@@ -77,10 +77,19 @@ def main():
         t[domain] = dict()
         nOfFunctions = statistics.mean([int(p["nOfFunctions"]) for p in d.values()])
         nOfPredicates = statistics.mean([int(p["nOfPredicates"]) for p in d.values()])
+        nOfBooleanEffects = statistics.mean([int(p["nOfBooleanEffects"]) for p in d.values()])
+        nOfNumericEffects = statistics.mean([int(p["nOfNumericEffects"]) for p in d.values()])
+        nOfSnapActions = statistics.mean([int(p["nOfSnapActions"]) for p in d.values()])
+        nOfAtMostOnceActions = statistics.mean([int(p["nOfAtMostOnceActions"]) for p in d.values()])
         t[domain]["nOfFunctions"] = r(nOfFunctions, 1)
         t[domain]["nOfPredicates"] = r(nOfPredicates, 1)
-        t[domain]["nOfSnapActions"] = r(statistics.mean([int(p["nOfSnapActions"]) for p in d.values()]), 1)
-        t[domain]["ratio"] = r(nOfPredicates / nOfFunctions, 1) if nOfFunctions else "-"
+        t[domain]["ratio"] = r(nOfPredicates / nOfFunctions, 2) if nOfFunctions else "-"
+        t[domain]["nOfBooleanEffects"] = r(nOfBooleanEffects, 1)
+        t[domain]["nOfNumericEffects"] = r(nOfNumericEffects, 1)
+        t[domain]["ratioEff"] = r(nOfBooleanEffects / nOfNumericEffects, 2) if nOfFunctions else "-"
+        t[domain]["nOfSnapActions"] = r(nOfSnapActions, 1)
+        t[domain]["nOfAtMostOnceActions"] = r(nOfAtMostOnceActions, 1)
+        t[domain]["ratioActions"] = r(nOfAtMostOnceActions / nOfSnapActions, 2)
 
     tables = [{
         "name": "tab:domains",
@@ -89,9 +98,31 @@ def main():
         "columns": {
             "nOfPredicates": "$|V_B|$",
             "nOfFunctions": "$|V_N|$",
+            "ratio": "$|V_B|/|V_N|$",
+            "nOfBooleanEffects": r"$|\mathit{Eff_B}|$",
+            "nOfNumericEffects": "$|\mathit{Eff_N}|$",
+            "ratioEff": "$|\mathit{Eff_B}|/|\mathit{Eff_N}|$",
+            "nOfAtMostOnceActions": "$|\mathrm{amo}|$",
             "nOfSnapActions": "$|A|$",
-            "ratio": "$|V_B|/|V_N|$"
+            "ratioActions": "$|\mathrm{amo}|/|A|$"
         },
+        "divisions": [
+            [
+                "nOfPredicates",
+                "nOfFunctions",
+                "ratio"
+            ],
+            [
+                "nOfBooleanEffects",
+                "nOfNumericEffects",
+                "ratioEff"
+            ],
+            [
+                "nOfAtMostOnceActions",
+                "nOfSnapActions",
+                "ratioActions"
+            ]
+        ],
         "caption": r"Statistic on domains of the 2023 IPC."
     }]
 
@@ -99,21 +130,23 @@ def main():
     latex.append(r"""
                 \documentclass[11pt]{article}
                 \usepackage{graphicx}
+                \usepackage{lscape}
                 \usepackage{multirow}
-                \usepackage[a4paper,margin=1in]{geometry}
+                \usepackage[a4paper,margin=1in,landscape]{geometry}
 
                 \begin{document}""")
 
     for table in tables:
         keys = table["columns"].keys()
         keysLatex = table["columns"].values()
+        divisions = table["divisions"]
 
         latex.append(r"""
                 \begin{""" + table["type"] + r"""}[tb]
                 \centering
                 \resizebox{""" + table["width"] + r"""}{!}{""")
 
-        columns = f"|l|{''.join(['c' for k in keys])}" + "|"
+        columns = f"|l|{'|'.join([''.join(['c' for k in d]) for d in divisions])}" + "|"
 
         latex.append(r"\begin{tabular}{" + columns + "}")
         latex.append(r"\hline")
