@@ -50,6 +50,6 @@ class RanTanPlan(Planner):
             "-o", domain,
             "-f", problem,
             "--effect-axioms",
-            "--roll-bound", "0"
+            "--roll-bound", "1"
         ]
         return cmd
