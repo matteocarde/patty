@@ -4,14 +4,14 @@ from natsort import natsort
 
 # PLANNERS = ["PATTY", "PATTY-R-YICES", "PATTY-R-Z3-NL", "PATTY-NL", "PATTY-Z3", "SPRINGROLL"]
 PLANNERS = [
-    # "PATTY",
-    # # "PATTY-R",
+    "PATTY",
+    "PATTY-R",
     # "SPRINGROLL",
     # "RANTANPLAN",
     # "ENHSP-HADD",
     # "ENHSP-HRADD",
     # "ENHSP-HMRP",
-    "METRIC-FF",
+    # "METRIC-FF",
     # "NFD",
     # "OMT"
 ]
@@ -19,29 +19,29 @@ PLANNERS = [
 
 def main():
     domains = [
-        # "ipc-2023/block-grouping",
-        # "ipc-2023/counters",
-        # "ipc-2023/delivery",
-        # "ipc-2023/drone",
-        # "ipc-2023/expedition",
-        # "ipc-2023/ext-plant-watering",
-        # "ipc-2023/farmland",
-        # "ipc-2023/fo-farmland",
-        # "ipc-2023/fo-sailing",
-        # "ipc-2023/fo_counters",
-        # "ipc-2023/hydropower",
-        # # "ipc-2023/markettrader",
-        # "ipc-2023/mprime",
-        # "ipc-2023/pathwaysmetric",
-        # "ipc-2023/rover",
-        # "ipc-2023/sailing",
-        # "ipc-2023/satellite",
-        # # "ipc-2023/settlers",
-        # "ipc-2023/sugar",
-        # "ipc-2023/tpp",
-        # "ipc-2023/zenotravel",
+        "numeric/ipc-2023/block-grouping",
+        "numeric/ipc-2023/counters",
+        "numeric/ipc-2023/delivery",
+        "numeric/ipc-2023/drone",
+        "numeric/ipc-2023/expedition",
+        "numeric/ipc-2023/ext-plant-watering",
+        "numeric/ipc-2023/farmland",
+        "numeric/ipc-2023/fo-farmland",
+        "numeric/ipc-2023/fo-sailing",
+        "numeric/ipc-2023/fo_counters",
+        "numeric/ipc-2023/hydropower",
+        # "ipc-2023/markettrader",
+        "numeric/ipc-2023/mprime",
+        "numeric/ipc-2023/pathwaysmetric",
+        "numeric/ipc-2023/rover",
+        "numeric/ipc-2023/sailing",
+        "numeric/ipc-2023/satellite",
+        # "ipc-2023/settlers",
+        "numeric/ipc-2023/sugar",
+        "numeric/ipc-2023/tpp",
+        "numeric/ipc-2023/zenotravel",
         # "line-exchange",
-        "line-exchange-quantity"
+        "numeric/line-exchange-quantity"
     ]
 
     instances = list()
@@ -61,7 +61,7 @@ def main():
 
     random.shuffle(instances)
     print(f"Listing {len(instances)} instances")
-    f = open("../../instances/pattern/instances-line.csv", "w")
+    f = open("benchmarks/instances/aij.csv", "w")
     f.write("\n".join([",".join(i) for i in instances]))
     f.close()
 

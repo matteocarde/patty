@@ -10,13 +10,14 @@ class Patty(Planner):
     name = NAME
 
     def __init__(self, name, search="static", maximize=False, useSCCs=False, noCompression=False,
-                 temporalConstraints=None):
+                 temporalConstraints=None, pattern="arpg"):
         self.search = search
         self.maximize = maximize
         self.name = name
         self.useSCCs = useSCCs
         self.noCompression = noCompression
         self.temporalConstraints = temporalConstraints
+        self.pattern = pattern
         super().__init__()
 
     @staticmethod
@@ -53,7 +54,8 @@ class Patty(Planner):
             "patty",
             "-o", domain,
             "-f", problem,
-            "-s", self.search
+            "-s", self.search,
+            "--pattern", self.pattern
         ]
         if self.noCompression:
             cmd += ["--no-compression"]

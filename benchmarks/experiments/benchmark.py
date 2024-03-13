@@ -28,6 +28,8 @@ my_config = Config(
 )
 
 PLANNERS: Dict[str, Planner] = {
+    "PATTY-R": Patty("PATTY-R", search="static", pattern="random"),
+    "PATTY": Patty("PATTY", search="static"),
     "PATTY-G": Patty("PATTY-G", search="static"),
     "PATTY-H": Patty("PATTY-H", search="astar", noCompression=True),
     "PATTY-F": Patty("PATTY-F", search="astar", noCompression=False),
