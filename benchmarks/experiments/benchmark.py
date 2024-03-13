@@ -20,6 +20,7 @@ from classes.planners.Optic import Optic
 from classes.planners.Patty import Patty
 from classes.planners.Planner import Planner
 from classes.Result import Result
+from classes.planners.RanTanPlan import RanTanPlan
 from classes.planners.SpringRoll import SpringRoll
 from classes.planners.TFD import TFD
 
@@ -54,6 +55,7 @@ PLANNERS: Dict[str, Planner] = {
     "ENHSP-OPT-HRADD": ENHSP(False, settings="-h hradd -s WAStar -silent -pp -pe", name="ENHSP-OPT-HRADD"),
     "ENHSP-OPT-BLIND": ENHSP(False, settings="-h blind -s WAStar -silent -pp -pe", name="ENHSP-OPT-BLIND"),
 
+    "RANTANPLAN": RanTanPlan(),
     "METRIC-FF": MetricFF(),
     "NFD": NFD(),
     "OMT": OMT(),

@@ -1,23 +1,18 @@
 import re
 
-from classes.planners.Planner import Planner
 from classes.Result import Result
+from classes.planners.Planner import Planner
 
-NAME = "PATTY"
+NAME = "RANTANPLAN"
+
+
 #
 
-class Patty(Planner):
+class RanTanPlan(Planner):
     name = NAME
 
-    def __init__(self, name, search="static", maximize=False, useSCCs=False, noCompression=False,
-                 temporalConstraints=None, pattern="arpg"):
-        self.search = search
-        self.maximize = maximize
-        self.name = name
-        self.useSCCs = useSCCs
-        self.noCompression = noCompression
-        self.temporalConstraints = temporalConstraints
-        self.pattern = pattern
+    def __init__(self):
+        self.name = f"{NAME}"
         super().__init__()
 
     @staticmethod
@@ -54,15 +49,7 @@ class Patty(Planner):
             "patty",
             "-o", domain,
             "-f", problem,
-            "-s", self.search,
-            "--pattern", self.pattern
+            "--effect-axioms",
+            "--roll-bound", "0"
         ]
-        if self.noCompression:
-            cmd += ["--no-compression"]
-        if self.maximize:
-            cmd += ["--maximize"]
-        if self.useSCCs:
-            cmd += ["--use-sccs"]
-        if self.temporalConstraints:
-            cmd += ["--temporal-constraints", self.temporalConstraints]
         return cmd

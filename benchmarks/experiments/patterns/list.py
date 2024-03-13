@@ -6,14 +6,14 @@ from natsort import natsort
 PLANNERS = [
     "PATTY",
     "PATTY-R",
-    # "SPRINGROLL",
-    # "RANTANPLAN",
-    # "ENHSP-HADD",
-    # "ENHSP-HRADD",
-    # "ENHSP-HMRP",
-    # "METRIC-FF",
-    # "NFD",
-    # "OMT"
+    "SPRINGROLL",
+    "RANTANPLAN",
+    "ENHSP-SAT-HADD",
+    "ENHSP-SAT-AIBR",
+    "ENHSP-SAT-HMRP",
+    "METRIC-FF",
+    "NFD",
+    "OMT"
 ]
 
 
