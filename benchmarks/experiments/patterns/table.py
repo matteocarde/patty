@@ -239,10 +239,7 @@ def main():
                 'PATTY-R': "SMT",
                 'RANTANPLAN': "SMT",
                 'SPRINGROLL': "SMT",
-                "OMT": "SMT",
-                'ENHSP': "SEARCH",
-                'METRIC-FF': "SEARCH",
-                "NFD": "SEARCH"
+                "OMT": "SMT"
             },
             "caption": r""
         }
