@@ -116,12 +116,12 @@ class Result:
         r.domain = results[0].domain
         r.problem = results[0].problem
         r.solved = statistics.mean([1 if e.solved else 0 for e in results])
-        r.timeout = statistics.mean([1 if e.timeout else 0 for e in results])
-        r.nOfVars = statistics.mean([e.nOfVars for e in results])
-        r.nOfRules = statistics.mean([e.nOfRules for e in results])
-        r.lastSearchedBound = statistics.mean([e.lastSearchedBound for e in results])
-        r.lastCallsToSolver = statistics.mean([e.lastCallsToSolver for e in results])
         if r.solved > 0:
+            r.timeout = statistics.mean([1 if e.timeout else 0 for e in results])
+            r.nOfVars = statistics.mean([e.nOfVars for e in results if e.solved])
+            r.nOfRules = statistics.mean([e.nOfRules for e in results if e.solved])
+            r.lastSearchedBound = statistics.mean([e.lastSearchedBound for e in results if e.solved])
+            r.lastCallsToSolver = statistics.mean([e.lastCallsToSolver for e in results if e.solved])
             r.time = statistics.mean([e.time for e in results if e.solved])
             r.bound = statistics.mean([e.bound for e in results if e.solved])
             r.planLength = statistics.mean([e.planLength for e in results if e.solved])
