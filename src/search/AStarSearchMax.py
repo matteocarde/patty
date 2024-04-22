@@ -100,5 +100,6 @@ class AStarSearchMax(Search):
                 patF.addPostfix(bound)
                 patG = patF
 
+            print("Is this called ?")
             bound = bound + 1
         pass
