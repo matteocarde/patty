@@ -2,15 +2,17 @@ from typing import List, Tuple
 
 from src.pddl.Action import Action
 from src.pddl.PDDLException import PDDLException
+from src.pddl.Plan import Plan
 from src.pddl.Problem import Problem
 from src.pddl.State import State
 from src.utils.LogPrint import LogPrint, LogPrintLevel
 
 
-class NumericPlan:
+class NumericPlan(Plan):
     quality: float
 
     def __init__(self):
+        super().__init__()
         self.__plan: List[Tuple[Action, int]] = list()
         self.__rolledPlan: List[Action] = list()
         self.quality: float
@@ -20,7 +22,7 @@ class NumericPlan:
         return len(self.__rolledPlan)
 
     def getActionsList(self):
-        return self.rolledPlan
+        return self.unrolledPlan
 
     @property
     def rolledPlan(self):

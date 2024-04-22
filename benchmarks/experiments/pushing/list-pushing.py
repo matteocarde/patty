@@ -9,12 +9,12 @@ PLANNERS = [
     "PATTY-H",
     "PATTY-F",
     # "PATTY-ASTAR",
-    # "SPRINGROLL",
-    # "ENHSP-HADD",
-    # "ENHSP-HRADD",
-    # "ENHSP-HMRP",
-    # "METRIC-FF",
-    # "NFD",
+    "SPRINGROLL",
+    "ENHSP-HADD",
+    "ENHSP-HRADD",
+    "ENHSP-HMRP",
+    "METRIC-FF",
+    "NFD",
     # "OMT"
 ]
 NAME = "pushing.csv"
@@ -41,7 +41,8 @@ def main():
         # "numeric/ipc-2023/sugar",
         # "numeric/ipc-2023/tpp",
         # "numeric/ipc-2023/zenotravel",
-        "numeric/line-exchange",
+        # "numeric/line-exchange",
+        "numeric/mail-robots",
     ]
 
     instances = list()

@@ -276,7 +276,12 @@ class Operation:
         return self.__getPreconditionAtoms(Literal)
 
     def __getPreN(self) -> Set[Atom]:
-        return self.__getPreconditionAtoms(BinaryPredicate)
+        atomList: Set[Atom] = set()
+        for c in self.preconditions:
+            if not isinstance(c, BinaryPredicate):
+                continue
+            atomList = atomList | c.getFunctions()
+        return atomList
 
     def __getAddList(self) -> Set[Atom]:
         return self.__getModifiedPredicates("+")
