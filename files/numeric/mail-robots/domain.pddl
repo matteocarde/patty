@@ -1,5 +1,4 @@
-
-(define (domain mailrobot)
+(define (domain mail-robots)
 
   (:types
     robot - object
