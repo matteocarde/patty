@@ -19,7 +19,7 @@ def main():
 
     solver: Search or None = None
     try:
-
+        print("Is this called ?")
         console: LogPrint = LogPrint(args.verboseLevel)
         ts: TimeStat = TimeStat()
         ts.start("Overall")
