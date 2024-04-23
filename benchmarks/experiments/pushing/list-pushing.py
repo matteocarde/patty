@@ -42,7 +42,7 @@ def main():
         # "numeric/ipc-2023/tpp",
         # "numeric/ipc-2023/zenotravel",
         # "numeric/line-exchange",
-        "numeric/mail-robots-qty",
+        "numeric/mail-robots-qty-types",
     ]
 
     instances = list()
