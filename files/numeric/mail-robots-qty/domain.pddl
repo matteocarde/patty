@@ -57,6 +57,7 @@
   (:action pst
     :parameters (?r - robot ?l - letter)
     :precondition (and
+      (not (psd ?r ?l))
       (> (p ?r ?l) 0)
     )
     :effect (and

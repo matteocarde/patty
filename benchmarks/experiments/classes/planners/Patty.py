@@ -53,8 +53,7 @@ class Patty(Planner):
             "patty",
             "-o", domain,
             "-f", problem,
-            "-s", self.search,
-            "-pp"
+            "-s", self.search
         ]
         if self.noCompression:
             cmd += ["--no-compression"]
