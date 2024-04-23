@@ -1,4 +1,6 @@
 import csv
+import os
+import shutil
 import statistics
 import time
 from typing import Dict, List, Set
@@ -10,26 +12,24 @@ from natsort import natsorted
 from classes.Result import Result
 
 SOLVERS = {
-    # 'RANTANPLAN': "\mathrm{R^2\exists}",
-    # 'OMT': "\mathrm{OMT}",
     'ENHSP': r"\mathrm{ENHSP}",
-    # 'NFD': "\mathrm{NFD}",
-    # 'METRIC-FF': "\mathrm{FF}",
-    'SpringRoll': "\mathrm{SR}",
-    'PATTY': "P",
-    'PATTY-STATIC': "P_{cat}",
-    'PATTY-ASTAR': "P_{A*}",
+    'SPRINGROLL': r"\mathrm{SR}",
+    'PATTY-G': r"\textsc{Patty}_\textsc{G}",
+    'PATTY-H': r"\textsc{Patty}_\textsc{H}",
+    'PATTY-F': r"\textsc{Patty}_\textsc{F}",
 }
 
 DOMAINS = {
-    "side-exchange": r"\textsc{SideExchange}"
+    "numeric/mail-robots": r"\textsc{MailRobots}"
 }
 
 TIMEOUT = 30
 
+
 def main():
+    filename = "2024-04-23-MAIL-V8"
     files = [
-        "benchmarks/results/2023-11-26-SIDE-v4.csv"
+        f"benchmarks/results/{filename}.csv"
     ]
     aResults: [Result] = []
     for file in files:
@@ -42,9 +42,9 @@ def main():
 
     ## Joining together portfolios
     results = Result.joinPorfolios(aResults, {
-        "ENHSP-sat-hadd": "ENHSP",
-        "ENHSP-sat-hradd": "ENHSP",
-        "ENHSP-sat-hmrphj": "ENHSP",
+        "ENHSP-SAT-AIBR": "ENHSP",
+        "ENHSP-SAT-HADD": "ENHSP",
+        "ENHSP-SAT-HMRP": "ENHSP",
     })
 
     xAxes: Dict[str, Set[str]] = dict()
@@ -72,20 +72,25 @@ def main():
         plt.figure(num=i, figsize=(8, 5))
         plt.title(rf"${DOMAINS[domain]}$")
         plt.grid()
-        plt.xlabel("Value of $Q$")
+        plt.xlabel("Value of $N$")
         plt.ylabel("Planning Time (s)")
         for solver in SOLVERS:
             tuple = rDomain[domain][solver]
             x = np.linspace(1, len(xAxes[domain]), len(xAxes[domain]))
             y = [tuple[prob].time / 1000 if prob in tuple and tuple[prob].solved else TIMEOUT for prob in xAxes[domain]]
-            ticks = [tick.replace(".pddl", "").replace("_", "\_") for tick in xAxes[domain]]
+            ticks = [tick.replace(".pddl", "").replace("prob_", "") for tick in xAxes[domain]]
             ticks = [t if int(t) % 2 == 0 else "" for t in ticks]
             plt.xticks(x, ticks)
             plt.plot(x, y, label=rf"${SOLVERS[solver]}$")
 
         # plt.ylim([0, 100])
         plt.legend(loc="upper right")
-        plt.savefig(f'benchmarks/figures/{domain}-{time.time_ns()}.pdf')
+        exp = filename.replace(".csv", "")
+        folder = f'benchmarks/figures/{exp}'
+        if os.path.exists(folder):
+            shutil.rmtree(folder)
+        os.mkdir(folder)
+        plt.savefig(f'{folder}/plot-{exp}.pdf', dpi=100, bbox_inches='tight', pad_inches=0.01)
         plt.show()
         i += 1
 

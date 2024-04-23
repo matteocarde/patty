@@ -370,11 +370,29 @@ class Operation:
         self.increases = self.__getIncreases()
         self.decreases = self.__getDecreases()
         self.assignments = self.__getAssignments()
-        self.__couldBeRepeated = len(self.getIncrList() | self.getDecrList()) > 0 and \
-                                 len(self.getPreB().intersection(self.getAddList() | self.getDelList())) == 0
+        self.__couldBeRepeated = self.__checkIfCanBeRepeated()
 
     def __hash__(self):
         return self.__hash
+
+    def __checkIfCanBeRepeated(self):
+        if not self.getIncrList() and not self.getDecrList():
+            return False
+        if self.getPreB().intersection(self.getAddList() | self.getDelList()):
+            return False
+
+        lhs = set()
+        rhs = set()
+        for e in self.effects:
+            if not isinstance(e, BinaryPredicate):
+                continue
+            lhs |= {e.getAtom()}
+            rhs |= e.rhs.getFunctions()
+
+        if lhs.intersection(rhs):
+            return False
+
+        return True
 
     def __eq__(self, other: Operation):
         if not isinstance(other, Operation):
