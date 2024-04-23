@@ -43,7 +43,7 @@
     )
   )
 
-  (:action gxc
+  (:action agxc
     :parameters (?r1 ?r2 - robot ?l - green)
     :precondition (and
       (next ?r1 ?r2)
@@ -58,7 +58,7 @@
     )
   )
 
-  (:action yxc
+  (:action ayxc
     :parameters (?r1 ?r2 - robot ?l - yellow)
     :precondition (and
       (next ?r1 ?r2)
@@ -73,7 +73,7 @@
     )
   )
 
-  (:action gst
+  (:action agst
     :parameters (?r - robot ?l - green)
     :precondition (and
       (> (g ?r ?l) 0)
@@ -83,7 +83,7 @@
     )
   )
 
-  (:action yst
+  (:action ayst
     :parameters (?r - robot ?l - yellow)
     :precondition (and
       (> (y ?r ?l) 0)
