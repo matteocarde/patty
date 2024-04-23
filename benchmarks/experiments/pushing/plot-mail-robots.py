@@ -20,14 +20,14 @@ SOLVERS = {
 }
 
 DOMAINS = {
-    "numeric/mail-robots": r"\textsc{MailRobots}"
+    "numeric/mail-robots-qty": r"\textsc{MailRobots}"
 }
 
 TIMEOUT = 30
 
 
 def main():
-    filename = "2024-04-23-MAIL-V8"
+    filename = "2024-04-23-MAIL-QTY-V2"
     files = [
         f"benchmarks/results/{filename}.csv"
     ]

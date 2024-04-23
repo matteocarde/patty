@@ -15,7 +15,7 @@ def main():
         l = MailRobots(
             nOfRobots=r,
             nOfLetters=nOfLetters,
-            L=5
+            L=20
         )
         with open(f"{folder}/prob_{r}.pddl", "w") as f:
             f.write(l.toPDDL())
