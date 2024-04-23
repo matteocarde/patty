@@ -30,7 +30,6 @@ def main():
         ts.end("Grounding", console=console)
 
         isTemporal = len(gDomain.durativeActions) > 0
-
         if args.search == "astar":
             solver = AStarSearchMax(gDomain, problem, args)
         elif args.search == "step":

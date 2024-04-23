@@ -1,8 +1,7 @@
 class MailRobots:
 
-    def __init__(self, halfRobots: int, L: int = 2):
-        self.nOfRobots = 2 * halfRobots + 1
-        self.middleRobot = halfRobots
+    def __init__(self, nOfRobots: int, L: int = 2):
+        self.nOfRobots = nOfRobots
         self.L = L
 
         self.robotList = list(range(0, self.nOfRobots))
@@ -14,8 +13,7 @@ class MailRobots:
         (define (problem prob{self.nOfRobots})
             (:domain mail-robots)
             (:objects
-              {' '.join(f"r{i}" for i in self.robotList if i != self.middleRobot)} - robot
-              r{self.middleRobot} - mailrobot
+              {' '.join(f"r{i}" for i in self.robotList)} - robot
             )
             
             (:init
@@ -26,15 +24,12 @@ class MailRobots:
                 {n.join(f"(= (x r{i}) {i * self.L})" for i in self.robotList)}
                 
                 {n.join(f"(= (p r{i}) {1 if i == 0 else 0})" for i in self.robotList)}
-                {n.join(f"(= (q r{i}) {1 if i == 0 else 0})" for i in self.robotList)}
             )
 
             (:goal
                 (and
-                    (psd)
-                    (qsd)
+                    {n.join(f"(psd r{i})" for i in self.robotList)}
                     (= (p r0) 1)
-                    (= (q r{self.nOfRobots - 1}) 1)
                 )
             )
         )"""

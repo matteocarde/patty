@@ -72,7 +72,7 @@ def main():
     if envs.isInsideAWS:
         time.sleep(envs.index / 4)
     else:
-        envs.file = "benchmarks/instances/temporal.csv"
+        envs.file = "benchmarks/instances/pushing.csv"
 
     logger = CloudLogger(envs.experiment)
 
@@ -104,6 +104,7 @@ def main():
                 print(f"Starting {planner} {benchmark} {domainFile} {problemFile}")
             r: Result = planner.run(benchmark, domainFile, problemFile, logger, envs.timeout)
             print(r)
+            print(r.stdout)
             if not r.solved:
                 print(r.stdout)
             logger.log(r.toCSV())
