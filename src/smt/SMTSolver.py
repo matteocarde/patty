@@ -28,7 +28,7 @@ class SMTSolver:
         if self.maximize:
             self.solver = Optimize()
             self.z3: Solver = Solver("z3",
-                                     logic=QF_NRA,
+                                     logic=QF_LRA,
                                      incremental=True,
                                      generate_models=True)
         else:
@@ -40,6 +40,8 @@ class SMTSolver:
         if self.encoding:
             self.addAssertions(self.encoding.rules)
             self.addSoftAssertions(self.encoding.softRules)
+            print(z3.get_version())
+            print(self.encoding.softRules)
 
     def addAssertion(self, expr: SMTExpression, push=True):
         self.assertions.append(expr)
@@ -100,7 +102,6 @@ class SMTSolver:
     def getSolution(self) -> SMTSolution or bool:
 
         if self.maximize:
-            # z3.set_option(verbose=10)
             res = self.solver.check()
 
             if str(res) != "sat":

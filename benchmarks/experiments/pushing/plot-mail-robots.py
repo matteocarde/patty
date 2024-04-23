@@ -23,7 +23,7 @@ DOMAINS = {
     "numeric/mail-robots-qty": r"\textsc{MailRobots}"
 }
 
-TIMEOUT = 90
+TIMEOUT = 30
 
 
 def main():

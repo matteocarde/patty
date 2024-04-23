@@ -8,8 +8,8 @@ def main():
     folder = f"./instances/{time.time_ns()}/"
     os.makedirs(folder)
 
-    robots = range(2, 22)
-    nOfLetters = 3
+    robots = range(2, 50)
+    nOfLetters = 4
 
     for r in robots:
         l = MailRobots(
