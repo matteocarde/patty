@@ -23,11 +23,11 @@ DOMAINS = {
     "numeric/mail-robots-qty": r"\textsc{MailRobots}"
 }
 
-TIMEOUT = 30
+TIMEOUT = 90
 
 
 def main():
-    filename = "2024-04-23-MAIL-QTY-V2"
+    filename = "2024-04-23-MAIL-QTY-V3"
     files = [
         f"benchmarks/results/{filename}.csv"
     ]

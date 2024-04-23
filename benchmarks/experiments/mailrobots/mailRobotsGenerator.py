@@ -9,7 +9,7 @@ def main():
     os.makedirs(folder)
 
     robots = range(2, 22)
-    nOfLetters = 5
+    nOfLetters = 2
 
     for r in robots:
         l = MailRobots(
