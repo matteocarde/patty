@@ -27,7 +27,7 @@ TIMEOUT = 30
 
 
 def main():
-    filename = "2024-04-23-MAIL-TYPES-V1"
+    filename = "2024-04-23-MAIL-TYPES-V3"
     files = [
         f"benchmarks/results/{filename}.csv"
     ]
@@ -80,7 +80,7 @@ def main():
             x = np.linspace(1, len(xAxes[domain]), len(xAxes[domain]))
             y = [tuple[prob].time / 1000 if prob in tuple and tuple[prob].solved else TIMEOUT for prob in xAxes[domain]]
             ticks = [tick.replace(".pddl", "").replace("prob_", "") for tick in xAxes[domain]]
-            ticks = [t if int(t) % 2 == 1 else "" for t in ticks]
+            ticks = [t if int(t) % 5 == 0 else "" for t in ticks]
             plt.xticks(x, ticks)
             plt.plot(x, y, label=rf"${SOLVERS[solver]}$")
 
