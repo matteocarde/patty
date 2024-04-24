@@ -9,12 +9,12 @@ PLANNERS = [
     "PATTY-H",
     "PATTY-F",
     # "PATTY-ASTAR",
-    "SPRINGROLL",
-    "ENHSP-SAT-AIBR",
-    "ENHSP-SAT-HADD",
-    "ENHSP-SAT-HMRP",
-    "METRIC-FF",
-    "NFD",
+    # "SPRINGROLL",
+    # "ENHSP-SAT-AIBR",
+    # "ENHSP-SAT-HADD",
+    # "ENHSP-SAT-HMRP",
+    # "METRIC-FF",
+    # "NFD",
     # "OMT"
 ]
 NAME = "pushing.csv"
@@ -56,7 +56,7 @@ def main():
             problemFile = f"files/{domain}/instances/{problem}"
 
             for planner in PLANNERS:
-                n = 1 if "PATTY-R" not in planner else 5
+                n = 1 if "PATTY" not in planner else 5
                 for i in range(0, n):
                     instances.append([planner, domain, domainFile, problemFile])
 

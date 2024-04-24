@@ -21,6 +21,7 @@ class Arguments:
         parser.add_argument('--encoding', default="non-linear",
                             help="The way linear numeric effect are dealt with: binary, non-linear")
         parser.add_argument('-pp', help="Print pattern", action="store_true")
+        parser.add_argument('-ppp', help="Print partial plan (for patty-f and patty-h)", action="store_true")
         parser.add_argument('--arpg', help="Prints the arpg", action="store_true")
         parser.add_argument('--binary-actions',
                             help="Number of binary actions allowed in the binary encoding (default=10)", default=10,
@@ -53,6 +54,7 @@ class Arguments:
         self.verboseLevel = LogPrintLevel(args.verboseLevel)
         self.deep = args.deep
         self.printPattern = args.pp
+        self.printPartialPlan = args.ppp
         self.printARPG = args.arpg
         self.pattern = args.pattern
         self.solver = args.solver

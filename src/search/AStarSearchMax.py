@@ -74,6 +74,11 @@ class AStarSearchMax(Search):
             solver.exit()
             self.ts.end(f"Solving Bound {bound}", console=self.console)
 
+            if self.args.printPartialPlan and plan:
+                print("--Partial Plan---")
+                print(plan)
+                print("-----------------")
+
             if self.args.saveSMT:
                 self.saveSMT(bound, encoding, callsToSolver=callsToSolver)
 

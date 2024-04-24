@@ -40,8 +40,6 @@ class SMTSolver:
         if self.encoding:
             self.addAssertions(self.encoding.rules)
             self.addSoftAssertions(self.encoding.softRules)
-            print(z3.get_version())
-            print(self.encoding.softRules)
 
     def addAssertion(self, expr: SMTExpression, push=True):
         self.assertions.append(expr)

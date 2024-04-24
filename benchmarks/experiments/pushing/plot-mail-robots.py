@@ -27,7 +27,7 @@ TIMEOUT = 30
 
 
 def main():
-    filename = "2024-04-23-MAIL-TYPES-V3"
+    filename = "2024-04-23-MAIL-TYPES-V4"
     files = [
         f"benchmarks/results/{filename}.csv"
     ]
