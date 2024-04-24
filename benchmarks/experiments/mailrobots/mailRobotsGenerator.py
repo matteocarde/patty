@@ -8,13 +8,13 @@ def main():
     folder = f"./instances/{time.time_ns()}/"
     os.makedirs(folder)
 
-    robots = range(1, 21)
-    nOfLetters = 2
+    robots = range(1, 81)
+    nOfLettersPerType = 1
 
     for r in robots:
         l = MailRobots(
             halfRobots=r,
-            nOfLetters=nOfLetters,
+            nOfLettersPerType=nOfLettersPerType,
             L=20
         )
         with open(f"{folder}/prob_{2 * r + 1}.pddl", "w") as f:

@@ -1,14 +1,14 @@
 class MailRobots:
 
-    def __init__(self, halfRobots: int, nOfLetters: int, L: int = 2):
+    def __init__(self, halfRobots: int, nOfLettersPerType: int, L: int = 2):
         self.nOfRobots = 2 * halfRobots + 1
-        self.nOfLetters = nOfLetters
+        self.nOfLettersPerType = nOfLettersPerType
         self.L = L
 
         self.robotList = list(range(0, self.nOfRobots))
         self.halfRobotsList = list(range(0, halfRobots + 1))
         self.pairs = [(i, i + 1) for i in range(0, self.nOfRobots - 1)]
-        self.lettersList = list(range(0, self.nOfLetters))
+        self.lettersList = list(range(0, self.nOfLettersPerType))
 
     def toPDDL(self) -> str:
         n = " "
@@ -32,16 +32,16 @@ class MailRobots:
                 
                 {n.join(f"(= (g r{i} g{j}) {1 if i == 0 else 0})" for i in self.robotList for j in self.lettersList)}
                 {n.join(f"(= (y r{i} y{j}) {1 if i == 0 else 0})" for i in self.robotList for j in self.lettersList)}
-                {n.join(f"(= (hg r{i}) {self.nOfLetters if i == 0 else 0})" for i in self.robotList)}
-                {n.join(f"(= (hy r{i}) {self.nOfLetters if i == 0 else 0})" for i in self.robotList)}
+                {n.join(f"(= (hg r{i}) {self.nOfLettersPerType if i == 0 else 0})" for i in self.robotList)}
+                {n.join(f"(= (hy r{i}) {self.nOfLettersPerType if i == 0 else 0})" for i in self.robotList)}
             )
 
             (:goal
                 (and
                     {n.join(f"(gsd r{i} g{j})" for i in self.halfRobotsList for j in self.lettersList)}
                     {n.join(f"(ysd r{i} y{j})" for i in self.robotList for j in self.lettersList)}
-                    (= (hg r0) {self.nOfLetters})
-                    (= (hy r{self.nOfRobots - 1}) {self.nOfLetters})
+                    (= (hg r0) {self.nOfLettersPerType})
+                    (= (hy r{self.nOfRobots - 1}) {self.nOfLettersPerType})
                 )
             )
         )"""

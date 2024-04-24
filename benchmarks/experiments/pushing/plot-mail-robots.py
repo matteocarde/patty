@@ -62,29 +62,30 @@ def main():
 
     plt.rcParams.update({
         "text.usetex": True,
-        "figure.figsize": [7.50, 1.50],
-        "figure.autolayout": True
+        "figure.figsize": [7.50, 7.50],
+        "figure.autolayout": True,
+        'font.size': 10
     })
 
     i = 1
     for domain in DOMAINS.keys():
-        plt.figure(figsize=(7.50, 3))
+        plt.figure(figsize=(7.50, 3.00))
         plt.figure(num=i, figsize=(8, 5))
-        plt.title(rf"${DOMAINS[domain]}$")
+        # plt.title(rf"${DOMAINS[domain]}$")
         plt.grid()
-        plt.xlabel("Value of $N$")
+        plt.xlabel("Number of robots")
         plt.ylabel("Planning Time (s)")
         for solver in SOLVERS:
             tuple = rDomain[domain][solver]
             x = np.linspace(1, len(xAxes[domain]), len(xAxes[domain]))
             y = [tuple[prob].time / 1000 if prob in tuple and tuple[prob].solved else TIMEOUT for prob in xAxes[domain]]
             ticks = [tick.replace(".pddl", "").replace("prob_", "") for tick in xAxes[domain]]
-            ticks = [t if int(t) % 2 == 0 else "" for t in ticks]
+            ticks = [t if int(t) % 2 == 1 else "" for t in ticks]
             plt.xticks(x, ticks)
             plt.plot(x, y, label=rf"${SOLVERS[solver]}$")
 
         # plt.ylim([0, 100])
-        plt.legend(loc="upper right")
+        plt.legend(loc="upper right", fontsize="10")
         exp = filename.replace(".csv", "")
         folder = f'benchmarks/figures/{exp}'
         if os.path.exists(folder):
