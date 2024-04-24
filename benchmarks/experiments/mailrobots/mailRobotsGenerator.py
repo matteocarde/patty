@@ -1,20 +1,20 @@
 import os
 import time
 
-from classes.MailRobots import MailRobots
+from classes.RelayRace import RelayRace
 
 
 def main():
     folder = f"./instances/{time.time_ns()}/"
     os.makedirs(folder)
 
-    robots = range(1, 81)
-    nOfLettersPerType = 1
+    runners = range(1, 41)
+    nOfBatonsPerType = 2
 
-    for r in robots:
-        l = MailRobots(
-            halfRobots=r,
-            nOfLettersPerType=nOfLettersPerType,
+    for r in runners:
+        l = RelayRace(
+            halfRunners=r,
+            nOfBatonsPerType=nOfBatonsPerType,
             L=20
         )
         with open(f"{folder}/prob_{2 * r + 1}.pddl", "w") as f:

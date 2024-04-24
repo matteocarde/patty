@@ -12,8 +12,8 @@ from natsort import natsorted
 from classes.Result import Result
 
 SOLVERS = {
-    'ENHSP': r"\mathrm{ENHSP}",
-    'SPRINGROLL': r"\mathrm{SR}",
+    # 'ENHSP': r"\mathrm{ENHSP}",
+    # 'SPRINGROLL': r"\mathrm{SR}",
     'PATTY-G': r"\textsc{Patty}_\textsc{G}",
     'PATTY-H': r"\textsc{Patty}_\textsc{H}",
     'PATTY-F': r"\textsc{Patty}_\textsc{F}",
@@ -23,11 +23,11 @@ DOMAINS = {
     "numeric/mail-robots-qty-types": r"\textsc{MailRobots}"
 }
 
-TIMEOUT = 30
+TIMEOUT = 90
 
 
 def main():
-    filename = "2024-04-23-MAIL-TYPES-V4"
+    filename = "2024-04-23-MAIL-TYPES-V5"
     files = [
         f"benchmarks/results/{filename}.csv"
     ]

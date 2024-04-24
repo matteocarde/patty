@@ -42,7 +42,7 @@ def main():
         # "numeric/ipc-2023/tpp",
         # "numeric/ipc-2023/zenotravel",
         # "numeric/line-exchange",
-        "numeric/mail-robots-qty-types",
+        "numeric/relay-race",
     ]
 
     instances = list()
@@ -56,7 +56,7 @@ def main():
             problemFile = f"files/{domain}/instances/{problem}"
 
             for planner in PLANNERS:
-                n = 1 if "PATTY" not in planner else 5
+                n = 1 if "JSHDKJSHDK" not in planner else 5
                 for i in range(0, n):
                     instances.append([planner, domain, domainFile, problemFile])
 
