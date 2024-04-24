@@ -20,14 +20,14 @@ SOLVERS = {
 }
 
 DOMAINS = {
-    "numeric/mail-robots-qty-types": r"\textsc{MailRobots}"
+    "numeric/relay-race": r"\textsc{MailRobots}"
 }
 
 TIMEOUT = 90
 
 
 def main():
-    filename = "2024-04-23-MAIL-TYPES-V5"
+    filename = "2024-04-24-RELAY-RACE-V1"
     files = [
         f"benchmarks/results/{filename}.csv"
     ]
@@ -73,7 +73,7 @@ def main():
         plt.figure(num=i, figsize=(8, 5))
         # plt.title(rf"${DOMAINS[domain]}$")
         plt.grid()
-        plt.xlabel("Number of robots")
+        plt.xlabel("Number of runners")
         plt.ylabel("Planning Time (s)")
         for solver in SOLVERS:
             tuple = rDomain[domain][solver]

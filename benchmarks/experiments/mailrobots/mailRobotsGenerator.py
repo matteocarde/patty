@@ -8,8 +8,8 @@ def main():
     folder = f"./instances/{time.time_ns()}/"
     os.makedirs(folder)
 
-    runners = range(1, 41)
-    nOfBatonsPerType = 2
+    runners = range(1, 81)
+    nOfBatonsPerType = 3
 
     for r in runners:
         l = RelayRace(
