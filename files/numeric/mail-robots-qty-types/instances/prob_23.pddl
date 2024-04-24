@@ -3,8 +3,8 @@
             (:domain mail-robots)
             (:objects
               r0 r1 r2 r3 r4 r5 r6 r7 r8 r9 r10 r11 r12 r13 r14 r15 r16 r17 r18 r19 r20 r21 r22 - robot
-              g0 g1 - green
-              y0 y1 - yellow
+              g0 - green
+              y0 - yellow
             )
             
             (:init
@@ -15,18 +15,18 @@
                 
                 (= (x r0) 0) (= (x r1) 20) (= (x r2) 40) (= (x r3) 60) (= (x r4) 80) (= (x r5) 100) (= (x r6) 120) (= (x r7) 140) (= (x r8) 160) (= (x r9) 180) (= (x r10) 200) (= (x r11) 220) (= (x r12) 240) (= (x r13) 260) (= (x r14) 280) (= (x r15) 300) (= (x r16) 320) (= (x r17) 340) (= (x r18) 360) (= (x r19) 380) (= (x r20) 400) (= (x r21) 420) (= (x r22) 440)
                 
-                (= (g r0 g0) 1) (= (g r0 g1) 1) (= (g r1 g0) 0) (= (g r1 g1) 0) (= (g r2 g0) 0) (= (g r2 g1) 0) (= (g r3 g0) 0) (= (g r3 g1) 0) (= (g r4 g0) 0) (= (g r4 g1) 0) (= (g r5 g0) 0) (= (g r5 g1) 0) (= (g r6 g0) 0) (= (g r6 g1) 0) (= (g r7 g0) 0) (= (g r7 g1) 0) (= (g r8 g0) 0) (= (g r8 g1) 0) (= (g r9 g0) 0) (= (g r9 g1) 0) (= (g r10 g0) 0) (= (g r10 g1) 0) (= (g r11 g0) 0) (= (g r11 g1) 0) (= (g r12 g0) 0) (= (g r12 g1) 0) (= (g r13 g0) 0) (= (g r13 g1) 0) (= (g r14 g0) 0) (= (g r14 g1) 0) (= (g r15 g0) 0) (= (g r15 g1) 0) (= (g r16 g0) 0) (= (g r16 g1) 0) (= (g r17 g0) 0) (= (g r17 g1) 0) (= (g r18 g0) 0) (= (g r18 g1) 0) (= (g r19 g0) 0) (= (g r19 g1) 0) (= (g r20 g0) 0) (= (g r20 g1) 0) (= (g r21 g0) 0) (= (g r21 g1) 0) (= (g r22 g0) 0) (= (g r22 g1) 0)
-                (= (y r0 y0) 1) (= (y r0 y1) 1) (= (y r1 y0) 0) (= (y r1 y1) 0) (= (y r2 y0) 0) (= (y r2 y1) 0) (= (y r3 y0) 0) (= (y r3 y1) 0) (= (y r4 y0) 0) (= (y r4 y1) 0) (= (y r5 y0) 0) (= (y r5 y1) 0) (= (y r6 y0) 0) (= (y r6 y1) 0) (= (y r7 y0) 0) (= (y r7 y1) 0) (= (y r8 y0) 0) (= (y r8 y1) 0) (= (y r9 y0) 0) (= (y r9 y1) 0) (= (y r10 y0) 0) (= (y r10 y1) 0) (= (y r11 y0) 0) (= (y r11 y1) 0) (= (y r12 y0) 0) (= (y r12 y1) 0) (= (y r13 y0) 0) (= (y r13 y1) 0) (= (y r14 y0) 0) (= (y r14 y1) 0) (= (y r15 y0) 0) (= (y r15 y1) 0) (= (y r16 y0) 0) (= (y r16 y1) 0) (= (y r17 y0) 0) (= (y r17 y1) 0) (= (y r18 y0) 0) (= (y r18 y1) 0) (= (y r19 y0) 0) (= (y r19 y1) 0) (= (y r20 y0) 0) (= (y r20 y1) 0) (= (y r21 y0) 0) (= (y r21 y1) 0) (= (y r22 y0) 0) (= (y r22 y1) 0)
-                (= (hg r0) 2) (= (hg r1) 0) (= (hg r2) 0) (= (hg r3) 0) (= (hg r4) 0) (= (hg r5) 0) (= (hg r6) 0) (= (hg r7) 0) (= (hg r8) 0) (= (hg r9) 0) (= (hg r10) 0) (= (hg r11) 0) (= (hg r12) 0) (= (hg r13) 0) (= (hg r14) 0) (= (hg r15) 0) (= (hg r16) 0) (= (hg r17) 0) (= (hg r18) 0) (= (hg r19) 0) (= (hg r20) 0) (= (hg r21) 0) (= (hg r22) 0)
-                (= (hy r0) 2) (= (hy r1) 0) (= (hy r2) 0) (= (hy r3) 0) (= (hy r4) 0) (= (hy r5) 0) (= (hy r6) 0) (= (hy r7) 0) (= (hy r8) 0) (= (hy r9) 0) (= (hy r10) 0) (= (hy r11) 0) (= (hy r12) 0) (= (hy r13) 0) (= (hy r14) 0) (= (hy r15) 0) (= (hy r16) 0) (= (hy r17) 0) (= (hy r18) 0) (= (hy r19) 0) (= (hy r20) 0) (= (hy r21) 0) (= (hy r22) 0)
+                (= (g r0 g0) 1) (= (g r1 g0) 0) (= (g r2 g0) 0) (= (g r3 g0) 0) (= (g r4 g0) 0) (= (g r5 g0) 0) (= (g r6 g0) 0) (= (g r7 g0) 0) (= (g r8 g0) 0) (= (g r9 g0) 0) (= (g r10 g0) 0) (= (g r11 g0) 0) (= (g r12 g0) 0) (= (g r13 g0) 0) (= (g r14 g0) 0) (= (g r15 g0) 0) (= (g r16 g0) 0) (= (g r17 g0) 0) (= (g r18 g0) 0) (= (g r19 g0) 0) (= (g r20 g0) 0) (= (g r21 g0) 0) (= (g r22 g0) 0)
+                (= (y r0 y0) 1) (= (y r1 y0) 0) (= (y r2 y0) 0) (= (y r3 y0) 0) (= (y r4 y0) 0) (= (y r5 y0) 0) (= (y r6 y0) 0) (= (y r7 y0) 0) (= (y r8 y0) 0) (= (y r9 y0) 0) (= (y r10 y0) 0) (= (y r11 y0) 0) (= (y r12 y0) 0) (= (y r13 y0) 0) (= (y r14 y0) 0) (= (y r15 y0) 0) (= (y r16 y0) 0) (= (y r17 y0) 0) (= (y r18 y0) 0) (= (y r19 y0) 0) (= (y r20 y0) 0) (= (y r21 y0) 0) (= (y r22 y0) 0)
+                (= (hg r0) 1) (= (hg r1) 0) (= (hg r2) 0) (= (hg r3) 0) (= (hg r4) 0) (= (hg r5) 0) (= (hg r6) 0) (= (hg r7) 0) (= (hg r8) 0) (= (hg r9) 0) (= (hg r10) 0) (= (hg r11) 0) (= (hg r12) 0) (= (hg r13) 0) (= (hg r14) 0) (= (hg r15) 0) (= (hg r16) 0) (= (hg r17) 0) (= (hg r18) 0) (= (hg r19) 0) (= (hg r20) 0) (= (hg r21) 0) (= (hg r22) 0)
+                (= (hy r0) 1) (= (hy r1) 0) (= (hy r2) 0) (= (hy r3) 0) (= (hy r4) 0) (= (hy r5) 0) (= (hy r6) 0) (= (hy r7) 0) (= (hy r8) 0) (= (hy r9) 0) (= (hy r10) 0) (= (hy r11) 0) (= (hy r12) 0) (= (hy r13) 0) (= (hy r14) 0) (= (hy r15) 0) (= (hy r16) 0) (= (hy r17) 0) (= (hy r18) 0) (= (hy r19) 0) (= (hy r20) 0) (= (hy r21) 0) (= (hy r22) 0)
             )
 
             (:goal
                 (and
-                    (gsd r0 g0) (gsd r0 g1) (gsd r1 g0) (gsd r1 g1) (gsd r2 g0) (gsd r2 g1) (gsd r3 g0) (gsd r3 g1) (gsd r4 g0) (gsd r4 g1) (gsd r5 g0) (gsd r5 g1) (gsd r6 g0) (gsd r6 g1) (gsd r7 g0) (gsd r7 g1) (gsd r8 g0) (gsd r8 g1) (gsd r9 g0) (gsd r9 g1) (gsd r10 g0) (gsd r10 g1) (gsd r11 g0) (gsd r11 g1)
-                    (ysd r0 y0) (ysd r0 y1) (ysd r1 y0) (ysd r1 y1) (ysd r2 y0) (ysd r2 y1) (ysd r3 y0) (ysd r3 y1) (ysd r4 y0) (ysd r4 y1) (ysd r5 y0) (ysd r5 y1) (ysd r6 y0) (ysd r6 y1) (ysd r7 y0) (ysd r7 y1) (ysd r8 y0) (ysd r8 y1) (ysd r9 y0) (ysd r9 y1) (ysd r10 y0) (ysd r10 y1) (ysd r11 y0) (ysd r11 y1) (ysd r12 y0) (ysd r12 y1) (ysd r13 y0) (ysd r13 y1) (ysd r14 y0) (ysd r14 y1) (ysd r15 y0) (ysd r15 y1) (ysd r16 y0) (ysd r16 y1) (ysd r17 y0) (ysd r17 y1) (ysd r18 y0) (ysd r18 y1) (ysd r19 y0) (ysd r19 y1) (ysd r20 y0) (ysd r20 y1) (ysd r21 y0) (ysd r21 y1) (ysd r22 y0) (ysd r22 y1)
-                    (= (hg r0) 2)
-                    (= (hy r22) 2)
+                    (gsd r0 g0) (gsd r1 g0) (gsd r2 g0) (gsd r3 g0) (gsd r4 g0) (gsd r5 g0) (gsd r6 g0) (gsd r7 g0) (gsd r8 g0) (gsd r9 g0) (gsd r10 g0) (gsd r11 g0)
+                    (ysd r0 y0) (ysd r1 y0) (ysd r2 y0) (ysd r3 y0) (ysd r4 y0) (ysd r5 y0) (ysd r6 y0) (ysd r7 y0) (ysd r8 y0) (ysd r9 y0) (ysd r10 y0) (ysd r11 y0) (ysd r12 y0) (ysd r13 y0) (ysd r14 y0) (ysd r15 y0) (ysd r16 y0) (ysd r17 y0) (ysd r18 y0) (ysd r19 y0) (ysd r20 y0) (ysd r21 y0) (ysd r22 y0)
+                    (= (hg r0) 1)
+                    (= (hy r22) 1)
                 )
             )
         )

@@ -21,7 +21,7 @@
     (i ?r - robot)
   )
 
-  (:action rt
+  (:action east
     :parameters (?r - robot)
     :precondition (and
       (> (+ (hg ?r)(hy ?r)) 0)
@@ -32,7 +32,7 @@
     )
   )
 
-  (:action lf
+  (:action west
     :parameters (?r - robot)
     :precondition (and
       (> (+ (hg ?r)(hy ?r)) 0)
@@ -43,7 +43,7 @@
     )
   )
 
-  (:action agxc
+  (:action gxc
     :parameters (?r1 ?r2 - robot ?l - green)
     :precondition (and
       (next ?r1 ?r2)
@@ -58,7 +58,7 @@
     )
   )
 
-  (:action ayxc
+  (:action yxc
     :parameters (?r1 ?r2 - robot ?l - yellow)
     :precondition (and
       (next ?r1 ?r2)
@@ -73,7 +73,7 @@
     )
   )
 
-  (:action agst
+  (:action gst
     :parameters (?r - robot ?l - green)
     :precondition (and
       (> (g ?r ?l) 0)
@@ -83,7 +83,7 @@
     )
   )
 
-  (:action ayst
+  (:action yst
     :parameters (?r - robot ?l - yellow)
     :precondition (and
       (> (y ?r ?l) 0)
