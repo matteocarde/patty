@@ -10,7 +10,7 @@ SMT_SOLVERS = {'PATTY-T-OR', 'PATTY-T-SIGMA', 'PATTY-T-OR-ASTAR', 'PATTY-T-SIGMA
 SOLVERS = {
     "PATTY-T-OR": r"\textsc{Patty}_{\vee}",
     "PATTY-T-SIGMA": r"\textsc{Patty}_{\Sigma}",
-    "PATTY-T-OR-ASTAR": r"\textsc{Patty}_{\vee}",
+    "PATTY-T-OR-ASTAR": r"\textsc{Patty}",
     "PATTY-T-SIGMA-ASTAR": r"\textsc{Patty}_{\Sigma}",
     "ANMLSMT": r"\textsc{AnmlSMT}",
     "ITSAT": r"\textsc{ITSat}",
@@ -166,14 +166,16 @@ def main():
             # "PATTY-T-OR": r"SMT",
             # "PATTY-T-SIGMA": r"SMT",
             "PATTY-T-OR-ASTAR": r"SMT",
-            "PATTY-T-SIGMA-ASTAR": r"SMT",
+            # "PATTY-T-SIGMA-ASTAR": r"SMT",
             "ANMLSMT": r"SMT",
             "ITSAT": r"SMT",
-            # "LPG": r"SEARCH",
+            "LPG": r"SEARCH",
             "OPTIC": r"SEARCH",
-            # "TFD": r"SEARCH",
+            "TFD": r"SEARCH",
         },
-        "caption": r"Comparative analysis between ..."
+        "caption": r"Comparative analysis between temporal solvers from the literature and our temporal version of the "
+                   r"solver $\textsc{Patty}$. The symbol ``-'' signifies that the solver was unable to parse the "
+                   r"problem specification."
     },
         #     {
         #     "name": "tab:exp-search",

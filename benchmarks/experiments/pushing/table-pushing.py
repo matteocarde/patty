@@ -9,17 +9,23 @@ from classes.Result import Result
 SMT_SOLVERS = {'SpringRoll', "PATTY-G", "PATTY-H", "PATTY-F", 'RANTANPLAN', "OMT"}
 TIME_LIMIT = 300 * 1000
 
+COMMANDS = r"""
+\newcommand{\pattyg}{\ensuremath{\textsc{Patty}_\textsc{G}}\xspace}
+\newcommand{\pattyh}{\ensuremath{\textsc{Patty}_\textsc{H}}\xspace}
+\newcommand{\pattyf}{\ensuremath{\textsc{Patty}_\textsc{F}}\xspace}
+"""
+
 SOLVERS = {
-    'SpringRoll': "SR",
-    'RANTANPLAN': "\mathrm{R^2\exists}",
-    'METRIC-FF': "\mathrm{FF}",
+    'SpringRoll': r"\mathrm{SR}",
+    'RANTANPLAN': r"\mathrm{R^2\exists}",
+    'METRIC-FF': r"\mathrm{FF}",
     'ENHSP': r"\mathrm{ENHSP}",
-    'NFD': "\mathrm{NFD}",
-    'SMTPLAN+': "\mathrm{SMTP}^+",
-    'OMT': "\mathrm{OMT}",
-    "PATTY-G": "P_G",
-    "PATTY-H": "P_H",
-    "PATTY-F": "P_F",
+    'NFD': r"\mathrm{NFD}",
+    'SMTPLAN+': r"\mathrm{SMTP}^+",
+    'OMT': r"\mathrm{OMT}",
+    "PATTY-G": r"\mathrm{P}_\mathrm{G}",
+    "PATTY-H": r"\mathrm{P}_\mathrm{H}",
+    "PATTY-F": r"\mathrm{P}_\mathrm{F}"
 }
 
 DOMAINS = {
@@ -220,7 +226,7 @@ def main():
     }
 
     tables = [{
-        "name": "tab:experiments",
+        "name": "tab:exp-patty",
         "type": "table*",
         "width": r"\textwidth",
         "columns": {
@@ -236,6 +242,32 @@ def main():
             'PATTY-H': "SMT",
             'PATTY-F': "SMT"
         },
+            # {
+            #     'PATTY-F': "SEARCH",
+            #     'ENHSP': "SEARCH",
+            #     'METRIC-FF': "SEARCH",
+            #     "NFD": "SEARCH",
+            # }
+        ],
+        "caption": r"Comparative analysis between \pattyg, \pattyh and \pattyf."
+    }, {
+        "name": "tab:exp-search",
+        "type": "table",
+        "width": r"\columnwidth",
+        "columns": {
+            "coverage": ("Coverage (\%)", {"SMT", "SEARCH"}),
+            "time": ("Time (s)", {"SMT", "SEARCH"}),
+            # "bound": (r"Calls to \textsc{Solve}", {"SMT"}),
+            # "nOfVars": ("$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$", {"SMT"}),
+            # "nOfRules": ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}),
+            # "lastCallsToSolver": (r"$\textsc{Solve}(\Pi^\prec)$ calls", {"SMT"}),
+        },
+        "planners": [
+            #     {
+            #     'PATTY-G': "SMT",
+            #     'PATTY-H': "SMT",
+            #     'PATTY-F': "SMT"
+            # },
             {
                 'PATTY-F': "SEARCH",
                 'ENHSP': "SEARCH",
@@ -243,7 +275,7 @@ def main():
                 "NFD": "SEARCH",
             }
         ],
-        "caption": r"Comparative analysis between \pattyg, \pattyh, \pattyf and the search based planners \textsc{ENHSP}, \textsc{MetricFF} and \textsc{NFD}."
+        "caption": r"Comparative analysis between \pattyf and the search based planners \textsc{ENHSP}, \textsc{MetricFF} and \textsc{NFD}."
     }]
 
     latex = []
@@ -252,8 +284,9 @@ def main():
            \usepackage{graphicx}
            \usepackage{lscape}
            \usepackage{multirow}
-           \usepackage[a4paper,margin=1in,landscape]{geometry}
-
+           \usepackage[a4paper,margin=1in,landscape]{geometry}""")
+    latex.append(COMMANDS)
+    latex.append(r"""
            \begin{document}""")
 
     for table in tables:

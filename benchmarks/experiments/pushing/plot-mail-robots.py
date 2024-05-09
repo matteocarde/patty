@@ -78,6 +78,7 @@ def main():
         for solver in SOLVERS:
             tuple = rDomain[domain][solver]
             x = np.linspace(1, len(xAxes[domain]), len(xAxes[domain]))
+            # y = [tuple[prob].time / 1000 if prob in tuple and tuple[prob].solved else TIMEOUT for prob in xAxes[domain]]
             y = [tuple[prob].time / 1000 if prob in tuple and tuple[prob].solved else TIMEOUT for prob in xAxes[domain]]
             ticks = [tick.replace(".pddl", "").replace("prob_", "") for tick in xAxes[domain]]
             ticks = [t if int(t) % 5 == 0 else "" for t in ticks]
