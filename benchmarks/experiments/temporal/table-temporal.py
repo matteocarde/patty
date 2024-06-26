@@ -8,15 +8,15 @@ from classes.Result import Result
 SMT_SOLVERS = {'PATTY-T-OR', 'PATTY-T-SIGMA', 'PATTY-T-OR-ASTAR', 'PATTY-T-SIGMA-ASTAR', 'ANMLSMT', 'ITSAT'}
 
 SOLVERS = {
-    "PATTY-T-OR": r"\textsc{Patty}_{\vee}",
-    "PATTY-T-SIGMA": r"\textsc{Patty}_{\Sigma}",
+    # "PATTY-T-OR": r"\textsc{Patty}_{\vee}",
+    # "PATTY-T-SIGMA": r"\textsc{Patty}_{\Sigma}",
     "PATTY-T-OR-ASTAR": r"\textsc{Patty}",
-    "PATTY-T-SIGMA-ASTAR": r"\textsc{Patty}_{\Sigma}",
+    # "PATTY-T-SIGMA-ASTAR": r"\textsc{Patty}_{\Sigma}",
     "ANMLSMT": r"\textsc{AnmlSMT}",
-    "ITSAT": r"\textsc{ITSat}",
-    "LPG": r"\textsc{LPG}",
-    "OPTIC": r"\textsc{Optic}",
-    "TFD": r"\textsc{TFD}",
+    # "ITSAT": r"\textsc{ITSat}",
+    # "LPG": r"\textsc{LPG}",
+    # "OPTIC": r"\textsc{Optic}",
+    # "TFD": r"\textsc{TFD}",
 }
 
 DOMAINS = {
@@ -36,7 +36,7 @@ TIMEOUT = 300 * 1000
 
 
 def main():
-    filename = "2024-01-14-TOTAL-v1.csv"
+    filename = "2024-06-26-REBUTTAL-TEMPORAL-V1.csv"
     files = [f"benchmarks/results/{filename}"]
 
     results: [Result] = []
@@ -50,7 +50,7 @@ def main():
     domains = set()
     d = dict()
     for r in results:
-        if r.domain not in DOMAINS:
+        if r.domain not in DOMAINS or r.solver not in SOLVERS:
             continue
         d[r.domain] = d.setdefault(r.domain, dict())
         solvers.add(r.solver)
@@ -116,9 +116,9 @@ def main():
             t[domain]["length"][solver] = r(statistics.mean([r.planLength for r in pResult if r.solved]), 0) if \
                 t[domain]["coverage"][solver] != "-" else "-"
 
-            v = [r.nOfVars for r in pResult if r.nOfVars > 0 and r.problem]
+            v = [r.nOfVars for r in pResult if r.nOfVars > 0 and (r.problem[:-5] in commonlySolved or domain == "temporal/oversub")]
             t[domain]["nOfVars"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
-            v = [r.nOfRules for r in pResult if r.nOfRules > 0 and r.problem]
+            v = [r.nOfRules for r in pResult if r.nOfRules > 0 and (r.problem[:-5] in commonlySolved or domain == "temporal/oversub")]
             t[domain]["nOfRules"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
 
     domainsClusters = {
@@ -168,10 +168,10 @@ def main():
             "PATTY-T-OR-ASTAR": r"SMT",
             # "PATTY-T-SIGMA-ASTAR": r"SMT",
             "ANMLSMT": r"SMT",
-            "ITSAT": r"SMT",
-            "LPG": r"SEARCH",
-            "OPTIC": r"SEARCH",
-            "TFD": r"SEARCH",
+            # "ITSAT": r"SMT",
+            # "LPG": r"SEARCH",
+            # "OPTIC": r"SEARCH",
+            # "TFD": r"SEARCH",
         },
         "caption": r"Comparative analysis between temporal solvers from the literature and our temporal version of the "
                    r"solver $\textsc{Patty}$. The symbol ``-'' signifies that the solver was unable to parse the "

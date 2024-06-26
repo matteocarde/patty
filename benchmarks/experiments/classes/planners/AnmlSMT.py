@@ -20,9 +20,9 @@ class AnmlSMT(Planner):
         r.planLength = len(r.plan)
 
         reNOfVars = re.findall(r".*? Number of variables: (.*?)$", stdout, re.MULTILINE)
-        r.nOfVars = -1 if not reNOfVars else int(reNOfVars[-1])
+        r.nOfVars = -1 if not reNOfVars else int(reNOfVars[0])
         reNOfRules = re.findall(r".*? Number of assertions: (.*?)$", stdout, re.MULTILINE)
-        r.nOfRules = -1 if not reNOfRules else int(reNOfRules[-1])
+        r.nOfRules = -1 if not reNOfRules else int(reNOfRules[0])
 
         return r
 

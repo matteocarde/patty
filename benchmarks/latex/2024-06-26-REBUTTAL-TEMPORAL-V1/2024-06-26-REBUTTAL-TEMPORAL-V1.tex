@@ -1,0 +1,37 @@
+
+            \documentclass[11pt,landscape]{article}
+            \usepackage{graphicx}
+            \usepackage{lscape}
+            \usepackage{multirow}
+            \usepackage[a4paper,margin=1in,landscape]{geometry}
+
+            \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\Huge{
+\begin{tabular}{|l||cc||cc||cc||cc||cc||}
+\hline
+ & \multicolumn{2}{c||}{Coverage (\%)}&\multicolumn{2}{c||}{Time (s)}&\multicolumn{2}{c||}{Bound (Common)}&\multicolumn{2}{c||}{$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$}&\multicolumn{2}{c||}{$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$}\\
+Domain & $\textsc{Patty}$&$\textsc{AnmlSMT}$&$\textsc{Patty}$&$\textsc{AnmlSMT}$&$\textsc{Patty}$&$\textsc{AnmlSMT}$&$\textsc{Patty}$&$\textsc{AnmlSMT}$&$\textsc{Patty}$&$\textsc{AnmlSMT}$\\
+\hline
+\textit{Temporal}&\textbf{10}&\textbf{4}&\textbf{6}&\textbf{4}&\textbf{10}&\textbf{0}&\textbf{10}&\textbf{0}&\textbf{10}&\textbf{0}\\\hline
+\textsc{Cushing}&\textbf{100.0}&30.0&\textbf{1.70}&230.35&\textbf{3.00}&10.33&\textbf{191}&965&\textbf{343}&11787\\
+\textsc{Pour}&\textbf{95.0}&5.0&\textbf{46.51}&285.92&\textbf{2.00}&14.00&\textbf{35}&1488&\textbf{102}&4863\\
+\textsc{Shake}&\textbf{100.0}&50.0&\textbf{1.11}&153.74&\textbf{2.00}&8.50&\textbf{138}&422&\textbf{282}&2381\\
+\textsc{Pack}&\textbf{60.0}&5.0&\textbf{154.72}&285.00&\textbf{1.00}&5.00&\textbf{22}&252&\textbf{46}&465\\
+\textsc{Bottles}&\textbf{10.0}&5.0&\textbf{284.28}&287.35&\textbf{7.00}&17.00&\textbf{287}&6190&\textbf{2017}&27046\\
+\textsc{Majsp}&\textbf{85.0}&50.0&\textbf{90.54}&153.85&\textbf{8.40}&15.00&\textbf{538}&5402&\textbf{1195}&20479\\
+\textsc{MatchAC}&\textbf{100.0}&\textbf{100.0}&2.20&\textbf{0.41}&\textbf{3.85}&9.00&\textbf{134}&563&\textbf{589}&1726\\
+\textsc{MatchMS}&\textbf{100.0}&\textbf{100.0}&1.22&\textbf{0.40}&\textbf{3.60}&9.00&\textbf{93}&610&\textbf{351}&1804\\
+\textsc{Oversub}&\textbf{100.0}&\textbf{100.0}&1.02&\textbf{0.04}&\textbf{1.00}&3.00&\textbf{181}&585&\textbf{308}&839\\
+\textsc{Painter}&\textbf{35.0}&\textbf{35.0}&211.69&\textbf{210.54}&\textbf{2.67}&17.83&\textbf{2058}&2490&\textbf{5491}&26586
+\\\hline
+
+        \end{tabular}}}
+        \caption{Comparative analysis between temporal solvers from the literature and our temporal version of the solver $\textsc{Patty}$. The symbol ``-'' signifies that the solver was unable to parse the problem specification.}
+        \label{tab:experiments}
+        \end{table*}
+        
+\end{document}
