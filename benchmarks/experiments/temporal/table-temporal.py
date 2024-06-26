@@ -116,9 +116,9 @@ def main():
             t[domain]["length"][solver] = r(statistics.mean([r.planLength for r in pResult if r.solved]), 0) if \
                 t[domain]["coverage"][solver] != "-" else "-"
 
-            v = [r.nOfVars for r in pResult if r.nOfVars > 0 and r.problem in commonlyGrounded]
+            v = [r.nOfVars for r in pResult if r.nOfVars > 0 and r.problem]
             t[domain]["nOfVars"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
-            v = [r.nOfRules for r in pResult if r.nOfRules > 0 and r.problem in commonlyGrounded]
+            v = [r.nOfRules for r in pResult if r.nOfRules > 0 and r.problem]
             t[domain]["nOfRules"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
 
     domainsClusters = {
@@ -159,8 +159,8 @@ def main():
             "coverage": ("Coverage (\%)", {"SMT", "SEARCH"}),
             "time": ("Time (s)", {"SMT", "SEARCH"}),
             "bound": ("Bound (Common)", {"SMT"}),
-            # "nOfVars": ("$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$", {"SMT"}),
-            # "nOfRules": ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}),
+            "nOfVars": ("$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$", {"SMT"}),
+            "nOfRules": ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}),
         },
         "solvers": {
             # "PATTY-T-OR": r"SMT",

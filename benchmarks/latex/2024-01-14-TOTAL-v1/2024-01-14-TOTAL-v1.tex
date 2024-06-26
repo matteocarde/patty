@@ -11,22 +11,22 @@
             \centering
             \resizebox{\textwidth}{!}{
 \Huge{
-\begin{tabular}{|l||cccccc||cccccc||ccc||}
+\begin{tabular}{|l||cccccc||cccccc||ccc||ccc||ccc||}
 \hline
- & \multicolumn{6}{c||}{Coverage (\%)}&\multicolumn{6}{c||}{Time (s)}&\multicolumn{3}{c||}{Bound (Common)}\\
-Domain & $\textsc{Patty}$&$\textsc{AnmlSMT}$&$\textsc{ITSat}$&$\textsc{LPG}$&$\textsc{Optic}$&$\textsc{TFD}$&$\textsc{Patty}$&$\textsc{AnmlSMT}$&$\textsc{ITSat}$&$\textsc{LPG}$&$\textsc{Optic}$&$\textsc{TFD}$&$\textsc{Patty}$&$\textsc{AnmlSMT}$&$\textsc{ITSat}$\\
+ & \multicolumn{6}{c||}{Coverage (\%)}&\multicolumn{6}{c||}{Time (s)}&\multicolumn{3}{c||}{Bound (Common)}&\multicolumn{3}{c||}{$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$}&\multicolumn{3}{c||}{$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$}\\
+Domain & $\textsc{Patty}$&$\textsc{AnmlSMT}$&$\textsc{ITSat}$&$\textsc{LPG}$&$\textsc{Optic}$&$\textsc{TFD}$&$\textsc{Patty}$&$\textsc{AnmlSMT}$&$\textsc{ITSat}$&$\textsc{LPG}$&$\textsc{Optic}$&$\textsc{TFD}$&$\textsc{Patty}$&$\textsc{AnmlSMT}$&$\textsc{ITSat}$&$\textsc{Patty}$&$\textsc{AnmlSMT}$&$\textsc{ITSat}$&$\textsc{Patty}$&$\textsc{AnmlSMT}$&$\textsc{ITSat}$\\
 \hline
-\textit{Temporal}&\textbf{9}&\textbf{4}&\textbf{2}&\textbf{1}&\textbf{4}&\textbf{0}&\textbf{6}&\textbf{1}&\textbf{0}&\textbf{0}&\textbf{3}&\textbf{0}&\textbf{10}&\textbf{0}&\textbf{0}\\\hline
-\textsc{Cushing}&\textbf{100.0}&30.0&-&-&\textbf{100.0}&10.0&\textbf{1.70}&235.35&-&-&3.12&270.02&\textbf{3.00}&11.33&-\\
-\textsc{Pour}&\textbf{95.0}&5.0&-&-&-&-&\textbf{46.51}&285.96&-&-&-&-&\textbf{2.00}&15.00&-\\
-\textsc{Shake}&\textbf{100.0}&50.0&-&-&-&-&\textbf{1.11}&155.15&-&-&-&-&\textbf{2.00}&9.50&-\\
-\textsc{Pack}&\textbf{60.0}&5.0&-&-&-&-&\textbf{154.72}&285.00&-&-&-&-&\textbf{1.00}&6.00&-\\
-\textsc{Bottles}&\textbf{10.0}&5.0&-&-&-&-&\textbf{284.28}&286.36&-&-&-&-&\textbf{7.00}&18.00&-\\
-\textsc{Majsp}&\textbf{85.0}&50.0&-&-&-&-&\textbf{90.54}&154.02&-&-&-&-&\textbf{8.40}&15.00&-\\
-\textsc{MatchAC}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&-&\textbf{100.0}&-&2.20&0.46&0.71&-&\textbf{0.01}&-&\textbf{3.85}&10.00&4.00\\
-\textsc{MatchMS}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&-&\textbf{100.0}&-&1.22&0.43&0.68&-&\textbf{0.01}&-&\textbf{3.60}&10.00&4.00\\
-\textsc{Oversub}&\textbf{100.0}&\textbf{100.0}&-&\textbf{100.0}&\textbf{100.0}&-&1.02&0.05&-&0.08&\textbf{0.01}&-&\textbf{1.00}&4.00&-\\
-\textsc{Painter}&35.0&\textbf{45.0}&-&-&10.0&-&211.69&\textbf{194.67}&-&-&270.03&-&\textbf{2.40}&16.80&-
+\textit{Temporal}&\textbf{9}&\textbf{4}&\textbf{2}&\textbf{1}&\textbf{4}&\textbf{0}&\textbf{6}&\textbf{1}&\textbf{0}&\textbf{0}&\textbf{3}&\textbf{0}&\textbf{10}&\textbf{0}&\textbf{0}&\textbf{10}&\textbf{0}&\textbf{0}&\textbf{10}&\textbf{0}&\textbf{0}\\\hline
+\textsc{Cushing}&\textbf{100.0}&30.0&-&-&\textbf{100.0}&10.0&\textbf{1.70}&235.35&-&-&3.12&270.02&\textbf{3.00}&11.33&-&\textbf{475}&-&-&\textbf{854}&-&-\\
+\textsc{Pour}&\textbf{95.0}&5.0&-&-&-&-&\textbf{46.51}&285.96&-&-&-&-&\textbf{2.00}&15.00&-&\textbf{242}&-&-&\textbf{1663}&-&-\\
+\textsc{Shake}&\textbf{100.0}&50.0&-&-&-&-&\textbf{1.11}&155.15&-&-&-&-&\textbf{2.00}&9.50&-&\textbf{262}&-&-&\textbf{536}&-&-\\
+\textsc{Pack}&\textbf{60.0}&5.0&-&-&-&-&\textbf{154.72}&285.00&-&-&-&-&\textbf{1.00}&6.00&-&\textbf{179}&-&-&\textbf{2030}&-&-\\
+\textsc{Bottles}&\textbf{10.0}&5.0&-&-&-&-&\textbf{284.28}&286.36&-&-&-&-&\textbf{7.00}&18.00&-&\textbf{464}&-&-&\textbf{4504}&-&-\\
+\textsc{Majsp}&\textbf{85.0}&50.0&-&-&-&-&\textbf{90.54}&154.02&-&-&-&-&\textbf{8.40}&15.00&-&\textbf{707}&-&-&\textbf{1557}&-&-\\
+\textsc{MatchAC}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&-&\textbf{100.0}&-&2.20&0.46&0.71&-&\textbf{0.01}&-&\textbf{3.85}&10.00&4.00&\textbf{134}&-&-&\textbf{589}&-&-\\
+\textsc{MatchMS}&\textbf{100.0}&\textbf{100.0}&\textbf{100.0}&-&\textbf{100.0}&-&1.22&0.43&0.68&-&\textbf{0.01}&-&\textbf{3.60}&10.00&4.00&\textbf{93}&-&-&\textbf{351}&-&-\\
+\textsc{Oversub}&\textbf{100.0}&\textbf{100.0}&-&\textbf{100.0}&\textbf{100.0}&-&1.02&0.05&-&0.08&\textbf{0.01}&-&\textbf{1.00}&4.00&-&\textbf{181}&-&-&\textbf{308}&-&-\\
+\textsc{Painter}&35.0&\textbf{45.0}&-&-&10.0&-&211.69&\textbf{194.67}&-&-&270.03&-&\textbf{2.40}&16.80&-&\textbf{2385}&-&-&\textbf{6404}&-&-
 \\\hline
 
         \end{tabular}}}

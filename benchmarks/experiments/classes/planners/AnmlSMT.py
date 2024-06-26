@@ -19,6 +19,11 @@ class AnmlSMT(Planner):
         r.plan = re.findall(r"^[.\d]*?: (.*?) \[(.*?)]", stdout, re.MULTILINE)
         r.planLength = len(r.plan)
 
+        reNOfVars = re.findall(r".*? Number of variables: (.*?)$", stdout, re.MULTILINE)
+        r.nOfVars = -1 if not reNOfVars else int(reNOfVars[-1])
+        reNOfRules = re.findall(r".*? Number of assertions: (.*?)$", stdout, re.MULTILINE)
+        r.nOfRules = -1 if not reNOfRules else int(reNOfRules[-1])
+
         return r
 
     def getCommand(self, domain: str, problem: str):

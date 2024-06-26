@@ -612,6 +612,7 @@ class TemporalEncoding(Encoding):
                         if action_j.couldBeRepeated() or action_i.couldBeRepeated():
                             rhs = (a_i <= 1).AND(a_j <= 1)
                             rules.append(interval.implies(rhs))
+                            print(interval.implies(rhs))
 
         return rules
 

@@ -167,9 +167,16 @@ RUN chmod +x /var/omtplan/omtplan
 
 RUN pip install tarjan prettytable
 
+COPY /benchmarks/planners/anmlsmt /var/anmlsmt
+WORKDIR /var/anmlsmt
+RUN chmod +x anmlsmt
+ENV PATH /var/anmlsmt/:${PATH}
+
 WORKDIR /project
 # Copying
 COPY . .
+
+#Cazzz
 
 #Authorizations
 RUN chmod +x exes/*
