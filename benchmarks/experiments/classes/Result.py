@@ -134,6 +134,9 @@ class Result:
         r.nOfRules = max([e.nOfRules for e in results])
         r.lastSearchedBound = max([e.lastSearchedBound for e in results])
         r.lastCallsToSolver = max([e.lastCallsToSolver for e in results])
+        r.numVariables = max([e.numVariables for e in results])
+        r.boolVariables = max([e.boolVariables for e in results])
+        r.actions = max([e.actions for e in results])
         if r.solved > 0:
             r.time = max([e.time for e in results if e.solved])
             r.bound = max([e.bound for e in results if e.solved])

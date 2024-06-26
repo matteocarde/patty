@@ -5,9 +5,10 @@ from natsort import natsort
 # PLANNERS = ["PATTY", "PATTY-R-YICES", "PATTY-R-Z3-NL", "PATTY-NL", "PATTY-Z3", "SPRINGROLL"]
 PLANNERS = [
     # "PATTY",
-    "PATTY-G",
-    "PATTY-H",
-    "PATTY-F",
+    "PATTY-O",
+    # "PATTY-G",
+    # "PATTY-H",
+    # "PATTY-F",
     # "PATTY-ASTAR",
     # "SPRINGROLL",
     # "ENHSP-SAT-AIBR",

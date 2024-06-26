@@ -29,64 +29,64 @@ SOLVERS = {
 }
 
 DOMAINS = {
-    "ipc-2023/block-grouping": r"\textsc{BlockGrouping} (S)",
-    "ipc-2023/counters": r"\textsc{Counters} (S)",
-    "ipc-2023/delivery": r"\textsc{Delivery} (S)",
-    "ipc-2023/drone": r"\textsc{Drone} (S)",
-    "ipc-2023/expedition": r"\textsc{Expedition} (S)",
-    "ipc-2023/ext-plant-watering": r"\textsc{PlantWatering} (S)",
-    "ipc-2023/farmland": r"\textsc{Farmland} (S)",
-    "ipc-2023/fo-farmland": r"\textsc{Farmland} (L)",
-    "ipc-2023/fo-sailing": r"\textsc{Sailing} (L)",
-    "ipc-2023/fo_counters": r"\textsc{Counters} (L)",
-    "ipc-2023/hydropower": r"\textsc{HydroPower} (S)",
-    # "ipc-2023/markettrader": r"\textsc{MarketTrader}",
-    "ipc-2023/mprime": r"\textsc{MPrime} (S)",
-    "ipc-2023/pathwaysmetric": r"\textsc{PathwaysMetric} (S)",
-    "ipc-2023/rover": r"\textsc{Rover} (S)",
-    "ipc-2023/sailing": r"\textsc{Sailing} (S)",
-    "ipc-2023/satellite": r"\textsc{Satellite} (S)",
-    "ipc-2023/settlers": r"\textsc{Settlers} (S)",
-    "ipc-2023/sugar": r"\textsc{Sugar} (S)",
-    "ipc-2023/tpp": r"\textsc{TPP} (L)",
-    "ipc-2023/zenotravel": r"\textsc{ZenoTravel} (S)",
-    "line-exchange": r"\textsc{LineExchange} (L)",
+    "numeric/ipc-2023/block-grouping": r"\textsc{BlockGrouping} (S)",
+    "numeric/ipc-2023/counters": r"\textsc{Counters} (S)",
+    "numeric/ipc-2023/delivery": r"\textsc{Delivery} (S)",
+    "numeric/ipc-2023/drone": r"\textsc{Drone} (S)",
+    "numeric/ipc-2023/expedition": r"\textsc{Expedition} (S)",
+    "numeric/ipc-2023/ext-plant-watering": r"\textsc{PlantWatering} (S)",
+    "numeric/ipc-2023/farmland": r"\textsc{Farmland} (S)",
+    "numeric/ipc-2023/fo-farmland": r"\textsc{Farmland} (L)",
+    "numeric/ipc-2023/fo-sailing": r"\textsc{Sailing} (L)",
+    "numeric/ipc-2023/fo_counters": r"\textsc{Counters} (L)",
+    "numeric/ipc-2023/hydropower": r"\textsc{HydroPower} (S)",
+    # "numeric/ipc-2023/markettrader": r"\textsc{MarketTrader}",
+    "numeric/ipc-2023/mprime": r"\textsc{MPrime} (S)",
+    "numeric/ipc-2023/pathwaysmetric": r"\textsc{PathwaysMetric} (S)",
+    "numeric/ipc-2023/rover": r"\textsc{Rover} (S)",
+    "numeric/ipc-2023/sailing": r"\textsc{Sailing} (S)",
+    "numeric/ipc-2023/satellite": r"\textsc{Satellite} (S)",
+    "numeric/ipc-2023/settlers": r"\textsc{Settlers} (S)",
+    "numeric/ipc-2023/sugar": r"\textsc{Sugar} (S)",
+    "numeric/ipc-2023/tpp": r"\textsc{TPP} (L)",
+    "numeric/ipc-2023/zenotravel": r"\textsc{ZenoTravel} (S)",
+    "numeric/line-exchange": r"\textsc{LineExchange} (L)",
     "line-exchange-quantity": r"\textsc{LineExchange-QTY} (L)"
 }
 
 TOTALS = {
-    "ipc-2023/block-grouping": 20,
-    "ipc-2023/counters": 20,
-    "ipc-2023/delivery": 20,
-    "ipc-2023/drone": 20,
-    "ipc-2023/expedition": 20,
-    "ipc-2023/ext-plant-watering": 20,
-    "ipc-2023/farmland": 20,
-    "ipc-2023/fo-farmland": 20,
-    "ipc-2023/fo-sailing": 20,
-    "ipc-2023/fo_counters": 20,
-    "ipc-2023/hydropower": 20,
-    "ipc-2023/markettrader": 20,
-    "ipc-2023/mprime": 20,
-    "ipc-2023/pathwaysmetric": 20,
-    "ipc-2023/rover": 20,
-    "ipc-2023/sailing": 20,
-    "ipc-2023/satellite": 20,
-    "ipc-2023/settlers": 20,
-    "ipc-2023/sugar": 20,
-    "ipc-2023/tpp": 20,
-    "ipc-2023/zenotravel": 20,
-    "line-exchange": 108,
+    "numeric/ipc-2023/block-grouping": 20,
+    "numeric/ipc-2023/counters": 20,
+    "numeric/ipc-2023/delivery": 20,
+    "numeric/ipc-2023/drone": 20,
+    "numeric/ipc-2023/expedition": 20,
+    "numeric/ipc-2023/ext-plant-watering": 20,
+    "numeric/ipc-2023/farmland": 20,
+    "numeric/ipc-2023/fo-farmland": 20,
+    "numeric/ipc-2023/fo-sailing": 20,
+    "numeric/ipc-2023/fo_counters": 20,
+    "numeric/ipc-2023/hydropower": 20,
+    "numeric/ipc-2023/markettrader": 20,
+    "numeric/ipc-2023/mprime": 20,
+    "numeric/ipc-2023/pathwaysmetric": 20,
+    "numeric/ipc-2023/rover": 20,
+    "numeric/ipc-2023/sailing": 20,
+    "numeric/ipc-2023/satellite": 20,
+    "numeric/ipc-2023/settlers": 20,
+    "numeric/ipc-2023/sugar": 20,
+    "numeric/ipc-2023/tpp": 20,
+    "numeric/ipc-2023/zenotravel": 20,
+    "numeric/line-exchange": 108,
     "line-exchange-quantity": 20
 }
 
 
 def main():
     # Parsing the results
-    exp = "2024-01-05-PUSHING-v3"
+    exp = "2024-06-26-REBUTTAL-PUSHING-V1"
     file = f"benchmarks/results/{exp}.csv"
 
-    joinWith = ["benchmarks/results/SEARCH-300.csv"] + [file]
+    joinWith = [] + [file]
     # joinWith = [file]
 
     aResults: [Result] = []
@@ -147,6 +147,10 @@ def main():
             "nOfVars": dict(),
             "nOfRules": dict(),
             "lastCallsToSolver": dict(),
+            "actions": dict(),
+            "patternLength": dict(),
+            "maxRolling": dict(),
+            "distinctActionsInPlan": dict()
         }
 
         commonlySolved = {}
@@ -185,34 +189,43 @@ def main():
             t[domain]["nOfRules"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
             v = [r.lastCallsToSolver for r in pResult if r.lastCallsToSolver > 0 and r.problem in commonlySolved]
             t[domain]["lastCallsToSolver"][solver] = r(statistics.mean(v), 2) if len(v) else "-"
+            v = [r.actions for r in pResult if r.problem in commonlySolved]
+            t[domain]["actions"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
+            v = [r.patternLength for r in pResult if r.patternLength > 0 and r.problem in commonlySolved]
+            t[domain]["patternLength"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
+            v = [r.maxRolling for r in pResult if r.maxRolling > 0 and r.problem in commonlySolved]
+            t[domain]["maxRolling"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
+            v = [r.distinctActionsInPlan for r in pResult if
+                 r.distinctActionsInPlan > 0 and r.problem in commonlySolved]
+            t[domain]["distinctActionsInPlan"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
 
     domainsClusters = {
         r"\textit{Highly Numeric}": [
-            "ipc-2023/block-grouping",
-            "ipc-2023/counters",
-            "ipc-2023/fo_counters",
-            "ipc-2023/drone",
-            "ipc-2023/ext-plant-watering",
-            "ipc-2023/farmland",
-            "ipc-2023/fo-farmland",
-            "ipc-2023/hydropower",
-            "ipc-2023/sailing",
-            "ipc-2023/fo-sailing",
-            "line-exchange",
+            "numeric/ipc-2023/block-grouping",
+            "numeric/ipc-2023/counters",
+            "numeric/ipc-2023/fo_counters",
+            "numeric/ipc-2023/drone",
+            "numeric/ipc-2023/ext-plant-watering",
+            "numeric/ipc-2023/farmland",
+            "numeric/ipc-2023/fo-farmland",
+            "numeric/ipc-2023/hydropower",
+            "numeric/ipc-2023/sailing",
+            "numeric/ipc-2023/fo-sailing",
+            "numeric/line-exchange",
             # "line-exchange-quantity"
         ],
         r"\textit{Lowly Numeric}": [
-            "ipc-2023/delivery",
-            "ipc-2023/expedition",
-            # "ipc-2023/markettrader",
-            "ipc-2023/mprime",
-            "ipc-2023/pathwaysmetric",
-            "ipc-2023/rover",
-            "ipc-2023/satellite",
-            # "ipc-2023/settlers",
-            "ipc-2023/sugar",
-            "ipc-2023/tpp",
-            "ipc-2023/zenotravel"
+            "numeric/ipc-2023/delivery",
+            "numeric/ipc-2023/expedition",
+            # "numeric/ipc-2023/markettrader",
+            "numeric/ipc-2023/mprime",
+            "numeric/ipc-2023/pathwaysmetric",
+            "numeric/ipc-2023/rover",
+            "numeric/ipc-2023/satellite",
+            # "numeric/ipc-2023/settlers",
+            "numeric/ipc-2023/sugar",
+            "numeric/ipc-2023/tpp",
+            "numeric/ipc-2023/zenotravel"
         ]
     }
 
@@ -223,24 +236,35 @@ def main():
         "nOfVars": -1,
         "nOfRules": -1,
         "lastCallsToSolver": -1,
+        "actions": -1,
+        "patternLength": -1,
+        "maxRolling": -1,
+        "distinctActionsInPlan": -1,
     }
 
     tables = [{
         "name": "tab:exp-patty",
-        "type": "table*",
+        "type": "table",
+        "avoidTotals": True,
+        "generalStats": True,
         "width": r"\textwidth",
         "columns": {
-            "coverage": ("Coverage (\%)", {"SMT", "SEARCH"}),
-            "time": ("Time (s)", {"SMT", "SEARCH"}),
-            "bound": (r"Calls to \textsc{Solve}", {"SMT"}),
-            "nOfVars": ("$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$", {"SMT"}),
-            "nOfRules": ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}),
+            # "coverage": ("Coverage (\%)", {"SMT", "SEARCH"}),
+            # "time": ("Time (s)", {"SMT", "SEARCH"}),
+            # "bound": (r"Calls to \textsc{Solve}", {"SMT"}),
+            # "nOfVars": ("$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$", {"SMT"}),
+            # "nOfRules": ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}),
+            "actions": ("$|A|$", {"SMT"}),
+            # "patternLength": ("$|\prec|$", {"SMT"}),
+            "distinctActionsInPlan": ("$|A(\pi)|$", {"SMT"}),
+            "maxRolling": ("Rolling", {"SMT"}),
+
             # "lastCallsToSolver": (r"$\textsc{Solve}(\Pi^\prec)$ calls", {"SMT"}),
         },
         "planners": [{
             'PATTY-G': "SMT",
-            'PATTY-H': "SMT",
-            'PATTY-F': "SMT"
+            # 'PATTY-H': "SMT",
+            # 'PATTY-F': "SMT"
         },
             # {
             #     'PATTY-F': "SEARCH",
@@ -254,6 +278,8 @@ def main():
         "name": "tab:exp-search",
         "type": "table",
         "width": r"\columnwidth",
+        "avoidTotals": False,
+        "generalStats": False,
         "columns": {
             "coverage": ("Coverage (\%)", {"SMT", "SEARCH"}),
             "time": ("Time (s)", {"SMT", "SEARCH"}),
@@ -280,11 +306,11 @@ def main():
 
     latex = []
     latex.append(r"""
-           \documentclass[11pt,landscape]{article}
+           \documentclass[11pt]{article}
            \usepackage{graphicx}
            \usepackage{lscape}
            \usepackage{multirow}
-           \usepackage[a4paper,margin=1in,landscape]{geometry}""")
+           \usepackage[a4paper,margin=1in]{geometry}""")
     latex.append(COMMANDS)
     latex.append(r"""
            \begin{document}""")
@@ -343,8 +369,9 @@ def main():
 
         latex.append(r"\begin{tabular}{" + columns + "}")
         latex.append(r"\hline")
-        latex.append(fr" & " + "&".join(mString) + r"\\")
-        latex.append(fr"Domain & " + "&".join(solversHeader) + r"\\")
+        latex.append(fr"{'Domain' if table['generalStats'] else ''} & " + "&".join(mString) + r"\\")
+        if not table["generalStats"]:
+            latex.append(fr"Domain & " + "&".join(solversHeader) + r"\\")
         latex.append(fr"\hline")
 
         for (cluster, clusterDomains) in domainsClusters.items():
@@ -360,7 +387,8 @@ def main():
                             if solver in best[i][domain][stat]:
                                 nOfBest += 1
                         row.append(r"\textbf{" + str(nOfBest) + "}")
-            latex.append("&".join(row) + r"\\\hline")
+            if not table["avoidTotals"]:
+                latex.append("&".join(row) + r"\\\hline")
             for domain in clusterDomains:
                 row = [DOMAINS[domain]]
                 for (stat, (name, statTypes)) in table["columns"].items():
@@ -371,13 +399,14 @@ def main():
                             if solver not in t[domain][stat]:
                                 row.append("TBD")
                                 continue
-                            if solver in best[i][domain][stat]:
+                            if solver in best[i][domain][stat] and not table["avoidTotals"]:
                                 row.append(r"\textbf{" + t[domain][stat][solver] + "}")
                             else:
                                 row.append(t[domain][stat][solver])
                 rows.append("&".join(row))
             latex.append("\\\\\n".join(rows))
             latex.append(fr"\\\hline")
+
         row = [r"\textit{Total}"]
         for (stat, (name, statTypes)) in table["columns"].items():
             for i, plCluster in enumerate(table["planners"]):
@@ -390,7 +419,9 @@ def main():
                             if solver in best[i][domain][stat]:
                                 nOfBest += 1
                     row.append(r"\textbf{" + str(nOfBest) + "}")
-        latex.append("&".join(row) + r"\\\hline")
+
+        if not table["avoidTotals"]:
+            latex.append("&".join(row) + r"\\\hline")
 
         latex.append(r"""
         \end{tabular}}

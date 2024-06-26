@@ -1,0 +1,90 @@
+
+           \documentclass[11pt]{article}
+           \usepackage{graphicx}
+           \usepackage{lscape}
+           \usepackage{multirow}
+           \usepackage[a4paper,margin=1in]{geometry}
+
+\newcommand{\pattyg}{\ensuremath{\textsc{Patty}_\textsc{G}}\xspace}
+\newcommand{\pattyh}{\ensuremath{\textsc{Patty}_\textsc{H}}\xspace}
+\newcommand{\pattyf}{\ensuremath{\textsc{Patty}_\textsc{F}}\xspace}
+
+
+           \begin{document}
+
+            \begin{table}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||c||c||c||}
+\hline
+Domain & \multicolumn{1}{c||}{$|A|$}&\multicolumn{1}{c||}{$|A(\pi)|$}&\multicolumn{1}{c||}{Rolling}\\
+\hline
+\textsc{BlockGrouping} (S)&87&83&22\\
+\textsc{Counters} (S)&45&44&38\\
+\textsc{Counters} (L)&43&23&11\\
+\textsc{Drone} (S)&12&9&12\\
+\textsc{PlantWatering} (S)&30&26&9\\
+\textsc{Farmland} (S)&25&19&462\\
+\textsc{Farmland} (L)&28&16&430\\
+\textsc{HydroPower} (S)&150&95&19\\
+\textsc{Sailing} (S)&31&15&191\\
+\textsc{Sailing} (L)&35&12&92\\
+\textsc{LineExchange} (L)&20&18&43
+\\\hline
+\textsc{Delivery} (S)&200&21&1\\
+\textsc{Expedition} (S)&66&19&4\\
+\textsc{MPrime} (S)&653&39&8\\
+\textsc{PathwaysMetric} (S)&353&348&335\\
+\textsc{Rover} (S)&338&23&15\\
+\textsc{Satellite} (S)&204&20&2\\
+\textsc{Sugar} (S)&399&31&5\\
+\textsc{TPP} (L)&66&10&1\\
+\textsc{ZenoTravel} (S)&256&19&1
+\\\hline
+
+        \end{tabular}}
+        \caption{Comparative analysis between \pattyg, \pattyh and \pattyf.}
+        \label{tab:exp-patty}
+        \end{table}
+        
+
+            \begin{table}[tb]
+            \centering
+            \resizebox{\columnwidth}{!}{
+\begin{tabular}{|l||cccc||cccc||}
+\hline
+ & \multicolumn{4}{c||}{Coverage (\%)}&\multicolumn{4}{c||}{Time (s)}\\
+Domain & $\mathrm{P}_\mathrm{F}$&$\mathrm{ENHSP}$&$\mathrm{FF}$&$\mathrm{NFD}$&$\mathrm{P}_\mathrm{F}$&$\mathrm{ENHSP}$&$\mathrm{FF}$&$\mathrm{NFD}$\\
+\hline
+\textit{Highly Numeric}&\textbf{11}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{11}&\textbf{0}&\textbf{0}&\textbf{0}\\\hline
+\textsc{BlockGrouping} (S)&\textbf{100}&TBD&TBD&TBD&\textbf{1.7}&TBD&TBD&TBD\\
+\textsc{Counters} (S)&\textbf{100}&TBD&TBD&TBD&\textbf{0.9}&TBD&TBD&TBD\\
+\textsc{Counters} (L)&\textbf{95}&TBD&TBD&TBD&\textbf{16.7}&TBD&TBD&TBD\\
+\textsc{Drone} (S)&\textbf{45}&TBD&TBD&TBD&\textbf{169.0}&TBD&TBD&TBD\\
+\textsc{PlantWatering} (S)&\textbf{100}&TBD&TBD&TBD&\textbf{8.6}&TBD&TBD&TBD\\
+\textsc{Farmland} (S)&\textbf{100}&TBD&TBD&TBD&\textbf{0.9}&TBD&TBD&TBD\\
+\textsc{Farmland} (L)&\textbf{90}&TBD&TBD&TBD&\textbf{33.2}&TBD&TBD&TBD\\
+\textsc{HydroPower} (S)&\textbf{100}&TBD&TBD&TBD&\textbf{9.4}&TBD&TBD&TBD\\
+\textsc{Sailing} (S)&\textbf{100}&TBD&TBD&TBD&\textbf{0.9}&TBD&TBD&TBD\\
+\textsc{Sailing} (L)&\textbf{100}&TBD&TBD&TBD&\textbf{2.1}&TBD&TBD&TBD\\
+\textsc{LineExchange} (L)&\textbf{100}&TBD&TBD&TBD&\textbf{1.4}&TBD&TBD&TBD
+\\\hline
+\textit{Lowly Numeric}&\textbf{9}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{9}&\textbf{0}&\textbf{0}&\textbf{0}\\\hline
+\textsc{Delivery} (S)&\textbf{25}&TBD&TBD&TBD&\textbf{226.6}&TBD&TBD&TBD\\
+\textsc{Expedition} (S)&\textbf{10}&TBD&TBD&TBD&\textbf{270.3}&TBD&TBD&TBD\\
+\textsc{MPrime} (S)&\textbf{50}&TBD&TBD&TBD&\textbf{154.0}&TBD&TBD&TBD\\
+\textsc{PathwaysMetric} (S)&\textbf{100}&TBD&TBD&TBD&\textbf{6.8}&TBD&TBD&TBD\\
+\textsc{Rover} (S)&\textbf{45}&TBD&TBD&TBD&\textbf{167.9}&TBD&TBD&TBD\\
+\textsc{Satellite} (S)&\textbf{25}&TBD&TBD&TBD&\textbf{227.2}&TBD&TBD&TBD\\
+\textsc{Sugar} (S)&\textbf{100}&TBD&TBD&TBD&\textbf{5.1}&TBD&TBD&TBD\\
+\textsc{TPP} (L)&\textbf{10}&TBD&TBD&TBD&\textbf{270.1}&TBD&TBD&TBD\\
+\textsc{ZenoTravel} (S)&\textbf{55}&TBD&TBD&TBD&\textbf{136.1}&TBD&TBD&TBD
+\\\hline
+\textit{Total}&\textbf{20}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{20}&\textbf{0}&\textbf{0}&\textbf{0}\\\hline
+
+        \end{tabular}}
+        \caption{Comparative analysis between \pattyf and the search based planners \textsc{ENHSP}, \textsc{MetricFF} and \textsc{NFD}.}
+        \label{tab:exp-search}
+        \end{table}
+        
+\end{document}

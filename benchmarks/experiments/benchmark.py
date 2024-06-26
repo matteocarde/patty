@@ -28,6 +28,7 @@ my_config = Config(
 )
 
 PLANNERS: Dict[str, Planner] = {
+    "PATTY-O": Patty("PATTY-O", search="step"),
     "PATTY-G": Patty("PATTY-G", search="static"),
     "PATTY-H": Patty("PATTY-H", search="astar", noCompression=True),
     "PATTY-F": Patty("PATTY-F", search="astar", noCompression=False),
