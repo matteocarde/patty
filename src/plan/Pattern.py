@@ -145,3 +145,8 @@ class Pattern:
 
     def index(self, a):
         return self.__order.index(a)
+
+    def getLength(self):
+        if self.dummyAction:
+            return len(self) - 1
+        return len(self)

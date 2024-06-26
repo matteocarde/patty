@@ -46,6 +46,15 @@ class Patty(Planner):
         actions = re.findall(r"^\|A\|=(\d*?)$", stdout, re.MULTILINE)
         r.actions = -1 if not actions else int(actions[0])
 
+        patternLength = re.findall(r"Bound .*? - Pattern Length = (.*?)$", stdout, re.MULTILINE)
+        r.patternLength = -1 if not patternLength else int(patternLength[-1])
+
+        maxRolling = re.findall(r"Max Rolling: (.*?)$", stdout, re.MULTILINE)
+        r.maxRolling = -1 if not maxRolling else int(maxRolling[0])
+
+        distinctActionsInPlan = re.findall(r"Distinct Actions: (.*?)$", stdout, re.MULTILINE)
+        r.distinctActionsInPlan = -1 if not distinctActionsInPlan else int(distinctActionsInPlan[0])
+
         return r
 
     def getCommand(self, domain: str, problem: str):

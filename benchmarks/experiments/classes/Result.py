@@ -28,6 +28,9 @@ class Result:
     boolVariables: int = -1
     numVariables: int = -1
     actions: int = -1
+    patternLength: int = -1
+    maxRolling: int = -1
+    distinctActionsInPlan: int = -1
 
     def __init__(self, domain: str, problem: str):
         self.plan = list()
@@ -55,6 +58,10 @@ class Result:
             r.boolVariables = int(csvLine[12])
             r.numVariables = int(csvLine[13])
             r.actions = int(csvLine[14])
+        if len(csvLine) > 14:
+            r.patternLength = int(csvLine[15])
+            r.maxRolling = int(csvLine[16])
+            r.distinctActionsInPlan = int(csvLine[17])
 
         return r
 
@@ -80,7 +87,10 @@ class Result:
             (str(self.lastCallsToSolver), 5),
             (str(self.boolVariables), 5),
             (str(self.numVariables), 5),
-            (str(self.actions), 5)
+            (str(self.actions), 5),
+            (str(self.patternLength), 5),
+            (str(self.maxRolling), 5),
+            (str(self.distinctActionsInPlan), 5),
         ]
 
         string = "|" + "|".join(["{:^" + str(n[1]) + "}" for n in row]) + "|"
@@ -107,6 +117,9 @@ class Result:
             str(self.boolVariables),
             str(self.numVariables),
             str(self.actions),
+            str(self.patternLength),
+            str(self.maxRolling),
+            str(self.distinctActionsInPlan),
         ])
 
     @classmethod
@@ -125,6 +138,9 @@ class Result:
             r.time = max([e.time for e in results if e.solved])
             r.bound = max([e.bound for e in results if e.solved])
             r.planLength = statistics.mean([e.planLength for e in results if e.solved])
+            r.patternLength = statistics.mean([e.patternLength for e in results if e.solved])
+            r.maxRolling = statistics.mean([e.maxRolling for e in results if e.solved])
+            r.distinctActionsInPlan = statistics.mean([e.distinctActionsInPlan for e in results if e.solved])
         return r
 
     @classmethod

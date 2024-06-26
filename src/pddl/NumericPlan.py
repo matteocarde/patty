@@ -1,6 +1,7 @@
-from typing import List, Tuple
+from typing import List, Tuple, Set
 
 from src.pddl.Action import Action
+from src.pddl.Operation import Operation
 from src.pddl.PDDLException import PDDLException
 from src.pddl.Plan import Plan
 from src.pddl.Problem import Problem
@@ -83,6 +84,12 @@ class NumericPlan(Plan):
 
     def printWithRepetitions(self):
         print(self.toValString())
+
+    def getMaxRolling(self) -> int:
+        return max([i for (a, i) in self.__plan])
+
+    def getDistinctActions(self) -> Set[Operation]:
+        return {a for a in self.__rolledPlan}
 
     def getMetric(self, problem: Problem):
         if not problem.metric:

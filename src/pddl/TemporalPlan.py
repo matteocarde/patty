@@ -2,6 +2,7 @@ from typing import List, Tuple, Set, Dict
 
 from src.pddl.Action import Action
 from src.pddl.DurativeAction import DurativeAction
+from src.pddl.Operation import Operation
 from src.pddl.PDDLException import PDDLException
 from src.pddl.Plan import Plan
 from src.pddl.Problem import Problem
@@ -56,6 +57,12 @@ class TemporalPlan(Plan):
 
     def getActionsList(self):
         return [tpia.action for tpia in self.unrolledTimedPlan]
+
+    def getMaxRolling(self) -> int:
+        return 0
+
+    def getDistinctActions(self) -> Set[Operation]:
+        return {a.action for a in self.rolledPlan}
 
     def toValString(self):
         string = ""

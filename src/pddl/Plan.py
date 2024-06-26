@@ -1,5 +1,6 @@
-from typing import List
+from typing import List, Set
 
+from src.pddl.Operation import Operation
 from src.pddl.Problem import Problem
 from src.utils.LogPrint import LogPrint
 
@@ -46,3 +47,13 @@ class Plan:
 
     def getActionsList(self):
         raise NotImplementedError()
+
+    def getMaxRolling(self) -> int:
+        raise NotImplementedError()
+
+    def getDistinctActions(self) -> Set[Operation]:
+        raise NotImplementedError
+
+    def toValString(self):
+        raise NotImplementedError
+

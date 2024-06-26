@@ -39,6 +39,10 @@ def main():
         plan: Plan = solver.solve()
 
         console.log(plan.toValString(), LogPrintLevel.PLAN)
+        console.log("------", LogPrintLevel.STATS)
+        console.log(f"Max Rolling: {plan.getMaxRolling()}", LogPrintLevel.STATS)
+        console.log(f"Distinct Actions: {len(plan.getDistinctActions())}", LogPrintLevel.STATS)
+        console.log("------", LogPrintLevel.STATS)
         isValid = plan.validate(problem, avoidRaising=True, logger=console)
         if isValid:
             console.log("Plan is valid", LogPrintLevel.PLAN)
