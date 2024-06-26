@@ -6,8 +6,8 @@ from typing import Dict, List
 
 from classes.Result import Result
 
-SMT_SOLVERS = {'SpringRoll', "PATTY-G", "PATTY-H", "PATTY-F", 'RANTANPLAN', "OMT"}
-TIME_LIMIT = 300 * 1000
+SMT_SOLVERS = {'SpringRoll', "PATTY-G", "PATTY-H", "PATTY-F", "PATTY-O", 'RANTANPLAN', "OMT"}
+TIME_LIMIT = 30 * 1000
 
 COMMANDS = r"""
 \newcommand{\pattyg}{\ensuremath{\textsc{Patty}_\textsc{G}}\xspace}
@@ -23,6 +23,7 @@ SOLVERS = {
     'NFD': r"\mathrm{NFD}",
     'SMTPLAN+': r"\mathrm{SMTP}^+",
     'OMT': r"\mathrm{OMT}",
+    "PATTY-O": r"\mathrm{P}_\mathrm{O}",
     "PATTY-G": r"\mathrm{P}_\mathrm{G}",
     "PATTY-H": r"\mathrm{P}_\mathrm{H}",
     "PATTY-F": r"\mathrm{P}_\mathrm{F}"
@@ -283,22 +284,15 @@ def main():
         "columns": {
             "coverage": ("Coverage (\%)", {"SMT", "SEARCH"}),
             "time": ("Time (s)", {"SMT", "SEARCH"}),
-            # "bound": (r"Calls to \textsc{Solve}", {"SMT"}),
-            # "nOfVars": ("$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$", {"SMT"}),
-            # "nOfRules": ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}),
+            "bound": (r"Bound ($n$)", {"SMT"}),
+            "nOfVars": ("$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$", {"SMT"}),
+            "nOfRules": ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}),
             # "lastCallsToSolver": (r"$\textsc{Solve}(\Pi^\prec)$ calls", {"SMT"}),
         },
         "planners": [
-            #     {
-            #     'PATTY-G': "SMT",
-            #     'PATTY-H': "SMT",
-            #     'PATTY-F': "SMT"
-            # },
             {
-                'PATTY-F': "SEARCH",
-                'ENHSP': "SEARCH",
-                'METRIC-FF': "SEARCH",
-                "NFD": "SEARCH",
+                'PATTY-O': "SMT",
+                'PATTY-G': "SMT",
             }
         ],
         "caption": r"Comparative analysis between \pattyf and the search based planners \textsc{ENHSP}, \textsc{MetricFF} and \textsc{NFD}."

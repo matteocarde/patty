@@ -28,9 +28,9 @@ class Patty(Planner):
         r.plan = re.findall(r"^\d*?: (\(.*?\))$", stdout, re.MULTILINE)
         r.planLength = len(r.plan)
         reNOfVars = re.findall(r"Bound .*? - Vars = (.*?)$", stdout, re.MULTILINE)
-        r.nOfVars = -1 if not reNOfVars else int(reNOfVars[0])
+        r.nOfVars = -1 if not reNOfVars else int(reNOfVars[-1])
         reNOfRules = re.findall(r"Bound .*? - Rules = (.*?)$", stdout, re.MULTILINE)
-        r.nOfRules = -1 if not reNOfRules else int(reNOfRules[0])
+        r.nOfRules = -1 if not reNOfRules else int(reNOfRules[-1])
         reLastSearchedBound = re.findall(r"Started Solving Bound (\d*?)$", stdout, re.MULTILINE)
         r.lastSearchedBound = -1 if not reLastSearchedBound else int(reLastSearchedBound[-1])
 
