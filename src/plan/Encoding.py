@@ -1,3 +1,4 @@
+import statistics
 from typing import List, Pattern
 
 import pysmt
@@ -78,3 +79,6 @@ class Encoding:
 
     def getNRules(self):
         return len(self.rules)
+
+    def getAvgRuleLength(self):
+        return round(statistics.mean([len(r.variables) for r in self.rules]), 2)

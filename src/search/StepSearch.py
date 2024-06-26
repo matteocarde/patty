@@ -68,6 +68,7 @@ class StepSearch(Search):
 
             self.console.log(f"Bound {bound} - Vars = {pddl2smt.getNVars()}", LogPrintLevel.STATS)
             self.console.log(f"Bound {bound} - Rules = {pddl2smt.getNRules()}", LogPrintLevel.STATS)
+            self.console.log(f"Bound {bound} - Avg Rule Length = {pddl2smt.getAvgRuleLength()}", LogPrintLevel.STATS)
             self.console.log(f"Bound {bound} - Pattern Length = {pattern.getLength()}", LogPrintLevel.STATS)
             self.console.log(f"Calls to Solver: {callsToSolver}", LogPrintLevel.STATS)
 

@@ -31,6 +31,7 @@ class Result:
     patternLength: int = -1
     maxRolling: int = -1
     distinctActionsInPlan: int = -1
+    avgVarsInRules: float = -1
 
     def __init__(self, domain: str, problem: str):
         self.plan = list()
@@ -62,6 +63,7 @@ class Result:
             r.patternLength = int(csvLine[15])
             r.maxRolling = int(csvLine[16])
             r.distinctActionsInPlan = int(csvLine[17])
+            r.avgVarsInRules = int(csvLine[18])
 
         return r
 
@@ -91,6 +93,7 @@ class Result:
             (str(self.patternLength), 5),
             (str(self.maxRolling), 5),
             (str(self.distinctActionsInPlan), 5),
+            (str(self.avgVarsInRules), 8),
         ]
 
         string = "|" + "|".join(["{:^" + str(n[1]) + "}" for n in row]) + "|"
@@ -120,6 +123,7 @@ class Result:
             str(self.patternLength),
             str(self.maxRolling),
             str(self.distinctActionsInPlan),
+            str(self.avgVarsInRules),
         ])
 
     @classmethod
@@ -144,6 +148,7 @@ class Result:
             r.patternLength = statistics.mean([e.patternLength for e in results if e.solved])
             r.maxRolling = statistics.mean([e.maxRolling for e in results if e.solved])
             r.distinctActionsInPlan = statistics.mean([e.distinctActionsInPlan for e in results if e.solved])
+            r.avgVarsInRules = statistics.mean([e.avgVarsInRules for e in results if e.solved])
         return r
 
     @classmethod
