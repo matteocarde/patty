@@ -38,13 +38,13 @@ class Patty(Planner):
         r.lastCallsToSolver = -1 if not lastCallsToSolver else int(lastCallsToSolver[-1])
 
         boolVariables = re.findall(r"^\|V_b\|=(\d*?)$", stdout, re.MULTILINE)
-        r.boolVariables = -1 if not boolVariables else int(boolVariables[0])
+        r.boolVariables = -1 if not boolVariables else int(boolVariables[-1])
 
         numVariables = re.findall(r"^\|V_n\|=(\d*?)$", stdout, re.MULTILINE)
-        r.numVariables = -1 if not numVariables else int(numVariables[0])
+        r.numVariables = -1 if not numVariables else int(numVariables[-1])
 
         actions = re.findall(r"^\|A\|=(\d*?)$", stdout, re.MULTILINE)
-        r.actions = -1 if not actions else int(actions[0])
+        r.actions = -1 if not actions else int(actions[-1])
 
         patternLength = re.findall(r"Bound .*? - Pattern Length = (.*?)$", stdout, re.MULTILINE)
         r.patternLength = -1 if not patternLength else int(patternLength[-1])

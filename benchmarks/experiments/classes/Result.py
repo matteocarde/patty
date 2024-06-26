@@ -63,7 +63,7 @@ class Result:
             r.patternLength = int(csvLine[15])
             r.maxRolling = int(csvLine[16])
             r.distinctActionsInPlan = int(csvLine[17])
-            r.avgVarsInRules = int(csvLine[18])
+            r.avgVarsInRules = float(csvLine[18])
 
         return r
 

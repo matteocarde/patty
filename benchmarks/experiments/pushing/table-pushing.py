@@ -84,7 +84,7 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2024-06-26-REBUTTAL-PUSHING-V1"
+    exp = "2024-06-26-REBUTTAL-PUSHING-V3"
     file = f"benchmarks/results/{exp}.csv"
 
     joinWith = [] + [file]
@@ -147,6 +147,7 @@ def main():
             "length": dict(),
             "nOfVars": dict(),
             "nOfRules": dict(),
+            "avgVarsInRules": dict(),
             "lastCallsToSolver": dict(),
             "actions": dict(),
             "patternLength": dict(),
@@ -188,6 +189,8 @@ def main():
             t[domain]["nOfVars"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
             v = [r.nOfRules for r in pResult if r.nOfRules > 0 and r.problem in commonlySolved]
             t[domain]["nOfRules"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
+            v = [r.avgVarsInRules for r in pResult if r.avgVarsInRules > 0 and r.problem in commonlySolved]
+            t[domain]["avgVarsInRules"][solver] = r(statistics.mean(v), 2) if len(v) else "-"
             v = [r.lastCallsToSolver for r in pResult if r.lastCallsToSolver > 0 and r.problem in commonlySolved]
             t[domain]["lastCallsToSolver"][solver] = r(statistics.mean(v), 2) if len(v) else "-"
             v = [r.actions for r in pResult if r.problem in commonlySolved]
@@ -236,6 +239,7 @@ def main():
         "time": -1,
         "nOfVars": -1,
         "nOfRules": -1,
+        "avgVarsInRules": -1,
         "lastCallsToSolver": -1,
         "actions": -1,
         "patternLength": -1,
@@ -258,7 +262,7 @@ def main():
             "actions": ("$|A|$", {"SMT"}),
             # "patternLength": ("$|\prec|$", {"SMT"}),
             "distinctActionsInPlan": ("$|A(\pi)|$", {"SMT"}),
-            "maxRolling": ("Rolling", {"SMT"}),
+            "maxRolling": ("$\max \mathsf{a}_i$", {"SMT"}),
 
             # "lastCallsToSolver": (r"$\textsc{Solve}(\Pi^\prec)$ calls", {"SMT"}),
         },
@@ -274,7 +278,8 @@ def main():
             #     "NFD": "SEARCH",
             # }
         ],
-        "caption": r"Comparative analysis between \pattyg, \pattyh and \pattyf."
+        "caption": r"Statistics for each domain. $A$ is the number of actions, $A(\pi)$ is the number of "
+                   r"distinct actions in $\pi$, $\max \mathsf{a} _i$ is the maximum amount of rolling achieved in the plan."
     }, {
         "name": "tab:exp-search",
         "type": "table",
@@ -285,8 +290,9 @@ def main():
             "coverage": ("Coverage (\%)", {"SMT", "SEARCH"}),
             "time": ("Time (s)", {"SMT", "SEARCH"}),
             "bound": (r"Bound ($n$)", {"SMT"}),
-            "nOfVars": ("$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$", {"SMT"}),
-            "nOfRules": ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}),
+            "nOfVars": ("Vars", {"SMT"}),
+            "nOfRules": ("Rules", {"SMT"}),
+            "avgVarsInRules": ("Vars x Rule", {"SMT"}),
             # "lastCallsToSolver": (r"$\textsc{Solve}(\Pi^\prec)$ calls", {"SMT"}),
         },
         "planners": [
@@ -295,7 +301,28 @@ def main():
                 'PATTY-G': "SMT",
             }
         ],
-        "caption": r"Comparative analysis between \pattyf and the search based planners \textsc{ENHSP}, \textsc{MetricFF} and \textsc{NFD}."
+        "caption": r"Comparison between $\textsc{patty}_\mathrm{O}$ with the standard increase of the bound and "
+                   r"$\textsc{patty}_\mathrm{G}$ with the concatenation of the pattern. The table shows the number, "
+                   r"in the final encoding which found the solution, of variables, rules, and avg. number of variables "
+                   r"per rule. "
+    }, {
+        "name": "tab:exp-search",
+        "type": "table",
+        "width": r"\columnwidth",
+        "avoidTotals": False,
+        "generalStats": False,
+        "columns": {
+            "actions": ("$|A|$", {"SMT"}),
+            "patternLength": ("$|\prec|$", {"SMT"}),
+        },
+        "planners": [
+            {
+                'PATTY-G': "SMT",
+                'PATTY-H': "SMT",
+                'PATTY-F': "SMT",
+            }
+        ],
+        "caption": r"Length of the pattern when the solution was found in all three presented approaches."
     }]
 
     latex = []
