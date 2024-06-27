@@ -84,7 +84,7 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2024-06-26-REBUTTAL-PUSHING-V5"
+    exp = "2024-06-26-REBUTTAL-PUSHING-V6"
     file = f"benchmarks/results/{exp}.csv"
 
     joinWith = [] + [file]
@@ -153,7 +153,8 @@ def main():
             "patternLength": dict(),
             "maxRolling": dict(),
             "distinctActionsInPlan": dict(),
-            "rolledActionsInPlan": dict()
+            "rolledActionsInPlan": dict(),
+            "percentageActions": dict()
         }
 
         commonlySolved = {}
@@ -201,9 +202,15 @@ def main():
             v = [r.maxRolling for r in pResult if r.maxRolling > 0 and r.problem in commonlySolved]
             t[domain]["maxRolling"][solver] = r(statistics.mean(v), 2) if len(v) else "-"
             v = [r.distinctActionsInPlan for r in pResult if r.problem in commonlySolved]
-            t[domain]["distinctActionsInPlan"][solver] = r(statistics.mean(v), 2) if len(v) else "-"
+            t[domain]["distinctActionsInPlan"][solver] = r(statistics.mean(v), 2) if len(v) else "0.00"
             v = [r.rolledActionsInPlan for r in pResult if r.problem in commonlySolved]
-            t[domain]["rolledActionsInPlan"][solver] = r(statistics.mean(v), 2) if len(v) else "-"
+            t[domain]["rolledActionsInPlan"][solver] = r(statistics.mean(v), 2) if len(v) else "0.00"
+            if t[domain]["rolledActionsInPlan"][solver] != "0.00":
+                percentage = float(t[domain]["rolledActionsInPlan"][solver]) / float(
+                    t[domain]["distinctActionsInPlan"][solver])
+                t[domain]["percentageActions"][solver] = f"{r(percentage * 100, 1)}"
+            else:
+                t[domain]["percentageActions"][solver] = f"0.00"
 
     domainsClusters = {
         r"\textit{Highly Numeric}": [
@@ -248,6 +255,7 @@ def main():
         "maxRolling": -1,
         "distinctActionsInPlan": -1,
         "rolledActionsInPlan": -1,
+        "percentageActions": -1
     }
 
     tables = [{
@@ -264,16 +272,17 @@ def main():
             # "nOfRules": ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}, {}),
             "actions": ("$|A|$", {"SMT"}, {}),
             # "patternLength": ("$|\prec|$", {"SMT"}, {}),
-            "distinctActionsInPlan": ("$|A(\pi)|$", {"SMT"}, {}),
-            "rolledActionsInPlan": ("$|R(\pi)|$", {"SMT"}, {}),
-            "maxRolling": ("$\max \mathsf{a}_i$", {"SMT"}, {}),
+            "distinctActionsInPlan": ("$\mathsf{a_i} > 0$", {"SMT"}, {}),
+            "rolledActionsInPlan": ("$\mathsf{a_i} > 1$", {"SMT"}, {}),
+            "percentageActions": ("$\%$", {"SMT"}, {}),
+            # "maxRolling": ("$\max \mathsf{a}_i$", {"SMT"}, {}),
 
             # "lastCallsToSolver": (r"$\textsc{Solve}(\Pi^\prec)$ calls", {"SMT"}),
         },
         "planners": [{
-            'PATTY-G': "SMT",
+            # 'PATTY-G': "SMT",
             # 'PATTY-H': "SMT",
-            # 'PATTY-F': "SMT"
+            'PATTY-F': "SMT"
         },
             # {
             #     'PATTY-F': "SEARCH",
@@ -282,11 +291,10 @@ def main():
             #     "NFD": "SEARCH",
             # }
         ],
-        "caption": r"Statistics averaged on the problems of each domain and the plans computed by all the approaches. "
-                   r"$A$ is the set of actions, $A(\pi) \subseteq A$ is the set of actions in the plan $\pi$, "
-                   r"$R(\pi) \subseteq A(\pi)$ is the set of actions in the plan $\pi$ consecutively executed more "
-                   r"than once, $\max \mathsf{a} _i$ is the maximum amount of consecutive executions of each action "
-                   r"in the plan."
+        "caption": r"Statistics averaged on the problems of each domain and the plans computed by "
+                   r"$\textsc{Patty}_\mathrm{F}$. "
+                   r"$A$ is the set of actions, $\mathsf{a}_i > 0$ is the number of action variables which are "
+                   r"executed, $\mathsf{a}_i > 1$ is the number of action variables which are rolled."
     }, {
         "name": "tab:exp-search",
         "type": "table",
