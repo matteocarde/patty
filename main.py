@@ -1,6 +1,7 @@
 import traceback
 
 from src.pddl.Domain import Domain, GroundedDomain
+from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Plan import Plan
 from src.pddl.Problem import Problem
 from src.search.AStarSearchMax import AStarSearchMax
@@ -40,8 +41,10 @@ def main():
 
         console.log(plan.toValString(), LogPrintLevel.PLAN)
         console.log("------", LogPrintLevel.STATS)
-        console.log(f"Max Rolling: {plan.getMaxRolling()}", LogPrintLevel.STATS)
         console.log(f"Distinct Actions: {len(plan.getDistinctActions())}", LogPrintLevel.STATS)
+        if isinstance(plan, NumericPlan):
+            console.log(f"Rolled Actions: {len(plan.getRolledActions())}", LogPrintLevel.STATS)
+            console.log(f"Max Rolling: {plan.getMaxRolling()}", LogPrintLevel.STATS)
         console.log("------", LogPrintLevel.STATS)
         isValid = plan.validate(problem, avoidRaising=True, logger=console)
         if isValid:

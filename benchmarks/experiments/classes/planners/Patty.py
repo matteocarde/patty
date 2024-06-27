@@ -58,6 +58,9 @@ class Patty(Planner):
         avgVarsInRules = re.findall(r"Bound .*? - Avg Rule Length = (.*?)$", stdout, re.MULTILINE)
         r.avgVarsInRules = -1 if not avgVarsInRules else float(avgVarsInRules[-1])
 
+        rolledActionsInPlan = re.findall(r"Rolled Actions: (.*?)$", stdout, re.MULTILINE)
+        r.rolledActionsInPlan = -1 if not rolledActionsInPlan else int(rolledActionsInPlan[0])
+
         return r
 
     def getCommand(self, domain: str, problem: str):

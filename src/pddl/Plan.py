@@ -54,6 +54,8 @@ class Plan:
     def getDistinctActions(self) -> Set[Operation]:
         raise NotImplementedError
 
-    def toValString(self):
+    def getRolledActions(self) -> Set[Operation]:
         raise NotImplementedError
 
+    def toValString(self):
+        raise NotImplementedError

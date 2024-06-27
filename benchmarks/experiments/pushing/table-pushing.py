@@ -84,7 +84,7 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2024-06-26-REBUTTAL-PUSHING-V3"
+    exp = "2024-06-26-REBUTTAL-PUSHING-V4"
     file = f"benchmarks/results/{exp}.csv"
 
     joinWith = [] + [file]
@@ -194,14 +194,14 @@ def main():
             v = [r.lastCallsToSolver for r in pResult if r.lastCallsToSolver > 0 and r.problem in commonlySolved]
             t[domain]["lastCallsToSolver"][solver] = r(statistics.mean(v), 2) if len(v) else "-"
             v = [r.actions for r in pResult if r.problem in commonlySolved]
-            t[domain]["actions"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
+            t[domain]["actions"][solver] = r(statistics.mean(v), 2) if len(v) else "-"
             v = [r.patternLength for r in pResult if r.patternLength > 0 and r.problem in commonlySolved]
-            t[domain]["patternLength"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
+            t[domain]["patternLength"][solver] = r(statistics.mean(v), 2) if len(v) else "-"
             v = [r.maxRolling for r in pResult if r.maxRolling > 0 and r.problem in commonlySolved]
-            t[domain]["maxRolling"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
+            t[domain]["maxRolling"][solver] = r(statistics.mean(v), 2) if len(v) else "-"
             v = [r.distinctActionsInPlan for r in pResult if
                  r.distinctActionsInPlan > 0 and r.problem in commonlySolved]
-            t[domain]["distinctActionsInPlan"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
+            t[domain]["distinctActionsInPlan"][solver] = r(statistics.mean(v), 2) if len(v) else "-"
 
     domainsClusters = {
         r"\textit{Highly Numeric}": [
@@ -254,15 +254,16 @@ def main():
         "generalStats": True,
         "width": r"\textwidth",
         "columns": {
-            # "coverage": ("Coverage (\%)", {"SMT", "SEARCH"}),
-            # "time": ("Time (s)", {"SMT", "SEARCH"}),
-            # "bound": (r"Calls to \textsc{Solve}", {"SMT"}),
-            # "nOfVars": ("$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$", {"SMT"}),
-            # "nOfRules": ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}),
-            "actions": ("$|A|$", {"SMT"}),
-            # "patternLength": ("$|\prec|$", {"SMT"}),
-            "distinctActionsInPlan": ("$|A(\pi)|$", {"SMT"}),
-            "maxRolling": ("$\max \mathsf{a}_i$", {"SMT"}),
+            # "coverage": ("Coverage (\%)", {"SMT", "SEARCH"}, {}),
+            # "time": ("Time (s)", {"SMT", "SEARCH"}, {}),
+            # "bound": (r"Calls to \textsc{Solve}", {"SMT"}, {}),
+            # "nOfVars": ("$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$", {"SMT"}, {}),
+            # "nOfRules": ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}, {}),
+            "actions": ("$|A|$", {"SMT"}, {}),
+            # "patternLength": ("$|\prec|$", {"SMT"}, {}),
+            "distinctActionsInPlan": ("$|A(\pi)|$", {"SMT"}, {}),
+            "nOfRules": ("$|R(\pi)|$", {"SMT"}, {}),
+            "maxRolling": ("$\max \mathsf{a}_i$", {"SMT"}, {}),
 
             # "lastCallsToSolver": (r"$\textsc{Solve}(\Pi^\prec)$ calls", {"SMT"}),
         },
@@ -278,8 +279,10 @@ def main():
             #     "NFD": "SEARCH",
             # }
         ],
-        "caption": r"Statistics for each domain. $A$ is the number of actions, $A(\pi)$ is the number of "
-                   r"distinct actions in $\pi$, $\max \mathsf{a} _i$ is the maximum amount of rolling achieved in the plan."
+        "caption": r"Statistics averaged on the problems of each domain. $A$ is the number of actions, "
+                   r"$A(\pi) \subseteq A$ is the set of actions in the plan $\pi$, $R(\pi) \subseteq A(\pi)$ is the "
+                   r"set of actions in the plan $\pi$ consecutively executed more than once, $\max \mathsf{a} _i$ is "
+                   r"the maximum amount of consecutive e achieved in the plan."
     }, {
         "name": "tab:exp-search",
         "type": "table",
@@ -287,13 +290,12 @@ def main():
         "avoidTotals": False,
         "generalStats": False,
         "columns": {
-            "coverage": ("Coverage (\%)", {"SMT", "SEARCH"}),
-            "time": ("Time (s)", {"SMT", "SEARCH"}),
-            "bound": (r"Bound ($n$)", {"SMT"}),
-            "nOfVars": ("Vars", {"SMT"}),
-            "nOfRules": ("Rules", {"SMT"}),
-            "avgVarsInRules": ("Vars x Rule", {"SMT"}),
-            # "lastCallsToSolver": (r"$\textsc{Solve}(\Pi^\prec)$ calls", {"SMT"}),
+            "coverage": ("Coverage (\%)", {"SMT", "SEARCH"}, {}),
+            "time": ("Time (s)", {"SMT", "SEARCH"}, {}),
+            "bound": (r"Bound ($n$)", {"SMT"}, {}),
+            "nOfVars": ("Vars", {"SMT"}, {}),
+            "nOfRules": ("Rules", {"SMT"}, {}),
+            "avgVarsInRules": ("Vars x Rule", {"SMT"}, {}),
         },
         "planners": [
             {
@@ -312,8 +314,9 @@ def main():
         "avoidTotals": False,
         "generalStats": False,
         "columns": {
-            "actions": ("$|A|$", {"SMT"}),
-            "patternLength": ("$|\prec|$", {"SMT"}),
+            "actions": ("$|A|$", {"SMT"}, {"PATTY-G"}),
+            "bound": (r"Concats", {"SMT"}, {}),
+            "patternLength": ("$|\prec|$", {"SMT"}, {}),
         },
         "planners": [
             {
@@ -322,7 +325,8 @@ def main():
                 'PATTY-F': "SMT",
             }
         ],
-        "caption": r"Length of the pattern when the solution was found in all three presented approaches."
+        "caption": r"Average number of concatenations and average length of the pattern when the solution was found "
+                   r"in all three presented approaches."
     }]
 
     latex = []
@@ -370,15 +374,15 @@ def main():
         solversHeader = []
         mString = []
         cString = ""
-        for (stat, (name, statTypes)) in table["columns"].items():
+        for (stat, (name, statTypes, onlyForSolvers)) in table["columns"].items():
             nCells = 0
             clString = []
             for cluster in table["planners"]:
                 clCells = 0
                 for (solver, type) in cluster.items():
-                    if type not in statTypes:
+                    if type not in statTypes or (onlyForSolvers and solver not in onlyForSolvers):
                         continue
-                    solversHeader.append(f"${SOLVERS[solver]}$")
+                    solversHeader.append(f"${SOLVERS[solver]}$" if not onlyForSolvers else "")
                     nCells += 1
                     clCells += 1
                 if clCells > 0:
@@ -398,30 +402,31 @@ def main():
         for (cluster, clusterDomains) in domainsClusters.items():
             rows = []
             row = [cluster]
-            for (stat, (name, statTypes)) in table["columns"].items():
+            for (stat, (name, statTypes, onlyForSolvers)) in table["columns"].items():
                 for i, plCluster in enumerate(table["planners"]):
                     for (solver, type) in plCluster.items():
-                        if type not in statTypes:
+                        if type not in statTypes or (onlyForSolvers and solver not in onlyForSolvers):
                             continue
                         nOfBest = 0
                         for domain in clusterDomains:
                             if solver in best[i][domain][stat]:
                                 nOfBest += 1
-                        row.append(r"\textbf{" + str(nOfBest) + "}")
+                        row.append(r"\textbf{" + str(nOfBest) + "}" if not onlyForSolvers else "")
             if not table["avoidTotals"]:
                 latex.append("&".join(row) + r"\\\hline")
             for domain in clusterDomains:
                 row = [DOMAINS[domain]]
-                for (stat, (name, statTypes)) in table["columns"].items():
+                for (stat, (name, statTypes, onlyForSolvers)) in table["columns"].items():
                     for i, plCluster in enumerate(table["planners"]):
                         for (solver, type) in plCluster.items():
-                            if type not in statTypes:
+                            if type not in statTypes or (onlyForSolvers and solver not in onlyForSolvers):
                                 continue
                             if solver not in t[domain][stat]:
                                 row.append("TBD")
                                 continue
                             if solver in best[i][domain][stat] and not table["avoidTotals"]:
-                                row.append(r"\textbf{" + t[domain][stat][solver] + "}")
+                                row.append(r"\textbf{" + t[domain][stat][solver] + "}" if not onlyForSolvers else
+                                           t[domain][stat][solver])
                             else:
                                 row.append(t[domain][stat][solver])
                 rows.append("&".join(row))
@@ -429,17 +434,17 @@ def main():
             latex.append(fr"\\\hline")
 
         row = [r"\textit{Total}"]
-        for (stat, (name, statTypes)) in table["columns"].items():
+        for (stat, (name, statTypes, onlyForSolvers)) in table["columns"].items():
             for i, plCluster in enumerate(table["planners"]):
                 for (solver, type) in plCluster.items():
-                    if type not in statTypes:
+                    if type not in statTypes or (onlyForSolvers and solver not in onlyForSolvers):
                         continue
                     nOfBest = 0
                     for (cluster, clusterDomains) in domainsClusters.items():
                         for domain in clusterDomains:
                             if solver in best[i][domain][stat]:
                                 nOfBest += 1
-                    row.append(r"\textbf{" + str(nOfBest) + "}")
+                    row.append(r"\textbf{" + str(nOfBest) + "}" if not onlyForSolvers else "")
 
         if not table["avoidTotals"]:
             latex.append("&".join(row) + r"\\\hline")

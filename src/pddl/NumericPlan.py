@@ -91,6 +91,9 @@ class NumericPlan(Plan):
     def getDistinctActions(self) -> Set[Operation]:
         return {a for a in self.__rolledPlan}
 
+    def getRolledActions(self) -> Set[Operation]:
+        return {a for (a, i) in self.__plan if i > 1}
+
     def getMetric(self, problem: Problem):
         if not problem.metric:
             return len(self.__rolledPlan)
