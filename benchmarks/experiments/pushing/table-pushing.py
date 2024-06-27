@@ -84,7 +84,7 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2024-06-26-REBUTTAL-PUSHING-V4"
+    exp = "2024-06-26-REBUTTAL-PUSHING-V5"
     file = f"benchmarks/results/{exp}.csv"
 
     joinWith = [] + [file]
@@ -152,7 +152,8 @@ def main():
             "actions": dict(),
             "patternLength": dict(),
             "maxRolling": dict(),
-            "distinctActionsInPlan": dict()
+            "distinctActionsInPlan": dict(),
+            "rolledActionsInPlan": dict()
         }
 
         commonlySolved = {}
@@ -199,9 +200,10 @@ def main():
             t[domain]["patternLength"][solver] = r(statistics.mean(v), 2) if len(v) else "-"
             v = [r.maxRolling for r in pResult if r.maxRolling > 0 and r.problem in commonlySolved]
             t[domain]["maxRolling"][solver] = r(statistics.mean(v), 2) if len(v) else "-"
-            v = [r.distinctActionsInPlan for r in pResult if
-                 r.distinctActionsInPlan > 0 and r.problem in commonlySolved]
+            v = [r.distinctActionsInPlan for r in pResult if r.problem in commonlySolved]
             t[domain]["distinctActionsInPlan"][solver] = r(statistics.mean(v), 2) if len(v) else "-"
+            v = [r.rolledActionsInPlan for r in pResult if r.problem in commonlySolved]
+            t[domain]["rolledActionsInPlan"][solver] = r(statistics.mean(v), 2) if len(v) else "-"
 
     domainsClusters = {
         r"\textit{Highly Numeric}": [
@@ -245,6 +247,7 @@ def main():
         "patternLength": -1,
         "maxRolling": -1,
         "distinctActionsInPlan": -1,
+        "rolledActionsInPlan": -1,
     }
 
     tables = [{
@@ -262,7 +265,7 @@ def main():
             "actions": ("$|A|$", {"SMT"}, {}),
             # "patternLength": ("$|\prec|$", {"SMT"}, {}),
             "distinctActionsInPlan": ("$|A(\pi)|$", {"SMT"}, {}),
-            "nOfRules": ("$|R(\pi)|$", {"SMT"}, {}),
+            "rolledActionsInPlan": ("$|R(\pi)|$", {"SMT"}, {}),
             "maxRolling": ("$\max \mathsf{a}_i$", {"SMT"}, {}),
 
             # "lastCallsToSolver": (r"$\textsc{Solve}(\Pi^\prec)$ calls", {"SMT"}),
@@ -279,10 +282,11 @@ def main():
             #     "NFD": "SEARCH",
             # }
         ],
-        "caption": r"Statistics averaged on the problems of each domain. $A$ is the number of actions, "
-                   r"$A(\pi) \subseteq A$ is the set of actions in the plan $\pi$, $R(\pi) \subseteq A(\pi)$ is the "
-                   r"set of actions in the plan $\pi$ consecutively executed more than once, $\max \mathsf{a} _i$ is "
-                   r"the maximum amount of consecutive e achieved in the plan."
+        "caption": r"Statistics averaged on the problems of each domain and the plans computed by all the approaches. "
+                   r"$A$ is the set of actions, $A(\pi) \subseteq A$ is the set of actions in the plan $\pi$, "
+                   r"$R(\pi) \subseteq A(\pi)$ is the set of actions in the plan $\pi$ consecutively executed more "
+                   r"than once, $\max \mathsf{a} _i$ is the maximum amount of consecutive executions of each action "
+                   r"in the plan."
     }, {
         "name": "tab:exp-search",
         "type": "table",
@@ -292,7 +296,7 @@ def main():
         "columns": {
             "coverage": ("Coverage (\%)", {"SMT", "SEARCH"}, {}),
             "time": ("Time (s)", {"SMT", "SEARCH"}, {}),
-            "bound": (r"Bound ($n$)", {"SMT"}, {}),
+            "bound": (r"$n$/concats", {"SMT"}, {}),
             "nOfVars": ("Vars", {"SMT"}, {}),
             "nOfRules": ("Rules", {"SMT"}, {}),
             "avgVarsInRules": ("Vars x Rule", {"SMT"}, {}),
@@ -304,9 +308,11 @@ def main():
             }
         ],
         "caption": r"Comparison between $\textsc{patty}_\mathrm{O}$ with the standard increase of the bound and "
-                   r"$\textsc{patty}_\mathrm{G}$ with the concatenation of the pattern. The table shows the number, "
-                   r"in the final encoding which found the solution, of variables, rules, and avg. number of variables "
-                   r"per rule. "
+                   r"$\textsc{patty}_\mathrm{G}$ with the concatenation of the pattern. The table shows the coverage, "
+                   r"time and either the bound $n$ ($\textsc{patty}_\mathrm{O}$) or the number of concatenations "
+                   r"($\textsc{patty}_\mathrm{G}$) (equal to the number of calls to \textsc{solve}) required to find "
+                   r"a solution. Additionally, it shows, in the last encoding before finding a solution, the number of "
+                   r"variables, rules, and average number of variables per rule ."
     }, {
         "name": "tab:exp-search",
         "type": "table",
@@ -325,8 +331,8 @@ def main():
                 'PATTY-F': "SMT",
             }
         ],
-        "caption": r"Average number of concatenations and average length of the pattern when the solution was found "
-                   r"in all three presented approaches."
+        "caption": r"Average number of concatenations (equal to the number of calls to $\textsc{solve}$) and average "
+                   r"length of the pattern when the solution is found in all three presented approaches."
     }]
 
     latex = []

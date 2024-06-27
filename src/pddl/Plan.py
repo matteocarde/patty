@@ -51,10 +51,10 @@ class Plan:
     def getMaxRolling(self) -> int:
         raise NotImplementedError()
 
-    def getDistinctActions(self) -> Set[Operation]:
+    def getDistinctActions(self) -> List[Operation]:
         raise NotImplementedError
 
-    def getRolledActions(self) -> Set[Operation]:
+    def getRolledActions(self) -> List[Operation]:
         raise NotImplementedError
 
     def toValString(self):

@@ -88,11 +88,11 @@ class NumericPlan(Plan):
     def getMaxRolling(self) -> int:
         return max([i for (a, i) in self.__plan])
 
-    def getDistinctActions(self) -> Set[Operation]:
-        return {a for a in self.__rolledPlan}
+    def getDistinctActions(self) -> List[Operation]:
+        return [a for (a, i) in self.__plan if i > 0]
 
-    def getRolledActions(self) -> Set[Operation]:
-        return {a for (a, i) in self.__plan if i > 1}
+    def getRolledActions(self) -> List[Operation]:
+        return [a for (a, i) in self.__plan if i > 1]
 
     def getMetric(self, problem: Problem):
         if not problem.metric:
