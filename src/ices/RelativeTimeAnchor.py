@@ -7,12 +7,9 @@ class RelativeTimeAnchor(Enum):
     START = "START"
     END = "END"
 
+    def __add__(self, other):
+        raise NotImplementedError
 
-class PlanRelativeTimeAnchor(Enum):
-    BEGIN = "BEGIN"
-    FINISH = "FINISH"
+    def __sub__(self, other):
+        raise NotImplementedError
 
-
-class ActionRelativeTimeAnchor(Enum):
-    START = "START"
-    END = "END"

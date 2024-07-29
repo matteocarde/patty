@@ -1,3 +1,4 @@
+from __future__ import annotations
 from typing import List
 
 from src.ices.ActionRelativeTime import ActionRelativeTime
@@ -12,3 +13,10 @@ class ActionIntermediateEffect(IntermediateEffect):
 
     def __init__(self):
         super().__init__()
+
+    @classmethod
+    def fromProperties(cls, time: ActionRelativeTime) -> ActionIntermediateEffect:
+        ie = cls()
+        ie.time = time
+
+        return ie
