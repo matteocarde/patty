@@ -1,0 +1,27 @@
+
+           \documentclass[11pt,landscape]{article}
+           \usepackage{graphicx}
+           \usepackage{lscape}
+           \usepackage{multirow}
+           \usepackage[a4paper,margin=1in,landscape]{geometry}
+
+           \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||cccc|cccc||cccc|cccc||cccc||cccc||cccc||}
+\hline
+ & \multicolumn{8}{c||}{Coverage (\%)}&\multicolumn{8}{c||}{Time (s)}&\multicolumn{4}{c||}{$|\mathcal{X} \cup \mathcal{A}^\prec \cup \mathcal{X}'|$}&\multicolumn{4}{c||}{$|\mathcal{T}^\prec(\mathcal{X},\mathcal{A}^\prec,\mathcal{X}')|$}&\multicolumn{4}{c||}{Vars x Rule}\\
+Domain & $P_O$&$P_G$&$P_H$&$P_F$&$P_F$&$\mathrm{ENHSP}$&$\mathrm{FF}$&$\mathrm{NFD}$&$P_O$&$P_G$&$P_H$&$P_F$&$P_F$&$\mathrm{ENHSP}$&$\mathrm{FF}$&$\mathrm{NFD}$&$P_O$&$P_G$&$P_H$&$P_F$&$P_O$&$P_G$&$P_H$&$P_F$&$P_O$&$P_G$&$P_H$&$P_F$\\
+\hline
+\textsc{Bottles-Pour-Numeric} (S)&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{0.8}&\textbf{0.8}&\textbf{0.8}&\textbf{0.8}&0.8&0.7&\textbf{0.0}&0.1&\textbf{65}&\textbf{65}&\textbf{65}&\textbf{65}&\textbf{153}&\textbf{153}&\textbf{153}&\textbf{153}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}
+\\\hline
+\textit{Total}&\textbf{1}&\textbf{1}&\textbf{1}&\textbf{1}&\textbf{1}&\textbf{1}&\textbf{1}&\textbf{1}&\textbf{1}&\textbf{1}&\textbf{1}&\textbf{1}&\textbf{0}&\textbf{0}&\textbf{1}&\textbf{0}&\textbf{1}&\textbf{1}&\textbf{1}&\textbf{1}&\textbf{1}&\textbf{1}&\textbf{1}&\textbf{1}&\textbf{1}&\textbf{1}&\textbf{1}&\textbf{1}\\\hline
+
+        \end{tabular}}
+        \caption{$\textsc{patty}_\mathrm{O}$ (bound increase) vs. $\textsc{patty}_\mathrm{G}$ (concatenation). The coverage and both the bound ($\textsc{p}_\mathrm{O}$) and the number of concats ($\textsc{p}_\mathrm{G}$) were the same for both approaches. The table shows, in the last encoding before finding a solution, the number of variables, rules, and average number of variables per rule.}
+        \label{tab:experiments}
+        \end{table*}
+        
+\end{document}

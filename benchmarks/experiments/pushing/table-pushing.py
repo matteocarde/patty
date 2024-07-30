@@ -72,7 +72,8 @@ DOMAINS = {
     "numeric/ipc-2023/tpp": r"\textsc{Tpp} (L)",
     "numeric/ipc-2023/zenotravel": r"\textsc{Zeno} (S)",
     "numeric/line-exchange": r"\textsc{Line} (L)",
-    "line-exchange-quantity": r"\textsc{LineExchange-QTY} (L)"
+    "line-exchange-quantity": r"\textsc{LineExchange-QTY} (L)",
+    "numeric/bottles-pour-numeric": r"\textsc{Bottles-Pour-Numeric} (S)"
 }
 
 TOTALS = {
@@ -98,13 +99,14 @@ TOTALS = {
     "numeric/ipc-2023/tpp": 20,
     "numeric/ipc-2023/zenotravel": 20,
     "numeric/line-exchange": 108,
-    "line-exchange-quantity": 20
+    "line-exchange-quantity": 20,
+    "numeric/bottles-pour-numeric": 100
 }
 
 
 def main():
     # Parsing the results
-    exp = "2024-07-24-AAAI-PUSHING-v2"
+    exp = "2024-07-30-BOTTLES-NUMERIC-V4"
     file = f"benchmarks/results/{exp}.csv"
 
     joinWith = [file]
@@ -124,9 +126,9 @@ def main():
 
     # Joining together portfolios
     results = Result.joinPorfolios(aResults, {
-        "ENHSP-sat-hadd": "ENHSP",
-        "ENHSP-sat-hradd": "ENHSP",
-        "ENHSP-sat-hmrphj": "ENHSP",
+        "ENHSP-SAT-HADD": "ENHSP",
+        "ENHSP-SAT-HRADD": "ENHSP",
+        "ENHSP-OPT-HMRPHJ": "ENHSP",
     })
 
     solvers = set()
@@ -209,25 +211,26 @@ def main():
 
     domainsClusters = {
         r"\textit{High}": [
-            "numeric/ipc-2023/block-grouping",
-            "numeric/ipc-2023/counters",
-            "numeric/ipc-2023/fo_counters",
-            "numeric/ipc-2023/delivery",
-            "numeric/ipc-2023/drone",
-            "numeric/ipc-2023/expedition",
-            "numeric/ipc-2023/farmland",
-            "numeric/ipc-2023/fo-farmland",
-            "numeric/ipc-2023/hydropower",
-            "numeric/ipc-2023/mprime",
-            "numeric/ipc-2023/pathwaysmetric",
-            "numeric/ipc-2023/ext-plant-watering",
-            "numeric/ipc-2023/rover",
-            "numeric/ipc-2023/sailing",
-            "numeric/ipc-2023/fo-sailing",
-            "numeric/ipc-2023/satellite",
-            "numeric/ipc-2023/sugar",
-            "numeric/ipc-2023/tpp",
-            "numeric/ipc-2023/zenotravel"
+            # "numeric/ipc-2023/block-grouping",
+            # "numeric/ipc-2023/counters",
+            # "numeric/ipc-2023/fo_counters",
+            # "numeric/ipc-2023/delivery",
+            # "numeric/ipc-2023/drone",
+            # "numeric/ipc-2023/expedition",
+            # "numeric/ipc-2023/farmland",
+            # "numeric/ipc-2023/fo-farmland",
+            # "numeric/ipc-2023/hydropower",
+            # "numeric/ipc-2023/mprime",
+            # "numeric/ipc-2023/pathwaysmetric",
+            # "numeric/ipc-2023/ext-plant-watering",
+            # "numeric/ipc-2023/rover",
+            # "numeric/ipc-2023/sailing",
+            # "numeric/ipc-2023/fo-sailing",
+            # "numeric/ipc-2023/satellite",
+            # "numeric/ipc-2023/sugar",
+            # "numeric/ipc-2023/tpp",
+            # "numeric/ipc-2023/zenotravel",
+            "numeric/bottles-pour-numeric"
         ],
     }
 
@@ -245,7 +248,7 @@ def main():
         "type": "table*",
         "width": r"\textwidth",
         "columns": {
-            # "coverage": ("Coverage (\%)", {"SMT", "SEARCH"}, "count"),
+            "coverage": ("Coverage (\%)", {"SMT", "SEARCH"}, "count"),
             "time": ("Time (s)", {"SMT", "SEARCH"}, "count"),
             # "bound": (r"$n$ - Calls to \smt solver", {"SMT"}, "count"),
             "nOfVars": ("$|\mathcal{X} \cup \mathcal{A}^\prec \cup \mathcal{X}'|$", {"SMT"}, "count"),
@@ -256,15 +259,15 @@ def main():
         "planners": [{
             'PATTY-O': "SMT",
             'PATTY-G': "SMT",
-            # 'PATTY-H': "SMT",
-            # 'PATTY-F': "SMT"
+            'PATTY-H': "SMT",
+            'PATTY-F': "SMT"
         },
-            # {
-            #     'PATTY-F': "SEARCH",
-            #     'ENHSP': "SEARCH",
-            #     'METRIC-FF': "SEARCH",
-            #     "NFD": "SEARCH",
-            # }
+            {
+                'PATTY-F': "SEARCH",
+                'ENHSP': "SEARCH",
+                'METRIC-FF': "SEARCH",
+                "NFD": "SEARCH",
+            }
         ],
         "caption": r"$\textsc{patty}_\mathrm{O}$ (bound increase) vs. $\textsc{patty}_\mathrm{G}$ (concatenation). "
                    r"The coverage and both the bound ($\textsc{p}_\mathrm{O}$) and the number of concats "
