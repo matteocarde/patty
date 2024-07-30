@@ -10,9 +10,9 @@ PLANNERS = [
     "PATTY-F",
     # "PATTY-ASTAR",
     # "SPRINGROLL",
-    "ENHSP-HADD",
-    "ENHSP-HRADD",
-    "ENHSP-HMRP",
+    "ENHSP-SAT-HADD",
+    "ENHSP-SAT-HRADD",
+    "ENHSP-OPT-HMRPHJ",
     "METRIC-FF",
     "NFD",
     # "OMT"
