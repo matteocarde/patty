@@ -10,11 +10,11 @@ PLANNERS = [
     "PATTY-F",
     # "PATTY-ASTAR",
     # "SPRINGROLL",
-    # "ENHSP-HADD",
-    # "ENHSP-HRADD",
-    # "ENHSP-HMRP",
-    # "METRIC-FF",
-    # "NFD",
+    "ENHSP-HADD",
+    "ENHSP-HRADD",
+    "ENHSP-HMRP",
+    "METRIC-FF",
+    "NFD",
     # "OMT"
 ]
 NAME = "pushing.csv"
