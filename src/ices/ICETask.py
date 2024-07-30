@@ -41,3 +41,6 @@ class ICETask:
 
     def addAction(self, action: ICEAction):
         self.actions.add(action)
+
+    def addActions(self, actions: Set[ICEAction]):
+        self.actions.update(actions)

@@ -1,4 +1,7 @@
 from __future__ import annotations
+
+from enum import Enum
+
 from src.ices.RelativeTime import RelativeTime
 from src.ices.RelativeTimeAnchor import RelativeTimeAnchor
 
@@ -11,12 +14,12 @@ class PlanRelativeTime(RelativeTime):
         super().__init__()
 
 
-class PlanRelativeTimeAnchor(RelativeTimeAnchor):
+class PlanRelativeTimeAnchor(RelativeTimeAnchor, Enum):
     BEGIN = "BEGIN"
     FINISH = "FINISH"
 
     def __add__(self, other) -> PlanRelativeTime:
-        if not isinstance(other, int):
+        if not isinstance(other, int) and not isinstance(other, float):
             raise Exception()
 
         rt = PlanRelativeTime()
@@ -25,7 +28,7 @@ class PlanRelativeTimeAnchor(RelativeTimeAnchor):
         return rt
 
     def __sub__(self, other) -> PlanRelativeTime:
-        if not isinstance(other, int):
+        if not isinstance(other, int) and not isinstance(other, float):
             raise Exception()
 
         rt = PlanRelativeTime()
