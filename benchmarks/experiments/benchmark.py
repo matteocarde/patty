@@ -73,7 +73,7 @@ def main():
     if envs.isInsideAWS:
         time.sleep(envs.index / 4)
     else:
-        envs.file = "benchmarks/instances/pushing.csv"
+        envs.file = "benchmarks/instances/temporal.csv"
 
     logger = CloudLogger(envs.experiment)
 

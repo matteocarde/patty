@@ -9,7 +9,7 @@ PLANNERS = [
     # "LPG",
     # "ITSAT",
     # "OPTIC",
-    "ANMLSMT",
+    # "ANMLSMT",
     "PATTY-T-OR-ASTAR",
     # "PATTY-T-SIGMA-ASTAR"
 ]
@@ -17,16 +17,17 @@ PLANNERS = [
 
 def main():
     domains = [
-        "temporal/cushing",
-        "temporal/majsp",
-        "temporal/bottles-all",
-        "temporal/bottles-pack",
+        # "temporal/cushing",
+        # "temporal/majsp",
+        # "temporal/bottles-all",
+        # "temporal/bottles-pack",
         "temporal/bottles-pour",
-        "temporal/bottles-shake",
-        "temporal/match-ac",
-        "temporal/match-ms",
-        "temporal/oversub",
-        "temporal/painter"
+        "temporal/bottles-pour-no-cap",
+        # "temporal/bottles-shake",
+        # "temporal/match-ac",
+        # "temporal/match-ms",
+        # "temporal/oversub",
+        # "temporal/painter"
     ]
 
     instances = list()
