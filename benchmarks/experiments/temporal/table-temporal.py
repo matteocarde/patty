@@ -12,7 +12,7 @@ SOLVERS = {
     # "PATTY-T-SIGMA": r"\textsc{Patty}_{\Sigma}",
     "PATTY-T-OR-ASTAR": r"\textsc{Patty}",
     # "PATTY-T-SIGMA-ASTAR": r"\textsc{Patty}_{\Sigma}",
-    "ANMLSMT": r"\textsc{AnmlSMT}",
+    # "ANMLSMT": r"\textsc{AnmlSMT}",
     # "ITSAT": r"\textsc{ITSat}",
     # "LPG": r"\textsc{LPG}",
     # "OPTIC": r"\textsc{Optic}",
@@ -29,6 +29,7 @@ DOMAINS = {
     "temporal/painter": r"\textsc{Painter}",
     "temporal/bottles-pack": r"\textsc{Pack}",
     "temporal/bottles-pour": r"\textsc{Pour}",
+    "temporal/bottles-pour-no-cap": r"\textsc{PourNoCap}",
     "temporal/bottles-shake": r"\textsc{Shake}",
 }
 
@@ -36,7 +37,7 @@ TIMEOUT = 300 * 1000
 
 
 def main():
-    filename = "2024-06-26-REBUTTAL-TEMPORAL-V1.csv"
+    filename = "2024-08-01-BOTTLES-NO-CAP-V1.csv"
     files = [f"benchmarks/results/{filename}"]
 
     results: [Result] = []
@@ -125,16 +126,17 @@ def main():
 
     domainsClusters = {
         r"\textit{Temporal}": [
-            "temporal/cushing",
+            # "temporal/cushing",
             "temporal/bottles-pour",
-            "temporal/bottles-shake",
-            "temporal/bottles-pack",
-            "temporal/bottles-all",
-            "temporal/majsp",
-            "temporal/match-ac",
-            "temporal/match-ms",
-            "temporal/oversub",
-            "temporal/painter"
+            "temporal/bottles-pour-no-cap",
+            # "temporal/bottles-shake",
+            # "temporal/bottles-pack",
+            # "temporal/bottles-all",
+            # "temporal/majsp",
+            # "temporal/match-ac",
+            # "temporal/match-ms",
+            # "temporal/oversub",
+            # "temporal/painter"
         ],
         # r"\textit{Temporal Numeric}": [
         #     "temporal/paper-example",
@@ -158,9 +160,9 @@ def main():
         "type": "table*",
         "width": r"\textwidth",
         "columns": {
-            # "coverage": ("Coverage (\%)", {"SMT", "SEARCH"}),
-            # "time": ("Time (s)", {"SMT", "SEARCH"}),
-            # "bound": ("Bound (Common)", {"SMT"}),
+            "coverage": ("Coverage (\%)", {"SMT", "SEARCH"}),
+            "time": ("Time (s)", {"SMT", "SEARCH"}),
+            "bound": ("Bound (Common)", {"SMT"}),
             "nOfVars": ("N. of Vars", {"SMT"}),  # ("$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$", {"SMT"}),
             "nOfRules": ("N. of Assertions", {"SMT"}),
             # ("$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$", {"SMT"}),
@@ -170,7 +172,7 @@ def main():
             # "PATTY-T-SIGMA": r"SMT",
             "PATTY-T-OR-ASTAR": r"SMT",
             # "PATTY-T-SIGMA-ASTAR": r"SMT",
-            "ANMLSMT": r"SMT",
+            # "ANMLSMT": r"SMT",
             # "ITSAT": r"SMT",
             # "LPG": r"SEARCH",
             # "OPTIC": r"SEARCH",
