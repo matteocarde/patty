@@ -3,7 +3,13 @@ from typing import List
 
 from src.ices.ActionIntermediateCondition import ActionIntermediateCondition
 from src.ices.ActionIntermediateEffect import ActionIntermediateEffect
+from src.ices.ActionRelativeTime import ActionRelativeTimeAnchor
+from src.ices.PlanRelativeTime import PlanRelativeTimeAnchor
 
+START = ActionRelativeTimeAnchor.START
+END = ActionRelativeTimeAnchor.END
+BEGIN = PlanRelativeTimeAnchor.BEGIN
+FINISH = PlanRelativeTimeAnchor.FINISH
 
 class ICEAction:
     name: str
