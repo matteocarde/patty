@@ -11,6 +11,7 @@ END = ActionRelativeTimeAnchor.END
 BEGIN = PlanRelativeTimeAnchor.BEGIN
 FINISH = PlanRelativeTimeAnchor.FINISH
 
+
 class ICEAction:
     name: str
     icond: List[ActionIntermediateCondition]
@@ -20,6 +21,12 @@ class ICEAction:
     def __init__(self):
         self.icond = list()
         self.ieff = list()
+
+    def __repr__(self):
+        return str(self)
+
+    def __str__(self):
+        return self.name
 
     @classmethod
     def fromProperties(cls, name: str, duration: int) -> ICEAction:
