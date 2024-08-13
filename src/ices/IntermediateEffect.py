@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 from typing import List
 
 from src.ices.RelativeTime import RelativeTime
@@ -11,8 +12,8 @@ class IntermediateEffect:
     effects: List[Literal or BinaryPredicate]
 
     def __init__(self):
+        super().__init__()
         self.effects = list()
-        pass
 
     @classmethod
     def fromProperties(cls, time: RelativeTime) -> IntermediateEffect:

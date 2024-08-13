@@ -13,6 +13,13 @@ class TimedICEAction:
         self.action = b
         self.duration = d
 
+    def __hash__(self):
+        return hash(str(self))
+
+    def __eq__(self, other):
+        return type(other) == type(self) and other.time == self.time and other.action == self.action \
+            and other.duration == self.duration
+
     def __repr__(self):
         return str(self)
 
