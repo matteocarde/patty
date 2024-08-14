@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Set
 
+from classes.utils.Constants import EPSILON
 from src.ices.Happening import HappeningActionStart, HappeningActionEnd, HappeningConditionStart, \
     HappeningConditionEnd, HappeningEffect, Happening
 from src.ices.ICETask import ICETask
@@ -41,12 +42,12 @@ class TimedHappening:
         for c in b.icond:
             tau1 = c.fromTime
             tau2 = c.toTime
-            timedHappenings.add(TimedHappening(tau1.absolute(t, t + d), HappeningConditionStart(c)))
-            timedHappenings.add(TimedHappening(tau2.absolute(t, t + d), HappeningConditionEnd(c)))
+            timedHappenings.add(TimedHappening(tau1.absolute(t, t + d), HappeningConditionStart(c, b)))
+            timedHappenings.add(TimedHappening(tau2.absolute(t, t + d), HappeningConditionEnd(c, b)))
 
         for e in b.ieff:
             tau = e.time
-            timedHappenings.add(TimedHappening(tau.absolute(t, t + d), HappeningEffect(e)))
+            timedHappenings.add(TimedHappening(tau.absolute(t + EPSILON, t + d + EPSILON), HappeningEffect(e, b)))
 
         return timedHappenings
 
@@ -57,11 +58,11 @@ class TimedHappening:
         for c in task.goal:
             tau1 = c.fromTime
             tau2 = c.toTime
-            timedHappenings.add(TimedHappening(tau1.absolute(0, ms), HappeningConditionStart(c)))
-            timedHappenings.add(TimedHappening(tau2.absolute(0, ms), HappeningConditionEnd(c)))
+            timedHappenings.add(TimedHappening(tau1.absolute(0, ms), HappeningConditionStart(c, None)))
+            timedHappenings.add(TimedHappening(tau2.absolute(0, ms), HappeningConditionEnd(c, None)))
 
         for e in task.init:
             tau = e.time
-            timedHappenings.add(TimedHappening(tau.absolute(0, ms), HappeningEffect(e)))
+            timedHappenings.add(TimedHappening(tau.absolute(0, ms), HappeningEffect(e, None)))
 
         return timedHappenings

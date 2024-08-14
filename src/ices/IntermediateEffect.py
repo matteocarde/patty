@@ -15,6 +15,9 @@ class IntermediateEffect:
         super().__init__()
         self.effects = list()
 
+    def __repr__(self):
+        return str(self.effects)
+
     @classmethod
     def fromProperties(cls, time: RelativeTime) -> IntermediateEffect:
         raise NotImplementedError()

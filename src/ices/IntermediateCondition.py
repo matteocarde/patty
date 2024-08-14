@@ -13,6 +13,9 @@ class IntermediateCondition:
         super().__init__()
         self.conditions = Formula()
 
+    def __repr__(self):
+        return str(self.conditions)
+
     @classmethod
     def fromProperties(cls, fromTime: RelativeTime, toTime: RelativeTime) -> IntermediateCondition:
         raise NotImplementedError()

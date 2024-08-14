@@ -43,16 +43,18 @@ class HappeningActionEnd(HappeningAction):
 
 class HappeningCondition(Happening):
     condition: IntermediateCondition
+    action: ICEAction or None
 
-    def __init__(self, condition: IntermediateCondition):
+    def __init__(self, condition: IntermediateCondition, action: ICEAction or None):
         super().__init__()
         self.condition = condition
+        self.action = action
 
 
 class HappeningConditionStart(HappeningCondition):
 
-    def __init__(self, condition: IntermediateCondition):
-        super().__init__(condition)
+    def __init__(self, condition: IntermediateCondition, action: ICEAction or None):
+        super().__init__(condition, action)
 
     def __str__(self):
         return f"{self.condition}-START"
@@ -60,8 +62,8 @@ class HappeningConditionStart(HappeningCondition):
 
 class HappeningConditionEnd(HappeningCondition):
 
-    def __init__(self, condition: IntermediateCondition):
-        super().__init__(condition)
+    def __init__(self, condition: IntermediateCondition, action: ICEAction or None):
+        super().__init__(condition, action)
 
     def __str__(self):
         return f"{self.condition}-END"
@@ -69,10 +71,12 @@ class HappeningConditionEnd(HappeningCondition):
 
 class HappeningEffect(Happening):
     effect: IntermediateEffect
+    action: ICEAction or None
 
-    def __init__(self, effect: IntermediateEffect):
+    def __init__(self, effect: IntermediateEffect, action: ICEAction or None):
         super().__init__()
         self.effect = effect
+        self.action = action
 
     def __str__(self):
         return f"{self.effect}"
