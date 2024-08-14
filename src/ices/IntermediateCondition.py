@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from src.ices.Happening import Happening
 from src.ices.RelativeTime import RelativeTime
 from src.pddl.Formula import Formula
 
