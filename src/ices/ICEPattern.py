@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Iterable
 
 from src.ices.Happening import Happening
 from src.ices.ICEAction import ICEAction
@@ -9,3 +9,12 @@ class ICEPattern:
 
     def __init__(self):
         self.pattern = list()
+
+    def __iter__(self) -> Iterable[Happening]:
+        return iter(self.pattern)
+
+    def __getitem__(self, item):
+        return self.pattern[item]
+
+    def __computeHelpingStructs(self):
+        pass

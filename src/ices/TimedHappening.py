@@ -39,15 +39,15 @@ class TimedHappening:
         timedHappenings.add(TimedHappening(t, HappeningActionStart(b)))
         timedHappenings.add(TimedHappening(t + d, HappeningActionEnd(b)))
 
-        for c in b.icond:
+        for i, c in enumerate(b.icond):
             tau1 = c.fromTime
             tau2 = c.toTime
-            timedHappenings.add(TimedHappening(tau1.absolute(t, t + d), HappeningConditionStart(c, b)))
-            timedHappenings.add(TimedHappening(tau2.absolute(t, t + d), HappeningConditionEnd(c, b)))
+            timedHappenings.add(TimedHappening(tau1.absolute(t, t + d), HappeningConditionStart(c, b, i)))
+            timedHappenings.add(TimedHappening(tau2.absolute(t, t + d), HappeningConditionEnd(c, b, i)))
 
-        for e in b.ieff:
+        for i, e in enumerate(b.ieff):
             tau = e.time
-            timedHappenings.add(TimedHappening(tau.absolute(t + EPSILON, t + d + EPSILON), HappeningEffect(e, b)))
+            timedHappenings.add(TimedHappening(tau.absolute(t + EPSILON, t + d + EPSILON), HappeningEffect(e, b, i)))
 
         return timedHappenings
 
@@ -55,14 +55,14 @@ class TimedHappening:
     def fromICETask(task: ICETask, ms: float) -> Set[TimedHappening]:
         timedHappenings: Set[TimedHappening] = set()
 
-        for c in task.goal:
+        for i, c in enumerate(task.goal):
             tau1 = c.fromTime
             tau2 = c.toTime
-            timedHappenings.add(TimedHappening(tau1.absolute(0, ms), HappeningConditionStart(c, None)))
-            timedHappenings.add(TimedHappening(tau2.absolute(0, ms), HappeningConditionEnd(c, None)))
+            timedHappenings.add(TimedHappening(tau1.absolute(0, ms), HappeningConditionStart(c, task.goal, i)))
+            timedHappenings.add(TimedHappening(tau2.absolute(0, ms), HappeningConditionEnd(c, task.goal, i)))
 
-        for e in task.init:
+        for i, e in enumerate(task.init):
             tau = e.time
-            timedHappenings.add(TimedHappening(tau.absolute(0, ms), HappeningEffect(e, None)))
+            timedHappenings.add(TimedHappening(tau.absolute(0, ms), HappeningEffect(e, task.init, i)))
 
         return timedHappenings
