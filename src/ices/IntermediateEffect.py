@@ -1,9 +1,11 @@
 from __future__ import annotations
 
-from typing import List
+from typing import List, Set, Dict
 
 from src.ices.RelativeTime import RelativeTime
-from src.pddl.BinaryPredicate import BinaryPredicate
+from src.pddl.Atom import Atom
+from src.pddl.BinaryPredicate import BinaryPredicate, BinaryPredicateType
+from src.pddl.Constant import Constant
 from src.pddl.Literal import Literal
 
 
@@ -11,12 +13,16 @@ class IntermediateEffect:
     time: RelativeTime
     effects: List[Literal or BinaryPredicate]
 
-    atomsAdded: set()
-    atomsDeleted: set()
-    atomsAssigned: set()
+    atomsAdded: Set[Atom]
+    atomsDeleted: Set[Atom]
+    atomsAssigned: Set[Atom]
+    atomToConstant: Dict[Atom, float]
+    atomToEffect: Dict[Atom, BinaryPredicate]
 
     def __init__(self):
         super().__init__()
+        self.atomToEffect = dict()
+        self.atomToConstant = dict()
         self.effects = list()
         self.atomsAdded = set()
         self.atomsDeleted = set()
@@ -38,7 +44,10 @@ class IntermediateEffect:
             self.atomsDeleted.add(eff.getAtom())
         if isinstance(eff, BinaryPredicate):
             self.atomsAssigned.add(eff.getAtom())
+            self.atomToEffect[eff.getAtom()] = eff
             self.atomsNumeric.add(eff.getFunctions())
+            if eff.type == BinaryPredicateType.MODIFICATION and isinstance(eff.rhs, Constant):
+                self.atomToConstant[eff.getAtom()] = eff.rhs.value
 
     @property
     def atomsTouched(self):

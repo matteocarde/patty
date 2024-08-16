@@ -1,7 +1,6 @@
 from typing import List, Iterable
 
 from src.ices.Happening import Happening
-from src.ices.ICEAction import ICEAction
 
 
 class ICEPattern:
