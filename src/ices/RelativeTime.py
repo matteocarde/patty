@@ -1,4 +1,5 @@
 from src.ices.RelativeTimeAnchor import RelativeTimeAnchor
+from src.smt.SMTExpression import SMTExpression
 
 
 class RelativeTime:
@@ -8,7 +9,7 @@ class RelativeTime:
     def __init__(self):
         pass
 
-    def absolute(self, a: float, b: float):
+    def absolute(self, a: SMTExpression or float, b: SMTExpression or float):
         from src.ices.ActionRelativeTime import ActionRelativeTimeAnchor
         from src.ices.PlanRelativeTime import PlanRelativeTimeAnchor
 

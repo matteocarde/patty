@@ -16,7 +16,7 @@ class ICETransitionVariables:
     valueVariables: Dict[Atom, SMTVariable]
     happeningVariables: Dict[Happening, SMTVariable]
     clockVariables: Dict[Happening, SMTVariable]
-    sigmaExpressions: Dict[int, Dict[Atom, SMTExpression or float]]
+    sigmaExpressions: Dict[int, Dict[Atom, SMTExpression]]
     makespan: SMTVariable
 
     def __init__(self, task: ICETask, pattern: ICEPattern):
@@ -53,8 +53,8 @@ class ICETransitionVariables:
 
         return variables
 
-    def __computeSigmaExpressions(self) -> Dict[int, Dict[Atom, SMTExpression or float]]:
-        sigmas: Dict[int, Dict[Atom, SMTExpression or float]] = dict()
+    def __computeSigmaExpressions(self) -> Dict[int, Dict[Atom, SMTExpression]]:
+        sigmas: Dict[int, Dict[Atom, SMTExpression]] = dict()
 
         for i, h in enumerate(self.pattern):
             sigmas[i] = dict()
@@ -71,7 +71,7 @@ class ICETransitionVariables:
                     if not x in h.effect.atomToConstant:
                         raise Exception("The first happening in the pattern, (i.e., the plan intermediate effect in I "
                                         "happening in t=0) should define the initial value of all the variables in V_N")
-                    sigmas[0][x] = h.effect.atomToConstant[x]
+                    sigmas[0][x] = SMTExpression.constant(h.effect.atomToConstant[x])
 
                 continue
 

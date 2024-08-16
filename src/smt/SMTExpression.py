@@ -94,7 +94,7 @@ class SMTExpression:
 
     def __eq__(self, other: SMTExpression or int):
         if self.type == BOOL:
-            return self.coimplies(other)
+            return self.iff(other)
         expr = self.__binary(other, Equals, self.expression, toRHS(other))
         expr.type = BOOL
         return expr
@@ -159,7 +159,7 @@ class SMTExpression:
         expr.type = BOOL
         return expr
 
-    def coimplies(self, other: SMTExpression):
+    def iff(self, other: SMTExpression):
         expr = self.__binary(other, Iff, self.expression, other.expression)
         expr.type = BOOL
         return expr
@@ -266,5 +266,12 @@ class SMTExpression:
     def ITE(cls, c: SMTExpression, t: SMTExpression, e: SMTExpression):
         exp = cls()
         exp.expression = Ite(c.expression, t.expression, e.expression)
+        exp.isConstant = False
+        return exp
+
+    @classmethod
+    def constant(cls, c: float):
+        exp = cls()
+        exp.expression = c
         exp.isConstant = False
         return exp

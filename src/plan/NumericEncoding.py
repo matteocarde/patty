@@ -367,7 +367,7 @@ class NumericEncoding(Encoding):
         for v in predicates:
             v_first = stepVars.valueVariables[v]
             delta_g_v = stepVars.deltaVariables[self.pattern.dummyAction][v]
-            rules.append(delta_g_v.coimplies(v_first))
+            rules.append(delta_g_v.iff(v_first))
 
         return rules
 
