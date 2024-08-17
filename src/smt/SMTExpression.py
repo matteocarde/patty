@@ -101,9 +101,9 @@ class SMTExpression:
             return SMTExpression.TRUE()
         if other.expression == FALSE() and self.expression == FALSE():
             return SMTExpression.FALSE()
-        if other.expression == TRUE():
+        if other.expression == FALSE():
             return self
-        if self.expression == TRUE():
+        if self.expression == FALSE():
             return other
 
         return self.__binary(other, Or, self.expression, other.expression)
@@ -267,17 +267,23 @@ class SMTExpression:
         r: SMTExpression
         for r in rules:
             e.variables |= getVars(r)
-            expressions.append(r.expression)
             allConstants = allConstants and r.isConstant
             allTrue = allTrue and r.expression == TRUE()
             someTrue = someTrue or r.expression == TRUE()
+            if connective == And and r.expression == FALSE():
+                return SMTExpression.FALSE()
+            if connective == Or and r.expression == TRUE():
+                return SMTExpression.TRUE()
+
+            if connective == And and r.expression == TRUE():
+                continue
+            if connective == Or and r.expression == FALSE():
+                continue
+
+            expressions.append(r.expression)
 
         if allConstants:
             if connective == And and allTrue:
-                return SMTExpression.TRUE()
-            elif connective == And and not allTrue:
-                return SMTExpression.FALSE()
-            elif connective == Or and someTrue:
                 return SMTExpression.TRUE()
             elif connective == Or and not someTrue:
                 return SMTExpression.FALSE()
