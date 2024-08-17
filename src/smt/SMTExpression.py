@@ -83,13 +83,37 @@ class SMTExpression:
         return expr
 
     def AND(self, other: SMTExpression):
+        if other.expression == TRUE() and self.expression == TRUE():
+            return SMTExpression.TRUE()
+        if other.expression == FALSE():
+            return SMTExpression.FALSE()
+        if other.expression == TRUE():
+            return self
+        if self.expression == FALSE():
+            return SMTExpression.FALSE()
+        if self.expression == TRUE():
+            return other
+
         return self.__binary(other, And, self.expression, other.expression)
 
     def OR(self, other: SMTExpression):
+        if other.expression == TRUE() or self.expression == TRUE():
+            return SMTExpression.TRUE()
+        if other.expression == FALSE() and self.expression == FALSE():
+            return SMTExpression.FALSE()
+        if other.expression == TRUE():
+            return self
+        if self.expression == TRUE():
+            return other
+
         return self.__binary(other, Or, self.expression, other.expression)
 
     def NOT(self):
         from src.smt.SMTNegation import SMTNegation
+        if self.expression == TRUE():
+            return SMTExpression.FALSE()
+        if self.expression == FALSE():
+            return SMTExpression.TRUE()
         return SMTNegation(self)
 
     def __eq__(self, other: SMTExpression or int):
@@ -155,6 +179,8 @@ class SMTExpression:
         return self.__binary(other, Div, toRHS(other), self.expression)
 
     def implies(self, other: SMTExpression):
+        if other.isConstant and other.expression == TRUE():
+            return SMTExpression.TRUE()
         expr = self.__binary(other, Implies, self.expression, other.expression)
         expr.type = BOOL
         return expr
@@ -233,10 +259,29 @@ class SMTExpression:
         e = cls()
         e.variables = set()
         expressions = list()
+
+        allConstants = True
+        allTrue = True
+        someTrue = False
+
         r: SMTExpression
         for r in rules:
             e.variables |= getVars(r)
             expressions.append(r.expression)
+            allConstants = allConstants and r.isConstant
+            allTrue = allTrue and r.expression == TRUE()
+            someTrue = someTrue or r.expression == TRUE()
+
+        if allConstants:
+            if connective == And and allTrue:
+                return SMTExpression.TRUE()
+            elif connective == And and not allTrue:
+                return SMTExpression.FALSE()
+            elif connective == Or and someTrue:
+                return SMTExpression.TRUE()
+            elif connective == Or and not someTrue:
+                return SMTExpression.FALSE()
+
         e.expression = connective(expressions)
         return e
 
@@ -252,6 +297,7 @@ class SMTExpression:
     def FALSE(cls):
         exp = cls()
         exp.expression = FALSE()
+        exp.type = BOOL
         exp.isConstant = True
         return exp
 
@@ -259,6 +305,7 @@ class SMTExpression:
     def TRUE(cls):
         exp = cls()
         exp.expression = TRUE()
+        exp.type = BOOL
         exp.isConstant = True
         return exp
 

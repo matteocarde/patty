@@ -1,15 +1,19 @@
 import itertools
 from typing import List, Dict, Tuple, Set
 
+from pysmt.shortcuts import TRUE, FALSE
+
 from src.ices.Happening import HappeningActionStart, HappeningActionEnd, HappeningEffect, HappeningCondition, \
     HappeningConditionStart, HappeningConditionEnd, HappeningAction
 from src.ices.ICEActionStartEndPair import ICEActionStartEndPair
+from src.ices.ICEConditionStartEndPair import ICEConditionStartEndPair
 from src.ices.ICEGoal import ICEGoal
 from src.ices.ICEInitialCondition import ICEInitialCondition
 from src.ices.ICEPattern import ICEPattern
 from src.ices.ICEPatternPrecedenceGraph import ICEPatternPrecedenceGraph
 from src.ices.ICETask import ICETask
 from src.ices.ICETransitionVariables import ICETransitionVariables
+from src.smt.SMTConjunction import SMTConjunction
 from src.smt.SMTExpression import SMTExpression
 
 
@@ -18,23 +22,25 @@ class ICEEncoding:
     pattern: ICEPattern
     ppg: ICEPatternPrecedenceGraph
     rulesBySet: Dict[str, List[SMTExpression]]
-    rules: List[SMTExpression]
-    startEndPairs: List[ICEActionStartEndPair]
+    rules: SMTConjunction
+    actionsStartEndPairs: List[ICEActionStartEndPair]
+    conditionsStartEndPairs: List[ICEConditionStartEndPair]
 
     def __init__(self, task: ICETask, pattern: ICEPattern):
         self.task: ICETask = task
         self.pattern: ICEPattern = pattern
-        self.startEndPairs = self.pattern.getStartEndPairs()
+        self.actionsStartEndPairs = self.pattern.getActionsStartEndPairs()
+        self.conditionsStartEndPairs = self.pattern.getConditionsStartEndPairs()
         self.transVars = ICETransitionVariables(task, pattern)
         self.ppg = ICEPatternPrecedenceGraph(pattern, self.transVars)
         self.k = len(pattern) - 1
         self.rulesBySet = dict()
 
         self.b_ij = dict()
-        for pair in self.startEndPairs:
+        for pair in self.actionsStartEndPairs:
             self.b_ij[pair] = pair.getPlaceholderBij(self.transVars.happeningVariables, self.pattern)
 
-        self.rulesBySet["frame"] = self.__getFrameRules()
+        # self.rulesBySet["frame"] = self.__getFrameRules()
         self.rulesBySet["dur"] = self.__getDurRules()
         self.rulesBySet["make-span"] = self.__getMakeSpanRules()
         self.rulesBySet["precedence"] = self.__getPrecedenceRules()
@@ -43,10 +49,14 @@ class ICEEncoding:
         self.rulesBySet["action-intermediate"] = self.__getActionIntermediateRules()
         self.rulesBySet["conditions"] = self.__getConditionsRules()
 
-        self.rules = list(itertools.chain([rules for (key, rules) in self.rulesBySet.items()]))
+        self.rules = SMTConjunction()
+        for (key, rules) in self.rulesBySet.items():
+            self.rules += rules
 
-    def __getFrameRules(self) -> List[SMTExpression]:
-        rules: List[SMTExpression] = list()
+        pass
+
+    def __getFrameRules(self) -> SMTConjunction:
+        rules: SMTConjunction = SMTConjunction()
 
         for v in self.task.propVariables:
             rules.append(self.transVars.nextVariables[v].iff(self.transVars.sigmaExpressions[self.k][v]))
@@ -56,8 +66,8 @@ class ICEEncoding:
 
         return rules
 
-    def __getDurRules(self) -> List[SMTExpression]:
-        rules: List[SMTExpression] = list()
+    def __getDurRules(self) -> SMTConjunction:
+        rules: SMTConjunction = SMTConjunction()
         tVars = self.transVars
 
         for i, h in enumerate(self.pattern):
@@ -73,8 +83,8 @@ class ICEEncoding:
 
         return rules
 
-    def __getMakeSpanRules(self) -> List[SMTExpression]:
-        rules: List[SMTExpression] = list()
+    def __getMakeSpanRules(self) -> SMTConjunction:
+        rules: SMTConjunction = SMTConjunction()
         tVars = self.transVars
 
         endingTimes = [tVars.timeVariables[h] for h in self.pattern if isinstance(h, HappeningActionEnd)]
@@ -84,8 +94,8 @@ class ICEEncoding:
 
         return rules
 
-    def __getPrecedenceRules(self) -> List[SMTExpression]:
-        rules: List[SMTExpression] = list()
+    def __getPrecedenceRules(self) -> SMTConjunction:
+        rules: SMTConjunction = SMTConjunction()
         hVars = self.transVars.happeningVariables
         tVars = self.transVars.timeVariables
 
@@ -98,8 +108,8 @@ class ICEEncoding:
 
         return rules
 
-    def __getPlanIntermediateRules(self) -> List[SMTExpression]:
-        rules: List[SMTExpression] = list()
+    def __getPlanIntermediateRules(self) -> SMTConjunction:
+        rules: SMTConjunction = SMTConjunction()
         tVars = self.transVars
         M = tVars.makespan
 
@@ -141,8 +151,8 @@ class ICEEncoding:
 
         return rules
 
-    def __getStartEndRules(self) -> List[SMTExpression]:
-        rules: List[SMTExpression] = list()
+    def __getStartEndRules(self) -> SMTConjunction:
+        rules: SMTConjunction = SMTConjunction()
         tVars = self.transVars
 
         for i, h in enumerate(self.pattern):
@@ -176,17 +186,16 @@ class ICEEncoding:
 
         return rules
 
-    def __getActionIntermediateRules(self) -> List[SMTExpression]:
-        rules: List[SMTExpression] = list()
+    def __getActionIntermediateRules(self) -> SMTConjunction:
+        rules: SMTConjunction = SMTConjunction()
         hVars = self.transVars.happeningVariables
         tVars = self.transVars.timeVariables
 
-        for pair in self.startEndPairs:
+        for pair in self.actionsStartEndPairs:
             b_ij: SMTExpression = self.b_ij[pair]
             t_i = tVars[pair.h_i]
             t_j = tVars[pair.h_j]
 
-            print(self.pattern[pair.i:pair.j + 1])
             ## 7.a
             ieffs: List[HappeningEffect] = [h_p for h_p in self.pattern[pair.i:pair.j]
                                             if isinstance(h_p, HappeningEffect) and h_p.parent == pair.action]
@@ -215,8 +224,23 @@ class ICEEncoding:
 
         return rules
 
-    def __getConditionsRules(self) -> List[SMTExpression]:
-        rules: List[SMTExpression] = list()
-        
+    def __getConditionsRules(self) -> SMTConjunction:
+        rules: SMTConjunction = SMTConjunction()
+        hVars = self.transVars.happeningVariables
+        sigma = self.transVars.sigmaExpressions
+
+        for pair in self.conditionsStartEndPairs:
+            # 8.a
+            h_i = hVars[pair.h_i]
+            h_j = hVars[pair.h_j]
+            i = pair.i
+            j = pair.j
+            cond = pair.condition.conditions
+            cond_i = SMTExpression.fromFormula(cond, sigma[i])
+            rules.append((h_i > 0).implies(cond_i))
+
+            for p in range(i + 1, j):
+                cond_p = SMTExpression.fromFormula(cond, sigma[p])
+                rules.append(((h_i > 0).AND(h_j > 0)).implies(cond_p))
 
         return rules
