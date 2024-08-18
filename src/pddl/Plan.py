@@ -1,7 +1,5 @@
-from typing import List, Set
+from typing import List
 
-from src.pddl.Operation import Operation
-from src.pddl.Problem import Problem
 from src.utils.LogPrint import LogPrint
 
 
@@ -36,10 +34,10 @@ class Plan:
     def print(self):
         print(str(self))
 
-    def validate(self, problem: Problem, avoidRaising=False, logger: LogPrint = None) -> bool:
+    def validate(self, problem, avoidRaising=False, logger: LogPrint = None) -> bool:
         raise NotImplementedError()
 
-    def getMetric(self, problem: Problem):
+    def getMetric(self, problem):
         if not problem.metric:
             return len(self.__rolledPlan)
 
@@ -51,10 +49,10 @@ class Plan:
     def getMaxRolling(self) -> int:
         raise NotImplementedError()
 
-    def getDistinctActions(self) -> List[Operation]:
+    def getDistinctActions(self):
         raise NotImplementedError
 
-    def getRolledActions(self) -> List[Operation]:
+    def getRolledActions(self):
         raise NotImplementedError
 
     def toValString(self):

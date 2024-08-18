@@ -10,6 +10,9 @@ class ICEGoal:
         self.icond = list()
         pass
 
+    def __len__(self):
+        return len(self.icond)
+
     def __iter__(self):
         return iter(self.icond)
 

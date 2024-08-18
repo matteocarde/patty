@@ -1,13 +1,11 @@
-from pysmt.logics import QF_LRA, QF_NRA
-from pysmt.shortcuts import Portfolio, write_smtlib, Solver
 from typing import Set, List, Dict
 
-from z3 import Optimize, z3
+from pysmt.logics import QF_LRA, QF_NRA
+from pysmt.shortcuts import Portfolio, Solver
+from z3 import Optimize
 
-from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Plan import Plan
 from src.plan.Encoding import Encoding
-from src.plan.NumericEncoding import NumericEncoding
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTSolution import SMTSolution
 from src.smt.SMTVariable import SMTVariable
@@ -135,58 +133,3 @@ class SMTSolver:
         # plan.quality = plan.getMetric(self.encoding.problem)
 
         return plan
-
-    # Linear Optimization
-    def optimize(self) -> NumericPlan or bool:
-
-        lastPlanFound: NumericPlan = self.solve()
-        if not lastPlanFound:
-            return False
-
-        while True:
-            assert lastPlanFound.validate(self.encoding.problem)
-            print(f"Found plan with quality {lastPlanFound.quality}. Improving...")
-            self.addAssertion(self.encoding.getMetricExpression(lastPlanFound.quality))
-
-            plan = self.solve()
-            if not plan or plan.quality == lastPlanFound.quality:
-                lastPlanFound.optimal = True
-                return lastPlanFound
-
-            lastPlanFound = plan
-            self.popLastAssertion()
-
-    def __solveBelowQuality(self, quality: float):
-        # print("Searching below", quality)
-        self.addAssertion(self.encoding.getMetricExpression(quality), push=False)
-        plan = self.solve()
-        self.popLastAssertion()
-        return plan
-
-    def __searchBetween(self, ub: float, lb: float, error: float, lastPlan: NumericPlan,
-                        onSolutionFound=None) -> NumericPlan:
-        if abs(ub - lb) < error:
-            lastPlan.optimal = True
-            return lastPlan
-
-        half = lb + (ub - lb) / 2
-        print(f"Searching plan with quality {half}.")
-        plan = self.__solveBelowQuality(half)
-        if plan and plan.quality != lastPlan.quality:
-            print(f"Plan FOUND with quality {plan.quality}.")
-            if onSolutionFound:
-                onSolutionFound(plan)
-            return self.__searchBetween(plan.quality, lb, error, plan, onSolutionFound)
-        if not plan or plan.quality == lastPlan.quality:
-            print(f"Plan NOT FOUND with quality {half}.")
-            return self.__searchBetween(ub, half, error, lastPlan, onSolutionFound)
-
-    def optimizeBinary(self, error=1, onSolutionFound=None) -> NumericPlan or bool:
-
-        lastPlanFound: NumericPlan = self.solve()
-        if not lastPlanFound:
-            return False
-        if onSolutionFound:
-            onSolutionFound(lastPlanFound)
-
-        return self.__searchBetween(lastPlanFound.quality, 0, error, lastPlanFound, onSolutionFound)

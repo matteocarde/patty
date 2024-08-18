@@ -10,6 +10,9 @@ class ICEInitialCondition:
         self.ieff = list()
         pass
 
+    def __len__(self):
+        return len(self.ieff)
+
     def __iter__(self):
         return iter(self.ieff)
 

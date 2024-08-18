@@ -1,10 +1,9 @@
-import itertools
-from typing import List, Dict, Tuple, Set
+from typing import List, Dict
 
-from pysmt.shortcuts import TRUE, FALSE
-
-from src.ices.Happening import HappeningActionStart, HappeningActionEnd, HappeningEffect, HappeningCondition, \
-    HappeningConditionStart, HappeningConditionEnd, HappeningAction
+from classes.utils.Constants import EPSILON
+from src.ices.Happening import HappeningActionStart, HappeningActionEnd, HappeningEffect, HappeningConditionStart, \
+    HappeningConditionEnd, HappeningAction
+from src.ices.ICEAction import ICEAction
 from src.ices.ICEActionStartEndPair import ICEActionStartEndPair
 from src.ices.ICEConditionStartEndPair import ICEConditionStartEndPair
 from src.ices.ICEGoal import ICEGoal
@@ -13,11 +12,12 @@ from src.ices.ICEPattern import ICEPattern
 from src.ices.ICEPatternPrecedenceGraph import ICEPatternPrecedenceGraph
 from src.ices.ICETask import ICETask
 from src.ices.ICETransitionVariables import ICETransitionVariables
+from src.plan.Encoding import Encoding
 from src.smt.SMTConjunction import SMTConjunction
 from src.smt.SMTExpression import SMTExpression
 
 
-class ICEEncoding:
+class ICEEncoding(Encoding):
     task: ICETask
     pattern: ICEPattern
     ppg: ICEPatternPrecedenceGraph
@@ -27,6 +27,7 @@ class ICEEncoding:
     conditionsStartEndPairs: List[ICEConditionStartEndPair]
 
     def __init__(self, task: ICETask, pattern: ICEPattern):
+        super().__init__()
         self.task: ICETask = task
         self.pattern: ICEPattern = pattern
         self.actionsStartEndPairs = self.pattern.getActionsStartEndPairs()
@@ -36,11 +37,15 @@ class ICEEncoding:
         self.k = len(pattern) - 1
         self.rulesBySet = dict()
 
+        # self.ppg.printDot()
+        # exit()
+
         self.b_ij = dict()
         for pair in self.actionsStartEndPairs:
             self.b_ij[pair] = pair.getPlaceholderBij(self.transVars.happeningVariables, self.pattern)
 
         # self.rulesBySet["frame"] = self.__getFrameRules()
+        self.rulesBySet["domain"] = self.__getDomainRules()
         self.rulesBySet["dur"] = self.__getDurRules()
         self.rulesBySet["make-span"] = self.__getMakeSpanRules()
         self.rulesBySet["precedence"] = self.__getPrecedenceRules()
@@ -55,7 +60,19 @@ class ICEEncoding:
             print("\n".join([str(r) for r in rules]))
             self.rules += rules
 
-        pass
+    def __getDomainRules(self) -> SMTConjunction:
+        rules: SMTConjunction = SMTConjunction()
+        hVar = self.transVars.happeningVariables
+        tVar = self.transVars.timeVariables
+
+        for h in self.pattern:
+            h_i = hVar[h]
+            t_i = tVar[h]
+            rules.append(h_i >= 0)
+            rules.append(h_i <= 1)
+            rules.append(t_i >= 0)
+
+        return rules
 
     def __getFrameRules(self) -> SMTConjunction:
         rules: SMTConjunction = SMTConjunction()
@@ -112,79 +129,110 @@ class ICEEncoding:
 
     def __getPlanIntermediateRules(self) -> SMTConjunction:
         rules: SMTConjunction = SMTConjunction()
-        tVars = self.transVars
-        M = tVars.makespan
+        hVars = self.transVars.happeningVariables
+        tVars = self.transVars.timeVariables
+        M = self.transVars.makespan
 
-        planEffects = []
-        planConditionsStarts = []
-        planConditionsEnds = []
+        piEff = []
+        piCondStart = []
+        piCondEnd = []
 
         for h in self.pattern:
             if isinstance(h, HappeningEffect) and isinstance(h.parent, ICEInitialCondition):
-                planEffects.append(h)
+                piEff.append(h)
             if isinstance(h, HappeningConditionStart) and isinstance(h.parent, ICEGoal):
-                planConditionsStarts.append(h)
+                piCondStart.append(h)
             if isinstance(h, HappeningConditionEnd) and isinstance(h.parent, ICEGoal):
-                planConditionsEnds.append(h)
+                piCondEnd.append(h)
 
+        effSum = sum([hVars[h] for h in piEff]) == len(self.task.init)
+        effAnd = SMTExpression.andOfExpressionsList([hVars[h] <= 1 for h in piEff])
         # 5.a
-        rules.append(sum([tVars.happeningVariables[h] for h in planEffects]) == 1)
+        rules.append(effSum.AND(effAnd))
 
         # 5.b
-        for h in planEffects:
-            h_i = tVars.happeningVariables[h]
-            t_i = tVars.timeVariables[h]
-            rules.append((h_i > 0).implies(t_i == h.effect.time.absolute(0, M)))
+        for h in piEff:
+            h_i = hVars[h]
+            t_i = tVars[h]
+            rules.append((h_i > 0).implies(t_i == h.effect.time.absolute(0, M) + EPSILON))
 
         # 5.c
-        rules.append(sum([tVars.happeningVariables[h] for h in planConditionsStarts]) == 1)
-        rules.append(sum([tVars.happeningVariables[h] for h in planConditionsEnds]) == 1)
+        condStartSum = sum([hVars[h] for h in piCondStart]) == len(self.task.goal)
+        condEndSum = sum([hVars[h] for h in piCondEnd]) == len(self.task.goal)
+        condStartAnd = SMTExpression.andOfExpressionsList([hVars[h] <= 1 for h in piCondStart])
+        condEndAnd = SMTExpression.andOfExpressionsList([hVars[h] <= 1 for h in piCondEnd])
+        rules.append(condStartSum.AND(condEndSum).AND(condStartAnd).AND(condEndAnd))
 
         # 5.d
-        for h in planConditionsStarts:
-            h_i = tVars.happeningVariables[h]
-            t_i = tVars.timeVariables[h]
+        for h in piCondStart:
+            h_i = hVars[h]
+            t_i = tVars[h]
             rules.append((h_i > 0).implies(t_i == h.condition.fromTime.absolute(0, M)))
 
-        for h in planConditionsEnds:
-            h_j = tVars.happeningVariables[h]
-            t_j = tVars.timeVariables[h]
+        for h in piCondEnd:
+            h_j = hVars[h]
+            t_j = tVars[h]
             rules.append((h_j > 0).implies(t_j == h.condition.toTime.absolute(0, M)))
 
         return rules
 
     def __getStartEndRules(self) -> SMTConjunction:
         rules: SMTConjunction = SMTConjunction()
-        tVars = self.transVars
+        hVars = self.transVars.happeningVariables
+        tVars = self.transVars.timeVariables
+        dVars = self.transVars.durVariables
 
         for i, h in enumerate(self.pattern):
-            if not isinstance(h, HappeningAction):
-                continue
 
             # 6.a
             if isinstance(h, HappeningActionStart):
-                h_i = tVars.happeningVariables[h]
-                t_i = tVars.timeVariables[h]
-                d_i = tVars.durVariables[h]
+                h_i = hVars[h]
+                t_i = tVars[h]
+                d_i = dVars[h]
 
                 ending = []
                 for ha_j in self.pattern[i + 1:]:
                     if not isinstance(ha_j, HappeningActionEnd) or not h.action == ha_j.action:
                         continue
-                    ending.append((tVars.happeningVariables[ha_j], tVars.timeVariables[ha_j]))
+                    ending.append((hVars[ha_j], tVars[ha_j]))
 
                 orSubFormulas = [(h_j == h_i).AND(t_j == t_i + d_i) for (h_j, t_j) in ending]
                 rules.append((h_i > 0).implies(SMTExpression.orOfExpressionsList(orSubFormulas)))
 
             # 6.b
             if isinstance(h, HappeningActionEnd):
-                h_j = tVars.happeningVariables[h]
-                t_j = tVars.timeVariables[h]
-                starting = [(tVars.happeningVariables[ha_i], tVars.timeVariables[ha_i], tVars.durVariables[ha_i])
+                h_j = hVars[h]
+                t_j = tVars[h]
+                starting = [(hVars[ha_i], tVars[ha_i], dVars[ha_i])
                             for ha_i in self.pattern[:i]
                             if isinstance(ha_i, HappeningActionStart) and h.action == ha_i.action]
                 orSubFormulas = [(h_j == h_i).AND(t_j == t_i + d_i) for (h_i, t_i, d_i) in starting]
                 rules.append((h_j > 0).implies(SMTExpression.orOfExpressionsList(orSubFormulas)))
+
+            # 6.c
+            if not isinstance(h, HappeningAction) and isinstance(h.parent, ICEAction):
+                p = i
+                h_p = hVars[h]
+                startBeforeP = []
+                endBeforeP = []
+                startAfterP = []
+                endAfterP = []
+                for q, ha_q in enumerate(self.pattern):
+                    if not isinstance(ha_q, HappeningAction) or ha_q.action != h.parent:
+                        continue
+                    h_q = hVars[ha_q]
+                    if q < p and isinstance(ha_q, HappeningActionStart):
+                        startBeforeP.append(h_q)
+                    if q < p and isinstance(ha_q, HappeningActionEnd):
+                        endBeforeP.append(h_q)
+                    if q > p and isinstance(ha_q, HappeningActionStart):
+                        startAfterP.append(h_q)
+                    if q > p and isinstance(ha_q, HappeningActionEnd):
+                        endAfterP.append(h_q)
+
+                rules.append((h_p > 0)
+                             .implies((sum(startBeforeP) - sum(endBeforeP) > 0)
+                                      .AND(sum(endAfterP) - sum(startAfterP) > 0)))
 
         return rules
 
@@ -195,28 +243,38 @@ class ICEEncoding:
 
         for pair in self.actionsStartEndPairs:
             b_ij: SMTExpression = self.b_ij[pair]
+            h_i = hVars[pair.h_i]
             t_i = tVars[pair.h_i]
             t_j = tVars[pair.h_j]
+            b = pair.action
 
             ## 7.a
-            ieffs: List[HappeningEffect] = [h_p for h_p in self.pattern[pair.i:pair.j]
+            ieffs: List[HappeningEffect] = [h_p for h_p in self.pattern[pair.i + 1:pair.j]
                                             if isinstance(h_p, HappeningEffect) and h_p.parent == pair.action]
-            rules.append(b_ij.implies(sum([hVars[h_p] for h_p in ieffs]) == 1))
+
+            effectsSum = sum([hVars[h_p] for h_p in ieffs]) == len(b.ieff)
+            effectsAnd = SMTExpression.andOfExpressionsList([hVars[h_p] <= 1 for h_p in ieffs])
+            rules.append(b_ij.implies(effectsSum.AND(effectsAnd)))
 
             ## 7.b
             for ha_p in ieffs:
                 h_p = hVars[ha_p]
                 t_p = tVars[ha_p]
-                rules.append(b_ij.AND(h_p > 0).implies(t_p == ha_p.effect.time.absolute(t_i, t_j)))
+                rules.append((b_ij.AND(h_p > 0)).implies(t_p == ha_p.effect.time.absolute(t_i, t_j) + EPSILON))
 
             ## 7.c
-            iconds: List[HappeningCondition] = [h_p for h_p in self.pattern[pair.i:pair.j]
-                                                if isinstance(h_p, HappeningCondition) and h_p.parent == pair.action]
+            icondsStart = [h_p for h_p in self.pattern[pair.i:pair.j]
+                           if isinstance(h_p, HappeningConditionStart) and h_p.parent == pair.action]
+            icondsEnd = [h_p for h_p in self.pattern[pair.i:pair.j]
+                         if isinstance(h_p, HappeningConditionEnd) and h_p.parent == pair.action]
 
-            rules.append(b_ij.implies(sum([hVars[h_p] for h_p in iconds]) == 1))
+            condStartSum = sum([hVars[h_p] for h_p in icondsStart]) == len(b.icond)
+            condEndSum = sum([hVars[h_p] for h_p in icondsEnd]) == len(b.icond)
+            condAnd = SMTExpression.andOfExpressionsList([hVars[h_p] <= 1 for h_p in icondsStart + icondsEnd])
+            rules.append(b_ij.implies(condStartSum.AND(condEndSum).AND(condAnd)))
 
             ## 7.d
-            for ha_p in iconds:
+            for ha_p in icondsStart + icondsEnd:
                 h_p = hVars[ha_p]
                 t_p = tVars[ha_p]
                 if isinstance(ha_p, HappeningConditionStart):
@@ -241,8 +299,11 @@ class ICEEncoding:
             cond_i = SMTExpression.fromFormula(cond, sigma[i])
             rules.append((h_i > 0).implies(cond_i))
 
+            conditions: Dict[str, SMTExpression] = dict()
             for p in range(i + 1, j):
-                cond_p = SMTExpression.fromFormula(cond, sigma[p])
-                rules.append(((h_i > 0).AND(h_j > 0)).implies(cond_p))
+                f = SMTExpression.fromFormula(cond, sigma[p])
+                conditions[str(f)] = f
+            cond_p = SMTExpression.andOfExpressionsList(list(conditions.values()))
+            rules.append(((h_i > 0).AND(h_j > 0)).implies(cond_p))
 
         return rules

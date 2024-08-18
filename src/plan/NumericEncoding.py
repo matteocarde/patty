@@ -28,7 +28,7 @@ class NumericEncoding(Encoding):
                  binaryActions=10, rollBound=0, hasEffectAxioms=False, relaxGoal=False,
                  subgoalsAchieved: Set[Formula] = None):
 
-        super().__init__(domain, problem, pattern, bound)
+        super().__init__()
         self.domain = domain
         self.problem = problem
         self.bound = bound

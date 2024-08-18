@@ -1,31 +1,21 @@
 import statistics
-from typing import List, Pattern
+from typing import List
 
 import pysmt
-
-from src.pddl.Domain import GroundedDomain
-from src.pddl.Problem import Problem
-from src.smt.SMTExpression import SMTExpression
-
 import pysmt.smtlib.commands as smtcmd
 import pysmt.smtlib.script
 from pysmt.environment import get_env
 from pysmt.logics import QF_NRA
 
+from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTSolution import SMTSolution
 
 
 class Encoding:
-    domain: GroundedDomain
-    problem: Problem
     rules: List[SMTExpression]
     softRules: List[SMTExpression]
 
-    def __init__(self, domain: GroundedDomain, problem: Problem, pattern: Pattern, bound: int):
-        self.domain = domain
-        self.problem = problem
-        self.pattern = pattern
-        self.bound = bound
+    def __init__(self):
         self.rules = []
         self.softRules = []
         pass

@@ -28,6 +28,6 @@ class SMTSolution:
         return str(self.__variables)
 
     def prettyString(self):
-        strings = [f"{v}: {val}" for (v, val) in self.__variables.items()]
+        strings = [f"{v}: {self.getVariable(v)}" for (v, val) in self.__variables.items()]
         strings.sort()
         return '\n'.join(list(strings))

@@ -149,6 +149,8 @@ class SMTExpression:
         return expr
 
     def __sub__(self, other: SMTExpression or float):
+        if isinstance(other, float) or isinstance(other, int) and other == 0:
+            return self
         return self.__binary(other, Minus, self.expression, toRHS(other))
 
     def __rsub__(self, other: SMTExpression or float):
