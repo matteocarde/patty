@@ -9,7 +9,12 @@ class RelativeTime:
     def __init__(self):
         pass
 
-    def absolute(self, a: SMTExpression or float, b: SMTExpression or float):
+    def __eq__(self, other):
+        if not isinstance(other, RelativeTime):
+            return False
+        return other.k == self.k and other.anchor == self.anchor
+
+    def absolute(self, a: SMTExpression or float, b: SMTExpression or float) -> SMTExpression or float:
         from src.ices.ActionRelativeTime import ActionRelativeTimeAnchor
         from src.ices.PlanRelativeTime import PlanRelativeTimeAnchor
 

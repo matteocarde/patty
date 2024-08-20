@@ -3,6 +3,8 @@ from __future__ import annotations
 import copy
 from typing import Dict
 
+from src.ices.ParallelIntermediateEffects import ParallelIntermediateEffects
+from src.ices.PlanIntermediateEffect import PlanIntermediateEffect
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
@@ -37,6 +39,16 @@ class State:
 
         return state
 
+    @classmethod
+    def fromPlanIntermediateEffect(cls, ieff: PlanIntermediateEffect):
+        state = cls()
+
+        for assignment in ieff.effects:
+            atom = assignment.getAtom()
+            state.assignments[atom] = state.getRealization(assignment)
+
+        return state
+
     def getAtom(self, atom: Atom) -> bool or float:
         if atom not in self.assignments:
             return False
@@ -57,6 +69,17 @@ class State:
         effect: Predicate
         for effect in action.effects:
             state.assignments[effect.getAtom()] = self.getRealization(effect)
+
+        return state
+
+    def applyParallelIntermediateEffects(self, pieff: ParallelIntermediateEffects) -> State:
+
+        state = State()
+        state.assignments = self.assignments.copy()
+
+        for eff in pieff:
+            for effect in eff.effects:
+                state.assignments[effect.getAtom()] = self.getRealization(effect)
 
         return state
 

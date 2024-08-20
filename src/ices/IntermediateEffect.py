@@ -1,16 +1,17 @@
 from __future__ import annotations
 
-from typing import List, Set, Dict
+from typing import List, Set, Dict, Tuple
 
 from src.ices.RelativeTime import RelativeTime
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate, BinaryPredicateType
 from src.pddl.Constant import Constant
 from src.pddl.Literal import Literal
+from src.utils.Tuplable import Tuplable
 
 
-class IntermediateEffect:
-    time: RelativeTime
+class IntermediateEffect(Tuplable):
+    time: RelativeTime or float
     effects: List[Literal or BinaryPredicate]
 
     atomsAdded: Set[Atom]
@@ -32,6 +33,12 @@ class IntermediateEffect:
     def __repr__(self):
         return str(self.effects)
 
+    def __str__(self):
+        return f"<{self.time}, {self.effects}>"
+
+    def toTuple(self) -> Tuple:
+        return self.time, self.effects
+
     @classmethod
     def fromProperties(cls, time: RelativeTime) -> IntermediateEffect:
         raise NotImplementedError()
@@ -48,6 +55,18 @@ class IntermediateEffect:
             self.atomsNumeric.add(eff.getFunctions())
             if eff.type == BinaryPredicateType.MODIFICATION and isinstance(eff.rhs, Constant):
                 self.atomToConstant[eff.getAtom()] = eff.rhs.value
+
+    def toAbsolute(self, a: float, b: float) -> IntermediateEffect:
+        ie = self.__class__()
+        ie.time = self.time.absolute(a, b)
+        ie.effects = self.effects
+
+        ie.atomsAdded = self.atomsAdded
+        ie.atomsDeleted = self.atomsDeleted
+        ie.atomsAssigned = self.atomsAssigned
+        ie.atomsNumeric = self.atomsNumeric
+
+        return ie
 
     @property
     def atomsTouched(self):

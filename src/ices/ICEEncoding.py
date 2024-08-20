@@ -56,8 +56,8 @@ class ICEEncoding(Encoding):
 
         self.rules = SMTConjunction()
         for (key, rules) in self.rulesBySet.items():
-            print(f"-----{key}-----")
-            print("\n".join([str(r) for r in rules]))
+            # print(f"-----{key}-----")
+            # print("\n".join([str(r) for r in rules]))
             self.rules += rules
 
     def __getDomainRules(self) -> SMTConjunction:

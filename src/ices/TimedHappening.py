@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Set
 
+from classes.utils.Constants import EPSILON
 from src.ices.Happening import HappeningActionStart, HappeningActionEnd, HappeningConditionStart, \
     HappeningConditionEnd, HappeningEffect, Happening, ACTION_START, ICOND_START, \
     ICOND_END, IEFF, ACTION_END
@@ -78,6 +79,6 @@ class TimedHappening:
 
         for i, e in enumerate(task.init):
             tau = e.time
-            timedHappenings.add(TimedHappening(tau.absolute(0, ms), HappeningEffect(e, task.init, i)))
+            timedHappenings.add(TimedHappening(tau.absolute(EPSILON, ms), HappeningEffect(e, task.init, i)))
 
         return timedHappenings
