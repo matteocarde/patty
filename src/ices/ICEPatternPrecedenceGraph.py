@@ -36,7 +36,7 @@ class ICEPatternPrecedenceGraph:
                 elif h_i.type == ACTION_END and h_j.type == ACTION_START and h_i.action == h_j.action:
                     self.setDelta(h_i, h_j, 0)
                 elif (h_i.type == ICOND_START or h_i.type == ICOND_END) and h_j.type == IEFF and h_i.inMutexWith(h_j):
-                    self.setDelta(h_i, h_j, EPSILON)
+                    self.setDelta(h_i, h_j, 0)
                 elif h_i.type == IEFF and (h_j.type == ICOND_START or h_j.type == ICOND_END) and h_i.inMutexWith(h_j):
                     self.setDelta(h_i, h_j, EPSILON)
                 elif h_i.type == IEFF and h_j.type == IEFF and h_i.inMutexWith(h_j):

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import copy
-from typing import Dict
+from typing import Dict, Set
 
 from src.ices.ParallelIntermediateEffects import ParallelIntermediateEffects
 from src.ices.PlanIntermediateEffect import PlanIntermediateEffect
@@ -56,6 +56,20 @@ class State:
 
     def __repr__(self):
         return repr(self.assignments)
+
+    def __str__(self):
+        return str(self.toClosedWorldSet())
+
+    def toClosedWorldSet(self) -> Set[Predicate]:
+
+        cwset = set()
+        for (atom, value) in self.assignments.items():
+            if type(value) == bool and value:
+                cwset.add(Literal.pos(atom))
+            if type(value) != bool:
+                cwset.add(BinaryPredicate.fromAssignment(atom, value))
+
+        return cwset
 
     def applyAction(self, action: Action):
 

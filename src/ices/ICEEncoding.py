@@ -1,6 +1,5 @@
 from typing import List, Dict
 
-from classes.utils.Constants import EPSILON
 from src.ices.Happening import HappeningActionStart, HappeningActionEnd, HappeningEffect, HappeningConditionStart, \
     HappeningConditionEnd, HappeningAction
 from src.ices.ICEAction import ICEAction
@@ -154,7 +153,7 @@ class ICEEncoding(Encoding):
         for h in piEff:
             h_i = hVars[h]
             t_i = tVars[h]
-            rules.append((h_i > 0).implies(t_i == h.effect.time.absolute(0, M) + EPSILON))
+            rules.append((h_i > 0).implies(t_i == h.effect.time.absolute(0, M)))
 
         # 5.c
         condStartSum = sum([hVars[h] for h in piCondStart]) == len(self.task.goal)
@@ -260,7 +259,7 @@ class ICEEncoding(Encoding):
             for ha_p in ieffs:
                 h_p = hVars[ha_p]
                 t_p = tVars[ha_p]
-                rules.append((b_ij.AND(h_p > 0)).implies(t_p == ha_p.effect.time.absolute(t_i, t_j) + EPSILON))
+                rules.append((b_ij.AND(h_p > 0)).implies(t_p == ha_p.effect.time.absolute(t_i, t_j)))
 
             ## 7.c
             icondsStart = [h_p for h_p in self.pattern[pair.i:pair.j]

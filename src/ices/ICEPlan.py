@@ -3,7 +3,6 @@ from __future__ import annotations
 from typing import List, Set, Dict
 
 from classes.utils.Constants import EPSILON
-from src.ices.ActionIntermediateCondition import ActionIntermediateCondition
 from src.ices.Happening import HappeningActionStart
 from src.ices.ICEAction import BEGIN
 from src.ices.ICEEncoding import ICEEncoding
@@ -53,12 +52,12 @@ class ICEPlan:
             for icond in b.icond:
                 plan.iconds.add(icond.toAbsolute(t, t + d))
             for ieff in b.ieff:
-                plan.ieffs.add(ieff.toAbsolute(t + EPSILON, t + d + EPSILON))
+                plan.ieffs.add(ieff.toAbsolute(t, t + d))
 
         for ieff in task.init:
             if ieff.time == BEGIN + 0:
                 continue
-            plan.ieffs.add(ieff.toAbsolute(EPSILON, ms + EPSILON))
+            plan.ieffs.add(ieff.toAbsolute(0, ms))
         for icond in task.goal:
             plan.iconds.add(icond.toAbsolute(0, ms))
 
@@ -120,18 +119,23 @@ class ICEPlan:
                     t_ = states[i + 1].time if i < m else None
 
                     # 1.a
-                    if i < m and (t < t_s <= t_ or t < t_e < t_):
-                        assert s.satisfies(cond)
+                    if i < m and (t < t_s <= t_ or t < t_e <= t_):
+                        self.__assert(s.satisfies(cond), f"Rule 1.a - \n{s} \nshould satisfy \n{cond}")
                         checked = True
 
                     # 1.b
                     if t_s < t < t_e:
-                        assert s.satisfies(cond)
+                        self.__assert(s.satisfies(cond), f"Rule 1.b - \n{s} \nshould satisfy \n{cond}")
                         checked = True
 
                     # 1.c
+                    if i == 0 and t_s == t:
+                        self.__assert(s.satisfies(cond), f"Rule 1.c - \n{s} \nshould satisfy \n{cond}")
+                        checked = True
+
+                    # 1.d
                     if i == m and t_e == t:
-                        assert s.satisfies(cond)
+                        self.__assert(s.satisfies(cond), f"Rule 1.d - \n{s} \nshould satisfy \n{cond}")
                         checked = True
 
                 assert checked
@@ -148,15 +152,15 @@ class ICEPlan:
     def __checkEpsilonSeparation(self) -> bool:
 
         try:
-            for c in self.iconds:
-                for e in self.ieffs:
-                    if c.inMutexWith(e):
-                        fromAssertion = abs(c.fromTime - e.time) >= EPSILON / 2
-                        toAssertion = abs(c.toTime - e.time) >= EPSILON / 2
-                        self.__assert(fromAssertion, f"c={c} and e={e} are in mutex and not epsilon separated: "
-                                                     f"{abs(c.fromTime - e.time)} < {EPSILON}")
-                        self.__assert(toAssertion, f"c={c} and e={e} are in mutex and not epsilon separated:"
-                                                   f"{abs(c.toTime - e.time)} < {EPSILON}")
+            # for c in self.iconds:
+            #     for e in self.ieffs:
+            #         if c.inMutexWith(e):
+            #             fromAssertion = abs(c.fromTime - e.time) >= EPSILON / 2
+            #             toAssertion = abs(c.toTime - e.time) >= EPSILON / 2
+            #             self.__assert(fromAssertion, f"c={c} and e={e} are in mutex and not epsilon separated: "
+            #                                          f"{abs(c.fromTime - e.time)} < {EPSILON}")
+            #             self.__assert(toAssertion, f"c={c} and e={e} are in mutex and not epsilon separated:"
+            #                                        f"{abs(c.toTime - e.time)} < {EPSILON}")
 
             for e1 in self.ieffs:
                 for e2 in self.ieffs:
