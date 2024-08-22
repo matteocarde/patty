@@ -1,4 +1,6 @@
-from typing import List, Dict
+from typing import List, Dict, Set
+
+from pysmt.shortcuts import FALSE
 
 from src.ices.Happening import HappeningActionStart, HappeningActionEnd, HappeningEffect, HappeningConditionStart, \
     HappeningConditionEnd, HappeningAction
@@ -11,6 +13,10 @@ from src.ices.ICEPattern import ICEPattern
 from src.ices.ICEPatternPrecedenceGraph import ICEPatternPrecedenceGraph
 from src.ices.ICETask import ICETask
 from src.ices.ICETransitionVariables import ICETransitionVariables
+from src.pddl.Atom import Atom
+from src.pddl.BinaryPredicate import BinaryPredicate
+from src.pddl.Formula import Formula
+from src.pddl.Literal import Literal
 from src.plan.Encoding import Encoding
 from src.smt.SMTConjunction import SMTConjunction
 from src.smt.SMTExpression import SMTExpression
@@ -43,6 +49,7 @@ class ICEEncoding(Encoding):
         for pair in self.actionsStartEndPairs:
             self.b_ij[pair] = pair.getPlaceholderBij(self.transVars.happeningVariables, self.pattern)
 
+        # self.rulesBySet["init"] = self.__getInitialRules()
         # self.rulesBySet["frame"] = self.__getFrameRules()
         self.rulesBySet["domain"] = self.__getDomainRules()
         self.rulesBySet["dur"] = self.__getDurRules()
@@ -52,12 +59,36 @@ class ICEEncoding(Encoding):
         self.rulesBySet["start-end"] = self.__getStartEndRules()
         self.rulesBySet["action-intermediate"] = self.__getActionIntermediateRules()
         self.rulesBySet["conditions"] = self.__getConditionsRules()
+        self.rulesBySet["goal"] = self.__getGoalRules()
 
         self.rules = SMTConjunction()
         for (key, rules) in self.rulesBySet.items():
             # print(f"-----{key}-----")
             # print("\n".join([str(r) for r in rules]))
             self.rules += rules
+
+    def __getGoalRules(self) -> SMTConjunction:
+        tVars = self.transVars
+        rules = SMTConjunction()
+        sigma = tVars.sigmaExpressions[self.k]
+
+        if self.task.goal.type == "OR":
+            raise Exception("I cannot and OR goals at the moment")
+
+        for condition in self.task.goal.conditions:
+            if isinstance(condition, BinaryPredicate):
+                rule = SMTExpression.fromPddl(condition, sigma)
+            elif isinstance(condition, Literal):
+                if condition.sign == "+":
+                    rule = sigma[condition.getAtom()]
+                else:
+                    rule = sigma[condition.getAtom()].NOT()
+            else:
+                raise NotImplemented("I cannot handle sub formulas in goal at the moment")
+
+            rules.append(rule)
+
+        return rules
 
     def __getDomainRules(self) -> SMTConjunction:
         rules: SMTConjunction = SMTConjunction()
@@ -144,10 +175,11 @@ class ICEEncoding(Encoding):
             if isinstance(h, HappeningConditionEnd) and isinstance(h.parent, ICEGoal):
                 piCondEnd.append(h)
 
-        effSum = sum([hVars[h] for h in piEff]) == len(self.task.init)
-        effAnd = SMTExpression.andOfExpressionsList([hVars[h] <= 1 for h in piEff])
-        # 5.a
-        rules.append(effSum.AND(effAnd))
+        if piEff:
+            effSum = sum([hVars[h] for h in piEff]) == len(self.task.effects)
+            effAnd = SMTExpression.andOfExpressionsList([hVars[h] <= 1 for h in piEff])
+            # 5.a
+            rules.append(effSum.AND(effAnd))
 
         # 5.b
         for h in piEff:
@@ -156,11 +188,12 @@ class ICEEncoding(Encoding):
             rules.append((h_i > 0).implies(t_i == h.effect.time.absolute(0, M)))
 
         # 5.c
-        condStartSum = sum([hVars[h] for h in piCondStart]) == len(self.task.goal)
-        condEndSum = sum([hVars[h] for h in piCondEnd]) == len(self.task.goal)
-        condStartAnd = SMTExpression.andOfExpressionsList([hVars[h] <= 1 for h in piCondStart])
-        condEndAnd = SMTExpression.andOfExpressionsList([hVars[h] <= 1 for h in piCondEnd])
-        rules.append(condStartSum.AND(condEndSum).AND(condStartAnd).AND(condEndAnd))
+        if piCondStart:
+            condStartSum = sum([hVars[h] for h in piCondStart]) == len(self.task.conditions)
+            condEndSum = sum([hVars[h] for h in piCondEnd]) == len(self.task.conditions)
+            condStartAnd = SMTExpression.andOfExpressionsList([hVars[h] <= 1 for h in piCondStart])
+            condEndAnd = SMTExpression.andOfExpressionsList([hVars[h] <= 1 for h in piCondEnd])
+            rules.append(condStartSum.AND(condEndSum).AND(condStartAnd).AND(condEndAnd))
 
         # 5.d
         for h in piCondStart:

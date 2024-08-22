@@ -14,6 +14,7 @@ from src.ices.TimedICEAction import TimedICEAction, TimedICEActionList
 from src.pddl.State import State
 from src.pddl.TimedState import TimedState
 from src.smt.SMTSolution import SMTSolution
+from src.utils.ValAssert import ValAssert
 
 
 class ICEPlan:
@@ -54,11 +55,11 @@ class ICEPlan:
             for ieff in b.ieff:
                 plan.ieffs.add(ieff.toAbsolute(t, t + d))
 
-        for ieff in task.init:
+        for ieff in task.effects:
             if ieff.time == BEGIN + 0:
                 continue
             plan.ieffs.add(ieff.toAbsolute(0, ms))
-        for icond in task.goal:
+        for icond in task.conditions:
             plan.iconds.add(icond.toAbsolute(0, ms))
 
         return plan
@@ -87,7 +88,7 @@ class ICEPlan:
 
         pieffs: List[ParallelIntermediateEffects] = [par for (t, par) in sorted(pieffDict.items())]
 
-        initState: State = task.init.getInitialState()
+        initState: State = State.fromInitialCondition(task.init)
         states: List[TimedState] = [TimedState(0, initState)]
 
         s = initState
@@ -96,11 +97,6 @@ class ICEPlan:
             states.append(TimedState(pieff.time, s))
 
         return states
-
-    def __assert(self, cond: bool, messageIfNotAsserted: str):
-        if not cond:
-            print("VALIDATION ERROR: " + messageIfNotAsserted)
-        assert cond
 
     def __checkIntermediateConditions(self) -> bool:
         states: List[TimedState] = self.getTimedStates()
@@ -120,22 +116,22 @@ class ICEPlan:
 
                     # 1.a
                     if i < m and (t < t_s <= t_ or t < t_e <= t_):
-                        self.__assert(s.satisfies(cond), f"Rule 1.a - \n{s} \nshould satisfy \n{cond}")
+                        ValAssert(s.satisfies(cond), f"Rule 1.a - \n{s} \nshould satisfy \n{cond}")
                         checked = True
 
                     # 1.b
                     if t_s < t < t_e:
-                        self.__assert(s.satisfies(cond), f"Rule 1.b - \n{s} \nshould satisfy \n{cond}")
+                        ValAssert(s.satisfies(cond), f"Rule 1.b - \n{s} \nshould satisfy \n{cond}")
                         checked = True
 
                     # 1.c
                     if i == 0 and t_s == t:
-                        self.__assert(s.satisfies(cond), f"Rule 1.c - \n{s} \nshould satisfy \n{cond}")
+                        ValAssert(s.satisfies(cond), f"Rule 1.c - \n{s} \nshould satisfy \n{cond}")
                         checked = True
 
                     # 1.d
                     if i == m and t_e == t:
-                        self.__assert(s.satisfies(cond), f"Rule 1.d - \n{s} \nshould satisfy \n{cond}")
+                        ValAssert(s.satisfies(cond), f"Rule 1.d - \n{s} \nshould satisfy \n{cond}")
                         checked = True
 
                 assert checked
@@ -168,9 +164,9 @@ class ICEPlan:
                         continue
                     if e1.inMutexWith(e2):
                         assertion = abs(e1.time - e2.time) >= EPSILON / 2
-                        self.__assert(assertion,
-                                      f"e_1={e1.effects} is in mutex with e_2={e2.effects} but are not "
-                                      f"epsilon separated. t_1 = {e1.time} and t_2 = {e2.time}")
+                        ValAssert(assertion,
+                                  f"e_1={e1.effects} is in mutex with e_2={e2.effects} but are not "
+                                  f"epsilon separated. t_1 = {e1.time} and t_2 = {e2.time}")
 
         except AssertionError:
             return False

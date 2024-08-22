@@ -1,9 +1,11 @@
 from typing import List, Iterable
 
 from src.ices.Happening import Happening, HappeningActionStart, HappeningActionEnd, HappeningConditionStart, \
-    HappeningConditionEnd
+    HappeningConditionEnd, HappeningEffect
+from src.ices.ICEAction import BEGIN
 from src.ices.ICEActionStartEndPair import ICEActionStartEndPair
 from src.ices.ICEConditionStartEndPair import ICEConditionStartEndPair
+from src.ices.PlanIntermediateEffect import PlanIntermediateEffect
 
 
 class ICEPattern:
@@ -46,3 +48,8 @@ class ICEPattern:
                 pairs.append(ICEConditionStartEndPair(h_i, i, h_j, j))
 
         return pairs
+
+    def getFake(self) -> Happening:
+
+        fakeEff = PlanIntermediateEffect.fromProperties(BEGIN + 0)
+        return HappeningEffect(fakeEff, None, "FAKE")
