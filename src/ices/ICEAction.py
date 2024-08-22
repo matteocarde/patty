@@ -17,7 +17,7 @@ class ICEAction:
     name: str
     icond: List[ActionIntermediateCondition]
     ieff: List[ActionIntermediateEffect]
-    duration: int
+    duration: float
 
     def __init__(self):
         self.icond = list()

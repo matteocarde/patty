@@ -3,11 +3,9 @@ from __future__ import annotations
 from typing import Set
 
 from classes.utils.Constants import EPSILON
-from src.ices.Happening import HappeningActionStart, HappeningActionEnd, HappeningConditionStart, \
-    HappeningConditionEnd, HappeningEffect, Happening, ACTION_START, ICOND_START, \
-    ICOND_END, IEFF, ACTION_END
+from src.ices.Happening import HappeningConditionStart, HappeningConditionEnd, HappeningEffect, Happening, ACTION_START, \
+    ICOND_START, ICOND_END, IEFF, ACTION_END
 from src.ices.ICETask import ICETask
-from src.ices.TimedICEAction import TimedICEAction
 
 ORDER = [
     ACTION_START,
@@ -41,31 +39,6 @@ class TimedHappening:
 
     def __repr__(self):
         return str(self)
-
-    @staticmethod
-    def fromTimedICEAction(ticea: TimedICEAction) -> Set[TimedHappening]:
-        timedHappenings: Set[TimedHappening] = set()
-
-        t = ticea.time
-        b = ticea.action
-        d = ticea.duration
-
-        timedHappenings.add(TimedHappening(t, HappeningActionStart(b)))
-        timedHappenings.add(TimedHappening(t + d, HappeningActionEnd(b)))
-
-        for i, c in enumerate(b.icond):
-            tau1 = c.fromTime
-            tau2 = c.toTime
-            timedHappenings.add(
-                TimedHappening(tau1.absolute(t, t + d), HappeningConditionStart(c, b, i)))
-            timedHappenings.add(
-                TimedHappening(tau2.absolute(t, t + d), HappeningConditionEnd(c, b, i)))
-
-        for i, e in enumerate(b.ieff):
-            tau = e.time
-            timedHappenings.add(TimedHappening(tau.absolute(t, t + d), HappeningEffect(e, b, i)))
-
-        return timedHappenings
 
     @staticmethod
     def fromICETask(task: ICETask, ms: float) -> Set[TimedHappening]:

@@ -93,7 +93,7 @@ class HappeningEffect(Happening):
     effect: IntermediateEffect
     parent: ICEAction or ICEInitialCondition
 
-    def __init__(self, effect: IntermediateEffect, parent: ICEAction or ICEInitialCondition, index: int):
+    def __init__(self, effect: IntermediateEffect, parent: ICEAction or ICEInitialCondition, index: str):
         super().__init__()
         self.effect = effect
         self.parent = parent
@@ -102,7 +102,7 @@ class HappeningEffect(Happening):
 
     def __str__(self):
         parentName = self.parent.name if isinstance(self.parent, ICEAction) else "init"
-        return f"{parentName}-E{self.index}"
+        return f"{parentName}-E-{self.index}"
 
     def inMutexWith(self, h: Happening) -> bool:
         if isinstance(h, HappeningCondition):
