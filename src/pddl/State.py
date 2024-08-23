@@ -39,16 +39,6 @@ class State:
 
         return state
 
-    @classmethod
-    def fromPlanIntermediateEffect(cls, ieff: PlanIntermediateEffect):
-        state = cls()
-
-        for assignment in ieff.effects:
-            atom = assignment.getAtom()
-            state.assignments[atom] = state.getRealization(assignment)
-
-        return state
-
     def getAtom(self, atom: Atom) -> bool or float:
         if atom not in self.assignments:
             return False

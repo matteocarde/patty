@@ -1,8 +1,8 @@
 from typing import Set
 
 from src.ices.ICEAction import ICEAction
-from src.ices.ICEGoal import ICEGoal
-from src.ices.ICEInitialCondition import ICEInitialCondition
+from src.ices.TimedConditions import TimedConditions
+from src.ices.TimedEffects import TimedEffects
 from src.pddl.Atom import Atom
 from src.pddl.Goal import Goal
 from src.pddl.InitialCondition import InitialCondition
@@ -14,8 +14,8 @@ class ICETask:
     actions: Set[ICEAction]
     init: InitialCondition
     goal: Goal
-    conditions: ICEInitialCondition
-    effects: ICEGoal
+    conditions: TimedEffects
+    effects: TimedConditions
 
     def __init__(self):
         self.propVariables = set()
@@ -23,8 +23,8 @@ class ICETask:
         self.actions = set()
         self.init = InitialCondition()
         self.goal = Goal()
-        self.conditions = ICEInitialCondition()
-        self.effects = ICEGoal()
+        self.conditions = TimedEffects()
+        self.effects = TimedConditions()
         pass
 
     def addPropVariables(self, atoms: Set[Atom]):

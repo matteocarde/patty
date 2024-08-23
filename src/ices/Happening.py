@@ -1,6 +1,6 @@
 from src.ices.ICEAction import ICEAction
-from src.ices.ICEGoal import ICEGoal
-from src.ices.ICEInitialCondition import ICEInitialCondition
+from src.ices.TimedConditions import TimedConditions
+from src.ices.TimedEffects import TimedEffects
 from src.ices.IntermediateCondition import IntermediateCondition
 from src.ices.IntermediateEffect import IntermediateEffect
 
@@ -54,9 +54,9 @@ class HappeningActionEnd(HappeningAction):
 
 class HappeningCondition(Happening):
     condition: IntermediateCondition
-    parent: ICEAction or ICEGoal
+    parent: ICEAction or TimedConditions
 
-    def __init__(self, condition: IntermediateCondition, parent: ICEAction or ICEGoal, index: int):
+    def __init__(self, condition: IntermediateCondition, parent: ICEAction or TimedConditions, index: int):
         super().__init__()
         self.condition = condition
         self.parent = parent
@@ -69,7 +69,7 @@ class HappeningCondition(Happening):
 
 class HappeningConditionStart(HappeningCondition):
 
-    def __init__(self, condition: IntermediateCondition, parent: ICEAction or ICEGoal, index: int):
+    def __init__(self, condition: IntermediateCondition, parent: ICEAction or TimedConditions, index: int):
         super().__init__(condition, parent, index)
         self.type = ICOND_START
 
@@ -80,7 +80,7 @@ class HappeningConditionStart(HappeningCondition):
 
 class HappeningConditionEnd(HappeningCondition):
 
-    def __init__(self, condition: IntermediateCondition, parent: ICEAction or ICEGoal, index: int):
+    def __init__(self, condition: IntermediateCondition, parent: ICEAction or TimedConditions, index: int):
         super().__init__(condition, parent, index)
         self.type = ICOND_END
 
@@ -91,9 +91,9 @@ class HappeningConditionEnd(HappeningCondition):
 
 class HappeningEffect(Happening):
     effect: IntermediateEffect
-    parent: ICEAction or ICEInitialCondition
+    parent: ICEAction or TimedEffects
 
-    def __init__(self, effect: IntermediateEffect, parent: ICEAction or ICEInitialCondition, index: str):
+    def __init__(self, effect: IntermediateEffect, parent: ICEAction or TimedEffects, index: str):
         super().__init__()
         self.effect = effect
         self.parent = parent

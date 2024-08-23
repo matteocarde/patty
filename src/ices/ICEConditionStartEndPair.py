@@ -1,6 +1,6 @@
 from src.ices.Happening import HappeningConditionStart, HappeningConditionEnd
 from src.ices.ICEAction import ICEAction
-from src.ices.ICEGoal import ICEGoal
+from src.ices.TimedConditions import TimedConditions
 from src.ices.IntermediateCondition import IntermediateCondition
 
 
@@ -9,7 +9,7 @@ class ICEConditionStartEndPair:
     h_j: HappeningConditionEnd
     i: int
     j: int
-    parent: ICEAction or ICEGoal
+    parent: ICEAction or TimedConditions
     condition: IntermediateCondition
 
     def __init__(self, h_i: HappeningConditionStart, i: int, h_j: HappeningConditionEnd, j: int):

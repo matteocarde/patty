@@ -7,8 +7,8 @@ from src.ices.Happening import HappeningActionStart, HappeningActionEnd, Happeni
 from src.ices.ICEAction import ICEAction
 from src.ices.ICEActionStartEndPair import ICEActionStartEndPair
 from src.ices.ICEConditionStartEndPair import ICEConditionStartEndPair
-from src.ices.ICEGoal import ICEGoal
-from src.ices.ICEInitialCondition import ICEInitialCondition
+from src.ices.TimedConditions import TimedConditions
+from src.ices.TimedEffects import TimedEffects
 from src.ices.ICEPattern import ICEPattern
 from src.ices.ICEPatternPrecedenceGraph import ICEPatternPrecedenceGraph
 from src.ices.ICETask import ICETask
@@ -168,11 +168,11 @@ class ICEEncoding(Encoding):
         piCondEnd = []
 
         for h in self.pattern:
-            if isinstance(h, HappeningEffect) and isinstance(h.parent, ICEInitialCondition):
+            if isinstance(h, HappeningEffect) and isinstance(h.parent, TimedEffects):
                 piEff.append(h)
-            if isinstance(h, HappeningConditionStart) and isinstance(h.parent, ICEGoal):
+            if isinstance(h, HappeningConditionStart) and isinstance(h.parent, TimedConditions):
                 piCondStart.append(h)
-            if isinstance(h, HappeningConditionEnd) and isinstance(h.parent, ICEGoal):
+            if isinstance(h, HappeningConditionEnd) and isinstance(h.parent, TimedConditions):
                 piCondEnd.append(h)
 
         if piEff:

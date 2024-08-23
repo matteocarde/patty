@@ -3,7 +3,7 @@ from typing import List
 from src.ices.PlanIntermediateCondition import PlanIntermediateCondition
 
 
-class ICEGoal:
+class TimedConditions:
     icond: List[PlanIntermediateCondition]
 
     def __init__(self):
