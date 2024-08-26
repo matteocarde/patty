@@ -75,6 +75,10 @@ class IntermediateEffect(Tuplable):
     def interfere(self, effect: IntermediateEffect):
         if self.atomsAdded.intersection(effect.atomsDeleted):
             return True
+        if self.atomsAdded.intersection(effect.atomsAdded):
+            return True
+        if self.atomsDeleted.intersection(effect.atomsDeleted):
+            return True
         if self.atomsAssigned.intersection(effect.atomsAssigned):
             return True
         if self.atomsAssigned.intersection(effect.atomsNumeric):

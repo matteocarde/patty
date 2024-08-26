@@ -1,6 +1,5 @@
 from typing import List, Dict, Set
-
-from pysmt.shortcuts import FALSE
+import time
 
 from src.ices.Happening import HappeningActionStart, HappeningActionEnd, HappeningEffect, HappeningConditionStart, \
     HappeningConditionEnd, HappeningAction
@@ -20,6 +19,7 @@ from src.pddl.Literal import Literal
 from src.plan.Encoding import Encoding
 from src.smt.SMTConjunction import SMTConjunction
 from src.smt.SMTExpression import SMTExpression
+from src.utils.TimeStat import TimeStat
 
 
 class ICEEncoding(Encoding):
@@ -51,21 +51,29 @@ class ICEEncoding(Encoding):
 
         # self.rulesBySet["init"] = self.__getInitialRules()
         # self.rulesBySet["frame"] = self.__getFrameRules()
-        self.rulesBySet["domain"] = self.__getDomainRules()
-        self.rulesBySet["dur"] = self.__getDurRules()
-        self.rulesBySet["make-span"] = self.__getMakeSpanRules()
-        self.rulesBySet["precedence"] = self.__getPrecedenceRules()
-        self.rulesBySet["plan-intermediate"] = self.__getPlanIntermediateRules()
-        self.rulesBySet["start-end"] = self.__getStartEndRules()
-        self.rulesBySet["action-intermediate"] = self.__getActionIntermediateRules()
-        self.rulesBySet["conditions"] = self.__getConditionsRules()
-        self.rulesBySet["goal"] = self.__getGoalRules()
+        self.rulesBySet["domain"] = TimeStat.timeCall(self.__getDomainRules)
+        self.rulesBySet["dur"] = TimeStat.timeCall(self.__getDurRules)
+        self.rulesBySet["make-span"] = TimeStat.timeCall(self.__getMakeSpanRules)
+        self.rulesBySet["precedence"] = TimeStat.timeCall(self.__getPrecedenceRules)
+        self.rulesBySet["plan-intermediate"] = TimeStat.timeCall(self.__getPlanIntermediateRules)
+        self.rulesBySet["start-end"] = TimeStat.timeCall(self.__getStartEndRules)
+        self.rulesBySet["action-intermediate"] = TimeStat.timeCall(self.__getActionIntermediateRules)
+        self.rulesBySet["conditions"] = TimeStat.timeCall(self.__getConditionsRules)
+        self.rulesBySet["goal"] = TimeStat.timeCall(self.__getGoalRules)
+
+        print("INIT", self.task.init)
+        print("GOAL", self.task.goal)
+        # print(self.task.effects)
 
         self.rules = SMTConjunction()
         for (key, rules) in self.rulesBySet.items():
+            print(f"{key}: {len(rules)}")
             # print(f"-----{key}-----")
             # print("\n".join([str(r) for r in rules]))
             self.rules += rules
+
+    def __len__(self):
+        return len(self.rules)
 
     def __getGoalRules(self) -> SMTConjunction:
         tVars = self.transVars
@@ -329,6 +337,7 @@ class ICEEncoding(Encoding):
             j = pair.j
             cond = pair.condition.conditions
             cond_i = SMTExpression.fromFormula(cond, sigma[i])
+            # print((h_i > 0), sigma[i])
             rules.append((h_i > 0).implies(cond_i))
 
             conditions: Dict[str, SMTExpression] = dict()

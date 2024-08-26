@@ -14,12 +14,13 @@ from src.ices.TimedICEAction import TimedICEAction, TimedICEActionList
 from src.pddl.State import State
 from src.pddl.TimedState import TimedState
 from src.smt.SMTSolution import SMTSolution
-from src.utils.ValAssert import ValAssert
+from src.utils.ValAssert import ValAssert, ValidationError
 
 
 class ICEPlan:
     timedActions: TimedICEActionList
     encoding: ICEEncoding
+    task: ICETask
     iconds: Set[IntermediateCondition]
     ieffs: Set[IntermediateEffect]
 
@@ -44,7 +45,7 @@ class ICEPlan:
                 th = TimedICEAction(mu_t_i, h_i.action, mu_d_i)
                 plan.timedActions.append(th)
 
-        task: ICETask = encoding.task
+        plan.task: ICETask = encoding.task
         plan.iconds = set()
         plan.ieffs = set()
         ms: float = plan.getMakeSpan()
@@ -55,11 +56,11 @@ class ICEPlan:
             for ieff in b.ieff:
                 plan.ieffs.add(ieff.toAbsolute(t, t + d))
 
-        for ieff in task.effects:
+        for ieff in plan.task.effects:
             if ieff.time == BEGIN + 0:
                 continue
             plan.ieffs.add(ieff.toAbsolute(0, ms))
-        for icond in task.conditions:
+        for icond in plan.task.conditions:
             plan.iconds.add(icond.toAbsolute(0, ms))
 
         return plan
@@ -97,6 +98,20 @@ class ICEPlan:
             states.append(TimedState(pieff.time, s))
 
         return states
+
+    def __checkGoal(self) -> bool:
+        states: List[TimedState] = self.getTimedStates()
+        finalState: State = states[-1].state
+
+        try:
+            ValAssert(finalState.satisfies(self.task.goal),
+                      "Goal is not valid.\n"
+                      f"Final state: {finalState}\n"
+                      f"Goal: {self.task.goal}")
+        except ValidationError:
+            return False
+
+        return True
 
     def __checkIntermediateConditions(self) -> bool:
         states: List[TimedState] = self.getTimedStates()
@@ -175,4 +190,6 @@ class ICEPlan:
 
     def isValid(self) -> bool:
 
-        return self.__checkIntermediateConditions() and self.__checkSelfOverlapping() and self.__checkEpsilonSeparation()
+        return self.__checkIntermediateConditions() \
+            and self.__checkSelfOverlapping() \
+            and self.__checkEpsilonSeparation()

@@ -13,6 +13,9 @@ class TimedEffects:
     def __len__(self):
         return len(self.ieff)
 
+    def __str__(self):
+        return str(self.ieff)
+
     def __iter__(self):
         return iter(self.ieff)
 
