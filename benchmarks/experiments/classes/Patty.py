@@ -9,12 +9,15 @@ NAME = "PATTY"
 class Patty(Planner):
     name = NAME
 
-    def __init__(self, name, search="static", maximize=False, useSCCs=False, noCompression=False):
+    def __init__(self, name, search="static", maximize=False, useSCCs=False, noCompression=False,
+                 pattern="enhanced", quality="none"):
         self.search = search
         self.maximize = maximize
         self.name = name
         self.useSCCs = useSCCs
         self.noCompression = noCompression
+        self.pattern = pattern
+        self.quality = quality
         super().__init__()
 
     @staticmethod
@@ -42,7 +45,9 @@ class Patty(Planner):
             "patty",
             "-o", domain,
             "-f", problem,
-            "-s", self.search
+            "-s", self.search,
+            "--pattern", self.pattern,
+            "--quality", self.quality
         ]
         if self.noCompression:
             cmd += ["--no-compression"]
