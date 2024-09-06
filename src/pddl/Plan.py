@@ -38,6 +38,9 @@ class Plan:
     def validate(self, problem: Problem, avoidRaising=False, logger: LogPrint = None) -> bool:
         raise NotImplementedError()
 
+    def toValString(self):
+        raise NotImplementedError()
+
     def getMetric(self, problem: Problem):
         if not problem.metric:
             return len(self.__rolledPlan)

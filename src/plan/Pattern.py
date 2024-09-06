@@ -4,6 +4,7 @@ import copy
 import random
 from typing import List, Dict
 
+from src.pattern.PatternAction import PatternAction
 from src.pddl.ARPG import ARPG
 from src.pddl.Action import Operation, Action
 from src.pddl.Domain import GroundedDomain
@@ -98,8 +99,13 @@ class Pattern:
         return Pattern.fromOrder(order, addFake=addFake)
 
     @classmethod
-    def fromARPG(cls, gDomain: GroundedDomain, useSCCs=False) -> Pattern:
-        order = gDomain.getARPG().getActionsOrder(useSCCs)
+    def fromARPG(cls, gDomain: GroundedDomain) -> Pattern:
+        order: List[Action] = gDomain.getARPG().getActionsOrder(enhanced=False)
+        return Pattern.fromOrder(order)
+
+    @classmethod
+    def fromARPGEnhanced(cls, gDomain: GroundedDomain) -> Pattern:
+        order: List[Action] = gDomain.getARPG().getActionsOrder(enhanced=True)
         return Pattern.fromOrder(order)
 
     @classmethod

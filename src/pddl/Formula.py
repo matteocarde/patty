@@ -119,9 +119,15 @@ class Formula:
         x.conditions = [c for c in x.conditions if c]
         return x
 
-    def canHappen(self, subs: Dict[Atom, float], default=None) -> bool:
+    def canHappen(self, subs: Dict[Atom, float or bool], default=None) -> bool:
         for c in self.conditions:
             if not c.canHappen(subs, default):
+                return False
+        return True
+
+    def isValid(self, subs: Dict[Atom, float or bool], default=None) -> bool:
+        for c in self.conditions:
+            if not c.isValid(subs, default):
                 return False
         return True
 

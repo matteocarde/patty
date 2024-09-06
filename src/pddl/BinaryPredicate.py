@@ -196,6 +196,21 @@ class BinaryPredicate(Predicate):
             result = Utilities.compare(x.operator, x.lhs.value, x.rhs.value)
             return result
 
+    def isValid(self, subs: Dict[Atom, float], default=None) -> bool:
+        x = BinaryPredicate()
+        x.type = self.type
+        x.lhs = self.lhs.substitute(subs, default) if x.type != BinaryPredicateType.MODIFICATION else self.lhs
+        x.operator = self.operator
+        x.rhs = self.rhs.substitute(subs, default)
+
+        x.__functions = x.getFunctionsOverwrite()
+
+        if x.getFunctions() or x.getPredicates():
+            return False
+        else:
+            result = Utilities.compare(x.operator, x.lhs.value, x.rhs.value)
+            return result
+
     def canHappenLifted(self, sub, problem, isPredicateStatic: Dict[str, bool]) -> bool:
         # if all([not isPredicateStatic[f.name] for f in self.getFunctions()]):
         #     return False

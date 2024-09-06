@@ -29,7 +29,6 @@ def main():
         gDomain: GroundedDomain = domain.ground(problem, console=console)
         ts.end("Grounding", console=console)
 
-        isTemporal = len(gDomain.durativeActions) > 0
         solver: Search
 
         if args.search == "astar":

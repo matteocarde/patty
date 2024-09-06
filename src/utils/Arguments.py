@@ -12,12 +12,10 @@ class Arguments:
         parser.add_argument('-n', '--bound', help='The number of steps of the SMT encoding', type=int)
         parser.add_argument('-v', '--verboseLevel', help=f'The level of verbosity: {LogPrintLevel.getLevels()} ',
                             default=LogPrintLevel.getDefault(), type=int)
-        parser.add_argument('--deep', help="Iterative deepening approach to find the best plan (at the given bound)",
-                            action="store_true")
-        parser.add_argument('--pattern', default="arpg", help="Method too compute the pattern: arpg, random")
+        parser.add_argument('--pattern', default="arpg", help="Method too compute the pattern: arpg, enhanced, random")
         parser.add_argument('--solver', default="z3", help="The solver used to compute a solution: yices, z3")
         parser.add_argument('-s', '--search', default="static",
-                            help="The search strategy used to compute the solution: static, gbfs, astar")
+                            help="The search strategy used to compute the solution: static, step, astar")
         parser.add_argument('--encoding', default="non-linear",
                             help="The way linear numeric effect are dealt with: binary, non-linear")
         parser.add_argument('-pp', help="Print pattern", action="store_true")
@@ -32,15 +30,20 @@ class Arguments:
                             action="store_true", default=False)
         parser.add_argument('--roll-bound', help="The maximum amount of time an action can be rolled at each step",
                             type=int, default=0)
-        parser.add_argument('--concat', help="Enabling this action instead of increasing the bound n, it will "
-                                             "concatenate multiple copies of the pattern",
-                            action="store_true", default=False)
         parser.add_argument('--maximize', help="If it should maximize the subgoals when using step or static search",
                             action="store_true", default=False)
         parser.add_argument('--use-sccs', help="Use SCCs when computing pattern",
                             action="store_true", default=False)
         parser.add_argument('--no-compression', help="Avoid using compression when is doing A*",
                             action="store_true", default=False)
+        parser.add_argument('--quality',
+                            help='''The type of metric used for quality: none, shortest-step where:\n
+                            none:               The quality of the plan is not optimized\n
+                            shortest-step:      The length of the plan found is the shortest among all the possible 
+                                                plans found at the step in which a plan is found. There could exists 
+                                                shorter plans if searched at higher bounds.
+                            ''',
+                            default="none")
 
         args = parser.parse_args()
         self.isHelp = "help" in args
@@ -49,7 +52,6 @@ class Arguments:
         self.search = args.search
         self.bound = args.bound
         self.verboseLevel = LogPrintLevel(args.verboseLevel)
-        self.deep = args.deep
         self.printPattern = args.pp
         self.printARPG = args.arpg
         self.pattern = args.pattern
@@ -60,7 +62,6 @@ class Arguments:
         self.binaryActions = int(args.binary_actions)
         self.hasEffectAxioms = args.effect_axioms
         self.rollBound = args.roll_bound
-        self.concatPattern = args.concat
         self.maximize = args.maximize
         self.useSCCs = args.use_sccs
         self.noCompression = args.no_compression

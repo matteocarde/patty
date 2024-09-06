@@ -38,6 +38,7 @@ class Operation:
         self.functions = set()
         self.predicates = set()
         self.preB = set()
+        self.preN = set()
         self.addList = set()
         self.delList = set()
         self.assList = set()
@@ -65,6 +66,7 @@ class Operation:
         a.functions = copy.deepcopy(self.functions, m)
         a.predicates = copy.deepcopy(self.predicates, m)
         a.preB = copy.deepcopy(self.preB, m)
+        a.preN = copy.deepcopy(self.preN, m)
         a.addList = copy.deepcopy(self.addList, m)
         a.delList = copy.deepcopy(self.delList, m)
         a.assList = copy.deepcopy(self.assList, m)
@@ -264,6 +266,9 @@ class Operation:
     def __getPreB(self) -> Set[Atom]:
         return self.__getPreconditionAtoms(Literal)
 
+    def __getPreN(self) -> Set[Atom]:
+        return self.preconditions.getFunctions()
+
     def __getAddList(self) -> Set[Atom]:
         return self.__getModifiedPredicates("+")
 
@@ -338,6 +343,7 @@ class Operation:
         self.functions = self.__getFunctions()
         self.predicates = self.__getPredicates()
         self.preB = self.__getPreB()
+        self.preN = self.__getPreN()
         self.addList = self.__getAddList()
         self.delList = self.__getDelList()
         self.assList = self.__getAssList()
@@ -404,6 +410,9 @@ class Operation:
 
         o_i.name = f"{o_i.name}_{2 ** i}"
         return o_i
+
+    def interferes(self, other: Operation) -> bool:
+        return bool(self.influencedAtoms.intersection(other.preB | other.preN))
 
     def isMutex(self, other: Operation) -> bool:
         return True if self.addList.intersection(other.delList) or \

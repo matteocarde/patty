@@ -53,8 +53,6 @@ class Literal(Predicate):
     def isLinearIncrement(self):
         return False
 
-
-
     @classmethod
     def fromNode(cls, node: p.PositiveLiteralContext or p.NegativeLiteralContext) -> Literal:
         literal = cls()
@@ -131,8 +129,11 @@ class Literal(Predicate):
         if self.atom in subs:
             return Constant(subs[self.atom])
 
-    def canHappen(self, subs: Dict[Atom, float], default=None) -> bool:
-        return True
+    def canHappen(self, subs: Dict[Atom, float or bool], default=None) -> bool:
+        return True if self.atom not in subs or subs[self.atom] else False
+
+    def isValid(self, subs: Dict[Atom, float or bool], default=None) -> bool:
+        return False if self.atom not in subs or not subs[self.atom] else True
 
     def canHappenLifted(self, sub: Tuple, params: List[str], problem) -> bool:
         if not problem.isPredicateStatic[self.atom.name]:

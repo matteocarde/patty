@@ -1,5 +1,6 @@
 from typing import Set, List, Dict
 
+from src.pattern.PatternAction import PatternAction
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.Domain import GroundedDomain
@@ -73,28 +74,33 @@ class ARPG:
                 usefulActions.add(supporter.originatingAction)
         return usefulActions
 
-    def getActionsOrder(self, useSCCs=False) -> List[Action] or bool:
+    def getActionsOrder(self, enhanced=False) -> List[Action] or bool:
 
-        # if self.goalNotReachable:
-        #     return False
+        usedActions: Set[Action] = set()
 
-        order: List[Action] = list()
-        usedActions: Set[Action] = set(order)
+        layers: List[Set[Action]] = list()
+
         for supporters in self.supporterLevels:
             partialOrder = set()
             for supporter in supporters:
                 if supporter.originatingAction not in usedActions:
                     partialOrder.add(supporter.originatingAction)
                 usedActions.add(supporter.originatingAction)
-            sortOrder = sorted(partialOrder)
-            order += sortOrder
+            layers.append(partialOrder)
 
         leftActions = set(self.actions) - usedActions
-        orderIstant = sorted([a for a in leftActions if not isinstance(a, SnapAction)])
-        orderSnap = sorted(
-            [a for a in leftActions if isinstance(a, SnapAction) and a.timeType != TimePredicateType.OVER_ALL])
-        sortOrder = orderIstant + orderSnap
-        order += sortOrder
+        layerInstant = {a for a in leftActions if not isinstance(a, SnapAction)}
+        layerSnap = {a for a in leftActions if isinstance(a, SnapAction) and a.timeType != TimePredicateType.OVER_ALL}
+        layers.append(layerInstant)
+        layers.append(layerSnap)
+
+        order = list()
+        for layer in layers:
+            if enhanced:
+                order += sorted([PatternAction.fromAction(a) for a in layer])
+            else:
+                order += sorted(layer)
+
         return order
 
     def getConstantAtoms(self) -> Dict[Atom, float]:

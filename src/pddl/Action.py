@@ -2,8 +2,7 @@
 
 from __future__ import annotations
 
-import copy
-from typing import List, Dict, Set, cast
+from typing import List, Dict, Set
 
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
@@ -132,7 +131,7 @@ class Action(Operation):
         action = Action.fromProperties(name, [], preconditions, effects, planName, duration=duration)
         return action
 
-    def canHappen(self, sub: Dict[Atom, float], default=None) -> bool:
+    def canHappen(self, sub: Dict[Atom, float or bool], default=None) -> bool:
         return self.preconditions.canHappen(sub, default)
 
     def getBinaryOperation(self, i: int) -> Action:

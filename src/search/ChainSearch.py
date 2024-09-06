@@ -21,7 +21,9 @@ class ChainSearch(Search):
 
     def getPattern(self) -> Pattern:
         if self.args.pattern == "arpg":
-            return Pattern.fromARPG(self.domain, useSCCs=self.useSCCs)
+            return Pattern.fromARPG(self.domain)
+        if self.args.pattern == "enhanced":
+            return Pattern.fromARPGEnhanced(self.domain)
         if self.args.pattern == "random":
             return Pattern.fromRandom(self.domain)
 
