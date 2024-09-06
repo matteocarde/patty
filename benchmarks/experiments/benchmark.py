@@ -35,7 +35,7 @@ PLANNERS: Dict[str, Planner] = {
     "PATTY-R": Patty("PATTY-R", search="step", pattern="random", quality="none"),
     "PATTY-A": Patty("PATTY-A", search="step", pattern="arpg", quality="none"),
     "PATTY-E": Patty("PATTY-E", search="step", pattern="enhanced", quality="none"),
-    "PATTy-M": Patty("PATTY-M", search="step", pattern="enhanced", quality="shortest-step"),
+    "PATTY-M": Patty("PATTY-M", search="step", pattern="enhanced", quality="shortest-step"),
     "SPRINGROLL": SpringRoll(),
 
     "ENHSP-SAT-HMRP": ENHSP(False, settings="-h hmrp -s gbfs -silent -pp -pe", name="ENHSP-SAT-HMRP"),
@@ -72,7 +72,7 @@ def main():
     if envs.isInsideAWS:
         time.sleep(envs.index / 4)
     else:
-        envs.file = "benchmarks/instances/pushing.csv"
+        envs.file = "benchmarks/instances/aij.csv"
 
     logger = CloudLogger(envs.experiment)
 
