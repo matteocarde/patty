@@ -50,17 +50,12 @@ class StepSearch(Search):
                 problem=self.problem,
                 pattern=pattern,
                 bound=bound,
-                relaxGoal=self.args.maximize,
-                subgoalsAchieved=set() if self.args.maximize else None,
-                encoding=self.args.encoding,
-                binaryActions=self.args.binaryActions,
-                rollBound=self.args.rollBound,
-                hasEffectAxioms=self.args.hasEffectAxioms
+                args=self.args
             )
             self.ts.end(f"Conversion to SMT at bound {bound}", console=self.console)
 
             self.ts.start(f"Solving Bound {bound}", console=self.console)
-            solver: SMTSolver = SMTSolver(pddl2smt, maximize=self.args.maximize)
+            solver: SMTSolver = SMTSolver(pddl2smt)
 
             plan: NumericPlan
             plan = solver.solve()

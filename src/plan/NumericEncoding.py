@@ -15,6 +15,7 @@ from src.plan.Pattern import Pattern
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTNumericVariable import SMTNumericVariable
 from src.smt.SMTSolution import SMTSolution
+from src.utils.Arguments import Arguments
 
 # BOUND = 1000
 EXPLICIT_DELTA = False
@@ -24,19 +25,20 @@ class NumericEncoding(Encoding):
     domain: GroundedDomain
     problem: Problem
 
-    def __init__(self, domain: GroundedDomain, problem: Problem, pattern: Pattern, bound: int, encoding="non-linear",
-                 binaryActions=10, rollBound=0, hasEffectAxioms=False, relaxGoal=False,
-                 subgoalsAchieved: Set[Formula] = None):
+    def __init__(self, domain: GroundedDomain, problem: Problem, pattern: Pattern, bound: int, args: Arguments):
 
         super().__init__(domain, problem, pattern, bound)
         self.domain = domain
         self.problem = problem
         self.bound = bound
-        self.encoding = encoding
-        self.rollBound = rollBound
-        self.hasEffectAxioms = hasEffectAxioms
-        self.relaxGoal = relaxGoal
-        self.subgoalsAchieved = subgoalsAchieved
+
+        self.relaxGoal = args.maximize,
+        self.subgoalsAchieved = set() if args.maximize else None,
+        self.encoding = args.encoding
+        self.rollBound = args.rollBound
+        self.quality = args.quality
+        self.binaryActions: int = args.binaryActions
+        self.hasEffectAxioms = args.hasEffectAxioms
 
         self.transitionVariables: [NumericTransitionVariables] = list()
 
@@ -44,16 +46,18 @@ class NumericEncoding(Encoding):
 
         self.pattern = pattern
         if self.encoding == "binary":
-            self.pattern.extendNonLinearities(binaryActions)
+            self.pattern.extendNonLinearities(self.binaryActions)
 
         for index in range(0, bound + 1):
             var = NumericTransitionVariables(self.domain.predicates, self.domain.functions, self.domain.assList,
-                                             self.pattern,
-                                             index, hasEffectAxioms)
+                                             self.pattern, index, self.hasEffectAxioms)
             self.transitionVariables.append(var)
+            if index > 0:
+                self.actionVariables.update(var.actionVariables.values())
 
         self.softRules = []
         self.initial: [SMTExpression] = self.getInitialExpression()
+        self.minimize: SMTExpression or None = self.getMinimize()
         self.goal: [SMTExpression] = self.getGoalExpression()
 
         for index in range(1, bound + 1):
@@ -61,6 +65,11 @@ class NumericEncoding(Encoding):
             self.transitions.extend(stepRules)
 
         self.rules = self.initial + self.transitions + [self.goal]
+
+    def getMinimize(self):
+        if self.quality == "shortest-step":
+            return sum(self.actionVariables)
+        return None
 
     def getInitialExpression(self) -> List[SMTExpression]:
         tVars = self.transitionVariables[0]

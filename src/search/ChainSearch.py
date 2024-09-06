@@ -61,12 +61,7 @@ class ChainSearch(Search):
                     problem=self.problem,
                     pattern=fPattern,
                     bound=1,
-                    relaxGoal=self.args.maximize,
-                    subgoalsAchieved=set() if self.args.maximize else None,
-                    encoding=self.args.encoding,
-                    binaryActions=self.args.binaryActions,
-                    rollBound=self.args.rollBound,
-                    hasEffectAxioms=self.args.hasEffectAxioms
+                    args=self.args
                 )
             self.ts.end(f"Conversion to SMT at bound {bound}", console=self.console)
 
@@ -74,7 +69,7 @@ class ChainSearch(Search):
             self.console.log(f"Bound {bound} - Rules = {encoding.getNRules()}", LogPrintLevel.STATS)
             self.console.log(f"Calls to Solver: {callsToSolver}", LogPrintLevel.STATS)
             self.ts.start(f"Solving Bound {bound}", console=self.console)
-            solver: SMTSolver = SMTSolver(encoding, maximize=self.args.maximize)
+            solver: SMTSolver = SMTSolver(encoding)
 
             plan: Plan
             plan = solver.solve()

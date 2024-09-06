@@ -12,8 +12,8 @@ from src.pddl.Literal import Literal
 
 class PatternAction(Action):
     simpleAssignments: Dict[Atom, float or bool]
-    assignments: Set[Atom]
-    linearIncremented: Set[Atom]
+    assignedAtoms: Set[Atom]
+    linearlyIncrementedAtoms: Set[Atom]
 
     def __init__(self):
         super().__init__()
@@ -24,21 +24,21 @@ class PatternAction(Action):
         pa.__class__ = PatternAction
         assert isinstance(pa, PatternAction)
 
-        pa.assignments = set()
-        pa.linearIncremented = set()
+        pa.assignedAtoms = set()
+        pa.linearlyIncrementedAtoms = set()
         pa.simpleAssignments = dict()
         for e in pa.effects:
             if isinstance(e, BinaryPredicate):
                 x = e.getAtom()
-                pa.assignments.add(x)
+                pa.assignedAtoms.add(x)
                 if e.isLinearIncrement():
-                    pa.linearIncremented.add(x)
+                    pa.linearlyIncrementedAtoms.add(x)
                 if isinstance(e.rhs, Constant):
                     pa.simpleAssignments[x] = e.rhs.value
             elif isinstance(e, Literal):
                 x = e.getAtom()
                 pa.simpleAssignments[x] = True if e.sign == "+" else False
-                pa.assignments.add(x)
+                pa.assignedAtoms.add(x)
 
         return pa
 
@@ -66,9 +66,9 @@ class PatternAction(Action):
 
     def __notInterferesWithEffects(self, a_: PatternAction) -> bool:
         a = self
-        for x in self.assignments:
-            res = x not in a_.assignments or \
-                  (x in a.linearIncremented and x in a_.linearIncremented) or \
+        for x in self.assignedAtoms:
+            res = x not in a_.assignedAtoms or \
+                  (x in a.linearlyIncrementedAtoms and x in a_.linearlyIncrementedAtoms) or \
                   (x in a.simpleAssignments and x in a_.simpleAssignments)
             if not res:
                 return False

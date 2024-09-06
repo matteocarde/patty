@@ -1,15 +1,17 @@
 from __future__ import annotations
 
+from typing import Set, Dict
+
+from pysmt.fnode import FNode
+from pysmt.shortcuts import And, Or, Equals, LE, LT, GE, GT, Implies, Real, Times, Minus, Plus, Div, TRUE, ToReal, \
+    NotEquals, Iff, FALSE
+from pysmt.typing import REAL, INT, BOOL
+
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.Constant import Constant
 from src.pddl.Formula import Formula
 from src.pddl.Literal import Literal
-from pysmt.fnode import FNode
-from pysmt.shortcuts import And, Or, Equals, LE, LT, GE, GT, Implies, Real, Times, Minus, Plus, Div, TRUE, ToReal, Int, \
-    NotEquals, Iff, FALSE
-from pysmt.typing import REAL, INT, BOOL
-from typing import Set, Dict
 
 
 def toRHS(other):
@@ -257,3 +259,4 @@ class SMTExpression:
         exp.expression = TRUE()
         exp.isConstant = True
         return exp
+

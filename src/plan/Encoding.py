@@ -1,4 +1,4 @@
-from typing import List, Pattern
+from typing import List, Pattern, Set
 
 import pysmt
 
@@ -12,6 +12,7 @@ from pysmt.environment import get_env
 from pysmt.logics import QF_NRA
 
 from src.smt.SMTSolution import SMTSolution
+from src.smt.SMTVariable import SMTVariable
 
 
 class Encoding:
@@ -19,14 +20,18 @@ class Encoding:
     problem: Problem
     rules: List[SMTExpression]
     softRules: List[SMTExpression]
+    minimize: SMTExpression or None
+    actionVariables: Set[SMTVariable]
 
     def __init__(self, domain: GroundedDomain, problem: Problem, pattern: Pattern, bound: int):
         self.domain = domain
         self.problem = problem
         self.pattern = pattern
         self.bound = bound
+        self.minimize = None
         self.rules = []
         self.softRules = []
+        self.actionVariables = set()
         pass
 
     def __str__(self):

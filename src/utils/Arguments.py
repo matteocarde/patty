@@ -12,9 +12,11 @@ class Arguments:
         parser.add_argument('-n', '--bound', help='The number of steps of the SMT encoding', type=int)
         parser.add_argument('-v', '--verboseLevel', help=f'The level of verbosity: {LogPrintLevel.getLevels()} ',
                             default=LogPrintLevel.getDefault(), type=int)
-        parser.add_argument('--pattern', default="arpg", help="Method too compute the pattern: arpg, enhanced, random")
-        parser.add_argument('--solver', default="z3", help="The solver used to compute a solution: yices, z3")
-        parser.add_argument('-s', '--search', default="static",
+        parser.add_argument('--pattern', default="enhanced",
+                            help="Method too compute the pattern: arpg, enhanced, random")
+        parser.add_argument('--solver', default="z3",
+                            help="The solver used to compute a solution: yices, z3")
+        parser.add_argument('-s', '--search', default="step",
                             help="The search strategy used to compute the solution: static, step, astar")
         parser.add_argument('--encoding', default="non-linear",
                             help="The way linear numeric effect are dealt with: binary, non-linear")
@@ -59,9 +61,10 @@ class Arguments:
         self.encoding = args.encoding
         self.saveSMT = args.save_smt
         self.savePlan = args.save_plan
-        self.binaryActions = int(args.binary_actions)
+        self.binaryActions: int = int(args.binary_actions)
         self.hasEffectAxioms = args.effect_axioms
         self.rollBound = args.roll_bound
         self.maximize = args.maximize
         self.useSCCs = args.use_sccs
         self.noCompression = args.no_compression
+        self.quality = args.quality
