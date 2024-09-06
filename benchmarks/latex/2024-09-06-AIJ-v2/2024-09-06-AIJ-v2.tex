@@ -1,0 +1,45 @@
+
+           \documentclass[11pt,landscape]{article}
+           \usepackage{graphicx}
+           \usepackage{lscape}
+           \usepackage{multirow}
+           \usepackage[a4paper,margin=1in,landscape]{geometry}
+
+           \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||cccc||cccc||cccc||cccc||cccc||cccc||}
+\hline
+ & \multicolumn{4}{c||}{Coverage (\%)}&\multicolumn{4}{c||}{Time (s)}&\multicolumn{4}{c||}{$n$ - Calls to \smt solver}&\multicolumn{4}{c||}{$|\pi|$}&\multicolumn{4}{c||}{$|\mathcal{X} \cup \mathcal{A}^\prec \cup \mathcal{X}'|$}&\multicolumn{4}{c||}{$|\mathcal{T}^\prec(\mathcal{X},\mathcal{A}^\prec,\mathcal{X}')|$}\\
+Domain & $P_R$&$P_A$&$P_E$&$P_M$&$P_R$&$P_A$&$P_E$&$P_M$&$P_R$&$P_A$&$P_E$&$P_M$&$P_R$&$P_A$&$P_E$&$P_M$&$P_R$&$P_A$&$P_E$&$P_M$&$P_R$&$P_A$&$P_E$&$P_M$\\
+\hline
+\textsc{BlGrp} (S)&\textbf{100}&\textbf{100}&\textbf{100}&65&1.8&\textbf{1.7}&\textbf{1.7}&110.4&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&478&732&725&\textbf{86}&\textbf{131}&\textbf{131}&\textbf{131}&\textbf{131}&\textbf{321}&\textbf{321}&\textbf{321}&\textbf{321}\\
+\textsc{Cnt} (S)&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{100}&0.9&\textbf{0.8}&\textbf{0.8}&3.6&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&563&475&475&\textbf{352}&\textbf{92}&\textbf{92}&\textbf{92}&\textbf{92}&\textbf{228}&\textbf{228}&\textbf{228}&\textbf{228}\\
+\textsc{Cnt} (L)&38&\textbf{100}&\textbf{100}&45&154.8&\textbf{0.9}&\textbf{0.9}&167.7&2.0&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&122&122&131&\textbf{20}&83&\textbf{48}&\textbf{48}&\textbf{48}&200&\textbf{100}&\textbf{100}&\textbf{100}\\
+\textsc{Del} (S)&22&15&\textbf{25}&15&227.7&255.7&\textbf{227.3}&256.7&3.0&3.3&\textbf{2.3}&2.7&37&24&29&\textbf{16}&988&1082&\textbf{771}&866&2977&3277&\textbf{2282}&2583\\
+\textsc{Drn} (S)&\textbf{15}&\textbf{15}&\textbf{15}&\textbf{15}&256.4&255.6&\textbf{255.3}&256.3&5.7&5.7&4.3&\textbf{4.0}&24&22&21&\textbf{13}&301&301&245&\textbf{226}&778&778&624&\textbf{571}\\
+\textsc{Exp} (S)&\textbf{12}&10&10&10&\textbf{256.9}&270.8&270.2&271.8&7.0&6.0&\textbf{3.5}&4.5&55&50&43&\textbf{28}&616&534&\textbf{333}&404&1478&1272&\textbf{766}&957\\
+\textsc{Farm} (S)&99&\textbf{100}&\textbf{100}&45&1.3&\textbf{0.8}&\textbf{0.8}&167.7&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&631&659&624&\textbf{292}&\textbf{27}&\textbf{27}&\textbf{27}&\textbf{27}&\textbf{55}&\textbf{55}&\textbf{55}&\textbf{55}\\
+\textsc{Farm} (L)&97&\textbf{100}&\textbf{100}&10&3.0&2.0&\textbf{1.9}&270.9&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&708&755&755&\textbf{14}&\textbf{16}&\textbf{16}&\textbf{16}&\textbf{16}&\textbf{28}&\textbf{28}&\textbf{28}&\textbf{28}\\
+\textsc{HPwr} (S)&3&\textbf{100}&\textbf{100}&-&286.2&\textbf{10.7}&13.5&-&8.0&\textbf{1.0}&\textbf{1.0}&-&\textbf{22}&206&235&-&3114&\textbf{352}&\textbf{352}&-&6688&\textbf{725}&\textbf{725}&-\\
+\textsc{MPrime} (S)&46&45&\textbf{50}&20&156.0&169.0&\textbf{154.0}&241.5&3.8&2.2&1.5&\textbf{1.0}&188&88&114&\textbf{7}&1283&848&704&\textbf{368}&3878&2516&2162&\textbf{1158}\\
+\textsc{PathM} (S)&50&\textbf{100}&\textbf{100}&15&129.4&\textbf{6.3}&6.6&255.6&3.7&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&2344&2323&2346&\textbf{39}&1604&\textbf{505}&\textbf{505}&\textbf{505}&3583&\textbf{805}&\textbf{805}&\textbf{805}\\
+\textsc{PlWat} (S)&\textbf{25}&\textbf{25}&\textbf{25}&-&\textbf{214.8}&226.8&227.0&-&8.4&\textbf{7.6}&\textbf{7.6}&-&381&332&\textbf{325}&-&596&\textbf{540}&\textbf{540}&-&1647&\textbf{1486}&\textbf{1486}&-\\
+\textsc{Rvr} (S)&\textbf{43}&40&40&30&\textbf{169.0}&181.6&181.6&213.3&3.2&2.0&\textbf{1.8}&\textbf{1.8}&65&57&54&\textbf{13}&1096&733&700&\textbf{531}&2343&1540&1468&\textbf{1175}\\
+\textsc{Sail} (S)&96&95&\textbf{100}&15&2.1&16.6&\textbf{2.0}&255.2&1.3&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&3122&2405&2469&\textbf{186}&45&\textbf{35}&\textbf{35}&\textbf{35}&68&\textbf{52}&\textbf{52}&\textbf{52}\\
+\textsc{Sail} (L)&\textbf{98}&90&85&10&\textbf{4.7}&32.6&46.5&270.5&1.5&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&2121&5477&1245&\textbf{68}&48&\textbf{29}&\textbf{29}&\textbf{29}&116&\textbf{68}&\textbf{68}&\textbf{68}\\
+\textsc{Sat} (S)&\textbf{10}&5&5&-&\textbf{242.4}&285.3&285.4&-&\textbf{3.0}&\textbf{3.0}&\textbf{3.0}&-&47&\textbf{28}&35&-&\textbf{1132}&\textbf{1132}&\textbf{1132}&-&\textbf{2928}&\textbf{2928}&\textbf{2928}&-\\
+\textsc{Sgr} (S)&97&\textbf{100}&95&30&\textbf{8.3}&8.8&20.8&214.1&3.2&2.3&\textbf{1.8}&\textbf{1.8}&55&49&48&\textbf{17}&1340&1022&\textbf{824}&\textbf{824}&3289&2444&\textbf{1949}&\textbf{1949}\\
+\textsc{Tpp} (L)&9&\textbf{10}&\textbf{10}&5&271.8&270.8&\textbf{270.7}&285.2&3.0&\textbf{2.0}&\textbf{2.0}&\textbf{2.0}&13&11&14&\textbf{7}&442&\textbf{317}&\textbf{317}&\textbf{317}&1082&\textbf{741}&\textbf{741}&\textbf{741}\\
+\textsc{Zeno} (S)&54&50&\textbf{55}&40&138.9&151.2&\textbf{138.1}&180.7&3.1&\textbf{1.5}&\textbf{1.5}&\textbf{1.5}&24&18&20&\textbf{11}&732&\textbf{321}&\textbf{321}&\textbf{321}&2269&\textbf{935}&\textbf{935}&\textbf{935}
+\\\hline
+\textit{Total}&\textbf{8}&\textbf{11}&\textbf{14}&\textbf{2}&\textbf{6}&\textbf{6}&\textbf{11}&\textbf{0}&\textbf{5}&\textbf{13}&\textbf{17}&\textbf{14}&\textbf{1}&\textbf{1}&\textbf{1}&\textbf{16}&\textbf{5}&\textbf{13}&\textbf{16}&\textbf{14}&\textbf{5}&\textbf{13}&\textbf{16}&\textbf{14}\\\hline
+
+        \end{tabular}}
+        \caption{}
+        \label{tab:experiments}
+        \end{table*}
+        
+\end{document}

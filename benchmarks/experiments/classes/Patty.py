@@ -43,6 +43,7 @@ class Patty(Planner):
     def getCommand(self, domain: str, problem: str):
         cmd = [
             "patty",
+            "-pp",
             "-o", domain,
             "-f", problem,
             "-s", self.search,

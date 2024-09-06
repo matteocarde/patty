@@ -9,7 +9,7 @@ import re
 from typing import List, Dict
 
 
-class Result:
+class Result(dict):
     solver: str = ""
     domain: str
     problem: str
@@ -27,10 +27,10 @@ class Result:
     lastCallsToSolver: int = -1
 
     def __init__(self, domain: str, problem: str):
+        super().__init__()
         self.plan = list()
         self.domain = domain
         self.problem = problem.split("/")[-1]
-        pass
 
     @classmethod
     def fromCSVLine(cls, csvLine: str):
@@ -48,6 +48,16 @@ class Result:
         r.lastSearchedBound = int(csvLine[10])
         if len(csvLine) > 11:
             r.lastCallsToSolver = int(csvLine[11])
+
+        r["solved"] = r.solved
+        r["timeout"] = r.timeout
+        r["time"] = r.time
+        r["bound"] = r.bound
+        r["planLength"] = r.planLength
+        r["nOfVars"] = r.nOfVars
+        r["nOfRules"] = r.nOfRules
+        r["lastSearchedBound"] = r.lastSearchedBound
+        r["lastCallsToSolver"] = r.lastCallsToSolver
 
         return r
 
@@ -76,9 +86,6 @@ class Result:
         string = "|" + "|".join(["{:^" + str(n[1]) + "}" for n in row]) + "|"
         values = [n[0] for n in row]
         return string.format(*values)
-
-    def toJSON(self):
-        return json.dumps(self.__dict__)
 
     def toCSV(self):
         return ",".join([

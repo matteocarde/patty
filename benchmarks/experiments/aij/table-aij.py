@@ -1,12 +1,14 @@
 import csv
+import json
 import os
 import shutil
 import statistics
 from typing import Dict, List
 
+from classes.CloudLogger import CloudLogger
 from classes.Result import Result
 
-SMT_SOLVERS = {'SpringRoll', "PATTY-O", "PATTY-G", "PATTY-H", "PATTY-F", 'RANTANPLAN', "OMT"}
+SMT_SOLVERS = {'SpringRoll', "PATTY-R", "PATTY-A", "PATTY-E", "PATTY-M", 'RANTANPLAN', "OMT"}
 TIME_LIMIT = 300 * 1000
 
 SOLVERS = {
@@ -17,10 +19,10 @@ SOLVERS = {
     'NFD': "\mathrm{NFD}",
     'SMTPLAN+': "\mathrm{SMTP}^+",
     'OMT': "\mathrm{OMT}",
-    "PATTY-O": "P_O",
-    "PATTY-G": "P_G",
-    "PATTY-H": "P_H",
-    "PATTY-F": "P_F",
+    "PATTY-R": "P_R",
+    "PATTY-A": "P_A",
+    "PATTY-E": "P_E",
+    "PATTY-M": "P_M",
 }
 
 # DOMAINS = {
@@ -104,8 +106,10 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2024-07-24-AAAI-PUSHING-v2"
+    exp = "2024-09-06-AIJ-v2"
     file = f"benchmarks/results/{exp}.csv"
+
+    CloudLogger.saveLogs(exp, file)
 
     joinWith = [file]
     # joinWith = [file]
@@ -132,13 +136,23 @@ def main():
     solvers = set()
     domains = set()
     d = dict()
+    dView = dict()
     for r in results:
-        d[r.domain] = d.setdefault(r.domain, dict())
         solvers.add(r.solver)
         domains.add(r.domain)
+
+        d[r.domain] = d.setdefault(r.domain, dict())
         d[r.domain][r.solver] = d[r.domain].setdefault(r.solver, dict())
         d[r.domain][r.solver][r.problem] = d[r.domain][r.solver].setdefault(r.problem, list())
         d[r.domain][r.solver][r.problem].append(r)
+
+        dView[r.domain] = dView.setdefault(r.domain, dict())
+        dView[r.domain][r.problem] = dView[r.domain].setdefault(r.problem, dict())
+        dView[r.domain][r.problem][r.solver] = dView[r.domain][r.problem].setdefault(r.solver, list())
+        dView[r.domain][r.problem][r.solver].append(r)
+
+    with open(file.replace(".csv", ".json"), "w") as f:
+        f.write(json.dumps(dView, indent=2))
 
     solvers = list(solvers)
     solvers.sort()
@@ -156,6 +170,9 @@ def main():
 
     def r(fValue, n):
         return '{:.{n}f}'.format(fValue, n=n)
+
+    def rVec(v, n):
+        return r(statistics.mean(v), n) if v else "-"
 
     t = dict()
     stats = set()
@@ -188,24 +205,26 @@ def main():
             if solver not in domainDict:
                 continue
             pResult = domainDict[solver]
+
+            hasCoverage = sum([r.solved for r in pResult]) > 0
             t[domain]["coverage"][solver] = r(sum([r.solved for r in pResult]) / TOTALS[domain] * 100, 0)
-            t[domain]["coverage"][solver] = "-" if t[domain]["coverage"][solver] == "0.0" else t[domain]["coverage"][
-                solver]
-            bounds = [r.bound for r in pResult if r.solved if r.problem in commonlySolved]
-            t[domain]["bound"][solver] = r(statistics.mean(bounds), 1) if t[domain]["coverage"][
-                                                                              solver] != "-" and bounds else "-"
-            t[domain]["time"][solver] = r(statistics.mean([r.time if r.solved else TIME_LIMIT for r in pResult]) / 1000,
-                                          1) if \
-                t[domain]["coverage"][solver] != "-" else "-"
-            t[domain]["length"][solver] = r(statistics.mean([r.planLength for r in pResult if r.solved]), 0) if \
-                t[domain]["coverage"][solver] != "-" else "-"
+            t[domain]["coverage"][solver] = "-" if not hasCoverage else t[domain]["coverage"][solver]
+
+            v = [r.bound for r in pResult if r.solved and r.problem in commonlySolved]
+            t[domain]["bound"][solver] = rVec(v, 1) if hasCoverage else "-"
+
+            v = [r.time / 1000 if r.solved else TIME_LIMIT / 1000 for r in pResult]
+            t[domain]["time"][solver] = rVec(v, 1) if hasCoverage else "-"
+
+            v = [r.planLength for r in pResult if r.solved]
+            t[domain]["length"][solver] = rVec(v, 0) if hasCoverage else "-"
 
             v = [r.nOfVars for r in pResult if r.nOfVars > 0 and r.problem in commonlySolved]
-            t[domain]["nOfVars"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
+            t[domain]["nOfVars"][solver] = rVec(v, 0) if len(v) else "-"
             v = [r.nOfRules for r in pResult if r.nOfRules > 0 and r.problem in commonlySolved]
-            t[domain]["nOfRules"][solver] = r(statistics.mean(v), 0) if len(v) else "-"
+            t[domain]["nOfRules"][solver] = rVec(v, 0) if len(v) else "-"
             v = [r.lastCallsToSolver for r in pResult if r.lastCallsToSolver > 0 and r.problem in commonlySolved]
-            t[domain]["lastCallsToSolver"][solver] = r(statistics.mean(v), 2) if len(v) else "-"
+            t[domain]["lastCallsToSolver"][solver] = rVec(v, 2) if len(v) else "-"
 
     domainsClusters = {
         r"\textit{High}": [
@@ -234,6 +253,7 @@ def main():
     winners = {
         "coverage": +1,
         "bound": -1,
+        "length": -1,
         "time": -1,
         "nOfVars": -1,
         "nOfRules": -1,
@@ -245,17 +265,20 @@ def main():
         "type": "table*",
         "width": r"\textwidth",
         "columns": {
-            # "coverage": ("Coverage (\%)", {"SMT", "SEARCH"}, "count"),
+            "coverage": ("Coverage (\%)", {"SMT", "SEARCH"}, "count"),
             "time": ("Time (s)", {"SMT", "SEARCH"}, "count"),
-            # "bound": (r"$n$ - Calls to \smt solver", {"SMT"}, "count"),
+            "bound": (r"$n$ - Calls to \smt solver", {"SMT"}, "count"),
+            "length": (r"$|\pi|$", {"SMT"}, "count"),
             "nOfVars": ("$|\mathcal{X} \cup \mathcal{A}^\prec \cup \mathcal{X}'|$", {"SMT"}, "count"),
             "nOfRules": ("$|\mathcal{T}^\prec(\mathcal{X},\mathcal{A}^\prec,\mathcal{X}')|$", {"SMT"}, "count"),
-            "bound": (r"Vars x Rule", {"SMT"}, "count"),
+            # "bound": (r"Vars x Rule", {"SMT"}, "count"),
             # "lastCallsToSolver": (r"$\textsc{Solve}(\Pi^\prec)$ calls", {"SMT"}),
         },
         "planners": [{
-            'PATTY-O': "SMT",
-            'PATTY-G': "SMT",
+            'PATTY-R': "SMT",
+            'PATTY-A': "SMT",
+            'PATTY-E': "SMT",
+            'PATTY-M': "SMT",
             # 'PATTY-H': "SMT",
             # 'PATTY-F': "SMT"
         },
@@ -266,11 +289,7 @@ def main():
             #     "NFD": "SEARCH",
             # }
         ],
-        "caption": r"$\textsc{patty}_\mathrm{O}$ (bound increase) vs. $\textsc{patty}_\mathrm{G}$ (concatenation). "
-                   r"The coverage and both the bound ($\textsc{p}_\mathrm{O}$) and the number of concats "
-                   r"($\textsc{p}_\mathrm{G}$) were the same for both approaches. The table shows, in the last "
-                   r"encoding before finding a solution, the number of variables, rules, and average number of "
-                   r"variables per rule."
+        "caption": r""
     }]
 
     latex = []
@@ -409,6 +428,8 @@ def main():
 
     os.remove(f"{folder}/{exp}.aux")
     os.remove(f"{folder}/{exp}.log")
+
+    os.system(f"open {folder}/{exp}.pdf")
 
 
 if __name__ == '__main__':

@@ -41,3 +41,19 @@ class CloudLogger:
                 logGroupName=LOG_GROUP,
                 logStreamName=name
             )
+
+    @staticmethod
+    def read(name):
+        client = boto3.client('logs')
+        cmd = client.get_log_events(
+            logGroupName=LOG_GROUP,
+            logStreamName=name,
+            limit=10000,
+        )
+        return cmd["events"]
+
+    @staticmethod
+    def saveLogs(exp, file):
+        events = ['"' + e["message"] + '"' for e in CloudLogger.read(exp)]
+        with open(file, "w") as f:
+            f.write("\n".join(sorted(events)))
