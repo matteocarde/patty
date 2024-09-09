@@ -1,5 +1,5 @@
 import itertools
-from graphlib import TopologicalSorter
+from graphlib import TopologicalSorter, CycleError
 from typing import List, Dict, Set
 
 from src.pattern.PatternAction import PatternAction
@@ -18,10 +18,8 @@ class PatternActionGraph:
             self.graphDict[a] = list()
         for a, b in itertools.combinations_with_replacement(patternActions, 2):
             if a.compare(b) < 0:
-                print(f"{a} before {b}")
                 self.graphDict[b].append(a)
             if a.compare(b) > 0:
-                print(f"{b} before {a}")
                 self.graphDict[a].append(b)
 
         for a in patternActions:
@@ -30,5 +28,11 @@ class PatternActionGraph:
         pass
 
     def getSorted(self) -> List[PatternAction]:
-        ts = TopologicalSorter(self.graphDict)
-        return list(ts.static_order())
+        try:
+            ts = TopologicalSorter(self.graphDict)
+            return list(ts.static_order())
+        except CycleError as e:
+            cycle = e.args[1]
+            print(cycle)
+            print([a.compare(b) for (a, b) in zip(cycle[:-1], cycle[1:])])
+            raise CycleError

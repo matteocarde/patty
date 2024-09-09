@@ -33,7 +33,7 @@ class PatternAction(Action):
                 pa.assignedAtoms.add(x)
                 if e.isLinearIncrement():
                     pa.linearlyIncrementedAtoms.add(x)
-                if isinstance(e.rhs, Constant):
+                if isinstance(e.rhs, Constant) and e.operator == "assign":
                     pa.simpleAssignments[x] = e.rhs.value
             elif isinstance(e, Literal):
                 x = e.getAtom()
