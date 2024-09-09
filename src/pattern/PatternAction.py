@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 import copy
 from typing import Dict, Set
 
@@ -6,7 +7,6 @@ from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.Constant import Constant
-from src.pddl.Formula import Formula
 from src.pddl.Literal import Literal
 
 

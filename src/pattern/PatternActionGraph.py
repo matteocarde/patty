@@ -28,11 +28,10 @@ class PatternActionGraph:
         pass
 
     def getSorted(self) -> List[PatternAction]:
-        try:
-            ts = TopologicalSorter(self.graphDict)
-            return list(ts.static_order())
-        except CycleError as e:
-            cycle = e.args[1]
-            print(cycle)
-            print([a.compare(b) for (a, b) in zip(cycle[:-1], cycle[1:])])
-            raise CycleError
+        while True:
+            try:
+                ts = TopologicalSorter(self.graphDict)
+                return list(ts.static_order())
+            except CycleError as e:
+                cycle = e.args[1]
+                self.graphDict[cycle[1]].remove(cycle[0])
