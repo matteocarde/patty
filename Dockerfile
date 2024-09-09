@@ -165,7 +165,7 @@ COPY /benchmarks/planners/omtplan /var/omtplan
 ENV PATH /var/omtplan/:${PATH}
 RUN chmod +x /var/omtplan/omtplan
 
-RUN pip install tarjan prettytable
+RUN pip install tarjan prettytable graphlib-backport
 
 WORKDIR /project
 # Copying

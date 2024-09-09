@@ -30,57 +30,57 @@ SOLVERS = {
     "PATTY-M": "P_M",
 }
 
-# DOMAINS = {
-#     "numeric/ipc-2023/block-grouping": r"\textsc{BlockGrouping} (S)",
-#     "numeric/ipc-2023/counters": r"\textsc{Counters} (S)",
-#     "numeric/ipc-2023/delivery": r"\textsc{Delivery} (S)",
-#     "numeric/ipc-2023/drone": r"\textsc{Drone} (S)",
-#     "numeric/ipc-2023/expedition": r"\textsc{Expedition} (S)",
-#     "numeric/ipc-2023/ext-plant-watering": r"\textsc{PlantWatering} (S)",
-#     "numeric/ipc-2023/farmland": r"\textsc{Farmland} (S)",
-#     "numeric/ipc-2023/fo-farmland": r"\textsc{Farmland} (L)",
-#     "numeric/ipc-2023/fo-sailing": r"\textsc{Sailing} (L)",
-#     "numeric/ipc-2023/fo_counters": r"\textsc{Counters} (L)",
-#     "numeric/ipc-2023/hydropower": r"\textsc{HydroPower} (S)",
-#     # "numeric/ipc-2023/markettrader": r"\textsc{MarketTrader}",
-#     "numeric/ipc-2023/mprime": r"\textsc{MPrime} (S)",
-#     "numeric/ipc-2023/pathwaysmetric": r"\textsc{PathwaysMetric} (S)",
-#     "numeric/ipc-2023/rover": r"\textsc{Rover} (S)",
-#     "numeric/ipc-2023/sailing": r"\textsc{Sailing} (S)",
-#     "numeric/ipc-2023/satellite": r"\textsc{Satellite} (S)",
-#     "numeric/ipc-2023/settlers": r"\textsc{Settlers} (S)",
-#     "numeric/ipc-2023/sugar": r"\textsc{Sugar} (S)",
-#     "numeric/ipc-2023/tpp": r"\textsc{TPP} (L)",
-#     "numeric/ipc-2023/zenotravel": r"\textsc{ZenoTravel} (S)",
-#     "numeric/line-exchange": r"\textsc{LineExchange} (L)",
-#     "line-exchange-quantity": r"\textsc{LineExchange-QTY} (L)"
-# }
-
 DOMAINS = {
-    "numeric/ipc-2023/block-grouping": r"\textsc{BlGrp} (S)",
-    "numeric/ipc-2023/counters": r"\textsc{Cnt} (S)",
-    "numeric/ipc-2023/delivery": r"\textsc{Del} (S)",
-    "numeric/ipc-2023/drone": r"\textsc{Drn} (S)",
-    "numeric/ipc-2023/expedition": r"\textsc{Exp} (S)",
-    "numeric/ipc-2023/ext-plant-watering": r"\textsc{PlWat} (S)",
-    "numeric/ipc-2023/farmland": r"\textsc{Farm} (S)",
-    "numeric/ipc-2023/fo-farmland": r"\textsc{Farm} (L)",
-    "numeric/ipc-2023/fo-sailing": r"\textsc{Sail} (L)",
-    "numeric/ipc-2023/fo_counters": r"\textsc{Cnt} (L)",
-    "numeric/ipc-2023/hydropower": r"\textsc{HPwr} (S)",
+    "numeric/ipc-2023/block-grouping": r"\textsc{BlockGrouping} (S)",
+    "numeric/ipc-2023/counters": r"\textsc{Counters} (S)",
+    "numeric/ipc-2023/delivery": r"\textsc{Delivery} (S)",
+    "numeric/ipc-2023/drone": r"\textsc{Drone} (S)",
+    "numeric/ipc-2023/expedition": r"\textsc{Expedition} (S)",
+    "numeric/ipc-2023/ext-plant-watering": r"\textsc{PlantWatering} (S)",
+    "numeric/ipc-2023/farmland": r"\textsc{Farmland} (S)",
+    "numeric/ipc-2023/fo-farmland": r"\textsc{Farmland} (L)",
+    "numeric/ipc-2023/fo-sailing": r"\textsc{Sailing} (L)",
+    "numeric/ipc-2023/fo_counters": r"\textsc{Counters} (L)",
+    "numeric/ipc-2023/hydropower": r"\textsc{HydroPower} (S)",
     # "numeric/ipc-2023/markettrader": r"\textsc{MarketTrader}",
     "numeric/ipc-2023/mprime": r"\textsc{MPrime} (S)",
-    "numeric/ipc-2023/pathwaysmetric": r"\textsc{PathM} (S)",
-    "numeric/ipc-2023/rover": r"\textsc{Rvr} (S)",
-    "numeric/ipc-2023/sailing": r"\textsc{Sail} (S)",
-    "numeric/ipc-2023/satellite": r"\textsc{Sat} (S)",
-    "numeric/ipc-2023/settlers": r"\textsc{Stlr} (S)",
-    "numeric/ipc-2023/sugar": r"\textsc{Sgr} (S)",
-    "numeric/ipc-2023/tpp": r"\textsc{Tpp} (L)",
-    "numeric/ipc-2023/zenotravel": r"\textsc{Zeno} (S)",
-    "numeric/line-exchange": r"\textsc{Line} (L)",
+    "numeric/ipc-2023/pathwaysmetric": r"\textsc{PathwaysMetric} (S)",
+    "numeric/ipc-2023/rover": r"\textsc{Rover} (S)",
+    "numeric/ipc-2023/sailing": r"\textsc{Sailing} (S)",
+    "numeric/ipc-2023/satellite": r"\textsc{Satellite} (S)",
+    "numeric/ipc-2023/settlers": r"\textsc{Settlers} (S)",
+    "numeric/ipc-2023/sugar": r"\textsc{Sugar} (S)",
+    "numeric/ipc-2023/tpp": r"\textsc{TPP} (L)",
+    "numeric/ipc-2023/zenotravel": r"\textsc{ZenoTravel} (S)",
+    "numeric/line-exchange": r"\textsc{LineExchange} (L)",
     "line-exchange-quantity": r"\textsc{LineExchange-QTY} (L)"
 }
+
+# DOMAINS = {
+#     "numeric/ipc-2023/block-grouping": r"\textsc{BlGrp} (S)",
+#     "numeric/ipc-2023/counters": r"\textsc{Cnt} (S)",
+#     "numeric/ipc-2023/delivery": r"\textsc{Del} (S)",
+#     "numeric/ipc-2023/drone": r"\textsc{Drn} (S)",
+#     "numeric/ipc-2023/expedition": r"\textsc{Exp} (S)",
+#     "numeric/ipc-2023/ext-plant-watering": r"\textsc{PlWat} (S)",
+#     "numeric/ipc-2023/farmland": r"\textsc{Farm} (S)",
+#     "numeric/ipc-2023/fo-farmland": r"\textsc{Farm} (L)",
+#     "numeric/ipc-2023/fo-sailing": r"\textsc{Sail} (L)",
+#     "numeric/ipc-2023/fo_counters": r"\textsc{Cnt} (L)",
+#     "numeric/ipc-2023/hydropower": r"\textsc{HPwr} (S)",
+#     # "numeric/ipc-2023/markettrader": r"\textsc{MarketTrader}",
+#     "numeric/ipc-2023/mprime": r"\textsc{MPrime} (S)",
+#     "numeric/ipc-2023/pathwaysmetric": r"\textsc{PathM} (S)",
+#     "numeric/ipc-2023/rover": r"\textsc{Rvr} (S)",
+#     "numeric/ipc-2023/sailing": r"\textsc{Sail} (S)",
+#     "numeric/ipc-2023/satellite": r"\textsc{Sat} (S)",
+#     "numeric/ipc-2023/settlers": r"\textsc{Stlr} (S)",
+#     "numeric/ipc-2023/sugar": r"\textsc{Sgr} (S)",
+#     "numeric/ipc-2023/tpp": r"\textsc{Tpp} (L)",
+#     "numeric/ipc-2023/zenotravel": r"\textsc{Zeno} (S)",
+#     "numeric/line-exchange": r"\textsc{Line} (L)",
+#     "line-exchange-quantity": r"\textsc{LineExchange-QTY} (L)"
+# }
 
 TOTALS = {
     "numeric/ipc-2023/block-grouping": 20,
@@ -111,7 +111,7 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2024-09-06-AIJ-v4"
+    exp = "2024-09-06-AIJ-v5"
     file = f"benchmarks/results/csv/{exp}.csv"
 
     CloudLogger.saveLogs(exp, file)
@@ -255,7 +255,8 @@ def main():
             "numeric/ipc-2023/satellite",
             "numeric/ipc-2023/sugar",
             "numeric/ipc-2023/tpp",
-            "numeric/ipc-2023/zenotravel"
+            "numeric/ipc-2023/zenotravel",
+            "numeric/line-exchange"
         ],
     }
 

@@ -1,7 +1,7 @@
 import itertools
 from typing import Set, List, Dict
 
-from src.pattern.PatternAction import PatternAction
+from src.pattern.PatternActionGraph import PatternActionGraph
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.Domain import GroundedDomain
@@ -98,9 +98,7 @@ class ARPG:
         order = list()
         for i, layer in enumerate(layers):
             if enhanced:
-                sortedLayer = sorted([PatternAction.fromAction(a) for a in layer])
-                print(f"----Layer {i}----")
-                print("\n".join([str(a) for a in sortedLayer]))
+                sortedLayer = PatternActionGraph(layer).getSorted()
                 order += sortedLayer
             else:
                 order += sorted(layer)

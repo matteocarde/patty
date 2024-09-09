@@ -42,25 +42,27 @@ class PatternAction(Action):
 
         return pa
 
-    def __lt__(self, other):
+    def compare(self, other) -> int:
         if not isinstance(other, PatternAction):
             return False
         a = self
         a_ = other
 
         if a.interferesWithEffects(a_) and a_.interferesWithEffects(a):
-            return a.name < a_.name
+            return 0
+        if a.blocks(a_) and a_.blocks(a):
+            return 0
 
-        if a.blocks(a_) and not a_.blocks(a):
-            return False
-        if a_.blocks(a) and not a.blocks(a_):
-            return True
+        if a.blocks(a_):
+            return +1
+        if a_.blocks(a):
+            return -1
         if a.supports(a_) and not a_.interferes(a):
-            return True
+            return -1
         if a_.supports(a) and not a.interferes(a_):
-            return False
+            return +1
 
-        return a.name < a_.name
+        return 0
 
     def interferesWithEffects(self, a_: PatternAction) -> bool:
         return not self.__notInterferesWithEffects(a_)
