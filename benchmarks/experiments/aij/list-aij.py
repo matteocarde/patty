@@ -4,12 +4,12 @@ from natsort import natsort
 
 # PLANNERS = ["PATTY", "PATTY-R-YICES", "PATTY-R-Z3-NL", "PATTY-NL", "PATTY-Z3", "SPRINGROLL"]
 PLANNERS = [
-    # "PATTY-R",
+    "PATTY-R",
     "PATTY-A",
     "PATTY-E",
     "PATTY-FA",
     "PATTY-FE",
-    # "PATTY-M",
+    "PATTY-M",
     # "SPRINGROLL",
     # "ENHSP-HADD",
     # "ENHSP-HRADD",

@@ -3,6 +3,7 @@ import json
 import os
 import shutil
 import statistics
+import sys
 from typing import Dict, List
 
 from classes.CloudLogger import CloudLogger
@@ -27,6 +28,8 @@ SOLVERS = {
     "PATTY-R-AVG": "P_R^{\mathrm{avg}}",
     "PATTY-A": "P_A",
     "PATTY-E": "P_E",
+    "PATTY-FA": "P_{FA}",
+    "PATTY-FE": "P_{FE}",
     "PATTY-M": "P_M",
 }
 
@@ -111,7 +114,7 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2024-09-06-AIJ-v11"
+    exp = "2024-09-06-AIJ-v12"
     file = f"benchmarks/results/csv/{exp}.csv"
 
     CloudLogger.saveLogs(exp, file)
@@ -172,8 +175,8 @@ def main():
                 continue
             for problem in d[domain][solver].keys():
                 if len(d[domain][solver][problem]) > 1:
-                    raise Exception(f"There are multiple problems {problem} for {domain} with {solver}. "
-                                    f"Please aggregate it in some way")
+                    print(f"There are multiple problems {problem} for {domain} with {solver}. "
+                          f"Please aggregate it in some way", file=sys.stderr)
                 problems.append(d[domain][solver][problem][0])
             d[domain][solver] = problems
 
@@ -285,12 +288,14 @@ def main():
             # "lastCallsToSolver": (r"$\textsc{Solve}(\Pi^\prec)$ calls", {"SMT"}),
         },
         "planners": [{
-            'PATTY-R-MIN': "SMT",
-            'PATTY-R-AVG': "SMT",
-            'PATTY-R-MAX': "SMT",
+            # 'PATTY-R-MIN': "SMT",
+            # 'PATTY-R-AVG': "SMT",
+            # 'PATTY-R-MAX': "SMT",
             'PATTY-A': "SMT",
             'PATTY-E': "SMT",
-            'PATTY-M': "SMT",
+            'PATTY-FA': "SMT",
+            'PATTY-FE': "SMT",
+            # 'PATTY-M': "SMT",
             # 'PATTY-H': "SMT",
             # 'PATTY-F': "SMT"
         },
