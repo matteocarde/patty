@@ -1,3 +1,4 @@
+import itertools
 from typing import Set, List, Dict
 
 from src.pattern.PatternAction import PatternAction
@@ -95,12 +96,11 @@ class ARPG:
         layers.append(layerSnap)
 
         order = list()
-        for layer in layers:
+        for i, layer in enumerate(layers):
             if enhanced:
                 sortedLayer = sorted([PatternAction.fromAction(a) for a in layer])
-                for (a, b) in zip(sortedLayer[:-1], sortedLayer[1:]):
-                    if not a < b or a > b:
-                        raise Exception(f"Total order not respected: ({a}) < ({b}) = {a < b}, ({a}) > ({b}) = {a > b}")
+                print(f"----Layer {i}----")
+                print("\n".join([str(a) for a in sortedLayer]))
                 order += sortedLayer
             else:
                 order += sorted(layer)

@@ -6,7 +6,7 @@ import json
 
 import re
 
-from typing import List, Dict
+from typing import List, Dict, Callable
 
 
 class Result(dict):
@@ -48,18 +48,19 @@ class Result(dict):
         r.lastSearchedBound = int(csvLine[10])
         if len(csvLine) > 11:
             r.lastCallsToSolver = int(csvLine[11])
-
-        r["solved"] = r.solved
-        r["timeout"] = r.timeout
-        r["time"] = r.time
-        r["bound"] = r.bound
-        r["planLength"] = r.planLength
-        r["nOfVars"] = r.nOfVars
-        r["nOfRules"] = r.nOfRules
-        r["lastSearchedBound"] = r.lastSearchedBound
-        r["lastCallsToSolver"] = r.lastCallsToSolver
-
+        r.__setDict()
         return r
+
+    def __setDict(self):
+        self["solved"] = self.solved
+        self["timeout"] = self.timeout
+        self["time"] = self.time
+        self["bound"] = self.bound
+        self["planLength"] = self.planLength
+        self["nOfVars"] = self.nOfVars
+        self["nOfRules"] = self.nOfRules
+        self["lastSearchedBound"] = self.lastSearchedBound
+        self["lastCallsToSolver"] = self.lastCallsToSolver
 
     @classmethod
     def parseTime(cls, stdout):
@@ -104,22 +105,37 @@ class Result(dict):
         ])
 
     @classmethod
-    def average(cls, results: [Result]):
+    def aggregator(cls, results: [Result], agg: Callable[List[float], float], solver=None) -> Result:
         r = cls("x", "x")
-        r.solver = results[0].solver
+        r.solver = results[0].solver if not solver else solver
         r.domain = results[0].domain
         r.problem = results[0].problem
         r.solved = statistics.mean([1 if e.solved else 0 for e in results])
         r.timeout = statistics.mean([1 if e.timeout else 0 for e in results])
-        r.nOfVars = max([e.nOfVars for e in results])
-        r.nOfRules = max([e.nOfRules for e in results])
-        r.lastSearchedBound = max([e.lastSearchedBound for e in results])
-        r.lastCallsToSolver = max([e.lastCallsToSolver for e in results])
+        r.nOfVars = agg([e.nOfVars for e in results])
+        r.nOfRules = agg([e.nOfRules for e in results])
+        r.lastSearchedBound = agg([e.lastSearchedBound for e in results])
+        r.lastCallsToSolver = agg([e.lastCallsToSolver for e in results])
         if r.solved > 0:
-            r.time = max([e.time for e in results if e.solved])
-            r.bound = max([e.bound for e in results if e.solved])
-            r.planLength = statistics.mean([e.planLength for e in results if e.solved])
+            r.time = agg([e.time for e in results if e.solved])
+            r.bound = agg([e.bound for e in results if e.solved])
+            r.planLength = agg([e.planLength for e in results if e.solved])
+        r.solved = bool(r.solved)
+        r.timeout = bool(r.timeout)
+        r.__setDict()
         return r
+
+    @classmethod
+    def max(cls, results: [Result], solver=None):
+        return Result.aggregator(results, max, solver)
+
+    @classmethod
+    def min(cls, results: [Result], solver=None):
+        return Result.aggregator(results, min, solver)
+
+    @classmethod
+    def avg(cls, results: [Result], solver=None):
+        return Result.aggregator(results, statistics.mean, solver)
 
     @classmethod
     def portfolio(cls, portfolio: [Result], solver: str) -> Result:
@@ -138,7 +154,7 @@ class Result(dict):
         return minResult
 
     @classmethod
-    def joinPorfolios(cls, aResults: List[Result], PORTFOLIOS: Dict[str, str]):
+    def joinPorfolios(cls, aResults: List[Result], PORTFOLIOS: Dict[str, str]) -> List[Result]:
         results = list()
         pResults: Dict[str, Dict[str, Dict[str, List[Result]]]] = dict()
 
@@ -156,4 +172,26 @@ class Result(dict):
             for (domain, domainDict) in solverDict.items():
                 for (problem, portfolio) in domainDict.items():
                     results.append(Result.portfolio(portfolio, solver))
+        return results
+
+    @classmethod
+    def splitRandom(cls, aResults: List[Result], randomSolver: str) -> List[Result]:
+
+        results: List[Result] = list()
+        rResults: Dict[str, Dict[str, List[Result]]] = dict()
+
+        for r in aResults:
+            if r.solver != randomSolver:
+                results.append(r)
+                continue
+            rResults.setdefault(r.domain, dict())
+            rResults[r.domain].setdefault(r.problem, list())
+            rResults[r.domain][r.problem].append(r)
+
+        for (domain, domainDict) in rResults.items():
+            for (problem, problems) in domainDict.items():
+                results.append(Result.min(problems, f"{randomSolver}-MIN"))
+                results.append(Result.avg(problems, f"{randomSolver}-AVG"))
+                results.append(Result.max(problems, f"{randomSolver}-MAX"))
+
         return results

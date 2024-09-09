@@ -8,7 +8,10 @@ from typing import Dict, List
 from classes.CloudLogger import CloudLogger
 from classes.Result import Result
 
-SMT_SOLVERS = {'SpringRoll', "PATTY-R", "PATTY-A", "PATTY-E", "PATTY-M", 'RANTANPLAN', "OMT"}
+SMT_SOLVERS = {'SpringRoll',
+               "PATTY-R-MIN", "PATTY-R-MAX", "PATTY-R-AVG", "PATTY-A", "PATTY-E", "PATTY-M",
+               'RANTANPLAN',
+               "OMT"}
 TIME_LIMIT = 30 * 1000
 
 SOLVERS = {
@@ -19,7 +22,9 @@ SOLVERS = {
     'NFD': "\mathrm{NFD}",
     'SMTPLAN+': "\mathrm{SMTP}^+",
     'OMT': "\mathrm{OMT}",
-    "PATTY-R": "P_R",
+    "PATTY-R-MIN": "P_R^{\mathrm{min}}",
+    "PATTY-R-MAX": "P_R^{\mathrm{max}}",
+    "PATTY-R-AVG": "P_R^{\mathrm{avg}}",
     "PATTY-A": "P_A",
     "PATTY-E": "P_E",
     "PATTY-M": "P_M",
@@ -106,8 +111,8 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2024-09-06-AIJ-v3"
-    file = f"benchmarks/results/{exp}.csv"
+    exp = "2024-09-06-AIJ-v4"
+    file = f"benchmarks/results/csv/{exp}.csv"
 
     CloudLogger.saveLogs(exp, file)
 
@@ -132,6 +137,7 @@ def main():
         "ENHSP-sat-hradd": "ENHSP",
         "ENHSP-sat-hmrphj": "ENHSP",
     })
+    results = Result.splitRandom(results, "PATTY-R")
 
     solvers = set()
     domains = set()
@@ -151,7 +157,7 @@ def main():
         dView[r.domain][r.problem][r.solver] = dView[r.domain][r.problem].setdefault(r.solver, list())
         dView[r.domain][r.problem][r.solver].append(r)
 
-    with open(file.replace(".csv", ".json"), "w") as f:
+    with open(f"benchmarks/results/json/{exp}.json", "w") as f:
         f.write(json.dumps(dView, indent=2))
 
     solvers = list(solvers)
@@ -165,7 +171,10 @@ def main():
             if solver not in d[domain]:
                 continue
             for problem in d[domain][solver].keys():
-                problems.append(Result.average(d[domain][solver][problem]))
+                if len(d[domain][solver][problem]) > 1:
+                    raise Exception(f"There are multiple problems {problem} for {domain} with {solver}. "
+                                    f"Please aggregate it in some way")
+                problems.append(d[domain][solver][problem][0])
             d[domain][solver] = problems
 
     def r(fValue, n):
@@ -275,7 +284,9 @@ def main():
             # "lastCallsToSolver": (r"$\textsc{Solve}(\Pi^\prec)$ calls", {"SMT"}),
         },
         "planners": [{
-            'PATTY-R': "SMT",
+            'PATTY-R-MIN': "SMT",
+            'PATTY-R-AVG': "SMT",
+            'PATTY-R-MAX': "SMT",
             'PATTY-A': "SMT",
             'PATTY-E': "SMT",
             'PATTY-M': "SMT",

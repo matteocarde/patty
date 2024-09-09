@@ -46,8 +46,11 @@ class CloudLogger:
     def read(name):
         client = boto3.client('logs')
         cmd = client.get_log_events(
+            startTime=round(time.time() * 1000) - 1000 * 60 * 60 * 24 * 30,
+            endTime=round(time.time() * 1000),
             logGroupName=LOG_GROUP,
             logStreamName=name,
+            startFromHead=True,
             limit=10000,
         )
         return cmd["events"]
