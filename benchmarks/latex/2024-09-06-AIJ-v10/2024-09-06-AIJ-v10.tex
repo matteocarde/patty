@@ -1,0 +1,46 @@
+
+           \documentclass[11pt,landscape]{article}
+           \usepackage{graphicx}
+           \usepackage{lscape}
+           \usepackage{multirow}
+           \usepackage[a4paper,margin=1in,landscape]{geometry}
+
+           \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||cc||cc||cc||cc||cc||cc||}
+\hline
+ & \multicolumn{2}{c||}{Coverage (\%)}&\multicolumn{2}{c||}{Time (s)}&\multicolumn{2}{c||}{Bound $n$}&\multicolumn{2}{c||}{$|\pi|$}&\multicolumn{2}{c||}{$|\mathcal{X} \cup \mathcal{A}^\prec \cup \mathcal{X}'|$}&\multicolumn{2}{c||}{$|\mathcal{T}^\prec(\mathcal{X},\mathcal{A}^\prec,\mathcal{X}')|$}\\
+Domain & $P_E$&$P_M$&$P_E$&$P_M$&$P_E$&$P_M$&$P_E$&$P_M$&$P_E$&$P_M$&$P_E$&$P_M$\\
+\hline
+\textsc{BlockGrouping} (S)&\textbf{100}&65&\textbf{1.9}&9.3&\textbf{1.0}&\textbf{1.0}&250&\textbf{86}&\textbf{131}&\textbf{131}&\textbf{321}&\textbf{321}\\
+\textsc{Counters} (S)&\textbf{100}&\textbf{100}&\textbf{1.0}&4.1&\textbf{1.0}&\textbf{1.0}&475&\textbf{352}&\textbf{92}&\textbf{92}&\textbf{228}&\textbf{228}\\
+\textsc{Counters} (L)&\textbf{100}&45&\textbf{1.0}&7.0&\textbf{1.0}&\textbf{1.0}&56&\textbf{20}&\textbf{52}&\textbf{52}&\textbf{108}&\textbf{108}\\
+\textsc{Delivery} (S)&\textbf{25}&15&7.6&\textbf{2.7}&\textbf{1.7}&\textbf{1.7}&18&\textbf{16}&\textbf{566}&\textbf{566}&\textbf{1661}&\textbf{1661}\\
+\textsc{Drone} (S)&\textbf{15}&10&4.6&\textbf{1.3}&\textbf{4.0}&\textbf{4.0}&11&\textbf{7}&\textbf{164}&\textbf{164}&\textbf{421}&\textbf{421}\\
+\textsc{Expedition} (S)&\textbf{15}&\textbf{15}&\textbf{4.4}&8.0&\textbf{4.0}&\textbf{4.0}&54&\textbf{41}&\textbf{430}&\textbf{430}&\textbf{973}&\textbf{973}\\
+\textsc{Farmland} (S)&\textbf{100}&45&\textbf{0.9}&4.7&\textbf{1.0}&\textbf{1.0}&408&\textbf{292}&\textbf{27}&\textbf{27}&\textbf{55}&\textbf{55}\\
+\textsc{Farmland} (L)&\textbf{100}&10&\textbf{2.0}&10.5&\textbf{1.0}&\textbf{1.0}&200&\textbf{14}&\textbf{16}&\textbf{16}&\textbf{28}&\textbf{28}\\
+\textsc{HydroPower} (S)&\textbf{100}&TBD&\textbf{11.1}&TBD&\textbf{1.0}&TBD&\textbf{206}&TBD&\textbf{352}&TBD&\textbf{725}&TBD\\
+\textsc{MPrime} (S)&\textbf{50}&20&5.6&\textbf{3.4}&\textbf{1.2}&\textbf{1.2}&46&\textbf{6}&\textbf{266}&\textbf{266}&\textbf{696}&\textbf{696}\\
+\textsc{PathwaysMetric} (S)&\textbf{100}&15&6.8&\textbf{5.2}&\textbf{1.0}&\textbf{1.0}&256&\textbf{39}&\textbf{505}&\textbf{505}&\textbf{805}&\textbf{805}\\
+\textsc{PlantWatering} (S)&\textbf{25}&TBD&\textbf{7.5}&TBD&\textbf{7.6}&TBD&\textbf{309}&TBD&\textbf{540}&TBD&\textbf{1486}&TBD\\
+\textsc{Rover} (S)&\textbf{50}&30&\textbf{5.9}&8.1&\textbf{1.3}&\textbf{1.3}&54&\textbf{13}&\textbf{295}&\textbf{295}&\textbf{676}&\textbf{676}\\
+\textsc{Sailing} (S)&\textbf{100}&15&2.1&\textbf{1.3}&\textbf{1.0}&\textbf{1.0}&259&\textbf{186}&\textbf{35}&\textbf{35}&\textbf{52}&\textbf{52}\\
+\textsc{Sailing} (L)&\textbf{90}&10&\textbf{2.5}&6.3&\textbf{1.0}&\textbf{1.0}&146&\textbf{68}&\textbf{29}&\textbf{29}&\textbf{68}&\textbf{68}\\
+\textsc{Satellite} (S)&\textbf{5}&TBD&\textbf{13.7}&TBD&\textbf{3.0}&TBD&\textbf{71}&TBD&\textbf{1132}&TBD&\textbf{2928}&TBD\\
+\textsc{Sugar} (S)&\textbf{100}&20&\textbf{6.3}&15.5&\textbf{1.8}&\textbf{1.8}&29&\textbf{16}&\textbf{747}&\textbf{747}&\textbf{1754}&\textbf{1754}\\
+\textsc{TPP} (L)&\textbf{10}&5&11.3&\textbf{3.4}&\textbf{2.0}&\textbf{2.0}&12&\textbf{7}&\textbf{317}&\textbf{317}&\textbf{741}&\textbf{741}\\
+\textsc{ZenoTravel} (S)&\textbf{55}&40&5.4&\textbf{1.6}&\textbf{1.5}&\textbf{1.5}&13&\textbf{11}&\textbf{321}&\textbf{321}&\textbf{935}&\textbf{935}\\
+\textsc{LineExchange} (L)&\textbf{100}&80&\textbf{1.1}&6.0&\textbf{2.5}&\textbf{2.5}&209&\textbf{178}&\textbf{135}&\textbf{135}&\textbf{317}&\textbf{317}
+\\\hline
+\textit{Total}&\textbf{20}&\textbf{2}&\textbf{13}&\textbf{7}&\textbf{20}&\textbf{17}&\textbf{3}&\textbf{17}&\textbf{20}&\textbf{17}&\textbf{20}&\textbf{17}\\\hline
+
+        \end{tabular}}
+        \caption{}
+        \label{tab:experiments}
+        \end{table*}
+        
+\end{document}
