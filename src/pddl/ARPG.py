@@ -97,7 +97,11 @@ class ARPG:
         order = list()
         for layer in layers:
             if enhanced:
-                order += sorted([PatternAction.fromAction(a) for a in layer])
+                sortedLayer = sorted([PatternAction.fromAction(a) for a in layer])
+                for (a, b) in zip(sortedLayer[:-1], sortedLayer[1:]):
+                    if not a < b or a > b:
+                        raise Exception(f"Total order not respected: ({a}) < ({b}) = {a < b}, ({a}) > ({b}) = {a > b}")
+                order += sortedLayer
             else:
                 order += sorted(layer)
 

@@ -48,11 +48,12 @@ class PatternAction(Action):
         a = self
         a_ = other
 
-        if a.interferesWithEffects(a_) or a_.interferesWithEffects(a):
+        if a.interferesWithEffects(a_) and a_.interferesWithEffects(a):
             return a.name < a_.name
-        if a.blocks(a_):
+
+        if a.blocks(a_) and not a_.blocks(a):
             return False
-        if a_.blocks(a):
+        if a_.blocks(a) and not a.blocks(a_):
             return True
         if a.supports(a_) and not a_.interferes(a):
             return True
