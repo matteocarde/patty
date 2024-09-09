@@ -11,9 +11,10 @@ from src.pddl.Literal import Literal
 
 
 class PatternAction(Action):
-    simpleAssignments: Dict[Atom, float or bool]
+    simpleAssignedAtoms: Set[Atom]
     assignedAtoms: Set[Atom]
     linearlyIncrementedAtoms: Set[Atom]
+    constantAssignments: Dict[Atom, float or bool]
 
     def __init__(self):
         super().__init__()
@@ -26,18 +27,22 @@ class PatternAction(Action):
 
         pa.assignedAtoms = set()
         pa.linearlyIncrementedAtoms = set()
-        pa.simpleAssignments = dict()
+        pa.simpleAssignedAtoms = set()
+        pa.constantAssignments = dict()
         for e in pa.effects:
             if isinstance(e, BinaryPredicate):
                 x = e.getAtom()
                 pa.assignedAtoms.add(x)
                 if e.isLinearIncrement():
                     pa.linearlyIncrementedAtoms.add(x)
+                if not e.rhs.getFunctions().intersection(action.influencedAtoms):
+                    pa.simpleAssignedAtoms.add(x)
                 if isinstance(e.rhs, Constant) and e.operator == "assign":
-                    pa.simpleAssignments[x] = e.rhs.value
+                    pa.constantAssignments[x] = e.rhs.value
             elif isinstance(e, Literal):
                 x = e.getAtom()
-                pa.simpleAssignments[x] = True if e.sign == "+" else False
+                pa.simpleAssignedAtoms.add(x)
+                pa.constantAssignments[x] = True if e.sign == "+" else False
                 pa.assignedAtoms.add(x)
 
         return pa
@@ -68,18 +73,18 @@ class PatternAction(Action):
         return not self.__notInterferesWithEffects(a_)
 
     def __notInterferesWithEffects(self, a_: PatternAction) -> bool:
-        a = self
+        a: PatternAction = self
         for x in self.assignedAtoms:
             res = x not in a_.assignedAtoms or \
                   (x in a.linearlyIncrementedAtoms and x in a_.linearlyIncrementedAtoms) or \
-                  (x in a.simpleAssignments and x in a_.simpleAssignments)
+                  (x in a.simpleAssignedAtoms and x in a_.simpleAssignedAtoms)
             if not res:
                 return False
         return True
 
     def blocks(self, a_: PatternAction) -> bool:
         for pre in a_.preconditions:
-            if not pre.canHappen(self.simpleAssignments):
+            if not pre.canHappen(self.constantAssignments):
                 return True
         return False
 
@@ -87,6 +92,6 @@ class PatternAction(Action):
         if not self.interferes(a_):
             return False
         for pre in a_.preconditions:
-            if not pre.isValid(self.simpleAssignments):
+            if not pre.isValid(self.constantAssignments):
                 return False
         return True

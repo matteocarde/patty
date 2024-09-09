@@ -11,7 +11,7 @@ class PatternActionGraph:
 
     def __init__(self, actionList: Set[Action]):
 
-        patternActions = [PatternAction.fromAction(a) for a in actionList]
+        patternActions = sorted([PatternAction.fromAction(a) for a in actionList])
 
         self.graphDict = dict()
         for a in patternActions:

@@ -111,7 +111,7 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2024-09-06-AIJ-v6"
+    exp = "2024-09-06-AIJ-v8"
     file = f"benchmarks/results/csv/{exp}.csv"
 
     CloudLogger.saveLogs(exp, file)
@@ -277,7 +277,7 @@ def main():
         "columns": {
             "coverage": ("Coverage (\%)", {"SMT", "SEARCH"}, "count"),
             "time": ("Time (s)", {"SMT", "SEARCH"}, "count"),
-            "bound": (r"$n$ - Calls to \smt solver", {"SMT"}, "count"),
+            "bound": (r"Bound $n$", {"SMT"}, "count"),
             "length": (r"$|\pi|$", {"SMT"}, "count"),
             "nOfVars": ("$|\mathcal{X} \cup \mathcal{A}^\prec \cup \mathcal{X}'|$", {"SMT"}, "count"),
             "nOfRules": ("$|\mathcal{T}^\prec(\mathcal{X},\mathcal{A}^\prec,\mathcal{X}')|$", {"SMT"}, "count"),
@@ -285,10 +285,10 @@ def main():
             # "lastCallsToSolver": (r"$\textsc{Solve}(\Pi^\prec)$ calls", {"SMT"}),
         },
         "planners": [{
-            'PATTY-R-MIN': "SMT",
-            'PATTY-R-AVG': "SMT",
-            'PATTY-R-MAX': "SMT",
-            'PATTY-A': "SMT",
+            # 'PATTY-R-MIN': "SMT",
+            # 'PATTY-R-AVG': "SMT",
+            # 'PATTY-R-MAX': "SMT",
+            # 'PATTY-A': "SMT",
             'PATTY-E': "SMT",
             'PATTY-M': "SMT",
             # 'PATTY-H': "SMT",
