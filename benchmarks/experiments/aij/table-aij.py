@@ -9,7 +9,7 @@ from classes.CloudLogger import CloudLogger
 from classes.Result import Result
 
 SMT_SOLVERS = {'SpringRoll', "PATTY-R", "PATTY-A", "PATTY-E", "PATTY-M", 'RANTANPLAN', "OMT"}
-TIME_LIMIT = 300 * 1000
+TIME_LIMIT = 30 * 1000
 
 SOLVERS = {
     'SpringRoll': "SR",
@@ -106,7 +106,7 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2024-09-06-AIJ-v2"
+    exp = "2024-09-06-AIJ-v3"
     file = f"benchmarks/results/{exp}.csv"
 
     CloudLogger.saveLogs(exp, file)
@@ -216,7 +216,7 @@ def main():
             v = [r.time / 1000 if r.solved else TIME_LIMIT / 1000 for r in pResult]
             t[domain]["time"][solver] = rVec(v, 1) if hasCoverage else "-"
 
-            v = [r.planLength for r in pResult if r.solved]
+            v = [r.planLength for r in pResult if r.solved and r.problem in commonlySolved]
             t[domain]["length"][solver] = rVec(v, 0) if hasCoverage else "-"
 
             v = [r.nOfVars for r in pResult if r.nOfVars > 0 and r.problem in commonlySolved]

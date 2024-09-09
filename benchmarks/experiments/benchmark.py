@@ -111,7 +111,8 @@ def main():
                 s3.put_object(
                     Key=f"{envs.experiment}/{r.solver}/{r.domain}/plans/{r.problem}.txt",
                     Bucket="patty-benchmarks",
-                    Body=bytes(r.stdout, 'utf-8')
+                    Body=bytes(r.stdout, 'utf-8'),
+                    ContentType='text/plain'
                 )
 
         except Exception as error:
