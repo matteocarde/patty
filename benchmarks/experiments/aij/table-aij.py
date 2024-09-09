@@ -111,7 +111,7 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2024-09-06-AIJ-v5"
+    exp = "2024-09-06-AIJ-v6"
     file = f"benchmarks/results/csv/{exp}.csv"
 
     CloudLogger.saveLogs(exp, file)

@@ -28,7 +28,7 @@ class Planner:
             return r
         if not r.timeout and not r.solved:
             print(r.stdout)
-            logger.error(r.toJSON())
+            logger.error(r)
         else:
             r.solved = False
             r.time = timeout * 1000
