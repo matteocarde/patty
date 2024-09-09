@@ -106,8 +106,8 @@ def main():
             print(r)
             if not r.solved:
                 print(r.stdout)
-            logger.log(r.toCSV())
             if r.solved:
+                logger.log(r.toCSV())
                 s3.put_object(
                     Key=f"{envs.experiment}/{r.solver}/{r.domain}/plans/{r.problem}.txt",
                     Bucket="patty-benchmarks",

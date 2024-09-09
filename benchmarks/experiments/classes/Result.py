@@ -195,3 +195,6 @@ class Result(dict):
                 results.append(Result.max(problems, f"{randomSolver}-MAX"))
 
         return results
+
+    def toJSON(self):
+        return json.dumps(self.__dict__)
