@@ -111,7 +111,7 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2024-09-06-AIJ-v10"
+    exp = "2024-09-06-AIJ-v11"
     file = f"benchmarks/results/csv/{exp}.csv"
 
     CloudLogger.saveLogs(exp, file)
@@ -285,10 +285,10 @@ def main():
             # "lastCallsToSolver": (r"$\textsc{Solve}(\Pi^\prec)$ calls", {"SMT"}),
         },
         "planners": [{
-            # 'PATTY-R-MIN': "SMT",
-            # 'PATTY-R-AVG': "SMT",
-            # 'PATTY-R-MAX': "SMT",
-            # 'PATTY-A': "SMT",
+            'PATTY-R-MIN': "SMT",
+            'PATTY-R-AVG': "SMT",
+            'PATTY-R-MAX': "SMT",
+            'PATTY-A': "SMT",
             'PATTY-E': "SMT",
             'PATTY-M': "SMT",
             # 'PATTY-H': "SMT",
@@ -394,7 +394,7 @@ def main():
                             if type not in statTypes:
                                 continue
                             if solver not in t[domain][stat]:
-                                row.append("TBD")
+                                row.append("-")
                                 continue
                             if solver in best[i][domain][stat]:
                                 row.append(r"\textbf{" + t[domain][stat][solver] + "}")

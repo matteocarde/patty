@@ -44,18 +44,14 @@ class AStarSearchMax(Search):
                 problem=self.problem,
                 pattern=patF,
                 bound=1,
-                relaxGoal=True,
-                subgoalsAchieved=subgoalsAchieved,
-                encoding=self.args.encoding,
-                rollBound=self.args.rollBound,
-                hasEffectAxioms=self.args.hasEffectAxioms
+                args=self.args
             )
             self.ts.end(f"Conversion to SMT at bound {bound}", console=self.console)
             self.console.log(f"Bound {bound} - Vars = {pddl2smt.getNVars()}", LogPrintLevel.STATS)
             self.console.log(f"Bound {bound} - Rules = {pddl2smt.getNRules()}", LogPrintLevel.STATS)
 
             self.ts.start(f"Solving Bound {bound}", console=self.console)
-            solver: SMTSolver = SMTSolver(pddl2smt, maximize=True)
+            solver: SMTSolver = SMTSolver(pddl2smt)
             callsToSolver += 1
             plan: NumericPlan = solver.solve()
             solver.exit()

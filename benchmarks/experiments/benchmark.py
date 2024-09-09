@@ -35,6 +35,8 @@ PLANNERS: Dict[str, Planner] = {
     "PATTY-R": Patty("PATTY-R", search="step", pattern="random", quality="none"),
     "PATTY-A": Patty("PATTY-A", search="step", pattern="arpg", quality="none"),
     "PATTY-E": Patty("PATTY-E", search="step", pattern="enhanced", quality="none"),
+    "PATTY-FA": Patty("PATTY-FA", search="astar", pattern="arpg", quality="none"),
+    "PATTY-FE": Patty("PATTY-FE", search="astar", pattern="enhanced", quality="none"),
     "PATTY-M": Patty("PATTY-M", search="step", pattern="enhanced", quality="shortest-step"),
     "SPRINGROLL": SpringRoll(),
 
