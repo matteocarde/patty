@@ -15,8 +15,8 @@ from src.utils.LogPrint import LogPrintLevel
 class AStarSearchMax(Search):
 
     def __init__(self, domain: GroundedDomain, problem: Problem, args: Arguments):
-        self.useSCCs = args.useSCCs
         super().__init__(domain, problem, args)
+        self.enhanced = self.args.pattern == "enhanced"
 
     def solve(self) -> NumericPlan:
         callsToSolver = 0
@@ -29,7 +29,7 @@ class AStarSearchMax(Search):
         s: State = initialState
 
         patG: Pattern = Pattern.fromOrder([])
-        patH: Pattern = Pattern.fromState(s, self.problem.goal, self.domain, useSCCs=self.useSCCs)
+        patH: Pattern = Pattern.fromState(s, self.problem.goal, self.domain, enhanced=self.enhanced)
 
         while bound <= self.maxBound:
 
@@ -44,7 +44,9 @@ class AStarSearchMax(Search):
                 problem=self.problem,
                 pattern=patF,
                 bound=1,
-                args=self.args
+                args=self.args,
+                relaxGoal=True,
+                subgoalsAchieved=subgoalsAchieved
             )
             self.ts.end(f"Conversion to SMT at bound {bound}", console=self.console)
             self.console.log(f"Bound {bound} - Vars = {pddl2smt.getNVars()}", LogPrintLevel.STATS)
@@ -77,7 +79,7 @@ class AStarSearchMax(Search):
                                  LogPrintLevel.STATS)
                 patG = Pattern.fromPlan(plan) if not self.args.noCompression else patF
                 patG.addPostfix("G")
-                patH = Pattern.fromState(state, self.problem.goal, self.domain, useSCCs=self.useSCCs)
+                patH = Pattern.fromState(state, self.problem.goal, self.domain, enhanced=self.enhanced)
             else:
                 patF.addPostfix(bound)
                 patG = patF

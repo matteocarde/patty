@@ -67,6 +67,7 @@ class Encoding:
                 # Assert formula
                 script.add_command(pysmt.smtlib.script.SmtLibCommand(name=smtcmd.ASSERT,
                                                                      args=[r.expression]))
+
             # check-sat
             script.add_command(pysmt.smtlib.script.SmtLibCommand(name=smtcmd.CHECK_SAT,
                                                                  args=[]))

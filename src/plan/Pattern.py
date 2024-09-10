@@ -115,9 +115,9 @@ class Pattern:
         return Pattern.fromOrder(order)
 
     @classmethod
-    def fromState(cls, state: State, goal: Goal, domain: GroundedDomain, useSCCs=False):
+    def fromState(cls, state: State, goal: Goal, domain: GroundedDomain, enhanced=False):
         arpg: ARPG = ARPG(domain, state, goal, avoidRaising=True)
-        order = arpg.getActionsOrder(useSCCs)
+        order = arpg.getActionsOrder(enhanced)
         return order and Pattern.fromOrder(order)
 
     def addPostfix(self, postfix: int or str):
