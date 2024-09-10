@@ -1,5 +1,7 @@
 import traceback
 
+from z3 import z3
+
 from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.Plan import Plan
 from src.pddl.Problem import Problem
@@ -18,6 +20,7 @@ def main():
         exit(0)
 
     try:
+        print(f"Using z3 version {z3.get_version_string()}")
         console: LogPrint = LogPrint(args.verboseLevel)
         ts: TimeStat = TimeStat()
         ts.start("Overall")
