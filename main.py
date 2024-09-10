@@ -18,7 +18,6 @@ def main():
         exit(0)
 
     try:
-
         console: LogPrint = LogPrint(args.verboseLevel)
         ts: TimeStat = TimeStat()
         ts.start("Overall")

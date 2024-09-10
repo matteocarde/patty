@@ -11,7 +11,7 @@ PLANNERS = [
     "PATTY-FE",
     "PATTY-M",
     # "SPRINGROLL",
-    # "ENHSP-HADD",
+    # "ENHSP-SAT-HADD",
     # "ENHSP-HRADD",
     # "ENHSP-HMRP",
     # "METRIC-FF",

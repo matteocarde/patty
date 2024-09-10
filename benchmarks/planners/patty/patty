@@ -1,2 +1,2 @@
 #!/bin/bash
-python /project/main.py $@
+python -u /project/main.py $@

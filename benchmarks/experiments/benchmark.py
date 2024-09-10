@@ -111,7 +111,7 @@ def main():
 
             logger.log(r.toCSV())
             s3.put_object(
-                Key=f"{envs.experiment}/{r.solver}/{r.domain}/plans/{r.problem}-{'unsolved' if not r.solved else ''}.txt",
+                Key=f"{envs.experiment}/{r.solver}/{r.domain}/plans/{r.problem}{'-unsolved' if not r.solved else ''}.txt",
                 Bucket="patty-benchmarks",
                 Body=bytes(r.stdout, 'utf-8'),
                 ContentType='text/plain'

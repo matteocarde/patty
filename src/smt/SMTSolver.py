@@ -1,3 +1,4 @@
+import signal
 from typing import Set, List, Dict
 
 from pysmt.logics import QF_NRA
@@ -33,6 +34,9 @@ class SMTSolver:
             self.addAssertions(self.encoding.rules)
             self.addSoftAssertions(self.encoding.softRules)
             self.setMinimize(self.encoding.minimize)
+
+        # signal.signal(signal.SIGTERM, self.z3.exit)
+        # signal.signal(signal.SIGINT, self.z3.exit)
 
     def addAssertion(self, expr: SMTExpression, push=True):
         self.assertions.append(expr)

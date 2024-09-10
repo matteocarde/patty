@@ -129,13 +129,6 @@ COPY /benchmarks/planners/enhsp /var/enhsp
 ENV PATH /var/enhsp/:${PATH}
 RUN chmod +x /var/enhsp/enhsp
 
-# Install patty
-COPY /benchmarks/planners/patty /var/patty
-ENV PATH /var/patty/:${PATH}
-RUN chmod +x /var/patty/patty
-RUN apt-get install -y time
-RUN conda env export
-
 # Create conda env
 COPY environment.yml environment.yml
 RUN conda env update --file environment.yml
@@ -165,6 +158,13 @@ COPY /benchmarks/planners/omtplan /var/omtplan
 ENV PATH /var/omtplan/:${PATH}
 RUN chmod +x /var/omtplan/omtplan
 
+# Install patty
+COPY /benchmarks/planners/patty /var/patty
+ENV PATH /var/patty/:${PATH}
+RUN chmod +x /var/patty/patty
+RUN apt-get install -y time
+RUN conda env export
+
 RUN pip install tarjan prettytable graphlib-backport
 
 WORKDIR /project
@@ -175,4 +175,4 @@ COPY . .
 RUN chmod +x exes/*
 
 #Execution
-ENTRYPOINT ["conda", "run", "--no-capture-output", "-n", "patty", "./exes/run.sh"]
+ENTRYPOINT ["conda", "run", "--live-stream", "-n", "patty", "./exes/run.sh"]

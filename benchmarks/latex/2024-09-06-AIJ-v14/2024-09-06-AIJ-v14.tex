@@ -1,0 +1,46 @@
+
+           \documentclass[11pt,landscape]{article}
+           \usepackage{graphicx}
+           \usepackage{lscape}
+           \usepackage{multirow}
+           \usepackage[a4paper,margin=1in,landscape]{geometry}
+
+           \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||cccc||cccc||cccc||cccc||cccc||cccc||}
+\hline
+ & \multicolumn{4}{c||}{Coverage (\%)}&\multicolumn{4}{c||}{Time (s)}&\multicolumn{4}{c||}{Bound $n$}&\multicolumn{4}{c||}{$|\pi|$}&\multicolumn{4}{c||}{$|\mathcal{X} \cup \mathcal{A}^\prec \cup \mathcal{X}'|$}&\multicolumn{4}{c||}{$|\mathcal{T}^\prec(\mathcal{X},\mathcal{A}^\prec,\mathcal{X}')|$}\\
+Domain & $P_A$&$P_E$&$P_{FA}$&$P_{FE}$&$P_A$&$P_E$&$P_{FA}$&$P_{FE}$&$P_A$&$P_E$&$P_{FA}$&$P_{FE}$&$P_A$&$P_E$&$P_{FA}$&$P_{FE}$&$P_A$&$P_E$&$P_{FA}$&$P_{FE}$&$P_A$&$P_E$&$P_{FA}$&$P_{FE}$\\
+\hline
+\textsc{BlockGrouping} (S)&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{1.7}&1.8&\textbf{1.7}&\textbf{1.7}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&251&244&255&\textbf{242}&\textbf{131}&\textbf{131}&\textbf{131}&\textbf{131}&\textbf{321}&\textbf{321}&\textbf{321}&\textbf{321}\\
+\textsc{Counters} (S)&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{0.9}&\textbf{0.9}&\textbf{0.9}&\textbf{0.9}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{475}&\textbf{475}&\textbf{475}&\textbf{475}&\textbf{92}&\textbf{92}&\textbf{92}&\textbf{92}&\textbf{228}&\textbf{228}&\textbf{228}&\textbf{228}\\
+\textsc{Counters} (L)&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{100}&1.0&1.0&\textbf{0.9}&1.0&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{56}&58&\textbf{56}&58&\textbf{52}&\textbf{52}&\textbf{52}&\textbf{52}&\textbf{108}&\textbf{108}&\textbf{108}&\textbf{108}\\
+\textsc{Delivery} (S)&15&20&\textbf{25}&\textbf{25}&26.4&24.9&\textbf{24.0}&\textbf{24.0}&3.3&\textbf{1.7}&3.3&3.3&26&\textbf{18}&19&22&1082&566&\textbf{509}&510&3277&\textbf{1661}&1746&1749\\
+\textsc{Drone} (S)&15&15&\textbf{30}&\textbf{30}&26.1&26.5&\textbf{23.1}&23.3&\textbf{4.0}&\textbf{4.0}&4.5&5.0&\textbf{11}&\textbf{11}&\textbf{11}&18&164&164&\textbf{68}&74&421&421&\textbf{136}&152\\
+\textsc{Expedition} (S)&10&\textbf{15}&10&10&27.8&\textbf{26.0}&27.8&27.8&6.0&\textbf{3.0}&7.0&7.0&49&46&\textbf{39}&\textbf{39}&534&\textbf{286}&297&297&1272&\textbf{656}&918&918\\
+\textsc{Farmland} (S)&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{0.9}&\textbf{0.9}&\textbf{0.9}&\textbf{0.9}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{408}&\textbf{408}&\textbf{408}&\textbf{408}&\textbf{27}&\textbf{27}&\textbf{27}&\textbf{27}&\textbf{55}&\textbf{55}&\textbf{55}&\textbf{55}\\
+\textsc{Farmland} (L)&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{1.9}&\textbf{1.9}&\textbf{1.9}&2.0&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{200}&\textbf{200}&\textbf{200}&\textbf{200}&\textbf{16}&\textbf{16}&\textbf{16}&\textbf{16}&\textbf{28}&\textbf{28}&\textbf{28}&\textbf{28}\\
+\textsc{HydroPower} (S)&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{100}&11.3&11.4&\textbf{10.7}&11.0&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{66}&\textbf{66}&\textbf{66}&\textbf{66}&\textbf{352}&\textbf{352}&\textbf{352}&\textbf{352}&\textbf{725}&\textbf{725}&\textbf{725}&\textbf{725}\\
+\textsc{MPrime} (S)&45&\textbf{50}&45&45&20.2&\textbf{17.9}&20.5&20.5&2.2&\textbf{1.2}&2.8&2.8&78&\textbf{47}&86&93&512&\textbf{266}&374&374&1308&\textbf{696}&1164&1164\\
+\textsc{PathwaysMetric} (S)&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{100}&6.3&6.6&6.3&\textbf{6.2}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{256}&\textbf{256}&\textbf{256}&\textbf{256}&\textbf{505}&\textbf{505}&\textbf{505}&\textbf{505}&\textbf{805}&\textbf{805}&\textbf{805}&\textbf{805}\\
+\textsc{PlantWatering} (S)&25&25&\textbf{100}&95&24.4&24.4&12.8&\textbf{12.7}&\textbf{7.3}&\textbf{7.3}&8.3&9.0&305&\textbf{288}&306&318&501&501&\textbf{189}&198&1378&1378&\textbf{466}&492\\
+\textsc{Rover} (S)&40&\textbf{45}&40&\textbf{45}&20.0&\textbf{18.5}&20.0&20.4&2.0&\textbf{1.3}&2.3&2.3&51&57&48&\textbf{38}&546&295&\textbf{244}&\textbf{244}&1129&\textbf{676}&712&710\\
+\textsc{Sailing} (S)&95&\textbf{100}&\textbf{100}&\textbf{100}&2.8&2.0&\textbf{0.9}&\textbf{0.9}&\textbf{1.2}&\textbf{1.2}&\textbf{1.2}&\textbf{1.2}&525&525&\textbf{435}&\textbf{435}&46&46&\textbf{38}&\textbf{38}&75&75&\textbf{60}&\textbf{60}\\
+\textsc{Sailing} (L)&90&\textbf{95}&\textbf{95}&\textbf{95}&6.0&6.2&2.8&\textbf{2.5}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{146}&\textbf{146}&\textbf{146}&\textbf{146}&\textbf{29}&\textbf{29}&\textbf{29}&\textbf{29}&\textbf{68}&\textbf{68}&\textbf{68}&\textbf{68}\\
+\textsc{Satellite} (S)&5&5&\textbf{25}&20&28.8&28.9&\textbf{24.9}&25.4&\textbf{3.0}&\textbf{3.0}&4.0&4.0&50&44&\textbf{41}&\textbf{41}&1132&1132&\textbf{387}&\textbf{387}&2928&2928&\textbf{982}&\textbf{982}\\
+\textsc{Sugar} (S)&95&\textbf{100}&95&\textbf{100}&9.7&6.2&7.1&\textbf{6.1}&2.3&\textbf{1.8}&3.2&3.2&37&\textbf{36}&42&42&1022&824&\textbf{733}&\textbf{733}&2444&\textbf{1949}&2142&2142\\
+\textsc{TPP} (L)&\textbf{10}&\textbf{10}&\textbf{10}&\textbf{10}&28.4&27.9&\textbf{27.1}&\textbf{27.1}&\textbf{2.0}&\textbf{2.0}&\textbf{2.0}&\textbf{2.0}&\textbf{9}&10&14&14&317&317&\textbf{171}&\textbf{171}&741&741&\textbf{364}&\textbf{364}\\
+\textsc{ZenoTravel} (S)&50&\textbf{55}&\textbf{55}&\textbf{55}&16.7&15.8&\textbf{15.0}&15.2&\textbf{1.5}&\textbf{1.5}&\textbf{1.5}&\textbf{1.5}&14&14&14&\textbf{13}&321&321&\textbf{256}&\textbf{256}&935&935&\textbf{750}&\textbf{750}\\
+\textsc{LineExchange} (L)&\textbf{100}&\textbf{100}&98&99&1.6&\textbf{1.0}&2.5&2.0&3.9&\textbf{2.4}&5.6&5.5&217&\textbf{201}&265&258&200&131&129&\textbf{127}&486&\textbf{309}&352&343
+\\\hline
+\textit{Total}&\textbf{9}&\textbf{16}&\textbf{15}&\textbf{15}&\textbf{4}&\textbf{7}&\textbf{12}&\textbf{10}&\textbf{14}&\textbf{20}&\textbf{11}&\textbf{11}&\textbf{9}&\textbf{12}&\textbf{11}&\textbf{12}&\textbf{8}&\textbf{10}&\textbf{17}&\textbf{15}&\textbf{8}&\textbf{14}&\textbf{14}&\textbf{12}\\\hline
+
+        \end{tabular}}
+        \caption{}
+        \label{tab:experiments}
+        \end{table*}
+        
+\end{document}
