@@ -26,7 +26,7 @@ class NumericEncoding(Encoding):
     problem: Problem
 
     def __init__(self, domain: GroundedDomain, problem: Problem, pattern: Pattern, bound: int,
-                 args: Arguments, relaxGoal=False, subgoalsAchieved=None):
+                 args: Arguments, relaxGoal=False, subgoalsAchieved=None, minimizeQuality=False):
 
         super().__init__(domain, problem, pattern, bound)
         self.domain = domain
@@ -37,7 +37,7 @@ class NumericEncoding(Encoding):
         self.subgoalsAchieved = subgoalsAchieved
         self.encoding = args.encoding
         self.rollBound = args.rollBound
-        self.quality = args.quality
+        self.minimizeQuality = minimizeQuality or args.quality == "shortest-step"
         self.binaryActions: int = args.binaryActions
         self.hasEffectAxioms = args.hasEffectAxioms
 
@@ -68,7 +68,7 @@ class NumericEncoding(Encoding):
         self.rules = self.initial + self.transitions + [self.goal]
 
     def getMinimize(self):
-        if self.quality == "shortest-step":
+        if self.minimizeQuality:
             return sum(self.actionVariables)
         return None
 

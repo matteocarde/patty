@@ -7,6 +7,7 @@ from src.pddl.Plan import Plan
 from src.pddl.Problem import Problem
 from src.search.AStarSearchMax import AStarSearchMax
 from src.search.ChainSearch import ChainSearch
+from src.search.PlanImprover import PlanImprover
 from src.search.Search import Search
 from src.search.StepSearch import StepSearch
 from src.utils.Arguments import Arguments
@@ -40,6 +41,16 @@ def main():
         else:
             solver = ChainSearch(gDomain, problem, args)
         plan: Plan = solver.solve()
+
+        if args.quality == "improve-plan":
+            ts.start("Improving Plan", console=console)
+            improver = PlanImprover(gDomain, problem, args, plan)
+            improvedPlan = improver.solve()
+            ts.end("Improving Plan", console=console)
+            if improvedPlan:
+                console.log(f"First Plan Length: {len(plan)}", LogPrintLevel.PLAN)
+                console.log(f"Improved Plan Length: {len(improvedPlan)}", LogPrintLevel.PLAN)
+                plan = improvedPlan
 
         console.log(plan.toValString(), LogPrintLevel.PLAN)
         isValid = plan.validate(problem, avoidRaising=True, logger=console)

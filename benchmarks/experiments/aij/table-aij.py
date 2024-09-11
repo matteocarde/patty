@@ -114,7 +114,7 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2024-09-06-AIJ-v16"
+    exp = "2024-09-10-AIJ-v1"
     file = f"benchmarks/results/csv/{exp}.csv"
 
     CloudLogger.saveLogs(exp, file)
@@ -288,14 +288,14 @@ def main():
             # "lastCallsToSolver": (r"$\textsc{Solve}(\Pi^\prec)$ calls", {"SMT"}),
         },
         "planners": [{
-            # 'PATTY-R-MIN': "SMT",
-            # 'PATTY-R-AVG': "SMT",
-            # 'PATTY-R-MAX': "SMT",
+            'PATTY-R-MIN': "SMT",
+            'PATTY-R-AVG': "SMT",
+            'PATTY-R-MAX': "SMT",
             'PATTY-A': "SMT",
             'PATTY-E': "SMT",
+            'PATTY-M': "SMT",
             'PATTY-FA': "SMT",
             'PATTY-FE': "SMT",
-            # 'PATTY-M': "SMT",
             # 'PATTY-H': "SMT",
             # 'PATTY-F': "SMT"
         },

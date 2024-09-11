@@ -44,6 +44,11 @@ class Arguments:
                             shortest-step:      The length of the plan found is the shortest among all the possible 
                                                 plans found at the step in which a plan is found. There could exists 
                                                 shorter plans if searched at higher bounds.
+                            improve-plan:       The quality of the first satisficing plan is improved by passing it
+                                                to another call of encoding in which the plan is put as pattern and
+                                                the plan with minimum length is searched. This doesn't generate 
+                                                optimal plans since the plan found are only optimal among all the 
+                                                plans covered by the first satisficing plan.
                             ''',
                             default="none")
 
