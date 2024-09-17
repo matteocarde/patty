@@ -1,9 +1,8 @@
 from __future__ import annotations
 
 import copy
-
 from itertools import chain
-from typing import Dict, List, cast, Iterable, Tuple, Iterator
+from typing import Dict, List, cast, Iterable, Tuple
 
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate, BinaryPredicateType
@@ -37,6 +36,8 @@ class Effects:
     @classmethod
     def fromNode(cls, node: pddlParser.EffectsContext) -> Effects:
 
+        from src.pddl.ConditionalEffect import ConditionalEffect
+
         effects = cls()
         nodes: [p.EffectContext] = []
 
@@ -50,6 +51,8 @@ class Effects:
                 effects.assignments.append(Literal.fromNode(n.getChild(0)))
             elif type(n) in {p.AtStartEffectContext, p.OverAllEffectContext, p.AtEndEffectContext}:
                 effects.assignments += TimePredicate.fromNode(n)
+            elif isinstance(n, p.CeContext):
+                effects.assignments.append(ConditionalEffect.fromNode(n))
             else:
                 effects.assignments.append(BinaryPredicate.fromNode(n))
 

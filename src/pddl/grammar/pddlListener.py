@@ -332,12 +332,48 @@ class pddlListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by pddlParser#ceCond.
+    def enterCeCond(self, ctx:pddlParser.CeCondContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#ceCond.
+    def exitCeCond(self, ctx:pddlParser.CeCondContext):
+        pass
+
+
+    # Enter a parse tree produced by pddlParser#ceEff.
+    def enterCeEff(self, ctx:pddlParser.CeEffContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#ceEff.
+    def exitCeEff(self, ctx:pddlParser.CeEffContext):
+        pass
+
+
+    # Enter a parse tree produced by pddlParser#ce.
+    def enterCe(self, ctx:pddlParser.CeContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#ce.
+    def exitCe(self, ctx:pddlParser.CeContext):
+        pass
+
+
     # Enter a parse tree produced by pddlParser#effect.
     def enterEffect(self, ctx:pddlParser.EffectContext):
         pass
 
     # Exit a parse tree produced by pddlParser#effect.
     def exitEffect(self, ctx:pddlParser.EffectContext):
+        pass
+
+
+    # Enter a parse tree produced by pddlParser#effectNoCes.
+    def enterEffectNoCes(self, ctx:pddlParser.EffectNoCesContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#effectNoCes.
+    def exitEffectNoCes(self, ctx:pddlParser.EffectNoCesContext):
         pass
 
 
@@ -365,6 +401,15 @@ class pddlListener(ParseTreeListener):
 
     # Exit a parse tree produced by pddlParser#andEffect.
     def exitAndEffect(self, ctx:pddlParser.AndEffectContext):
+        pass
+
+
+    # Enter a parse tree produced by pddlParser#andEffectNoCes.
+    def enterAndEffectNoCes(self, ctx:pddlParser.AndEffectNoCesContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#andEffectNoCes.
+    def exitAndEffectNoCes(self, ctx:pddlParser.AndEffectNoCesContext):
         pass
 
 

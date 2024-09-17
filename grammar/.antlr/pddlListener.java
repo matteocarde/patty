@@ -327,6 +327,16 @@ public interface pddlListener extends ParseTreeListener {
 	 */
 	void exitAssignment(pddlParser.AssignmentContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link pddlParser#durationAssignment}.
+	 * @param ctx the parse tree
+	 */
+	void enterDurationAssignment(pddlParser.DurationAssignmentContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link pddlParser#durationAssignment}.
+	 * @param ctx the parse tree
+	 */
+	void exitDurationAssignment(pddlParser.DurationAssignmentContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link pddlParser#comparation}.
 	 * @param ctx the parse tree
 	 */
@@ -357,6 +367,36 @@ public interface pddlListener extends ParseTreeListener {
 	 */
 	void exitModification(pddlParser.ModificationContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link pddlParser#ceCond}.
+	 * @param ctx the parse tree
+	 */
+	void enterCeCond(pddlParser.CeCondContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link pddlParser#ceCond}.
+	 * @param ctx the parse tree
+	 */
+	void exitCeCond(pddlParser.CeCondContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link pddlParser#ceEff}.
+	 * @param ctx the parse tree
+	 */
+	void enterCeEff(pddlParser.CeEffContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link pddlParser#ceEff}.
+	 * @param ctx the parse tree
+	 */
+	void exitCeEff(pddlParser.CeEffContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link pddlParser#ce}.
+	 * @param ctx the parse tree
+	 */
+	void enterCe(pddlParser.CeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link pddlParser#ce}.
+	 * @param ctx the parse tree
+	 */
+	void exitCe(pddlParser.CeContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link pddlParser#effect}.
 	 * @param ctx the parse tree
 	 */
@@ -366,6 +406,16 @@ public interface pddlListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitEffect(pddlParser.EffectContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link pddlParser#effectNoCes}.
+	 * @param ctx the parse tree
+	 */
+	void enterEffectNoCes(pddlParser.EffectNoCesContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link pddlParser#effectNoCes}.
+	 * @param ctx the parse tree
+	 */
+	void exitEffectNoCes(pddlParser.EffectNoCesContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link pddlParser#andClause}.
 	 * @param ctx the parse tree
@@ -397,6 +447,16 @@ public interface pddlListener extends ParseTreeListener {
 	 */
 	void exitAndEffect(pddlParser.AndEffectContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link pddlParser#andEffectNoCes}.
+	 * @param ctx the parse tree
+	 */
+	void enterAndEffectNoCes(pddlParser.AndEffectNoCesContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link pddlParser#andEffectNoCes}.
+	 * @param ctx the parse tree
+	 */
+	void exitAndEffectNoCes(pddlParser.AndEffectNoCesContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link pddlParser#emptyPrecondition}.
 	 * @param ctx the parse tree
 	 */
@@ -426,6 +486,116 @@ public interface pddlListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitEffects(pddlParser.EffectsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link pddlParser#andDurClause}.
+	 * @param ctx the parse tree
+	 */
+	void enterAndDurClause(pddlParser.AndDurClauseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link pddlParser#andDurClause}.
+	 * @param ctx the parse tree
+	 */
+	void exitAndDurClause(pddlParser.AndDurClauseContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link pddlParser#atStartPre}.
+	 * @param ctx the parse tree
+	 */
+	void enterAtStartPre(pddlParser.AtStartPreContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link pddlParser#atStartPre}.
+	 * @param ctx the parse tree
+	 */
+	void exitAtStartPre(pddlParser.AtStartPreContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link pddlParser#overAllPre}.
+	 * @param ctx the parse tree
+	 */
+	void enterOverAllPre(pddlParser.OverAllPreContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link pddlParser#overAllPre}.
+	 * @param ctx the parse tree
+	 */
+	void exitOverAllPre(pddlParser.OverAllPreContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link pddlParser#atEndPre}.
+	 * @param ctx the parse tree
+	 */
+	void enterAtEndPre(pddlParser.AtEndPreContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link pddlParser#atEndPre}.
+	 * @param ctx the parse tree
+	 */
+	void exitAtEndPre(pddlParser.AtEndPreContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link pddlParser#durativeConditions}.
+	 * @param ctx the parse tree
+	 */
+	void enterDurativeConditions(pddlParser.DurativeConditionsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link pddlParser#durativeConditions}.
+	 * @param ctx the parse tree
+	 */
+	void exitDurativeConditions(pddlParser.DurativeConditionsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link pddlParser#atStartEffect}.
+	 * @param ctx the parse tree
+	 */
+	void enterAtStartEffect(pddlParser.AtStartEffectContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link pddlParser#atStartEffect}.
+	 * @param ctx the parse tree
+	 */
+	void exitAtStartEffect(pddlParser.AtStartEffectContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link pddlParser#overAllEffect}.
+	 * @param ctx the parse tree
+	 */
+	void enterOverAllEffect(pddlParser.OverAllEffectContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link pddlParser#overAllEffect}.
+	 * @param ctx the parse tree
+	 */
+	void exitOverAllEffect(pddlParser.OverAllEffectContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link pddlParser#atEndEffect}.
+	 * @param ctx the parse tree
+	 */
+	void enterAtEndEffect(pddlParser.AtEndEffectContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link pddlParser#atEndEffect}.
+	 * @param ctx the parse tree
+	 */
+	void exitAtEndEffect(pddlParser.AtEndEffectContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link pddlParser#durativeEffect}.
+	 * @param ctx the parse tree
+	 */
+	void enterDurativeEffect(pddlParser.DurativeEffectContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link pddlParser#durativeEffect}.
+	 * @param ctx the parse tree
+	 */
+	void exitDurativeEffect(pddlParser.DurativeEffectContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link pddlParser#andDurativeEffect}.
+	 * @param ctx the parse tree
+	 */
+	void enterAndDurativeEffect(pddlParser.AndDurativeEffectContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link pddlParser#andDurativeEffect}.
+	 * @param ctx the parse tree
+	 */
+	void exitAndDurativeEffect(pddlParser.AndDurativeEffectContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link pddlParser#durativeEffects}.
+	 * @param ctx the parse tree
+	 */
+	void enterDurativeEffects(pddlParser.DurativeEffectsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link pddlParser#durativeEffects}.
+	 * @param ctx the parse tree
+	 */
+	void exitDurativeEffects(pddlParser.DurativeEffectsContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link pddlParser#parameters}.
 	 * @param ctx the parse tree
@@ -467,6 +637,16 @@ public interface pddlListener extends ParseTreeListener {
 	 */
 	void exitOpPrecondition(pddlParser.OpPreconditionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link pddlParser#opDurativeCondition}.
+	 * @param ctx the parse tree
+	 */
+	void enterOpDurativeCondition(pddlParser.OpDurativeConditionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link pddlParser#opDurativeCondition}.
+	 * @param ctx the parse tree
+	 */
+	void exitOpDurativeCondition(pddlParser.OpDurativeConditionContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link pddlParser#opEffect}.
 	 * @param ctx the parse tree
 	 */
@@ -477,6 +657,26 @@ public interface pddlListener extends ParseTreeListener {
 	 */
 	void exitOpEffect(pddlParser.OpEffectContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link pddlParser#opDurativeEffect}.
+	 * @param ctx the parse tree
+	 */
+	void enterOpDurativeEffect(pddlParser.OpDurativeEffectContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link pddlParser#opDurativeEffect}.
+	 * @param ctx the parse tree
+	 */
+	void exitOpDurativeEffect(pddlParser.OpDurativeEffectContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link pddlParser#opDuration}.
+	 * @param ctx the parse tree
+	 */
+	void enterOpDuration(pddlParser.OpDurationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link pddlParser#opDuration}.
+	 * @param ctx the parse tree
+	 */
+	void exitOpDuration(pddlParser.OpDurationContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link pddlParser#action}.
 	 * @param ctx the parse tree
 	 */
@@ -486,6 +686,16 @@ public interface pddlListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAction(pddlParser.ActionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link pddlParser#durativeAction}.
+	 * @param ctx the parse tree
+	 */
+	void enterDurativeAction(pddlParser.DurativeActionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link pddlParser#durativeAction}.
+	 * @param ctx the parse tree
+	 */
+	void exitDurativeAction(pddlParser.DurativeActionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link pddlParser#event}.
 	 * @param ctx the parse tree

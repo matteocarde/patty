@@ -78,11 +78,17 @@ comparation: LP comparator operationSide operationSide RP;
 negatedComparation: LP 'not' comparation RP;
 modification: LP modificator positiveLiteral operationSide RP;
 
-effect:  booleanLiteral | modification;
+ceCond: andClause | orClause | booleanLiteral | negatedComparation | comparation | emptyPrecondition;
+ceEff: effectNoCes | andEffectNoCes;
+ce: LP 'when' cond=ceCond eff=ceEff RP;
+
+effect:  booleanLiteral | modification | ce;
+effectNoCes:  booleanLiteral | modification;
 
 andClause: LP 'and' (andClause | orClause | booleanLiteral | negatedComparation  | comparation)+ RP;
 orClause: LP 'or' (andClause | orClause | booleanLiteral | negatedComparation  | comparation)+ RP;
-andEffect : LP 'and' effect+ RP;
+andEffect: LP 'and' effect+ RP;
+andEffectNoCes: LP 'and' effectNoCes+ RP;
 emptyPrecondition: LP RP;
 preconditions: andClause | orClause | booleanLiteral | negatedComparation | comparation | emptyPrecondition;
 effects: effect | andEffect;

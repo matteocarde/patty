@@ -400,6 +400,18 @@ public class pddlBaseListener implements pddlListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterDurationAssignment(pddlParser.DurationAssignmentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDurationAssignment(pddlParser.DurationAssignmentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterComparation(pddlParser.ComparationContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -436,6 +448,42 @@ public class pddlBaseListener implements pddlListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterCeCond(pddlParser.CeCondContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCeCond(pddlParser.CeCondContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCeEff(pddlParser.CeEffContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCeEff(pddlParser.CeEffContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCe(pddlParser.CeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCe(pddlParser.CeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterEffect(pddlParser.EffectContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -443,6 +491,18 @@ public class pddlBaseListener implements pddlListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitEffect(pddlParser.EffectContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterEffectNoCes(pddlParser.EffectNoCesContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEffectNoCes(pddlParser.EffectNoCesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -484,6 +544,18 @@ public class pddlBaseListener implements pddlListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterAndEffectNoCes(pddlParser.AndEffectNoCesContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAndEffectNoCes(pddlParser.AndEffectNoCesContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterEmptyPrecondition(pddlParser.EmptyPreconditionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -515,6 +587,138 @@ public class pddlBaseListener implements pddlListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitEffects(pddlParser.EffectsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAndDurClause(pddlParser.AndDurClauseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAndDurClause(pddlParser.AndDurClauseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAtStartPre(pddlParser.AtStartPreContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAtStartPre(pddlParser.AtStartPreContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOverAllPre(pddlParser.OverAllPreContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOverAllPre(pddlParser.OverAllPreContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAtEndPre(pddlParser.AtEndPreContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAtEndPre(pddlParser.AtEndPreContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDurativeConditions(pddlParser.DurativeConditionsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDurativeConditions(pddlParser.DurativeConditionsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAtStartEffect(pddlParser.AtStartEffectContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAtStartEffect(pddlParser.AtStartEffectContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOverAllEffect(pddlParser.OverAllEffectContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOverAllEffect(pddlParser.OverAllEffectContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAtEndEffect(pddlParser.AtEndEffectContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAtEndEffect(pddlParser.AtEndEffectContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDurativeEffect(pddlParser.DurativeEffectContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDurativeEffect(pddlParser.DurativeEffectContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAndDurativeEffect(pddlParser.AndDurativeEffectContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAndDurativeEffect(pddlParser.AndDurativeEffectContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDurativeEffects(pddlParser.DurativeEffectsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDurativeEffects(pddlParser.DurativeEffectsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -568,6 +772,18 @@ public class pddlBaseListener implements pddlListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterOpDurativeCondition(pddlParser.OpDurativeConditionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOpDurativeCondition(pddlParser.OpDurativeConditionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterOpEffect(pddlParser.OpEffectContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -580,6 +796,30 @@ public class pddlBaseListener implements pddlListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterOpDurativeEffect(pddlParser.OpDurativeEffectContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOpDurativeEffect(pddlParser.OpDurativeEffectContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOpDuration(pddlParser.OpDurationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOpDuration(pddlParser.OpDurationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterAction(pddlParser.ActionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -587,6 +827,18 @@ public class pddlBaseListener implements pddlListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAction(pddlParser.ActionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDurativeAction(pddlParser.DurativeActionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDurativeAction(pddlParser.DurativeActionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
