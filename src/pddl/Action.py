@@ -6,7 +6,9 @@ from typing import List, Dict, Set
 
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
+from src.pddl.ConditionalEffect import ConditionalEffect
 from src.pddl.Constant import Constant
+from src.pddl.Effects import Effects
 from src.pddl.MooreInterval import MooreInterval
 from src.pddl.Operation import Operation
 from src.pddl.OperationType import OperationType
@@ -150,3 +152,18 @@ class Action(Operation):
         pw.decreaseTab()
         pw.write(")")
         pass
+
+    def toFullCEAction(self) -> Action:
+        effects: Effects = Effects()
+        noConditionCe: ConditionalEffect = ConditionalEffect()
+        for eff in self.effects:
+            if isinstance(eff, ConditionalEffect):
+                effects.addEffect(eff)
+                continue
+
+            noConditionCe.effects.addEffect(eff)
+
+        if noConditionCe.effects:
+            effects.addEffect(noConditionCe)
+
+        return Action.fromProperties(self.name, self.parameters, self.preconditions, effects, self.planName)

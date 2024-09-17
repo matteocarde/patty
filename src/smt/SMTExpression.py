@@ -162,6 +162,11 @@ class SMTExpression:
         expr.type = BOOL
         return expr
 
+    def iff(self, other: SMTExpression):
+        expr = self.__binary(other, Iff, self.expression, other.expression)
+        expr.type = BOOL
+        return expr
+
     def impliedBy(self, other: SMTExpression):
         expr = self.__binary(other, Implies, other.expression, self.expression)
         expr.type = BOOL
@@ -209,6 +214,7 @@ class SMTExpression:
                 return variables[predicate.getAtom()].NOT()
         if isinstance(predicate, Constant):
             return predicate.value
+        raise Exception(f"Don't know how to convert {predicate} to Expression")
 
     @classmethod
     def fromFormula(cls, formula: Formula,
@@ -259,4 +265,3 @@ class SMTExpression:
         exp.expression = TRUE()
         exp.isConstant = True
         return exp
-

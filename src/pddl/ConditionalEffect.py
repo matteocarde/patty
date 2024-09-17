@@ -15,6 +15,8 @@ class ConditionalEffect(Predicate):
 
     def __init__(self):
         super().__init__()
+        self.conditions = CEConditions()
+        self.effects = CEEffects()
 
     @classmethod
     def fromNode(cls, node: p.CeContext):
