@@ -6,7 +6,7 @@ from natsort import natsort
 PLANNERS = [
     # "PATTY-R",
     # "PATTY-A",
-    # "PATTY-E",
+    "PATTY-E",
     # "PATTY-FA",
     # "PATTY-FE",
     "PATTY-M",

@@ -10,7 +10,7 @@ from classes.CloudLogger import CloudLogger
 from classes.Result import Result
 
 SMT_SOLVERS = {'SpringRoll',
-               "PATTY-R-MIN", "PATTY-R-MAX", "PATTY-R-AVG", "PATTY-A", "PATTY-E", "PATTY-M",
+               "PATTY-R-MIN", "PATTY-R-MAX", "PATTY-R-AVG", "PATTY-A", "PATTY-E", "PATTY-M", "PATTY-I",
                'RANTANPLAN',
                "OMT"}
 TIME_LIMIT = 30 * 1000
@@ -31,6 +31,7 @@ SOLVERS = {
     "PATTY-FA": "P_{FA}",
     "PATTY-FE": "P_{FE}",
     "PATTY-M": "P_M",
+    "PATTY-I": "P_I",
 }
 
 DOMAINS = {
@@ -114,10 +115,13 @@ TOTALS = {
 
 def main():
     # Parsing the results
-    exp = "2024-09-10-AIJ-v1"
+    exp = "2024-09-11-IMPROVE-v1"
     file = f"benchmarks/results/csv/{exp}.csv"
 
     CloudLogger.saveLogs(exp, file)
+    joinWith = ["2024-09-10-AIJ-v1"]
+    for exp in joinWith:
+        CloudLogger.appendLogs(exp, file)
 
     joinWith = [file]
     # joinWith = [file]
@@ -293,9 +297,10 @@ def main():
             'PATTY-R-MAX': "SMT",
             'PATTY-A': "SMT",
             'PATTY-E': "SMT",
-            'PATTY-M': "SMT",
-            'PATTY-FA': "SMT",
-            'PATTY-FE': "SMT",
+            # 'PATTY-M': "SMT",
+            # 'PATTY-I': "SMT",
+            # 'PATTY-FA': "SMT",
+            # 'PATTY-FE': "SMT",
             # 'PATTY-H': "SMT",
             # 'PATTY-F': "SMT"
         },

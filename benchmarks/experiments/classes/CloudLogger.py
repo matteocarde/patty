@@ -60,3 +60,10 @@ class CloudLogger:
         events = ['"' + e["message"] + '"' for e in CloudLogger.read(exp)]
         with open(file, "w") as f:
             f.write("\n".join(sorted(events)))
+
+    @staticmethod
+    def appendLogs(exp, file):
+        events = ['"' + e["message"] + '"' for e in CloudLogger.read(exp)]
+        with open(file, "a") as f:
+            f.write("\n")
+            f.write("\n".join(sorted(events)))
