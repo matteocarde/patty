@@ -18,19 +18,19 @@ RUN npm --version
 RUN npm install
 ENV PATH "$PATH:/project/experiments/libs"
 
-# Install python 3.7
+# Install python 3.8
 RUN apt-get install software-properties-common -y
 RUN add-apt-repository ppa:deadsnakes/ppa
-RUN apt-get install python3.7 -y
+RUN apt-get install python3.8 -y
 
-# Make python 3.7 the default
-RUN echo "alias python=python3.7" >> ~/.bashrc
-RUN export PATH=${PATH}:/usr/bin/python3.7
+# Make python 3.8 the default
+RUN echo "alias python=python3.8" >> ~/.bashrc
+RUN export PATH=${PATH}:/usr/bin/python3.8
 RUN /bin/bash -c "source ~/.bashrc"
 
 # Install pip
 RUN apt-get install python3-pip -y
-RUN python3.7 -m pip install --upgrade pip
+RUN python3.8 -m pip install --upgrade pip
 
 # Install conda
 ENV PATH="/root/miniconda3/bin:${PATH}"
@@ -71,7 +71,7 @@ RUN yes | apt-get install -y oracle-java17-installer --install-recommends
 #RUN ls -la
 #
 #ARG COSDIR=/opt/CPLEX
-#ARG CPX_PYVERSION=3.7
+#ARG CPX_PYVERSION=3.8
 #RUN chmod u+x /tmp/installer
 #
 #RUN /tmp/installer -f /tmp/install.properties
@@ -152,8 +152,6 @@ ENV PATH /var/nfd/:${PATH}
 RUN chmod +x /var/nfd/nfd
 
 # Install OMTPlan
-RUN pip install networkx
-RUN pip install numpy
 COPY /benchmarks/planners/omtplan /var/omtplan
 ENV PATH /var/omtplan/:${PATH}
 RUN chmod +x /var/omtplan/omtplan
@@ -165,7 +163,7 @@ RUN chmod +x /var/patty/patty
 RUN apt-get install -y time
 RUN conda env export
 
-RUN pip install tarjan prettytable graphlib-backport
+RUN pip install numpy networkx tarjan prettytable graphlib-backport
 
 WORKDIR /project
 # Copying

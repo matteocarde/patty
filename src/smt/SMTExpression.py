@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import Set, Dict
 
+from pyeda.boolalg.bdd import BDDVariable
+from pyeda.boolalg.expr import expr
 from pysmt.fnode import FNode
 from pysmt.shortcuts import And, Or, Equals, LE, LT, GE, GT, Implies, Real, Times, Minus, Plus, Div, TRUE, ToReal, \
     NotEquals, Iff, FALSE
@@ -24,9 +26,9 @@ def toRHS(other):
 
 
 def getVars(obj):
-    from src.smt.SMTNegation import SMTNegation
+    from src.smt.expressions.NotExpression import NotExpression
     if isinstance(obj, SMTExpression):
-        return obj.variables if obj.variables or obj.isConstant else {obj} if not isinstance(obj, SMTNegation) else {
+        return obj.variables if obj.variables or obj.isConstant else {obj} if not isinstance(obj, NotExpression) else {
             obj.positive}
     return set()
 
@@ -41,6 +43,7 @@ class SMTExpression:
     def __init__(self):
         self.variables = set()
         self.type = REAL
+        self.operation = None
         self.lhs: SMTExpression
         self.rhs: SMTExpression
         self.expression = TRUE()
@@ -59,6 +62,7 @@ class SMTExpression:
                  rhsExpression: FNode) -> SMTExpression:
         expr = SMTExpression()
         expr.lhs = self
+        expr.operation = operation
         expr.variables = getVars(self) | getVars(other)
 
         if isinstance(other, SMTExpression):
@@ -83,14 +87,32 @@ class SMTExpression:
         return expr
 
     def AND(self, other: SMTExpression):
-        return self.__binary(other, And, self.expression, other.expression)
+        from src.smt.expressions.AndExpression import AndExpression
+        return AndExpression(self, other)
 
     def OR(self, other: SMTExpression):
-        return self.__binary(other, Or, self.expression, other.expression)
+        from src.smt.expressions.OrExpression import OrExpression
+        return OrExpression(self, other)
 
     def NOT(self):
-        from src.smt.SMTNegation import SMTNegation
-        return SMTNegation(self)
+        from src.smt.expressions.NotExpression import NotExpression
+        return NotExpression(self)
+
+    def implies(self, other: SMTExpression):
+        from src.smt.expressions.ImpliesExpression import ImpliesExpression
+        return ImpliesExpression(self, other)
+
+    def coimplies(self, other: SMTExpression):
+        from src.smt.expressions.IffExpression import IffExpression
+        return IffExpression(self, other)
+
+    def iff(self, other: SMTExpression):
+        from src.smt.expressions.IffExpression import IffExpression
+        return IffExpression(self, other)
+
+    def impliedBy(self, other: SMTExpression):
+        from src.smt.expressions.ImpliesExpression import ImpliesExpression
+        return ImpliesExpression(other, self)
 
     def __eq__(self, other: SMTExpression or int):
         if self.type == BOOL:
@@ -98,6 +120,9 @@ class SMTExpression:
         expr = self.__binary(other, Equals, self.expression, toRHS(other))
         expr.type = BOOL
         return expr
+
+    def __invert__(self):
+        return self.NOT()
 
     def __ne__(self, other: SMTExpression or int):
         expr = self.__binary(other, NotEquals, self.expression, toRHS(other))
@@ -151,26 +176,6 @@ class SMTExpression:
 
     def __rtruediv__(self, other: SMTExpression or float):
         return self.__binary(other, Div, toRHS(other), self.expression)
-
-    def implies(self, other: SMTExpression):
-        expr = self.__binary(other, Implies, self.expression, other.expression)
-        expr.type = BOOL
-        return expr
-
-    def coimplies(self, other: SMTExpression):
-        expr = self.__binary(other, Iff, self.expression, other.expression)
-        expr.type = BOOL
-        return expr
-
-    def iff(self, other: SMTExpression):
-        expr = self.__binary(other, Iff, self.expression, other.expression)
-        expr.type = BOOL
-        return expr
-
-    def impliedBy(self, other: SMTExpression):
-        expr = self.__binary(other, Implies, other.expression, self.expression)
-        expr.type = BOOL
-        return expr
 
     @staticmethod
     def opByString(op: str, left: SMTExpression or float, right: SMTExpression or float):
@@ -232,36 +237,22 @@ class SMTExpression:
 
     @classmethod
     def __connectiveOfExpressionList(cls, rules: [SMTExpression], connective):
+        from src.smt.expressions.TrueExpression import TrueExpression
         if not rules:
-            return SMTExpression.TRUE()
-        e = cls()
-        e.variables = set()
-        expressions = list()
-        r: SMTExpression
-        for r in rules:
-            e.variables |= getVars(r)
-            expressions.append(r.expression)
-        e.expression = connective(expressions)
-        return e
+            return TrueExpression()
+        if len(rules) == 1:
+            return rules[0]
+        return connective(*rules)
 
     @classmethod
     def andOfExpressionsList(cls, rules: [SMTExpression]):
-        return cls.__connectiveOfExpressionList(rules, And)
+        from src.smt.expressions.AndExpression import AndExpression
+        return SMTExpression.__connectiveOfExpressionList(rules, AndExpression)
 
     @classmethod
     def orOfExpressionsList(cls, rules: [SMTExpression]):
-        return cls.__connectiveOfExpressionList(rules, Or)
+        from src.smt.expressions.OrExpression import OrExpression
+        return SMTExpression.__connectiveOfExpressionList(rules, OrExpression)
 
-    @classmethod
-    def FALSE(cls):
-        exp = cls()
-        exp.expression = FALSE()
-        exp.isConstant = True
-        return exp
-
-    @classmethod
-    def TRUE(cls):
-        exp = cls()
-        exp.expression = TRUE()
-        exp.isConstant = True
-        return exp
+    def toBDDExpression(self, map):
+        raise NotImplementedError()
