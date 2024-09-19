@@ -13,18 +13,23 @@ from src.smt.SMTExpression import SMTExpression
 
 
 class ActionStateTransitionFunction:
+    action: Action
+    m: int
+    atoms: Set[Atom]
+    current: Dict[Atom, SMTBoolVariable]
+    next: Dict[Atom, SMTBoolVariable]
+    countingCurrent: List[SMTBoolVariable]
+    countingNext: List[SMTBoolVariable]
 
-    def __init__(self, a: Action, current: Dict[Atom, SMTBoolVariable], next: Dict[Atom, SMTBoolVariable]):
+    def __init__(self, a: Action):
         self.action = a.toFullCEAction()
-        # TODO: Remember to join together CES with the same cond(e)
         self.m = len(a.effects)
-        self.atoms = current.keys()
-        self.current = copy.copy(current)
-        self.next = copy.copy(next)
+        self.atoms = self.action.predicates
+        self.__computingHelping()
+        self.current = dict([(v, SMTBoolVariable(f"{v}")) for v in self.atoms])
+        self.next = dict([(v, SMTBoolVariable(f"{v}'")) for v in self.atoms])
         self.countingCurrent = [SMTBoolVariable(f"r_{a.name}_{i}") for i in range(0, self.m)]
         self.countingNext = [SMTBoolVariable(f"r_{a.name}_{i}'") for i in range(0, self.m)]
-
-        self.__computingHelping()
 
         self.clauses: SMTConjunction = SMTConjunction()
 
@@ -38,7 +43,7 @@ class ActionStateTransitionFunction:
         self.deltaMinus: Dict[Atom, List[ConditionalEffect]] = dict()
         self.addedAtoms: Set[Atom] = set()
         self.deletedAtoms: Set[Atom] = set()
-        for v in self.current.keys():
+        for v in self.atoms:
             self.deltaPlus.setdefault(v, list())
             self.deltaMinus.setdefault(v, list())
 
@@ -96,7 +101,6 @@ class ActionStateTransitionFunction:
 
             bits.append(SMTExpression.andOfExpressionsList(bit))
         expr = SMTExpression.orOfExpressionsList(bits)
-        print(expr)
         return expr
 
     def getAmoClauses(self):
@@ -115,16 +119,3 @@ class ActionStateTransitionFunction:
             fDeleting = SMTExpression.andOfExpressionsList(cesDeleting)
             clauses.append(fAdding.OR(fDeleting))
         return clauses
-
-    def toBDD(self):
-
-        varToBddVar: Dict[SMTBoolVariable, BDDVariable] = dict()
-        for v in self.atoms:
-            varToBddVar[self.current[v]] = bddvar(f"{v.name}")
-            varToBddVar[self.next[v]] = bddvar(f"{v.name}'")
-        for i in range(0, self.m):
-            varToBddVar[self.countingCurrent[i]] = bddvar(f"r_{self.action.name}_{i}")
-            varToBddVar[self.countingNext[i]] = bddvar(f"r_{self.action.name}_{i}'")
-
-        expr = self.clauses.toBDDExpression(varToBddVar)
-        print(expr.to_dot())

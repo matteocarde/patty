@@ -224,7 +224,7 @@ class SMTExpression:
             if predicate.sign == "+":
                 return variables[predicate.getAtom()]
             else:
-                return variables[predicate.getAtom()].NOT()
+                return ~variables[predicate.getAtom()]
         if isinstance(predicate, Constant):
             return predicate.value
         raise Exception(f"Don't know how to convert {predicate} to Expression")
