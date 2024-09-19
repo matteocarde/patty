@@ -1,10 +1,7 @@
 import copy
-import pyeda
 from typing import Dict, List, Set
 
 from pyeda.boolalg.bdd import bddvar, BDDVariable
-from pyeda.boolalg.bfarray import bddvars
-from pyeda.boolalg.expr import expr
 
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
@@ -60,9 +57,11 @@ class ActionStateTransitionFunction:
     def getPreconditionClauses(self) -> List[SMTExpression]:
         preFormula = SMTExpression.fromFormula(self.action.preconditions, self.current)
         clauses = [preFormula]
+        atLeastOneCe = []
         for ce in self.action.effects:
             assert isinstance(ce, ConditionalEffect)
-            clauses.append(SMTExpression.fromFormula(ce.conditions, self.current))
+            atLeastOneCe.append(SMTExpression.fromFormula(ce.conditions, self.current))
+        clauses.append(SMTExpression.orOfExpressionsList(atLeastOneCe))
 
         return clauses
 
@@ -89,17 +88,19 @@ class ActionStateTransitionFunction:
     def getDiffOne(self) -> SMTExpression:
         bits = []
         for i in range(0, self.m):
-            bit = [self.countingNext[i].AND(~self.countingCurrent[i])]
-            for j in range(0, i):
-                bit.append((~self.countingNext[i]).AND(self.countingCurrent[i]))
+            bit = [self.countingNext[i] & ~self.countingCurrent[i]]
+            for j in range(0, i - 1):
+                bit.append(~self.countingNext[j] & self.countingCurrent[j])
             for k in range(i + 1, self.m):
-                bit.append(self.countingNext[i].iff(self.countingCurrent[i]))
+                bit.append(self.countingNext[k].iff(self.countingCurrent[k]))
 
             bits.append(SMTExpression.andOfExpressionsList(bit))
-        return SMTExpression.orOfExpressionsList(bits)
+        expr = SMTExpression.orOfExpressionsList(bits)
+        print(expr)
+        return expr
 
     def getAmoClauses(self):
-        return [self.getDiffZero().OR(self.getDiffOne())]
+        return [self.getDiffOne()]
 
     def getConflictClauses(self) -> List[SMTExpression]:
         clauses = []
@@ -126,4 +127,4 @@ class ActionStateTransitionFunction:
             varToBddVar[self.countingNext[i]] = bddvar(f"r_{self.action.name}_{i}'")
 
         expr = self.clauses.toBDDExpression(varToBddVar)
-        pass
+        print(expr.to_dot())

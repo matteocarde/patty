@@ -28,7 +28,8 @@ class TestCES(TestCase):
         self.assertEqual(len(self.transFunctions.items()), 5)
 
     def test_bdd(self):
-        tFunc = self.transFunctions[list(self.gDomain.actions)[0]]
+        action = list(self.gDomain.actions)[0]
+        tFunc = self.transFunctions[action]
         tFunc.toBDD()
         pass
 

@@ -90,7 +90,15 @@ class SMTExpression:
         from src.smt.expressions.AndExpression import AndExpression
         return AndExpression(self, other)
 
+    def __and__(self, other):
+        from src.smt.expressions.AndExpression import AndExpression
+        return AndExpression(self, other)
+
     def OR(self, other: SMTExpression):
+        from src.smt.expressions.OrExpression import OrExpression
+        return OrExpression(self, other)
+
+    def __or__(self, other):
         from src.smt.expressions.OrExpression import OrExpression
         return OrExpression(self, other)
 
