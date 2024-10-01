@@ -6,6 +6,7 @@ from src.ces.ActionStateTransitionFunction import ActionStateTransitionFunction
 from src.ces.TransitionFunctionBDD import TransitionFunctionBDD
 from src.ces.TransitiveClosure import TransitiveClosure
 from src.pddl.Action import Action
+from src.pddl.Atom import Atom
 from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.Problem import Problem
 from src.smt.SMTBoolVariable import SMTBoolVariable
@@ -14,8 +15,9 @@ from src.smt.SMTBoolVariable import SMTBoolVariable
 class TestCES(TestCase):
 
     def setUp(self) -> None:
-        self.domain: Domain = Domain.fromFile("../../files/ces/counter/domains/4/domain-4.pddl")
-        self.problem: Problem = Problem.fromFile("../../files/ces/counter/domains/4/problem-4.pddl")
+        self.b = 5
+        self.domain: Domain = Domain.fromFile(f"../../files/ces/counter/domains/{self.b}/domain-{self.b}.pddl")
+        self.problem: Problem = Problem.fromFile(f"../../files/ces/counter/domains/{self.b}/problem-{self.b}.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.transFunctions: Dict[Action, ActionStateTransitionFunction] = dict()
         self.name2Action: Dict[str, Action] = dict()
@@ -33,7 +35,11 @@ class TestCES(TestCase):
         action = self.name2Action["inx"]
         tFunc = self.transFunctions[action]
         print("Starting computing Transitive Closure")
-        tc = TransitiveClosure.fromActionStateTransitionFunction(tFunc)
+        v: Dict[str, Atom] = dict()
+        for atom in tFunc.atoms:
+            v[atom.name] = atom
+        atomsOrder = [v[f"l{i}"] for i in range(1, self.b + 1)] + [v[f"x{i}"] for i in range(1, self.b + 1)]
+        tc = TransitiveClosure.fromActionStateTransitionFunction(tFunc, atomsOrder)
         self.assertIsInstance(tc, TransitiveClosure)
 
 

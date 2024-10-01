@@ -33,10 +33,13 @@ class ActionStateTransitionFunction:
 
         self.clauses: SMTConjunction = SMTConjunction()
 
-        self.clauses += self.getPreconditionClauses()
-        self.clauses += self.getEffectClauses()
-        self.clauses += self.getAmoClauses()
-        self.clauses += self.getConflictClauses()
+        self.clausesByName = dict()
+        self.clausesByName["pre"] = self.getPreconditionClauses()
+        self.clausesByName["eff"] = self.getEffectClauses()
+        # self.clausesByName["amo"] = self.getAmoClauses()
+        self.clausesByName["conflict"] = self.getConflictClauses()
+        for name, clauses in self.clausesByName.items():
+            self.clauses += clauses
 
     def __computingHelping(self):
         self.deltaPlus: Dict[Atom, List[ConditionalEffect]] = dict()
@@ -94,7 +97,7 @@ class ActionStateTransitionFunction:
         bits = []
         for i in range(0, self.m):
             bit = [self.countingNext[i] & ~self.countingCurrent[i]]
-            for j in range(0, i - 1):
+            for j in range(0, i):
                 bit.append(~self.countingNext[j] & self.countingCurrent[j])
             for k in range(i + 1, self.m):
                 bit.append(self.countingNext[k].iff(self.countingCurrent[k]))
