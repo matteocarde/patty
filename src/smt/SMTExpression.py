@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Set, Dict
 
-from pyeda.boolalg.bdd import BDDVariable
+from pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram
 from pyeda.boolalg.expr import expr
 from pysmt.fnode import FNode
 from pysmt.shortcuts import And, Or, Equals, LE, LT, GE, GT, Implies, Real, Times, Minus, Plus, Div, TRUE, ToReal, \
@@ -262,5 +262,5 @@ class SMTExpression:
         from src.smt.expressions.OrExpression import OrExpression
         return SMTExpression.__connectiveOfExpressionList(rules, OrExpression)
 
-    def toBDDExpression(self, map):
+    def toBDDExpression(self, map) -> BinaryDecisionDiagram:
         raise NotImplementedError()

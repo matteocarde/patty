@@ -28,15 +28,14 @@ class ActionStateTransitionFunction:
         self.__computingHelping()
         self.current = dict([(v, SMTBoolVariable(f"{v}")) for v in self.atoms])
         self.next = dict([(v, SMTBoolVariable(f"{v}'")) for v in self.atoms])
-        self.countingCurrent = [SMTBoolVariable(f"r_{a.name}_{i}") for i in range(0, self.m)]
-        self.countingNext = [SMTBoolVariable(f"r_{a.name}_{i}'") for i in range(0, self.m)]
 
         self.clauses: SMTConjunction = SMTConjunction()
+
+        self.varTransitions: Dict[Atom, SMTExpression] = self.getVarTransitions()
 
         self.clausesByName = dict()
         self.clausesByName["pre"] = self.getPreconditionClauses()
         self.clausesByName["eff"] = self.getEffectClauses()
-        # self.clausesByName["amo"] = self.getAmoClauses()
         self.clausesByName["conflict"] = self.getConflictClauses()
         for name, clauses in self.clausesByName.items():
             self.clauses += clauses
@@ -73,6 +72,19 @@ class ActionStateTransitionFunction:
 
         return clauses
 
+    def getVarTransitions(self) -> Dict[Atom, SMTExpression]:
+        varTransitions = dict()
+        for v in self.addedAtoms | self.deletedAtoms:
+            andExpr = [self.current[v]]
+            for e in self.deltaMinus[v]:
+                andExpr.append(~SMTExpression.fromFormula(e.conditions, self.current))
+            orExpr = [SMTExpression.andOfExpressionsList(andExpr)]
+            for e in self.deltaPlus[v]:
+                orExpr.append(SMTExpression.fromFormula(e.conditions, self.current))
+            cav = SMTExpression.orOfExpressionsList(orExpr)
+            varTransitions[v] = cav
+        return varTransitions
+
     def getEffectClauses(self) -> List[SMTExpression]:
         clauses = []
         for v in self.addedAtoms | self.deletedAtoms:
@@ -105,9 +117,6 @@ class ActionStateTransitionFunction:
             bits.append(SMTExpression.andOfExpressionsList(bit))
         expr = SMTExpression.orOfExpressionsList(bits)
         return expr
-
-    def getAmoClauses(self):
-        return [self.getDiffOne()]
 
     def getConflictClauses(self) -> List[SMTExpression]:
         clauses = []

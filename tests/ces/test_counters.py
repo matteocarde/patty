@@ -15,7 +15,7 @@ from src.smt.SMTBoolVariable import SMTBoolVariable
 class TestCES(TestCase):
 
     def setUp(self) -> None:
-        self.b = 5
+        self.b = 3
         self.domain: Domain = Domain.fromFile(f"../../files/ces/counter/domains/{self.b}/domain-{self.b}.pddl")
         self.problem: Problem = Problem.fromFile(f"../../files/ces/counter/domains/{self.b}/problem-{self.b}.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)

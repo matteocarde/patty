@@ -1,8 +1,10 @@
 from __future__ import annotations
-from typing import Dict, Set, List
 
-from pyeda.boolalg.bdd import BDDVariable, bddvar, BinaryDecisionDiagram, _NODES
-from pyeda.boolalg.expr import And
+import copy
+from typing import Dict, Set, List, Tuple
+
+from pyeda.boolalg.bdd import BDDVariable, bddvar, BinaryDecisionDiagram, _NODES, bdd2expr
+from pyeda.boolalg.expr import And, Expression
 
 from src.ces.ActionStateTransitionFunction import ActionStateTransitionFunction
 from src.pddl.Action import Action
@@ -21,10 +23,14 @@ class TransitionFunctionBDD:
     m: int
     currentState: Dict[Atom, SMTBoolVariable]
     nextState: Dict[Atom, SMTBoolVariable]
-    currentCounting: List[SMTBoolVariable]
-    nextCounting: List[SMTBoolVariable]
-    Xs: Dict[int, Dict[SMTBoolVariable, BDDVariable]]
+    Xs: Dict[SMTBoolVariable, BDDVariable]
+    Xs_: Dict[SMTBoolVariable, BDDVariable]
+    XsFake: Dict[SMTBoolVariable, BDDVariable]
+    currentToFake: Dict[BDDVariable, BDDVariable]
+    fakeToCurrent: Dict[BDDVariable, BDDVariable]
     atomsOrder: List[Atom]
+    varTransitionSteps: Dict[int, Dict[Atom, BinaryDecisionDiagram]]
+    varTransitionFixpoint: Dict[Atom, bool]
     bdd: BinaryDecisionDiagram
 
     def __init__(self, t: ActionStateTransitionFunction):
@@ -34,131 +40,103 @@ class TransitionFunctionBDD:
         self.atoms = list(self.transitionFunction.atoms)
         self.currentState = self.transitionFunction.current
         self.nextState = self.transitionFunction.next
-        self.currentCounting = self.transitionFunction.countingCurrent
-        self.nextCounting = self.transitionFunction.countingNext
         self.clauses = self.transitionFunction.clauses
+        self.varTransitionSteps = dict()
+        self.varTransitionFixpoint = dict()
+        self.step = 1
 
     @classmethod
     def fromActionStateTransitionFunction(cls, t: ActionStateTransitionFunction, atomsOrder: List[Atom]):
         tfbdd = cls(t)
         tfbdd.atomsOrder = atomsOrder
-        tfbdd.setOrderForOneStep()
-        tfbdd.Xs = tfbdd.getOneStepXs()
-        tfbdd.bdd = tfbdd.clauses.toBDDExpression({**tfbdd.Xs[0], **tfbdd.Xs[1]})
+        tfbdd.setOrder()
+        tfbdd.Xs, tfbdd.Xs_, tfbdd.XsFake = tfbdd.getOneStepXs()
+        tfbdd.currentToFake = dict([(tfbdd.Xs[v], tfbdd.XsFake[v]) for v in tfbdd.Xs.keys()])
+        tfbdd.fakeToCurrent = dict([(tfbdd.XsFake[v], tfbdd.Xs[v]) for v in tfbdd.Xs.keys()])
+        tfbdd.varTransitionSteps[1] = dict()
+        for v, cav in t.varTransitions.items():
+            bdd = cav.toBDDExpression(tfbdd.Xs)
+            tfbdd.varTransitionSteps[1][v] = bdd
+            print(f"Step 1 of {v}: {bdd.to_dot()}")
+            tfbdd.varTransitionFixpoint[v] = False
+        tfbdd.bdd = tfbdd.getInitialBdd()
         return tfbdd
 
-    def getOneStepXs(self) -> Dict[int, Dict[SMTBoolVariable, BDDVariable]]:
-        Xs: Dict[int, Dict[SMTBoolVariable, BDDVariable]] = dict()
-        Xs[0] = dict()
-        Xs[1] = dict()
+    def getOneStepXs(self) -> Tuple[
+        Dict[SMTBoolVariable, BDDVariable], Dict[SMTBoolVariable, BDDVariable], Dict[SMTBoolVariable, BDDVariable]]:
+        Xs = dict()
+        Xs_ = dict()
+        XsFake = dict()
         for v in self.atoms:
-            Xs[0][self.currentState[v]] = bddvar(f"{v.name}")
-            Xs[1][self.nextState[v]] = bddvar(f"{v.name}'")
-        for k in range(0, self.transitionFunction.m):
-            Xs[0][self.currentCounting[k]] = bddvar(f"r_{self.action.name}_{k}")
-            Xs[1][self.nextCounting[k]] = bddvar(f"r_{self.action.name}_{k}'")
-        return Xs
+            Xs[self.currentState[v]] = bddvar(f"{v.name}")
+            XsFake[self.currentState[v]] = bddvar(f"{v.name}_fake")
+            Xs_[self.nextState[v]] = bddvar(f"{v.name}'")
+        return Xs, Xs_, XsFake
 
-    def setOrderForOneStep(self):
+    def setOrder(self):
         for v in self.atomsOrder:
             bddvar(f"{v.name}")
+            bddvar(f"{v.name}_fake")
             bddvar(f"{v.name}'")
-        for k in range(0, self.transitionFunction.m):
-            bddvar(f"r_{self.action.name}_{k}")
-            bddvar(f"r_{self.action.name}_{k}'")
 
-    def setOrderForTwoStep(self):
-        for v in self.atomsOrder:
-            bddvar(f"{v.name}_1")
-        for v in self.atomsOrder:
-            bddvar(f"{v.name}_0")
-            bddvar(f"{v.name}_2")
+    def getMapping(self, i) -> Dict[BDDVariable, BinaryDecisionDiagram]:
+        mapping = dict()
+        for atom, cav_prev in self.varTransitionSteps[i].items():
+            v = self.Xs[self.currentState[atom]]
+            mapping[v] = cav_prev.compose(self.currentToFake)
+        return mapping
 
-        # for k in range(0, self.transitionFunction.m):
-        #     for i in [0, 1, 2]:
-        #         bddvar(f"r_{self.action.name}_{k}_{i}")
+    def replace(self, bdd: BinaryDecisionDiagram, i: int) -> BinaryDecisionDiagram:
+        return bdd.compose(self.getMapping(i)).compose(self.fakeToCurrent)
 
-    def getTwoStepXs(self, a: int, b: int) -> Dict[int, Dict[SMTBoolVariable, BDDVariable]]:
-        Xs: Dict[int, Dict[SMTBoolVariable, BDDVariable]] = dict()
-        Xs[a] = dict()
-        Xs[b] = dict()
-        for k in range(0, self.transitionFunction.m):
-            Xs[a][self.currentCounting[k]] = bddvar(f"r_{self.action.name}_{k}_{a}")
-            Xs[b][self.nextCounting[k]] = bddvar(f"r_{self.action.name}_{k}_{b}")
-        for v in self.atoms:
-            Xs[a][self.currentState[v]] = bddvar(f"{v.name}_{a}")
-            Xs[b][self.nextState[v]] = bddvar(f"{v.name}_{b}")
-        return Xs
+    def computeNextVarTransitions(self):
+        i = self.step
+        self.varTransitionSteps[i] = dict()
 
-    def smoothingSet(self, func: BinaryDecisionDiagram, vars: List[BDDVariable], var: BDDVariable or None = None):
-        if not var:
-            return self.smoothingSet(func, vars[1:], vars[0])
-        # if not vars:
-        #     return func.restrict({var: 0}) | func.restrict({var: 1})
+        for v, cav_prev in self.varTransitionSteps[i - 1].items():
+            if self.varTransitionFixpoint[v]:
+                self.varTransitionSteps[i][v] = cav_prev
+                continue
 
-        sFunc = self.smoothingSet(func, vars[1:], vars[0]) if vars else func
-        print(f"Smoothing away {var}")
-        return sFunc.restrict({var: 0}) | sFunc.restrict({var: 1})
+            cav_i = cav_prev
+            for j in range(1, i):
+                cav_i = cav_i | self.replace(cav_prev, j)
+
+            # cav_i = self.replace(cav_prev, i - 1)
+            self.varTransitionSteps[i][v] = cav_i
+            print(f"Step {i} of {v}: {cav_i.to_dot()}")
+            if cav_i is cav_prev:
+                print(f"Found fixpoint of {v}")
+                self.varTransitionFixpoint[v] = True
+        pass
+
+    def getInitialBdd(self):
+        andBdd = 1
+        for v, cav in self.varTransitionSteps[1].items():
+            v_ = self.Xs_[self.nextState[v]]
+            andBdd = andBdd & Iff(v_, cav)
+
+        return andBdd
+
+    def getBDDFromTransitions(self, previousBDD: BinaryDecisionDiagram) -> BinaryDecisionDiagram:
+        i = self.step
+
+        andBdd = 1
+        for v, cav in self.varTransitionSteps[i].items():
+            v_ = self.Xs_[self.nextState[v]]
+            andBdd = andBdd & Iff(v_, cav)
+
+        return andBdd
 
     def computeTransition(self) -> TransitionFunctionBDD:
         ith = TransitionFunctionBDD(self.transitionFunction)
-        ith.Xs = self.Xs
-        ith.atomsOrder = self.atomsOrder
-
-        ith.setOrderForTwoStep()
-
-        Xs1 = ith.getTwoStepXs(0, 1)
-        Xs2 = ith.getTwoStepXs(1, 2)
-
-        rep1: Dict[BDDVariable, BDDVariable] = dict()
-        rep2: Dict[BDDVariable, BDDVariable] = dict()
-        repBack: Dict[BDDVariable, BDDVariable] = dict()
-        for (smtVar, bddVar) in self.Xs[0].items():
-            rep1[bddVar] = Xs1[0][smtVar]
-            rep2[bddVar] = Xs2[1][smtVar]
-            repBack[Xs1[0][smtVar]] = bddVar
-        for (smtVar, bddVar) in self.Xs[1].items():
-            rep1[bddVar] = Xs1[1][smtVar]
-            rep2[bddVar] = Xs2[2][smtVar]
-            repBack[Xs2[2][smtVar]] = bddVar
-
-        print("Compose")
-        # bdd1 = self.clauses.toBDDExpression({**Xs1[0], **Xs1[1]})
-        # bdd2 = self.clauses.toBDDExpression({**Xs2[1], **Xs2[2]})
-        bdd1 = self.bdd.compose(rep1)
-        bdd2 = self.bdd.compose(rep2)
-        print("BDD0", self.bdd.to_dot())
-        print("BDD1", bdd1.to_dot())
-        print("BDD2", bdd2.to_dot())
-        print("Equiv")
-        equiv = 1
-        for atom in self.atomsOrder:
-            v = self.currentState[atom]
-            v_ = self.nextState[atom]
-            equiv = equiv & Iff(Xs2[1][v], Xs2[2][v_])
-        # for k in range(0, self.m):
-        #     r = self.currentCounting[k]
-        #     r_ = self.nextCounting[k]
-        #     equiv = equiv & Iff(Xs2[1][r], Xs2[2][r_])
-        print("Equiv", equiv.to_dot())
-        print("Smoothing")
-        smoothVariables = [Xs2[1][self.currentState[v]] for v in reversed(self.atomsOrder)]
-        # smoothVariables += [Xs2[1][self.currentCounting[k]] for k in reversed(range(0, self.m))]
-        print(smoothVariables)
-        fToBeSmoothed = bdd1 & (bdd2 | equiv)
-        print("toBeSmoothed:", fToBeSmoothed.to_dot())
-
-        ith.bdd = self.smoothingSet(fToBeSmoothed, smoothVariables).compose(repBack)
-        # ith.bdd = self.smoothingSet(bdd1 & bdd2, list(Xs2[1].values())).compose(repBack)
-        print("final", ith.bdd.to_dot())
-
-        # exit()
-
-        del bdd1
-        del bdd2
-        del equiv
-
-        print("Iteration:", ith.bdd.to_dot())
+        ith.Xs, ith.Xs_ = self.Xs, self.Xs_
+        ith.currentToFake, ith.fakeToCurrent = self.currentToFake, self.fakeToCurrent
+        ith.step = self.step + 1
+        ith.varTransitionSteps = self.varTransitionSteps
+        ith.varTransitionFixpoint = self.varTransitionFixpoint
+        ith.computeNextVarTransitions()
+        ith.bdd = ith.getBDDFromTransitions(copy.copy(self.bdd))
 
         return ith
 
