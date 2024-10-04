@@ -10,7 +10,7 @@ class Patty(Planner):
     name = NAME
 
     def __init__(self, name, search="static", maximize=False, useSCCs=False, noCompression=False,
-                 pattern="enhanced", quality="none"):
+                 pattern="enhanced", quality="none", hasEffectAxioms=False, rollBound=0):
         self.search = search
         self.maximize = maximize
         self.name = name
@@ -18,6 +18,8 @@ class Patty(Planner):
         self.noCompression = noCompression
         self.pattern = pattern
         self.quality = quality
+        self.hasEffectAxioms = hasEffectAxioms
+        self.rollBound = rollBound
         super().__init__()
 
     @staticmethod
@@ -50,6 +52,10 @@ class Patty(Planner):
             "--pattern", self.pattern,
             "--quality", self.quality
         ]
+        if self.rollBound:
+            cmd += ["--roll-bound", str(self.rollBound)]
+        if self.hasEffectAxioms:
+            cmd += ["--effect-axioms"]
         if self.noCompression:
             cmd += ["--no-compression"]
         if self.maximize:

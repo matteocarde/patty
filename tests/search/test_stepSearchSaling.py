@@ -4,7 +4,7 @@ from unittest import TestCase
 from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
-from src.search.PlanImprover import PlanImprover
+from src.search.PlanImproverPattern import PlanImproverPattern
 from src.search.StepSearch import StepSearch
 from src.utils.Arguments import Arguments
 
@@ -41,7 +41,7 @@ class TestStepSearchSailing(TestCase):
 
         self.assertIsInstance(plan, NumericPlan)
 
-        improver = PlanImprover(self.gDomain, self.problem, self.args, plan)
+        improver = PlanImproverPattern(self.gDomain, self.problem, self.args, plan)
         improvedPlan = improver.solve()
 
         self.assertIsInstance(improvedPlan, NumericPlan)

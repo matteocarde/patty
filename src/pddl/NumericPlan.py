@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import List, Tuple, Dict
 
 from src.pddl.Action import Action
 from src.pddl.PDDLException import PDDLException
@@ -9,12 +9,14 @@ from src.utils.LogPrint import LogPrint, LogPrintLevel
 
 class NumericPlan:
     quality: float
+    actionRolling: Dict[int, Dict[Action, int]]
 
     def __init__(self):
         self.__plan: List[Tuple[Action, int]] = list()
         self.__rolledPlan: List[Action] = list()
         self.quality: float
         self.optimal = False
+        self.actionRolling = dict()
 
     def __len__(self):
         return len(self.__rolledPlan)

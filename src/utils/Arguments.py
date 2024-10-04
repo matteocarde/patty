@@ -49,6 +49,10 @@ class Arguments:
                                                 the plan with minimum length is searched. This doesn't generate 
                                                 optimal plans since the plan found are only optimal among all the 
                                                 plans covered by the first satisficing plan.
+                            improve-less:       The quality of the first satisficing plan is improved by passing it
+                                                to another call of encoding in which we ask that every action rolling
+                                                is less than the previous iteration and the plan with minimum length
+                                                is searched.
                             ''',
                             default="none")
 

@@ -3,11 +3,14 @@ import traceback
 from z3 import z3
 
 from src.pddl.Domain import Domain, GroundedDomain
+from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Plan import Plan
 from src.pddl.Problem import Problem
+from src.plan.Pattern import Pattern
 from src.search.AStarSearchMax import AStarSearchMax
 from src.search.ChainSearch import ChainSearch
-from src.search.PlanImprover import PlanImprover
+from src.search.PlanImproverLess import PlanImproverLess
+from src.search.PlanImproverPattern import PlanImproverPattern
 from src.search.Search import Search
 from src.search.StepSearch import StepSearch
 from src.utils.Arguments import Arguments
@@ -33,6 +36,8 @@ def main():
         ts.end("Grounding", console=console)
 
         solver: Search
+        pattern: Pattern
+        bound: int
 
         if args.search == "astar":
             solver = AStarSearchMax(gDomain, problem, args)
@@ -42,9 +47,14 @@ def main():
             solver = ChainSearch(gDomain, problem, args)
         plan: Plan = solver.solve()
 
-        if args.quality == "improve-plan":
+        if isinstance(plan, NumericPlan) and args.quality in {"improve-plan", "improve-less"}:
             ts.start("Improving Plan", console=console)
-            improver = PlanImprover(gDomain, problem, args, plan)
+            improver: Search
+            if args.quality == "improve-plan":
+                improver = PlanImproverPattern(gDomain, problem, args, plan)
+            else:
+                assert solver.finalPattern and solver.finalBound
+                improver = PlanImproverLess(gDomain, problem, args, plan, solver.finalPattern, solver.finalBound)
             improvedPlan = improver.solve()
             ts.end("Improving Plan", console=console)
             if improvedPlan:

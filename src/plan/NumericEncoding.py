@@ -26,7 +26,8 @@ class NumericEncoding(Encoding):
     problem: Problem
 
     def __init__(self, domain: GroundedDomain, problem: Problem, pattern: Pattern, bound: int,
-                 args: Arguments, relaxGoal=False, subgoalsAchieved=None, minimizeQuality=False):
+                 args: Arguments, relaxGoal=False, subgoalsAchieved=None, minimizeQuality=False,
+                 maxActionsRolling: Dict[int, Dict[Action, int]] = None):
 
         super().__init__(domain, problem, pattern, bound)
         self.domain = domain
@@ -40,6 +41,7 @@ class NumericEncoding(Encoding):
         self.minimizeQuality = minimizeQuality or args.quality == "shortest-step"
         self.binaryActions: int = args.binaryActions
         self.hasEffectAxioms = args.hasEffectAxioms
+        self.maxActionsRolling = maxActionsRolling
 
         self.transitionVariables: [NumericTransitionVariables] = list()
 
@@ -242,7 +244,7 @@ class NumericEncoding(Encoding):
 
         return rules
 
-    def getActStepRules(self, stepVars: NumericTransitionVariables) -> List[SMTExpression]:
+    def getAmoStepRules(self, stepVars: NumericTransitionVariables, i: int) -> List[SMTExpression]:
         rules: List[SMTExpression] = []
 
         for a in self.pattern:
@@ -250,9 +252,13 @@ class NumericEncoding(Encoding):
                 continue
             a_n = stepVars.actionVariables[a]
             rules.append(a_n >= 0)
+            if self.maxActionsRolling:
+                rules.append(a_n <= self.maxActionsRolling[i][a])
+                continue
             if not a.couldBeRepeated() or (a.hasNonSimpleLinearIncrement(self.encoding)):
                 rules.append(a_n <= 1)
-            elif self.rollBound:
+                continue
+            if self.rollBound:
                 rules.append(a_n <= self.rollBound)
 
         if len(self.domain.arpg.stateLevels) > 2:
@@ -385,7 +391,7 @@ class NumericEncoding(Encoding):
 
         rules: List[SMTExpression] = []
         rules += self.getDeltaStepRules(prevVars, stepVars)
-        rules += self.getActStepRules(stepVars)
+        rules += self.getAmoStepRules(stepVars, index)
         rules += self.getPreStepRules(stepVars)
         rules += self.getEffStepRules(stepVars)
         rules += self.getFrameStepRules(stepVars)
@@ -398,12 +404,16 @@ class NumericEncoding(Encoding):
         if not solution:
             return plan
 
+        plan.actionRolling = dict()
+
         for i in range(1, self.bound + 1):
+            plan.actionRolling.setdefault(i, dict())
             stepVar = self.transitionVariables[i]
             for a in self.pattern:
                 if a.isFake:
                     continue
                 repetitions = int(str(solution.getVariable(stepVar.actionVariables[a]))) * a.linearizationTimes
+                plan.actionRolling[i][a] = repetitions
                 if repetitions > 0:
                     plan.addRepeatedAction(a.linearizationOf, repetitions)
 
