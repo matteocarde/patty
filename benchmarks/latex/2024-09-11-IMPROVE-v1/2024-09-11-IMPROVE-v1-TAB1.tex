@@ -1,0 +1,46 @@
+
+               \documentclass[11pt,landscape]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in,landscape]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||ccc||ccc||ccc||ccc||ccc||}
+\hline
+ & \multicolumn{3}{c||}{Coverage (\%)}&\multicolumn{3}{c||}{Time (s)}&\multicolumn{3}{c||}{Bound $n$}&\multicolumn{3}{c||}{$|\mathcal{X} \cup \mathcal{A}^\prec \cup \mathcal{X}'|$}&\multicolumn{3}{c||}{$|\mathcal{T}^\prec(\mathcal{X},\mathcal{A}^\prec,\mathcal{X}')|$}\\
+Domain & $\mathrm{P}_\mathrm{R}$&$\mathrm{P}_\mathrm{A}$&$\mathrm{P}_\mathrm{E}$&$\mathrm{P}_\mathrm{R}$&$\mathrm{P}_\mathrm{A}$&$\mathrm{P}_\mathrm{E}$&$\mathrm{P}_\mathrm{R}$&$\mathrm{P}_\mathrm{A}$&$\mathrm{P}_\mathrm{E}$&$\mathrm{P}_\mathrm{R}$&$\mathrm{P}_\mathrm{A}$&$\mathrm{P}_\mathrm{E}$&$\mathrm{P}_\mathrm{R}$&$\mathrm{P}_\mathrm{A}$&$\mathrm{P}_\mathrm{E}$\\
+\hline
+\textsc{BlGrp} (S)&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{1.4}$\pm 0.1$&1.5&1.6&\textbf{1.0}$\pm 0.0$&\textbf{1.0}&\textbf{1.0}&\textbf{182}$\pm 0$&\textbf{182}&\textbf{182}&\textbf{448}$\pm 0$&\textbf{448}&\textbf{448}\\
+\textsc{Cnt} (S)&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{0.9}$\pm 0.1$&\textbf{0.9}&\textbf{0.9}&\textbf{1.0}$\pm 0.0$&\textbf{1.0}&\textbf{1.0}&\textbf{92}$\pm 0$&\textbf{92}&\textbf{92}&\textbf{228}$\pm 0$&\textbf{228}&\textbf{228}\\
+\textsc{Cnt} (L)&20&\textbf{100}&\textbf{100}&24.7$\pm 0.7$&\textbf{1.1}&1.2&1.8$\pm 0.5$&\textbf{1.0}&\textbf{1.0}&46$\pm 13$&\textbf{32}&\textbf{32}&106$\pm 37$&\textbf{66}&\textbf{66}\\
+\textsc{Del} (S)&\textbf{25}&15&\textbf{25}&24.5$\pm 0.7$&26.1&\textbf{24.4}&2.5$\pm 0.2$&3.3&\textbf{1.7}&828$\pm 155$&1082&\textbf{566}&2462$\pm 494$&3277&\textbf{1661}\\
+\textsc{Drn} (S)&\textbf{15}&\textbf{15}&\textbf{15}&\textbf{25.7}$\pm 0.0$&\textbf{25.7}&\textbf{25.7}&\textbf{4.6}$\pm 0.8$&5.7&5.7&\textbf{250}$\pm 37$&301&301&\textbf{640}$\pm 102$&778&778\\
+\textsc{Exp} (S)&\textbf{20}&10&15&26.0$\pm 0.5$&27.4&\textbf{25.8}&5.8$\pm 0.7$&6.0&\textbf{3.0}&524$\pm 58$&534&\textbf{286}&1240$\pm 141$&1272&\textbf{656}\\
+\textsc{Farm} (S)&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{0.9}$\pm 0.1$&1.2&1.2&1.1$\pm 0.1$&\textbf{1.0}&\textbf{1.0}&60$\pm 49$&\textbf{50}&\textbf{50}&127$\pm 97$&\textbf{107}&\textbf{107}\\
+\textsc{Farm} (L)&\textbf{100}&90&90&\textbf{2.5}$\pm 2.1$&5.4&5.1&1.2$\pm 0.2$&\textbf{1.1}&\textbf{1.1}&71$\pm 57$&\textbf{67}&\textbf{67}&142$\pm 111$&\textbf{135}&\textbf{135}\\
+\textsc{HPwr} (S)&5&\textbf{95}&\textbf{95}&29.8$\pm 0.0$&\textbf{9.7}&\textbf{9.7}&8.0$\pm 0.0$&\textbf{1.0}&\textbf{1.0}&2723$\pm 146$&\textbf{352}&\textbf{352}&5820$\pm 323$&\textbf{725}&\textbf{725}\\
+\textsc{MPrime} (S)&\textbf{50}&\textbf{50}&\textbf{50}&19.0$\pm 1.9$&18.7&\textbf{17.5}&2.6$\pm 0.5$&2.0&\textbf{1.1}&2148$\pm 474$&1570&\textbf{844}&6808$\pm 1529$&4916&\textbf{2770}\\
+\textsc{PathM} (S)&60&\textbf{100}&\textbf{100}&20.5$\pm 0.8$&\textbf{6.4}&6.8&3.8$\pm 0.3$&\textbf{1.0}&\textbf{1.0}&5708$\pm 577$&\textbf{1939}&\textbf{1939}&12902$\pm 1446$&\textbf{3059}&\textbf{3059}\\
+\textsc{PlWat} (S)&\textbf{30}&25&25&\textbf{23.0}$\pm 1.0$&23.3&23.3&7.9$\pm 0.9$&\textbf{7.6}&\textbf{7.6}&565$\pm 58$&\textbf{540}&\textbf{540}&1558$\pm 167$&\textbf{1486}&\textbf{1486}\\
+\textsc{Rvr} (S)&50&50&\textbf{60}&18.4$\pm 0.5$&18.9&\textbf{15.8}&3.3$\pm 0.3$&2.5&\textbf{1.6}&1364$\pm 186$&1133&\textbf{685}&3112$\pm 418$&2569&\textbf{1628}\\
+\textsc{Sail} (S)&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{0.9}$\pm 0.1$&1.1&1.1&\textbf{2.6}$\pm 0.4$&3.3&3.3&\textbf{131}$\pm 27$&163&163&\textbf{267}$\pm 57$&340&340\\
+\textsc{Sail} (L)&\textbf{100}&80&80&\textbf{2.1}$\pm 2.2$&7.1&7.1&1.4$\pm 0.4$&\textbf{1.3}&\textbf{1.3}&70$\pm 28$&\textbf{64}&\textbf{64}&174$\pm 73$&\textbf{157}&\textbf{157}\\
+\textsc{Sat} (S)&\textbf{20}&5&5&\textbf{26.3}$\pm 0.4$&28.7&28.9&\textbf{3.0}$\pm 0.0$&\textbf{3.0}&\textbf{3.0}&\textbf{1132}$\pm 0$&\textbf{1132}&\textbf{1132}&\textbf{2928}$\pm 0$&\textbf{2928}&\textbf{2928}\\
+\textsc{Sgr} (S)&\textbf{100}&\textbf{100}&\textbf{100}&4.8$\pm 1.4$&6.6&\textbf{4.3}&3.1$\pm 0.3$&3.1&\textbf{2.5}&1392$\pm 197$&1401&\textbf{1162}&3440$\pm 527$&3465&\textbf{2836}\\
+\textsc{Tpp} (L)&\textbf{10}&\textbf{10}&\textbf{10}&\textbf{27.2}$\pm 0.1$&27.3&27.3&2.7$\pm 0.3$&\textbf{2.5}&\textbf{2.5}&476$\pm 68$&\textbf{452}&\textbf{452}&1121$\pm 187$&\textbf{1052}&\textbf{1052}\\
+\textsc{Zeno} (S)&\textbf{55}&\textbf{55}&\textbf{55}&16.1$\pm 0.7$&15.7&\textbf{15.2}&2.9$\pm 0.3$&\textbf{1.6}&\textbf{1.6}&1021$\pm 132$&\textbf{603}&\textbf{603}&3238$\pm 439$&\textbf{1855}&\textbf{1855}\\
+\textsc{Line} (L)&\textbf{100}&\textbf{100}&\textbf{100}&1.2$\pm 0.1$&1.1&\textbf{0.9}&4.4$\pm 0.6$&4.1&\textbf{2.6}&238$\pm 50$&231&\textbf{150}&586$\pm 126$&565&\textbf{355}
+\\\hline
+\textit{Total}&\textbf{16}&\textbf{13}&\textbf{15}&\textbf{10}&\textbf{5}&\textbf{10}&\textbf{5}&\textbf{12}&\textbf{18}&\textbf{5}&\textbf{12}&\textbf{18}&\textbf{5}&\textbf{12}&\textbf{18}\\\hline
+
+        \end{tabular}}
+        \caption{Comparative analysis between  \pattyr, \pattya and \pattye. \pattyr has been run 5 times and we report the best, worst and average performance, denoted respectively with \pattyrmin, \pattyrmax and \pattyravg. Each domain is labeled with S (for simple) if every numeric effect of each action either increases or decreases by a constant the assigned variable, and with L (for linear), otherwise. In the table, names have been abbreviated to save space.  See \cite{ipc2023} for other details.}
+        \label{tab:exp-random}
+        \end{table*}
+        
+\end{document}

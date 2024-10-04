@@ -138,6 +138,10 @@ class Result(dict):
         return Result.aggregator(results, statistics.mean, solver)
 
     @classmethod
+    def stdev(cls, results: [Result], solver=None):
+        return Result.aggregator(results, mystdev, solver)
+
+    @classmethod
     def portfolio(cls, portfolio: [Result], solver: str) -> Result:
         solved = [r for r in portfolio if r.solved]
         if not solved:
@@ -190,11 +194,16 @@ class Result(dict):
 
         for (domain, domainDict) in rResults.items():
             for (problem, problems) in domainDict.items():
-                results.append(Result.min(problems, f"{randomSolver}-MIN"))
                 results.append(Result.avg(problems, f"{randomSolver}-AVG"))
-                results.append(Result.max(problems, f"{randomSolver}-MAX"))
+                results.append(Result.stdev(problems, f"{randomSolver}-STDEV"))
 
         return results
 
     def toJSON(self):
         return json.dumps(self.__dict__)
+
+
+def mystdev(el):
+    if len(el) < 2:
+        return 0
+    return statistics.stdev(el)
