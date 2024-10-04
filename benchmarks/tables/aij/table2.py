@@ -3,6 +3,7 @@ from benchmarks.tables.aij.domains import AIJ_DOMAINS
 AIJ_TABLE2 = {
     "name": "tab:qual-plans",
     "type": "table*",
+    "orientation": "portrait",
     "width": r"\textwidth",
     "time-limit": 30 * 1000,
     "caption": r"Comparative analysis between  \pattye, \pattym and \pattyi. Each domain is labeled with S (for "
@@ -47,14 +48,14 @@ AIJ_TABLE2 = {
         },
         'PATTY-M': {
             "name": r"\mathrm{P}_\mathrm{M}",
-            "type": "stdev"
+            "type": "scalar"
         },
         'PATTY-I': {
             "name": r"\mathrm{P}_\mathrm{I}",
             "type": "scalar"
         },
         'PATTY-L': {
-            "name": r"\mathrm{P}_\mathrm{L}",
+            "name": r"\mathrm{P}_\leq",
             "type": "scalar"
         },
     },

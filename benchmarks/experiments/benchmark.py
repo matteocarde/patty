@@ -39,9 +39,11 @@ PLANNERS: Dict[str, Planner] = {
     "PATTY-FE": Patty("PATTY-FE", search="astar", pattern="enhanced", quality="none"),
     "PATTY-M": Patty("PATTY-M", search="step", pattern="enhanced", quality="shortest-step"),
     "PATTY-I": Patty("PATTY-I", search="step", pattern="enhanced", quality="improve-plan"),
+    "PATTY-L": Patty("PATTY-L", search="step", pattern="enhanced", quality="improve-less"),
     "SPRINGROLL": SpringRoll(),
 
     "ENHSP-SAT-HMRP": ENHSP(False, settings="-h hmrp -s gbfs -silent -pp -pe", name="ENHSP-SAT-HMRP"),
+    "ENHSP-SAT-HMRPHJ": ENHSP(False, settings="-planner sat-hmrphj -silent -pp -pe", name="ENHSP-SAT-HMRPHJ"),
     "ENHSP-SAT-HADD": ENHSP(False, settings="-h hadd -s gbfs -silent -pp -pe", name="ENHSP-SAT-HADD"),
     "ENHSP-SAT-HMAX": ENHSP(False, settings="-h hmax -s gbfs -silent -pp -pe", name="ENHSP-SAT-HMAX"),
     "ENHSP-SAT-AIBR": ENHSP(False, settings="-h aibr -s gbfs -silent -pp -pe", name="ENHSP-SAT-AIBR"),
@@ -49,7 +51,6 @@ PLANNERS: Dict[str, Planner] = {
     "ENHSP-SAT-BLIND": ENHSP(False, settings="-h blind -s gbfs -silent -pp -pe", name="ENHSP-SAT-BLIND"),
 
     "ENHSP-OPT-HMRP": ENHSP(False, settings="-h hmrp -s WAStar -silent -pp -pe", name="ENHSP-OPT-HMRP"),
-    "ENHSP-OPT-HMRPHJ": ENHSP(False, settings="-planner sat-hmrphj -silent -pp -pe", name="ENHSP-OPT-HMRPHJ"),
     "ENHSP-OPT-HADD": ENHSP(False, settings="-h hadd -s WAStar -silent -pp -pe", name="ENHSP-OPT-HADD"),
     "ENHSP-OPT-HMAX": ENHSP(False, settings="-h hadd -s WAStar -silent -pp -pe", name="ENHSP-OPT-HMAX"),
     "ENHSP-OPT-AIBR": ENHSP(False, settings="-h aibr -s WAStar -silent -pp -pe", name="ENHSP-OPT-AIBR"),

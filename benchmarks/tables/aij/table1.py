@@ -2,6 +2,7 @@ from benchmarks.tables.aij.domains import AIJ_DOMAINS
 
 AIJ_TABLE1 = {
     "name": "tab:exp-random",
+    "orientation": "landscape",
     "type": "table*",
     "width": r"\textwidth",
     "time-limit": 30 * 1000,

@@ -4,21 +4,22 @@ from natsort import natsort
 
 # PLANNERS = ["PATTY", "PATTY-R-YICES", "PATTY-R-Z3-NL", "PATTY-NL", "PATTY-Z3", "SPRINGROLL"]
 PLANNERS = [
-    # "PATTY-R",
-    # "PATTY-A",
+    "PATTY-R",
+    "PATTY-A",
     "PATTY-E",
-    # "PATTY-FA",
-    # "PATTY-FE",
     "PATTY-M",
     "PATTY-I",
-    # "SPRINGROLL",
-    # "ENHSP-SAT-HADD",
-    # "ENHSP-HRADD",
-    # "ENHSP-HMRP",
-    # "METRIC-FF",
-    # "NFD",
-    # "OMT"
+    "PATTY-L",
+    "SPRINGROLL",
+    "ENHSP-SAT-HADD",
+    "ENHSP-SAT-AIBR",
+    "ENHSP-SAT-HMRP",
+    "METRIC-FF",
+    "NFD",
+    "OMT",
+    "RANTANPLAN"
 ]
+RANDOM = 5
 NAME = "aij.csv"
 
 
@@ -57,7 +58,7 @@ def main():
             problemFile = f"files/{domain}/instances/{problem}"
 
             for planner in PLANNERS:
-                n = 1 if "PATTY-R" not in planner else 5
+                n = 1 if "PATTY-R" not in planner else RANDOM
                 for i in range(0, n):
                     instances.append([planner, domain, domainFile, problemFile])
 

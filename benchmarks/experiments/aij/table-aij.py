@@ -1,3 +1,4 @@
+import copy
 import csv
 import json
 import os
@@ -8,6 +9,8 @@ from typing import Dict, List, Set
 
 from benchmarks.tables.aij.table1 import AIJ_TABLE1
 from benchmarks.tables.aij.table2 import AIJ_TABLE2
+from benchmarks.tables.aij.table3 import AIJ_TABLE3
+from benchmarks.tables.aij.table4 import AIJ_TABLE4
 from classes.CloudLogger import CloudLogger
 from classes.Result import Result
 
@@ -25,12 +28,21 @@ def main():
     exp = "2024-09-11-IMPROVE-v1"
     file = f"benchmarks/results/csv/{exp}.csv"
 
+    folder = f'benchmarks/latex/{exp}'
+    if os.path.exists(folder):
+        shutil.rmtree(folder)
+    os.mkdir(folder)
+
     CloudLogger.saveLogs(exp, file)
     joinWith = ["2024-09-10-AIJ-v1"]
     for exp2 in joinWith:
         CloudLogger.appendLogs(exp2, file)
 
-    tables = [("TAB1", AIJ_TABLE1), ("TAB2", AIJ_TABLE2)]
+    tables = [
+        ("TAB1", AIJ_TABLE1),
+        ("TAB2", AIJ_TABLE2),
+        ("TAB3", AIJ_TABLE3),
+        ("TAB4", AIJ_TABLE4)]
 
     joinWith = [file]
     # joinWith = [file]
@@ -55,13 +67,13 @@ def main():
     })
     results = Result.splitRandom(results, "PATTY-R")
 
-    d = dict()
+    dOrig = dict()
     dView = dict()
     for r in results:
-        d[r.domain] = d.setdefault(r.domain, dict())
-        d[r.domain][r.solver] = d[r.domain].setdefault(r.solver, dict())
-        d[r.domain][r.solver][r.problem] = d[r.domain][r.solver].setdefault(r.problem, list())
-        d[r.domain][r.solver][r.problem].append(r)
+        dOrig[r.domain] = dOrig.setdefault(r.domain, dict())
+        dOrig[r.domain][r.solver] = dOrig[r.domain].setdefault(r.solver, dict())
+        dOrig[r.domain][r.solver][r.problem] = dOrig[r.domain][r.solver].setdefault(r.problem, list())
+        dOrig[r.domain][r.solver][r.problem].append(r)
 
         dView[r.solver] = dView.setdefault(r.solver, dict())
         dView[r.solver][r.domain] = dView[r.solver].setdefault(r.domain, dict())
@@ -77,6 +89,7 @@ def main():
         domains: List[str] = list(table["domains"].keys())
         domains.sort()
 
+        d = copy.deepcopy(dOrig)
         for domain in domains:
             for planner in planners:
                 problems = list()
@@ -104,6 +117,8 @@ def main():
             commonlySolved = {}
             commonlyGrounded = {}
             for planner in table["planners"].keys():
+                if planner not in d[domain]:
+                    continue
                 solved = {r.problem for r in d[domain][planner] if r.solved}
                 grounded = {r.problem for r in d[domain][planner] if r.nOfVars > 0}
                 if solved:
@@ -112,6 +127,8 @@ def main():
                     commonlyGrounded = solved if not commonlyGrounded else commonlyGrounded.intersection(grounded)
 
             for planner, plannerInfo in table["planners"].items():
+                if planner not in d[domain]:
+                    continue
                 pResult = d[domain][planner]
 
                 if plannerInfo["type"] in {"stdev"}:
@@ -161,12 +178,13 @@ def main():
                 t[domain]["lastCallsToSolver"][planner] = rVec(v, 2) if len(v) else "-"
 
         latex = list()
+        orientation = ",landscape" if table["orientation"] == "landscape" else ""
         latex.append(r"""
-               \documentclass[11pt,landscape]{article}
+               \documentclass[11pt""" + orientation + r"""]{article}
                \usepackage{graphicx}
                \usepackage{lscape}
                \usepackage{multirow}
-               \usepackage[a4paper,margin=1in,landscape]{geometry}
+               \usepackage[a4paper,margin=1in""" + orientation + r"""]{geometry}
     
                \begin{document}""")
 
@@ -268,10 +286,6 @@ def main():
         latex.append("\end{document}")
 
         latexStr = "\n".join(latex)
-        folder = f'benchmarks/latex/{exp}'
-        if os.path.exists(folder):
-            shutil.rmtree(folder)
-        os.mkdir(folder)
         file = f"{exp}-{tableName}"
         with open(f"{folder}/{file}.tex", "w") as f:
             f.write(latexStr)
@@ -280,7 +294,7 @@ def main():
         os.remove(f"{folder}/{file}.aux")
         os.remove(f"{folder}/{file}.log")
 
-    for table, tableName in tables:
+    for tableName, table in tables:
         os.system(f"open {folder}/{exp}-{tableName}.pdf")
 
 
