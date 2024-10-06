@@ -25,7 +25,7 @@ def rVec(v, n):
 
 def main():
     # Parsing the results
-    exp = "2024-09-11-IMPROVE-v1"
+    exp = "2024-10-04-AIJ-ALL-v1"
     file = f"benchmarks/results/csv/{exp}.csv"
 
     folder = f'benchmarks/latex/{exp}'
@@ -34,7 +34,7 @@ def main():
     os.mkdir(folder)
 
     CloudLogger.saveLogs(exp, file)
-    joinWith = ["2024-09-10-AIJ-v1"]
+    joinWith = []
     for exp2 in joinWith:
         CloudLogger.appendLogs(exp2, file)
 
@@ -61,9 +61,9 @@ def main():
 
     # Joining together portfolios
     results = Result.joinPorfolios(aResults, {
-        "ENHSP-sat-hadd": "ENHSP",
-        "ENHSP-sat-hradd": "ENHSP",
-        "ENHSP-sat-hmrphj": "ENHSP",
+        "ENHSP-SAT-HADD": "ENHSP",
+        "ENHSP-SAT-AIBR": "ENHSP",
+        "ENHSP-SAT-HMRP": "ENHSP",
     })
     results = Result.splitRandom(results, "PATTY-R")
 

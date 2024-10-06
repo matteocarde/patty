@@ -4,20 +4,20 @@ from natsort import natsort
 
 # PLANNERS = ["PATTY", "PATTY-R-YICES", "PATTY-R-Z3-NL", "PATTY-NL", "PATTY-Z3", "SPRINGROLL"]
 PLANNERS = [
-    "PATTY-R",
-    "PATTY-A",
-    "PATTY-E",
-    "PATTY-M",
-    "PATTY-I",
-    "PATTY-L",
+    # "PATTY-R",
+    # "PATTY-A",
+    # "PATTY-E",
+    # "PATTY-M",
+    # "PATTY-I",
+    # "PATTY-L",
     "SPRINGROLL",
-    "ENHSP-SAT-HADD",
-    "ENHSP-SAT-AIBR",
-    "ENHSP-SAT-HMRP",
-    "METRIC-FF",
-    "NFD",
-    "OMT",
-    "RANTANPLAN"
+    # "ENHSP-SAT-HADD",
+    # "ENHSP-SAT-AIBR",
+    # "ENHSP-SAT-HMRP",
+    # "METRIC-FF",
+    # "NFD",
+    # "OMT",
+    # "RANTANPLAN"
 ]
 RANDOM = 5
 NAME = "aij.csv"

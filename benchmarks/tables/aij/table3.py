@@ -47,7 +47,7 @@ AIJ_TABLE3 = {
             "name": r"\mathrm{OMT}",
             "type": "scalar",
         },
-        'Springroll': {
+        'SPRINGROLL': {
             "name": r"\mathrm{SR}",
             "type": "scalar",
         },
@@ -55,8 +55,8 @@ AIJ_TABLE3 = {
             "name": r"\mathrm{P}_\mathrm{E}",
             "type": "scalar",
         },
-        'PATTY-I': {
-            "name": r"\mathrm{P}_\mathrm{I}",
+        'PATTY-L': {
+            "name": r"\mathrm{P}_\leq",
             "type": "scalar"
         },
     },

@@ -17,7 +17,11 @@ AIJ_TABLE4 = {
             "name": "Time (s)",
             "winner": -1,
             "stdev": True
-        }
+        },
+        "length": {
+            "name": r"$|\pi|$",
+            "winner": -1
+        },
     },
     "planners": {
         'ENHSP': {
@@ -36,8 +40,8 @@ AIJ_TABLE4 = {
             "name": r"\mathrm{P}_\mathrm{E}",
             "type": "scalar",
         },
-        'PATTY-I': {
-            "name": r"\mathrm{P}_\mathrm{I}",
+        'PATTY-L': {
+            "name": r"\mathrm{P}_\leq",
             "type": "scalar"
         },
     },
