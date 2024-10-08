@@ -1,4 +1,5 @@
 import time
+from datetime import datetime
 
 import boto3
 
@@ -44,16 +45,32 @@ class CloudLogger:
 
     @staticmethod
     def read(name):
+        events = list()
         client = boto3.client('logs')
-        cmd = client.get_log_events(
-            startTime=round(time.time() * 1000) - 1000 * 60 * 60 * 24 * 30,
-            endTime=round(time.time() * 1000),
-            logGroupName=LOG_GROUP,
-            logStreamName=name,
-            startFromHead=True,
-            limit=10000,
-        )
-        return cmd["events"]
+        startTime = round(time.time() * 1000) - 1000 * 60 * 60 * 24 * 30
+        endTime = round(time.time() * 1000)
+        nextToken = None
+        while True:
+            args = {
+                "startTime": startTime,
+                "endTime": endTime,
+                "logGroupName": LOG_GROUP,
+                "logStreamName": name,
+                "startFromHead": True,
+                "limit": 10000,
+            }
+            if nextToken:
+                args["nextToken"] = nextToken
+            cmd = client.get_log_events(**args)
+            nextToken = cmd["nextForwardToken"]
+            print(f"Saved {len(cmd['events'])} instances from {datetime.fromtimestamp(startTime / 1000)} "
+                  f"to {datetime.fromtimestamp(endTime / 1000)}")
+            events += cmd["events"]
+            if not cmd["events"]:
+                break
+
+        print(f"Total Received: {len(events)} instances")
+        return events
 
     @staticmethod
     def saveLogs(exp, file):

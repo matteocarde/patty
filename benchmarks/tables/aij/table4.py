@@ -41,7 +41,7 @@ AIJ_TABLE4 = {
             "type": "scalar",
         },
         'PATTY-L': {
-            "name": r"\mathrm{P}_\leq",
+            "name": r"\mathrm{P}_\matrhm{I}",
             "type": "scalar"
         },
     },

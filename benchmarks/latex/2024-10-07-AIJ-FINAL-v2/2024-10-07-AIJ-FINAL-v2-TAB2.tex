@@ -1,0 +1,46 @@
+
+               \documentclass[11pt]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||ccc||ccc||ccc||}
+\hline
+ & \multicolumn{3}{c||}{Coverage (\%)}&\multicolumn{3}{c||}{Time (s)}&\multicolumn{3}{c||}{$|\pi|$}\\
+Domain & $\mathrm{P}_\mathrm{E}$&$\mathrm{P}_\mathrm{M}$&$\mathrm{P}_\mathrm{I}$&$\mathrm{P}_\mathrm{E}$&$\mathrm{P}_\mathrm{M}$&$\mathrm{P}_\mathrm{I}$&$\mathrm{P}_\mathrm{E}$&$\mathrm{P}_\mathrm{M}$&$\mathrm{P}_\mathrm{I}$\\
+\hline
+\textsc{BlGrp} (S)&\textbf{100}&70&95&\textbf{1.6}&101.5&3.3&451&\textbf{237}&294\\
+\textsc{Cnt} (S)&95&\textbf{100}&\textbf{100}&\textbf{0.9}&19.8&1.2&466&\textbf{332}&391\\
+\textsc{Cnt} (L)&95&50&\textbf{100}&\textbf{1.3}&162.0&3.3&39&\textbf{23}&27\\
+\textsc{Del} (S)&\textbf{25}&20&\textbf{25}&\textbf{226.0}&250.6&226.3&21&\textbf{20}&\textbf{20}\\
+\textsc{Drn} (S)&\textbf{15}&\textbf{15}&\textbf{15}&\textbf{255.2}&255.5&255.3&21&\textbf{12}&\textbf{12}\\
+\textsc{Exp} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{240.5}&255.3&242.2&56&\textbf{44}&\textbf{44}\\
+\textsc{Farm} (S)&\textbf{100}&45&95&\textbf{1.4}&187.1&39.5&980&\textbf{260}&\textbf{260}\\
+\textsc{Farm} (L)&\textbf{90}&10&75&\textbf{33.6}&272.1&96.1&398&\textbf{14}&170\\
+\textsc{HPwr} (S)&\textbf{100}&20&25&\textbf{12.8}&269.2&224.4&64&\textbf{32}&36\\
+\textsc{MPrime} (S)&\textbf{75}&45&65&\textbf{124.4}&185.6&129.8&50&\textbf{8}&\textbf{8}\\
+\textsc{PathM} (S)&\textbf{100}&10&15&\textbf{6.7}&281.4&252.9&312&\textbf{34}&\textbf{34}\\
+\textsc{PlWat} (S)&\textbf{30}&20&25&\textbf{214.7}&262.3&228.3&303&\textbf{137}&177\\
+\textsc{Rvr} (S)&65&35&\textbf{70}&121.3&197.3&\textbf{106.8}&58&\textbf{14}&15\\
+\textsc{Sail} (S)&\textbf{100}&35&95&\textbf{1.1}&215.6&20.6&740&\textbf{404}&543\\
+\textsc{Sail} (L)&70&5&\textbf{75}&90.7&289.6&\textbf{83.8}&158&\textbf{13}&32\\
+\textsc{Sat} (S)&\textbf{20}&-&15&\textbf{268.8}&-&272.9&133&-&\textbf{28}\\
+\textsc{Sgr} (S)&\textbf{95}&60&\textbf{95}&\textbf{3.9}&166.0&5.2&42&\textbf{19}&24\\
+\textsc{Tpp} (L)&5&\textbf{10}&\textbf{10}&284.5&270.8&\textbf{268.8}&19&\textbf{10}&13\\
+\textsc{Zeno} (S)&\textbf{55}&50&\textbf{55}&\textbf{136.7}&154.8&137.0&18&\textbf{15}&17\\
+\textsc{Line} (L)&\textbf{100}&96&\textbf{100}&\textbf{0.9}&24.9&1.2&273&\textbf{225}&226
+\\\hline
+\textit{Total}&\textbf{15}&\textbf{4}&\textbf{11}&\textbf{17}&\textbf{0}&\textbf{3}&\textbf{0}&\textbf{19}&\textbf{7}\\\hline
+
+        \end{tabular}}
+        \caption{Comparative analysis between  \pattye, \pattym and \pattyi. Each domain is labeled with S (for simple) if every numeric effect of each action either increases or decreases by a constant the assigned variable, and with L (for linear), otherwise. In the table, names have been abbreviated to save space.  See \cite{ipc2023} for other details.}
+        \label{tab:qual-plans}
+        \end{table*}
+        
+\end{document}

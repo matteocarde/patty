@@ -1,0 +1,46 @@
+
+               \documentclass[11pt,landscape]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in,landscape]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||ccc||ccc||ccc||ccc||ccc||}
+\hline
+ & \multicolumn{3}{c||}{Coverage (\%)}&\multicolumn{3}{c||}{Time (s)}&\multicolumn{3}{c||}{Bound $n$}&\multicolumn{3}{c||}{$|\mathcal{X} \cup \mathcal{A}^\prec \cup \mathcal{X}'|$}&\multicolumn{3}{c||}{$|\mathcal{T}^\prec(\mathcal{X},\mathcal{A}^\prec,\mathcal{X}')|$}\\
+Domain & $\mathrm{P}_\mathrm{R}$&$\mathrm{P}_\mathrm{A}$&$\mathrm{P}_\mathrm{E}$&$\mathrm{P}_\mathrm{R}$&$\mathrm{P}_\mathrm{A}$&$\mathrm{P}_\mathrm{E}$&$\mathrm{P}_\mathrm{R}$&$\mathrm{P}_\mathrm{A}$&$\mathrm{P}_\mathrm{E}$&$\mathrm{P}_\mathrm{R}$&$\mathrm{P}_\mathrm{A}$&$\mathrm{P}_\mathrm{E}$&$\mathrm{P}_\mathrm{R}$&$\mathrm{P}_\mathrm{A}$&$\mathrm{P}_\mathrm{E}$\\
+\hline
+\textsc{BlGrp} (S)&\textbf{100}&90&\textbf{100}&1.5&\textbf{1.4}&1.6&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{177}&\textbf{177}&\textbf{177}&\textbf{435}&\textbf{435}&\textbf{435}\\
+\textsc{Cnt} (S)&\textbf{100}&85&95&\textbf{0.9}&\textbf{0.9}&\textbf{0.9}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{90}&\textbf{90}&\textbf{90}&\textbf{224}&\textbf{224}&\textbf{224}\\
+\textsc{Cnt} (L)&20&\textbf{100}&95&240.7&\textbf{1.3}&\textbf{1.3}&1.6&\textbf{1.0}&\textbf{1.0}&42&\textbf{32}&\textbf{32}&94&\textbf{66}&\textbf{66}\\
+\textsc{Del} (S)&\textbf{30}&15&25&\textbf{218.5}&255.5&226.0&2.6&3.3&\textbf{1.7}&841&1082&\textbf{566}&2504&3277&\textbf{1661}\\
+\textsc{Drn} (S)&\textbf{20}&15&15&\textbf{253.9}&255.2&255.2&\textbf{4.9}&5.7&5.7&\textbf{271}&301&301&\textbf{695}&778&778\\
+\textsc{Exp} (S)&\textbf{20}&15&\textbf{20}&246.6&259.0&\textbf{240.5}&7.2&7.7&\textbf{4.0}&738&778&\textbf{430}&1711&1814&\textbf{973}\\
+\textsc{Farm} (S)&\textbf{100}&95&\textbf{100}&\textbf{1.0}&1.4&1.4&1.1&\textbf{1.0}&\textbf{1.0}&58&\textbf{53}&\textbf{53}&123&\textbf{111}&\textbf{111}\\
+\textsc{Farm} (L)&\textbf{100}&85&90&\textbf{5.4}&34.2&33.6&\textbf{1.1}&\textbf{1.1}&\textbf{1.1}&74&\textbf{67}&\textbf{67}&147&\textbf{133}&\textbf{133}\\
+\textsc{HPwr} (S)&5&\textbf{100}&\textbf{100}&286.4&\textbf{12.7}&12.8&8.4&\textbf{1.0}&\textbf{1.0}&2918&\textbf{352}&\textbf{352}&6254&\textbf{725}&\textbf{725}\\
+\textsc{MPrime} (S)&70&50&\textbf{75}&\textbf{114.5}&153.7&124.4&2.6&2.0&\textbf{1.1}&2157&1570&\textbf{844}&6833&4916&\textbf{2770}\\
+\textsc{PathM} (S)&80&\textbf{100}&\textbf{100}&94.3&\textbf{6.3}&6.7&4.0&\textbf{1.0}&\textbf{1.0}&7756&\textbf{2435}&\textbf{2435}&17749&\textbf{3828}&\textbf{3828}\\
+\textsc{PlWat} (S)&\textbf{40}&30&30&\textbf{200.6}&220.9&214.7&8.5&\textbf{8.2}&\textbf{8.2}&635&\textbf{623}&\textbf{623}&1752&\textbf{1718}&\textbf{1718}\\
+\textsc{Rvr} (S)&\textbf{80}&50&65&\textbf{105.7}&153.2&121.3&3.0&2.5&\textbf{1.6}&1361&1133&\textbf{685}&3104&2569&\textbf{1628}\\
+\textsc{Sail} (S)&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{0.9}&1.1&1.1&\textbf{2.8}&3.3&3.3&\textbf{135}&163&163&\textbf{275}&340&340\\
+\textsc{Sail} (L)&\textbf{100}&75&70&\textbf{2.0}&75.8&90.7&1.3&\textbf{1.2}&\textbf{1.2}&66&\textbf{62}&\textbf{62}&164&\textbf{154}&\textbf{154}\\
+\textsc{Sat} (S)&\textbf{40}&30&20&\textbf{219.4}&245.0&268.8&3.6&\textbf{3.5}&\textbf{3.5}&1899&\textbf{1848}&\textbf{1848}&5232&\textbf{5070}&\textbf{5070}\\
+\textsc{Sgr} (S)&\textbf{100}&\textbf{100}&95&5.1&6.9&\textbf{3.9}&3.2&3.1&\textbf{2.5}&1426&1384&\textbf{1133}&3536&3425&\textbf{2762}\\
+\textsc{Tpp} (L)&\textbf{15}&10&5&\textbf{264.5}&270.3&284.5&\textbf{3.0}&\textbf{3.0}&\textbf{3.0}&\textbf{586}&\textbf{586}&\textbf{586}&\textbf{1364}&\textbf{1364}&\textbf{1364}\\
+\textsc{Zeno} (S)&\textbf{55}&\textbf{55}&\textbf{55}&137.5&136.8&\textbf{136.7}&2.9&\textbf{1.6}&\textbf{1.6}&1005&\textbf{603}&\textbf{603}&3182&\textbf{1855}&\textbf{1855}\\
+\textsc{Line} (L)&\textbf{100}&\textbf{100}&\textbf{100}&1.2&1.1&\textbf{0.9}&4.5&4.1&\textbf{2.6}&231&231&\textbf{150}&569&565&\textbf{355}
+\\\hline
+\textit{Total}&\textbf{16}&\textbf{7}&\textbf{9}&\textbf{12}&\textbf{5}&\textbf{6}&\textbf{6}&\textbf{12}&\textbf{18}&\textbf{5}&\textbf{12}&\textbf{18}&\textbf{5}&\textbf{12}&\textbf{18}\\\hline
+
+        \end{tabular}}
+        \caption{Comparative analysis between  \pattyr, \pattya and \pattye. \pattyr has been run 5 times and we report the best, worst and average performance, denoted respectively with \pattyrmin, \pattyrmax and \pattyravg. Each domain is labeled with S (for simple) if every numeric effect of each action either increases or decreases by a constant the assigned variable, and with L (for linear), otherwise. In the table, names have been abbreviated to save space.  See \cite{ipc2023} for other details.}
+        \label{tab:exp-random}
+        \end{table*}
+        
+\end{document}

@@ -5,7 +5,7 @@ AIJ_TABLE2 = {
     "type": "table*",
     "orientation": "portrait",
     "width": r"\textwidth",
-    "time-limit": 30 * 1000,
+    "time-limit": 300 * 1000,
     "caption": r"Comparative analysis between  \pattye, \pattym and \pattyi. Each domain is labeled with S (for "
                r"simple) if every numeric effect of each action either increases or decreases by a constant the "
                r"assigned variable, and with L (for linear), otherwise. In the table, names have been abbreviated to "
@@ -50,12 +50,8 @@ AIJ_TABLE2 = {
             "name": r"\mathrm{P}_\mathrm{M}",
             "type": "scalar"
         },
-        'PATTY-I': {
-            "name": r"\mathrm{P}_\mathrm{I}",
-            "type": "scalar"
-        },
         'PATTY-L': {
-            "name": r"\mathrm{P}_\leq",
+            "name": r"\mathrm{P}_\mathrm{I}",
             "type": "scalar"
         },
     },

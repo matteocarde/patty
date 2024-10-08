@@ -5,7 +5,7 @@ AIJ_TABLE3 = {
     "type": "table*",
     "orientation": "landscape",
     "width": r"\textwidth",
-    "time-limit": 30 * 1000,
+    "time-limit": 300 * 1000,
     "caption": r"Comparative analysis between symbolic planners",
     "columns": {
         "coverage": {
@@ -56,7 +56,7 @@ AIJ_TABLE3 = {
             "type": "scalar",
         },
         'PATTY-L': {
-            "name": r"\mathrm{P}_\leq",
+            "name": r"\mathrm{P}_\matrhm{I}",
             "type": "scalar"
         },
     },

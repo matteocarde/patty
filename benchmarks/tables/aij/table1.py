@@ -5,7 +5,7 @@ AIJ_TABLE1 = {
     "orientation": "landscape",
     "type": "table*",
     "width": r"\textwidth",
-    "time-limit": 30 * 1000,
+    "time-limit": 300 * 1000,
     "caption": r"Comparative analysis between  \pattyr, \pattya and \pattye. \pattyr has been run 5 times and we "
                r"report the best, worst and average performance, denoted respectively with \pattyrmin, \pattyrmax and "
                r"\pattyravg. Each domain is labeled with S (for simple) if every numeric effect of each action either "
@@ -20,12 +20,12 @@ AIJ_TABLE1 = {
         "time": {
             "name": "Time (s)",
             "winner": -1,
-            "stdev": True
+            "stdev": False
         },
         "bound": {
             "name": r"Bound $n$",
             "winner": -1,
-            "stdev": True
+            "stdev": False
         },
         # "length": {
         #     "name": r"$|\pi|$",
@@ -34,19 +34,19 @@ AIJ_TABLE1 = {
         "nOfVars": {
             "name": "$|\mathcal{X} \cup \mathcal{A}^\prec \cup \mathcal{X}'|$",
             "winner": -1,
-            "stdev": True
+            "stdev": False
         },
         "nOfRules": {
             "name": "$|\mathcal{T}^\prec(\mathcal{X},\mathcal{A}^\prec,\mathcal{X}')|$",
             "winner": -1,
-            "stdev": True
+            "stdev": False
         },
     },
     "planners": {
         'PATTY-R-AVG': {
             "name": r"\mathrm{P}_\mathrm{R}",
-            "type": "avg",
-            "stdev": 'PATTY-R-STDEV'
+            "type": "scalar",
+            # "stdev": 'PATTY-R-STDEV'
         },
         'PATTY-R-STDEV': {
             "name": r"\mathrm{P}_\mathrm{R}",

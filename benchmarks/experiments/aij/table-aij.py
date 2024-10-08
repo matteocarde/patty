@@ -25,7 +25,7 @@ def rVec(v, n):
 
 def main():
     # Parsing the results
-    exp = "2024-10-04-AIJ-ALL-v1"
+    exp = "2024-10-07-AIJ-FINAL-v2"
     file = f"benchmarks/results/csv/{exp}.csv"
 
     folder = f'benchmarks/latex/{exp}'
@@ -154,9 +154,12 @@ def main():
                     t[domain]["lastCallsToSolver"][planner] = rVec(v, 2)
                     continue
 
+                instances = table["domains"][domain]["instances"]
+                if len(pResult) != instances:
+                    print(f"In {planner} the domain {domain} has {len(pResult)}/{instances} instances", file=sys.stderr)
+
                 hasCoverage = sum([r.solved for r in pResult]) > 0
-                t[domain]["coverage"][planner] = round(
-                    sum([r.solved for r in pResult]) / table["domains"][domain]["instances"] * 100, 0)
+                t[domain]["coverage"][planner] = round(sum([r.solved for r in pResult]) / instances * 100, 0)
                 t[domain]["coverage"][planner] = "-" if not hasCoverage else t[domain]["coverage"][planner]
 
                 v = [r.bound for r in pResult if r.solved and r.problem in commonlySolved]
