@@ -25,7 +25,7 @@ def rVec(v, n):
 
 def main():
     # Parsing the results
-    exp = "2024-10-07-AIJ-FINAL-v2"
+    exp = "2024-10-07-AIJ-FINAL-v3"
     file = f"benchmarks/results/csv/{exp}.csv"
 
     folder = f'benchmarks/latex/{exp}'
@@ -34,7 +34,7 @@ def main():
     os.mkdir(folder)
 
     CloudLogger.saveLogs(exp, file)
-    joinWith = []
+    joinWith = ["2024-10-07-AIJ-FINAL-v2"]
     for exp2 in joinWith:
         CloudLogger.appendLogs(exp2, file)
 
@@ -42,7 +42,8 @@ def main():
         ("TAB1", AIJ_TABLE1),
         ("TAB2", AIJ_TABLE2),
         ("TAB3", AIJ_TABLE3),
-        ("TAB4", AIJ_TABLE4)]
+        ("TAB4", AIJ_TABLE4)
+    ]
 
     joinWith = [file]
     # joinWith = [file]
@@ -65,7 +66,7 @@ def main():
         "ENHSP-SAT-AIBR": "ENHSP",
         "ENHSP-SAT-HMRP": "ENHSP",
     })
-    results = Result.splitRandom(results, "PATTY-R")
+    # results = Result.splitRandom(results, "PATTY-R")
 
     dOrig = dict()
     dView = dict()
@@ -75,10 +76,10 @@ def main():
         dOrig[r.domain][r.solver][r.problem] = dOrig[r.domain][r.solver].setdefault(r.problem, list())
         dOrig[r.domain][r.solver][r.problem].append(r)
 
-        dView[r.solver] = dView.setdefault(r.solver, dict())
-        dView[r.solver][r.domain] = dView[r.solver].setdefault(r.domain, dict())
-        dView[r.solver][r.domain][r.problem] = dView[r.solver][r.domain].setdefault(r.problem, list())
-        dView[r.solver][r.domain][r.problem].append(r)
+        dView[r.domain] = dView.setdefault(r.domain, dict())
+        dView[r.domain][r.problem] = dView[r.domain].setdefault(r.problem, dict())
+        dView[r.domain][r.problem][r.solver] = dView[r.domain][r.problem].setdefault(r.solver, list())
+        dView[r.domain][r.problem][r.solver].append(r)
 
     with open(f"benchmarks/results/json/{exp}.json", "w") as f:
         f.write(json.dumps(dView, indent=2))
@@ -96,6 +97,9 @@ def main():
                 if planner not in d[domain]:
                     continue
                 for problem in d[domain][planner].keys():
+                    if table["planners"][planner].get("isRandom") and table.get("keepAll"):
+                        problems += d[domain][planner][problem]
+                        continue
                     if len(d[domain][planner][problem]) > 1:
                         print(f"There are multiple problems {problem} for {domain} with {planner}. "
                               f"Please aggregate it in some way", file=sys.stderr)
@@ -131,30 +135,9 @@ def main():
                     continue
                 pResult = d[domain][planner]
 
-                if plannerInfo["type"] in {"stdev"}:
-                    t[domain]["coverage"][planner] = "0.0"
-
-                    v = [abs(r.time) / 1000 for r in pResult]
-                    t[domain]["time"][planner] = rVec(v, 1)
-
-                    v = [r.bound for r in pResult if r.solved and r.problem in commonlySolved]
-                    t[domain]["bound"][planner] = rVec(v, 1)
-
-                    v = [r.planLength for r in pResult if r.solved and r.problem in commonlySolved]
-                    t[domain]["length"][planner] = rVec(v, 0)
-
-                    v = [r.nOfVars for r in pResult if r.nOfVars > 0 and r.problem in commonlySolved]
-                    t[domain]["nOfVars"][planner] = rVec(v, 0) if v else "0"
-
-                    v = [r.nOfRules for r in pResult if r.nOfRules > 0 and r.problem in commonlySolved]
-                    t[domain]["nOfRules"][planner] = rVec(v, 0) if v else "0"
-
-                    v = [r.lastCallsToSolver for r in pResult if
-                         r.lastCallsToSolver > 0 and r.problem in commonlySolved]
-                    t[domain]["lastCallsToSolver"][planner] = rVec(v, 2)
-                    continue
-
                 instances = table["domains"][domain]["instances"]
+                if table["planners"][planner].get("isRandom") and table.get("keepAll"):
+                    instances = len(pResult)
                 if len(pResult) != instances:
                     print(f"In {planner} the domain {domain} has {len(pResult)}/{instances} instances", file=sys.stderr)
 
@@ -162,11 +145,14 @@ def main():
                 t[domain]["coverage"][planner] = round(sum([r.solved for r in pResult]) / instances * 100, 0)
                 t[domain]["coverage"][planner] = "-" if not hasCoverage else t[domain]["coverage"][planner]
 
+                if table.get("time-limit"):
+                    v = [r.time / 1000 if r.solved else table["time-limit"] / 1000 for r in pResult]
+                else:
+                    v = [r.time / 1000 for r in pResult if r.solved and r.problem in commonlySolved]
+                t[domain]["time"][planner] = rVec(v, 1) if hasCoverage else "-"
+
                 v = [r.bound for r in pResult if r.solved and r.problem in commonlySolved]
                 t[domain]["bound"][planner] = rVec(v, 1) if hasCoverage else "-"
-
-                v = [r.time / 1000 if r.solved else table["time-limit"] / 1000 for r in pResult]
-                t[domain]["time"][planner] = rVec(v, 1) if hasCoverage else "-"
 
                 v = [r.planLength for r in pResult if r.solved and r.problem in commonlySolved]
                 t[domain]["length"][planner] = rVec(v, 0) if hasCoverage else "-"

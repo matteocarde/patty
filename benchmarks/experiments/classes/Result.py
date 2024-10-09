@@ -120,8 +120,8 @@ class Result(dict):
             r.time = agg([e.time for e in results if e.solved])
             r.bound = agg([e.bound for e in results if e.solved])
             r.planLength = agg([e.planLength for e in results if e.solved])
-        r.solved = bool(r.solved)
-        r.timeout = bool(r.timeout)
+        # r.solved = bool(r.solved)
+        # r.timeout = bool(r.timeout)
         r.__setDict()
         return r
 
@@ -195,7 +195,6 @@ class Result(dict):
         for (domain, domainDict) in rResults.items():
             for (problem, problems) in domainDict.items():
                 results.append(Result.avg(problems, f"{randomSolver}-AVG"))
-                results.append(Result.stdev(problems, f"{randomSolver}-STDEV"))
 
         return results
 
