@@ -5,7 +5,6 @@ AIJ_TABLE3 = {
     "type": "table*",
     "orientation": "landscape",
     "width": r"\textwidth",
-    "time-limit": 300 * 1000,
     "caption": r"Comparative analysis between symbolic planners",
     "columns": {
         "coverage": {
@@ -39,6 +38,15 @@ AIJ_TABLE3 = {
         },
     },
     "planners": {
+        'PATTY-E': {
+            "name": r"\mathrm{P}_\mathrm{E}",
+            "type": "slashed",
+            "slashedWith": "PATTY-L"
+        },
+        'PATTY-L': {
+            "name": r"\mathrm{P}_\mathrm{I}",
+            "type": "skip"
+        },
         'RANTANPLAN': {
             "name": r"\mathrm{R^2\exists}",
             "type": "scalar",
@@ -50,14 +58,6 @@ AIJ_TABLE3 = {
         'SPRINGROLL': {
             "name": r"\mathrm{SR}",
             "type": "scalar",
-        },
-        'PATTY-E': {
-            "name": r"\mathrm{P}_\mathrm{E}",
-            "type": "scalar",
-        },
-        'PATTY-L': {
-            "name": r"\mathrm{P}_\matrhm{I}",
-            "type": "scalar"
         },
     },
     "domains": AIJ_DOMAINS

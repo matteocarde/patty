@@ -20,7 +20,19 @@ def round(fValue, n):
 
 
 def rVec(v, n):
-    return round(statistics.mean(v), n) if v else "-"
+    if not v:
+        return "-"
+    mean = statistics.mean(v)
+    return round(mean, n)
+
+
+def transformTextValue(v):
+    if v == "-":
+        return v
+    val = float(v)
+    if val > 1000:
+        return round(val / 1000, 1) + "k"
+    return v
 
 
 def main():
@@ -39,8 +51,8 @@ def main():
         CloudLogger.appendLogs(exp2, file)
 
     tables = [
-        ("TAB1", AIJ_TABLE1),
-        ("TAB2", AIJ_TABLE2),
+        # ("TAB1", AIJ_TABLE1),
+        # ("TAB2", AIJ_TABLE2),
         ("TAB3", AIJ_TABLE3),
         ("TAB4", AIJ_TABLE4)
     ]
@@ -158,13 +170,13 @@ def main():
                 t[domain]["length"][planner] = rVec(v, 0) if hasCoverage else "-"
 
                 v = [r.nOfVars for r in pResult if r.nOfVars > 0 and r.problem in commonlySolved]
-                t[domain]["nOfVars"][planner] = rVec(v, 0) if len(v) else "-"
+                t[domain]["nOfVars"][planner] = rVec(v, 0) if hasCoverage else "-"
 
                 v = [r.nOfRules for r in pResult if r.nOfRules > 0 and r.problem in commonlySolved]
-                t[domain]["nOfRules"][planner] = rVec(v, 0) if len(v) else "-"
+                t[domain]["nOfRules"][planner] = rVec(v, 0) if hasCoverage else "-"
 
                 v = [r.lastCallsToSolver for r in pResult if r.lastCallsToSolver > 0 and r.problem in commonlySolved]
-                t[domain]["lastCallsToSolver"][planner] = rVec(v, 2) if len(v) else "-"
+                t[domain]["lastCallsToSolver"][planner] = rVec(v, 2) if hasCoverage else "-"
 
         latex = list()
         orientation = ",landscape" if table["orientation"] == "landscape" else ""
@@ -211,10 +223,15 @@ def main():
             nCells = 0
             clString = []
             for (planner, plannerInfo) in table["planners"].items():
-                if plannerInfo["type"] not in {"stdev"}:
+                if plannerInfo["type"] in {"stdev", "skip"}:
+                    continue
+                if plannerInfo["type"] in {"slashed"}:
+                    otherPlannerInfo = table["planners"][plannerInfo['slashedWith']]
+                    plannersHeader.append(f"${plannerInfo['name']}/{otherPlannerInfo['name']}$")
+                else:
                     plannersHeader.append(f"${plannerInfo['name']}$")
-                    nCells += 1
-                    clString.append("c")
+                nCells += 1
+                clString.append("c")
 
             cString += f"|{''.join(clString)}|"
             mString.append(r"\multicolumn{" + str(nCells) + "}{c||}{" + columnInfos["name"] + "}")
@@ -232,12 +249,23 @@ def main():
             row = [domainInfo["name"]]
             for (column, columnInfo) in table["columns"].items():
                 for (planner, plannerInfo) in table["planners"].items():
-                    if plannerInfo["type"] in {"stdev"}:
+                    if plannerInfo["type"] in {"stdev", "skip"}:
                         continue
                     if planner not in t[domain][column]:
                         row.append("-")
                         continue
-                    value = t[domain][column][planner]
+                    value = transformTextValue(t[domain][column][planner])
+                    if plannerInfo["type"] in {"slashed"}:
+                        otherPlanner = plannerInfo["slashedWith"]
+                        otherValue = t[domain][column][otherPlanner]
+                        left = value
+                        right = transformTextValue(otherValue)
+                        if planner in best[domain][column]:
+                            left = r"\textbf{" + left + "}"
+                        if otherPlanner in best[domain][column]:
+                            right = r"\textbf{" + right + "}"
+                        row.append(f"{left}/{right}")
+                        continue
                     subvalue = ""
                     if plannerInfo["type"] in {"avg"} and columnInfo["stdev"]:
                         stdev = t[domain][column][plannerInfo["stdev"]]
@@ -254,10 +282,15 @@ def main():
 
         for column, columnInfo in table["columns"].items():
             for planner, plannerInfo in table["planners"].items():
-                if plannerInfo["type"] in {"stdev"}:
+                if plannerInfo["type"] in {"stdev", "skip"}:
                     continue
                 nOfBest = 0
                 for domain, domainInfo in table["domains"].items():
+                    if plannerInfo["type"] in {"slashed"}:
+                        otherPlanner = plannerInfo["slashedWith"]
+                        if planner in best[domain][column] or otherPlanner in best[domain][column]:
+                            nOfBest += 1
+                        continue
                     if planner in best[domain][column]:
                         nOfBest += 1
                 row.append(r"\textbf{" + str(nOfBest) + "}")

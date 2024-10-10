@@ -5,7 +5,7 @@ AIJ_TABLE4 = {
     "type": "table*",
     "orientation": "portrait",
     "width": r"\textwidth",
-    "time-limit": 30 * 1000,
+    "time-limit": 300 * 1000,
     "caption": r"Comparative analysis between search planners",
     "columns": {
         "coverage": {
@@ -24,6 +24,15 @@ AIJ_TABLE4 = {
         },
     },
     "planners": {
+        'PATTY-E': {
+            "name": r"\mathrm{P}_\mathrm{E}",
+            "type": "slashed",
+            "slashedWith": "PATTY-L"
+        },
+        'PATTY-L': {
+            "name": r"\mathrm{P}_\mathrm{I}",
+            "type": "skip"
+        },
         'ENHSP': {
             "name": r"\mathrm{EN}",
             "type": "scalar",
@@ -35,14 +44,6 @@ AIJ_TABLE4 = {
         'METRIC-FF': {
             "name": r"\mathrm{FF}",
             "type": "scalar",
-        },
-        'PATTY-E': {
-            "name": r"\mathrm{P}_\mathrm{E}",
-            "type": "scalar",
-        },
-        'PATTY-L': {
-            "name": r"\mathrm{P}_\matrhm{I}",
-            "type": "scalar"
         },
     },
     "domains": AIJ_DOMAINS
