@@ -16,7 +16,7 @@ PLANNERS = [
     # "ENHSP-SAT-HMRP",
     # "METRIC-FF",
     # "NFD",
-    "OMT",
+    # "OMT",
     # "RANTANPLAN"
 ]
 RANDOM = 5
