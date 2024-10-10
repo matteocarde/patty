@@ -6,6 +6,7 @@ AIJ_TABLE1 = {
     "type": "table*",
     "width": r"\textwidth",
     "keepAll": True,
+    "time-limit": 300 * 1000,
     "caption": r"Comparative analysis between  \pattya and \pattye. Each domain is labeled with S (for simple) if "
                r"every numeric effect of each action either increases or decreases by a constant the assigned "
                r"variable, and with L (for linear), otherwise. In the table, names have been abbreviated to save "

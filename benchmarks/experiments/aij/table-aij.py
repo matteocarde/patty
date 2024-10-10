@@ -37,7 +37,7 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2024-10-07-AIJ-FINAL-v3"
+    exp = "2024-10-07-AIJ-FINAL-v4"
     file = f"benchmarks/results/csv/{exp}.csv"
 
     folder = f'benchmarks/latex/{exp}'
@@ -46,13 +46,13 @@ def main():
     os.mkdir(folder)
 
     CloudLogger.saveLogs(exp, file)
-    joinWith = ["2024-10-07-AIJ-FINAL-v2"]
+    joinWith = ["2024-10-07-AIJ-FINAL-v3", "2024-10-07-AIJ-FINAL-v2"]
     for exp2 in joinWith:
         CloudLogger.appendLogs(exp2, file)
 
     tables = [
-        # ("TAB1", AIJ_TABLE1),
-        # ("TAB2", AIJ_TABLE2),
+        ("TAB1", AIJ_TABLE1),
+        ("TAB2", AIJ_TABLE2),
         ("TAB3", AIJ_TABLE3),
         ("TAB4", AIJ_TABLE4)
     ]

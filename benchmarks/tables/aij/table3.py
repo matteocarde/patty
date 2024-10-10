@@ -5,6 +5,7 @@ AIJ_TABLE3 = {
     "type": "table*",
     "orientation": "landscape",
     "width": r"\textwidth",
+    "time-limit": 300 * 1000,
     "caption": r"Comparative analysis between symbolic planners",
     "columns": {
         "coverage": {
