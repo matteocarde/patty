@@ -6,10 +6,10 @@ from natsort import natsort
 PLANNERS = [
     # "PATTY-R",
     "PATTY-A",
-    "PATTY-E",
-    "PATTY-M",
+    # "PATTY-E",
+    # "PATTY-M",
     # "PATTY-I",
-    "PATTY-L",
+    # "PATTY-L",
     # "SPRINGROLL",
     # "ENHSP-SAT-HADD",
     # "ENHSP-SAT-AIBR",
