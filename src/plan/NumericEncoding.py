@@ -371,15 +371,12 @@ class NumericEncoding(Encoding):
     def getFrameStepRules(self, stepVars: NumericTransitionVariables) -> List[SMTExpression]:
         rules: List[SMTExpression] = []
 
-        functions = self.domain.functions if self.bound > 1 else self.problem.goal.getFunctions()
-        predicates = self.domain.predicates if self.bound > 1 else self.problem.goal.getPredicates()
-
-        for v in functions:
+        for v in self.domain.functions:
             v_first = stepVars.valueVariables[v]
             delta_g_v = stepVars.deltaVariables[self.pattern.dummyAction][v]
             rules.append(v_first == delta_g_v)
 
-        for v in predicates:
+        for v in self.domain.predicates:
             v_first = stepVars.valueVariables[v]
             delta_g_v = stepVars.deltaVariables[self.pattern.dummyAction][v]
             rules.append(delta_g_v.coimplies(v_first))

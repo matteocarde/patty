@@ -1,7 +1,6 @@
-import signal
 from typing import Set, List, Dict
 
-from pysmt.logics import QF_NRA
+from pysmt.logics import QF_LRA
 from pysmt.shortcuts import Portfolio, Solver
 from z3 import Optimize
 
@@ -25,16 +24,15 @@ class SMTSolver:
         self.encoding: Encoding = encoding
 
         self.maximize = bool(self.encoding.softRules) or bool(self.encoding.minimize)
-
         if self.maximize:
             self.solver = Optimize()
             self.z3: Solver = Solver("z3",
-                                     logic=QF_NRA,
+                                     logic=QF_LRA,
                                      incremental=True,
                                      generate_models=True)
         else:
             self.solver: Portfolio = Portfolio(["z3"],
-                                               logic=QF_NRA,
+                                               logic=QF_LRA,
                                                incremental=True,
                                                generate_models=True)
 
@@ -50,7 +48,7 @@ class SMTSolver:
         self.assertions.append(expr)
         self.variables.update(expr.variables)
 
-        z3Expr = self.z3.converter.convert(expr.expression)  if self.maximize else expr.expression
+        z3Expr = self.z3.converter.convert(expr.expression) if self.maximize else expr.expression
 
         if self.maximize:
             self.solver.add(z3Expr)
