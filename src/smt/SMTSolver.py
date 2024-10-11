@@ -24,11 +24,19 @@ class SMTSolver:
         self.softAssertions: List[SMTExpression] = list()
         self.encoding: Encoding = encoding
 
-        self.solver = Optimize()
-        self.z3: Solver = Solver("z3",
-                                 logic=QF_NRA,
-                                 incremental=True,
-                                 generate_models=True)
+        self.maximize = bool(self.encoding.softRules) or bool(self.encoding.minimize)
+
+        if self.maximize:
+            self.solver = Optimize()
+            self.z3: Solver = Solver("z3",
+                                     logic=QF_NRA,
+                                     incremental=True,
+                                     generate_models=True)
+        else:
+            self.solver: Portfolio = Portfolio(["z3"],
+                                               logic=QF_NRA,
+                                               incremental=True,
+                                               generate_models=True)
 
         if self.encoding:
             self.addAssertions(self.encoding.rules)
@@ -42,8 +50,12 @@ class SMTSolver:
         self.assertions.append(expr)
         self.variables.update(expr.variables)
 
-        z3Expr = self.z3.converter.convert(expr.expression)
-        self.solver.add(z3Expr)
+        z3Expr = self.z3.converter.convert(expr.expression)  if self.maximize else expr.expression
+
+        if self.maximize:
+            self.solver.add(z3Expr)
+        else:
+            self.solver.add_assertion(z3Expr)
 
         if push:
             self.solver.push()
@@ -86,24 +98,37 @@ class SMTSolver:
         self.solver.push()  # I repush to keep the stack with the last actions
 
     def exit(self):
-        self.z3.exit()
+        if self.maximize:
+            self.z3.exit()
+        else:
+            self.solver.exit()
 
     def getSolution(self) -> SMTSolution or bool:
-        res = self.solver.check()
+        if self.maximize:
+            res = self.solver.check()
 
-        if str(res) != "sat":
-            return False
+            if str(res) != "sat":
+                return False
+        else:
+            found = self.solver.solve()
+            if not found:
+                return False
 
         solution = SMTSolution()
-        model = self.solver.model()
-        variablesByName = dict()
-        for v in self.variables:
-            variablesByName[str(v).replace("'", "")] = v
-        for v in model:
-            varName = str(v)
-            if varName not in variablesByName:
-                continue
-            solution.addVariable(variablesByName[varName], model[v])
+        if self.maximize:
+            model = self.solver.model()
+            variablesByName = dict()
+            for v in self.variables:
+                variablesByName[str(v).replace("'", "")] = v
+            for v in model:
+                varName = str(v)
+                if varName not in variablesByName:
+                    continue
+                solution.addVariable(variablesByName[varName], model[v])
+        else:
+            for variable in self.variables:
+                value = self.solver.get_value(variable.expression)
+                solution.addVariable(variable, value)
 
         return solution
 

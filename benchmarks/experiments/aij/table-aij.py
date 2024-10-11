@@ -37,7 +37,7 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2024-10-07-AIJ-FINAL-v5"
+    exp = "2024-10-07-AIJ-FINAL-v6"
     file = f"benchmarks/results/csv/{exp}.csv"
 
     folder = f'benchmarks/latex/{exp}'
@@ -46,7 +46,7 @@ def main():
     os.mkdir(folder)
 
     CloudLogger.saveLogs(exp, file)
-    joinWith = ["2024-10-07-AIJ-FINAL-v3", "2024-10-07-AIJ-FINAL-v2"]
+    joinWith = ["2024-10-07-AIJ-FINAL-v5", "2024-10-07-AIJ-FINAL-v3", "2024-10-07-AIJ-FINAL-v2"]
     for exp2 in joinWith:
         CloudLogger.appendLogs(exp2, file)
 
@@ -109,7 +109,7 @@ def main():
                 if planner not in d[domain]:
                     continue
                 for problem in d[domain][planner].keys():
-                    if table["planners"][planner].get("isRandom") and table.get("keepAll"):
+                    if table["planners"][planner].get("isRandom"):
                         problems += d[domain][planner][problem]
                         continue
                     if len(d[domain][planner][problem]) > 1:
@@ -148,7 +148,7 @@ def main():
                 pResult = d[domain][planner]
 
                 instances = table["domains"][domain]["instances"]
-                if table["planners"][planner].get("isRandom") and table.get("keepAll"):
+                if table["planners"][planner].get("isRandom"):
                     instances = len(pResult)
                 if len(pResult) != instances:
                     print(f"In {planner} the domain {domain} has {len(pResult)}/{instances} instances", file=sys.stderr)

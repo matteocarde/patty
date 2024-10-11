@@ -252,14 +252,15 @@ class NumericEncoding(Encoding):
                 continue
             a_n = stepVars.actionVariables[a]
             rules.append(a_n >= 0)
+            if self.rollBound:
+                rules.append(a_n <= self.rollBound)
+                continue
             if self.maxActionsRolling:
                 rules.append(a_n <= self.maxActionsRolling[i][a])
                 continue
             if not a.couldBeRepeated() or (a.hasNonSimpleLinearIncrement(self.encoding)):
                 rules.append(a_n <= 1)
                 continue
-            if self.rollBound:
-                rules.append(a_n <= self.rollBound)
 
         if len(self.domain.arpg.stateLevels) > 2:
             for (atom, interval) in self.domain.arpg.stateLevels[-1].intervals.items():

@@ -96,8 +96,9 @@ class Domain:
         gDomain.substitute(constants)
         problem.substitute(constants)
 
-        actions = [a for a in gDomain.actions if a in arpg.getUsefulActions()]
+        actions = [a.substitute(constants) for a in gDomain.actions if a in arpg.getUsefulActions()]
 
+        gDomain.operations = set()
         gDomain.actions = set()
         starts = set([a for a in actions if isinstance(a, SnapAction) and a.timeType == TimePredicateType.AT_START])
         for a in actions:
@@ -265,10 +266,13 @@ class GroundedDomain(Domain):
 
     def computeLists(self):
 
+        self.operations = set()
         self.operations.update(self.actions)
         self.operations.update(self.events)
         self.operations.update(self.processes)
         self.operations.update(self.durativeActions)
+        self.functions = set()
+        self.predicates = set()
 
         for op in self.operations:
             self.__operationsDict[op.planName] = op
