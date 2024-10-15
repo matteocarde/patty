@@ -30,12 +30,14 @@ AIJ_TABLE3 = {
         "nOfVars": {
             "name": "$|\mathcal{X} \cup \mathcal{A}^\prec \cup \mathcal{X}'|$",
             "winner": -1,
-            "stdev": True
+            "stdev": True,
+            "avoidSlashing": True
         },
         "nOfRules": {
             "name": "$|\mathcal{T}^\prec(\mathcal{X},\mathcal{A}^\prec,\mathcal{X}')|$",
             "winner": -1,
-            "stdev": True
+            "stdev": True,
+            "avoidSlashing": True
         },
     },
     "planners": {

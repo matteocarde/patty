@@ -37,7 +37,7 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2024-10-07-AIJ-FINAL-v9"
+    exp = "2024-10-07-AIJ-FINAL-v10"
     file = f"benchmarks/results/csv/{exp}.csv"
 
     folder = f'benchmarks/latex/{exp}'
@@ -47,21 +47,21 @@ def main():
 
     CloudLogger.saveLogs(exp, file)
     joinWith = [
-        "2024-10-07-AIJ-FINAL-v8",
-        # "2024-10-07-AIJ-FINAL-v7",
-        # "2024-10-07-AIJ-FINAL-v6",
-        # "2024-10-07-AIJ-FINAL-v5",
-        # "2024-10-07-AIJ-FINAL-v3",
-        # "2024-10-07-AIJ-FINAL-v2"
+        "2024-10-07-AIJ-FINAL-v9",
+        "2024-10-07-AIJ-FINAL-v7",
+        "2024-10-07-AIJ-FINAL-v6",
+        "2024-10-07-AIJ-FINAL-v5",
+        "2024-10-07-AIJ-FINAL-v3",
+        "2024-10-07-AIJ-FINAL-v2"
     ]
     for exp2 in joinWith:
         CloudLogger.appendLogs(exp2, file)
 
     tables = [
-        ("TAB1", AIJ_TABLE1),
-        ("TAB2", AIJ_TABLE2),
+        # ("TAB1", AIJ_TABLE1),
+        # ("TAB2", AIJ_TABLE2),
         ("TAB3", AIJ_TABLE3),
-        ("TAB4", AIJ_TABLE4)
+        # ("TAB4", AIJ_TABLE4)
     ]
 
     joinWith = [file]
@@ -143,12 +143,12 @@ def main():
                 if planner not in d[domain]:
                     continue
                 solved = {r.problem for r in d[domain][planner] if r.solved}
+                print(tableName, domain, planner, solved)
                 grounded = {r.problem for r in d[domain][planner] if r.nOfVars > 0}
                 if solved:
                     commonlySolved = solved if not commonlySolved else commonlySolved.intersection(solved)
                 if grounded:
                     commonlyGrounded = solved if not commonlyGrounded else commonlyGrounded.intersection(grounded)
-
             for planner, plannerInfo in table["planners"].items():
                 if planner not in d[domain]:
                     continue
@@ -262,7 +262,7 @@ def main():
                         row.append("-")
                         continue
                     value = transformTextValue(t[domain][column][planner])
-                    if plannerInfo["type"] in {"slashed"}:
+                    if plannerInfo["type"] in {"slashed"} and not columnInfo.get("avoidSlashing"):
                         otherPlanner = plannerInfo["slashedWith"]
                         otherValue = t[domain][column][otherPlanner]
                         left = value
