@@ -2,83 +2,84 @@
         (define (domain counter)
             (:requirements :strips :equality :conditional-effects)
             (:predicates
+                (ok)
+                (l1)(l2)(l3)(l4)(l5)(l6)(l7)
                 (x1)(x2)(x3)(x4)(x5)(x6)(x7)
                 (y1)(y2)(y3)(y4)(y5)(y6)(y7)
-                (l1)(l2)(l3)(l4)(l5)(l6)(l7)
             )
 
             (:action inx
                 :parameters ()
-                :precondition()
+                :precondition(and (ok))
                 :effect(and
                     (when
-                        (and (not (x1))(not (l1)))
+                        (and (not (x1)))
                         (and (x1))
                     )
                     (when
-                        (and (not (x2))(x1)(not (l2))(not (l1)))
+                        (and (not (x2))(x1))
                         (and (x2)(not (x1)))
                     )
                     (when
-                        (and (not (x3))(x2)(x1)(not (l3))(not (l2))(not (l1)))
+                        (and (not (x3))(x2)(x1))
                         (and (x3)(not (x2))(not (x1)))
                     )
                     (when
-                        (and (not (x4))(x3)(x2)(x1)(not (l4))(not (l3))(not (l2))(not (l1)))
+                        (and (not (x4))(x3)(x2)(x1))
                         (and (x4)(not (x3))(not (x2))(not (x1)))
                     )
                     (when
-                        (and (not (x5))(x4)(x3)(x2)(x1)(not (l5))(not (l4))(not (l3))(not (l2))(not (l1)))
+                        (and (not (x5))(x4)(x3)(x2)(x1))
                         (and (x5)(not (x4))(not (x3))(not (x2))(not (x1)))
                     )
                     (when
-                        (and (not (x6))(x5)(x4)(x3)(x2)(x1)(not (l6))(not (l5))(not (l4))(not (l3))(not (l2))(not (l1)))
+                        (and (not (x6))(x5)(x4)(x3)(x2)(x1))
                         (and (x6)(not (x5))(not (x4))(not (x3))(not (x2))(not (x1)))
                     )
                     (when
-                        (and (not (x7))(x6)(x5)(x4)(x3)(x2)(x1)(not (l7))(not (l6))(not (l5))(not (l4))(not (l3))(not (l2))(not (l1)))
+                        (and (not (x7))(x6)(x5)(x4)(x3)(x2)(x1))
                         (and (x7)(not (x6))(not (x5))(not (x4))(not (x3))(not (x2))(not (x1)))
                     )
                     (when
-                        (and (x7)(x6)(x5)(x4)(x3)(x2)(x1)(not (l7))(not (l6))(not (l5))(not (l4))(not (l3))(not (l2))(not (l1)))
+                        (and (x7)(x6)(x5)(x4)(x3)(x2)(x1))
                         (and (not (x7))(not (x6))(not (x5))(not (x4))(not (x3))(not (x2))(not (x1)))
                     )
                 )
             )
             (:action iny
                 :parameters ()
-                :precondition()
+                :precondition(and (ok))
                 :effect(and
                     (when
-                        (and (not (y1))(not (l1)))
+                        (and (not (y1)))
                         (and (y1))
                     )
                     (when
-                        (and (not (y2))(y1)(not (l2))(not (l1)))
+                        (and (not (y2))(y1))
                         (and (y2)(not (y1)))
                     )
                     (when
-                        (and (not (y3))(y2)(y1)(not (l3))(not (l2))(not (l1)))
+                        (and (not (y3))(y2)(y1))
                         (and (y3)(not (y2))(not (y1)))
                     )
                     (when
-                        (and (not (y4))(y3)(y2)(y1)(not (l4))(not (l3))(not (l2))(not (l1)))
+                        (and (not (y4))(y3)(y2)(y1))
                         (and (y4)(not (y3))(not (y2))(not (y1)))
                     )
                     (when
-                        (and (not (y5))(y4)(y3)(y2)(y1)(not (l5))(not (l4))(not (l3))(not (l2))(not (l1)))
+                        (and (not (y5))(y4)(y3)(y2)(y1))
                         (and (y5)(not (y4))(not (y3))(not (y2))(not (y1)))
                     )
                     (when
-                        (and (not (y6))(y5)(y4)(y3)(y2)(y1)(not (l6))(not (l5))(not (l4))(not (l3))(not (l2))(not (l1)))
+                        (and (not (y6))(y5)(y4)(y3)(y2)(y1))
                         (and (y6)(not (y5))(not (y4))(not (y3))(not (y2))(not (y1)))
                     )
                     (when
-                        (and (not (y7))(y6)(y5)(y4)(y3)(y2)(y1)(not (l7))(not (l6))(not (l5))(not (l4))(not (l3))(not (l2))(not (l1)))
+                        (and (not (y7))(y6)(y5)(y4)(y3)(y2)(y1))
                         (and (y7)(not (y6))(not (y5))(not (y4))(not (y3))(not (y2))(not (y1)))
                     )
                     (when
-                        (and (y7)(y6)(y5)(y4)(y3)(y2)(y1)(not (l7))(not (l6))(not (l5))(not (l4))(not (l3))(not (l2))(not (l1)))
+                        (and (y7)(y6)(y5)(y4)(y3)(y2)(y1))
                         (and (not (y7))(not (y6))(not (y5))(not (y4))(not (y3))(not (y2))(not (y1)))
                     )
                 )
@@ -86,76 +87,76 @@
             
             (:action dex
                 :parameters ()
-                :precondition()
+                :precondition(and (ok))
                 :effect(and
                     (when
-                        (and (x1)(not (l1)))
+                        (and (x1))
                         (and (not (x1)))
                     )
                     (when
-                        (and (x2)(not (x1))(not (l2))(not (l1)))
+                        (and (x2)(not (x1)))
                         (and (not (x2))(x1))
                     )
                     (when
-                        (and (x3)(not (x2))(not (x1))(not (l3))(not (l2))(not (l1)))
+                        (and (x3)(not (x2))(not (x1)))
                         (and (not (x3))(x2)(x1))
                     )
                     (when
-                        (and (x4)(not (x3))(not (x2))(not (x1))(not (l4))(not (l3))(not (l2))(not (l1)))
+                        (and (x4)(not (x3))(not (x2))(not (x1)))
                         (and (not (x4))(x3)(x2)(x1))
                     )
                     (when
-                        (and (x5)(not (x4))(not (x3))(not (x2))(not (x1))(not (l5))(not (l4))(not (l3))(not (l2))(not (l1)))
+                        (and (x5)(not (x4))(not (x3))(not (x2))(not (x1)))
                         (and (not (x5))(x4)(x3)(x2)(x1))
                     )
                     (when
-                        (and (x6)(not (x5))(not (x4))(not (x3))(not (x2))(not (x1))(not (l6))(not (l5))(not (l4))(not (l3))(not (l2))(not (l1)))
+                        (and (x6)(not (x5))(not (x4))(not (x3))(not (x2))(not (x1)))
                         (and (not (x6))(x5)(x4)(x3)(x2)(x1))
                     )
                     (when
-                        (and (x7)(not (x6))(not (x5))(not (x4))(not (x3))(not (x2))(not (x1))(not (l7))(not (l6))(not (l5))(not (l4))(not (l3))(not (l2))(not (l1)))
+                        (and (x7)(not (x6))(not (x5))(not (x4))(not (x3))(not (x2))(not (x1)))
                         (and (not (x7))(x6)(x5)(x4)(x3)(x2)(x1))
                     )
                     (when
-                        (and (not (x7))(not (x6))(not (x5))(not (x4))(not (x3))(not (x2))(not (x1))(not (l7))(not (l6))(not (l5))(not (l4))(not (l3))(not (l2))(not (l1)))
+                        (and (not (x7))(not (x6))(not (x5))(not (x4))(not (x3))(not (x2))(not (x1)))
                         (and (x7)(x6)(x5)(x4)(x3)(x2)(x1))
                     )
                 )
             )
             (:action dey
                 :parameters ()
-                :precondition()
+                :precondition(and (ok))
                 :effect(and
                     (when
-                        (and (y1)(not (l1)))
+                        (and (y1))
                         (and (not (y1)))
                     )
                     (when
-                        (and (y2)(not (y1))(not (l2))(not (l1)))
+                        (and (y2)(not (y1)))
                         (and (not (y2))(y1))
                     )
                     (when
-                        (and (y3)(not (y2))(not (y1))(not (l3))(not (l2))(not (l1)))
+                        (and (y3)(not (y2))(not (y1)))
                         (and (not (y3))(y2)(y1))
                     )
                     (when
-                        (and (y4)(not (y3))(not (y2))(not (y1))(not (l4))(not (l3))(not (l2))(not (l1)))
+                        (and (y4)(not (y3))(not (y2))(not (y1)))
                         (and (not (y4))(y3)(y2)(y1))
                     )
                     (when
-                        (and (y5)(not (y4))(not (y3))(not (y2))(not (y1))(not (l5))(not (l4))(not (l3))(not (l2))(not (l1)))
+                        (and (y5)(not (y4))(not (y3))(not (y2))(not (y1)))
                         (and (not (y5))(y4)(y3)(y2)(y1))
                     )
                     (when
-                        (and (y6)(not (y5))(not (y4))(not (y3))(not (y2))(not (y1))(not (l6))(not (l5))(not (l4))(not (l3))(not (l2))(not (l1)))
+                        (and (y6)(not (y5))(not (y4))(not (y3))(not (y2))(not (y1)))
                         (and (not (y6))(y5)(y4)(y3)(y2)(y1))
                     )
                     (when
-                        (and (y7)(not (y6))(not (y5))(not (y4))(not (y3))(not (y2))(not (y1))(not (l7))(not (l6))(not (l5))(not (l4))(not (l3))(not (l2))(not (l1)))
+                        (and (y7)(not (y6))(not (y5))(not (y4))(not (y3))(not (y2))(not (y1)))
                         (and (not (y7))(y6)(y5)(y4)(y3)(y2)(y1))
                     )
                     (when
-                        (and (not (y7))(not (y6))(not (y5))(not (y4))(not (y3))(not (y2))(not (y1))(not (l7))(not (l6))(not (l5))(not (l4))(not (l3))(not (l2))(not (l1)))
+                        (and (not (y7))(not (y6))(not (y5))(not (y4))(not (y3))(not (y2))(not (y1)))
                         (and (y7)(y6)(y5)(y4)(y3)(y2)(y1))
                     )
                 )
@@ -220,6 +221,7 @@
                         (and (not (x7))(not (y7)))
                         (and (l7))
                     )
+(not (ok))
                 )
             )
         )

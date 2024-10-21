@@ -73,7 +73,7 @@ class ActionStateTransitionFunction:
         return clauses
 
     def getEffectClauses(self) -> List[SMTExpression]:
-        clauses = []
+        one = []
         for v in self.atoms:
             vNext = self.next[v]
             vCurrent = self.current[v]
@@ -83,8 +83,13 @@ class ActionStateTransitionFunction:
             orExpr = [SMTExpression.andOfExpressionsList(andExpr)]
             for e in self.deltaPlus[v]:
                 orExpr.append(SMTExpression.fromFormula(e.conditions, self.current))
-            clauses.append(SMTExpression.orOfExpressionsList(orExpr).iff(vNext))
-        return clauses
+            one.append(SMTExpression.orOfExpressionsList(orExpr).iff(vNext))
+        zero = []
+        for v in self.atoms:
+            vNext = self.next[v]
+            vCurrent = self.current[v]
+            zero.append(vNext.iff(vCurrent))
+        return one
 
     def getConflictClauses(self) -> List[SMTExpression]:
         clauses = []

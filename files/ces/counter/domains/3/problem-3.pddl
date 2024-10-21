@@ -2,8 +2,9 @@
   (:domain counter)
 
   (:init
-    (x3)(x2) ;6 - 110
-    (y1) ;1 - 001
+    (ok)
+     ;0 - 000
+    (y3) ;4 - 100
   )
   (:goal
     (and  (l1)(l2)(l3))

@@ -1,3 +1,4 @@
+import math
 import os
 import random
 import shutil
@@ -28,48 +29,46 @@ def main():
 
         for v in VARS:
             for i in range(1, b + 1):
-                cond = [f"(not ({v}{i}))"] + [f"({v}{j})" for j in reversed(range(1, i))] + [f"(not (l{j}))" for j in
-                                                                                             reversed(range(1, i + 1))]
+                cond = [f"(not ({v}{i}))"] + [f"({v}{j})" for j in reversed(range(1, i))]
                 eff = [f"({v}{i})"] + [f"(not ({v}{j}))" for j in reversed(range(1, i))]
                 incr[v].append(ce(cond, eff))
 
-                cond = [f"({v}{i})"] + [f"(not ({v}{j}))" for j in reversed(range(1, i))] + [f"(not (l{j}))" for j in
-                                                                                             reversed(range(1, i + 1))]
+                cond = [f"({v}{i})"] + [f"(not ({v}{j}))" for j in reversed(range(1, i))]
                 eff = [f"(not ({v}{i}))"] + [f"({v}{j})" for j in reversed(range(1, i))]
                 decr[v].append(ce(cond, eff))
 
-            oCond = [f"({v}{j})" for j in reversed(range(1, b + 1))] + [f"(not (l{j}))" for j in
-                                                                        reversed(range(1, b + 1))]
+            oCond = [f"({v}{j})" for j in reversed(range(1, b + 1))]
             oEff = [f"(not ({v}{j}))" for j in reversed(range(1, b + 1))]
             incr[v].append(ce(oCond, oEff))
-            uCond = [f"(not ({v}{j}))" for j in reversed(range(1, b + 1))] + [f"(not (l{j}))" for j in
-                                                                              reversed(range(1, b + 1))]
+            uCond = [f"(not ({v}{j}))" for j in reversed(range(1, b + 1))]
             uEff = [f"({v}{j})" for j in reversed(range(1, b + 1))]
             decr[v].append(ce(uCond, uEff))
 
         for i in range(1, b + 1):
             lock.append(ce([f"(x{i})", f"(y{i})"], [f"(l{i})"]))
             lock.append(ce([f"(not (x{i}))", f"(not (y{i}))"], [f"(l{i})"]))
+        lock.append("(not (ok))")
 
         domain = f'''
         (define (domain counter)
             (:requirements :strips :equality :conditional-effects)
             (:predicates
+                (ok)
+                {"".join([f"(l{i})" for i in range(1, b + 1)])}
                 {"".join([f"(x{i})" for i in range(1, b + 1)])}
                 {"".join([f"(y{i})" for i in range(1, b + 1)])}
-                {"".join([f"(l{i})" for i in range(1, b + 1)])}
             )
 
             (:action inx
                 :parameters ()
-                :precondition()
+                :precondition(and (ok))
                 :effect(and
 {NEWLINE.join([e for e in incr['x']])}
                 )
             )
             (:action iny
                 :parameters ()
-                :precondition()
+                :precondition(and (ok))
                 :effect(and
 {NEWLINE.join([e for e in incr['y']])}
                 )
@@ -77,14 +76,14 @@ def main():
             
             (:action dex
                 :parameters ()
-                :precondition()
+                :precondition(and (ok))
                 :effect(and
 {NEWLINE.join([e for e in decr['x']])}
                 )
             )
             (:action dey
                 :parameters ()
-                :precondition()
+                :precondition(and (ok))
                 :effect(and
 {NEWLINE.join([e for e in decr['y']])}
                 )
@@ -103,8 +102,8 @@ def main():
         with open(f"{path}/{b}/domain-{b}.pddl", "w") as f:
             f.write(domain)
 
-        rX = random.randint(0, (2 ** b) - 1)
-        rY = random.randint(0, (2 ** b) - 1)
+        rX = 0
+        rY = math.ceil(2 ** (b - 1))
         rXb = format(rX, f"0{b}b")
         rYb = format(rY, f"0{b}b")
         rrXb = list(reversed(rXb))
@@ -114,6 +113,7 @@ def main():
   (:domain counter)
 
   (:init
+    (ok)
     {"".join([f"(x{i + 1})" for i in reversed(range(0, b)) if rrXb[i] == '1'])} ;{rX} - {rXb}
     {"".join([f"(y{i + 1})" for i in reversed(range(0, b)) if rrYb[i] == '1'])} ;{rY} - {rYb}
   )
