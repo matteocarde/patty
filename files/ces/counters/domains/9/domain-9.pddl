@@ -14,6 +14,10 @@
                 :precondition(and (free ?a))
                 :effect(and
                     (when
+                        (and (not (x1 ?a)))
+                        (and (x1 ?a))
+                    )
+                    (when
                         (and (not (x2 ?a))(x1 ?a))
                         (and (x2 ?a)(not (x1 ?a)))
                     )
@@ -56,6 +60,10 @@
                 :parameters (?a - counter)
                 :precondition(and (free ?a))
                 :effect(and
+                    (when
+                        (and (x1 ?a))
+                        (and (not (x1 ?a)))
+                    )
                     (when
                         (and (x2 ?a)(not (x1 ?a)))
                         (and (not (x2 ?a))(x1 ?a))

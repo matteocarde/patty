@@ -2,7 +2,7 @@ import math
 import os
 import shutil
 
-MAX_BITS = 10
+MAX_BITS = 11
 MAX_COUNTERS = 6
 NEWLINE = "\n"
 
@@ -26,7 +26,7 @@ def main():
         decr = list()
         lock = list()
 
-        for i in range(2, b + 1):
+        for i in range(1, b + 1):
             cond = [f"(not (x{i} ?a))"] + [f"(x{j} ?a)" for j in reversed(range(1, i))]
             eff = [f"(x{i} ?a)"] + [f"(not (x{j} ?a))" for j in reversed(range(1, i))]
             incr.append(ce(cond, eff))
