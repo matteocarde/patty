@@ -36,7 +36,6 @@ class ActionStateTransitionFunction:
         self.clausesByName = dict()
         self.clausesByName["pre"] = self.getPreconditionClauses()
         self.clausesByName["eff"] = self.getEffectClauses()
-        # self.clausesByName["amo"] = self.getAmoClauses()
         self.clausesByName["conflict"] = self.getConflictClauses()
         for name, clauses in self.clausesByName.items():
             self.clauses += clauses
@@ -75,7 +74,7 @@ class ActionStateTransitionFunction:
 
     def getEffectClauses(self) -> List[SMTExpression]:
         clauses = []
-        for v in self.addedAtoms | self.deletedAtoms:
+        for v in self.atoms:
             vNext = self.next[v]
             vCurrent = self.current[v]
             andExpr = [vCurrent]
@@ -86,28 +85,6 @@ class ActionStateTransitionFunction:
                 orExpr.append(SMTExpression.fromFormula(e.conditions, self.current))
             clauses.append(SMTExpression.orOfExpressionsList(orExpr).iff(vNext))
         return clauses
-
-    def getDiffZero(self) -> SMTExpression:
-        bits = []
-        for i in range(0, self.m):
-            bits.append(self.countingCurrent[i].iff(self.countingNext[i]))
-        return SMTExpression.andOfExpressionsList(bits)
-
-    def getDiffOne(self) -> SMTExpression:
-        bits = []
-        for i in range(0, self.m):
-            bit = [self.countingNext[i] & ~self.countingCurrent[i]]
-            for j in range(0, i):
-                bit.append(~self.countingNext[j] & self.countingCurrent[j])
-            for k in range(i + 1, self.m):
-                bit.append(self.countingNext[k].iff(self.countingCurrent[k]))
-
-            bits.append(SMTExpression.andOfExpressionsList(bit))
-        expr = SMTExpression.orOfExpressionsList(bits)
-        return expr
-
-    def getAmoClauses(self):
-        return [self.getDiffOne()]
 
     def getConflictClauses(self) -> List[SMTExpression]:
         clauses = []

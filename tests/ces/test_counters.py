@@ -3,19 +3,17 @@ from typing import Dict
 from unittest import TestCase
 
 from src.ces.ActionStateTransitionFunction import ActionStateTransitionFunction
-from src.ces.TransitionFunctionBDD import TransitionFunctionBDD
 from src.ces.TransitiveClosure import TransitiveClosure
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.Problem import Problem
-from src.smt.SMTBoolVariable import SMTBoolVariable
 
 
 class TestCES(TestCase):
 
     def setUp(self) -> None:
-        self.b = 5
+        self.b = 6
         self.domain: Domain = Domain.fromFile(f"../../files/ces/counter/domains/{self.b}/domain-{self.b}.pddl")
         self.problem: Problem = Problem.fromFile(f"../../files/ces/counter/domains/{self.b}/problem-{self.b}.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
@@ -38,7 +36,8 @@ class TestCES(TestCase):
         v: Dict[str, Atom] = dict()
         for atom in tFunc.atoms:
             v[atom.name] = atom
-        atomsOrder = [v[f"l{i}"] for i in range(1, self.b + 1)] + [v[f"x{i}"] for i in range(1, self.b + 1)]
+        atomsOrder = [v[f"x{i}"] for i in reversed(range(1, self.b + 1))] + \
+                     [v[f"l{i}"] for i in reversed(range(1, self.b + 1))]
         tc = TransitiveClosure.fromActionStateTransitionFunction(tFunc, atomsOrder)
         self.assertIsInstance(tc, TransitiveClosure)
 

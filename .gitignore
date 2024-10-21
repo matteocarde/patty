@@ -26,3 +26,5 @@ benchmarks/planners/cplex/installer.bin
 **/partial/**
 
 *.sp_log
+
+*.dot
