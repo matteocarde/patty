@@ -48,12 +48,6 @@ class TransitionFunctionBDD:
         tfbdd.atomsOrder = atomsOrder
         tfbdd.Xs = tfbdd.getXs(0, 2)
         bdd = tfbdd.clauses.toBDDExpression({**tfbdd.Xs[0], **tfbdd.Xs[2]})
-        # equiv = 1
-        # for v in tfbdd.atoms:
-        #     a = tfbdd.Xs[0][tfbdd.currentState[v]]
-        #     b = tfbdd.Xs[2][tfbdd.nextState[v]]
-        #     equiv = equiv & Iff(a, b)
-        # print("equiv", equiv.to_dot())
         tfbdd.bdd = bdd
         return tfbdd
 
@@ -74,14 +68,14 @@ class TransitionFunctionBDD:
         console: LogPrint = LogPrint(LogPrintLevel.PLAN)
         ts: TimeStat = TimeStat()
         sFunc = self.smoothingSet(func, vars[1:], vars[0]) if vars else func
-        # ts.start(f"SMOOTHING {var}")
+        ts.start(f"SMOOTHING {var}")
         left = sFunc.restrict({var: 0})
         right = sFunc.restrict({var: 1})
         join = left | right
-        # ts.end(f"SMOOTHING {var}", console=console)
+        ts.end(f"SMOOTHING {var}", console=console)
         return join
 
-    def computeTransition(self, ) -> TransitionFunctionBDD:
+    def computeTransition(self, reflexive=True) -> TransitionFunctionBDD:
         ith = TransitionFunctionBDD(self.transitionFunction)
         ith.Xs = self.Xs
         ith.atomsOrder = self.atomsOrder
@@ -110,25 +104,20 @@ class TransitionFunctionBDD:
 
         ts.start("TO BE SMOOTHED")
         toBeSmoothed = bdd1 & bdd2
-        del bdd1
-        del bdd2
         print("toBeSmoothed:", toBeSmoothed.to_dot())
         ts.end("TO BE SMOOTHED", console=console)
 
         smoothVariables = [Xs2[1][self.currentState[v]] for v in self.atomsOrder if v not in self.staticAtoms]
-
-        # for var in smoothVariables:
-        #     left = toBeSmoothed.restrict({var: 0})
-        #     right = toBeSmoothed.restrict({var: 1})
-        #     print(f"ToBeSmoothed dependent on {var}: {left is not right}")
 
         ts.start("SMOOTHING")
         smoothed = self.smoothingSet(toBeSmoothed, smoothVariables)
         ts.end("SMOOTHING", console=console)
 
         ts.start("JOIN PREVIOUS")
-        ith.bdd = smoothed | self.bdd
-        del smoothed
+        if reflexive:
+            ith.bdd = smoothed | self.bdd
+        else:
+            ith.bdd = smoothed
         ts.end("JOIN PREVIOUS", console=console)
 
         # exit()

@@ -20,7 +20,8 @@ class TransitiveClosure(TransitionFunctionBDD):
             bddvar(f"{v.name}_2")
 
     @classmethod
-    def fromActionStateTransitionFunction(cls, t: ActionStateTransitionFunction, atomsOrder: List[Atom]):
+    def fromActionStateTransitionFunction(cls, t: ActionStateTransitionFunction, atomsOrder: List[Atom],
+                                          reflexive=True):
         i = 1
         print("Computing first step")
         TransitiveClosure.setOrder(atomsOrder)
@@ -29,7 +30,7 @@ class TransitiveClosure(TransitionFunctionBDD):
         while (True):
             i += 1
             print(f"Step {i} of the transitive closure")
-            nextBDD: TransitionFunctionBDD = currentBDD.computeTransition()
+            nextBDD: TransitionFunctionBDD = currentBDD.computeTransition(reflexive=reflexive)
             if currentBDD.isEquivalent(nextBDD):
                 print(f"Transitive Closure found at {i}-th iteration")
                 nextBDD.__class__ = TransitiveClosure
