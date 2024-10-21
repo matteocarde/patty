@@ -60,6 +60,12 @@ class Domain:
         domain.constants = copy.deepcopy(self.constants, m)
         return domain
 
+    def hasConditionalEffects(self) -> bool:
+        for a in self.actions:
+            if a.hasConditionalEffects():
+                return True
+        return False
+
     def ground(self, problem: Problem, avoidSimplification=False, console: LogPrint = None, delta=1) -> GroundedDomain:
 
         problem.computeWhatCanHappen(self)

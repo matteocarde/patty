@@ -3,7 +3,7 @@
             (:requirements :strips :equality :conditional-effects)
             (:types counter)
             (:predicates
-                (free ?a - counter)
+                (z ?a - counter)
                 (next ?a - counter ?b - counter)
                 (l1 ?a - counter ?b - counter)(l2 ?a - counter ?b - counter)(l3 ?a - counter ?b - counter)(l4 ?a - counter ?b - counter)(l5 ?a - counter ?b - counter)(l6 ?a - counter ?b - counter)
                 (x1 ?a - counter)(x2 ?a - counter)(x3 ?a - counter)(x4 ?a - counter)(x5 ?a - counter)(x6 ?a - counter)
@@ -11,7 +11,7 @@
 
             (:action incr
                 :parameters (?a - counter)
-                :precondition(and (free ?a))
+                :precondition(and (z ?a))
                 :effect(and
                     (when
                         (and (not (x1 ?a)))
@@ -46,7 +46,7 @@
             
             (:action decr
                 :parameters (?a - counter)
-                :precondition(and (free ?a))
+                :precondition(and (z ?a))
                 :effect(and
                     (when
                         (and (x1 ?a))
@@ -131,8 +131,8 @@
                         (and (not (x6 ?a))(not (x6 ?b)))
                         (and (l6 ?a ?b))
                     )
-(not (free ?a))
-(not (free ?b))
+(not (z ?a))
+(not (z ?b))
                 )
             )
         )

@@ -14,33 +14,27 @@ class TestCES(TestCase):
 
     def setUp(self) -> None:
         self.b = 9
-        self.domain: Domain = Domain.fromFile(f"../../files/ces/counter/domains/{self.b}/domain-{self.b}.pddl")
-        self.problem: Problem = Problem.fromFile(f"../../files/ces/counter/domains/{self.b}/problem-{self.b}.pddl")
+        self.domain: Domain = Domain.fromFile(f"../../files/ces/counters/domains/{self.b}/domain-{self.b}.pddl")
+        self.problem: Problem = Problem.fromFile(
+            f"../../files/ces/counters/domains/{self.b}/instances/problem-{self.b}-3.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.transFunctions: Dict[Action, ActionStateTransitionFunction] = dict()
         self.name2Action: Dict[str, Action] = dict()
-        for action in self.gDomain.actions:
+        for action in self.domain.actions:
             self.name2Action[action.name] = action
             self.transFunctions[action] = ActionStateTransitionFunction(action)
         pass
 
-    def test_transform(self):
-        self.assertIsInstance(self.gDomain, GroundedDomain)
-        self.assertEqual(len(self.gDomain.actions), 5)
-        self.assertEqual(len(self.transFunctions.items()), 5)
-
     def test_bdd(self):
-        action = self.name2Action["inx"]
+        action = self.name2Action["incr"]
         tFunc = self.transFunctions[action]
         print("Starting computing Transitive Closure")
         v: Dict[str, Atom] = dict()
         for atom in tFunc.atoms:
             v[atom.name] = atom
-        atomsOrder = [v["ok"]]
+        atomsOrder = [v["free"]]
         for i in reversed(range(1, self.b + 1)):
             atomsOrder += [v[f"x{i}"]]
-        # atomsOrder = [v[f"x{i}"] for i in reversed(range(1, self.b + 1))] + \
-        #              [v[f"l{i}"] for i in reversed(range(1, self.b + 1))]
         tc = TransitiveClosure.fromActionStateTransitionFunction(tFunc, atomsOrder)
         self.assertIsInstance(tc, TransitiveClosure)
 

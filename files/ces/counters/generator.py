@@ -45,15 +45,15 @@ def main():
         for i in range(1, b + 1):
             lock.append(ce([f"(x{i} ?a)", f"(x{i} ?b)"], [f"(l{i} ?a ?b)"]))
             lock.append(ce([f"(not (x{i} ?a))", f"(not (x{i} ?b))"], [f"(l{i} ?a ?b)"]))
-        lock.append("(not (free ?a))")
-        lock.append("(not (free ?b))")
+        lock.append("(not (z ?a))")
+        lock.append("(not (z ?b))")
 
         domain = f'''
         (define (domain counters)
             (:requirements :strips :equality :conditional-effects)
             (:types counter)
             (:predicates
-                (free ?a - counter)
+                (z ?a - counter)
                 (next ?a - counter ?b - counter)
                 {"".join([f"(l{i} ?a - counter ?b - counter)" for i in range(1, b + 1)])}
                 {"".join([f"(x{i} ?a - counter)" for i in range(1, b + 1)])}
@@ -61,7 +61,7 @@ def main():
 
             (:action incr
                 :parameters (?a - counter)
-                :precondition(and (free ?a))
+                :precondition(and (z ?a))
                 :effect(and
 {NEWLINE.join([e for e in incr])}
                 )
@@ -69,7 +69,7 @@ def main():
             
             (:action decr
                 :parameters (?a - counter)
-                :precondition(and (free ?a))
+                :precondition(and (z ?a))
                 :effect(and
 {NEWLINE.join([e for e in decr])}
                 )
@@ -104,7 +104,7 @@ def main():
     (:domain counters)
     (:objects {" ".join([f'c{i}' for i in counters])} - counter)
     (:init
-        {"".join([f'(free c{i})' for i in range(1, c + 1)])}
+        {"".join([f'(z c{i})' for i in range(1, c + 1)])}
         {"".join([f'(next c{i} c{i + 1})' for i in range(1, c)])}
         {"".join([f"(x{i + 1} c{j})" for i in reversed(range(0, b)) if rrXb[i] == '1' for j in counters if j % 1])} ;{rX} - {rXb}
         {"".join([f"(x{i + 1} c{j})" for i in reversed(range(0, b)) if rrYb[i] == '1' for j in counters if j % 2])} ;{rY} - {rYb}

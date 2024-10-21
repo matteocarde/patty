@@ -56,8 +56,8 @@ class TransitionFunctionBDD:
         Xs[a] = dict()
         Xs[b] = dict()
         for v in self.atoms:
-            Xs[a][self.currentState[v]] = bddvar(f"{v.name}_{a}")
-            Xs[b][self.nextState[v]] = bddvar(f"{v.name}_{b}") if v not in self.staticAtoms else bddvar(f"{v.name}_0")
+            Xs[a][self.currentState[v]] = bddvar(f"{v}_{a}")
+            Xs[b][self.nextState[v]] = bddvar(f"{v}_{b}") if v not in self.staticAtoms else bddvar(f"{v}_0")
         return Xs
 
     def smoothingSet(self, func: BinaryDecisionDiagram, vars: List[BDDVariable],
@@ -65,14 +65,10 @@ class TransitionFunctionBDD:
         if not var:
             return self.smoothingSet(func, vars[1:], vars[0])
 
-        console: LogPrint = LogPrint(LogPrintLevel.PLAN)
-        ts: TimeStat = TimeStat()
         sFunc = self.smoothingSet(func, vars[1:], vars[0]) if vars else func
-        ts.start(f"SMOOTHING {var}")
         left = sFunc.restrict({var: 0})
         right = sFunc.restrict({var: 1})
         join = left | right
-        ts.end(f"SMOOTHING {var}", console=console)
         return join
 
     def computeTransition(self, reflexive=True) -> TransitionFunctionBDD:
@@ -95,33 +91,19 @@ class TransitionFunctionBDD:
             if smtVar not in self.staticVars:
                 rep1[bddVar] = Xs1[1][smtVar]
 
-        ts.start("COMPOSE")
         bdd1 = self.bdd.compose(rep1)
         bdd2 = self.bdd.compose(rep2)
-        print("T(X0,X1)", bdd1.to_dot())
-        print("T(X1,X2)", bdd2.to_dot())
-        ts.end("COMPOSE", console=console)
 
-        ts.start("TO BE SMOOTHED")
         toBeSmoothed = bdd1 & bdd2
-        print("toBeSmoothed:", toBeSmoothed.to_dot())
-        ts.end("TO BE SMOOTHED", console=console)
 
         smoothVariables = [Xs2[1][self.currentState[v]] for v in self.atomsOrder if v not in self.staticAtoms]
 
-        ts.start("SMOOTHING")
         smoothed = self.smoothingSet(toBeSmoothed, smoothVariables)
-        ts.end("SMOOTHING", console=console)
 
-        ts.start("JOIN PREVIOUS")
         if reflexive:
             ith.bdd = smoothed | self.bdd
         else:
             ith.bdd = smoothed
-        ts.end("JOIN PREVIOUS", console=console)
-
-        # exit()
-        print("Iteration:", ith.bdd.to_dot())
 
         return ith
 

@@ -2,7 +2,7 @@
     (:domain counters)
     (:objects c1 c2 - counter)
     (:init
-        (free c1)(free c2)
+        (z c1)(z c2)
         (next c1 c2)
          ;0 - 00
         (x2 c1) ;2 - 10

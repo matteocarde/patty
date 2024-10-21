@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-from typing import List
+from typing import List, Set
 
+from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.Literal import Literal
 from src.pddl.Effects import Effects
@@ -33,3 +34,9 @@ class CEEffects(Effects):
                 effects.assignments.append(BinaryPredicate.fromNode(n))
 
         return effects
+
+    def getPositive(self) -> Set[Atom]:
+        return {e for e in self.assignments if isinstance(e, Literal) and e.sign == "+"}
+
+    def getNegative(self) -> Set[Atom]:
+        return {e for e in self.assignments if isinstance(e, Literal) and e.sign == "-"}

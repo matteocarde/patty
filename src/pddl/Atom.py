@@ -84,6 +84,11 @@ class Atom:
             return False
         return self.__string == other.__string
 
+    def __lt__(self, other):
+        if not isinstance(other, Atom):
+            return False
+        return self.name < other.name
+
     def toFunctionName(self):
         return self.__functionName
 

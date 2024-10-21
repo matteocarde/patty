@@ -28,8 +28,6 @@ class ActionStateTransitionFunction:
         self.__computingHelping()
         self.current = dict([(v, SMTBoolVariable(f"{v}")) for v in self.atoms])
         self.next = dict([(v, SMTBoolVariable(f"{v}'")) for v in self.atoms])
-        self.countingCurrent = [SMTBoolVariable(f"r_{a.name}_{i}") for i in range(0, self.m)]
-        self.countingNext = [SMTBoolVariable(f"r_{a.name}_{i}'") for i in range(0, self.m)]
 
         self.clauses: SMTConjunction = SMTConjunction()
 

@@ -10,6 +10,7 @@ from src.search.ChainSearch import ChainSearch
 from src.search.PlanImprover import PlanImprover
 from src.search.Search import Search
 from src.search.StepSearch import StepSearch
+from src.search.TransitiveClosureSolver import TransitiveClosureSolver
 from src.utils.Arguments import Arguments
 from src.utils.LogPrint import LogPrint, LogPrintLevel
 from src.utils.TimeStat import TimeStat
@@ -31,6 +32,10 @@ def main():
         ts.start("Grounding", console=console)
         gDomain: GroundedDomain = domain.ground(problem, console=console)
         ts.end("Grounding", console=console)
+
+        if domain.hasConditionalEffects:
+            tcs = TransitiveClosureSolver(domain, problem, gDomain, args)
+            exit()
 
         solver: Search
 

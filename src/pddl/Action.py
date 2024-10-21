@@ -41,7 +41,7 @@ class Action(Operation):
         return super().fromNode(node, types)
 
     @classmethod
-    def fromProperties(cls, name, parameters, preconditions, effects, planName, duration=None) -> Action:
+    def fromProperties(cls, name, parameters, preconditions, effects, planName=None, duration=None) -> Action:
         return super().fromProperties(name, parameters, preconditions, effects, planName, duration=duration)
 
     @classmethod
@@ -117,6 +117,22 @@ class Action(Operation):
 
         return supporters
 
+    def isNonIdempotent(self) -> bool:
+        if not self.hasConditionalEffects():
+            return False
+        for e1 in [e1 for e1 in self.effects if isinstance(e1, ConditionalEffect)]:
+            for e2 in [e2 for e2 in self.effects if isinstance(e2, ConditionalEffect) and e1 != e2]:
+                c11 = e1.effects.getNegative() & e2.conditions.getPositive()
+                c12 = e1.effects.getPositive() & e2.conditions.getNegative()
+                c21 = e1.effects.getPositive() & e2.conditions.getNegative()
+                c22 = e1.effects.getNegative() & e2.conditions.getNegative()
+                if (not c11 or not c12) and (c21 or c22):
+                    return True
+        return False
+
+    def isIdempotent(self) -> bool:
+        return not self.isNonIdempotent()
+
     def substitute(self, sub: Dict[Atom, float], default=None) -> Action:
 
         atoms = self.functions | self.predicates
@@ -166,4 +182,10 @@ class Action(Operation):
         if noConditionCe.effects:
             effects.addEffect(noConditionCe)
 
-        return Action.fromProperties(self.name, self.parameters, self.preconditions, effects, self.planName)
+        return Action.fromProperties(self.name, self.parameters, self.preconditions, effects)
+
+    def hasConditionalEffects(self):
+        for eff in self.effects:
+            if isinstance(eff, ConditionalEffect):
+                return True
+        return False
