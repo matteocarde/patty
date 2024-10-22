@@ -20,6 +20,7 @@ from src.pddl.grammar.pddlParser import pddlParser as p
 
 
 class Action(Operation):
+    lifted: Action or None
 
     def __init__(self):
         self.isFake = False
@@ -168,4 +169,3 @@ class Action(Operation):
         pw.decreaseTab()
         pw.write(")")
         pass
-

@@ -17,6 +17,7 @@ class Literal(Predicate):
     sign: str
     atom: Atom
     funct: str
+    lifted: Literal or None
 
     def __init__(self):
         super().__init__()
@@ -27,6 +28,7 @@ class Literal(Predicate):
         l.sign = self.sign
         l.atom = copy.deepcopy(self.atom, m)
         l.funct = self.funct
+        l.lifted = self.lifted
         return l
 
     @classmethod
@@ -84,10 +86,10 @@ class Literal(Predicate):
 
         literal = Literal()
         literal.sign = self.sign
-
         literal.atom = self.atom.ground(subs)
         literal.funct = literal.atom.toFunctionName()
         literal.alphaFunct = literal.atom.toAlphaFunctionName()
+        literal.lifted = self
 
         return literal
 

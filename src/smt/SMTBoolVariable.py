@@ -13,13 +13,16 @@ class SMTBoolVariable(SMTVariable):
     def __init__(self, name: str):
         super().__init__()
         self.expression = Symbol(name)
+        self.variables = {self}
         self.type = BOOL
-
-    def variables(self):
-        return {self}
 
     def __hash__(self):
         return hash(str(self.expression))
 
     def toBDDExpression(self, map: Dict[SMTBoolVariable, BDDVariable]):
         return map[self]
+
+    def replace(self, sub):
+        if self not in sub:
+            raise Exception(f"Dictionary {sub} doesn't contain {self} for replacement")
+        return sub[self]

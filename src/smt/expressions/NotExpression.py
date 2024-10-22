@@ -27,3 +27,6 @@ class NotExpression(UnaryExpression):
         x = self.positive.toBDDExpression(map)
         f = ~x
         return f
+
+    def replace(self, sub):
+        return ~self.positive.replace(sub)

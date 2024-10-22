@@ -28,6 +28,7 @@ class Operation:
     preconditions: Preconditions
     effects: Effects
     __hash: int
+    lifted: Operation or None
 
     def __init__(self):
         self.name: str = ""
@@ -54,6 +55,7 @@ class Operation:
         self.linearizationTimes = 1
         self.__couldBeRepeated = False
         self.isFake = False
+        self.lifted = None
         self.addedAtoms: Set[Atom] = set()
         self.deletedAtoms: Set[Atom] = set()
         self.deltaPlus: Dict[Atom, List[ConditionalEffect]] = dict()
@@ -86,6 +88,7 @@ class Operation:
         a.linearizationTimes = self.linearizationTimes
         a.originalName = self.originalName
         a.duration = copy.deepcopy(self.duration)
+        a.lifted = self.lifted
 
         a.cacheLists()
 
@@ -206,6 +209,7 @@ class Operation:
                 duration = self.duration.ground(sub)
             operation: Operation = Operation.fromProperties(name, [], preconditions, effects, planName,
                                                             duration=duration)
+            operation.lifted = self
             gOperations.append(operation)
         return gOperations
 

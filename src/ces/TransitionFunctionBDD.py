@@ -8,6 +8,7 @@ from src.ces.ActionStateTransitionFunction import ActionStateTransitionFunction
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.smt.SMTBoolVariable import SMTBoolVariable
+from src.smt.SMTExpression import SMTExpression
 from src.utils.LogPrint import LogPrint, LogPrintLevel
 from src.utils.TimeStat import TimeStat
 
@@ -109,3 +110,34 @@ class TransitionFunctionBDD:
 
     def isEquivalent(self, nextBDD: TransitionFunctionBDD) -> bool:
         return self.bdd.equivalent(nextBDD.bdd)
+
+    def toSMTExpression(self):
+
+        subs: Dict[str, SMTBoolVariable] = dict()
+        for smtvar, bddvar in {**self.Xs[0], **self.Xs[2]}.items():
+            subs[bddvar.name] = smtvar
+
+        return SMTExpression.fromBDDExpression(self.bdd, subs)
+
+    def toGroundSMTExpression(self,
+                              groundAction: Action,
+                              current: Dict[Atom, SMTExpression],
+                              next: Dict[Atom, SMTExpression]):
+
+        liftedExpr: SMTExpression = self.toSMTExpression()
+        liftedVar2liftedAtom: Dict[SMTBoolVariable, Atom] = dict()
+        for (liftedAtom, liftedVar) in self.currentState.items() | self.nextState.items():
+            liftedVar2liftedAtom[liftedVar] = liftedAtom
+
+        liftedAtom2groundAtom: Dict[Atom, Atom] = dict()
+        for groundAtom in groundAction.predicates:
+            liftedAtom2groundAtom[groundAtom.lifted] = groundAtom
+
+        liftedVar2sigma: Dict[SMTBoolVariable, SMTExpression] = dict()
+        for (liftedAtom, liftedVar) in self.currentState.items():
+            liftedVar2sigma[liftedVar] = current[liftedAtom2groundAtom[liftedAtom]]
+        for (liftedAtom, liftedVar) in self.nextState.items():
+            liftedVar2sigma[liftedVar] = next[liftedAtom2groundAtom[liftedAtom]]
+
+        groundExpr = liftedExpr.replace(liftedVar2sigma)
+        return groundExpr

@@ -16,6 +16,7 @@ class Atom:
     __hash: int
     __functionName: str
     __alphaFunctionName: str
+    lifted: Atom
     attributes: list[str]
 
     def __init__(self):
@@ -29,6 +30,7 @@ class Atom:
         a.__hash = self.__hash
         a.__functionName = self.__functionName
         a.__alphaFunctionName = self.__alphaFunctionName
+        a.lifted = self.lifted
         a.attributes = copy.deepcopy(self.attributes)
         return a
 
@@ -68,6 +70,7 @@ class Atom:
         atom.name = self.name
         atom.attributes = [sub[attr] for attr in self.attributes]
         atom.__setProperties()
+        atom.lifted = self
         return atom
 
     def __str__(self):
