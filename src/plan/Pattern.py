@@ -143,3 +143,7 @@ class Pattern:
 
     def index(self, a):
         return self.__order.index(a)
+
+    @classmethod
+    def fromAlphabetical(cls, domain: GroundedDomain):
+        return cls.fromOrder(sorted(domain.actions))

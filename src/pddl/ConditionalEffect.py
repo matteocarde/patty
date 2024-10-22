@@ -1,4 +1,6 @@
 from __future__ import annotations
+
+import copy
 from typing import Set, Dict
 
 from src.pddl.Atom import Atom
@@ -30,6 +32,13 @@ class ConditionalEffect(Predicate):
 
     def __repr__(self):
         return str(self)
+
+    def __deepcopy__(self, m=None) -> ConditionalEffect:
+        m = {} if m is None else m
+        ce = ConditionalEffect()
+        ce.conditions = copy.deepcopy(self.conditions, m)
+        ce.effects = copy.deepcopy(self.effects, m)
+        return ce
 
     def getPredicates(self) -> Set[Atom]:
         return self.conditions.getPredicates() | self.effects.getPredicates()

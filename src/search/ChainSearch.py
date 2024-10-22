@@ -1,12 +1,14 @@
-from src.pddl.Domain import GroundedDomain
+from src.pddl.Domain import GroundedDomain, Domain
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Plan import Plan
 from src.pddl.Problem import Problem
 from src.pddl.State import State
 from src.pddl.TemporalPlan import TemporalPlan
+from src.plan.CESEncoding import CESEncoding
 from src.plan.NumericEncoding import NumericEncoding
 from src.plan.Pattern import Pattern
 from src.plan.TemporalEncoding import TemporalEncoding
+from src.plan.TransitionRelations import TransitionRelations
 from src.search.Search import Search
 from src.smt.SMTSolver import SMTSolver
 from src.utils.Arguments import Arguments
@@ -15,9 +17,10 @@ from src.utils.LogPrint import LogPrintLevel
 
 class ChainSearch(Search):
 
-    def __init__(self, domain: GroundedDomain, problem: Problem, args: Arguments):
+    def __init__(self, domain: GroundedDomain, problem: Problem, args: Arguments, liftedDomain: Domain = None):
         self.useSCCs = args.useSCCs
-        super().__init__(domain, problem, args)
+        super().__init__(domain, problem, args, liftedDomain=liftedDomain)
+        self.isCES = self.domain.hasConditionalEffects()
 
     def getPattern(self) -> Pattern:
         if self.args.pattern == "arpg":
@@ -26,21 +29,23 @@ class ChainSearch(Search):
             return Pattern.fromARPGEnhanced(self.domain)
         if self.args.pattern == "random":
             return Pattern.fromRandom(self.domain)
+        if self.args.pattern == "alpha":
+            return Pattern.fromAlphabetical(self.domain)
 
         raise Exception(f"Pattern generation method '{self.args.pattern}' unknown")
 
     def solve(self) -> Plan:
         callsToSolver = 0
         pattern: Pattern = self.getPattern()
-        subgoalsAchieved = set()
-        totalSubgoals = self.problem.goal.conditions
-
-        initialState: State = State.fromInitialCondition(self.problem.init)
 
         if self.args.printARPG:
             self.console.log(str(self.domain.arpg), LogPrintLevel.PLAN)
 
         bound = self.startBound
+
+        relations = None
+        if self.isCES:
+            relations = TransitionRelations(self.liftedDomain)
 
         while bound <= self.maxBound:
 
@@ -55,6 +60,16 @@ class ChainSearch(Search):
                     problem=self.problem,
                     pattern=fPattern,
                     bound=1)
+            elif self.isCES:
+                assert relations
+                encoding: CESEncoding = CESEncoding(
+                    domain=self.domain,
+                    liftedDomain=self.liftedDomain,
+                    problem=self.problem,
+                    pattern=fPattern,
+                    bound=1,
+                    transitionRelations=relations
+                )
             else:
                 encoding: NumericEncoding = NumericEncoding(
                     domain=self.domain,
@@ -81,9 +96,6 @@ class ChainSearch(Search):
                 self.saveSMT(bound, encoding)
 
             if isinstance(plan, TemporalPlan if self.isTemporal else NumericPlan):
-                # state = initialState.applyPlan(plan)
-                # subgoalsAchieved = {g for g in self.problem.goal.conditions if state.satisfies(g)}
-                # if len(subgoalsAchieved) == len(totalSubgoals):
                 self.console.log(f"Bound: {bound}", LogPrintLevel.STATS)
                 return plan
 

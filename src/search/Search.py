@@ -1,4 +1,4 @@
-from src.pddl.Domain import GroundedDomain
+from src.pddl.Domain import GroundedDomain, Domain
 from src.pddl.Problem import Problem
 from src.plan.NumericEncoding import NumericEncoding
 from src.utils.Arguments import Arguments
@@ -8,8 +8,9 @@ from src.utils.TimeStat import TimeStat
 
 class Search:
 
-    def __init__(self, domain: GroundedDomain, problem: Problem, args: Arguments):
+    def __init__(self, domain: GroundedDomain, problem: Problem, args: Arguments, liftedDomain: Domain = None):
         self.domain = domain
+        self.liftedDomain = liftedDomain
         self.problem = problem
 
         self.args = args
