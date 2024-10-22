@@ -49,7 +49,7 @@ class ChainSearch(Search):
 
         while bound <= self.maxBound:
 
-            fPattern = pattern.multiply(bound, addFake=not self.isTemporal)
+            fPattern = pattern.multiply(bound, addFake=not self.isTemporal and not self.isCES)
             if self.args.printPattern:
                 self.console.log("Pattern: " + str(fPattern), LogPrintLevel.PLAN)
 

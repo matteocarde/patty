@@ -16,3 +16,8 @@ class ImpliesExpression(BinaryExpression):
 
     def toBDDExpression(self, map: Dict[SMTBoolVariable, BDDVariable]):
         return ~self.lhs.toBDDExpression(map) | self.rhs.toBDDExpression(map)
+
+    def evaluate(self, solution):
+        if not self.lhs.evaluate(solution):
+            return True
+        return self.rhs.evaluate(solution)

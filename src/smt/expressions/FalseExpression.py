@@ -19,3 +19,6 @@ class FalseExpression(SMTExpression):
 
     def toBDDExpression(self, map: Dict[SMTBoolVariable, BDDVariable]):
         return 0
+
+    def evaluate(self, solution):
+        return False

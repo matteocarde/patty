@@ -21,3 +21,6 @@ class TrueExpression(NaryExpression):
 
     def toBDDExpression(self, map: Dict[SMTBoolVariable, BDDVariable]):
         return 1
+
+    def evaluate(self, solution):
+        return True

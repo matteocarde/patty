@@ -30,3 +30,8 @@ class NotExpression(UnaryExpression):
 
     def replace(self, sub):
         return ~self.positive.replace(sub)
+
+    def evaluate(self, solution):
+        if self.positive.evaluate(solution):
+            return False
+        return True

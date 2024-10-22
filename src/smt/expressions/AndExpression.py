@@ -37,3 +37,9 @@ class AndExpression(NaryExpression):
 
     def replace(self, sub):
         return SMTExpression.bigand([c.replace(sub) for c in self.children])
+
+    def evaluate(self, solution):
+        for c in self.children:
+            if not c.evaluate(solution):
+                return False
+        return True

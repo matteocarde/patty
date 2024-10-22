@@ -20,3 +20,6 @@ class IffExpression(BinaryExpression):
         lhs = self.lhs.toBDDExpression(map)
         rhs = self.rhs.toBDDExpression(map)
         return (lhs & rhs) | (~lhs & ~rhs)
+
+    def evaluate(self, solution):
+        return self.lhs.evaluate(solution) == self.rhs.evaluate(solution)

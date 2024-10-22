@@ -42,8 +42,14 @@ class State:
             return False
         return self.assignments[atom]
 
+    def setAtom(self, atom: Atom, assignment: bool or float):
+        self.assignments[atom] = assignment
+
     def __repr__(self):
         return repr(self.assignments)
+
+    def asBooleanSet(self):
+        return {v for (v, a) in self.assignments.items() if a}
 
     def applyAction(self, action: Action):
 

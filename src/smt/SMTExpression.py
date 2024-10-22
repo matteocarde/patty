@@ -280,3 +280,6 @@ class SMTExpression:
 
     def replace(self, sub):
         raise NotImplementedError()
+
+    def evaluate(self, solution):
+        raise NotImplementedError

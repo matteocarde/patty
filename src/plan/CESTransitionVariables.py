@@ -13,8 +13,8 @@ class CESTransitionVariables:
     currentState: Dict[Atom, SMTVariable]
     nextState: Dict[Atom, SMTVariable]
     sigma: Dict[int, Dict[Atom, SMTExpression]]
-    actionVariables: Dict[int, SMTExpression]
-    auxVariables: Dict[int, Dict[Atom, SMTExpression]]
+    actionVariables: Dict[int, SMTVariable]
+    auxVariables: Dict[int, Dict[Atom, SMTVariable]]
 
     def __init__(self, gDomain: GroundedDomain, pattern: Pattern, transitions: TransitionRelations):
         self.domain = gDomain

@@ -1,10 +1,13 @@
 from typing import Dict, Set
 
 from src.ces.TransitionFunctionBDD import TransitionFunctionBDD
+from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.Literal import Literal
+from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
+from src.pddl.State import State
 from src.plan.CESTransitionVariables import CESTransitionVariables
 from src.plan.Encoding import Encoding
 from src.plan.Pattern import Pattern
@@ -97,5 +100,42 @@ class CESEncoding(Encoding):
         rules.append(goal)
         return rules
 
-    def getPlanFromSolution(self, solution: SMTSolution):
-        print(solution)
+    def getState(self, exprs: Dict[Atom, SMTExpression], solution: SMTSolution) -> State:
+        s = State()
+        for v in self.atoms:
+            s.setAtom(v, exprs[v].evaluate(solution))
+        return s
+
+    def repetitions(self, a: Action, s0: State, s2: State, m: int) -> int:
+        for j in range(0, m):
+            T_a = self.relations.closures[a.lifted][j]
+            if T_a.reachable(s0, s2):
+                R_a = self.relations.reachability[a.lifted][j - 1]
+                s1: State = R_a.jumpState(s0)
+                if j == 0:
+                    return 1
+                return 2 ** (j - 1) + self.repetitions(a, s1, s2, j - 1)
+        return 0
+
+    def getRepetitions(self, i: int, solution: SMTSolution):
+        a = self.pattern[i - 1]
+        s0: State = self.getState(self.vars.sigma[i - 1], solution)
+        s2: State = self.getState(self.vars.sigma[i], solution)
+        m = len(self.relations.closures[a.lifted])
+        print(a, s0.asBooleanSet(), s2.asBooleanSet())
+        return self.repetitions(self.pattern[i - 1], s0, s2, m)
+
+    def getPlanFromSolution(self, solution: SMTSolution) -> NumericPlan:
+        plan = NumericPlan()
+
+        if not solution:
+            return plan
+
+        for i, a in self.pattern.enumerate():
+            isExecuted = solution.getVariable(self.vars.actionVariables[i])
+            if isExecuted:
+                r = self.getRepetitions(i, solution) if a.isNonIdempotent() else 1
+                print(r)
+                plan.addRepeatedAction(a, r)
+
+        return plan

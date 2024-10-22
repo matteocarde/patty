@@ -30,3 +30,9 @@ class OrExpression(NaryExpression):
 
     def replace(self, sub):
         return SMTExpression.bigor([c.replace(sub) for c in self.children])
+
+    def evaluate(self, solution):
+        for c in self.children:
+            if c.evaluate(solution):
+                return True
+        return False

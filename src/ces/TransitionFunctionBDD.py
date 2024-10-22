@@ -7,6 +7,7 @@ from pyeda.boolalg.bdd import BDDVariable, bddvar, BinaryDecisionDiagram
 from src.ces.ActionStateTransitionFunction import ActionStateTransitionFunction
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
+from src.pddl.State import State
 from src.smt.SMTBoolVariable import SMTBoolVariable
 from src.smt.SMTExpression import SMTExpression
 from src.utils.LogPrint import LogPrint, LogPrintLevel
@@ -141,3 +142,38 @@ class TransitionFunctionBDD:
 
         groundExpr = liftedExpr.replace(liftedVar2sigma)
         return groundExpr
+
+    def __getRestriction(self, s: State, Xs, vars) -> Dict[BDDVariable, float]:
+        restrict = dict()
+        for atom, ass in s.assignments.items():
+            if atom.lifted not in vars:
+                continue
+            v0 = Xs[vars[atom.lifted]]
+            restrict[v0] = bool(ass)
+        return restrict
+
+    def reachable(self, s0: State, s2: State) -> bool:
+
+        restrict = {**self.__getRestriction(s0, self.Xs[0], self.currentState),
+                    **self.__getRestriction(s2, self.Xs[2], self.nextState)}
+
+        res = self.bdd.restrict(restrict)
+        if res.is_one():
+            return True
+        if res.is_zero():
+            return False
+        raise Exception("When computing reachability, there a some variables missing")
+
+    def jumpState(self, s0: State) -> State:
+        restrict = {**self.__getRestriction(s0, self.Xs[0], self.currentState)}
+        res = self.bdd.restrict(restrict)
+        sat = res.satisfy_one()
+
+        s1 = State()
+        for atom, ass in s0.assignments.items():
+            if atom.lifted not in self.nextState:
+                s1.setAtom(atom, s0.getAtom(atom))
+                continue
+            var = self.Xs[2][self.nextState[atom.lifted]]
+            s1.setAtom(atom, sat[var] if var in sat else s0.getAtom(atom))
+        return s1
