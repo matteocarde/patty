@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import List, Set
+import copy
+from typing import List, Set, Dict, cast
 
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
@@ -40,3 +41,19 @@ class CEEffects(Effects):
 
     def getNegative(self) -> Set[Atom]:
         return {e for e in self.assignments if isinstance(e, Literal) and e.sign == "-"}
+
+    def ground(self, subs: Dict[str, str], delta=1) -> CEEffects:
+        g = super().ground(subs, delta)
+        g.__class__ = CEEffects
+        return cast(CEEffects, g)
+
+    def substitute(self, subs: Dict[Atom, float], default=None) -> CEEffects:
+        s = super().substitute(subs, default)
+        s.__class__ = CEEffects
+        return cast(CEEffects, s)
+
+    def __deepcopy__(self, m=None):
+        m = {} if m is None else m
+        eff = copy.deepcopy(super(), m)
+        eff.__class__ = CEEffects
+        return cast(CEEffects, eff)

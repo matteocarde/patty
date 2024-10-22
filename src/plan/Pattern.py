@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 import random
-from typing import List, Dict
+from typing import List, Dict, Tuple
 
 from src.pattern.PatternAction import PatternAction
 from src.pddl.ARPG import ARPG
@@ -146,4 +146,7 @@ class Pattern:
 
     @classmethod
     def fromAlphabetical(cls, domain: GroundedDomain):
-        return cls.fromOrder(sorted(domain.actions))
+        return cls.fromOrder(sorted(domain.actions), addFake=False)
+
+    def enumerate(self) -> List[Tuple[int, Action]]:
+        return [(i + 1, a) for (i, a) in enumerate(self)]

@@ -33,9 +33,9 @@ class TransitionFunctionBDD:
         self.transitionFunction = t
         self.action = self.transitionFunction.action
         self.m = self.transitionFunction.m
-        self.atoms = list(self.transitionFunction.atoms)
-        self.staticAtoms = self.transitionFunction.atoms - (
-                self.transitionFunction.addedAtoms | self.transitionFunction.deletedAtoms)
+        self.atoms = list(self.action.predicates)
+        self.staticAtoms = self.action.predicates - (
+                self.action.addedAtoms | self.action.deletedAtoms)
         self.currentState = self.transitionFunction.current
         self.nextState = self.transitionFunction.next
         self.staticVars = {self.currentState[v] for v in self.staticAtoms} | {self.nextState[v] for v in

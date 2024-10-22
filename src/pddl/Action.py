@@ -169,23 +169,3 @@ class Action(Operation):
         pw.write(")")
         pass
 
-    def toFullCEAction(self) -> Action:
-        effects: Effects = Effects()
-        noConditionCe: ConditionalEffect = ConditionalEffect()
-        for eff in self.effects:
-            if isinstance(eff, ConditionalEffect):
-                effects.addEffect(eff)
-                continue
-
-            noConditionCe.effects.addEffect(eff)
-
-        if noConditionCe.effects:
-            effects.addEffect(noConditionCe)
-
-        return Action.fromProperties(self.name, self.parameters, self.preconditions, effects)
-
-    def hasConditionalEffects(self):
-        for eff in self.effects:
-            if isinstance(eff, ConditionalEffect):
-                return True
-        return False

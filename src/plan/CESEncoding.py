@@ -1,5 +1,6 @@
 from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.Problem import Problem
+from src.plan.CESTransitionVariables import CESTransitionVariables
 from src.plan.Pattern import Pattern
 from src.plan.TransitionRelations import TransitionRelations
 
@@ -15,6 +16,6 @@ class CESEncoding:
         self.bound: int = bound
         self.relations: TransitionRelations = transitionRelations
 
-        
+        self.vars = CESTransitionVariables(self.domain, self.pattern, self.relations)
 
         pass

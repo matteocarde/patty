@@ -258,9 +258,17 @@ class SMTExpression:
         return SMTExpression.__connectiveOfExpressionList(rules, AndExpression)
 
     @classmethod
+    def bigand(cls, rules: [SMTExpression]):
+        return SMTExpression.andOfExpressionsList(rules)
+
+    @classmethod
     def orOfExpressionsList(cls, rules: [SMTExpression]):
         from src.smt.expressions.OrExpression import OrExpression
         return SMTExpression.__connectiveOfExpressionList(rules, OrExpression)
+
+    @classmethod
+    def bigor(cls, rules: [SMTExpression]):
+        return SMTExpression.orOfExpressionsList(rules)
 
     def toBDDExpression(self, map):
         raise NotImplementedError()

@@ -6,6 +6,7 @@ from typing import Dict, List, Set, Tuple
 
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate, BinaryPredicateType
+from src.pddl.ConditionalEffect import ConditionalEffect
 from src.pddl.Constant import Constant
 from src.pddl.Effects import Effects
 from src.pddl.Literal import Literal
@@ -53,6 +54,10 @@ class Operation:
         self.linearizationTimes = 1
         self.__couldBeRepeated = False
         self.isFake = False
+        self.addedAtoms: Set[Atom] = set()
+        self.deletedAtoms: Set[Atom] = set()
+        self.deltaPlus: Dict[Atom, List[ConditionalEffect]] = dict()
+        self.deltaMinus: Dict[Atom, List[ConditionalEffect]] = dict()
 
     def __deepcopy__(self, m=None) -> Operation:
         m = {} if m is None else m
@@ -356,6 +361,39 @@ class Operation:
         self.__couldBeRepeated = len(self.getIncrList() | self.getDecrList()) > 0 and \
                                  len(self.getPreB().intersection(self.getAddList() | self.getDelList())) == 0
 
+        self.deltaPlus: Dict[Atom, List[ConditionalEffect]] = dict()
+        self.deltaMinus: Dict[Atom, List[ConditionalEffect]] = dict()
+        self.addedAtoms: Set[Atom] = set()
+        self.deletedAtoms: Set[Atom] = set()
+        for v in self.predicates:
+            self.deltaPlus.setdefault(v, list())
+            self.deltaMinus.setdefault(v, list())
+
+        if not self.hasConditionalEffects():
+            return
+
+        toBeRemoved = set()
+        noCondition = ConditionalEffect()
+        newEffects = Effects()
+        for e in self.effects:
+            if isinstance(e, ConditionalEffect):
+                newEffects.addEffect(e)
+                continue
+            noCondition.effects.addEffect(e)
+        self.effects = newEffects
+
+        for ce in self.effects:
+            assert isinstance(ce, ConditionalEffect)
+            for l in ce.effects:
+                assert isinstance(l, Literal)
+                v = l.getAtom()
+                if l.sign == "+":
+                    self.addedAtoms.add(v)
+                    self.deltaPlus[v].append(ce)
+                if l.sign == "-":
+                    self.deletedAtoms.add(v)
+                    self.deltaMinus[v].append(ce)
+
     def __hash__(self):
         return self.__hash
 
@@ -366,6 +404,12 @@ class Operation:
 
     def nameToLatex(self):
         return self.planName.replace("_", r"\_")
+
+    def hasConditionalEffects(self):
+        for eff in self.effects:
+            if isinstance(eff, ConditionalEffect):
+                return True
+        return False
 
     def hasNonSimpleLinearIncrement(self, encoding=""):
         if encoding == "non-linear":
