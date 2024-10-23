@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 from typing import Dict, List
 
 from pyeda.boolalg.bdd import BDDVariable, bddvar, BinaryDecisionDiagram
@@ -144,36 +145,39 @@ class TransitionFunctionBDD:
         groundExpr = liftedExpr.replace(liftedVar2sigma)
         return groundExpr
 
-    def __getRestriction(self, a: Action, s: State, Xs, vars) -> Dict[BDDVariable, float]:
+    def getRestriction(self, a: Action, s: State, Xs, vars) -> Dict[BDDVariable, float]:
         restrict = dict()
-        for atom, ass in s.assignments.items():
-            if atom not in a.predicates or atom.lifted not in vars:
+        for atom in a.predicates:
+            # for atom, ass in s.assignments.items():
+            if atom.lifted not in vars:
                 continue
             v0 = Xs[vars[atom.lifted]]
-            restrict[v0] = bool(ass)
+            restrict[v0] = bool(s.assignments[atom])
         return restrict
 
     def reachable(self, a: Action, s0: State, s2: State) -> bool:
 
-        restrict = {**self.__getRestriction(a, s0, self.Xs[0], self.currentState),
-                    **self.__getRestriction(a, s2, self.Xs[2], self.nextState)}
+        restrict0 = self.getRestriction(a, s0, self.Xs[0], self.currentState)
+        restrict2 = self.getRestriction(a, s2, self.Xs[2], self.nextState)
+        restrict = {**restrict0, **restrict2}
 
+        assert restrict
         res = self.bdd.restrict(restrict)
         if res.is_one():
             return True
         if res.is_zero():
             return False
+        print(a, res.to_dot())
         raise Exception("When computing reachability, there are some variables missing")
 
     def jumpState(self, a: Action, s0: State) -> State:
-        restrict = {**self.__getRestriction(a, s0, self.Xs[0], self.currentState)}
+        restrict = {**self.getRestriction(a, s0, self.Xs[0], self.currentState)}
         res = self.bdd.restrict(restrict)
         sat = res.satisfy_one()
 
-        s1 = State()
-        for atom, ass in s0.assignments.items():
+        s1 = copy.deepcopy(s0)
+        for atom in a.predicates:
             if atom.lifted not in self.nextState:
-                s1.setAtom(atom, s0.getAtom(atom))
                 continue
             var = self.Xs[2][self.nextState[atom.lifted]]
             s1.setAtom(atom, sat[var] if var in sat else s0.getAtom(atom))

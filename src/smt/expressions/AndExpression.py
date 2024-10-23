@@ -26,7 +26,7 @@ class AndExpression(NaryExpression):
         return f
 
     @classmethod
-    def fromBDDExpression(cls, bdd: BinaryDecisionDiagram, subs: Dict[str, SMTExpression]):
+    def fromBDDExpression(cls, bdd: AndOp, subs: Dict[str, SMTExpression]):
         assert isinstance(bdd, AndOp)
         conjunction = []
         for x in bdd.xs:

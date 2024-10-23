@@ -11,8 +11,8 @@ from src.utils.Arguments import Arguments
 class TestCES(TestCase):
 
     def setUp(self) -> None:
-        self.b = 4
-        self.c = 3
+        self.b = 7
+        self.c = 5
         self.domain: Domain = Domain.fromFile(f"../../files/ces/counters/domains/{self.b}/domain-{self.b}.pddl")
         self.problem: Problem = Problem.fromFile(
             f"../../files/ces/counters/domains/{self.b}/instances/problem-{self.b}-{self.c}.pddl")

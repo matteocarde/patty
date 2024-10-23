@@ -24,7 +24,7 @@ class OrExpression(NaryExpression):
         return f
 
     @classmethod
-    def fromBDDExpression(cls, bdd: BinaryDecisionDiagram, subs: Dict[str, SMTExpression]):
+    def fromBDDExpression(cls, bdd: OrOp, subs: Dict[str, SMTExpression]):
         assert isinstance(bdd, OrOp)
         from src.smt.expressions.AndExpression import AndExpression
         return SMTExpression.bigor([AndExpression.fromBDDExpression(x, subs) for x in bdd.xs])
