@@ -15,6 +15,8 @@ from src.plan.TransitionRelations import TransitionRelations
 from src.smt.SMTConjunction import SMTConjunction
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTSolution import SMTSolution
+from src.utils.LogPrint import LogPrint, LogPrintLevel
+from src.utils.TimeStat import TimeStat
 
 
 class CESEncoding(Encoding):
@@ -64,11 +66,16 @@ class CESEncoding(Encoding):
     def getClosureRules(self) -> SMTConjunction:
         rules = SMTConjunction()
         sigmas = self.vars.sigma
+        console: LogPrint = LogPrint(LogPrintLevel.PLAN)
+        ts: TimeStat = TimeStat()
+
         for i, a in self.pattern.enumerate():
             if a.isIdempotent():
                 continue
             T_a: TransitionFunctionBDD = self.relations.closures[a.lifted][-1]
+            ts.start("GROUNDING EXPR")
             groundExpr: SMTExpression = T_a.toGroundSMTExpression(a, sigmas[i - 1], sigmas[i])
+            ts.end("GROUNDING EXPR", console)
             rules.append(groundExpr)
 
         return rules
@@ -108,6 +115,7 @@ class CESEncoding(Encoding):
 
     def repetitions(self, a: Action, s0: State, s2: State, m: int) -> int:
         for j in range(0, m + 1):
+            print(j, len(self.relations.closures[a.lifted]))
             T_a = self.relations.closures[a.lifted][j]
             if not T_a.reachable(a, s0, s2):
                 continue

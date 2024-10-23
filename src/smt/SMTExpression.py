@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Set, Dict
 
 from pyeda.boolalg.bdd import BinaryDecisionDiagram, bdd2expr
-from pyeda.boolalg.expr import OrOp, AndOp, Variable, Complement
+from pyeda.boolalg.expr import OrOp, AndOp, Variable, Complement, OrAndOp
 from pysmt.fnode import FNode
 from pysmt.shortcuts import Equals, LE, LT, GE, GT, Real, Times, Minus, Plus, Div, TRUE, ToReal, \
     NotEquals
@@ -315,10 +315,9 @@ class SMTExpression:
         raise NotImplementedError()
 
     @classmethod
-    def fromBDDExpression(cls, bdd: BinaryDecisionDiagram, subs: Dict[str, SMTExpression]):
+    def fromBDDExpression(cls, expr: OrAndOp, subs: Dict[str, SMTExpression]):
         from src.smt.expressions.OrExpression import OrExpression
         from src.smt.expressions.AndExpression import AndExpression
-        expr = bdd2expr(bdd)
         if isinstance(expr, OrOp):
             return OrExpression.fromBDDExpression(expr, subs)
         if isinstance(expr, AndOp):

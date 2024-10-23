@@ -1,9 +1,10 @@
+import signal
 from typing import List
+
+from pyeda.boolalg.bdd import bddvar
 
 from src.ces.ActionStateTransitionFunction import ActionStateTransitionFunction
 from src.ces.TransitionFunctionBDD import TransitionFunctionBDD
-from pyeda.boolalg.bdd import _NODES, bddvar
-
 from src.pddl.Atom import Atom
 
 
@@ -22,18 +23,32 @@ class TransitiveClosure(TransitionFunctionBDD):
 
     @classmethod
     def fromActionStateTransitionFunction(cls, t: ActionStateTransitionFunction, atomsOrder: List[Atom],
-                                          reflexive=True) -> List[TransitionFunctionBDD]:
+                                          reflexive=True, maxTime: None or int = None) -> List[TransitionFunctionBDD]:
 
         bdds = []
-        i = 1
+        i = 0
         TransitiveClosure.setOrder(t.action, atomsOrder, reflexive)
         currentBDD: TransitionFunctionBDD = super().fromActionStateTransitionFunction(t, atomsOrder)
         bdds.append(currentBDD)
-        while (True):
-            i += 1
-            nextBDD: TransitionFunctionBDD = currentBDD.computeTransition(reflexive=reflexive)
-            if currentBDD.isEquivalent(nextBDD):
-                nextBDD.__class__ = TransitiveClosure
-                return bdds
-            bdds.append(nextBDD)
-            currentBDD = nextBDD
+
+        if maxTime:
+            signal.alarm(maxTime)
+
+        def handler(signum, frame):
+            raise Exception("Timeout!!!")
+
+        signal.signal(signal.SIGALRM, handler)
+        try:
+            while True:
+                i += 1
+                nextBDD: TransitionFunctionBDD = currentBDD.computeTransition(reflexive=reflexive)
+                if currentBDD.isEquivalent(nextBDD):
+                    nextBDD.__class__ = TransitiveClosure
+                    signal.alarm(0)
+                    return bdds
+                bdds.append(nextBDD)
+                currentBDD = nextBDD
+        except:
+            print(len(bdds))
+            print(f"Timeout when computing transitive closure of {t.action} at step {i}, i.e., {2 ** i} steps")
+            return bdds

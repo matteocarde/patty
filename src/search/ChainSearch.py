@@ -45,7 +45,9 @@ class ChainSearch(Search):
 
         relations = None
         if self.isCES:
-            relations = TransitionRelations(self.liftedDomain)
+            self.ts.start(f"Computing Transitive Closure", console=self.console)
+            relations = TransitionRelations(self.liftedDomain, self.args.maxClosureTime)
+            self.ts.end(f"Computing Transitive Closure", console=self.console)
 
         while bound <= self.maxBound:
 

@@ -3,7 +3,8 @@ from __future__ import annotations
 import copy
 from typing import Dict, List
 
-from pyeda.boolalg.bdd import BDDVariable, bddvar, BinaryDecisionDiagram
+from pyeda.boolalg.bdd import BDDVariable, bddvar, BinaryDecisionDiagram, bdd2expr
+from pyeda.boolalg.expr import OrAndOp
 
 from src.ces.ActionStateTransitionFunction import ActionStateTransitionFunction
 from src.pddl.Action import Action
@@ -31,6 +32,7 @@ class TransitionFunctionBDD:
     Xs: Dict[int, Dict[SMTBoolVariable, BDDVariable]]
     atomsOrder: List[Atom]
     bdd: BinaryDecisionDiagram
+    expr: OrAndOp
 
     def __init__(self, t: ActionStateTransitionFunction):
         self.transitionFunction = t
@@ -52,6 +54,7 @@ class TransitionFunctionBDD:
         tfbdd.Xs = tfbdd.getXs(0, 2)
         bdd = tfbdd.clauses.toBDDExpression({**tfbdd.Xs[0], **tfbdd.Xs[2]})
         tfbdd.bdd = bdd
+        tfbdd.expr = bdd2expr(bdd, conj=True)
         return tfbdd
 
     def getXs(self, a: int, b: int) -> Dict[int, Dict[SMTBoolVariable, BDDVariable]]:
@@ -80,9 +83,6 @@ class TransitionFunctionBDD:
         ith.Xs = self.Xs
         ith.atomsOrder = self.atomsOrder
 
-        console: LogPrint = LogPrint(LogPrintLevel.PLAN)
-        ts: TimeStat = TimeStat()
-
         Xs1 = ith.getXs(0, 1)
         Xs2 = ith.getXs(1, 2)
 
@@ -108,6 +108,7 @@ class TransitionFunctionBDD:
             ith.bdd = smoothed | self.bdd
         else:
             ith.bdd = smoothed
+        ith.expr = bdd2expr(ith.bdd, conj=True)
 
         return ith
 
@@ -120,17 +121,12 @@ class TransitionFunctionBDD:
         for smtvar, bddvar in {**self.Xs[0], **self.Xs[2]}.items():
             subs[bddvar.name] = smtvar
 
-        return SMTExpression.fromBDDExpression(self.bdd, subs)
+        return SMTExpression.fromBDDExpression(self.expr, subs)
 
     def toGroundSMTExpression(self,
                               groundAction: Action,
                               current: Dict[Atom, SMTExpression],
                               next: Dict[Atom, SMTExpression]):
-
-        liftedExpr: SMTExpression = self.toSMTExpression()
-        liftedVar2liftedAtom: Dict[SMTBoolVariable, Atom] = dict()
-        for (liftedAtom, liftedVar) in self.currentState.items() | self.nextState.items():
-            liftedVar2liftedAtom[liftedVar] = liftedAtom
 
         liftedAtom2groundAtom: Dict[Atom, Atom] = dict()
         for groundAtom in groundAction.predicates:
@@ -142,7 +138,12 @@ class TransitionFunctionBDD:
         for (liftedAtom, liftedVar) in self.nextState.items():
             liftedVar2sigma[liftedVar] = next[liftedAtom2groundAtom[liftedAtom]]
 
-        groundExpr = liftedExpr.replace(liftedVar2sigma)
+        bddVar2sigma: Dict[str, SMTExpression] = dict()
+        for smtvar, bddvar in {**self.Xs[0], **self.Xs[2]}.items():
+            bddVar2sigma[bddvar.name] = liftedVar2sigma[smtvar]
+
+        groundExpr = SMTExpression.fromBDDExpression(self.expr, bddVar2sigma)
+        print(groundAction, self.expr, groundExpr)
         return groundExpr
 
     def getRestriction(self, a: Action, s: State, Xs, vars) -> Dict[BDDVariable, float]:

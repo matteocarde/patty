@@ -1,12 +1,11 @@
 from typing import Dict
 
-from pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram
-from pyeda.boolalg.expr import Or as BDDOr, OrOp
+from pyeda.boolalg.bdd import BDDVariable
+from pyeda.boolalg.expr import OrOp, Variable, Complement, AndOp
 from pysmt.shortcuts import Or as SMTOr
 
 from src.smt.SMTBoolVariable import SMTBoolVariable
 from src.smt.SMTExpression import SMTExpression
-from src.smt.expressions.FalseExpression import FalseExpression
 from src.smt.expressions.NaryExpression import NaryExpression
 
 
@@ -25,9 +24,17 @@ class OrExpression(NaryExpression):
 
     @classmethod
     def fromBDDExpression(cls, bdd: OrOp, subs: Dict[str, SMTExpression]):
-        assert isinstance(bdd, OrOp)
         from src.smt.expressions.AndExpression import AndExpression
-        return SMTExpression.bigor([AndExpression.fromBDDExpression(x, subs) for x in bdd.xs])
+        assert isinstance(bdd, OrOp)
+        conjunction = []
+        for x in bdd.xs:
+            if isinstance(x, Variable):
+                conjunction.append(subs[x.name])
+            if isinstance(x, Complement):
+                conjunction.append(~subs[x.top.name])
+            if isinstance(x, AndOp):
+                conjunction.append(AndExpression.fromBDDExpression(x, subs))
+        return SMTExpression.bigor(conjunction)
 
     def replace(self, sub):
         return SMTExpression.bigor([c.replace(sub) for c in self.children])

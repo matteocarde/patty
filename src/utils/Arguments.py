@@ -32,6 +32,9 @@ class Arguments:
                             action="store_true", default=False)
         parser.add_argument('--roll-bound', help="The maximum amount of time an action can be rolled at each step",
                             type=int, default=0)
+        parser.add_argument('--max-closure-time',
+                            help="The maximum number of seconds the transitive closure should be computed for",
+                            type=int)
         parser.add_argument('--maximize', help="If it should maximize the subgoals when using step or static search",
                             action="store_true", default=False)
         parser.add_argument('--use-sccs', help="Use SCCs when computing pattern",
@@ -65,6 +68,7 @@ class Arguments:
         self.solver = args.solver
         self.encoding = args.encoding
         self.saveSMT = args.save_smt
+        self.maxClosureTime = args.max_closure_time
         self.savePlan = args.save_plan
         self.binaryActions: int = int(args.binary_actions)
         self.hasEffectAxioms = args.effect_axioms

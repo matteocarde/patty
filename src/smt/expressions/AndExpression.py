@@ -1,15 +1,12 @@
-import itertools
 from typing import Dict
 
-import pyeda
-from pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram
-from pyeda.boolalg.expr import And, AndOp, Variable, Complement
+from pyeda.boolalg.bdd import BDDVariable
+from pyeda.boolalg.expr import AndOp, Variable, Complement, OrOp
 from pysmt.shortcuts import And as SMTAnd
 
 from src.smt.SMTBoolVariable import SMTBoolVariable
 from src.smt.SMTExpression import SMTExpression
 from src.smt.expressions.NaryExpression import NaryExpression
-from src.smt.expressions.TrueExpression import TrueExpression
 
 
 class AndExpression(NaryExpression):
@@ -27,6 +24,7 @@ class AndExpression(NaryExpression):
 
     @classmethod
     def fromBDDExpression(cls, bdd: AndOp, subs: Dict[str, SMTExpression]):
+        from src.smt.expressions.OrExpression import OrExpression
         assert isinstance(bdd, AndOp)
         conjunction = []
         for x in bdd.xs:
@@ -34,6 +32,8 @@ class AndExpression(NaryExpression):
                 conjunction.append(subs[x.name])
             if isinstance(x, Complement):
                 conjunction.append(~subs[x.top.name])
+            if isinstance(x, OrOp):
+                conjunction.append(OrExpression.fromBDDExpression(x, subs))
         return SMTExpression.bigand(conjunction)
 
     def replace(self, sub):
