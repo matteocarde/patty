@@ -136,6 +136,6 @@ class CESEncoding(Encoding):
             isExecuted = solution.getVariable(self.vars.actionVariables[i])
             if isExecuted:
                 r = self.getRepetitions(i, solution) if a.isNonIdempotent() else 1
-                plan.addRepeatedAction(a, r)
+                plan.addRepeatedAction(a.linearizationOf, r)
 
         return plan

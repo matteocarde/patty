@@ -384,6 +384,7 @@ class Operation:
                 newEffects.addEffect(e)
                 continue
             noCondition.effects.addEffect(e)
+        newEffects.addEffect(noCondition)
         self.effects = newEffects
 
         for ce in self.effects:

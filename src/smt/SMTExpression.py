@@ -92,6 +92,14 @@ class SMTExpression:
 
     def __and__(self, other):
         from src.smt.expressions.AndExpression import AndExpression
+        from src.smt.expressions.TrueExpression import TrueExpression
+        from src.smt.expressions.FalseExpression import FalseExpression
+        if isinstance(self, TrueExpression):
+            return other
+        if isinstance(other, TrueExpression):
+            return self
+        if isinstance(other, FalseExpression) or isinstance(self, FalseExpression):
+            return FalseExpression()
         return AndExpression(self, other)
 
     def OR(self, other: SMTExpression):
@@ -100,10 +108,24 @@ class SMTExpression:
 
     def __or__(self, other):
         from src.smt.expressions.OrExpression import OrExpression
+        from src.smt.expressions.TrueExpression import TrueExpression
+        from src.smt.expressions.FalseExpression import FalseExpression
+        if isinstance(self, FalseExpression):
+            return other
+        if isinstance(other, FalseExpression):
+            return self
+        if isinstance(other, TrueExpression) or isinstance(self, TrueExpression):
+            return TrueExpression()
         return OrExpression(self, other)
 
     def NOT(self):
         from src.smt.expressions.NotExpression import NotExpression
+        from src.smt.expressions.TrueExpression import TrueExpression
+        from src.smt.expressions.FalseExpression import FalseExpression
+        if isinstance(self, TrueExpression):
+            return FalseExpression()
+        if isinstance(self, FalseExpression):
+            return TrueExpression()
         return NotExpression(self)
 
     def implies(self, other: SMTExpression):
@@ -245,9 +267,6 @@ class SMTExpression:
 
     @classmethod
     def __connectiveOfExpressionList(cls, rules: [SMTExpression], connective):
-        from src.smt.expressions.TrueExpression import TrueExpression
-        if not rules:
-            return TrueExpression()
         if len(rules) == 1:
             return rules[0]
         return connective(*rules)
@@ -255,7 +274,18 @@ class SMTExpression:
     @classmethod
     def andOfExpressionsList(cls, rules: [SMTExpression]):
         from src.smt.expressions.AndExpression import AndExpression
-        return SMTExpression.__connectiveOfExpressionList(rules, AndExpression)
+        from src.smt.expressions.FalseExpression import FalseExpression
+        from src.smt.expressions.TrueExpression import TrueExpression
+        sRules = []
+        for r in rules:
+            if isinstance(r, FalseExpression):
+                return FalseExpression()
+            if isinstance(r, TrueExpression):
+                continue
+            sRules.append(r)
+        if not rules:
+            return TrueExpression()
+        return SMTExpression.__connectiveOfExpressionList(sRules, AndExpression)
 
     @classmethod
     def bigand(cls, rules: [SMTExpression]):
@@ -264,6 +294,17 @@ class SMTExpression:
     @classmethod
     def orOfExpressionsList(cls, rules: [SMTExpression]):
         from src.smt.expressions.OrExpression import OrExpression
+        from src.smt.expressions.FalseExpression import FalseExpression
+        from src.smt.expressions.TrueExpression import TrueExpression
+        sRules = []
+        for r in rules:
+            if isinstance(r, TrueExpression):
+                return TrueExpression()
+            if isinstance(r, FalseExpression):
+                continue
+            sRules.append(r)
+        if not rules:
+            return FalseExpression()
         return SMTExpression.__connectiveOfExpressionList(rules, OrExpression)
 
     @classmethod

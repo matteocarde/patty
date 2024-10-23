@@ -9,6 +9,7 @@ from pysmt.shortcuts import And as SMTAnd
 from src.smt.SMTBoolVariable import SMTBoolVariable
 from src.smt.SMTExpression import SMTExpression
 from src.smt.expressions.NaryExpression import NaryExpression
+from src.smt.expressions.TrueExpression import TrueExpression
 
 
 class AndExpression(NaryExpression):

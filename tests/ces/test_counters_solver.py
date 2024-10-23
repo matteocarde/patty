@@ -12,9 +12,10 @@ class TestCES(TestCase):
 
     def setUp(self) -> None:
         self.b = 4
+        self.c = 3
         self.domain: Domain = Domain.fromFile(f"../../files/ces/counters/domains/{self.b}/domain-{self.b}.pddl")
         self.problem: Problem = Problem.fromFile(
-            f"../../files/ces/counters/domains/{self.b}/instances/problem-{self.b}-3.pddl")
+            f"../../files/ces/counters/domains/{self.b}/instances/problem-{self.b}-{self.c}.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.args = Arguments(keepRequired=False)
         self.args.pattern = "alpha"

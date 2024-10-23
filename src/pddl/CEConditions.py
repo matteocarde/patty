@@ -14,10 +14,10 @@ class CEConditions(Formula):
         super().__init__()
 
     def getPositive(self):
-        return {e for e in self.conditions if isinstance(e, Literal) and e.sign == "+"}
+        return {e.getAtom() for e in self.conditions if isinstance(e, Literal) and e.sign == "+"}
 
     def getNegative(self):
-        return {e for e in self.conditions if isinstance(e, Literal) and e.sign == "-"}
+        return {e.getAtom() for e in self.conditions if isinstance(e, Literal) and e.sign == "-"}
 
     def ground(self, subs: Dict[str, str], delta=1) -> CEConditions:
         g = super().ground(subs, delta)

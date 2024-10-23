@@ -71,10 +71,8 @@ class State:
             if state.satisfies(effect.conditions):
                 added |= effect.effects.getPositive()
                 deleted |= effect.effects.getNegative()
-
         if added & deleted:
             raise Exception(f"Action {action} has conflicting CES in state {state}")
-        print(action, added, deleted)
         for v in added:
             state.assignments[v] = True
         for v in deleted:
