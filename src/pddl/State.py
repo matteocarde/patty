@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 import copy
-from typing import Dict
+from typing import Dict, Set
 
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
+from src.pddl.ConditionalEffect import ConditionalEffect
 from src.pddl.Constant import Constant
 from src.pddl.Formula import Formula
 from src.pddl.InitialCondition import InitialCondition
@@ -49,10 +50,9 @@ class State:
         return repr(self.assignments)
 
     def asBooleanSet(self):
-        return {v for (v, a) in self.assignments.items() if a}
+        return sorted({v for (v, a) in self.assignments.items() if a})
 
     def applyAction(self, action: Action):
-
         state = State()
         state.assignments = self.assignments.copy()
 
@@ -61,8 +61,24 @@ class State:
                 f"Tried to apply action {action} to a state {state} in which its preconditions {action.preconditions} are not satisfied")
 
         effect: Predicate
+        added: Set[Atom] = set()
+        deleted: Set[Atom] = set()
         for effect in action.effects:
-            state.assignments[effect.getAtom()] = self.getRealization(effect)
+            if not isinstance(effect, ConditionalEffect):
+                state.assignments[effect.getAtom()] = self.getRealization(effect)
+                continue
+            assert isinstance(effect, ConditionalEffect)
+            if state.satisfies(effect.conditions):
+                added |= effect.effects.getPositive()
+                deleted |= effect.effects.getNegative()
+
+        if added & deleted:
+            raise Exception(f"Action {action} has conflicting CES in state {state}")
+        print(action, added, deleted)
+        for v in added:
+            state.assignments[v] = True
+        for v in deleted:
+            state.assignments[v] = False
 
         return state
 

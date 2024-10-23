@@ -67,7 +67,7 @@ class CESEncoding(Encoding):
         for i, a in self.pattern.enumerate():
             if a.isIdempotent():
                 continue
-            T_a: TransitionFunctionBDD = self.relations.closures[a.lifted][-3]
+            T_a: TransitionFunctionBDD = self.relations.closures[a.lifted][-2]
             groundExpr: SMTExpression = T_a.toGroundSMTExpression(a, sigmas[i - 1], sigmas[i])
             rules.append(groundExpr)
 
@@ -107,14 +107,16 @@ class CESEncoding(Encoding):
         return s
 
     def repetitions(self, a: Action, s0: State, s2: State, m: int) -> int:
-        for j in range(0, m):
+        for j in range(0, m + 1):
             T_a = self.relations.closures[a.lifted][j]
-            if T_a.reachable(s0, s2):
-                R_a = self.relations.reachability[a.lifted][j - 1]
-                s1: State = R_a.jumpState(s0)
-                if j == 0:
-                    return 1
-                return 2 ** (j - 1) + self.repetitions(a, s1, s2, j - 1)
+            if not T_a.reachable(a, s0, s2):
+                continue
+
+            if j == 0:
+                return 1
+            R_a = self.relations.reachability[a.lifted][j - 1]
+            s1: State = R_a.jumpState(a, s0)
+            return 2 ** (j - 1) + self.repetitions(a, s1, s2, j - 1)
         return 0
 
     def getRepetitions(self, i: int, solution: SMTSolution):
@@ -122,7 +124,6 @@ class CESEncoding(Encoding):
         s0: State = self.getState(self.vars.sigma[i - 1], solution)
         s2: State = self.getState(self.vars.sigma[i], solution)
         m = len(self.relations.closures[a.lifted])
-        print(a, s0.asBooleanSet(), s2.asBooleanSet())
         return self.repetitions(self.pattern[i - 1], s0, s2, m)
 
     def getPlanFromSolution(self, solution: SMTSolution) -> NumericPlan:
@@ -135,7 +136,6 @@ class CESEncoding(Encoding):
             isExecuted = solution.getVariable(self.vars.actionVariables[i])
             if isExecuted:
                 r = self.getRepetitions(i, solution) if a.isNonIdempotent() else 1
-                print(r)
                 plan.addRepeatedAction(a, r)
 
         return plan

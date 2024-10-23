@@ -58,8 +58,9 @@ class TransitionFunctionBDD:
         Xs[a] = dict()
         Xs[b] = dict()
         for v in self.atoms:
-            Xs[a][self.currentState[v]] = bddvar(f"{v}_{a}")
-            Xs[b][self.nextState[v]] = bddvar(f"{v}_{b}") if v not in self.staticAtoms else bddvar(f"{v}_0")
+            Xs[a][self.currentState[v]] = bddvar(f"{self.action}_{v}_{a}")
+            Xs[b][self.nextState[v]] = bddvar(f"{self.action}_{v}_{b}") if v not in self.staticAtoms else bddvar(
+                f"{self.action}_{v}_0")
         return Xs
 
     def smoothingSet(self, func: BinaryDecisionDiagram, vars: List[BDDVariable],
@@ -143,29 +144,29 @@ class TransitionFunctionBDD:
         groundExpr = liftedExpr.replace(liftedVar2sigma)
         return groundExpr
 
-    def __getRestriction(self, s: State, Xs, vars) -> Dict[BDDVariable, float]:
+    def __getRestriction(self, a: Action, s: State, Xs, vars) -> Dict[BDDVariable, float]:
         restrict = dict()
         for atom, ass in s.assignments.items():
-            if atom.lifted not in vars:
+            if atom not in a.predicates or atom.lifted not in vars:
                 continue
             v0 = Xs[vars[atom.lifted]]
             restrict[v0] = bool(ass)
         return restrict
 
-    def reachable(self, s0: State, s2: State) -> bool:
+    def reachable(self, a: Action, s0: State, s2: State) -> bool:
 
-        restrict = {**self.__getRestriction(s0, self.Xs[0], self.currentState),
-                    **self.__getRestriction(s2, self.Xs[2], self.nextState)}
+        restrict = {**self.__getRestriction(a, s0, self.Xs[0], self.currentState),
+                    **self.__getRestriction(a, s2, self.Xs[2], self.nextState)}
 
         res = self.bdd.restrict(restrict)
         if res.is_one():
             return True
         if res.is_zero():
             return False
-        raise Exception("When computing reachability, there a some variables missing")
+        raise Exception("When computing reachability, there are some variables missing")
 
-    def jumpState(self, s0: State) -> State:
-        restrict = {**self.__getRestriction(s0, self.Xs[0], self.currentState)}
+    def jumpState(self, a: Action, s0: State) -> State:
+        restrict = {**self.__getRestriction(a, s0, self.Xs[0], self.currentState)}
         res = self.bdd.restrict(restrict)
         sat = res.satisfy_one()
 

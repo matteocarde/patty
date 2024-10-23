@@ -13,11 +13,12 @@ class TransitiveClosure(TransitionFunctionBDD):
         super().__init__(t)
 
     @staticmethod
-    def setOrder(order):
+    def setOrder(action, order, reflexive):
+        p = 1 if reflexive else 0
         for v in order:
-            bddvar(f"{v}_0")
-            bddvar(f"{v}_1")
-            bddvar(f"{v}_2")
+            bddvar(f"{action}_{v}_0")
+            bddvar(f"{action}_{v}_1")
+            bddvar(f"{action}_{v}_2")
 
     @classmethod
     def fromActionStateTransitionFunction(cls, t: ActionStateTransitionFunction, atomsOrder: List[Atom],
@@ -25,15 +26,14 @@ class TransitiveClosure(TransitionFunctionBDD):
 
         bdds = []
         i = 1
-        TransitiveClosure.setOrder(atomsOrder)
+        TransitiveClosure.setOrder(t.action, atomsOrder, reflexive)
         currentBDD: TransitionFunctionBDD = super().fromActionStateTransitionFunction(t, atomsOrder)
         bdds.append(currentBDD)
         while (True):
             i += 1
             nextBDD: TransitionFunctionBDD = currentBDD.computeTransition(reflexive=reflexive)
-            bdds.append(nextBDD)
             if currentBDD.isEquivalent(nextBDD):
                 nextBDD.__class__ = TransitiveClosure
                 return bdds
-            del currentBDD
+            bdds.append(nextBDD)
             currentBDD = nextBDD

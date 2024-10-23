@@ -37,10 +37,10 @@ class CEEffects(Effects):
         return effects
 
     def getPositive(self) -> Set[Atom]:
-        return {e for e in self.assignments if isinstance(e, Literal) and e.sign == "+"}
+        return {e.getAtom() for e in self.assignments if isinstance(e, Literal) and e.sign == "+"}
 
     def getNegative(self) -> Set[Atom]:
-        return {e for e in self.assignments if isinstance(e, Literal) and e.sign == "-"}
+        return {e.getAtom() for e in self.assignments if isinstance(e, Literal) and e.sign == "-"}
 
     def ground(self, subs: Dict[str, str], delta=1) -> CEEffects:
         g = super().ground(subs, delta)

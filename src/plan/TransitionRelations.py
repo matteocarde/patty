@@ -14,7 +14,7 @@ class TransitionRelations:
     def __init__(self, domain: Domain):
 
         self.closures = dict()
-        self.reachability: Dict[Action, List[TransitionFunctionBDD]] = dict()
+        self.reachability = dict()
         for a in domain.actions:
             T_a = ActionStateTransitionFunction(a)
             atomsOrder = list(reversed(sorted(a.predicates)))

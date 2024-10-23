@@ -23,8 +23,8 @@ class TestCES(TestCase):
         search = ChainSearch(self.gDomain, self.problem, self.args, liftedDomain=self.domain)
         plan = search.solve()
         print(plan)
-        # isValid = plan.validate(self.problem)
-        # self.assertTrue(isValid)
+        isValid = plan.validate(self.problem)
+        self.assertTrue(isValid)
 
 
 if __name__ == '__main__':
