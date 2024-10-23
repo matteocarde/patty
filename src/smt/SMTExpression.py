@@ -2,11 +2,11 @@ from __future__ import annotations
 
 from typing import Set, Dict
 
-from pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram, bdd2expr
-from pyeda.boolalg.expr import expr, OrOp, AndOp, Variable, Complement
+from pyeda.boolalg.bdd import BinaryDecisionDiagram, bdd2expr
+from pyeda.boolalg.expr import OrOp, AndOp, Variable, Complement
 from pysmt.fnode import FNode
-from pysmt.shortcuts import And, Or, Equals, LE, LT, GE, GT, Implies, Real, Times, Minus, Plus, Div, TRUE, ToReal, \
-    NotEquals, Iff, FALSE
+from pysmt.shortcuts import Equals, LE, LT, GE, GT, Real, Times, Minus, Plus, Div, TRUE, ToReal, \
+    NotEquals
 from pysmt.typing import REAL, INT, BOOL
 
 from src.pddl.Atom import Atom

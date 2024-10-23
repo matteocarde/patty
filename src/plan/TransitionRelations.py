@@ -19,9 +19,9 @@ class TransitionRelations:
             T_a = ActionStateTransitionFunction(a)
             atomsOrder = list(reversed(sorted(a.predicates)))
             if a.isIdempotent():
-                bdd = TransitionFunctionBDD.fromActionStateTransitionFunction(T_a, atomsOrder)
-                self.closures[a] = [bdd]
-                self.reachability[a] = [bdd]
+                # bdd = TransitionFunctionBDD.fromActionStateTransitionFunction(T_a, atomsOrder)
+                # self.closures[a] = [bdd]
+                # self.reachability[a] = [bdd]
                 continue
             print(f"Computing Transitive Closure of {a}")
             self.closures[a] = TransitiveClosure.fromActionStateTransitionFunction(T_a, atomsOrder, reflexive=True)

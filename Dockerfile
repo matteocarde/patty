@@ -50,7 +50,7 @@ WORKDIR /project
 RUN conda create --name patty
 SHELL ["conda", "run", "--no-capture-output", "-n", "patty", "/bin/bash", "-c"]
 
-# Install yices
+## Install yices
 RUN pip install pysmt
 RUN add-apt-repository ppa:sri-csl/formal-methods
 RUN apt-get install -y swig autoconf gperf libgmp-dev
@@ -133,28 +133,28 @@ RUN chmod +x /var/enhsp/enhsp
 COPY environment.yml environment.yml
 RUN conda env update --file environment.yml
 
-RUN pysmt-install --check
-RUN pysmt-install --yices --confirm-agreement
-RUN pysmt-install --check
+#RUN pysmt-install --check
+#RUN pysmt-install --yices --confirm-agreement
+#RUN pysmt-install --check
 
 # Install python 2.7
 RUN apt-get install python2.7 -y
 RUN which python2.7
 
 # Install Numeric Fast Downward
-RUN apt-get install -y cmake
-COPY /benchmarks/planners/nfd /var/nfd
-WORKDIR /var/nfd/src/search/bliss-0.73
-RUN make
-WORKDIR /var/nfd
-RUN ./build.py release64
-ENV PATH /var/nfd/:${PATH}
-RUN chmod +x /var/nfd/nfd
+#RUN apt-get install -y cmake
+#COPY /benchmarks/planners/nfd /var/nfd
+#WORKDIR /var/nfd/src/search/bliss-0.73
+#RUN make
+#WORKDIR /var/nfd
+#RUN ./build.py release64
+#ENV PATH /var/nfd/:${PATH}
+#RUN chmod +x /var/nfd/nfd
 
 # Install OMTPlan
-COPY /benchmarks/planners/omtplan /var/omtplan
-ENV PATH /var/omtplan/:${PATH}
-RUN chmod +x /var/omtplan/omtplan
+#COPY /benchmarks/planners/omtplan /var/omtplan
+#ENV PATH /var/omtplan/:${PATH}
+#RUN chmod +x /var/omtplan/omtplan
 
 # Install patty
 COPY /benchmarks/planners/patty /var/patty
@@ -163,7 +163,8 @@ RUN chmod +x /var/patty/patty
 RUN apt-get install -y time
 RUN conda env export
 
-RUN pip install numpy networkx tarjan prettytable graphlib-backport
+RUN pip install numpy networkx tarjan prettytable graphlib-backport pyeda
+RUN pip install boto3
 
 WORKDIR /project
 # Copying

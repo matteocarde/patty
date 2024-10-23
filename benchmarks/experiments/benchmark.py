@@ -31,6 +31,7 @@ PLANNERS: Dict[str, Planner] = {
     "PATTY-G": Patty("PATTY-G", search="static"),
     "PATTY-H": Patty("PATTY-H", search="astar", noCompression=True),
     "PATTY-F": Patty("PATTY-F", search="astar", noCompression=False),
+    "PATTY-CES": Patty("PATTY-CES", search="chain", pattern="alpha"),
 
     "PATTY-R": Patty("PATTY-R", search="step", pattern="random", quality="none"),
     "PATTY-A": Patty("PATTY-A", search="step", pattern="arpg", quality="none"),
@@ -75,7 +76,7 @@ def main():
     if envs.isInsideAWS:
         time.sleep(envs.index / 4)
     else:
-        envs.file = "benchmarks/instances/aij.csv"
+        envs.file = "benchmarks/instances/ces.csv"
 
     logger = CloudLogger(envs.experiment)
 
