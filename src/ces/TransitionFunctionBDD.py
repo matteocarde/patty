@@ -143,7 +143,6 @@ class TransitionFunctionBDD:
             bddVar2sigma[bddvar.name] = liftedVar2sigma[smtvar]
 
         groundExpr = SMTExpression.fromBDDExpression(self.expr, bddVar2sigma)
-        print(groundAction, self.expr, groundExpr)
         return groundExpr
 
     def getRestriction(self, a: Action, s: State, Xs, vars) -> Dict[BDDVariable, float]:

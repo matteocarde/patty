@@ -40,9 +40,9 @@ class SMTSolver:
 
     def addAssertion(self, expr: SMTExpression, push=True):
         self.assertions.append(expr)
-        self.variables.update(expr.variables)
+        self.variables.update(expr.getVariables())
 
-        z3Expr = self.z3.converter.convert(expr.expression)
+        z3Expr = self.z3.converter.convert(expr.getExpression())
         self.solver.add(z3Expr)
 
         if push:
@@ -58,8 +58,8 @@ class SMTSolver:
     def addSoftAssertion(self, expr: SMTExpression, push=True):
 
         self.softAssertions.append(expr)
-        self.variables.update(expr.variables)
-        z3Expr = self.z3.converter.convert(expr.expression)
+        self.variables.update(expr.getVariables())
+        z3Expr = self.z3.converter.convert(expr.getExpression())
         self.solver.add_soft(z3Expr)
 
         if push:
@@ -69,7 +69,7 @@ class SMTSolver:
         if not expr:
             return
 
-        z3Expr = self.z3.converter.convert(expr.expression)
+        z3Expr = self.z3.converter.convert(expr.getExpression())
         self.solver.minimize(z3Expr)
 
     def addSoftAssertions(self, exprs: [SMTExpression], push=True):

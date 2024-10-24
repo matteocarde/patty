@@ -80,14 +80,13 @@ class ChainSearch(Search):
                     bound=1,
                     args=self.args
                 )
+            solver: SMTSolver = SMTSolver(encoding)
             self.ts.end(f"Conversion to SMT at bound {bound}", console=self.console)
 
             self.console.log(f"Bound {bound} - Vars = {encoding.getNVars()}", LogPrintLevel.STATS)
             self.console.log(f"Bound {bound} - Rules = {encoding.getNRules()}", LogPrintLevel.STATS)
             self.console.log(f"Calls to Solver: {callsToSolver}", LogPrintLevel.STATS)
             self.ts.start(f"Solving Bound {bound}", console=self.console)
-            solver: SMTSolver = SMTSolver(encoding)
-
             plan: Plan
             plan = solver.solve()
             callsToSolver += 1

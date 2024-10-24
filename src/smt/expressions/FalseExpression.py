@@ -1,6 +1,7 @@
 from typing import Dict
 
 from pyeda.boolalg.bdd import BDDVariable
+from pysmt.fnode import FNode
 from pysmt.shortcuts import TRUE, FALSE
 
 from src.smt.SMTBoolVariable import SMTBoolVariable
@@ -11,11 +12,13 @@ class FalseExpression(SMTExpression):
 
     def __init__(self):
         super().__init__()
-        self.expression = FALSE()
         self.isConstant = True
 
     def __hash__(self):
-        return hash(self.expression)
+        return hash(True)
+
+    def getExpression(self) -> FNode:
+        return FALSE()
 
     def toBDDExpression(self, map: Dict[SMTBoolVariable, BDDVariable]):
         return 0

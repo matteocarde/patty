@@ -34,7 +34,6 @@ def getVars(obj):
 
 
 class SMTExpression:
-    expression: FNode
     variables: Set
     lhs: SMTExpression
     rhs: SMTExpression
@@ -46,11 +45,10 @@ class SMTExpression:
         self.operation = None
         self.lhs: SMTExpression
         self.rhs: SMTExpression
-        self.expression = TRUE()
         self.isConstant = False
 
     def __str__(self):
-        return str(self.expression.serialize())
+        return str(self.getExpression().serialize())
 
     def __repr__(self):
         return str(self)
@@ -85,6 +83,12 @@ class SMTExpression:
         expr.expression = operation(lhsExpression, rhsExpression)
 
         return expr
+
+    def getExpression(self) -> FNode:
+        raise NotImplementedError()
+
+    def getVariables(self) -> Set:
+        raise NotImplementedError()
 
     def AND(self, other: SMTExpression):
         from src.smt.expressions.AndExpression import AndExpression

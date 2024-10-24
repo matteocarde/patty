@@ -2,6 +2,7 @@ from __future__ import annotations
 from typing import Dict
 
 from pyeda.boolalg.bdd import BDDVariable
+from pysmt.fnode import FNode
 from pysmt.shortcuts import Symbol
 from pysmt.typing import BOOL
 
@@ -12,12 +13,17 @@ class SMTBoolVariable(SMTVariable):
 
     def __init__(self, name: str):
         super().__init__()
-        self.expression = Symbol(name)
-        self.variables = {self}
+        self.name = name
         self.type = BOOL
 
     def __hash__(self):
-        return hash(str(self.expression))
+        return hash(self.name)
+
+    def getExpression(self) -> FNode:
+        return Symbol(self.name)
+
+    def getVariables(self):
+        return {self}
 
     def toBDDExpression(self, map: Dict[SMTBoolVariable, BDDVariable]):
         return map[self]

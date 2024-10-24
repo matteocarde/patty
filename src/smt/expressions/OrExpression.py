@@ -2,6 +2,7 @@ from typing import Dict
 
 from pyeda.boolalg.bdd import BDDVariable
 from pyeda.boolalg.expr import OrOp, Variable, Complement, AndOp
+from pysmt.fnode import FNode
 from pysmt.shortcuts import Or as SMTOr
 
 from src.smt.SMTBoolVariable import SMTBoolVariable
@@ -13,7 +14,6 @@ class OrExpression(NaryExpression):
 
     def __init__(self, *xs: SMTExpression):
         super().__init__(*xs)
-        self.expression = SMTOr([x.expression for x in xs])
 
     def toBDDExpression(self, map: Dict[SMTBoolVariable, BDDVariable]):
         exprs = [c.toBDDExpression(map) for c in self.children]
@@ -21,6 +21,9 @@ class OrExpression(NaryExpression):
         for c in exprs[1:]:
             f = f | c
         return f
+
+    def getExpression(self) -> FNode:
+        return SMTOr([x.getExpression() for x in self.children])
 
     @classmethod
     def fromBDDExpression(cls, bdd: OrOp, subs: Dict[str, SMTExpression]):
