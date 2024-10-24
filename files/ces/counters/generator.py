@@ -2,7 +2,7 @@ import math
 import os
 import shutil
 
-MAX_BITS = 11
+MAX_BITS = 15
 MAX_COUNTERS = 6
 NEWLINE = "\n"
 
