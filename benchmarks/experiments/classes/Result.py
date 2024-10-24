@@ -25,6 +25,7 @@ class Result(dict):
     nOfRules: int = -1
     lastSearchedBound: int = -1
     lastCallsToSolver: int = -1
+    transitiveClosureTime: int = -1
 
     def __init__(self, domain: str, problem: str):
         super().__init__()
@@ -48,6 +49,8 @@ class Result(dict):
         r.lastSearchedBound = int(csvLine[10])
         if len(csvLine) > 11:
             r.lastCallsToSolver = int(csvLine[11])
+        if len(csvLine) > 12:
+            r.transitiveClosureTime = int(csvLine[12])
         r.__setDict()
         return r
 
@@ -81,7 +84,8 @@ class Result(dict):
             (str(self.nOfVars), 5),
             (str(self.nOfRules), 5),
             (str(self.lastSearchedBound), 5),
-            (str(self.lastCallsToSolver), 5)
+            (str(self.lastCallsToSolver), 5),
+            (str(self.transitiveClosureTime), 5)
         ]
 
         string = "|" + "|".join(["{:^" + str(n[1]) + "}" for n in row]) + "|"
@@ -102,6 +106,7 @@ class Result(dict):
             str(self.nOfRules),
             str(self.lastSearchedBound),
             str(self.lastCallsToSolver),
+            str(self.transitiveClosureTime)
         ])
 
     @classmethod
@@ -116,6 +121,7 @@ class Result(dict):
         r.nOfRules = agg([e.nOfRules for e in results])
         r.lastSearchedBound = agg([e.lastSearchedBound for e in results])
         r.lastCallsToSolver = agg([e.lastCallsToSolver for e in results])
+        r.transitiveClosureTime = agg([e.transitiveClosureTime for e in results])
         if r.solved > 0:
             r.time = agg([e.time for e in results if e.solved])
             r.bound = agg([e.bound for e in results if e.solved])

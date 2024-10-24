@@ -12,6 +12,7 @@ from classes.ENHSP import ENHSP
 from classes.Envs import Envs
 from classes.ITSAT import ITSAT
 from classes.LPG import LPG
+from classes.Madagascar import Madagascar
 from classes.MetricFF import MetricFF
 from classes.NFD import NFD
 from classes.OMT import OMT
@@ -31,7 +32,7 @@ PLANNERS: Dict[str, Planner] = {
     "PATTY-G": Patty("PATTY-G", search="static"),
     "PATTY-H": Patty("PATTY-H", search="astar", noCompression=True),
     "PATTY-F": Patty("PATTY-F", search="astar", noCompression=False),
-    "PATTY-CES": Patty("PATTY-CES", search="chain", pattern="alpha"),
+    "PATTY-CES": Patty("PATTY-CES", search="chain", pattern="alpha", tcTime=30),
 
     "PATTY-R": Patty("PATTY-R", search="step", pattern="random", quality="none"),
     "PATTY-A": Patty("PATTY-A", search="step", pattern="arpg", quality="none"),
@@ -60,6 +61,7 @@ PLANNERS: Dict[str, Planner] = {
     "METRIC-FF": MetricFF(),
     "NFD": NFD(),
     "OMT": OMT(),
+    "MADAGASCAR": Madagascar(),
 
     "LPG": LPG(),
     "TFD": TFD(),

@@ -16,8 +16,8 @@ class NaryExpression(SMTExpression):
 
     def getVariables(self):
         variables = set()
-        for x in self.children:
-            self.variables |= x.getVariables()
+        for c in self.children:
+            variables |= c.getVariables()
         return variables
 
     def toBDDExpression(self, map: Dict[SMTBoolVariable, BDDVariable]):

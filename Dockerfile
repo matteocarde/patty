@@ -166,6 +166,23 @@ RUN conda env export
 RUN pip install numpy networkx tarjan prettytable graphlib-backport pyeda
 RUN pip install boto3
 
+# Install Madagascar
+COPY /benchmarks/planners/madagascar /var/madagascar
+ENV PATH /var/madagascar/:${PATH}
+RUN chmod +x /var/madagascar/madagascar
+
+# Install Lama
+RUN apt-get install git cmake -y
+COPY /benchmarks/planners/lama /var/lama
+WORKDIR /var/lama
+RUN chmod +x install.sh
+RUN ./install.sh
+RUN mv /var/lama/lama-planner/bin/lama-planner /var/lama/lama-planner/bin/lama
+ENV PATH /var/lama/lama-planner/bin/:${PATH}
+RUN chmod +x /var/lama/lama-planner/bin/lama
+
+
+
 WORKDIR /project
 # Copying
 COPY . .

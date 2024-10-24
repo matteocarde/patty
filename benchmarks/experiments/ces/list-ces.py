@@ -5,7 +5,7 @@ from natsort import natsort
 # PLANNERS = ["PATTY", "PATTY-R-YICES", "PATTY-R-Z3-NL", "PATTY-NL", "PATTY-Z3", "SPRINGROLL"]
 PLANNERS = [
     "PATTY-CES",
-    "SPRINGROLL",
+    "MADAGASCAR",
     "ENHSP-SAT-HADD",
     "ENHSP-SAT-HMAX",
     "ENHSP-SAT-HMRP"

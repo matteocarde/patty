@@ -1,4 +1,3 @@
-import signal
 from typing import Set, List, Dict
 
 from pysmt.logics import QF_NRA

@@ -10,7 +10,7 @@ class Patty(Planner):
     name = NAME
 
     def __init__(self, name, search="static", maximize=False, useSCCs=False, noCompression=False,
-                 pattern="enhanced", quality="none"):
+                 pattern="enhanced", quality="none", tcTime=0):
         self.search = search
         self.maximize = maximize
         self.name = name
@@ -18,6 +18,7 @@ class Patty(Planner):
         self.noCompression = noCompression
         self.pattern = pattern
         self.quality = quality
+        self.tcTime = tcTime
         super().__init__()
 
     @staticmethod
@@ -38,6 +39,10 @@ class Patty(Planner):
         lastCallsToSolver = re.findall(r"Calls to Solver: (\d*?)$", stdout, re.MULTILINE)
         r.lastCallsToSolver = -1 if not lastCallsToSolver else int(lastCallsToSolver[-1])
 
+        transitiveClosureTime = re.findall(r"Ended Computing Transitive Closure: (\d*?)$", stdout, re.MULTILINE)
+        print(transitiveClosureTime)
+        r.transitiveClosureTime = -1 if not transitiveClosureTime else int(transitiveClosureTime[-1])
+
         return r
 
     def getCommand(self, domain: str, problem: str):
@@ -56,4 +61,6 @@ class Patty(Planner):
             cmd += ["--maximize"]
         if self.useSCCs:
             cmd += ["--use-sccs"]
+        if self.tcTime:
+            cmd += ["--max-closure-time", str(self.tcTime)]
         return cmd

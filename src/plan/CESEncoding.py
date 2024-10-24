@@ -66,8 +66,6 @@ class CESEncoding(Encoding):
     def getClosureRules(self) -> SMTConjunction:
         rules = SMTConjunction()
         sigmas = self.vars.sigma
-        console: LogPrint = LogPrint(LogPrintLevel.PLAN)
-        ts: TimeStat = TimeStat()
 
         for i, a in self.pattern.enumerate():
             if a.isIdempotent():
