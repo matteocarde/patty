@@ -58,10 +58,10 @@ def main():
         CloudLogger.appendLogs(exp2, file)
 
     tables = [
-        # ("TAB1", AIJ_TABLE1),
-        # ("TAB2", AIJ_TABLE2),
+        ("TAB1", AIJ_TABLE1),
+        ("TAB2", AIJ_TABLE2),
         ("TAB3", AIJ_TABLE3),
-        # ("TAB4", AIJ_TABLE4)
+        ("TAB4", AIJ_TABLE4)
     ]
 
     joinWith = [file]

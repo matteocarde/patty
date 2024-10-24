@@ -59,10 +59,6 @@ AIJ_DOMAINS = {
         "name": r"\textsc{Sail} (L)",
         "instances": 20
     },
-    "numeric/ipc-2023/satellite": {
-        "name": r"\textsc{Sat} (S)",
-        "instances": 20
-    },
     "numeric/ipc-2023/sugar": {
         "name": r"\textsc{Sgr} (S)",
         "instances": 20
@@ -77,6 +73,6 @@ AIJ_DOMAINS = {
     },
     "numeric/line-exchange": {
         "name": r"\textsc{Line} (L)",
-        "instances": 108
+        "instances": 20
     },
 }
