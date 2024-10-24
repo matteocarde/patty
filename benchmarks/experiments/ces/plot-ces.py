@@ -14,7 +14,7 @@ from classes.Result import Result
 
 def main():
     # Parsing the results
-    exp = "2024-10-23-CES-v5"
+    exp = "2024-10-23-CES-v6"
     file = f"benchmarks/results/csv/{exp}.csv"
 
     CloudLogger.saveLogs(exp, file)
@@ -111,9 +111,10 @@ def main():
 
         ax.legend(loc="upper left", fontsize="8")
 
-        ax.spines['top'].set_visible(False)
-        ax.spines['right'].set_visible(False)
+        # ax.spines['top'].set_visible(False)
+        # ax.spines['right'].set_visible(False)
 
+        ax.set_xticks(range(1, 13))
         if p == "bound":
             ax.set_yticks([0, 2, 4, 6, 8, 10])
         # ax.spines['bottom'].set_visible(False)
