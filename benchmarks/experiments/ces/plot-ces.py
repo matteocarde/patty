@@ -11,34 +11,10 @@ from matplotlib import pyplot as plt
 from classes.CloudLogger import CloudLogger
 from classes.Result import Result
 
-SMT_SOLVERS = {'SpringRoll',
-               "PATTY-R-MIN", "PATTY-R-MAX", "PATTY-R-AVG", "PATTY-A", "PATTY-E", "PATTY-M", "PATTY-I",
-               'RANTANPLAN',
-               "OMT"}
-
-SOLVERS = {
-    'SpringRoll': "SR",
-    'RANTANPLAN': "\mathrm{R^2\exists}",
-    'METRIC-FF': "\mathrm{FF}",
-    'ENHSP': r"\mathrm{ENHSP}",
-    'NFD': "\mathrm{NFD}",
-    'SMTPLAN+': "\mathrm{SMTP}^+",
-    'OMT': "\mathrm{OMT}",
-    "PATTY-R-MIN": "P_R^{\mathrm{min}}",
-    "PATTY-R-MAX": "P_R^{\mathrm{max}}",
-    "PATTY-R-AVG": "P_R^{\mathrm{avg}}",
-    "PATTY-A": "P_A",
-    "PATTY-E": "P_E",
-    "PATTY-FA": "P_{FA}",
-    "PATTY-FE": "P_{FE}",
-    "PATTY-M": "P_M",
-    "PATTY-I": "P_I",
-}
-
 
 def main():
     # Parsing the results
-    exp = "2024-10-23-CES-v4"
+    exp = "2024-10-23-CES-v5"
     file = f"benchmarks/results/csv/{exp}.csv"
 
     CloudLogger.saveLogs(exp, file)
@@ -83,9 +59,9 @@ def main():
 
             if p == "time" and r.transitiveClosureTime > 0:
                 closurePoints.setdefault(c, list())
-                closurePoints[c].append((b, r.transitiveClosureTime))
+                closurePoints[c].append((b, r.transitiveClosureTime / 1000))
 
-            property = r.time if p == "time" else r.bound
+            property = r.time / 1000 if p == "time" else r.bound
             points[p].setdefault(r.solver, dict())
             points[p][r.solver].setdefault(c, list())
             points[p][r.solver][c].append((b, property))
@@ -97,11 +73,17 @@ def main():
     })
 
     lines = [{
-        "solver": "ENHSP"
+        "solver": "ENHSP",
+        "color": "blue",
+        "label": r"$\textsc{enhsp}$"
     }, {
-        "solver": "PATTY-CES"
+        "solver": "PATTY-CES",
+        "color": "green",
+        "label": r"$\textsc{p}$"
     }, {
-        "solver": "MADAGASCAR"
+        "solver": "MADAGASCAR",
+        "color": "red",
+        "label": r"$\textsc{mpc}$"
     }]
 
     fCounters = 5
@@ -110,14 +92,13 @@ def main():
         ax = axs[i]
         ax.grid()
         ax.set_xlabel(r"Number of bits")
-        ax.set_ylabel(p)
+        ax.set_ylabel("Planning Time [s]" if p == "time" else "Bound")
         # ax.set_xscale("log")
-
         if p == "time":
             ps = sorted(closurePoints[fCounters])
             x = [p[0] for p in ps]
             y = [p[1] for p in ps]
-            ax.plot(x, y, linestyle="dashed")
+            ax.plot(x, y, linestyle="dashed", color="black", label=r"${\textsc{tc}}$")
 
         for line in lines:
             solver = line["solver"]
@@ -126,10 +107,15 @@ def main():
             ps = sorted(points[p][solver][fCounters])
             x = [p[0] for p in ps]
             y = [p[1] for p in ps]
-            ax.plot(x, y)
+            ax.plot(x, y, color=line["color"], label=line["label"])
+
+        ax.legend(loc="upper left", fontsize="8")
 
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
+
+        if p == "bound":
+            ax.set_yticks([0, 2, 4, 6, 8, 10])
         # ax.spines['bottom'].set_visible(False)
         # ax.spines['left'].set_visible(False)
         # ax.legend(loc="upper left", fontsize="8")
