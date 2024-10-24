@@ -15,7 +15,6 @@ SMT_SOLVERS = {'SpringRoll',
                "PATTY-R-MIN", "PATTY-R-MAX", "PATTY-R-AVG", "PATTY-A", "PATTY-E", "PATTY-M", "PATTY-I",
                'RANTANPLAN',
                "OMT"}
-TIME_LIMIT = 30 * 1000
 
 SOLVERS = {
     'SpringRoll': "SR",
@@ -39,7 +38,7 @@ SOLVERS = {
 
 def main():
     # Parsing the results
-    exp = "2024-10-23-CES-v2"
+    exp = "2024-10-23-CES-v4"
     file = f"benchmarks/results/csv/{exp}.csv"
 
     CloudLogger.saveLogs(exp, file)
@@ -66,6 +65,7 @@ def main():
     counters = set()
 
     properties = ["time", "bound"]
+    closurePoints: Dict[int, List[Tuple[int, float]]] = dict()
 
     for p in properties:
         points[p] = dict()
@@ -74,6 +74,16 @@ def main():
             bits.add(b)
             c = int(r.problem.replace(".pddl", "").split("-")[2])
             counters.add(c)
+
+            if not r.solved:
+                continue
+
+            if p == "bound" and r.bound < 0:
+                continue
+
+            if p == "time" and r.transitiveClosureTime > 0:
+                closurePoints.setdefault(c, list())
+                closurePoints[c].append((b, r.transitiveClosureTime))
 
             property = r.time if p == "time" else r.bound
             points[p].setdefault(r.solver, dict())
@@ -90,6 +100,8 @@ def main():
         "solver": "ENHSP"
     }, {
         "solver": "PATTY-CES"
+    }, {
+        "solver": "MADAGASCAR"
     }]
 
     fCounters = 5
@@ -101,8 +113,17 @@ def main():
         ax.set_ylabel(p)
         # ax.set_xscale("log")
 
+        if p == "time":
+            ps = sorted(closurePoints[fCounters])
+            x = [p[0] for p in ps]
+            y = [p[1] for p in ps]
+            ax.plot(x, y, linestyle="dashed")
+
         for line in lines:
-            ps = sorted(points[p][line["solver"]][fCounters])
+            solver = line["solver"]
+            if not solver in points[p]:
+                continue
+            ps = sorted(points[p][solver][fCounters])
             x = [p[0] for p in ps]
             y = [p[1] for p in ps]
             ax.plot(x, y)

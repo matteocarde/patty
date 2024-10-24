@@ -5,10 +5,10 @@
         (z c1)(z c2)(z c3)
         (next c1 c2)(next c2 c3)
          ;0 - 000
-        (x3 c1)(x3 c3) ;4 - 100
+        (x03 c1)(x03 c3) ;4 - 100
     )
     (:goal
-        (and  (l1 c1 c2)(l1 c2 c3)(l2 c1 c2)(l2 c2 c3)(l3 c1 c2)(l3 c2 c3))
+        (and  (l01 c1 c2)(l01 c2 c3)(l02 c1 c2)(l02 c2 c3)(l03 c1 c2)(l03 c2 c3))
     )
     )
             

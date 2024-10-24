@@ -26,23 +26,26 @@ def main():
         decr = list()
         lock = list()
 
-        for i in range(1, b + 1):
-            cond = [f"(not (x{i} ?a))"] + [f"(x{j} ?a)" for j in reversed(range(1, i))]
-            eff = [f"(x{i} ?a)"] + [f"(not (x{j} ?a))" for j in reversed(range(1, i))]
+        bits = ["{:02d}".format(i) for i in range(1, b + 1)]
+
+        for i in bits:
+            index = int(i)
+            cond = [f"(not (x{i} ?a))"] + [f"(x{j} ?a)" for j in reversed(bits[:index - 1])]
+            eff = [f"(x{i} ?a)"] + [f"(not (x{j} ?a))" for j in reversed(bits[:index - 1])]
             incr.append(ce(cond, eff))
 
-            cond = [f"(x{i} ?a)"] + [f"(not (x{j} ?a))" for j in reversed(range(1, i))]
-            eff = [f"(not (x{i} ?a))"] + [f"(x{j} ?a)" for j in reversed(range(1, i))]
+            cond = [f"(x{i} ?a)"] + [f"(not (x{j} ?a))" for j in reversed(bits[:index - 1])]
+            eff = [f"(not (x{i} ?a))"] + [f"(x{j} ?a)" for j in reversed(bits[:index - 1])]
             decr.append(ce(cond, eff))
 
-        oCond = [f"(x{j} ?a)" for j in reversed(range(1, b + 1))]
-        oEff = [f"(not (x{j} ?a))" for j in reversed(range(1, b + 1))]
+        oCond = [f"(x{j} ?a)" for j in reversed(bits)]
+        oEff = [f"(not (x{j} ?a))" for j in reversed(bits)]
         incr.append(ce(oCond, oEff))
-        uCond = [f"(not (x{j} ?a))" for j in reversed(range(1, b + 1))]
-        uEff = [f"(x{j} ?a)" for j in reversed(range(1, b + 1))]
+        uCond = [f"(not (x{j} ?a))" for j in reversed(bits)]
+        uEff = [f"(x{j} ?a)" for j in reversed(bits)]
         decr.append(ce(uCond, uEff))
 
-        for i in range(1, b + 1):
+        for i in bits:
             lock.append(ce([f"(x{i} ?a)", f"(x{i} ?b)"], [f"(l{i} ?a ?b)"]))
             lock.append(ce([f"(not (x{i} ?a))", f"(not (x{i} ?b))"], [f"(l{i} ?a ?b)"]))
         lock.append("(not (z ?a))")
@@ -55,8 +58,8 @@ def main():
             (:predicates
                 (z ?a - counter)
                 (next ?a - counter ?b - counter)
-                {"".join([f"(l{i} ?a - counter ?b - counter)" for i in range(1, b + 1)])}
-                {"".join([f"(x{i} ?a - counter)" for i in range(1, b + 1)])}
+                {"".join([f"(l{i} ?a - counter ?b - counter)" for i in bits])}
+                {"".join([f"(x{i} ?a - counter)" for i in bits])}
             )
 
             (:action incr
@@ -106,11 +109,11 @@ def main():
     (:init
         {"".join([f'(z c{i})' for i in range(1, c + 1)])}
         {"".join([f'(next c{i} c{i + 1})' for i in range(1, c)])}
-        {"".join([f"(x{i + 1} c{j})" for i in reversed(range(0, b)) if rrXb[i] == '1' for j in counters if j % 1])} ;{rX} - {rXb}
-        {"".join([f"(x{i + 1} c{j})" for i in reversed(range(0, b)) if rrYb[i] == '1' for j in counters if j % 2])} ;{rY} - {rYb}
+        {"".join([f"(x{'{:02d}'.format(i + 1)} c{j})" for i in reversed(range(0, b)) if rrXb[i] == '1' for j in counters if j % 1])} ;{rX} - {rXb}
+        {"".join([f"(x{'{:02d}'.format(i + 1)} c{j})" for i in reversed(range(0, b)) if rrYb[i] == '1' for j in counters if j % 2])} ;{rY} - {rYb}
     )
     (:goal
-        (and  {"".join([f"(l{i} c{j} c{j + 1})" for i in range(1, b + 1) for j in range(1, c)])})
+        (and  {"".join([f"(l{i} c{j} c{j + 1})" for i in bits for j in range(1, c)])})
     )
     )
             

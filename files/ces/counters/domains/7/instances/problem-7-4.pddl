@@ -5,10 +5,10 @@
         (z c1)(z c2)(z c3)(z c4)
         (next c1 c2)(next c2 c3)(next c3 c4)
          ;0 - 0000000
-        (x7 c1)(x7 c3) ;64 - 1000000
+        (x07 c1)(x07 c3) ;64 - 1000000
     )
     (:goal
-        (and  (l1 c1 c2)(l1 c2 c3)(l1 c3 c4)(l2 c1 c2)(l2 c2 c3)(l2 c3 c4)(l3 c1 c2)(l3 c2 c3)(l3 c3 c4)(l4 c1 c2)(l4 c2 c3)(l4 c3 c4)(l5 c1 c2)(l5 c2 c3)(l5 c3 c4)(l6 c1 c2)(l6 c2 c3)(l6 c3 c4)(l7 c1 c2)(l7 c2 c3)(l7 c3 c4))
+        (and  (l01 c1 c2)(l01 c2 c3)(l01 c3 c4)(l02 c1 c2)(l02 c2 c3)(l02 c3 c4)(l03 c1 c2)(l03 c2 c3)(l03 c3 c4)(l04 c1 c2)(l04 c2 c3)(l04 c3 c4)(l05 c1 c2)(l05 c2 c3)(l05 c3 c4)(l06 c1 c2)(l06 c2 c3)(l06 c3 c4)(l07 c1 c2)(l07 c2 c3)(l07 c3 c4))
     )
     )
             

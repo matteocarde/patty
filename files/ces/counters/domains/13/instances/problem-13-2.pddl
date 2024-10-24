@@ -8,7 +8,7 @@
         (x13 c1) ;4096 - 1000000000000
     )
     (:goal
-        (and  (l1 c1 c2)(l2 c1 c2)(l3 c1 c2)(l4 c1 c2)(l5 c1 c2)(l6 c1 c2)(l7 c1 c2)(l8 c1 c2)(l9 c1 c2)(l10 c1 c2)(l11 c1 c2)(l12 c1 c2)(l13 c1 c2))
+        (and  (l01 c1 c2)(l02 c1 c2)(l03 c1 c2)(l04 c1 c2)(l05 c1 c2)(l06 c1 c2)(l07 c1 c2)(l08 c1 c2)(l09 c1 c2)(l10 c1 c2)(l11 c1 c2)(l12 c1 c2)(l13 c1 c2))
     )
     )
             
