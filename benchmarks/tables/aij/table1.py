@@ -12,37 +12,54 @@ AIJ_TABLE1 = {
                r"variable, and with L (for linear), otherwise. In the table, names have been abbreviated to save "
                r"space.  See \cite{ipc2023} for other details.",
     "columns": {
-        "coverage": {
-            "name": "Coverage (\%)",
+        # "coverage": {
+        #     "name": "Coverage (\%)",
+        #     "winner": +1,
+        #     "stdev": False
+        # },
+        "quantity": {
+            "name": "Solved (out of $20$)",
             "winner": +1,
-            "stdev": False
+            "avg": True
         },
         "time": {
             "name": "Time (s)",
             "winner": -1,
-            "stdev": False
+            "avg": True
         },
         "bound": {
             "name": r"Bound $n$",
             "winner": -1,
-            "stdev": False
+            "avg": True
         },
         # "length": {
         #     "name": r"$|\pi|$",
         #     "winner": -1
         # },
-        "nOfVars": {
-            "name": "$|\mathcal{X} \cup \mathcal{A}^\prec \cup \mathcal{X}'|$",
-            "winner": -1,
-            "stdev": False
-        },
-        "nOfRules": {
-            "name": "$|\mathcal{T}^\prec(\mathcal{X},\mathcal{A}^\prec,\mathcal{X}')|$",
-            "winner": -1,
-            "stdev": False
-        },
+        # "nOfVars": {
+        #     "name": "$|\mathcal{X} \cup \mathcal{A}^\prec \cup \mathcal{X}'|$",
+        #     "winner": -1,
+        #     "stdev": False
+        # },
+        # "nOfRules": {
+        #     "name": "$|\mathcal{T}^\prec(\mathcal{X},\mathcal{A}^\prec,\mathcal{X}')|$",
+        #     "winner": -1,
+        #     "stdev": False
+        # },
     },
     "planners": {
+        'PATTY-R-MIN': {
+            "name": r"\mathrm{P}_\mathrm{R}^{min}",
+            "type": "scalar"
+        },
+        'PATTY-R-MED': {
+            "name": r"\mathrm{P}_\mathrm{R}^{med}",
+            "type": "scalar"
+        },
+        'PATTY-R-MAX': {
+            "name": r"\mathrm{P}_\mathrm{R}^{max}",
+            "type": "scalar"
+        },
         'PATTY-A': {
             "name": r"\mathrm{P}_\mathrm{A}",
             "type": "scalar"

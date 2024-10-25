@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import copy
+import math
 import statistics
 
 import json
@@ -178,6 +180,11 @@ class Result(dict):
                     results.append(Result.portfolio(portfolio, solver))
         return results
 
+    def __lt__(self, other):
+        if not isinstance(other, Result):
+            return False
+        return self.time < other.time
+
     @classmethod
     def splitRandom(cls, aResults: List[Result], randomSolver: str) -> List[Result]:
 
@@ -194,7 +201,14 @@ class Result(dict):
 
         for (domain, domainDict) in rResults.items():
             for (problem, problems) in domainDict.items():
-                results.append(Result.avg(problems, f"{randomSolver}-AVG"))
+                sortedResults = sorted(problems)
+                min: Result = copy.deepcopy(sortedResults[0])
+                min.solver += "-MIN"
+                med: Result = copy.deepcopy(sortedResults[math.floor((len(problems) - 1) / 2)])
+                med.solver += "-MED"
+                max: Result = copy.deepcopy(sortedResults[-1])
+                max.solver += "-MAX"
+                results += [min, med, max]
 
         return results
 

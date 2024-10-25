@@ -32,22 +32,28 @@ def main():
 
     for domain in domains:
         problems = natsort.natsorted(os.listdir(f"files/{domain}/instances"))
+        domainFile = f"files/{domain}/domain.pddl"
+        problemFiles = set()
         for problem in problems:
             if problem[-5:] != ".pddl":
                 continue
-            domainFile = f"files/{domain}/domain.pddl"
             problemFile = f"files/{domain}/instances/{problem}"
+            problemFiles.add(problem)
 
             for planner in PLANNERS:
                 n = 1 if "PATTY-R" not in planner else RANDOM
                 for i in range(0, n):
                     instances.append([planner, domain, domainFile, problemFile])
+        assert len(problemFiles) == 20
+        print(domain, problemFiles)
 
     random.shuffle(instances)
     print(f"Listing {len(instances)} instances")
     f = open(f"benchmarks/instances/{NAME}", "w")
     f.write("\n".join([",".join(i) for i in instances]))
     f.close()
+
+    print(AIJ_DOMAINS)
 
 
 if __name__ == '__main__':

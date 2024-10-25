@@ -37,7 +37,7 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2024-10-07-AIJ-FINAL-v10"
+    exp = "2024-10-24-AIJ-v1"
     file = f"benchmarks/results/csv/{exp}.csv"
 
     folder = f'benchmarks/latex/{exp}'
@@ -47,21 +47,22 @@ def main():
 
     CloudLogger.saveLogs(exp, file)
     joinWith = [
+        "2024-10-07-AIJ-FINAL-v10",
         "2024-10-07-AIJ-FINAL-v9",
         "2024-10-07-AIJ-FINAL-v7",
         "2024-10-07-AIJ-FINAL-v6",
         "2024-10-07-AIJ-FINAL-v5",
         "2024-10-07-AIJ-FINAL-v3",
-        "2024-10-07-AIJ-FINAL-v2"
+        # "2024-10-07-AIJ-FINAL-v2"
     ]
     for exp2 in joinWith:
         CloudLogger.appendLogs(exp2, file)
 
     tables = [
         ("TAB1", AIJ_TABLE1),
-        ("TAB2", AIJ_TABLE2),
-        ("TAB3", AIJ_TABLE3),
-        ("TAB4", AIJ_TABLE4)
+        # ("TAB2", AIJ_TABLE2),
+        # ("TAB3", AIJ_TABLE3),
+        # ("TAB4", AIJ_TABLE4)
     ]
 
     joinWith = [file]
@@ -85,7 +86,7 @@ def main():
         "ENHSP-SAT-AIBR": "ENHSP",
         "ENHSP-SAT-HMRP": "ENHSP",
     })
-    # results = Result.splitRandom(results, "PATTY-R")
+    results = Result.splitRandom(results, "PATTY-R")
 
     dOrig = dict()
     dView = dict()
@@ -116,6 +117,8 @@ def main():
                 if planner not in d[domain]:
                     continue
                 for problem in d[domain][planner].keys():
+                    if problem not in table["domains"][domain]["instances"]:
+                        continue
                     if table["planners"][planner].get("isRandom"):
                         problems += d[domain][planner][problem]
                         continue
@@ -129,6 +132,7 @@ def main():
         for domain in domains:
             t[domain] = {
                 "coverage": dict(),
+                "quantity": dict(),
                 "bound": dict(),
                 "time": dict(),
                 "length": dict(),
@@ -154,7 +158,7 @@ def main():
                     continue
                 pResult = d[domain][planner]
 
-                instances = table["domains"][domain]["instances"]
+                instances = len(table["domains"][domain]["instances"])
                 if table["planners"][planner].get("isRandom"):
                     instances = len(pResult)
                 if len(pResult) != instances:
@@ -163,6 +167,9 @@ def main():
                 hasCoverage = sum([r.solved for r in pResult]) > 0
                 t[domain]["coverage"][planner] = round(sum([r.solved for r in pResult]) / instances * 100, 0)
                 t[domain]["coverage"][planner] = "-" if not hasCoverage else t[domain]["coverage"][planner]
+
+                v = round(sum([r.solved for r in pResult]), 0)
+                t[domain]["quantity"][planner] = v if hasCoverage else "-"
 
                 if table.get("time-limit"):
                     v = [r.time / 1000 if r.solved else table["time-limit"] / 1000 for r in pResult]
@@ -285,10 +292,11 @@ def main():
 
         latex.append("\\\\\n".join(rows))
         latex.append(fr"\\\hline")
-        row = [r"\textit{Total}"]
+        row = [r"\textit{Average}"]
 
         for column, columnInfo in table["columns"].items():
             for planner, plannerInfo in table["planners"].items():
+                avg = []
                 if plannerInfo["type"] in {"stdev", "skip"}:
                     continue
                 nOfBest = 0
@@ -298,9 +306,16 @@ def main():
                         if planner in best[domain][column] or otherPlanner in best[domain][column]:
                             nOfBest += 1
                         continue
+                    if columnInfo.get("avg"):
+                        val = t[domain][column][planner]
+                        avg.append(0 if val == "-" else float(val))
+                        continue
                     if planner in best[domain][column]:
                         nOfBest += 1
-                row.append(r"\textbf{" + str(nOfBest) + "}")
+                if columnInfo.get("avg"):
+                    row.append(rVec(avg, 1))
+                else:
+                    row.append(r"\textbf{" + str(nOfBest) + "}")
         latex.append("&".join(row) + r"\\\hline")
 
         latex.append(r"""
