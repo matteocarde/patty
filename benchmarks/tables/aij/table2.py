@@ -11,10 +11,10 @@ AIJ_TABLE2 = {
                r"assigned variable, and with L (for linear), otherwise. In the table, names have been abbreviated to "
                r"save space.  See \cite{ipc2023} for other details.",
     "columns": {
-        "coverage": {
-            "name": "Coverage (\%)",
+        "quantity": {
+            "name": "Solved (out of $20$)",
             "winner": +1,
-            "stdev": False
+            "avg": True
         },
         "time": {
             "name": "Time (s)",
@@ -26,8 +26,8 @@ AIJ_TABLE2 = {
         #     "winner": -1,
         #     "stdev": True
         # },
-        "length": {
-            "name": r"$|\pi|$",
+        "planLength": {
+            "name": r"Plan length",
             "winner": -1
         },
         # "nOfVars": {

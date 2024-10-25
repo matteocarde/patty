@@ -8,10 +8,10 @@ AIJ_TABLE3 = {
     "time-limit": 300 * 1000,
     "caption": r"Comparative analysis between symbolic planners",
     "columns": {
-        "coverage": {
-            "name": "Coverage (\%)",
+        "quantity": {
+            "name": "Solved (out of $20$)",
             "winner": +1,
-            "stdev": False
+            "avg": True
         },
         "time": {
             "name": "Time (s)",
@@ -19,22 +19,22 @@ AIJ_TABLE3 = {
             "stdev": True
         },
         "bound": {
-            "name": r"Bound $n$",
+            "name": r"\textsc{smt} calls",
             "winner": -1,
             "stdev": True
         },
-        "length": {
-            "name": r"$|\pi|$",
+        "planLength": {
+            "name": r"$Plan length$",
             "winner": -1
         },
         "nOfVars": {
-            "name": "$|\mathcal{X} \cup \mathcal{A}^\prec \cup \mathcal{X}'|$",
+            "name": "Variables",
             "winner": -1,
             "stdev": True,
             "avoidSlashing": True
         },
         "nOfRules": {
-            "name": "$|\mathcal{T}^\prec(\mathcal{X},\mathcal{A}^\prec,\mathcal{X}')|$",
+            "name": "Assertions",
             "winner": -1,
             "stdev": True,
             "avoidSlashing": True
@@ -43,13 +43,13 @@ AIJ_TABLE3 = {
     "planners": {
         'PATTY-E': {
             "name": r"\mathrm{P}_\mathrm{E}",
-            "type": "slashed",
-            "slashedWith": "PATTY-L"
+            "type": "scalar",
+            # "slashedWith": "PATTY-L"
         },
-        'PATTY-L': {
-            "name": r"\mathrm{P}_\mathrm{I}",
-            "type": "skip"
-        },
+        # 'PATTY-L': {
+        #     "name": r"\mathrm{P}_\mathrm{I}",
+        #     "type": "skip"
+        # },
         'RANTANPLAN': {
             "name": r"\mathrm{R^2\exists}",
             "type": "scalar",

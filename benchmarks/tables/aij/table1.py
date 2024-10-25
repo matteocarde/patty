@@ -28,7 +28,7 @@ AIJ_TABLE1 = {
             "avg": True
         },
         "bound": {
-            "name": r"Bound $n$",
+            "name": r"\textsc{smt} calls",
             "winner": -1,
             "avg": True
         },

@@ -8,31 +8,31 @@ AIJ_TABLE4 = {
     "time-limit": 300 * 1000,
     "caption": r"Comparative analysis between search planners",
     "columns": {
-        "coverage": {
-            "name": "Coverage (\%)",
+        "quantity": {
+            "name": "Solved (out of $20$)",
             "winner": +1,
-            "stdev": False
+            "avg": True
         },
         "time": {
             "name": "Time (s)",
             "winner": -1,
             "stdev": True
         },
-        "length": {
-            "name": r"$|\pi|$",
+        "planLength": {
+            "name": r"Plan Length",
             "winner": -1
         },
     },
     "planners": {
         'PATTY-E': {
             "name": r"\mathrm{P}_\mathrm{E}",
-            "type": "slashed",
-            "slashedWith": "PATTY-L"
+            "type": "scalar",
+            # "slashedWith": "PATTY-L"
         },
-        'PATTY-L': {
-            "name": r"\mathrm{P}_\mathrm{I}",
-            "type": "skip"
-        },
+        # 'PATTY-L': {
+        #     "name": r"\mathrm{P}_\mathrm{I}",
+        #     "type": "skip"
+        # },
         'ENHSP': {
             "name": r"\mathrm{EN}",
             "type": "scalar",

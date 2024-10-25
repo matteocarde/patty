@@ -63,6 +63,7 @@ class Result(dict):
         self["nOfRules"] = self.nOfRules
         self["lastSearchedBound"] = self.lastSearchedBound
         self["lastCallsToSolver"] = self.lastCallsToSolver
+        self["quantity"] = 1 if self.solved else 0
 
     @classmethod
     def parseTime(cls, stdout):

@@ -53,16 +53,16 @@ def main():
         "2024-10-07-AIJ-FINAL-v6",
         "2024-10-07-AIJ-FINAL-v5",
         "2024-10-07-AIJ-FINAL-v3",
-        # "2024-10-07-AIJ-FINAL-v2"
+        "2024-10-07-AIJ-FINAL-v2"
     ]
     for exp2 in joinWith:
         CloudLogger.appendLogs(exp2, file)
 
     tables = [
         ("TAB1", AIJ_TABLE1),
-        # ("TAB2", AIJ_TABLE2),
-        # ("TAB3", AIJ_TABLE3),
-        # ("TAB4", AIJ_TABLE4)
+        ("TAB2", AIJ_TABLE2),
+        ("TAB3", AIJ_TABLE3),
+        ("TAB4", AIJ_TABLE4)
     ]
 
     joinWith = [file]
@@ -110,22 +110,23 @@ def main():
         domains: List[str] = list(table["domains"].keys())
         domains.sort()
 
-        d = copy.deepcopy(dOrig)
+        d: Dict[str, Dict[str, List[Result]]] = copy.deepcopy(dOrig)
+        p: Dict[str, Dict[str, Dict[str, Result]]] = dict()
         for domain in domains:
+            p[domain] = dict()
             for planner in planners:
+                p[domain][planner] = dict()
                 problems = list()
-                if planner not in d[domain]:
+                if planner not in dOrig[domain]:
                     continue
-                for problem in d[domain][planner].keys():
+                for problem in dOrig[domain][planner].keys():
                     if problem not in table["domains"][domain]["instances"]:
                         continue
-                    if table["planners"][planner].get("isRandom"):
-                        problems += d[domain][planner][problem]
-                        continue
-                    if len(d[domain][planner][problem]) > 1:
-                        print(f"There are multiple problems {problem} for {domain} with {planner}. "
-                              f"Please aggregate it in some way", file=sys.stderr)
+                    # if len(d[domain][planner][problem]) > 1:
+                    #     print(f"There are multiple problems {problem} for {domain} with {planner}. "
+                    #           f"Please aggregate it in some way", file=sys.stderr)
                     problems.append(d[domain][planner][problem][0])
+                    p[domain][planner][problem] = d[domain][planner][problem][0]
                 d[domain][planner] = problems
 
         t = dict()
@@ -135,19 +136,17 @@ def main():
                 "quantity": dict(),
                 "bound": dict(),
                 "time": dict(),
-                "length": dict(),
+                "planLength": dict(),
                 "nOfVars": dict(),
                 "nOfRules": dict(),
                 "lastCallsToSolver": dict(),
             }
-
             commonlySolved = {}
             commonlyGrounded = {}
             for planner in table["planners"].keys():
                 if planner not in d[domain]:
                     continue
                 solved = {r.problem for r in d[domain][planner] if r.solved}
-                print(tableName, domain, planner, solved)
                 grounded = {r.problem for r in d[domain][planner] if r.nOfVars > 0}
                 if solved:
                     commonlySolved = solved if not commonlySolved else commonlySolved.intersection(solved)
@@ -181,7 +180,7 @@ def main():
                 t[domain]["bound"][planner] = rVec(v, 1) if hasCoverage else "-"
 
                 v = [r.planLength for r in pResult if r.solved and r.problem in commonlySolved]
-                t[domain]["length"][planner] = rVec(v, 0) if hasCoverage else "-"
+                t[domain]["planLength"][planner] = rVec(v, 0) if hasCoverage else "-"
 
                 v = [r.nOfVars for r in pResult if r.nOfVars > 0 and r.problem in commonlySolved]
                 t[domain]["nOfVars"][planner] = rVec(v, 0) if hasCoverage else "-"
@@ -202,6 +201,8 @@ def main():
                \usepackage[a4paper,margin=1in""" + orientation + r"""]{geometry}
     
                \begin{document}""")
+        # best[domain][column][planner] = int
+        # #numero di problemi di domain in cui planner è il migliore nella metrica column
 
         best: Dict[str, Dict[str, Set[str]]] = dict()
         for domain in domains:
@@ -224,6 +225,34 @@ def main():
                     elif float(value) == betterValue:
                         better |= {planner}
                 best[domain][column] = better
+
+        winning: Dict[str, Dict[str, Dict[str, int]]] = dict()
+        for domain, domainInfo in table["domains"].items():
+            winning[domain] = dict()
+            for column, statInfo in table["columns"].items():
+                winner = statInfo["winner"]
+                winning[domain][column] = dict()
+                for planner in planners:
+                    winning[domain][column][planner] = 0
+
+                for problem in domainInfo["instances"]:
+                    betterValue = float("-inf") if winner > 0 else float("+inf")
+                    better: Set[str] = set()
+                    for planner, plannerInfo in table["planners"].items():
+                        if problem not in p[domain][planner]:
+                            continue
+                        result = p[domain][planner][problem]
+                        if not result.solved:
+                            continue
+                        value: int = result.get(column)
+                        print(column, value)
+                        if float(value) * winner > betterValue * winner:
+                            betterValue = float(value)
+                            better = {planner}
+                        elif float(value) == betterValue:
+                            better |= {planner}
+                    for planner in planners:
+                        winning[domain][column][planner] += 1 if planner in better else 0
 
         latex.append(r"""
             \begin{""" + table["type"] + r"""}[tb]
@@ -292,30 +321,16 @@ def main():
 
         latex.append("\\\\\n".join(rows))
         latex.append(fr"\\\hline")
-        row = [r"\textit{Average}"]
+        row = [r"\textit{Best}"]
 
         for column, columnInfo in table["columns"].items():
             for planner, plannerInfo in table["planners"].items():
-                avg = []
                 if plannerInfo["type"] in {"stdev", "skip"}:
                     continue
-                nOfBest = 0
+                nOfWinning = 0
                 for domain, domainInfo in table["domains"].items():
-                    if plannerInfo["type"] in {"slashed"}:
-                        otherPlanner = plannerInfo["slashedWith"]
-                        if planner in best[domain][column] or otherPlanner in best[domain][column]:
-                            nOfBest += 1
-                        continue
-                    if columnInfo.get("avg"):
-                        val = t[domain][column][planner]
-                        avg.append(0 if val == "-" else float(val))
-                        continue
-                    if planner in best[domain][column]:
-                        nOfBest += 1
-                if columnInfo.get("avg"):
-                    row.append(rVec(avg, 1))
-                else:
-                    row.append(r"\textbf{" + str(nOfBest) + "}")
+                    nOfWinning += winning[domain][column][planner]
+                row.append(r"\textbf{" + str(nOfWinning) + "}")
         latex.append("&".join(row) + r"\\\hline")
 
         latex.append(r"""
