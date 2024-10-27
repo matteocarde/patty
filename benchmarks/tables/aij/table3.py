@@ -1,4 +1,5 @@
 from benchmarks.tables.aij.domains import AIJ_DOMAINS
+from benchmarks.tables.aij.planners import AIJ_PLANNERS
 
 AIJ_TABLE3 = {
     "name": "tab:symbolic",
@@ -51,15 +52,15 @@ AIJ_TABLE3 = {
         #     "type": "skip"
         # },
         'RANTANPLAN': {
-            "name": r"\mathrm{R^2\exists}",
+            "name": AIJ_PLANNERS["RANTANPLAN"]["name"],
             "type": "scalar",
         },
         'OMT': {
-            "name": r"\mathrm{OMT}",
+            "name": AIJ_PLANNERS["OMT"]["name"],
             "type": "scalar",
         },
         'SPRINGROLL': {
-            "name": r"\mathrm{SR}",
+            "name": AIJ_PLANNERS["SPRINGROLL"]["name"],
             "type": "scalar",
         },
     },

@@ -1,4 +1,5 @@
 from benchmarks.tables.aij.domains import AIJ_DOMAINS
+from benchmarks.tables.aij.planners import AIJ_PLANNERS
 
 AIJ_TABLE4 = {
     "name": "tab:search",
@@ -34,15 +35,15 @@ AIJ_TABLE4 = {
         #     "type": "skip"
         # },
         'ENHSP': {
-            "name": r"\mathrm{EN}",
+            "name": AIJ_PLANNERS['ENHSP']["name"],
             "type": "scalar",
         },
         'NFD': {
-            "name": r"\mathrm{NFD}",
+            "name": AIJ_PLANNERS['NFD']["name"],
             "type": "scalar",
         },
         'METRIC-FF': {
-            "name": r"\mathrm{FF}",
+            "name": AIJ_PLANNERS['METRIC-FF']["name"],
             "type": "scalar",
         },
     },

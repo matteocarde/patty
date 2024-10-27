@@ -1,4 +1,5 @@
 from benchmarks.tables.aij.domains import AIJ_DOMAINS
+from benchmarks.tables.aij.planners import AIJ_PLANNERS
 
 AIJ_TABLE1 = {
     "name": "tab:exp-patty-a-patty-e",
@@ -49,23 +50,23 @@ AIJ_TABLE1 = {
     },
     "planners": {
         'PATTY-R-MIN': {
-            "name": r"\mathrm{P}_\mathrm{R}^{min}",
+            "name": AIJ_PLANNERS['PATTY-R-MIN']["name"],
             "type": "scalar"
         },
         'PATTY-R-MED': {
-            "name": r"\mathrm{P}_\mathrm{R}^{med}",
+            "name": AIJ_PLANNERS['PATTY-R-MED']["name"],
             "type": "scalar"
         },
         'PATTY-R-MAX': {
-            "name": r"\mathrm{P}_\mathrm{R}^{max}",
+            "name": AIJ_PLANNERS['PATTY-R-MAX']["name"],
             "type": "scalar"
         },
         'PATTY-A': {
-            "name": r"\mathrm{P}_\mathrm{A}",
+            "name": AIJ_PLANNERS['PATTY-A']["name"],
             "type": "scalar"
         },
         'PATTY-E': {
-            "name": r"\mathrm{P}_\mathrm{E}",
+            "name": AIJ_PLANNERS['PATTY-E']["name"],
             "type": "scalar"
         },
     },

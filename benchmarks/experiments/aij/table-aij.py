@@ -45,18 +45,21 @@ def main():
         shutil.rmtree(folder)
     os.mkdir(folder)
 
-    CloudLogger.saveLogs(exp, file)
+    if os.path.exists(file):
+        os.remove(file)
     joinWith = [
-        "2024-10-07-AIJ-FINAL-v10",
-        "2024-10-07-AIJ-FINAL-v9",
-        "2024-10-07-AIJ-FINAL-v7",
-        "2024-10-07-AIJ-FINAL-v6",
-        "2024-10-07-AIJ-FINAL-v5",
-        "2024-10-07-AIJ-FINAL-v3",
-        "2024-10-07-AIJ-FINAL-v2"
+        (exp, ["PATTY-R"]),
+        ("2024-10-07-AIJ-FINAL-v10", ["PATTY-A"]),
+        ("2024-10-07-AIJ-FINAL-v9", ["PATTY-E", "PATTY-L", "PATTY-M"]),
+        ("2024-10-07-AIJ-FINAL-v7", ["RANTANPLAN"]),
+        ("2024-10-07-AIJ-FINAL-v6", ["SPRINGROLL"]),
+        ("2024-10-07-AIJ-FINAL-v5", ["OMT"]),
+        ("2024-10-07-AIJ-FINAL-v2",
+         ["ENHSP-SAT-AIBR", "PATTY-A", "PATTY-E", "ENHSP-SAT-HADD", "ENHSP-SAT-HMRP", "METRIC-FF", "NFD"])
     ]
-    for exp2 in joinWith:
-        CloudLogger.appendLogs(exp2, file)
+
+    for (exp2, keepSolvers) in joinWith:
+        CloudLogger.appendLogs(exp2, file, keepSolvers)
 
     tables = [
         ("TAB1", AIJ_TABLE1),
@@ -73,6 +76,8 @@ def main():
         with open(fileJoin, "r") as f:
             reader = csv.reader(f, delimiter=",")
             for i, line in enumerate(reader):
+                if not line:
+                    continue
                 aResults.append(Result.fromCSVLine(line[0].split(",")))
 
     folder = f'benchmarks/latex/{exp}'

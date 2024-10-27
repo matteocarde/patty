@@ -1,5 +1,6 @@
 import time
 from datetime import datetime
+from typing import List
 
 import boto3
 
@@ -79,8 +80,14 @@ class CloudLogger:
             f.write("\n".join(sorted(events)))
 
     @staticmethod
-    def appendLogs(exp, file):
+    def appendLogs(exp, file, keepSolvers: List[str]):
         events = ['"' + e["message"] + '"' for e in CloudLogger.read(exp)]
+        keepEvents = []
+        for e in events:
+            for s in keepSolvers:
+                if f"{s}," in e:
+                    keepEvents.append(e)
+                    break
         with open(file, "a") as f:
             f.write("\n")
-            f.write("\n".join(sorted(events)))
+            f.write("\n".join(sorted(keepEvents)))
