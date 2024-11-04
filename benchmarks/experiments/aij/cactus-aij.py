@@ -61,11 +61,13 @@ def main():
         "PATTY-A",
         "PATTY-R-MIN",
         "PATTY-R-MED",
+        "PATTY-L",
         "PATTY-R-MAX",
         "ENHSP",
-        "SPRINGROLL",
+        "PATTY-M",
         "METRIC-FF",
         "NFD",
+        "SPRINGROLL",
         "OMT",
         "RANTANPLAN"
     ]
@@ -95,24 +97,34 @@ def main():
         "xLabel": "Solved Instances",
         "steps": 1000,
         "min": 500,
-        "scalingFactor": 1000
+        "scalingFactor": 1000,
+        "yScale": "linear",
+        "yLim": 300
     }, {
         "key": "planLength",
         "yLabel": "Plan Length",
         "xLabel": "Solved Instances",
         "steps": 1000,
+        "yLim": 2500,
         "min": 1,
-        "scalingFactor": 1
+        "scalingFactor": 1,
+        "yScale": "linear"
     }]
 
-    plt.rcParams.update({
-        "text.usetex": True,
-        "figure.figsize": [12.50, 4.5 * len(plots)],
-        "figure.autolayout": True
-    })
+    folder = f"benchmarks/figures/CACTUS-{exp}"
+    if os.path.exists(folder):
+        shutil.rmtree(folder)
+    os.mkdir(folder)
 
-    figs, axs = plt.subplots(len(plots), 1)
     for i, p in enumerate(plots):
+        plt.rcParams.update({
+            "text.usetex": True,
+            "figure.figsize": [12.50, 4.5],
+            "figure.autolayout": True,
+            'font.size': 22
+        })
+
+        figs, ax = plt.subplots(1, 1)
         arrayByPlanner: Dict[str, ndarray] = dict()
         maxY = float("-inf")
         minY = float("+inf")
@@ -130,24 +142,24 @@ def main():
         for planner, array in arrayByPlanner.items():
             cactusByPlanner[planner] = [len(array[array <= y]) for y in Y]
 
-        ax = axs[i]
         ax.grid()
         ax.set_xlabel(p["xLabel"])
-        ax.set_xlim([-10, 380])
+        ax.set_xlim([-10, 280])
+        ax.set_ylim([0, p["yLim"]])
         ax.set_ylabel(p["yLabel"])
+        ax.set_yscale(p["yScale"])
 
         for planner in planners:
-            ax.plot(cactusByPlanner[planner], Y / p["scalingFactor"], label=AIJ_PLANNERS[planner]["name"])
+            pInfo = AIJ_PLANNERS[planner]
+            ax.plot(cactusByPlanner[planner], Y / p["scalingFactor"], label=pInfo["name"],
+                    linestyle=pInfo["style"], linewidth=2)
 
-        ax.legend(loc="upper left", fontsize="8")
+        ax.legend(loc="upper left", fontsize="10")
 
-    folder = f'benchmarks/figures/CACTUS-{exp}'
-    if os.path.exists(folder):
-        shutil.rmtree(folder)
-    os.mkdir(folder)
-    plt.savefig(f'{folder}/{exp}.pdf', bbox_inches='tight', pad_inches=0.01)
-    # plt.show()
-    os.system(f"open {folder}/{exp}.pdf")
+        filename = f"{exp}-{p['key']}.pdf"
+        plt.savefig(f'{folder}/{filename}', bbox_inches='tight', pad_inches=0.01)
+        # plt.show()
+        os.system(f"open {folder}/{filename}")
 
 
 if __name__ == '__main__':

@@ -49,6 +49,14 @@ AIJ_TABLE1 = {
         # },
     },
     "planners": {
+        'PATTY-E': {
+            "name": AIJ_PLANNERS['PATTY-E']["name"],
+            "type": "scalar"
+        },
+        'PATTY-A': {
+            "name": AIJ_PLANNERS['PATTY-A']["name"],
+            "type": "scalar"
+        },
         'PATTY-R-MIN': {
             "name": AIJ_PLANNERS['PATTY-R-MIN']["name"],
             "type": "scalar"
@@ -59,14 +67,6 @@ AIJ_TABLE1 = {
         },
         'PATTY-R-MAX': {
             "name": AIJ_PLANNERS['PATTY-R-MAX']["name"],
-            "type": "scalar"
-        },
-        'PATTY-A': {
-            "name": AIJ_PLANNERS['PATTY-A']["name"],
-            "type": "scalar"
-        },
-        'PATTY-E': {
-            "name": AIJ_PLANNERS['PATTY-E']["name"],
             "type": "scalar"
         },
     },
