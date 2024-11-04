@@ -48,7 +48,7 @@ AIJ_PLANNERS = {
         "style": "--"
     },
     "RANTANPLAN": {
-        "name": r"$\mathrm{R^2\exists}$",
+        "name": r"$\mathrm{R}^2\exists$",
         "style": "--"
     }
 }

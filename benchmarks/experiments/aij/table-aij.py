@@ -37,7 +37,7 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2024-10-24-AIJ-v1"
+    exp = "2024-11-04-REBUTTAL-v2"
     file = f"benchmarks/results/csv/{exp}.csv"
 
     folder = f'benchmarks/latex/{exp}'
@@ -47,24 +47,27 @@ def main():
 
     if os.path.exists(file):
         os.remove(file)
+    # joinWith = [
+    #     (exp, ["PATTY-R"]),
+    #     ("2024-10-07-AIJ-FINAL-v10", ["PATTY-A"]),
+    #     ("2024-10-07-AIJ-FINAL-v9", ["PATTY-E", "PATTY-L", "PATTY-M"]),
+    #     ("2024-10-07-AIJ-FINAL-v7", ["RANTANPLAN"]),
+    #     ("2024-10-07-AIJ-FINAL-v6", ["SPRINGROLL"]),
+    #     ("2024-10-07-AIJ-FINAL-v5", ["OMT"]),
+    #     ("2024-10-07-AIJ-FINAL-v2",
+    #      ["ENHSP-SAT-AIBR", "PATTY-A", "PATTY-E", "ENHSP-SAT-HADD", "ENHSP-SAT-HMRP", "METRIC-FF", "NFD"])
+    # ]
     joinWith = [
-        (exp, ["PATTY-R"]),
-        ("2024-10-07-AIJ-FINAL-v10", ["PATTY-A"]),
-        ("2024-10-07-AIJ-FINAL-v9", ["PATTY-E", "PATTY-L", "PATTY-M"]),
-        ("2024-10-07-AIJ-FINAL-v7", ["RANTANPLAN"]),
-        ("2024-10-07-AIJ-FINAL-v6", ["SPRINGROLL"]),
-        ("2024-10-07-AIJ-FINAL-v5", ["OMT"]),
-        ("2024-10-07-AIJ-FINAL-v2",
-         ["ENHSP-SAT-AIBR", "PATTY-A", "PATTY-E", "ENHSP-SAT-HADD", "ENHSP-SAT-HMRP", "METRIC-FF", "NFD"])
+        (exp, ["ENHSP-SAT-AIBR", "RANTANPLAN", "SPRINGROLL", "ENHSP-SAT-HADD", "ENHSP-SAT-HMRP", "METRIC-FF", "NFD", "OMT"])
     ]
 
     for (exp2, keepSolvers) in joinWith:
         CloudLogger.appendLogs(exp2, file, keepSolvers)
 
     tables = [
-        ("TAB1", AIJ_TABLE1),
-        ("TAB2", AIJ_TABLE2),
-        ("TAB3", AIJ_TABLE3),
+        # ("TAB1", AIJ_TABLE1),
+        # ("TAB2", AIJ_TABLE2),
+        # ("TAB3", AIJ_TABLE3),
         ("TAB4", AIJ_TABLE4)
     ]
 

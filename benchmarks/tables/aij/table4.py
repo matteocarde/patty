@@ -46,6 +46,18 @@ AIJ_TABLE4 = {
             "name": AIJ_PLANNERS['METRIC-FF']["name"],
             "type": "scalar",
         },
+        'RANTANPLAN': {
+            "name": AIJ_PLANNERS["RANTANPLAN"]["name"],
+            "type": "scalar",
+        },
+        'OMT': {
+            "name": AIJ_PLANNERS["OMT"]["name"],
+            "type": "scalar",
+        },
+        'SPRINGROLL': {
+            "name": AIJ_PLANNERS["SPRINGROLL"]["name"],
+            "type": "scalar",
+        },
     },
     "domains": AIJ_DOMAINS
 }
