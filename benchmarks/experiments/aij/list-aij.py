@@ -7,7 +7,7 @@ from benchmarks.tables.aij.domains import AIJ_DOMAINS
 # PLANNERS = ["PATTY", "PATTY-R-YICES", "PATTY-R-Z3-NL", "PATTY-NL", "PATTY-Z3", "SPRINGROLL"]
 PLANNERS = [
     # "PATTY-R",
-    # "PATTY-A",
+    "PATTY-A",
     # "PATTY-E",
     # "PATTY-M",
     # "PATTY-I",

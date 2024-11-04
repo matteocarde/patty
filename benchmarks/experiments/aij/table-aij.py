@@ -37,7 +37,7 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2024-11-04-REBUTTAL-v3"
+    exp = "2024-11-04-REBUTTAL-v4"
     file = f"benchmarks/results/csv/{exp}.csv"
 
     folder = f'benchmarks/latex/{exp}'

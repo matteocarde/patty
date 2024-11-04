@@ -24,29 +24,29 @@ AIJ_DOMAINS = {
     #         'instance_11_40_10_1.pddl'
     #     }
     # },
-    "numeric/ipc-2023/settlers": {
+    "numeric/ipc-2023/settlers-compiled": {
         "name": r"\textsc{Stlrs} (S)",
         "instances": {
-            "pfile02.pddl",
-            "pfile03.pddl",
-            "pfile04.pddl",
-            "pfile05.pddl",
-            "pfile07.pddl",
-            "pfile08.pddl",
-            "pfile09.pddl",
+            "pfile1.pddl",
             "pfile10.pddl",
             "pfile11.pddl",
             "pfile12.pddl",
+            "pfile13.pddl",
             "pfile14.pddl",
+            "pfile15.pddl",
             "pfile16.pddl",
+            "pfile17.pddl",
             "pfile18.pddl",
             "pfile19.pddl",
+            "pfile2.pddl",
             "pfile20.pddl",
-            "pfile21.pddl",
-            "pfile22.pddl",
-            "pfile23.pddl",
-            "pfile24.pddl",
-            "pfile25.pddl",
+            "pfile3.pddl",
+            "pfile4.pddl",
+            "pfile5.pddl",
+            "pfile6.pddl",
+            "pfile7.pddl",
+            "pfile8.pddl",
+            "pfile9.pddl",
         }
     },
     # "numeric/ipc-2023/counters": {
