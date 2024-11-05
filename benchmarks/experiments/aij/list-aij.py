@@ -15,14 +15,14 @@ PLANNERS = [
     # "PATTY-M",
     # "PATTY-I",
     # "PATTY-L",
-    "SPRINGROLL",
+    # "SPRINGROLL",
     "ENHSP-SAT-HADD",
     "ENHSP-SAT-AIBR",
     "ENHSP-SAT-HMRP",
     "METRIC-FF",
-    "NFD",
-    "OMT",
-    "RANTANPLAN"
+    # "NFD",
+    # "OMT",
+    # "RANTANPLAN"
 ]
 RANDOM = 5
 NAME = "aij.csv"
