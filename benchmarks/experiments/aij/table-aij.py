@@ -37,7 +37,7 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2024-11-04-REBUTTAL-v5"
+    exp = "2024-11-04-REBUTTAL-v6"
     file = f"benchmarks/results/csv/{exp}.csv"
 
     folder = f'benchmarks/latex/{exp}'
@@ -58,7 +58,8 @@ def main():
     #      ["ENHSP-SAT-AIBR", "PATTY-A", "PATTY-E", "ENHSP-SAT-HADD", "ENHSP-SAT-HMRP", "METRIC-FF", "NFD"])
     # ]
     joinWith = [
-        (exp, ["PATTY-A", "ENHSP-SAT-AIBR", "RANTANPLAN", "SPRINGROLL", "ENHSP-SAT-HADD", "ENHSP-SAT-HMRP", "METRIC-FF",
+        (exp, ["PATTY-G", "PATTY-H", "PATTY-F", "ENHSP-SAT-AIBR", "RANTANPLAN", "SPRINGROLL", "ENHSP-SAT-HADD",
+               "ENHSP-SAT-HMRP", "METRIC-FF",
                "NFD", "OMT"])
     ]
 
@@ -156,6 +157,7 @@ def main():
                 if planner not in d[domain]:
                     continue
                 solved = {r.problem for r in d[domain][planner] if r.solved}
+                print(planner, "solved", solved)
                 grounded = {r.problem for r in d[domain][planner] if r.nOfVars > 0}
                 if solved:
                     commonlySolved = solved if not commonlySolved else commonlySolved.intersection(solved)

@@ -12,21 +12,33 @@ AIJ_TABLE4 = {
         "quantity": {
             "name": "Solved (out of $20$)",
             "winner": +1,
-            "avg": True
         },
         "time": {
             "name": "Time (s)",
             "winner": -1,
-            "stdev": True
         },
         "planLength": {
             "name": r"Plan Length",
             "winner": -1
         },
+        "bound": {
+            "name": r"Bound $n$",
+            "winner": -1
+        },
     },
     "planners": {
-        'PATTY-A': {
-            "name": r"\mathrm{P}_\mathrm{A}",
+        'PATTY-G': {
+            "name": r"\mathrm{P}_\mathrm{G}",
+            "type": "scalar",
+            # "slashedWith": "PATTY-L"
+        },
+        'PATTY-H': {
+            "name": r"\mathrm{P}_\mathrm{H}",
+            "type": "scalar",
+            # "slashedWith": "PATTY-L"
+        },
+        'PATTY-F': {
+            "name": r"\mathrm{P}_\mathrm{F}",
             "type": "scalar",
             # "slashedWith": "PATTY-L"
         },
