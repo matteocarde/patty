@@ -25,8 +25,8 @@ AIJ_TABLE4 = {
         },
     },
     "planners": {
-        'PATTY-E': {
-            "name": r"\mathrm{P}_\mathrm{E}",
+        'PATTY-A': {
+            "name": r"\mathrm{P}_\mathrm{A}",
             "type": "scalar",
             # "slashedWith": "PATTY-L"
         },

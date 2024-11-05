@@ -37,7 +37,7 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2024-11-04-REBUTTAL-v4"
+    exp = "2024-11-04-REBUTTAL-v5"
     file = f"benchmarks/results/csv/{exp}.csv"
 
     folder = f'benchmarks/latex/{exp}'
@@ -58,7 +58,8 @@ def main():
     #      ["ENHSP-SAT-AIBR", "PATTY-A", "PATTY-E", "ENHSP-SAT-HADD", "ENHSP-SAT-HMRP", "METRIC-FF", "NFD"])
     # ]
     joinWith = [
-        (exp, ["ENHSP-SAT-AIBR", "RANTANPLAN", "SPRINGROLL", "ENHSP-SAT-HADD", "ENHSP-SAT-HMRP", "METRIC-FF", "NFD", "OMT"])
+        (exp, ["PATTY-A", "ENHSP-SAT-AIBR", "RANTANPLAN", "SPRINGROLL", "ENHSP-SAT-HADD", "ENHSP-SAT-HMRP", "METRIC-FF",
+               "NFD", "OMT"])
     ]
 
     for (exp2, keepSolvers) in joinWith:
