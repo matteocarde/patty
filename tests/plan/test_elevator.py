@@ -9,17 +9,20 @@ from src.pddl.Problem import Problem
 from src.plan.NumericEncoding import NumericEncoding
 from src.plan.Pattern import Pattern
 from src.smt.SMTSolver import SMTSolver
+from src.utils.Arguments import Arguments
 
 
 class TestElevator(TestCase):
 
     def setUp(self) -> None:
-        self.domain: Domain = Domain.fromFile("../../files/numerical/elevator-num/domain.pddl")
-        self.problem: Problem = Problem.fromFile("../../files/numerical/elevator-num/instances/problem-5-3-3.pddl")
+        self.domain: Domain = Domain.fromFile("../../files/numeric/elevator-num/domain.pddl")
+        self.problem: Problem = Problem.fromFile("../../files/numeric/elevator-num/instances/problem-5-3-3.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
-        self.horizon = 2
+        self.horizon = 3
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
-        self.pddl2smt: NumericEncoding = NumericEncoding(self.gDomain, self.problem, self.pattern, self.horizon)
+        self.args = Arguments(keepRequired=False)
+        self.pddl2smt: NumericEncoding = NumericEncoding(self.gDomain, self.problem, self.pattern, self.horizon,
+                                                         self.args)
         print(self.pddl2smt.pattern)
         pass
 

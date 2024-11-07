@@ -190,7 +190,7 @@ class Literal(Predicate):
         return len(finalSet) > 0
 
     def isDynamicLifted(self, problem) -> bool:
-        return not problem.isPredicateStatic[self.atom.name]
+        return self.atom.name not in problem.isPredicateStatic or not problem.isPredicateStatic[self.atom.name]
 
     def getLinearIncrement(self) -> float:
         return 0

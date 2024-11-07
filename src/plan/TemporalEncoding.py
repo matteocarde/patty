@@ -36,7 +36,7 @@ class TemporalEncoding(Encoding):
                  constraints: str = "numerical", relaxGoal=False,
                  subgoalsAchieved: Set[Formula] = None):
 
-        super().__init__()
+        super().__init__(domain, problem, pattern, bound)
         self.domain = domain
         self.problem = problem
         self.bound = bound

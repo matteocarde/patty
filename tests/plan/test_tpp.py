@@ -9,17 +9,19 @@ from src.plan.NumericEncoding import NumericEncoding
 from src.plan.Pattern import Pattern
 from src.smt.SMTSolution import SMTSolution
 from src.smt.SMTSolver import SMTSolver
+from src.utils.Arguments import Arguments
 
 
 class TestTPP(TestCase):
 
     def setUp(self) -> None:
-        self.domain: Domain = Domain.fromFile("../../files/numerical/ipc-2023/tpp/domain.pddl")
-        self.problem: Problem = Problem.fromFile("../../files/numerical/ipc-2023/tpp/instances/p02.pddl")
+        self.domain: Domain = Domain.fromFile("../../files/numeric/ipc-2023/tpp/domain.pddl")
+        self.problem: Problem = Problem.fromFile("../../files/numeric/ipc-2023/tpp/instances/p02.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
-        self.horizon = 1
+        self.horizon = 2
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
-        self.pddl2smt: NumericEncoding = NumericEncoding(self.gDomain, self.problem, self.pattern, self.horizon)
+        args = Arguments(keepRequired=False)
+        self.pddl2smt: NumericEncoding = NumericEncoding(self.gDomain, self.problem, self.pattern, self.horizon, args)
         print(self.pddl2smt.pattern)
         print("Number of rules:", len(self.pddl2smt.rules))
         pass

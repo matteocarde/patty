@@ -29,7 +29,7 @@ class NumericEncoding(Encoding):
                  args: Arguments, relaxGoal=False, subgoalsAchieved=None, minimizeQuality=False,
                  maxActionsRolling: Dict[int, Dict[Action, int]] = None):
 
-        super().__init__()
+        super().__init__(domain, problem, pattern, bound)
         self.domain = domain
         self.problem = problem
         self.bound = bound
@@ -57,6 +57,7 @@ class NumericEncoding(Encoding):
             self.transitionVariables.append(var)
             if index > 0:
                 self.actionVariables.update(var.actionVariables.values())
+        self.k = len(self.pattern)
 
         self.softRules = []
         self.initial: [SMTExpression] = self.getInitialExpression()
@@ -167,96 +168,90 @@ class NumericEncoding(Encoding):
         SMTExpression]:
         rules: List[SMTExpression] = []
 
-        prevAction: Action or None = None
-        for action in self.pattern:
-            if not prevAction:
-                # First action in the order copies the value from previous step
-                for v in self.domain.allAtoms:
-                    if self.hasEffectAxioms:
-                        rules.append(stepVars.deltaVariables[action][v] == prevVars.valueVariables[v])
-                    else:
-                        stepVars.deltaVariables[action][v] = prevVars.valueVariables[v]
-                prevAction = action
-                continue
+        for v in self.domain.allAtoms:
+            if self.hasEffectAxioms:
+                rules.append(stepVars.sigmaVariables[0][v] == prevVars.valueVariables[v])
+            else:
+                stepVars.sigmaVariables[0][v] = prevVars.valueVariables[v]
+
+        for i, action in self.pattern.enumerate():
 
             # Case a) Not influenced
-            notInfluenced = self.domain.allAtoms - (prevAction.getInfluencedAtoms())
+            notInfluenced = self.domain.allAtoms - (action.getInfluencedAtoms())
             for v in notInfluenced:
                 if self.hasEffectAxioms:
-                    rules.append(stepVars.deltaVariables[action][v] == stepVars.deltaVariables[prevAction][v])
+                    rules.append(stepVars.sigmaVariables[i][v] == stepVars.sigmaVariables[i - 1][v])
                 else:
-                    stepVars.deltaVariables[action][v] = stepVars.deltaVariables[prevAction][v]
+                    stepVars.sigmaVariables[i][v] = stepVars.sigmaVariables[i - 1][v]
 
             # Case b) Boolean
-            for v in prevAction.getAddList() | prevAction.getDelList():
-                d_bv = stepVars.deltaVariables[prevAction][v]
-                b_n = stepVars.actionVariables[prevAction]
+            for v in action.getAddList() | action.getDelList():
+                d_bv = stepVars.sigmaVariables[i - 1][v]
+                b_n = stepVars.actionVariables[i]
 
-                if v in prevAction.getAddList():
+                if v in action.getAddList():
                     if self.hasEffectAxioms:
-                        rules.append(stepVars.deltaVariables[action][v] == d_bv.OR(b_n > 0))
+                        rules.append(stepVars.sigmaVariables[i][v] == d_bv.OR(b_n > 0))
                     else:
-                        stepVars.deltaVariables[action][v] = d_bv.OR(b_n > 0)
+                        stepVars.sigmaVariables[i][v] = d_bv.OR(b_n > 0)
 
-                if v in prevAction.getDelList():
+                if v in action.getDelList():
                     if self.hasEffectAxioms:
-                        rules.append(stepVars.deltaVariables[action][v] == d_bv.AND(b_n == 0))
+                        rules.append(stepVars.sigmaVariables[i][v] == d_bv.AND(b_n == 0))
                     else:
-                        stepVars.deltaVariables[action][v] = d_bv.AND(b_n == 0)
+                        stepVars.sigmaVariables[i][v] = d_bv.AND(b_n == 0)
 
             # Case c) Numeric increases or decreases
-            if not prevAction.hasNonSimpleLinearIncrement(self.encoding):
-                modifications = [(+1, prevAction.getIncreases()), (-1, prevAction.getDecreases())]
+            if not action.hasNonSimpleLinearIncrement(self.encoding):
+                modifications = [(+1, action.getIncreases()), (-1, action.getDecreases())]
                 for sign, modificationDict in modifications:
                     for v, funct in modificationDict.items():
 
-                        d_bv = stepVars.deltaVariables[prevAction][v]
-                        k = SMTNumericVariable.fromPddl(funct, stepVars.deltaVariables[prevAction])
-                        b_n = stepVars.actionVariables[prevAction]
-                        if sign > 0:
-                            if self.hasEffectAxioms:
-                                rules.append(stepVars.deltaVariables[action][v] == d_bv + (k * b_n))
-                            else:
-                                stepVars.deltaVariables[action][v] = d_bv + (k * b_n)
-                        else:
-                            if self.hasEffectAxioms:
-                                rules.append(stepVars.deltaVariables[action][v] == d_bv - (k * b_n))
-                            else:
-                                stepVars.deltaVariables[action][v] = d_bv - (k * b_n)
-            # Case d) Numeric assignments
-            for v in prevAction.getAssList():
-                if self.hasEffectAxioms:
-                    rules.append(stepVars.deltaVariables[action][v] == stepVars.auxVariables[prevAction][v])
-                else:
-                    stepVars.deltaVariables[action][v] = stepVars.auxVariables[prevAction][v]
+                        d_bv = stepVars.sigmaVariables[i - 1][v]
+                        k = SMTNumericVariable.fromPddl(funct, stepVars.sigmaVariables[i - 1])
+                        b_n = stepVars.actionVariables[i]
 
-            if prevAction.hasNonSimpleLinearIncrement(self.encoding):
-                for eff in prevAction.effects:
+                        if self.hasEffectAxioms:
+                            if sign > 0:
+                                rules.append(stepVars.sigmaVariables[i][v] == d_bv + (k * b_n))
+                            else:
+                                rules.append(stepVars.sigmaVariables[i][v] == d_bv - (k * b_n))
+                        else:
+                            if sign > 0:
+                                stepVars.sigmaVariables[i][v] = d_bv + (k * b_n)
+                            else:
+                                stepVars.sigmaVariables[i][v] = d_bv - (k * b_n)
+
+            # Case d) Numeric assignments
+            for v in action.getAssList():
+                if self.hasEffectAxioms:
+                    rules.append(stepVars.sigmaVariables[i][v] == stepVars.auxVariables[i][v])
+                else:
+                    stepVars.sigmaVariables[i][v] = stepVars.auxVariables[i][v]
+
+            if action.hasNonSimpleLinearIncrement(self.encoding):
+                for eff in action.effects:
                     if not eff.isLinearIncrement():
                         continue
                     v = eff.getAtom()
                     if self.hasEffectAxioms:
-                        rules.append(stepVars.deltaVariables[action][v] == stepVars.auxVariables[prevAction][v])
+                        rules.append(stepVars.sigmaVariables[i][v] == stepVars.auxVariables[i][v])
                     else:
-                        stepVars.deltaVariables[action][v] = stepVars.auxVariables[prevAction][v]
-
-            prevAction = action
+                        stepVars.sigmaVariables[i][v] = stepVars.auxVariables[i][v]
 
         return rules
 
-    def getAmoStepRules(self, stepVars: NumericTransitionVariables, i: int) -> List[SMTExpression]:
+    def getAmoStepRules(self, stepVars: NumericTransitionVariables, n: int) -> List[SMTExpression]:
         rules: List[SMTExpression] = []
 
-        for a in self.pattern:
-            if a.isFake:
-                continue
-            a_n = stepVars.actionVariables[a]
+        for i, a in self.pattern.enumerate():
+            a_n = stepVars.actionVariables[i]
             rules.append(a_n >= 0)
             if self.rollBound:
                 rules.append(a_n <= self.rollBound)
                 continue
             if self.maxActionsRolling:
-                rules.append(a_n <= self.maxActionsRolling[i][a])
+                rules.append(a_n <= self.maxActionsRolling[n][a])
                 continue
             if not a.couldBeRepeated() or (a.hasNonSimpleLinearIncrement(self.encoding)):
                 rules.append(a_n <= 1)
@@ -276,25 +271,23 @@ class NumericEncoding(Encoding):
     def getPreStepRules(self, stepVars: NumericTransitionVariables) -> List[SMTExpression]:
         rules: List[SMTExpression] = []
 
-        for a in self.pattern:
-            if a.isFake:
-                continue
-            # a_n > 0
-            lhs0 = stepVars.actionVariables[a] > 0
-            lhs1 = stepVars.actionVariables[a] > 1
+        for i, a in self.pattern.enumerate():
+
+            lhs0 = stepVars.actionVariables[i] > 0
+            lhs1 = stepVars.actionVariables[i] > 1
             preconditions0 = None
             preconditions1 = None
             isPre1Impossible = False
             for pre in a.preconditions:
                 if isinstance(pre, Literal):
                     v = pre.getAtom()
-                    d_av = stepVars.deltaVariables[a][v]
+                    d_av = stepVars.sigmaVariables[i - 1][v]
                     rhs = d_av if pre.sign == "+" else d_av.NOT()
                     preconditions0 = preconditions0.AND(rhs) if preconditions0 else rhs
                     preconditions1 = preconditions1.AND(rhs) if preconditions1 else rhs
                     continue
 
-                precondition0 = SMTNumericVariable.fromPddl(pre, stepVars.deltaVariables[a])
+                precondition0 = SMTNumericVariable.fromPddl(pre, stepVars.sigmaVariables[i - 1])
                 preconditions0 = preconditions0.AND(precondition0) if preconditions0 else precondition0
 
                 subs: Dict[Atom, SMTExpression] = dict()
@@ -303,19 +296,19 @@ class NumericEncoding(Encoding):
                     if not isinstance(eff, BinaryPredicate):
                         continue
                     v = eff.lhs.getAtom()
-                    rhsExpr = SMTNumericVariable.fromPddl(eff.rhs, stepVars.deltaVariables[a])
+                    rhsExpr = SMTNumericVariable.fromPddl(eff.rhs, stepVars.sigmaVariables[i - 1])
                     if eff.operator == "assign":
                         subs[v] = rhsExpr
                         continue
                     if eff.operator == "increase":
-                        x = stepVars.deltaVariables[a][v] + rhsExpr * (stepVars.actionVariables[a] - 1)
+                        x = stepVars.sigmaVariables[i][v] + rhsExpr * (stepVars.actionVariables[i] - 1)
                         subs[v] = x
                         pass
                     else:
-                        subs[v] = stepVars.deltaVariables[a][v] - rhsExpr * (stepVars.actionVariables[a] - 1)
+                        subs[v] = stepVars.sigmaVariables[i][v] - rhsExpr * (stepVars.actionVariables[i] - 1)
 
-                for v in stepVars.deltaVariables[a].keys():
-                    subs[v] = subs[v] if v in subs else stepVars.deltaVariables[a][v]
+                for v in stepVars.sigmaVariables[i].keys():
+                    subs[v] = subs[v] if v in subs else stepVars.sigmaVariables[i - 1][v]
 
                 # Transformed precondition
                 precondition1 = SMTNumericVariable.fromPddl(pre, subs)
@@ -338,16 +331,14 @@ class NumericEncoding(Encoding):
     def getEffStepRules(self, stepVars: NumericTransitionVariables) -> List[SMTExpression]:
         rules: List[SMTExpression] = []
 
-        for a in self.pattern:
+        for i, a in self.pattern.enumerate():
             for var, rhs in a.getAssignments().items():
-                v_a = stepVars.auxVariables[a][var]
-                a_n = stepVars.actionVariables[a]
-                d_a_v = stepVars.deltaVariables[a][var]
-                d_psi = None
-                if isinstance(rhs, Constant):
-                    d_psi = rhs.value
-                else:
-                    d_psi = SMTNumericVariable.fromPddl(rhs, stepVars.deltaVariables[a])
+                v_a = stepVars.auxVariables[i][var]
+                a_n = stepVars.actionVariables[i]
+                d_a_v = stepVars.sigmaVariables[i - 1][var]
+                d_psi = rhs.value if isinstance(rhs, Constant) else \
+                    SMTNumericVariable.fromPddl(rhs, stepVars.sigmaVariables[i - 1])
+
                 rules.append((a_n > 0).implies(v_a == d_psi))
                 rules.append((a_n == 0).implies(v_a == d_a_v))
 
@@ -358,10 +349,10 @@ class NumericEncoding(Encoding):
                 if not eff.isLinearIncrement():
                     continue
                 var = eff.getAtom()
-                v_a = stepVars.auxVariables[a][var]
-                a_n = stepVars.actionVariables[a]
-                d_a_v = stepVars.deltaVariables[a][var]
-                d_a_phi = SMTNumericVariable.fromPddl(eff.rhs, stepVars.deltaVariables[a])
+                v_a = stepVars.auxVariables[i][var]
+                a_n = stepVars.actionVariables[i]
+                d_a_v = stepVars.sigmaVariables[i - 1][var]
+                d_a_phi = SMTNumericVariable.fromPddl(eff.rhs, stepVars.sigmaVariables[i - 1])
                 if eff.operator == "increase":
                     rules.append((a_n > 0).implies(v_a == d_a_v + d_a_phi))
                 else:
@@ -375,12 +366,12 @@ class NumericEncoding(Encoding):
 
         for v in self.domain.functions:
             v_first = stepVars.valueVariables[v]
-            delta_g_v = stepVars.deltaVariables[self.pattern.dummyAction][v]
+            delta_g_v = stepVars.sigmaVariables[self.k][v]
             rules.append(v_first == delta_g_v)
 
         for v in self.domain.predicates:
             v_first = stepVars.valueVariables[v]
-            delta_g_v = stepVars.deltaVariables[self.pattern.dummyAction][v]
+            delta_g_v = stepVars.sigmaVariables[self.k][v]
             rules.append(delta_g_v.iff(v_first))
 
         return rules
@@ -406,14 +397,12 @@ class NumericEncoding(Encoding):
 
         plan.actionRolling = dict()
 
-        for i in range(1, self.bound + 1):
-            plan.actionRolling.setdefault(i, dict())
-            stepVar = self.transitionVariables[i]
-            for a in self.pattern:
-                if a.isFake:
-                    continue
-                repetitions = int(str(solution.getVariable(stepVar.actionVariables[a]))) * a.linearizationTimes
-                plan.actionRolling[i][a] = repetitions
+        for n in range(1, self.bound + 1):
+            plan.actionRolling.setdefault(n, dict())
+            stepVar = self.transitionVariables[n]
+            for i, a in self.pattern.enumerate():
+                repetitions = int(str(solution.getVariable(stepVar.actionVariables[i]))) * a.linearizationTimes
+                plan.actionRolling[n][a] = repetitions
                 if repetitions > 0:
                     plan.addRepeatedAction(a.linearizationOf, repetitions)
 

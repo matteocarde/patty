@@ -22,7 +22,7 @@ class SMTSolver:
         self.softAssertions: List[SMTExpression] = list()
         self.encoding: Encoding = encoding
 
-        self.maximize = bool(self.encoding.softRules) or bool(self.encoding.minimize)
+        self.maximize = self.encoding and (bool(self.encoding.softRules) or bool(self.encoding.minimize))
         if self.maximize:
             self.solver = Optimize()
             self.z3: Solver = Solver("z3",

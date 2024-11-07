@@ -21,8 +21,11 @@ class SMTSolution:
             if isinstance(node, RatNumRef):
                 return float(node.as_fraction())
             if isinstance(var, SMTIntVariable):
-                return int(node.as_long())
-            return node
+                return int(str(node))
+            if "/" in str(node):
+                n, d = str(node).split("/")
+                return float(n) / float(d)
+            return float(str(node))
         if isinstance(var, SMTBoolVariable):
             raise NotImplemented("TODO")
 

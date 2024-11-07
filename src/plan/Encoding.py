@@ -7,6 +7,8 @@ import pysmt.smtlib.script
 from pysmt.environment import get_env
 from pysmt.logics import QF_NRA
 
+from src.pddl.Domain import GroundedDomain
+from src.pddl.Problem import Problem
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTSolution import SMTSolution
 from src.smt.SMTVariable import SMTVariable

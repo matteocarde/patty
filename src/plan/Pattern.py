@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 import random
-from typing import List, Dict
+from typing import List, Dict, Tuple
 
 from src.pattern.PatternAction import PatternAction
 from src.pddl.ARPG import ARPG
@@ -20,14 +20,11 @@ class Pattern:
 
     def __init__(self):
         self.__order: List[Operation] = list()
-        self.dummyAction = None
         pass
 
     def __deepcopy__(self, m=None) -> Pattern:
-        m = {} if m is None else m
         p = Pattern()
         p.__order = copy.copy(self.__order)
-        p.dummyAction = copy.copy(self.dummyAction)
         return p
 
     def __getitem__(self, item):
@@ -41,16 +38,9 @@ class Pattern:
         return self.__order
 
     @classmethod
-    def fromOrder(cls, order: List[Operation], addFake=True):
+    def fromOrder(cls, order: List[Operation]):
         p = cls()
         p.dummyAction = None
-        if addFake:
-            p.dummyAction = Action()
-            p.dummyAction.isFake = True
-            p.dummyAction.name = "final_dummy_g"
-            p.dummyAction.cacheLists()
-
-            order.append(p.dummyAction)
         p.__order = order
 
         return p
@@ -62,10 +52,7 @@ class Pattern:
         if not isinstance(other, Pattern):
             raise Exception("Cannot concatenate Pattern with element not of type Pattern")
         catPattern: Pattern = Pattern()
-        catPattern.__order = [a for a in self.__order if not a.isFake] + [b for b in other.__order if not b.isFake]
-        if other.dummyAction:
-            catPattern.dummyAction = other.dummyAction
-            catPattern.__order.append(catPattern.dummyAction)
+        catPattern.__order = [a for a in self.__order] + [b for b in other.__order]
 
         return catPattern
 
@@ -94,13 +81,11 @@ class Pattern:
         order = []
         for i in range(0, times):
             for item in self.__order:
-                if item.isFake:
-                    continue
                 a = copy.deepcopy(item)
                 a.name = f"{a.name}_{i}" if times > 1 else f"{a.name}"
                 order.append(a)
 
-        return Pattern.fromOrder(order, addFake=addFake)
+        return Pattern.fromOrder(order)
 
     @classmethod
     def fromARPG(cls, gDomain: GroundedDomain) -> Pattern:
@@ -127,13 +112,9 @@ class Pattern:
     def addPostfix(self, postfix: int or str):
         order = []
         for item in self.__order:
-            if item.isFake:
-                continue
             a = copy.deepcopy(item)
             a.name = f"{a.name}_{postfix}"
             order.append(a)
-        if self.dummyAction:
-            order.append(self.dummyAction)
         self.__order = order
 
     @classmethod
@@ -147,12 +128,13 @@ class Pattern:
             a.name = f"{a.name}_{names[a.name]}"
             order.append(a)
 
-        return Pattern.fromOrder(order, addFake=addFake)
+        return Pattern.fromOrder(order)
 
     def index(self, a):
         return self.__order.index(a)
 
     def getLength(self):
-        if self.dummyAction:
-            return len(self) - 1
         return len(self)
+
+    def enumerate(self) -> List[Tuple[int, Action]]:
+        return [(i + 1, a) for (i, a) in enumerate(self.__order)]
