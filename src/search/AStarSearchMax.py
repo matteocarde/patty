@@ -56,6 +56,7 @@ class AStarSearchMax(Search):
                     problem=self.problem,
                     pattern=patF,
                     bound=1,
+                    args=self.args,
                     relaxGoal=True,
                     subgoalsAchieved=subgoalsAchieved
                 )
@@ -66,7 +67,7 @@ class AStarSearchMax(Search):
             self.console.log(f"Bound {bound} - Pattern Length = {patF.getLength()}", LogPrintLevel.STATS)
 
             self.ts.start(f"Solving Bound {bound}", console=self.console)
-            solver: SMTSolver = SMTSolver(pddl2smt)
+            solver: SMTSolver = SMTSolver(encoding)
             callsToSolver += 1
             plan: Plan = solver.solve()
             solver.exit()

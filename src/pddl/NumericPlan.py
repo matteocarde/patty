@@ -1,4 +1,4 @@
-from typing import List, Tuple, Set
+from typing import List, Tuple, Set, Dict
 
 from src.pddl.Action import Action
 from src.pddl.Operation import Operation

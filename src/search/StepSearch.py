@@ -68,7 +68,7 @@ class StepSearch(Search):
             self.console.log(f"Bound {bound} - Vars = {encoding.getNVars()}", LogPrintLevel.STATS)
             self.console.log(f"Bound {bound} - Rules = {encoding.getNRules()}", LogPrintLevel.STATS)
             self.console.log(f"Bound {bound} - Avg Rule Length = {encoding.getAvgRuleLength()}", LogPrintLevel.STATS)
-            self.console.log(f"Bound {bound} - Pattern Length = {encoding.getLength()}", LogPrintLevel.STATS)
+            self.console.log(f"Bound {bound} - Pattern Length = {pattern.getLength()}", LogPrintLevel.STATS)
             self.console.log(f"Calls to Solver: {callsToSolver}", LogPrintLevel.STATS)
 
             if self.args.saveSMT:
