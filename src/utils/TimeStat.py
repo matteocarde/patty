@@ -20,7 +20,7 @@ class TimeStat:
         a = time.time()
         x = call()
         b = time.time()
-        print(f"{call.__name__} = {b - a}s")
+        # print(f"{call.__name__} = {b - a}s")
         return x
 
     def start(self, name: str, console: LogPrint or None = None):

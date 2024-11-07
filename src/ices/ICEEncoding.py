@@ -61,15 +61,8 @@ class ICEEncoding(Encoding):
         self.rulesBySet["conditions"] = TimeStat.timeCall(self.__getConditionsRules)
         self.rulesBySet["goal"] = TimeStat.timeCall(self.__getGoalRules)
 
-        print("INIT", self.task.init)
-        print("GOAL", self.task.goal)
-        # print(self.task.effects)
-
         self.rules = SMTConjunction()
         for (key, rules) in self.rulesBySet.items():
-            print(f"{key}: {len(rules)}")
-            # print(f"-----{key}-----")
-            # print("\n".join([str(r) for r in rules]))
             self.rules += rules
 
     def __len__(self):

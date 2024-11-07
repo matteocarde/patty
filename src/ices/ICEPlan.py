@@ -67,6 +67,7 @@ class ICEPlan:
 
     def print(self):
         sortedPlan = sorted(self.timedActions)
+        print("Found Plan:")
         for ta in sortedPlan:
             print(f"{ta.time}: {ta.action} [{ta.duration}]")
 
