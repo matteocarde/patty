@@ -23,6 +23,7 @@ def main():
     if args.isHelp:
         exit(0)
 
+    solver: Search or None = None
     try:
         print(f"Using z3 version {z3.get_version_string()}")
         console: LogPrint = LogPrint(args.verboseLevel)
@@ -35,6 +36,7 @@ def main():
         gDomain: GroundedDomain = domain.ground(problem, console=console)
         ts.end("Grounding", console=console)
 
+        isTemporal = len(gDomain.durativeActions) > 0
         solver: Search
         pattern: Pattern
         bound: int
@@ -63,6 +65,12 @@ def main():
                 plan = improvedPlan
 
         console.log(plan.toValString(), LogPrintLevel.PLAN)
+        console.log("------", LogPrintLevel.STATS)
+        console.log(f"Distinct Actions: {len(plan.getDistinctActions())}", LogPrintLevel.STATS)
+        if isinstance(plan, NumericPlan):
+            console.log(f"Rolled Actions: {len(plan.getRolledActions())}", LogPrintLevel.STATS)
+            console.log(f"Max Rolling: {plan.getMaxRolling()}", LogPrintLevel.STATS)
+        console.log("------", LogPrintLevel.STATS)
         isValid = plan.validate(problem, avoidRaising=True, logger=console)
         if isValid:
             console.log("Plan is valid", LogPrintLevel.PLAN)

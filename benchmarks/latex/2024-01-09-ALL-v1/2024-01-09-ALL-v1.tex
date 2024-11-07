@@ -1,0 +1,36 @@
+
+            \documentclass[11pt,landscape]{article}
+            \usepackage{graphicx}
+            \usepackage{lscape}
+            \usepackage{multirow}
+            \usepackage[a4paper,margin=1in,landscape]{geometry}
+
+            \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||ccccccc||ccccccc||ccc||}
+\hline
+ & \multicolumn{7}{c||}{Coverage (\%)}&\multicolumn{7}{c||}{Time (s)}&\multicolumn{3}{c||}{Bound (Common)}\\
+Domain & $\textsc{Patty}_\vee$&$\textsc{Patty}_\Sigma$&$\textsc{AnmlSMT}$&$\textsc{ITSat}$&$\textsc{LPG}$&$\textsc{Optic}$&$\textsc{TFD}$&$\textsc{Patty}_\vee$&$\textsc{Patty}_\Sigma$&$\textsc{AnmlSMT}$&$\textsc{ITSat}$&$\textsc{LPG}$&$\textsc{Optic}$&$\textsc{TFD}$&$\textsc{Patty}_\vee$&$\textsc{Patty}_\Sigma$&$\textsc{AnmlSMT}$\\
+\hline
+\textit{Temporal}&\textbf{0}&\textbf{0}&\textbf{2}&\textbf{2}&\textbf{1}&\textbf{3}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{2}&\textbf{0}&\textbf{0}&\textbf{3}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{2}\\\hline
+\textsc{Cushing} (B)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{BottlesPour} (N)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{BottlesShake} (N)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{BottlesPack} (N)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{BottlesAll} (N)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{Majsp} (N)&-&-&\textbf{60.0}&-&-&-&-&-&-&\textbf{11.19}&-&-&-&-&-&-&\textbf{11.38}\\
+\textsc{MatchAC} (B)&-&-&-&\textbf{100.0}&-&\textbf{100.0}&-&-&-&-&0.64&-&\textbf{0.01}&-&-&-&-\\
+\textsc{MatchMS} (B)&-&-&-&\textbf{100.0}&-&\textbf{100.0}&-&-&-&-&0.59&-&\textbf{0.00}&-&-&-&-\\
+\textsc{Oversub} (B)&-&-&-&-&\textbf{100.0}&\textbf{100.0}&-&-&-&-&-&0.07&\textbf{0.01}&-&-&-&-\\
+\textsc{Painter} (B)&-&-&\textbf{40.0}&-&-&-&-&-&-&\textbf{20.91}&-&-&-&-&-&-&\textbf{16.92}
+\\\hline
+
+        \end{tabular}}
+        \caption{Comparative analysis between ...}
+        \label{tab:experiments}
+        \end{table*}
+        
+\end{document}

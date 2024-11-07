@@ -1,0 +1,38 @@
+
+            \documentclass[11pt,landscape]{article}
+            \usepackage{graphicx}
+            \usepackage{lscape}
+            \usepackage{multirow}
+            \usepackage[a4paper,margin=1in,landscape]{geometry}
+            \pagenumbering{gobble}
+
+            \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\Huge{
+\begin{tabular}{|l||cc||cc||}
+\hline
+ & \multicolumn{2}{c||}{N. of Vars}&\multicolumn{2}{c||}{N. of Assertions}\\
+Domain & $\textsc{Patty}$&$\textsc{AnmlSMT}$&$\textsc{Patty}$&$\textsc{AnmlSMT}$\\
+\hline
+\textit{Temporal}&\textbf{10}&\textbf{0}&\textbf{10}&\textbf{0}\\\hline
+\textsc{Cushing}&\textbf{191}&965&\textbf{343}&11787\\
+\textsc{Pour}&\textbf{35}&1488&\textbf{102}&4863\\
+\textsc{Shake}&\textbf{138}&422&\textbf{282}&2381\\
+\textsc{Pack}&\textbf{22}&252&\textbf{46}&465\\
+\textsc{Bottles}&\textbf{287}&6190&\textbf{2017}&27046\\
+\textsc{Majsp}&\textbf{538}&5402&\textbf{1195}&20479\\
+\textsc{MatchAC}&\textbf{134}&563&\textbf{589}&1726\\
+\textsc{MatchMS}&\textbf{93}&610&\textbf{351}&1804\\
+\textsc{Oversub}&\textbf{181}&585&\textbf{308}&839\\
+\textsc{Painter}&\textbf{2058}&2490&\textbf{5491}&26586
+\\\hline
+
+        \end{tabular}}}
+        \caption{Number of variables and assertions of the final \textsc{smt} encoding of the solvers \textsc{patty} and \textsc{anmlsmt} on the instances where both solvers found a solution.}
+        \label{tab:experiments}
+        \end{table*}
+        
+\end{document}

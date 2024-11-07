@@ -1,0 +1,184 @@
+fluent boolean x11;
+fluent boolean x12;
+fluent boolean x13;
+fluent boolean x21;
+fluent boolean x22;
+fluent boolean x23;
+fluent boolean x31;
+fluent boolean x32;
+fluent boolean x33;
+fluent boolean x41;
+fluent boolean x42;
+fluent boolean x43;
+fluent boolean y;
+
+fluent boolean g1;
+fluent boolean g2;
+fluent boolean g3;
+fluent boolean g4;
+
+
+action set_x11() ::("cost", 1) {
+  duration := 1;
+  [start] not x11;
+  [start] x11 := true;
+};
+
+action set_x12() ::("cost", 1) {
+  duration := 1;
+  [start] not x12;
+  [start] x12 := true;
+};
+
+action set_x13() ::("cost", 1) {
+  duration := 1;
+  [start] not x13;
+  [start] x13 := true;
+};
+
+action set_x21() ::("cost", 1) {
+  duration := 1;
+  [start] not x21;
+  [start] x21 := true;
+};
+
+action set_x22() ::("cost", 1) {
+  duration := 1;
+  [start] not x22;
+  [start] x22 := true;
+};
+
+action set_x23() ::("cost", 1) {
+  duration := 1;
+  [start] not x23;
+  [start] x23 := true;
+};
+
+action set_x31() ::("cost", 1) {
+  duration := 1;
+  [start] not x31;
+  [start] x31 := true;
+};
+
+action set_x32() ::("cost", 1) {
+  duration := 1;
+  [start] not x32;
+  [start] x32 := true;
+};
+
+action set_x33() ::("cost", 1) {
+  duration := 1;
+  [start] not x33;
+  [start] x33 := true;
+};
+
+action set_x41() ::("cost", 1) {
+  duration := 1;
+  [start] not x41;
+  [start] x41 := true;
+};
+
+action set_x42() ::("cost", 1) {
+  duration := 1;
+  [start] not x42;
+  [start] x42 := true;
+};
+
+action set_x43() ::("cost", 1) {
+  duration := 1;
+  [start] not x43;
+  [start] x43 := true;
+};
+
+action set_y() ::("cost", 1) {
+  duration := 1;
+  [start] not y;
+  [start] y := true;
+};
+
+action goal1() ::("cost", 1) {
+  duration := 1;
+  [start] x11;
+  [start] x12;
+  [start] x13;
+  [start] not g1;
+  [end] g1 := true;
+};
+
+action goal2() ::("cost", 1) {
+  duration := 1;
+  [start] x21;
+  [start] x22;
+  [start] x23;
+  [start] not g2;
+  [end] g2 := true;
+};
+
+action goal3() ::("cost", 1) {
+  duration := 1;
+  [start] x31;
+  [start] x32;
+  [start] x33;
+  [start] not g3;
+  [end] g3 := true;
+};
+
+action goal4() ::("cost", 1) {
+  duration := 1;
+  [start] x41;
+  [start] x42;
+  [start] x43;
+  [start] not g4;
+  [end] g4 := true;
+};
+
+action goal1_fake() ::("cost", 200) {
+  duration := 1;
+  [start] not g1;
+  [end] g1 := true;
+};
+
+action goal2_fake() ::("cost", 200) {
+  duration := 1;
+  [start] not g2;
+  [end] g2 := true;
+};
+
+action goal3_fake() ::("cost", 200) {
+  duration := 1;
+  [start] not g3;
+  [end] g3 := true;
+};
+
+action goal4_fake() ::("cost", 200) {
+  duration := 1;
+  [start] not g4;
+  [end] g4 := true;
+};
+
+[start] x11 := false;
+[start] x12 := false;
+[start] x13 := false;
+[start] x21 := false;
+[start] x22 := false;
+[start] x23 := false;
+[start] x31 := false;
+[start] x32 := false;
+[start] x33 := false;
+[start] x41 := false;
+[start] x42 := false;
+[start] x43 := false;
+[start] y := false;
+
+[start] g1 := false;
+[start] g2 := false;
+[start] g3 := false;
+[start] g4 := false;
+
+[end] y;
+[end] g1;
+[end] g2;
+[end] g3;
+[end] g4;
+
+::("metric", "minimize-action-cost", 0);

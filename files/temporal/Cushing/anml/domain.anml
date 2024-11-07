@@ -1,0 +1,38 @@
+type variable;
+
+fluent boolean norepeat(variable var);
+fluent boolean condition1(variable var);
+fluent boolean condition2(variable var);
+fluent boolean target1(variable var);
+fluent boolean target2(variable var);
+fluent boolean target3(variable var);
+
+
+action action_type1(variable var) {
+   duration := 5.0;
+   [start] norepeat(var) == true;
+
+   [start] condition1(var) := true;
+   [start] norepeat(var) := false;
+   [end] condition1(var) := false;
+   [end] target1(var) := true;
+   [end] target2(var) := false;
+};
+
+action action_type2(variable var) {
+   duration := 4.0;
+   [start] condition1(var) == true;
+
+   [start] condition2(var) := true;
+   [end] condition2(var) := false;
+   [end] target2(var) := true;
+};
+
+action action_type3(variable var) {
+   duration := 1.0;
+   [start] condition2(var) == true;
+
+   [end] target1(var) := false;
+   [end] target3(var) := true;
+};
+

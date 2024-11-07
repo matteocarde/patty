@@ -10,15 +10,17 @@ from src.pddl.Action import Operation, Action
 from src.pddl.Domain import GroundedDomain
 from src.pddl.Goal import Goal
 from src.pddl.NumericPlan import NumericPlan
+from src.pddl.Plan import Plan
 from src.pddl.State import State
 
 
 class Pattern:
     __order: List[Operation]
-    dummyAction: Action
+    dummyAction: Action or None
 
     def __init__(self):
         self.__order: List[Operation] = list()
+        self.dummyAction = None
         pass
 
     def __deepcopy__(self, m=None) -> Pattern:
@@ -41,6 +43,7 @@ class Pattern:
     @classmethod
     def fromOrder(cls, order: List[Operation], addFake=True):
         p = cls()
+        p.dummyAction = None
         if addFake:
             p.dummyAction = Action()
             p.dummyAction.isFake = True
@@ -60,8 +63,9 @@ class Pattern:
             raise Exception("Cannot concatenate Pattern with element not of type Pattern")
         catPattern: Pattern = Pattern()
         catPattern.__order = [a for a in self.__order if not a.isFake] + [b for b in other.__order if not b.isFake]
-        catPattern.dummyAction = other.dummyAction
-        catPattern.__order.append(catPattern.dummyAction)
+        if other.dummyAction:
+            catPattern.dummyAction = other.dummyAction
+            catPattern.__order.append(catPattern.dummyAction)
 
         return catPattern
 
@@ -122,24 +126,33 @@ class Pattern:
 
     def addPostfix(self, postfix: int or str):
         order = []
-        for item in self.__order[:-1]:
+        for item in self.__order:
+            if item.isFake:
+                continue
             a = copy.deepcopy(item)
             a.name = f"{a.name}_{postfix}"
             order.append(a)
-        order.append(self.dummyAction)
+        if self.dummyAction:
+            order.append(self.dummyAction)
         self.__order = order
 
     @classmethod
-    def fromPlan(cls, plan: NumericPlan) -> Pattern:
+    def fromPlan(cls, plan: Plan, addFake=False) -> Pattern:
         names: Dict[str, int] = dict()
         order = []
-        for item in plan.unrolledPlan:
+        actionsList = plan.getActionsList()
+        for item in actionsList:
             a = copy.deepcopy(item)
             names[a.name] = names.setdefault(a.name, 0) + 1
             a.name = f"{a.name}_{names[a.name]}"
             order.append(a)
 
-        return Pattern.fromOrder(order)
+        return Pattern.fromOrder(order, addFake=addFake)
 
     def index(self, a):
         return self.__order.index(a)
+
+    def getLength(self):
+        if self.dummyAction:
+            return len(self) - 1
+        return len(self)

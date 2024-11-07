@@ -1,17 +1,20 @@
-from typing import List, Tuple, Dict
+from typing import List, Tuple, Set
 
 from src.pddl.Action import Action
+from src.pddl.Operation import Operation
 from src.pddl.PDDLException import PDDLException
+from src.pddl.Plan import Plan
 from src.pddl.Problem import Problem
 from src.pddl.State import State
 from src.utils.LogPrint import LogPrint, LogPrintLevel
 
 
-class NumericPlan:
+class NumericPlan(Plan):
     quality: float
     actionRolling: Dict[int, Dict[Action, int]]
 
     def __init__(self):
+        super().__init__()
         self.__plan: List[Tuple[Action, int]] = list()
         self.__rolledPlan: List[Action] = list()
         self.quality: float
@@ -20,6 +23,9 @@ class NumericPlan:
 
     def __len__(self):
         return len(self.__rolledPlan)
+
+    def getActionsList(self):
+        return self.unrolledPlan
 
     @property
     def rolledPlan(self):
@@ -80,6 +86,15 @@ class NumericPlan:
 
     def printWithRepetitions(self):
         print(self.toValString())
+
+    def getMaxRolling(self) -> int:
+        return max([i for (a, i) in self.__plan])
+
+    def getDistinctActions(self) -> List[Operation]:
+        return [a for (a, i) in self.__plan if i > 0]
+
+    def getRolledActions(self) -> List[Operation]:
+        return [a for (a, i) in self.__plan if i > 1]
 
     def getMetric(self, problem: Problem):
         if not problem.metric:

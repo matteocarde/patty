@@ -44,6 +44,7 @@ class Operation:
         self.assList = set()
         self.incrList = set()
         self.decrList = set()
+        self.numEffList = set()
         self.influencedAtoms = set()
         self.increases = dict()
         self.decreases = dict()
@@ -247,6 +248,14 @@ class Operation:
             atomList = atomList | {c.getAtom()}
         return atomList
 
+    def __getEffectFunctions(self) -> Set[Atom]:
+        atomList: Set[Atom] = set()
+        for c in self.effects:
+            if not isinstance(c, BinaryPredicate):
+                continue
+            atomList |= c.getFunctions()
+        return atomList
+
     def __getModifiedFunctions(self, operator: str = None) -> Set[Atom]:
         atomList: Set[Atom] = set()
         for c in self.effects:
@@ -344,20 +353,41 @@ class Operation:
         self.predicates = self.__getPredicates()
         self.preB = self.__getPreB()
         self.preN = self.__getPreN()
+        self.effN = self.__getEffectFunctions()
         self.addList = self.__getAddList()
         self.delList = self.__getDelList()
         self.assList = self.__getAssList()
         self.incrList = self.__getIncrList()
         self.decrList = self.__getDecrList()
+        self.numEffList = self.assList | self.incrList | self.decrList
+        self.effRhs = self.effN - self.numEffList
         self.influencedAtoms = self.__getInfluencedAtoms()
         self.increases = self.__getIncreases()
         self.decreases = self.__getDecreases()
         self.assignments = self.__getAssignments()
-        self.__couldBeRepeated = len(self.getIncrList() | self.getDecrList()) > 0 and \
-                                 len(self.getPreB().intersection(self.getAddList() | self.getDelList())) == 0
+        self.__couldBeRepeated = self.__checkIfCanBeRepeated()
 
     def __hash__(self):
         return self.__hash
+
+    def __checkIfCanBeRepeated(self):
+        if not self.getIncrList() and not self.getDecrList():
+            return False
+        if self.getPreB().intersection(self.getAddList() | self.getDelList()):
+            return False
+
+        lhs = set()
+        rhs = set()
+        for e in self.effects:
+            if not isinstance(e, BinaryPredicate):
+                continue
+            lhs |= {e.getAtom()}
+            rhs |= e.rhs.getFunctions()
+
+        if lhs.intersection(rhs):
+            return False
+
+        return True
 
     def __eq__(self, other: Operation):
         if not isinstance(other, Operation):
@@ -414,18 +444,28 @@ class Operation:
     def interferes(self, other: Operation) -> bool:
         return bool(self.influencedAtoms.intersection(other.preB | other.preN))
 
+    @staticmethod
+    def __isMutex(a_i: Operation, a_j: Operation) -> bool:
+        # Condition 1 - Paper Temporal
+        if a_i.addList.intersection(a_j.preB) or \
+                a_i.delList.intersection(a_j.preB) or \
+                a_i.numEffList.intersection(a_j.preN):
+            # print(f"{a_i} and {a_j} are in mutex due to C1")
+            return True
+        # Condition 2 - Paper Temporal
+        if a_i.addList.intersection(a_j.delList) or a_i.delList.intersection(a_j.addList):
+            # print(f"{a_i} and {a_j} are in mutex due to C2")
+            return True
+        # Condition 3 - Paper Temporal
+        if a_i.assList.intersection(a_j.assList) or a_i.effRhs.intersection(a_j.numEffList):
+            # print(f"{a_i} and {a_j} are in mutex due to C3")
+            return True
+
+        # print(f"{a_i} and {a_j} are NOT in mutex")
+        return False
+
     def isMutex(self, other: Operation) -> bool:
-        return True if self.addList.intersection(other.delList) or \
-                       self.delList.intersection(other.addList) or \
-                       self.addList.intersection(other.preB) or \
-                       self.delList.intersection(other.preB) or \
-                       self.preB.intersection(other.addList) or \
-                       self.preB.intersection(other.delList) or \
-                       self.assList.intersection(other.assList) else False
+        return Operation.__isMutex(self, other) or Operation.__isMutex(other, self)
 
-
-def isMutexSet(self, operations: Set[Operation]):
-    isMutex = False
-    for op in operations:
-        isMutex = isMutex or self.isMutex(op)
-    return isMutex
+    def isSame(self, end: Operation):
+        return self.originalName == end.originalName

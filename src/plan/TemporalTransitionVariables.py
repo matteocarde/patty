@@ -25,7 +25,7 @@ class TemporalTransitionVariables:
             self.actionVariables: Dict[int, SMTVariable] = self.__computeActionVariables(index)
             self.auxVariables: Dict[int, Dict[Atom, SMTVariable]] = self.__computeAuxVariables(index)
             self.timeVariables: Dict[int, SMTVariable] = self.__computeTimeVariables(index)
-            self.durVariables: Dict[int, float] = self.__computeDurVariables(index)
+            self.durVariables: Dict[int, SMTVariable] = self.__computeDurVariables(index)
 
     def __computeValueVariables(self, index: int) -> Dict[Atom, SMTVariable]:
         variables: Dict[Atom, SMTVariable] = dict()
@@ -51,14 +51,17 @@ class TemporalTransitionVariables:
         variables: Dict[int, SMTVariable] = dict()
 
         for i, action in enumerate(self.pattern):
-            if action.isFake:
-                continue
             variables[i] = SMTRealVariable(f"time_{action.name}")
 
         return variables
 
-    def __computeDurVariables(self, index: int) -> Dict[int, float]:
-        variables: Dict[int, float] = dict()
+    def __computeDurVariables(self, index: int) -> Dict[int, SMTVariable]:
+        variables: Dict[int, SMTVariable] = dict()
+
+        for i, action in enumerate(self.pattern):
+            if not isinstance(action, SnapAction) or action.timeType != TimePredicateType.AT_START:
+                continue
+            variables[i] = SMTRealVariable(f"dur_{action.name}")
 
         return variables
 

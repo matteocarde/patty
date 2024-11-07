@@ -1,3 +1,4 @@
+import statistics
 from typing import List, Pattern, Set
 
 import pysmt
@@ -80,8 +81,10 @@ class Encoding:
         variables = set()
         for i, rule in enumerate(self.rules):
             variables |= rule.variables
-        # print(variables)
         return len(variables)
 
     def getNRules(self):
         return len(self.rules)
+
+    def getAvgRuleLength(self):
+        return round(statistics.mean([len(r.variables) for r in self.rules]), 2)

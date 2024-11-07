@@ -280,8 +280,8 @@ class BinaryPredicate(Predicate):
         m = diff(f, var)  # m = df/dx
         q = f.subs(var, 0)  # q = f | 0
 
-        lb = float(-q / m) if self.operator in {">=", ">", "=", "!="} else float("-inf")
-        ub = float(-q / m) if self.operator in {"<=", "<", "=", "!="} else float("+inf")
+        lb = float(-q / m) if self.operator in {">=", ">", "=", "!="} and m != 0 else float("-inf")
+        ub = float(-q / m) if self.operator in {"<=", "<", "=", "!="} and m != 0 else float("+inf")
 
         return MooreInterval(lb, ub)
 

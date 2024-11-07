@@ -343,10 +343,12 @@ class NumericEncoding(Encoding):
                 v_a = stepVars.auxVariables[a][var]
                 a_n = stepVars.actionVariables[a]
                 d_a_v = stepVars.deltaVariables[a][var]
-                if not isinstance(rhs, Constant):
-                    raise Exception("I cannot handle yet linear assignments")
-                k = rhs.value
-                rules.append((a_n > 0).implies(v_a == k))
+                d_psi = None
+                if isinstance(rhs, Constant):
+                    d_psi = rhs.value
+                else:
+                    d_psi = SMTNumericVariable.fromPddl(rhs, stepVars.deltaVariables[a])
+                rules.append((a_n > 0).implies(v_a == d_psi))
                 rules.append((a_n == 0).implies(v_a == d_a_v))
 
             if not a.hasNonSimpleLinearIncrement(self.encoding):

@@ -1,0 +1,29 @@
+type bottle;
+
+fluent boolean capped(bottle a);
+fluent integer litres(bottle a);
+
+constant boolean left(bottle a);
+constant boolean right(bottle a);
+
+action uncap_cap(bottle a) {
+   duration := 5.0;
+   [start] capped(a) == true;
+   [start] capped(a) := false;
+   [end] capped(a) == false;
+   [end] capped(a) := true;
+};
+
+action pour(bottle a, bottle b) {
+   duration := 1.0;
+   [start] litres(a) > 0;
+   [start] capped(a) == false;
+   [start] capped(b) == false;
+   [start] left(a) == true;
+   [start] right(b) == true;
+   [all] capped(a) == false;
+   [all] capped(b) == false;
+
+   [start] litres(a) := litres(a) - 1;
+   [end] litres(b) := litres(b) + 1;
+};

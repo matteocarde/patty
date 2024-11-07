@@ -131,10 +131,12 @@ class SMTExpression:
         return self.__binary(other, Minus, self.expression * -1, toRHS(other) * -1)
 
     def __add__(self, other: SMTExpression or float):
+        if (type(other) == float or type(other) == int) and other == 0.0:
+            return self
         return self.__binary(other, Plus, self.expression, toRHS(other))
 
     def __radd__(self, other: SMTExpression or float):
-        if type(other) == float and other == 0:
+        if (type(other) == float or type(other) == int) and other == 0.0:
             return self
         return self.__binary(other, Plus, self.expression, toRHS(other))
 

@@ -4,15 +4,16 @@ from natsort import natsort
 
 # PLANNERS = ["PATTY", "PATTY-R-YICES", "PATTY-R-Z3-NL", "PATTY-NL", "PATTY-Z3", "SPRINGROLL"]
 PLANNERS = [
+    # "PATTY",
     "PATTY-O",
     "PATTY-G",
-    "PATTY-H",
-    "PATTY-F",
+    # "PATTY-H",
+    # "PATTY-F",
     # "PATTY-ASTAR",
     # "SPRINGROLL",
-    # "ENHSP-HADD",
-    # "ENHSP-HRADD",
-    # "ENHSP-HMRP",
+    # "ENHSP-SAT-AIBR",
+    # "ENHSP-SAT-HADD",
+    # "ENHSP-SAT-HMRP",
     # "METRIC-FF",
     # "NFD",
     # "OMT"
@@ -33,11 +34,13 @@ def main():
         "numeric/ipc-2023/fo-sailing",
         "numeric/ipc-2023/fo_counters",
         "numeric/ipc-2023/hydropower",
+        "numeric/ipc-2023/markettrader",
         "numeric/ipc-2023/mprime",
         "numeric/ipc-2023/pathwaysmetric",
         "numeric/ipc-2023/rover",
         "numeric/ipc-2023/sailing",
         "numeric/ipc-2023/satellite",
+        "numeric/ipc-2023/settlers",
         "numeric/ipc-2023/sugar",
         "numeric/ipc-2023/tpp",
         "numeric/ipc-2023/zenotravel",
@@ -55,7 +58,7 @@ def main():
             problemFile = f"files/{domain}/instances/{problem}"
 
             for planner in PLANNERS:
-                n = 1 if "PATTY-R" not in planner else 5
+                n = 1 if "JSHDKJSHDK" not in planner else 5
                 for i in range(0, n):
                     instances.append([planner, domain, domainFile, problemFile])
 
