@@ -53,6 +53,14 @@ class Atom:
 
         return atom
 
+    @classmethod
+    def simple(cls, name: str):
+        atom = cls()
+        atom.name = name
+        atom.__setProperties()
+
+        return atom
+
     def __setProperties(self):
         parts = [self.name] + [a for a in self.attributes]
         self.__string = " ".join(parts)

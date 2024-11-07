@@ -38,6 +38,14 @@ class Literal(Predicate):
         lit.alphaFunct = lit.atom.toAlphaFunctionName()
         return lit
 
+    @classmethod
+    def pos(cls, atom: Atom):
+        return cls.fromAtom(atom, "+")
+
+    @classmethod
+    def neg(cls, atom: Atom):
+        return cls.fromAtom(atom, "-")
+
     def replace(self, atom: Atom, w: Predicate):
         if self.atom != atom:
             return copy.deepcopy(self)

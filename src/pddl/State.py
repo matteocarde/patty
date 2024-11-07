@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import copy
-from typing import Dict
+from typing import Dict, Set
 
+from src.ices.ParallelIntermediateEffects import ParallelIntermediateEffects
+from src.ices.PlanIntermediateEffect import PlanIntermediateEffect
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
@@ -45,6 +47,20 @@ class State:
     def __repr__(self):
         return repr(self.assignments)
 
+    def __str__(self):
+        return str(self.toClosedWorldSet())
+
+    def toClosedWorldSet(self) -> Set[Predicate]:
+
+        cwset = set()
+        for (atom, value) in self.assignments.items():
+            if type(value) == bool and value:
+                cwset.add(Literal.pos(atom))
+            if type(value) != bool:
+                cwset.add(BinaryPredicate.fromAssignment(atom, value))
+
+        return cwset
+
     def applyAction(self, action: Action):
 
         state = State()
@@ -57,6 +73,17 @@ class State:
         effect: Predicate
         for effect in action.effects:
             state.assignments[effect.getAtom()] = self.getRealization(effect)
+
+        return state
+
+    def applyParallelIntermediateEffects(self, pieff: ParallelIntermediateEffects) -> State:
+
+        state = State()
+        state.assignments = self.assignments.copy()
+
+        for eff in pieff:
+            for effect in eff.effects:
+                state.assignments[effect.getAtom()] = self.getRealization(effect)
 
         return state
 

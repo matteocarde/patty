@@ -1,5 +1,4 @@
 from __future__ import annotations
-from typing import Dict, List, Tuple, Set
 
 import copy
 from typing import Dict, List, Set
@@ -7,13 +6,12 @@ from typing import Dict, List, Set
 from prettytable import PrettyTable
 
 from src.pddl.Atom import Atom
+from src.pddl.Goal import Goal
+from src.pddl.InitialCondition import InitialCondition
 from src.pddl.Literal import Literal
 from src.pddl.PDDLWriter import PDDLWriter
 from src.pddl.Predicate import Predicate
-from src.pddl.InitialCondition import InitialCondition
-from src.pddl.Goal import Goal
 from src.pddl.Utilities import Utilities
-
 from src.pddl.grammar.pddlParser import pddlParser
 
 

@@ -29,7 +29,7 @@ class NumericEncoding(Encoding):
                  args: Arguments, relaxGoal=False, subgoalsAchieved=None, minimizeQuality=False,
                  maxActionsRolling: Dict[int, Dict[Action, int]] = None):
 
-        super().__init__(domain, problem, pattern, bound)
+        super().__init__()
         self.domain = domain
         self.problem = problem
         self.bound = bound
@@ -381,7 +381,7 @@ class NumericEncoding(Encoding):
         for v in self.domain.predicates:
             v_first = stepVars.valueVariables[v]
             delta_g_v = stepVars.deltaVariables[self.pattern.dummyAction][v]
-            rules.append(delta_g_v.coimplies(v_first))
+            rules.append(delta_g_v.iff(v_first))
 
         return rules
 

@@ -2,23 +2,17 @@ import statistics
 from typing import List, Pattern, Set
 
 import pysmt
-
-from src.pddl.Domain import GroundedDomain
-from src.pddl.Problem import Problem
-from src.smt.SMTExpression import SMTExpression
-
 import pysmt.smtlib.commands as smtcmd
 import pysmt.smtlib.script
 from pysmt.environment import get_env
 from pysmt.logics import QF_NRA
 
+from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTSolution import SMTSolution
 from src.smt.SMTVariable import SMTVariable
 
 
 class Encoding:
-    domain: GroundedDomain
-    problem: Problem
     rules: List[SMTExpression]
     softRules: List[SMTExpression]
     minimize: SMTExpression or None
