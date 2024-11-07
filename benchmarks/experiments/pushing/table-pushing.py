@@ -104,7 +104,8 @@ TOTALS = {
     "numeric/ipc-2023/tpp": 20,
     "numeric/ipc-2023/zenotravel": 20,
     "numeric/line-exchange": 108,
-    "line-exchange-quantity": 20
+    "line-exchange-quantity": 20,
+    "numeric/bottles-pour-numeric": 100
 }
 
 
@@ -130,9 +131,9 @@ def main():
 
     # Joining together portfolios
     results = Result.joinPorfolios(aResults, {
-        "ENHSP-sat-hadd": "ENHSP",
-        "ENHSP-sat-hradd": "ENHSP",
-        "ENHSP-sat-hmrphj": "ENHSP",
+        "ENHSP-SAT-HADD": "ENHSP",
+        "ENHSP-SAT-HRADD": "ENHSP",
+        "ENHSP-OPT-HMRPHJ": "ENHSP",
     })
 
     solvers = set()
@@ -310,12 +311,12 @@ def main():
             # 'PATTY-H': "SMT",
             'PATTY-F': "SMT"
         },
-            # {
-            #     'PATTY-F': "SEARCH",
-            #     'ENHSP': "SEARCH",
-            #     'METRIC-FF': "SEARCH",
-            #     "NFD": "SEARCH",
-            # }
+            {
+                'PATTY-F': "SEARCH",
+                'ENHSP': "SEARCH",
+                'METRIC-FF': "SEARCH",
+                "NFD": "SEARCH",
+            }
         ],
         "caption": r"Statistics averaged on the problems of each domain and the plans computed by "
                    r"$\textsc{Patty}_\mathrm{F}$. "
