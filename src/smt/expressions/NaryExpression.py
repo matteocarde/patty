@@ -14,6 +14,10 @@ class NaryExpression(SMTExpression):
         super().__init__()
         self.children = xs
 
+    @classmethod
+    def simplify(cls, *xs):
+        raise NotImplementedError()
+
     def getVariables(self):
         variables = set()
         for c in self.children:

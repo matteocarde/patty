@@ -6,9 +6,11 @@ from pysmt.fnode import FNode
 from pysmt.shortcuts import Not as SMTNot
 
 from src.smt.SMTBoolVariable import SMTBoolVariable
-from src.smt.SMTExpression import SMTExpression
+from src.smt.SMTExpression import SMTExpression, BOOLEAN
 from pysmt.typing import BOOL
 
+from src.smt.expressions.FalseExpression import FalseExpression
+from src.smt.expressions.TrueExpression import TrueExpression
 from src.smt.expressions.UnaryExpression import UnaryExpression
 
 
@@ -16,12 +18,19 @@ class NotExpression(UnaryExpression):
 
     def __init__(self, expr: SMTExpression):
         super().__init__(expr)
-        self.variables = expr.variables
         self.positive = expr
-        self.type = BOOL
+        self.type = BOOLEAN
 
     def __hash__(self):
         return hash(-hash(self.positive))
+
+    @classmethod
+    def simplify(cls, pos):
+        if isinstance(pos, TrueExpression):
+            return FalseExpression()
+        if isinstance(pos, FalseExpression):
+            return TrueExpression()
+        return cls(pos)
 
     def getExpression(self) -> FNode:
         return SMTNot(self.positive.getExpression())

@@ -2,12 +2,10 @@ from __future__ import annotations
 
 from typing import Set, Dict
 
-from pyeda.boolalg.bdd import BinaryDecisionDiagram, bdd2expr
 from pyeda.boolalg.expr import OrOp, AndOp, Variable, Complement, OrAndOp
 from pysmt.fnode import FNode
-from pysmt.shortcuts import Equals, LE, LT, GE, GT, Real, Times, Minus, Plus, Div, TRUE, ToReal, \
-    NotEquals
-from pysmt.typing import REAL, INT, BOOL
+from pysmt.shortcuts import Equals, LE, LT, GE, GT, NotEquals
+from pysmt.typing import BOOL
 
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
@@ -15,37 +13,15 @@ from src.pddl.Constant import Constant
 from src.pddl.Formula import Formula
 from src.pddl.Literal import Literal
 
-
-def toRHS(other):
-    if isinstance(other, SMTExpression):
-        return other.expression
-    if type(other) == int or (type(other) == float and other.is_integer()):
-        return Real(float(other))
-    if type(other) == float:
-        return Real(other)
-
-
-def getVars(obj):
-    from src.smt.expressions.NotExpression import NotExpression
-    if isinstance(obj, SMTExpression):
-        return obj.variables if obj.variables or obj.isConstant else {obj} if not isinstance(obj, NotExpression) else {
-            obj.positive}
-    return set()
+NUMERIC = "N"
+BOOLEAN = "B"
 
 
 class SMTExpression:
-    variables: Set
-    lhs: SMTExpression
-    rhs: SMTExpression
-    isConstant: bool
+    type: str
 
     def __init__(self):
-        self.variables = set()
-        self.type = REAL
-        self.operation = None
-        self.lhs: SMTExpression
-        self.rhs: SMTExpression
-        self.isConstant = False
+        pass
 
     def __str__(self):
         return str(self.getExpression().serialize())
@@ -56,189 +32,98 @@ class SMTExpression:
     def __hash__(self):
         return hash(str(self))
 
-    def __binary(self, other: SMTExpression or float, operation, lhsExpression: FNode,
-                 rhsExpression: FNode) -> SMTExpression:
-        expr = SMTExpression()
-        expr.lhs = self
-        expr.operation = operation
-        expr.variables = getVars(self) | getVars(other)
-
-        if isinstance(other, SMTExpression):
-            rhsType = other.type
-        elif type(other) == int or (type(other) == float and other.is_integer()):
-            other = float(other)
-            rhsType = REAL
-        else:
-            rhsType = REAL
-
-        expr.rhs = other
-
-        if expr.lhs.type == BOOL or expr.lhs.type == rhsType:
-            expr.type = expr.lhs.type
-        else:
-            expr.type = REAL
-            lhsExpression = ToReal(lhsExpression) if expr.lhs.type == INT else lhsExpression
-            rhsExpression = ToReal(rhsExpression) if rhsType == INT else rhsExpression
-
-        expr.expression = operation(lhsExpression, rhsExpression)
-
-        return expr
-
     def getExpression(self) -> FNode:
         raise NotImplementedError()
 
     def getVariables(self) -> Set:
         raise NotImplementedError()
 
-    def AND(self, other: SMTExpression):
-        from src.smt.expressions.AndExpression import AndExpression
-        return AndExpression(self, other)
-
     def __and__(self, other):
         from src.smt.expressions.AndExpression import AndExpression
-        from src.smt.expressions.TrueExpression import TrueExpression
-        from src.smt.expressions.FalseExpression import FalseExpression
-        if isinstance(self, TrueExpression):
-            return other
-        if isinstance(other, TrueExpression):
-            return self
-        if isinstance(other, FalseExpression) or isinstance(self, FalseExpression):
-            return FalseExpression()
-        return AndExpression(self, other)
-
-    def OR(self, other: SMTExpression):
-        from src.smt.expressions.OrExpression import OrExpression
-        return OrExpression(self, other)
+        return AndExpression.simplify(self, other)
 
     def __or__(self, other):
         from src.smt.expressions.OrExpression import OrExpression
-        from src.smt.expressions.TrueExpression import TrueExpression
-        from src.smt.expressions.FalseExpression import FalseExpression
-        if isinstance(self, FalseExpression):
-            return other
-        if isinstance(other, FalseExpression):
-            return self
-        if isinstance(other, TrueExpression) or isinstance(self, TrueExpression):
-            return TrueExpression()
-        return OrExpression(self, other)
-
-    def NOT(self):
-        from src.smt.expressions.NotExpression import NotExpression
-        from src.smt.expressions.TrueExpression import TrueExpression
-        from src.smt.expressions.FalseExpression import FalseExpression
-        if isinstance(self, TrueExpression):
-            return FalseExpression()
-        if isinstance(self, FalseExpression):
-            return TrueExpression()
-        return NotExpression(self)
+        return OrExpression.simplify(self, other)
 
     def implies(self, other: SMTExpression):
         from src.smt.expressions.ImpliesExpression import ImpliesExpression
-        return ImpliesExpression(self, other)
-
-    def coimplies(self, other: SMTExpression):
-        from src.smt.expressions.IffExpression import IffExpression
-        return IffExpression(self, other)
+        return ImpliesExpression.simplify(self, other)
 
     def iff(self, other: SMTExpression):
         from src.smt.expressions.IffExpression import IffExpression
-        return IffExpression(self, other)
+        return IffExpression.simplify(self, other)
 
     def impliedBy(self, other: SMTExpression):
         from src.smt.expressions.ImpliesExpression import ImpliesExpression
         return ImpliesExpression(other, self)
 
     def __eq__(self, other: SMTExpression or int):
-        if self.type == BOOL:
-            return self.coimplies(other)
-        expr = self.__binary(other, Equals, self.expression, toRHS(other))
-        expr.type = BOOL
-        return expr
+        from src.smt.expressions.EqualExpression import EqualExpression
+        return EqualExpression.simplify(self, other)
 
     def __invert__(self):
-        return self.NOT()
+        from src.smt.expressions.NotExpression import NotExpression
+        return NotExpression.simplify(self)
 
     def __ne__(self, other: SMTExpression or int):
-        expr = self.__binary(other, NotEquals, self.expression, toRHS(other))
-        expr.type = BOOL
-        return expr
+        from src.smt.expressions.NotEqualExpression import NotEqualExpression
+        return NotEqualExpression.simplify(self, other)
 
     def __le__(self, other: SMTExpression or float):
-        expr = self.__binary(other, LE, self.expression, toRHS(other))
-        expr.type = BOOL
-        return expr
+        from src.smt.expressions.LessEqualExpression import LessEqualExpression
+        return LessEqualExpression.simplify(self, other)
 
     def __lt__(self, other: SMTExpression or float):
-        expr = self.__binary(other, LT, self.expression, toRHS(other))
-        expr.type = BOOL
-        return expr
+        from src.smt.expressions.LessExpression import LessExpression
+        return LessExpression.simplify(self, other)
 
     def __ge__(self, other: SMTExpression or float):
-        expr = self.__binary(other, GE, self.expression, toRHS(other))
-        expr.type = BOOL
-        return expr
+        from src.smt.expressions.GreaterEqualExpression import GreaterEqualExpression
+        return GreaterEqualExpression.simplify(self, other)
 
     def __gt__(self, other: SMTExpression or float):
-        expr = self.__binary(other, GT, self.expression, toRHS(other))
-        expr.type = BOOL
-        return expr
+        from src.smt.expressions.GreaterExpression import GreaterExpression
+        return GreaterExpression.simplify(self, other)
 
     def __sub__(self, other: SMTExpression or float):
-        return self.__binary(other, Minus, self.expression, toRHS(other))
+        from src.smt.expressions.SubtractExpression import SubtractExpression
+        return SubtractExpression.simplify(self, other)
 
     def __rsub__(self, other: SMTExpression or float):
-        return self.__binary(other, Minus, self.expression * -1, toRHS(other) * -1)
+        from src.smt.expressions.SubtractExpression import SubtractExpression
+        return SubtractExpression.simplify(other, self)
 
     def __add__(self, other: SMTExpression or float):
-        if (type(other) == float or type(other) == int) and other == 0.0:
-            return self
-        return self.__binary(other, Plus, self.expression, toRHS(other))
+        from src.smt.expressions.AddExpression import AddExpression
+        return AddExpression.simplify(self, other)
 
     def __radd__(self, other: SMTExpression or float):
-        if (type(other) == float or type(other) == int) and other == 0.0:
-            return self
-        return self.__binary(other, Plus, self.expression, toRHS(other))
+        from src.smt.expressions.AddExpression import AddExpression
+        return AddExpression.simplify(other, self)
 
     def __mul__(self, other: SMTExpression or float):
-        return self.__binary(other, Times, self.expression, toRHS(other))
+        from src.smt.expressions.MultiplyExpression import MultiplyExpression
+        return MultiplyExpression.simplify(self, other)
 
     def __rmul__(self, other: SMTExpression or float):
-        if type(other) == float and other == 1:
-            return self
-        return self.__binary(other, Times, self.expression, toRHS(other))
+        from src.smt.expressions.MultiplyExpression import MultiplyExpression
+        return MultiplyExpression.simplify(other, self)
 
     def __truediv__(self, other: SMTExpression or float):
-        return self.__binary(other, Div, self.expression, toRHS(other))
+        from src.smt.expressions.DivideExpression import DivideExpression
+        return DivideExpression.simplify(self, other)
 
     def __rtruediv__(self, other: SMTExpression or float):
-        return self.__binary(other, Div, toRHS(other), self.expression)
-
-    def implies(self, other: SMTExpression):
-        expr = self.__binary(other, Implies, self.expression, other.expression)
-        expr.type = BOOL
-        return expr
-
-    def coimplies(self, other: SMTExpression):
-        expr = self.__binary(other, Iff, self.expression, other.expression)
-        expr.type = BOOL
-        return expr
-
-    def iff(self, other: SMTExpression):
-        expr = self.__binary(other, Iff, self.expression, other.expression)
-        expr.type = BOOL
-        return expr
-
-    def impliedBy(self, other: SMTExpression):
-        expr = self.__binary(other, Implies, other.expression, self.expression)
-        expr.type = BOOL
-        return expr
+        from src.smt.expressions.DivideExpression import DivideExpression
+        return DivideExpression.simplify(other, self)
 
     @staticmethod
     def opByString(op: str, left: SMTExpression or float, right: SMTExpression or float):
         if op == "and":
-            return left.AND(right)
+            return left & right
         if op == "or":
-            return left.OR(right)
+            return left | right
         if op == "+":
             return left + right
         if op == "-":
@@ -358,3 +243,10 @@ class SMTExpression:
 
     def evaluate(self, solution):
         raise NotImplementedError
+
+    @staticmethod
+    def numericConstant(el):
+        if type(el) == float or type(el) == int:
+            from src.smt.expressions.ConstantExpression import ConstantExpression
+            return ConstantExpression(el)
+        return el

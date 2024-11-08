@@ -6,6 +6,7 @@ from pysmt.fnode import FNode
 from pysmt.shortcuts import Symbol
 from pysmt.typing import BOOL
 
+from src.smt.SMTExpression import BOOLEAN
 from src.smt.SMTVariable import SMTVariable
 
 
@@ -14,7 +15,7 @@ class SMTBoolVariable(SMTVariable):
     def __init__(self, name: str):
         super().__init__()
         self.name = name
-        self.type = BOOL
+        self.type = BOOLEAN
 
     def __hash__(self):
         return hash(self.name)

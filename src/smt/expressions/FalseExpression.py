@@ -5,14 +5,14 @@ from pysmt.fnode import FNode
 from pysmt.shortcuts import TRUE, FALSE
 
 from src.smt.SMTBoolVariable import SMTBoolVariable
-from src.smt.SMTExpression import SMTExpression
+from src.smt.SMTExpression import SMTExpression, BOOLEAN
 
 
 class FalseExpression(SMTExpression):
 
     def __init__(self):
         super().__init__()
-        self.isConstant = True
+        self.type = BOOLEAN
 
     def __hash__(self):
         return hash(True)

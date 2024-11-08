@@ -6,14 +6,27 @@ from pysmt.fnode import FNode
 from pysmt.shortcuts import And as SMTAnd
 
 from src.smt.SMTBoolVariable import SMTBoolVariable
-from src.smt.SMTExpression import SMTExpression
+from src.smt.SMTExpression import SMTExpression, BOOLEAN
+from src.smt.expressions.FalseExpression import FalseExpression
 from src.smt.expressions.NaryExpression import NaryExpression
+from src.smt.expressions.TrueExpression import TrueExpression
 
 
 class AndExpression(NaryExpression):
 
     def __init__(self, *xs: SMTExpression):
         super().__init__(*xs)
+        self.type = BOOLEAN
+
+    @classmethod
+    def simplify(cls, lhs, rhs):
+        if isinstance(rhs, FalseExpression) or isinstance(lhs, FalseExpression):
+            return FalseExpression()
+        if isinstance(lhs, TrueExpression):
+            return rhs
+        if isinstance(rhs, TrueExpression):
+            return lhs
+        return cls(lhs, rhs)
 
     def toBDDExpression(self, map: Dict[SMTBoolVariable, BDDVariable]):
         exprs = [c.toBDDExpression(map) for c in self.children]
