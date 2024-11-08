@@ -1,8 +1,7 @@
 from __future__ import annotations
 
 import copy
-
-from typing import Dict, cast, Tuple
+from typing import Dict, cast
 
 from src.pddl.Formula import Formula
 from src.pddl.PDDLWriter import PDDLWriter

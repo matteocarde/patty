@@ -9,17 +9,20 @@ from src.plan.NumericEncoding import NumericEncoding
 from src.plan.Pattern import Pattern
 from src.smt.SMTSolution import SMTSolution
 from src.smt.SMTSolver import SMTSolver
+from src.utils.Arguments import Arguments
 
 
 class TestLineExchange(TestCase):
 
     def setUp(self) -> None:
-        self.domain: Domain = Domain.fromFile("../../files/numerical/line-exchange-two-robots/domain.pddl")
-        self.problem: Problem = Problem.fromFile("../../files/numerical/line-exchange-two-robots/instances/prob01.pddl")
+        self.domain: Domain = Domain.fromFile("../../files/numeric/line-exchange/domain.pddl")
+        self.problem: Problem = Problem.fromFile("../../files/numeric/line-exchange/instances/3_5_50_50.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
-        self.horizon = 3
+        self.horizon = 5
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
-        self.pddl2smt: NumericEncoding = NumericEncoding(self.gDomain, self.problem, self.pattern, self.horizon)
+        self.args = Arguments(keepRequired=False)
+        self.pddl2smt: NumericEncoding = NumericEncoding(self.gDomain, self.problem, self.pattern, self.horizon,
+                                                         self.args)
         # print(self.pddl2smt.pattern)
         pass
 

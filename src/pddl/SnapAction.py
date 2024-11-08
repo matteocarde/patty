@@ -56,5 +56,3 @@ class SnapAction(Action):
         sa.durativeAction = dAction
         return sa
 
-    def isSame(self, end: SnapAction):
-        return self.originalName == end.originalName

@@ -9,17 +9,19 @@ from src.plan.NumericEncoding import NumericEncoding
 from src.plan.Pattern import Pattern
 from src.smt.SMTSolution import SMTSolution
 from src.smt.SMTSolver import SMTSolver
+from src.utils.Arguments import Arguments
 
 
 class TestZeno(TestCase):
 
     def setUp(self) -> None:
-        self.domain: Domain = Domain.fromFile("../../files/zeno-travel/domain.pddl")
-        self.problem: Problem = Problem.fromFile("../../files/zeno-travel/instances/pfile1.pddl")
+        self.domain: Domain = Domain.fromFile("../../files/numeric/ipc-2023/zenotravel/domain.pddl")
+        self.problem: Problem = Problem.fromFile("../../files/numeric/ipc-2023/zenotravel/instances/pfile1.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.horizon = 5
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
-        self.pddl2smt: NumericEncoding = NumericEncoding(self.gDomain, self.problem, self.pattern, self.horizon)
+        args = Arguments(keepRequired=False)
+        self.pddl2smt: NumericEncoding = NumericEncoding(self.gDomain, self.problem, self.pattern, self.horizon, args)
         print(self.pddl2smt.pattern)
         print("Number of rules:", len(self.pddl2smt.rules))
         pass

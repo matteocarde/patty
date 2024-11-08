@@ -1,0 +1,37 @@
+
+            \documentclass[11pt,landscape]{article}
+            \usepackage{graphicx}
+            \usepackage{lscape}
+            \usepackage{multirow}
+            \usepackage[a4paper,margin=1in,landscape]{geometry}
+
+            \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\Huge{
+\begin{tabular}{|l||ccccccc||ccccccc||cccc||}
+\hline
+ & \multicolumn{7}{c||}{Coverage (\%)}&\multicolumn{7}{c||}{Time (s)}&\multicolumn{4}{c||}{Bound (Common)}\\
+Domain & $\textsc{Patty}_\vee$&$\textsc{Patty}_\Sigma$&$\textsc{AnmlSMT}$&$\textsc{ITSat}$&$\textsc{LPG}$&$\textsc{Optic}$&$\textsc{TFD}$&$\textsc{Patty}_\vee$&$\textsc{Patty}_\Sigma$&$\textsc{AnmlSMT}$&$\textsc{ITSat}$&$\textsc{LPG}$&$\textsc{Optic}$&$\textsc{TFD}$&$\textsc{Patty}_\vee$&$\textsc{Patty}_\Sigma$&$\textsc{AnmlSMT}$&$\textsc{ITSat}$\\
+\hline
+\textit{Temporal}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}\\\hline
+\textsc{Cushing} (B)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{BottlesPour} (N)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{BottlesShake} (N)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{BottlesPack} (N)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{BottlesAll} (N)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{Majsp} (N)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{MatchAC} (B)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{MatchMS} (B)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{Oversub} (B)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{Painter} (B)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-
+\\\hline
+
+        \end{tabular}}}
+        \caption{Comparative analysis between ...}
+        \label{tab:experiments}
+        \end{table*}
+        
+\end{document}

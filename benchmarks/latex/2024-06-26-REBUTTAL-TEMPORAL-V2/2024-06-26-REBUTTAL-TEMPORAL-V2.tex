@@ -1,0 +1,37 @@
+
+            \documentclass[11pt,landscape]{article}
+            \usepackage{graphicx}
+            \usepackage{lscape}
+            \usepackage{multirow}
+            \usepackage[a4paper,margin=1in,landscape]{geometry}
+
+            \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\Huge{
+\begin{tabular}{|l||cc||cc||}
+\hline
+ & \multicolumn{2}{c||}{N. of Vars}&\multicolumn{2}{c||}{N. of Assertions}\\
+Domain & $\textsc{Patty}$&$\textsc{AnmlSMT}$&$\textsc{Patty}$&$\textsc{AnmlSMT}$\\
+\hline
+\textit{Temporal}&\textbf{4}&\textbf{6}&\textbf{4}&\textbf{6}\\\hline
+\textsc{Cushing}&72&\textbf{56}&118&\textbf{110}\\
+\textsc{Pour}&\textbf{20}&42&\textbf{46}&65\\
+\textsc{Shake}&70&\textbf{31}&136&\textbf{65}\\
+\textsc{Pack}&\textbf{22}&51&\textbf{46}&72\\
+\textsc{Bottles}&\textbf{57}&115&\textbf{143}&161\\
+\textsc{Majsp}&213&\textbf{137}&473&\textbf{373}\\
+\textsc{MatchAC}&95&\textbf{41}&271&\textbf{110}\\
+\textsc{MatchMS}&70&\textbf{43}&178&\textbf{92}\\
+\textsc{Oversub}&\textbf{181}&279&\textbf{308}&354\\
+\textsc{Painter}&723&\textbf{50}&1535&\textbf{203}
+\\\hline
+
+        \end{tabular}}}
+        \caption{Comparative analysis between temporal solvers from the literature and our temporal version of the solver $\textsc{Patty}$. The symbol ``-'' signifies that the solver was unable to parse the problem specification.}
+        \label{tab:experiments}
+        \end{table*}
+        
+\end{document}

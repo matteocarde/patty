@@ -8,17 +8,21 @@ from src.pddl.Problem import Problem
 from src.plan.NumericEncoding import NumericEncoding
 from src.plan.Pattern import Pattern
 from src.smt.SMTSolver import SMTSolver
+from src.utils.Arguments import Arguments
 
 
 class TestFarmlandLinear(TestCase):
 
     def setUp(self) -> None:
-        self.domain: Domain = Domain.fromFile("../../files/farmland_ln/domain.pddl")
-        self.problem: Problem = Problem.fromFile("../../files/farmland_ln/instances/instance_2_100_1229.pddl")
+        self.domain: Domain = Domain.fromFile("../../files/numeric/ipc-2023/fo-farmland/domain.pddl")
+        self.problem: Problem = Problem.fromFile(
+            "../../files/numeric/ipc-2023/fo-farmland/instances/instance_2_200_1229.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.horizon = 2
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
-        self.pddl2smt: NumericEncoding = NumericEncoding(self.gDomain, self.problem, self.pattern, self.horizon)
+        self.args = Arguments(keepRequired=False)
+        self.pddl2smt: NumericEncoding = NumericEncoding(self.gDomain, self.problem, self.pattern, self.horizon,
+                                                         self.args)
         print(self.pddl2smt.pattern)
         pass
 
@@ -38,7 +42,6 @@ class TestFarmlandLinear(TestCase):
         plan.printWithRepetitions()
 
         self.assertTrue(plan.validate(self.problem))
-
 
 
 if __name__ == '__main__':

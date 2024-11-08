@@ -190,10 +190,12 @@ class SMTExpression:
         return self.__binary(other, Minus, self.expression * -1, toRHS(other) * -1)
 
     def __add__(self, other: SMTExpression or float):
+        if (type(other) == float or type(other) == int) and other == 0.0:
+            return self
         return self.__binary(other, Plus, self.expression, toRHS(other))
 
     def __radd__(self, other: SMTExpression or float):
-        if type(other) == float and other == 0:
+        if (type(other) == float or type(other) == int) and other == 0.0:
             return self
         return self.__binary(other, Plus, self.expression, toRHS(other))
 
@@ -210,6 +212,26 @@ class SMTExpression:
 
     def __rtruediv__(self, other: SMTExpression or float):
         return self.__binary(other, Div, toRHS(other), self.expression)
+
+    def implies(self, other: SMTExpression):
+        expr = self.__binary(other, Implies, self.expression, other.expression)
+        expr.type = BOOL
+        return expr
+
+    def coimplies(self, other: SMTExpression):
+        expr = self.__binary(other, Iff, self.expression, other.expression)
+        expr.type = BOOL
+        return expr
+
+    def iff(self, other: SMTExpression):
+        expr = self.__binary(other, Iff, self.expression, other.expression)
+        expr.type = BOOL
+        return expr
+
+    def impliedBy(self, other: SMTExpression):
+        expr = self.__binary(other, Implies, other.expression, self.expression)
+        expr.type = BOOL
+        return expr
 
     @staticmethod
     def opByString(op: str, left: SMTExpression or float, right: SMTExpression or float):

@@ -1,0 +1,27 @@
+
+               \documentclass[11pt]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||ccccccc||ccccccc||ccccccc||}
+\hline
+ & \multicolumn{7}{c||}{Solved (out of $20$)}&\multicolumn{7}{c||}{Time (s)}&\multicolumn{7}{c||}{Plan Length}\\
+Domain & $\mathrm{P}_\mathrm{A}$&$$\mathrm{EN}$$&$$\mathrm{NFD}$$&$$\mathrm{FF}$$&$$\mathrm{R}^2\exists$$&$$\mathrm{OMT}$$&$$\mathrm{SR}$$&$\mathrm{P}_\mathrm{A}$&$$\mathrm{EN}$$&$$\mathrm{NFD}$$&$$\mathrm{FF}$$&$$\mathrm{R}^2\exists$$&$$\mathrm{OMT}$$&$$\mathrm{SR}$$&$\mathrm{P}_\mathrm{A}$&$$\mathrm{EN}$$&$$\mathrm{NFD}$$&$$\mathrm{FF}$$&$$\mathrm{R}^2\exists$$&$$\mathrm{OMT}$$&$$\mathrm{SR}$$\\
+\hline
+\textsc{Stlrs} (S)&\textbf{8}&1&-&4&-&-&-&\textbf{220.3}&289.4&-&243.8&-&-&-&-&-&-&-&-&-&-
+\\\hline
+\textit{Best}&\textbf{8}&\textbf{1}&\textbf{0}&\textbf{4}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{5}&\textbf{1}&\textbf{0}&\textbf{4}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{5}&\textbf{1}&\textbf{0}&\textbf{4}&\textbf{0}&\textbf{0}&\textbf{0}\\\hline
+
+        \end{tabular}}
+        \caption{Comparative analysis between search planners}
+        \label{tab:search}
+        \end{table*}
+        
+\end{document}

@@ -1,0 +1,46 @@
+
+               \documentclass[11pt,landscape]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in,landscape]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||cccc||cccc||cccc||cccc||cccc||cccc||}
+\hline
+ & \multicolumn{4}{c||}{Coverage (\%)}&\multicolumn{4}{c||}{Time (s)}&\multicolumn{4}{c||}{Bound $n$}&\multicolumn{4}{c||}{$|\pi|$}&\multicolumn{4}{c||}{$|\mathcal{X} \cup \mathcal{A}^\prec \cup \mathcal{X}'|$}&\multicolumn{4}{c||}{$|\mathcal{T}^\prec(\mathcal{X},\mathcal{A}^\prec,\mathcal{X}')|$}\\
+Domain & $\mathrm{P}_\mathrm{E}/\mathrm{P}_\mathrm{I}$&$\mathrm{R^2\exists}$&$\mathrm{OMT}$&$\mathrm{SR}$&$\mathrm{P}_\mathrm{E}/\mathrm{P}_\mathrm{I}$&$\mathrm{R^2\exists}$&$\mathrm{OMT}$&$\mathrm{SR}$&$\mathrm{P}_\mathrm{E}/\mathrm{P}_\mathrm{I}$&$\mathrm{R^2\exists}$&$\mathrm{OMT}$&$\mathrm{SR}$&$\mathrm{P}_\mathrm{E}/\mathrm{P}_\mathrm{I}$&$\mathrm{R^2\exists}$&$\mathrm{OMT}$&$\mathrm{SR}$&$\mathrm{P}_\mathrm{E}/\mathrm{P}_\mathrm{I}$&$\mathrm{R^2\exists}$&$\mathrm{OMT}$&$\mathrm{SR}$&$\mathrm{P}_\mathrm{E}/\mathrm{P}_\mathrm{I}$&$\mathrm{R^2\exists}$&$\mathrm{OMT}$&$\mathrm{SR}$\\
+\hline
+\textsc{BlGrp} (S)&\textbf{100}/\textbf{100}&85&10&\textbf{100}&\textbf{1.7}/3.1&74.7&270.2&\textbf{1.7}&\textbf{1.0}/\textbf{1.0}&6.0&8.5&\textbf{1.0}&63/\textbf{26}&34&60&74&48/48&1.8k&265&\textbf{40}&\textbf{113}/\textbf{113}&2.2k&776&122\\
+\textsc{Cnt} (S)&\textbf{100}/\textbf{100}&25&90&\textbf{100}&\textbf{0.9}/1.2&221.4&92.7&1.0&\textbf{1.0}/\textbf{1.0}&5.6&5.6&\textbf{1.0}&35/\textbf{20}&24&28&21&24/24&647&111&\textbf{22}&\textbf{60}/\textbf{60}&871&323&69\\
+\textsc{Cnt} (L)&\textbf{100}/\textbf{100}&30&15&30&\textbf{1.2}/3.4&211.0&255.3&229.2&\textbf{1.0}/\textbf{1.0}&1.7&5.3&2.7&14/\textbf{5}&10&\textbf{5}&7&28/28&232&122&\textbf{26}&\textbf{57}/\textbf{57}&301&1.5k&112\\
+\textsc{Del} (S)&\textbf{25}/\textbf{25}&15&5&-&226.5/\textbf{226.3}&262.0&295.6&-&\textbf{1.0}/\textbf{1.0}&2.0&10.0&-&\textbf{10}/\textbf{10}&\textbf{10}&\textbf{10}&-&\textbf{212}/\textbf{212}&17.5k&1.9k&-&\textbf{627}/\textbf{627}&18.4k&246.0k&-\\
+\textsc{Drn} (S)&\textbf{15}/\textbf{15}&\textbf{15}&\textbf{15}&\textbf{15}&\textbf{255.2}/\textbf{255.2}&256.0&256.3&256.4&\textbf{5.7}/\textbf{5.7}&8.3&12.3&9.7&21/\textbf{12}&14&\textbf{12}&15&301/301&4.3k&299&\textbf{29}&778/778&4.7k&5.1k&\textbf{211}\\
+\textsc{Exp} (S)&\textbf{20}/\textbf{20}&5&10&-&242.6/\textbf{242.5}&287.1&276.2&-&\textbf{3.0}/\textbf{3.0}&10.0&15.0&-&42/\textbf{30}&\textbf{30}&\textbf{30}&-&\textbf{332}/\textbf{332}&22.6k&1.1k&-&\textbf{711}/\textbf{711}&23.9k&32.5k&-\\
+\textsc{Farm} (S)&\textbf{100}/85&5&-&95&\textbf{1.2}/65.2&292.9&-&1.4&\textbf{1.0}/\textbf{1.0}&170.0&-&\textbf{1.0}&295/170&170&-&\textbf{169}&\textbf{12}/\textbf{12}&4.1k&-&14&\textbf{23}/\textbf{23}&6.1k&-&52\\
+\textsc{Farm} (L)&\textbf{90}/75&-&5&-&\textbf{32.9}/90.4&-&286.2&-&\textbf{1.0}/\textbf{1.0}&-&12.0&-&167/112&-&\textbf{19}&-&\textbf{16}/\textbf{16}&-&112&-&\textbf{28}/\textbf{28}&-&545&-\\
+\textsc{HPwr} (S)&\textbf{100}/25&40&-&-&\textbf{10.5}/228.1&185.5&-&-&\textbf{1.0}/\textbf{1.0}&\textbf{1.0}&-&-&66/\textbf{36}&47&-&-&\textbf{352}/\textbf{352}&26.8k&-&-&\textbf{725}/\textbf{725}&27.3k&-&-\\
+\textsc{MPrime} (S)&\textbf{70}/\textbf{70}&45&30&50&\textbf{121.7}/126.9&211.2&229.6&174.7&\textbf{1.2}/\textbf{1.2}&2.2&4.2&5.2&57/\textbf{6}&23&10&38&\textbf{422}/\textbf{422}&77.9k&1.5k&467&\textbf{1.3k}/\textbf{1.3k}&79.7k&144.8k&19.4k\\
+\textsc{PathM} (S)&\textbf{100}/15&10&15&5&\textbf{6.7}/255.2&279.7&262.4&286.1&\textbf{1.0}/\textbf{1.0}&6.0&9.0&3.0&155/\textbf{12}&40&28&57&238/238&32.0k&986&\textbf{186}&\textbf{393}/\textbf{393}&32.8k&5.2k&521\\
+\textsc{PlWat} (S)&\textbf{30}/25&-&-&-&\textbf{222.8}/226.5&-&-&-&\textbf{7.6}/\textbf{7.6}&-&-&-&348/\textbf{213}&-&-&-&\textbf{540}/\textbf{540}&-&-&-&\textbf{1.5k}/\textbf{1.5k}&-&-&-\\
+\textsc{Rvr} (S)&70/\textbf{75}&45&35&55&111.3/\textbf{98.7}&195.9&232.6&180.5&\textbf{1.4}/\textbf{1.4}&2.0&7.7&7.7&62/\textbf{16}&\textbf{16}&17&19&468/468&50.7k&1.5k&\textbf{367}&\textbf{1.1k}/\textbf{1.1k}&51.5k&151.2k&10.4k\\
+\textsc{Sail} (S)&\textbf{100}/\textbf{100}&-&-&\textbf{100}&\textbf{1.1}/7.2&-&-&5.9&\textbf{3.3}/\textbf{3.3}&-&-&7.3&1.3k/\textbf{1.0k}&-&-&1.2k&163/163&-&-&\textbf{52}&340/340&-&-&\textbf{326}\\
+\textsc{Sail} (L)&\textbf{70}/\textbf{70}&-&5&-&\textbf{90.7}/96.3&-&285.8&-&\textbf{1.0}/\textbf{1.0}&-&13.0&-&158/\textbf{32}&-&59&-&\textbf{75}/\textbf{75}&-&874&-&\textbf{187}/\textbf{187}&-&5.8k&-\\
+\textsc{Sat} (S)&25/25&\textbf{30}&15&15&264.3/263.0&\textbf{257.0}&262.9&263.2&\textbf{3.0}/\textbf{3.0}&\textbf{3.0}&6.0&7.0&46/15&\textbf{14}&16&15&1.1k/1.1k&79.6k&1.3k&\textbf{290}&\textbf{2.9k}/\textbf{2.9k}&81.1k&151.6k&9.2k\\
+\textsc{Sgr} (S)&\textbf{100}/\textbf{100}&80&90&-&\textbf{4.1}/5.1&153.1&113.7&-&\textbf{2.5}/\textbf{2.5}&4.6&6.8&-&46/\textbf{25}&43&34&-&\textbf{1.1k}/\textbf{1.1k}&173.2k&2.3k&-&\textbf{2.8k}/\textbf{2.8k}&176.4k&122.8k&-\\
+\textsc{Tpp} (L)&\textbf{10}/\textbf{10}&\textbf{10}&-&-&\textbf{270.2}/270.3&270.5&-&-&\textbf{2.5}/\textbf{2.5}&\textbf{2.5}&-&-&14/12&\textbf{10}&-&-&\textbf{452}/\textbf{452}&10.4k&-&-&\textbf{1.1k}/\textbf{1.1k}&10.9k&-&-\\
+\textsc{Zeno} (S)&\textbf{55}/\textbf{55}&\textbf{55}&35&-&\textbf{136.4}/136.8&148.2&209.6&-&\textbf{1.6}/\textbf{1.6}&\textbf{1.6}&5.3&-&13/\textbf{11}&12&13&-&\textbf{276}/\textbf{276}&10.8k&931&-&\textbf{783}/\textbf{783}&11.2k&74.8k&-\\
+\textsc{Line} (L)&\textbf{100}/\textbf{100}&15&23&34&\textbf{0.9}/1.1&255.7&234.1&226.4&\textbf{1.7}/\textbf{1.7}&8.5&9.2&8.9&30/\textbf{21}&29&23&32&62/62&1.9k&212&\textbf{36}&138/138&2.3k&876&\textbf{103}
+\\\hline
+\textit{Total}&\textbf{19}&\textbf{4}&\textbf{1}&\textbf{4}&\textbf{19}&\textbf{1}&\textbf{0}&\textbf{1}&\textbf{20}&\textbf{4}&\textbf{0}&\textbf{3}&\textbf{16}&\textbf{5}&\textbf{5}&\textbf{1}&\textbf{11}&\textbf{0}&\textbf{0}&\textbf{9}&\textbf{17}&\textbf{0}&\textbf{0}&\textbf{3}\\\hline
+
+        \end{tabular}}
+        \caption{Comparative analysis between symbolic planners}
+        \label{tab:symbolic}
+        \end{table*}
+        
+\end{document}

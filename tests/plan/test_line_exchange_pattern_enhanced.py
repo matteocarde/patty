@@ -10,7 +10,7 @@ class TestLineExchangePatternEnhanced(TestCase):
 
     def setUp(self) -> None:
         self.domain: Domain = Domain.fromFile("../../files/numeric/line-exchange/domain.pddl")
-        self.problem: Problem = Problem.fromFile("../../files/numeric/line-exchange/instances/2_5_25_10.pddl")
+        self.problem: Problem = Problem.fromFile("../../files/numeric/line-exchange/instances/3_5_50_50.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.patternRandom = Pattern.fromRandom(self.gDomain)
         self.patternNormal = Pattern.fromARPG(self.gDomain)

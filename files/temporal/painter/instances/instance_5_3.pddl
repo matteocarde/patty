@@ -4,7 +4,7 @@
 
 	(:objects
 		i0 i1 i2 - Item
-		t0 t1 t2 t3 t4 - Treatment
+		t0 t1 t2 t3 t4 last_t - Treatment
 	)
 
         (:init

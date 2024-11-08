@@ -1,0 +1,17 @@
+instance variable var1;
+instance variable var2;
+[start] norepeat(var1) := true;
+[start] norepeat(var2) := true;
+[start] target1(var1) := false;
+[start] target2(var1) := false;
+[start] target3(var1) := false;
+[start] target1(var2) := false;
+[start] target2(var2) := false;
+[start] target3(var2) := false;
+
+[end] target1(var1) == true;
+[end] target2(var1) == true;
+[end] target3(var1) == true;
+[end] target1(var2) == true;
+[end] target2(var2) == true;
+[end] target3(var2) == true;

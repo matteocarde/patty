@@ -1,23 +1,20 @@
+import statistics
 from typing import List, Pattern, Set
 
 import pysmt
-
-from src.pddl.Domain import GroundedDomain
-from src.pddl.Problem import Problem
-from src.smt.SMTExpression import SMTExpression
-
 import pysmt.smtlib.commands as smtcmd
 import pysmt.smtlib.script
 from pysmt.environment import get_env
 from pysmt.logics import QF_NRA
 
+from src.pddl.Domain import GroundedDomain
+from src.pddl.Problem import Problem
+from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTSolution import SMTSolution
 from src.smt.SMTVariable import SMTVariable
 
 
 class Encoding:
-    domain: GroundedDomain
-    problem: Problem
     rules: List[SMTExpression]
     softRules: List[SMTExpression]
     minimize: SMTExpression or None
@@ -80,8 +77,10 @@ class Encoding:
         variables = set()
         for i, rule in enumerate(self.rules):
             variables |= rule.variables
-        # print(variables)
         return len(variables)
 
     def getNRules(self):
         return len(self.rules)
+
+    def getAvgRuleLength(self):
+        return round(statistics.mean([len(r.variables) for r in self.rules]), 2)

@@ -9,21 +9,24 @@ from src.plan.NumericEncoding import NumericEncoding
 from src.plan.Pattern import Pattern
 from src.smt.SMTSolution import SMTSolution
 from src.smt.SMTSolver import SMTSolver
+from src.utils.Arguments import Arguments
 
 
 class TestLogistic(TestCase):
 
     def setUp(self) -> None:
         a = time.perf_counter()
-        self.domain: Domain = Domain.fromFile("../../files/classical/logistic/domain.pddl")
+        self.domain: Domain = Domain.fromFile("../../files/classic/logistic/domain.pddl")
         b = time.perf_counter()
-        self.problem: Problem = Problem.fromFile("../../files/classical/logistic/instances/probLOGISTICS-4-0.pddl")
+        self.problem: Problem = Problem.fromFile("../../files/classic/logistic/instances/probLOGISTICS-4-0.pddl")
         c = time.perf_counter()
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         d = time.perf_counter()
         self.horizon = 10
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
-        self.pddl2smt: NumericEncoding = NumericEncoding(self.gDomain, self.problem, self.pattern, self.horizon)
+        self.args = Arguments(keepRequired=False)
+        self.pddl2smt: NumericEncoding = NumericEncoding(self.gDomain, self.problem, self.pattern, self.horizon,
+                                                         self.args)
         e = time.perf_counter()
         print(self.pddl2smt.pattern)
         print("Domain Time:", b - a)

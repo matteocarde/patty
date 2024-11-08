@@ -1,7 +1,14 @@
+;;  Introduced by Maria Fox and Derek Long in IPC-3. The domain, i.e. its test
+;; suite, could not be solved efficiently by any of the IPC-3 participants. The
+;; domain was re-used in the IPC-4 with no modifications whatsoever, except removing some
+;; quantified effects (that could easily be replaced with lists of non-quantified
+;; effects). 
+
 (define (domain civ)
   (:requirements :fluents :typing :conditional-effects)
   (:types
     place vehicle - store
+    resource
   )
   (:constants
     timber wood coal stone iron ore - resource

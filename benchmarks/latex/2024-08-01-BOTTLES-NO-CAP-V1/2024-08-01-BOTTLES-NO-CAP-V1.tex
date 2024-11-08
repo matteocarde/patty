@@ -1,0 +1,30 @@
+
+            \documentclass[11pt,landscape]{article}
+            \usepackage{graphicx}
+            \usepackage{lscape}
+            \usepackage{multirow}
+            \usepackage[a4paper,margin=1in,landscape]{geometry}
+            \pagenumbering{gobble}
+
+            \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\Huge{
+\begin{tabular}{|l||c||c||c||c||c||}
+\hline
+ & \multicolumn{1}{c||}{Coverage (\%)}&\multicolumn{1}{c||}{Time (s)}&\multicolumn{1}{c||}{Bound (Common)}&\multicolumn{1}{c||}{N. of Vars}&\multicolumn{1}{c||}{N. of Assertions}\\
+Domain & $\textsc{Patty}$&$\textsc{Patty}$&$\textsc{Patty}$&$\textsc{Patty}$&$\textsc{Patty}$\\
+\hline
+\textit{Temporal}&\textbf{2}&\textbf{2}&\textbf{2}&\textbf{2}&\textbf{2}\\\hline
+\textsc{Pour}&\textbf{90.0}&\textbf{40.82}&\textbf{3.56}&\textbf{244}&\textbf{1743}\\
+\textsc{PourNoCap}&\textbf{100.0}&\textbf{0.75}&\textbf{1.00}&\textbf{52}&\textbf{104}
+\\\hline
+
+        \end{tabular}}}
+        \caption{Number of variables and assertions of the final \textsc{smt} encoding of the solvers \textsc{patty} and \textsc{anmlsmt} on the instances where both solvers found a solution.}
+        \label{tab:experiments}
+        \end{table*}
+        
+\end{document}

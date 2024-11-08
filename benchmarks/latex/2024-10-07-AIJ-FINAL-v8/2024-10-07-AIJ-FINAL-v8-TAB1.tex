@@ -1,0 +1,46 @@
+
+               \documentclass[11pt,landscape]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in,landscape]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||cc||cc||cc||cc||cc||}
+\hline
+ & \multicolumn{2}{c||}{Coverage (\%)}&\multicolumn{2}{c||}{Time (s)}&\multicolumn{2}{c||}{Bound $n$}&\multicolumn{2}{c||}{$|\mathcal{X} \cup \mathcal{A}^\prec \cup \mathcal{X}'|$}&\multicolumn{2}{c||}{$|\mathcal{T}^\prec(\mathcal{X},\mathcal{A}^\prec,\mathcal{X}')|$}\\
+Domain & $\mathrm{P}_\mathrm{A}$&$\mathrm{P}_\mathrm{E}$&$\mathrm{P}_\mathrm{A}$&$\mathrm{P}_\mathrm{E}$&$\mathrm{P}_\mathrm{A}$&$\mathrm{P}_\mathrm{E}$&$\mathrm{P}_\mathrm{A}$&$\mathrm{P}_\mathrm{E}$&$\mathrm{P}_\mathrm{A}$&$\mathrm{P}_\mathrm{E}$\\
+\hline
+\textsc{BlGrp} (S)&\textbf{100}&-&\textbf{2.2}&-&\textbf{1.0}&-&\textbf{174}&-&\textbf{436}&-\\
+\textsc{Cnt} (S)&\textbf{100}&-&\textbf{0.9}&-&\textbf{1.0}&-&\textbf{90}&-&\textbf{225}&-\\
+\textsc{Cnt} (L)&\textbf{100}&-&\textbf{0.8}&-&\textbf{1.0}&-&\textbf{94}&-&\textbf{198}&-\\
+\textsc{Del} (S)&\textbf{10}&-&\textbf{271.2}&-&\textbf{3.0}&-&\textbf{809}&-&\textbf{2.4k}&-\\
+\textsc{Drn} (S)&\textbf{15}&-&\textbf{256.0}&-&\textbf{5.7}&-&\textbf{142}&-&\textbf{344}&-\\
+\textsc{Exp} (S)&\textbf{5}&-&\textbf{295.9}&-&\textbf{6.0}&-&\textbf{516}&-&\textbf{1.2k}&-\\
+\textsc{Farm} (S)&\textbf{100}&-&\textbf{0.9}&-&\textbf{1.0}&-&\textbf{50}&-&\textbf{107}&-\\
+\textsc{Farm} (L)&\textbf{100}&-&\textbf{0.9}&-&\textbf{1.0}&-&\textbf{64}&-&\textbf{129}&-\\
+\textsc{HPwr} (S)&\textbf{60}&-&\textbf{131.2}&-&\textbf{1.0}&-&\textbf{298}&-&\textbf{640}&-\\
+\textsc{MPrime} (S)&\textbf{30}&-&\textbf{217.0}&-&\textbf{2.2}&-&\textbf{1.1k}&-&\textbf{3.2k}&-\\
+\textsc{PathM} (S)&\textbf{95}&-&\textbf{20.8}&-&\textbf{1.0}&-&\textbf{1.1k}&-&\textbf{1.9k}&-\\
+\textsc{PlWat} (S)&\textbf{25}&-&\textbf{247.3}&-&\textbf{7.6}&-&\textbf{363}&-&\textbf{997}&-\\
+\textsc{Rvr} (S)&\textbf{50}&-&\textbf{169.4}&-&\textbf{2.3}&-&\textbf{1.1k}&-&\textbf{2.9k}&-\\
+\textsc{Sail} (S)&\textbf{100}&-&\textbf{15.0}&-&\textbf{3.3}&-&\textbf{134}&-&\textbf{266}&-\\
+\textsc{Sail} (L)&\textbf{100}&-&\textbf{3.4}&-&\textbf{1.4}&-&\textbf{66}&-&\textbf{167}&-\\
+\textsc{Sat} (S)&-&-&-&-&-&-&-&-&-&-\\
+\textsc{Sgr} (S)&\textbf{30}&-&\textbf{217.5}&-&\textbf{2.3}&-&\textbf{908}&-&\textbf{2.3k}&-\\
+\textsc{Tpp} (L)&\textbf{10}&-&\textbf{271.1}&-&\textbf{2.5}&-&\textbf{237}&-&\textbf{604}&-\\
+\textsc{Zeno} (S)&\textbf{45}&-&\textbf{168.9}&-&\textbf{1.6}&-&\textbf{345}&-&\textbf{1.1k}&-\\
+\textsc{Line} (L)&\textbf{98}&-&\textbf{15.0}&-&\textbf{4.1}&-&\textbf{205}&-&\textbf{497}&-
+\\\hline
+\textit{Total}&\textbf{19}&\textbf{0}&\textbf{19}&\textbf{0}&\textbf{19}&\textbf{0}&\textbf{19}&\textbf{0}&\textbf{19}&\textbf{0}\\\hline
+
+        \end{tabular}}
+        \caption{Comparative analysis between  \pattya and \pattye. Each domain is labeled with S (for simple) if every numeric effect of each action either increases or decreases by a constant the assigned variable, and with L (for linear), otherwise. In the table, names have been abbreviated to save space.  See \cite{ipc2023} for other details.}
+        \label{tab:exp-patty-a-patty-e}
+        \end{table*}
+        
+\end{document}

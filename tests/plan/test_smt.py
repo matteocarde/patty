@@ -189,29 +189,6 @@ class TestSMT(TestCase):
             v_x = s.get_value(x)
             self.assertEqual(v_x, FALSE())
 
-    def test_yices(self):
-        x, y = Symbol("x1"), Symbol("y1")
-        f = Implies(x, y)
-
-        solvers_set = ["yices"]
-        with Portfolio(solvers_set,
-                       logic=QF_UFLIRA,
-                       incremental=True,
-                       generate_models=True) as s:
-            s.add_assertion(f)
-            s.push()
-            s.add_assertion(x)
-
-            res = s.solve()
-            v_y = s.get_value(y)
-            self.assertEqual(v_y, TRUE())
-
-            s.pop()
-            s.add_assertion(Not(y))
-            res = s.solve()
-            v_x = s.get_value(x)
-            self.assertEqual(v_x, FALSE())
-
 
 if __name__ == '__main__':
     unittest.main()

@@ -20,12 +20,12 @@ class NumericTransitionVariables:
         self.assList: Dict[Atom, Set[Operation]] = assList
         self.pattern: Pattern = pattern
         self.valueVariables: Dict[Atom, SMTVariable] = self.__computeValueVariables(index)
-        self.deltaVariables: Dict[Action, Dict[Atom, SMTExpression]] = self.__computeDeltaVariables(index,
-                                                                                                    hasPlaceholders)
+        self.sigmaVariables: Dict[int, Dict[Atom, SMTExpression]] = self.__computeSigmaVariables(index,
+                                                                                                 hasPlaceholders)
         if index > 0:
-            self.actionVariables: Dict[Action, SMTVariable] = self.__computeActionVariables(index)
+            self.actionVariables: Dict[int, SMTVariable] = self.__computeActionVariables(index)
             # self.boolActionVariables: Dict[Action, SMTVariable] = self.__computeBoolActionVariables(index)
-            self.auxVariables: Dict[Action, Dict[Atom, SMTVariable]] = self.__computeAuxVariables(index)
+            self.auxVariables: Dict[int, Dict[Atom, SMTVariable]] = self.__computeAuxVariables(index)
 
     def __computeValueVariables(self, index: int) -> Dict[Atom, SMTVariable]:
         variables: Dict[Atom, SMTVariable] = dict()
@@ -37,52 +37,51 @@ class NumericTransitionVariables:
 
         return variables
 
-    def __computeActionVariables(self, index: int) -> Dict[Action, SMTVariable]:
-        variables: Dict[Action, SMTVariable] = dict()
+    def __computeActionVariables(self, index: int) -> Dict[int, SMTVariable]:
+        variables: Dict[int, SMTVariable] = dict()
 
-        for action in self.pattern:
-            if action.isFake:
-                continue
-            variables[action] = SMTIntVariable(f"{action.name}_{index}_n")
+        for i, action in self.pattern.enumerate():
+            variables[i] = SMTIntVariable(f"{action.name}_{index}_n")
 
         return variables
 
-    def __computeBoolActionVariables(self, index: int) -> Dict[Action, SMTVariable]:
-        variables: Dict[Action, SMTVariable] = dict()
+    def __computeBoolActionVariables(self, index: int) -> Dict[int, SMTVariable]:
+        variables: Dict[int, SMTVariable] = dict()
 
-        for action in self.pattern:
-            if action.isFake:
-                continue
+        for i, action in self.pattern.enumerate():
             # They should be Integer, but in pattern to avoid always casting them with ToReal we relax them to float,
             # since they are constrained in the encoding
-            variables[action] = SMTRealVariable(f"{action.name}_{index}_b")
+            variables[i] = SMTRealVariable(f"{action.name}_{index}_b")
 
         return variables
 
-    def __computeDeltaVariables(self, index: int, hasPlaceholders: bool) -> Dict[Action, Dict[Atom, SMTVariable]]:
-        variables: Dict[Action, Dict[Atom, SMTVariable]] = dict()
+    def __computeSigmaVariables(self, index: int, hasPlaceholders: bool) -> Dict[int, Dict[Atom, SMTVariable]]:
+        variables: Dict[int, Dict[Atom, SMTVariable]] = dict()
 
-        for action in self.pattern:
-            variables[action] = dict()
+        variables[0] = dict()
+        if hasPlaceholders:
+            for atom in self.functions:
+                variables[0][atom] = SMTRealVariable(f"d_0_{index}({atom})")
+            for atom in self.predicates:
+                variables[0][atom] = SMTBoolVariable(f"d_0_{index}({atom})")
+
+        for i, action in self.pattern.enumerate():
+            variables[i] = dict()
             if hasPlaceholders:
                 for atom in self.functions:
-                    variables[action][atom] = SMTRealVariable(f"d_{{{action}}}_{index}({atom})")
+                    variables[i][atom] = SMTRealVariable(f"d_{{{action}}}_{index}({atom})")
                 for atom in self.predicates:
-                    variables[action][atom] = SMTBoolVariable(f"d_{{{action}}}_{index}({atom})")
+                    variables[i][atom] = SMTBoolVariable(f"d_{{{action}}}_{index}({atom})")
 
         return variables
 
-    def __computeAuxVariables(self, index) -> Dict[Action, Dict[Atom, SMTVariable]]:
-        variables: Dict[Action, Dict[Atom, SMTVariable]] = dict()
-        # for (var, actions) in self.assList.items():
-        #     for a in actions:
-        #         variables.setdefault(a, dict())
-        #         variables[a][var] = SMTRealVariable(f"{var}_{a}_{index}")
+    def __computeAuxVariables(self, index) -> Dict[int, Dict[Atom, SMTVariable]]:
+        variables: Dict[int, Dict[Atom, SMTVariable]] = dict()
 
-        for a in self.pattern:
-            variables.setdefault(a, dict())
+        for i, a in self.pattern.enumerate():
+            variables.setdefault(i, dict())
             for var in a.assList:
-                variables[a][var] = SMTRealVariable(f"{var}_{a}_{index}")
+                variables[i][var] = SMTRealVariable(f"{var}_{a}_{index}")
             if not a.hasNonSimpleLinearIncrement():
                 continue
             for eff in a.effects:
@@ -90,6 +89,6 @@ class NumericTransitionVariables:
                     continue
                 var = eff.getAtom()
                 variables.setdefault(a, dict())
-                variables[a][var] = SMTRealVariable(f"{var}_{a}_{index}")
+                variables[i][var] = SMTRealVariable(f"{var}_{a}_{index}")
 
         return variables

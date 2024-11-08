@@ -8,8 +8,8 @@ from src.pddl.Problem import Problem
 class TestHugeGrounding(TestCase):
 
     def setUp(self) -> None:
-        domainFile = "../../files/ipc-2023/pathwaysmetric/domain.pddl"
-        problemFile = "../../files/ipc-2023/pathwaysmetric/instances/pfile07.pddl"
+        domainFile = "../../files/numeric/ipc-2023/pathwaysmetric/domain.pddl"
+        problemFile = "../../files/numeric/ipc-2023/pathwaysmetric/instances/pfile07.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)

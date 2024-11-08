@@ -1,127 +1,77 @@
+import copy
 import csv
 import json
 import os
 import shutil
 import statistics
 import sys
-from typing import Dict, List
+from typing import Dict, List, Set
 
+from benchmarks.tables.aij.table1 import AIJ_TABLE1
+from benchmarks.tables.aij.table2 import AIJ_TABLE2
+from benchmarks.tables.aij.table3 import AIJ_TABLE3
+from benchmarks.tables.aij.table4 import AIJ_TABLE4
 from classes.CloudLogger import CloudLogger
 from classes.Result import Result
 
-SMT_SOLVERS = {'SpringRoll',
-               "PATTY-R-MIN", "PATTY-R-MAX", "PATTY-R-AVG", "PATTY-A", "PATTY-E", "PATTY-M", "PATTY-I",
-               'RANTANPLAN',
-               "OMT"}
-TIME_LIMIT = 30 * 1000
 
-SOLVERS = {
-    'SpringRoll': "SR",
-    'RANTANPLAN': "\mathrm{R^2\exists}",
-    'METRIC-FF': "\mathrm{FF}",
-    'ENHSP': r"\mathrm{ENHSP}",
-    'NFD': "\mathrm{NFD}",
-    'SMTPLAN+': "\mathrm{SMTP}^+",
-    'OMT': "\mathrm{OMT}",
-    "PATTY-R-MIN": "P_R^{\mathrm{min}}",
-    "PATTY-R-MAX": "P_R^{\mathrm{max}}",
-    "PATTY-R-AVG": "P_R^{\mathrm{avg}}",
-    "PATTY-A": "P_A",
-    "PATTY-E": "P_E",
-    "PATTY-FA": "P_{FA}",
-    "PATTY-FE": "P_{FE}",
-    "PATTY-M": "P_M",
-    "PATTY-I": "P_I",
-}
+def round(fValue, n):
+    return '{:.{n}f}'.format(fValue, n=n)
 
-DOMAINS = {
-    "numeric/ipc-2023/block-grouping": r"\textsc{BlockGrouping} (S)",
-    "numeric/ipc-2023/counters": r"\textsc{Counters} (S)",
-    "numeric/ipc-2023/delivery": r"\textsc{Delivery} (S)",
-    "numeric/ipc-2023/drone": r"\textsc{Drone} (S)",
-    "numeric/ipc-2023/expedition": r"\textsc{Expedition} (S)",
-    "numeric/ipc-2023/ext-plant-watering": r"\textsc{PlantWatering} (S)",
-    "numeric/ipc-2023/farmland": r"\textsc{Farmland} (S)",
-    "numeric/ipc-2023/fo-farmland": r"\textsc{Farmland} (L)",
-    "numeric/ipc-2023/fo-sailing": r"\textsc{Sailing} (L)",
-    "numeric/ipc-2023/fo_counters": r"\textsc{Counters} (L)",
-    "numeric/ipc-2023/hydropower": r"\textsc{HydroPower} (S)",
-    # "numeric/ipc-2023/markettrader": r"\textsc{MarketTrader}",
-    "numeric/ipc-2023/mprime": r"\textsc{MPrime} (S)",
-    "numeric/ipc-2023/pathwaysmetric": r"\textsc{PathwaysMetric} (S)",
-    "numeric/ipc-2023/rover": r"\textsc{Rover} (S)",
-    "numeric/ipc-2023/sailing": r"\textsc{Sailing} (S)",
-    "numeric/ipc-2023/satellite": r"\textsc{Satellite} (S)",
-    "numeric/ipc-2023/settlers": r"\textsc{Settlers} (S)",
-    "numeric/ipc-2023/sugar": r"\textsc{Sugar} (S)",
-    "numeric/ipc-2023/tpp": r"\textsc{TPP} (L)",
-    "numeric/ipc-2023/zenotravel": r"\textsc{ZenoTravel} (S)",
-    "numeric/line-exchange": r"\textsc{LineExchange} (L)",
-    "line-exchange-quantity": r"\textsc{LineExchange-QTY} (L)"
-}
 
-# DOMAINS = {
-#     "numeric/ipc-2023/block-grouping": r"\textsc{BlGrp} (S)",
-#     "numeric/ipc-2023/counters": r"\textsc{Cnt} (S)",
-#     "numeric/ipc-2023/delivery": r"\textsc{Del} (S)",
-#     "numeric/ipc-2023/drone": r"\textsc{Drn} (S)",
-#     "numeric/ipc-2023/expedition": r"\textsc{Exp} (S)",
-#     "numeric/ipc-2023/ext-plant-watering": r"\textsc{PlWat} (S)",
-#     "numeric/ipc-2023/farmland": r"\textsc{Farm} (S)",
-#     "numeric/ipc-2023/fo-farmland": r"\textsc{Farm} (L)",
-#     "numeric/ipc-2023/fo-sailing": r"\textsc{Sail} (L)",
-#     "numeric/ipc-2023/fo_counters": r"\textsc{Cnt} (L)",
-#     "numeric/ipc-2023/hydropower": r"\textsc{HPwr} (S)",
-#     # "numeric/ipc-2023/markettrader": r"\textsc{MarketTrader}",
-#     "numeric/ipc-2023/mprime": r"\textsc{MPrime} (S)",
-#     "numeric/ipc-2023/pathwaysmetric": r"\textsc{PathM} (S)",
-#     "numeric/ipc-2023/rover": r"\textsc{Rvr} (S)",
-#     "numeric/ipc-2023/sailing": r"\textsc{Sail} (S)",
-#     "numeric/ipc-2023/satellite": r"\textsc{Sat} (S)",
-#     "numeric/ipc-2023/settlers": r"\textsc{Stlr} (S)",
-#     "numeric/ipc-2023/sugar": r"\textsc{Sgr} (S)",
-#     "numeric/ipc-2023/tpp": r"\textsc{Tpp} (L)",
-#     "numeric/ipc-2023/zenotravel": r"\textsc{Zeno} (S)",
-#     "numeric/line-exchange": r"\textsc{Line} (L)",
-#     "line-exchange-quantity": r"\textsc{LineExchange-QTY} (L)"
-# }
+def rVec(v, n):
+    if not v:
+        return "-"
+    mean = statistics.mean(v)
+    return round(mean, n)
 
-TOTALS = {
-    "numeric/ipc-2023/block-grouping": 20,
-    "numeric/ipc-2023/counters": 20,
-    "numeric/ipc-2023/delivery": 20,
-    "numeric/ipc-2023/drone": 20,
-    "numeric/ipc-2023/expedition": 20,
-    "numeric/ipc-2023/ext-plant-watering": 20,
-    "numeric/ipc-2023/farmland": 20,
-    "numeric/ipc-2023/fo-farmland": 20,
-    "numeric/ipc-2023/fo-sailing": 20,
-    "numeric/ipc-2023/fo_counters": 20,
-    "numeric/ipc-2023/hydropower": 20,
-    "numeric/ipc-2023/markettrader": 20,
-    "numeric/ipc-2023/mprime": 20,
-    "numeric/ipc-2023/pathwaysmetric": 20,
-    "numeric/ipc-2023/rover": 20,
-    "numeric/ipc-2023/sailing": 20,
-    "numeric/ipc-2023/satellite": 20,
-    "numeric/ipc-2023/settlers": 20,
-    "numeric/ipc-2023/sugar": 20,
-    "numeric/ipc-2023/tpp": 20,
-    "numeric/ipc-2023/zenotravel": 20,
-    "numeric/line-exchange": 108,
-    "line-exchange-quantity": 20
-}
+
+def transformTextValue(v):
+    if v == "-":
+        return v
+    val = float(v)
+    if val > 1000:
+        return round(val / 1000, 1) + "k"
+    return v
 
 
 def main():
     # Parsing the results
-    exp = "2024-09-11-IMPROVE-v1"
+    exp = "2024-11-04-REBUTTAL-v6"
     file = f"benchmarks/results/csv/{exp}.csv"
 
-    CloudLogger.saveLogs(exp, file)
-    joinWith = ["2024-09-10-AIJ-v1"]
-    for exp in joinWith:
-        CloudLogger.appendLogs(exp, file)
+    folder = f'benchmarks/latex/{exp}'
+    if os.path.exists(folder):
+        shutil.rmtree(folder)
+    os.mkdir(folder)
+
+    if os.path.exists(file):
+        os.remove(file)
+    # joinWith = [
+    #     (exp, ["PATTY-R"]),
+    #     ("2024-10-07-AIJ-FINAL-v10", ["PATTY-A"]),
+    #     ("2024-10-07-AIJ-FINAL-v9", ["PATTY-E", "PATTY-L", "PATTY-M"]),
+    #     ("2024-10-07-AIJ-FINAL-v7", ["RANTANPLAN"]),
+    #     ("2024-10-07-AIJ-FINAL-v6", ["SPRINGROLL"]),
+    #     ("2024-10-07-AIJ-FINAL-v5", ["OMT"]),
+    #     ("2024-10-07-AIJ-FINAL-v2",
+    #      ["ENHSP-SAT-AIBR", "PATTY-A", "PATTY-E", "ENHSP-SAT-HADD", "ENHSP-SAT-HMRP", "METRIC-FF", "NFD"])
+    # ]
+    joinWith = [
+        (exp, ["PATTY-G", "PATTY-H", "PATTY-F", "ENHSP-SAT-AIBR", "RANTANPLAN", "SPRINGROLL", "ENHSP-SAT-HADD",
+               "ENHSP-SAT-HMRP", "METRIC-FF",
+               "NFD", "OMT"])
+    ]
+
+    for (exp2, keepSolvers) in joinWith:
+        CloudLogger.appendLogs(exp2, file, keepSolvers)
+
+    tables = [
+        # ("TAB1", AIJ_TABLE1),
+        # ("TAB2", AIJ_TABLE2),
+        # ("TAB3", AIJ_TABLE3),
+        ("TAB4", AIJ_TABLE4)
+    ]
 
     joinWith = [file]
     # joinWith = [file]
@@ -131,6 +81,8 @@ def main():
         with open(fileJoin, "r") as f:
             reader = csv.reader(f, delimiter=",")
             for i, line in enumerate(reader):
+                if not line:
+                    continue
                 aResults.append(Result.fromCSVLine(line[0].split(",")))
 
     folder = f'benchmarks/latex/{exp}'
@@ -140,24 +92,19 @@ def main():
 
     # Joining together portfolios
     results = Result.joinPorfolios(aResults, {
-        "ENHSP-sat-hadd": "ENHSP",
-        "ENHSP-sat-hradd": "ENHSP",
-        "ENHSP-sat-hmrphj": "ENHSP",
+        "ENHSP-SAT-HADD": "ENHSP",
+        "ENHSP-SAT-AIBR": "ENHSP",
+        "ENHSP-SAT-HMRP": "ENHSP",
     })
     results = Result.splitRandom(results, "PATTY-R")
 
-    solvers = set()
-    domains = set()
-    d = dict()
+    dOrig = dict()
     dView = dict()
     for r in results:
-        solvers.add(r.solver)
-        domains.add(r.domain)
-
-        d[r.domain] = d.setdefault(r.domain, dict())
-        d[r.domain][r.solver] = d[r.domain].setdefault(r.solver, dict())
-        d[r.domain][r.solver][r.problem] = d[r.domain][r.solver].setdefault(r.problem, list())
-        d[r.domain][r.solver][r.problem].append(r)
+        dOrig[r.domain] = dOrig.setdefault(r.domain, dict())
+        dOrig[r.domain][r.solver] = dOrig[r.domain].setdefault(r.solver, dict())
+        dOrig[r.domain][r.solver][r.problem] = dOrig[r.domain][r.solver].setdefault(r.problem, list())
+        dOrig[r.domain][r.solver][r.problem].append(r)
 
         dView[r.domain] = dView.setdefault(r.domain, dict())
         dView[r.domain][r.problem] = dView[r.domain].setdefault(r.problem, dict())
@@ -167,265 +114,234 @@ def main():
     with open(f"benchmarks/results/json/{exp}.json", "w") as f:
         f.write(json.dumps(dView, indent=2))
 
-    solvers = list(solvers)
-    solvers.sort()
-    domains = list(domains)
-    domains.sort()
+    for tableName, table in tables:
 
-    for domain in domains:
-        for solver in solvers:
-            problems = list()
-            if solver not in d[domain]:
-                continue
-            for problem in d[domain][solver].keys():
-                if len(d[domain][solver][problem]) > 1:
-                    print(f"There are multiple problems {problem} for {domain} with {solver}. "
-                          f"Please aggregate it in some way", file=sys.stderr)
-                problems.append(d[domain][solver][problem][0])
-            d[domain][solver] = problems
+        planners: List[str] = list(table["planners"].keys())
+        domains: List[str] = list(table["domains"].keys())
+        domains.sort()
 
-    def r(fValue, n):
-        return '{:.{n}f}'.format(fValue, n=n)
+        d: Dict[str, Dict[str, List[Result]]] = copy.deepcopy(dOrig)
+        p: Dict[str, Dict[str, Dict[str, Result]]] = dict()
+        for domain in domains:
+            p[domain] = dict()
+            for planner in planners:
+                p[domain][planner] = dict()
+                problems = list()
+                if planner not in dOrig[domain]:
+                    continue
+                for problem in dOrig[domain][planner].keys():
+                    if problem not in table["domains"][domain]["instances"]:
+                        continue
+                    # if len(d[domain][planner][problem]) > 1:
+                    #     print(f"There are multiple problems {problem} for {domain} with {planner}. "
+                    #           f"Please aggregate it in some way", file=sys.stderr)
+                    problems.append(d[domain][planner][problem][0])
+                    p[domain][planner][problem] = d[domain][planner][problem][0]
+                d[domain][planner] = problems
 
-    def rVec(v, n):
-        return r(statistics.mean(v), n) if v else "-"
+        t = dict()
+        for domain in domains:
+            t[domain] = {
+                "coverage": dict(),
+                "quantity": dict(),
+                "bound": dict(),
+                "time": dict(),
+                "planLength": dict(),
+                "nOfVars": dict(),
+                "nOfRules": dict(),
+                "lastCallsToSolver": dict(),
+            }
+            commonlySolved = {}
+            commonlyGrounded = {}
+            for planner in table["planners"].keys():
+                if planner not in d[domain]:
+                    continue
+                solved = {r.problem for r in d[domain][planner] if r.solved}
+                print(planner, "solved", solved)
+                grounded = {r.problem for r in d[domain][planner] if r.nOfVars > 0}
+                if solved:
+                    commonlySolved = solved if not commonlySolved else commonlySolved.intersection(solved)
+                if grounded:
+                    commonlyGrounded = solved if not commonlyGrounded else commonlyGrounded.intersection(grounded)
+            for planner, plannerInfo in table["planners"].items():
+                if planner not in d[domain]:
+                    continue
+                pResult = d[domain][planner]
 
-    t = dict()
-    stats = set()
-    for (domain, domainDict) in d.items():
-        t[domain] = {
-            "coverage": dict(),
-            "bound": dict(),
-            "time": dict(),
-            "length": dict(),
-            "nOfVars": dict(),
-            "nOfRules": dict(),
-            "lastCallsToSolver": dict(),
-        }
+                instances = len(table["domains"][domain]["instances"])
+                if table["planners"][planner].get("isRandom"):
+                    instances = len(pResult)
+                if len(pResult) != instances:
+                    print(f"In {planner} the domain {domain} has {len(pResult)}/{instances} instances", file=sys.stderr)
 
-        commonlySolved = {}
-        commonlyGrounded = {}
-        for solver in SMT_SOLVERS:
-            if solver not in domainDict:
-                continue
-            solved = {r.problem for r in domainDict[solver] if r.solved}
-            grounded = {r.problem for r in domainDict[solver] if r.nOfVars > 0}
-            if solved:
-                commonlySolved = solved if not commonlySolved else commonlySolved.intersection(solved)
-            if grounded:
-                commonlyGrounded = solved if not commonlyGrounded else commonlyGrounded.intersection(grounded)
+                hasCoverage = sum([r.solved for r in pResult]) > 0
+                t[domain]["coverage"][planner] = round(sum([r.solved for r in pResult]) / instances * 100, 0)
+                t[domain]["coverage"][planner] = "-" if not hasCoverage else t[domain]["coverage"][planner]
 
-        a = 1 + 1
+                v = round(sum([r.solved for r in pResult]), 0)
+                t[domain]["quantity"][planner] = v if hasCoverage else "-"
 
-        for solver in solvers:
-            if solver not in domainDict:
-                continue
-            pResult = domainDict[solver]
+                if table.get("time-limit"):
+                    v = [r.time / 1000 if r.solved else table["time-limit"] / 1000 for r in pResult]
+                else:
+                    v = [r.time / 1000 for r in pResult if r.solved and r.problem in commonlySolved]
+                t[domain]["time"][planner] = rVec(v, 1) if hasCoverage else "-"
 
-            hasCoverage = sum([r.solved for r in pResult]) > 0
-            t[domain]["coverage"][solver] = r(sum([r.solved for r in pResult]) / TOTALS[domain] * 100, 0)
-            t[domain]["coverage"][solver] = "-" if not hasCoverage else t[domain]["coverage"][solver]
+                v = [r.bound for r in pResult if r.solved and r.problem in commonlySolved]
+                t[domain]["bound"][planner] = rVec(v, 1) if hasCoverage else "-"
 
-            v = [r.bound for r in pResult if r.solved and r.problem in commonlySolved]
-            t[domain]["bound"][solver] = rVec(v, 1) if hasCoverage else "-"
+                v = [r.planLength for r in pResult if r.solved and r.problem in commonlySolved]
+                t[domain]["planLength"][planner] = rVec(v, 0) if hasCoverage else "-"
 
-            v = [r.time / 1000 if r.solved else TIME_LIMIT / 1000 for r in pResult]
-            t[domain]["time"][solver] = rVec(v, 1) if hasCoverage else "-"
+                v = [r.nOfVars for r in pResult if r.nOfVars > 0 and r.problem in commonlySolved]
+                t[domain]["nOfVars"][planner] = rVec(v, 0) if hasCoverage else "-"
 
-            v = [r.planLength for r in pResult if r.solved and r.problem in commonlySolved]
-            t[domain]["length"][solver] = rVec(v, 0) if hasCoverage else "-"
+                v = [r.nOfRules for r in pResult if r.nOfRules > 0 and r.problem in commonlySolved]
+                t[domain]["nOfRules"][planner] = rVec(v, 0) if hasCoverage else "-"
 
-            v = [r.nOfVars for r in pResult if r.nOfVars > 0 and r.problem in commonlySolved]
-            t[domain]["nOfVars"][solver] = rVec(v, 0) if len(v) else "-"
-            v = [r.nOfRules for r in pResult if r.nOfRules > 0 and r.problem in commonlySolved]
-            t[domain]["nOfRules"][solver] = rVec(v, 0) if len(v) else "-"
-            v = [r.lastCallsToSolver for r in pResult if r.lastCallsToSolver > 0 and r.problem in commonlySolved]
-            t[domain]["lastCallsToSolver"][solver] = rVec(v, 2) if len(v) else "-"
+                v = [r.lastCallsToSolver for r in pResult if r.lastCallsToSolver > 0 and r.problem in commonlySolved]
+                t[domain]["lastCallsToSolver"][planner] = rVec(v, 2) if hasCoverage else "-"
 
-    domainsClusters = {
-        r"\textit{High}": [
-            "numeric/ipc-2023/block-grouping",
-            "numeric/ipc-2023/counters",
-            "numeric/ipc-2023/fo_counters",
-            "numeric/ipc-2023/delivery",
-            "numeric/ipc-2023/drone",
-            "numeric/ipc-2023/expedition",
-            "numeric/ipc-2023/farmland",
-            "numeric/ipc-2023/fo-farmland",
-            "numeric/ipc-2023/hydropower",
-            "numeric/ipc-2023/mprime",
-            "numeric/ipc-2023/pathwaysmetric",
-            "numeric/ipc-2023/ext-plant-watering",
-            "numeric/ipc-2023/rover",
-            "numeric/ipc-2023/sailing",
-            "numeric/ipc-2023/fo-sailing",
-            "numeric/ipc-2023/satellite",
-            "numeric/ipc-2023/sugar",
-            "numeric/ipc-2023/tpp",
-            "numeric/ipc-2023/zenotravel",
-            "numeric/line-exchange"
-        ],
-    }
+        latex = list()
+        orientation = ",landscape" if table["orientation"] == "landscape" else ""
+        latex.append(r"""
+               \documentclass[11pt""" + orientation + r"""]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in""" + orientation + r"""]{geometry}
+    
+               \begin{document}""")
+        # best[domain][column][planner] = int
+        # #numero di problemi di domain in cui planner è il migliore nella metrica column
 
-    winners = {
-        "coverage": +1,
-        "bound": -1,
-        "length": -1,
-        "time": -1,
-        "nOfVars": -1,
-        "nOfRules": -1,
-        "lastCallsToSolver": -1,
-    }
+        best: Dict[str, Dict[str, Set[str]]] = dict()
+        for domain in domains:
+            best[domain] = dict()
+            for column, statInfo in table["columns"].items():
+                winner = statInfo["winner"]
+                better = set()
+                betterValue = float("-inf") if winner > 0 else float("+inf")
+                for planner, plannerInfo in table["planners"].items():
+                    if planner not in t[domain][column]:
+                        continue
+                    if plannerInfo["type"] in {"stdev"}:
+                        continue
+                    value = t[domain][column][planner]
+                    if value in {"-", "G", "-1.00"}:
+                        continue
+                    if float(value) * winner > betterValue * winner:
+                        betterValue = float(value)
+                        better = {planner}
+                    elif float(value) == betterValue:
+                        better |= {planner}
+                best[domain][column] = better
 
-    tables = [{
-        "name": "tab:experiments",
-        "type": "table*",
-        "width": r"\textwidth",
-        "columns": {
-            "coverage": ("Coverage (\%)", {"SMT", "SEARCH"}, "count"),
-            "time": ("Time (s)", {"SMT", "SEARCH"}, "count"),
-            "bound": (r"Bound $n$", {"SMT"}, "count"),
-            "length": (r"$|\pi|$", {"SMT"}, "count"),
-            "nOfVars": ("$|\mathcal{X} \cup \mathcal{A}^\prec \cup \mathcal{X}'|$", {"SMT"}, "count"),
-            "nOfRules": ("$|\mathcal{T}^\prec(\mathcal{X},\mathcal{A}^\prec,\mathcal{X}')|$", {"SMT"}, "count"),
-            # "bound": (r"Vars x Rule", {"SMT"}, "count"),
-            # "lastCallsToSolver": (r"$\textsc{Solve}(\Pi^\prec)$ calls", {"SMT"}),
-        },
-        "planners": [{
-            'PATTY-R-MIN': "SMT",
-            'PATTY-R-AVG': "SMT",
-            'PATTY-R-MAX': "SMT",
-            'PATTY-A': "SMT",
-            'PATTY-E': "SMT",
-            # 'PATTY-M': "SMT",
-            # 'PATTY-I': "SMT",
-            # 'PATTY-FA': "SMT",
-            # 'PATTY-FE': "SMT",
-            # 'PATTY-H': "SMT",
-            # 'PATTY-F': "SMT"
-        },
-            # {
-            #     'PATTY-F': "SEARCH",
-            #     'ENHSP': "SEARCH",
-            #     'METRIC-FF': "SEARCH",
-            #     "NFD": "SEARCH",
-            # }
-        ],
-        "caption": r""
-    }]
+        winning: Dict[str, Dict[str, Dict[str, int]]] = dict()
+        for domain, domainInfo in table["domains"].items():
+            winning[domain] = dict()
+            for column, statInfo in table["columns"].items():
+                winner = statInfo["winner"]
+                winning[domain][column] = dict()
+                for planner in planners:
+                    winning[domain][column][planner] = 0
 
-    latex = []
-    latex.append(r"""
-           \documentclass[11pt,landscape]{article}
-           \usepackage{graphicx}
-           \usepackage{lscape}
-           \usepackage{multirow}
-           \usepackage[a4paper,margin=1in,landscape]{geometry}
-
-           \begin{document}""")
-
-    for table in tables:
-        stats = table["columns"].keys()
-
-        best: List[Dict] = list()
-        for i in range(len(table["planners"])):
-            bestCluster = dict()
-            solvers = table["planners"][i].keys()
-            best.append(bestCluster)
-            for (domain, domainDict) in d.items():
-                bestCluster[domain] = dict()
-                for stat in table["columns"].keys():
-                    better = {}
-                    betterValue = float("-inf") if winners[stat] > 0 else float("+inf")
-                    for solver in solvers:
-                        if solver not in t[domain][stat]:
+                for problem in domainInfo["instances"]:
+                    betterValue = float("-inf") if winner > 0 else float("+inf")
+                    better: Set[str] = set()
+                    for planner, plannerInfo in table["planners"].items():
+                        if problem not in p[domain][planner]:
                             continue
-                        value = t[domain][stat][solver]
-                        if value in {"-", "G", "-1.00"}:
+                        result = p[domain][planner][problem]
+                        if not result.solved:
                             continue
-                        if float(value) * winners[stat] > betterValue * winners[stat]:
+                        value: int = result.get(column)
+                        print(column, value)
+                        if float(value) * winner > betterValue * winner:
                             betterValue = float(value)
-                            better = {solver}
+                            better = {planner}
                         elif float(value) == betterValue:
-                            better |= {solver}
-                    bestCluster[domain][stat] = better
+                            better |= {planner}
+                    for planner in planners:
+                        winning[domain][column][planner] += 1 if planner in better else 0
 
         latex.append(r"""
             \begin{""" + table["type"] + r"""}[tb]
             \centering
             \resizebox{""" + table["width"] + r"""}{!}{""")
 
-        solversHeader = []
+        plannersHeader = []
         mString = []
         cString = ""
-        for (stat, (name, statTypes, aggregate)) in table["columns"].items():
+        for (column, columnInfos) in table["columns"].items():
             nCells = 0
             clString = []
-            for cluster in table["planners"]:
-                clCells = 0
-                for (solver, type) in cluster.items():
-                    if type not in statTypes:
-                        continue
-                    solversHeader.append(f"${SOLVERS[solver]}$")
-                    nCells += 1
-                    clCells += 1
-                if clCells > 0:
-                    clString.append(clCells * 'c')
-            cString += f"|{'|'.join(clString)}|"
-            mString.append(r"\multicolumn{" + str(nCells) + "}{c||}{" + name + "}")
+            for (planner, plannerInfo) in table["planners"].items():
+                if plannerInfo["type"] in {"stdev", "skip"}:
+                    continue
+                if plannerInfo["type"] in {"slashed"}:
+                    otherPlannerInfo = table["planners"][plannerInfo['slashedWith']]
+                    plannersHeader.append(f"${plannerInfo['name']}/{otherPlannerInfo['name']}$")
+                else:
+                    plannersHeader.append(f"${plannerInfo['name']}$")
+                nCells += 1
+                clString.append("c")
+
+            cString += f"|{''.join(clString)}|"
+            mString.append(r"\multicolumn{" + str(nCells) + "}{c||}{" + columnInfos["name"] + "}")
 
         columns = f"|l|{cString}" + "|"
 
         latex.append(r"\begin{tabular}{" + columns + "}")
         latex.append(r"\hline")
         latex.append(fr" & " + "&".join(mString) + r"\\")
-        latex.append(fr"Domain & " + "&".join(solversHeader) + r"\\")
+        latex.append(fr"Domain & " + "&".join(plannersHeader) + r"\\")
         latex.append(fr"\hline")
 
-        for (cluster, clusterDomains) in domainsClusters.items():
-            rows = []
-            row = [cluster]
-            for (stat, (name, statTypes, aggregate)) in table["columns"].items():
-                for i, plCluster in enumerate(table["planners"]):
-                    for (solver, type) in plCluster.items():
-                        if type not in statTypes:
-                            continue
-                        nOfBest = 0
-                        for domain in clusterDomains:
-                            if solver in best[i][domain][stat]:
-                                nOfBest += 1
-                        row.append(r"\textbf{" + str(nOfBest) + "}")
-            # latex.append("&".join(row) + r"\\\hline")
-            for domain in clusterDomains:
-                row = [DOMAINS[domain]]
-                for (stat, (name, statTypes, aggregate)) in table["columns"].items():
-                    for i, plCluster in enumerate(table["planners"]):
-                        for (solver, type) in plCluster.items():
-                            if type not in statTypes:
-                                continue
-                            if solver not in t[domain][stat]:
-                                row.append("-")
-                                continue
-                            if solver in best[i][domain][stat]:
-                                row.append(r"\textbf{" + t[domain][stat][solver] + "}")
-                            else:
-                                row.append(t[domain][stat][solver])
-                rows.append("&".join(row))
-            latex.append("\\\\\n".join(rows))
-            latex.append(fr"\\\hline")
-        row = [r"\textit{Total}"]
-        for (stat, (name, statTypes, aggregate)) in table["columns"].items():
-            for i, plCluster in enumerate(table["planners"]):
-                for (solver, type) in plCluster.items():
-                    if type not in statTypes:
+        rows = list()
+        for domain, domainInfo in table["domains"].items():
+            row = [domainInfo["name"]]
+            for (column, columnInfo) in table["columns"].items():
+                for (planner, plannerInfo) in table["planners"].items():
+                    if plannerInfo["type"] in {"stdev", "skip"}:
                         continue
-                    nOfBest = 0
-                    for (cluster, clusterDomains) in domainsClusters.items():
-                        for domain in clusterDomains:
-                            if solver in best[i][domain][stat]:
-                                if aggregate == "count":
-                                    nOfBest += 1
-                    row.append(r"\textbf{" + str(nOfBest) + "}")
+                    if planner not in t[domain][column]:
+                        row.append("-")
+                        continue
+                    value = transformTextValue(t[domain][column][planner])
+                    if plannerInfo["type"] in {"slashed"} and not columnInfo.get("avoidSlashing"):
+                        otherPlanner = plannerInfo["slashedWith"]
+                        otherValue = t[domain][column][otherPlanner]
+                        left = value
+                        right = transformTextValue(otherValue)
+                        if planner in best[domain][column]:
+                            left = r"\textbf{" + left + "}"
+                        if otherPlanner in best[domain][column]:
+                            right = r"\textbf{" + right + "}"
+                        row.append(f"{left}/{right}")
+                        continue
+                    subvalue = ""
+                    if plannerInfo["type"] in {"avg"} and columnInfo["stdev"]:
+                        stdev = t[domain][column][plannerInfo["stdev"]]
+                        subvalue = rf"$\pm {stdev}$"
+                    if planner in best[domain][column]:
+                        row.append(r"\textbf{" + value + "}" + subvalue)
+                        continue
+                    row.append(value + subvalue)
+            rows.append("&".join(row))
+
+        latex.append("\\\\\n".join(rows))
+        latex.append(fr"\\\hline")
+        row = [r"\textit{Best}"]
+
+        for column, columnInfo in table["columns"].items():
+            for planner, plannerInfo in table["planners"].items():
+                if plannerInfo["type"] in {"stdev", "skip"}:
+                    continue
+                nOfWinning = 0
+                for domain, domainInfo in table["domains"].items():
+                    nOfWinning += winning[domain][column][planner]
+                row.append(r"\textbf{" + str(nOfWinning) + "}")
         latex.append("&".join(row) + r"\\\hline")
 
         latex.append(r"""
@@ -435,23 +351,21 @@ def main():
         \end{""" + table["type"] + """}
         """)
 
-    pass
+        pass
 
-    latex.append("\end{document}")
+        latex.append("\end{document}")
 
-    latexStr = "\n".join(latex)
-    folder = f'benchmarks/latex/{exp}'
-    if os.path.exists(folder):
-        shutil.rmtree(folder)
-    os.mkdir(folder)
-    with open(f"{folder}/{exp}.tex", "w") as f:
-        f.write(latexStr)
-    os.system(f"pdflatex -interaction=nonstopmode --output-directory='{folder}' {folder}/{exp}.tex ")
+        latexStr = "\n".join(latex)
+        file = f"{exp}-{tableName}"
+        with open(f"{folder}/{file}.tex", "w") as f:
+            f.write(latexStr)
+        os.system(f"pdflatex -interaction=nonstopmode --output-directory='{folder}' {folder}/{file}.tex ")
 
-    os.remove(f"{folder}/{exp}.aux")
-    os.remove(f"{folder}/{exp}.log")
+        os.remove(f"{folder}/{file}.aux")
+        os.remove(f"{folder}/{file}.log")
 
-    os.system(f"open {folder}/{exp}.pdf")
+    for tableName, table in tables:
+        os.system(f"open {folder}/{exp}-{tableName}.pdf")
 
 
 if __name__ == '__main__':

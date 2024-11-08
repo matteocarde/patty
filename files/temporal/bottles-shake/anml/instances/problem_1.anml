@@ -1,0 +1,3 @@
+instance bottle b1;
+[start] litres(b1) := 5;
+[end] litres(b1) == 0;

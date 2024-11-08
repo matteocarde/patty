@@ -1,0 +1,36 @@
+(define (problem prob_8_1_7)
+(:domain bottles)
+	(:objects
+		 l1 - bottleleft
+		 r1 r2 r3 r4 r5 r6 r7 - bottleright
+	)
+	(:init
+		(= (litres l1) 24)
+		(= (litres r1) 0)
+		(= (litres r2) 0)
+		(= (litres r3) 0)
+		(= (litres r4) 0)
+		(= (litres r5) 0)
+		(= (litres r6) 0)
+		(= (litres r7) 0)
+		(capped l1)
+		(capped r1)
+		(capped r2)
+		(capped r3)
+		(capped r4)
+		(capped r5)
+		(capped r6)
+		(capped r7)
+	)
+	(:goal
+		(and
+			(= (litres r1) 16)
+			(= (litres r2) 1)
+			(= (litres r3) 1)
+			(= (litres r4) 2)
+			(= (litres r5) 1)
+			(= (litres r6) 2)
+			(= (litres r7) 1)
+		)
+	)
+)

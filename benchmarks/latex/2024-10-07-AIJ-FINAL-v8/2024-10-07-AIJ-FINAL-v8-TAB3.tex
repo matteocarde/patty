@@ -1,0 +1,46 @@
+
+               \documentclass[11pt,landscape]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in,landscape]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||cccc||cccc||cccc||cccc||cccc||cccc||}
+\hline
+ & \multicolumn{4}{c||}{Coverage (\%)}&\multicolumn{4}{c||}{Time (s)}&\multicolumn{4}{c||}{Bound $n$}&\multicolumn{4}{c||}{$|\pi|$}&\multicolumn{4}{c||}{$|\mathcal{X} \cup \mathcal{A}^\prec \cup \mathcal{X}'|$}&\multicolumn{4}{c||}{$|\mathcal{T}^\prec(\mathcal{X},\mathcal{A}^\prec,\mathcal{X}')|$}\\
+Domain & $\mathrm{P}_\mathrm{E}/\mathrm{P}_\mathrm{I}$&$\mathrm{R^2\exists}$&$\mathrm{OMT}$&$\mathrm{SR}$&$\mathrm{P}_\mathrm{E}/\mathrm{P}_\mathrm{I}$&$\mathrm{R^2\exists}$&$\mathrm{OMT}$&$\mathrm{SR}$&$\mathrm{P}_\mathrm{E}/\mathrm{P}_\mathrm{I}$&$\mathrm{R^2\exists}$&$\mathrm{OMT}$&$\mathrm{SR}$&$\mathrm{P}_\mathrm{E}/\mathrm{P}_\mathrm{I}$&$\mathrm{R^2\exists}$&$\mathrm{OMT}$&$\mathrm{SR}$&$\mathrm{P}_\mathrm{E}/\mathrm{P}_\mathrm{I}$&$\mathrm{R^2\exists}$&$\mathrm{OMT}$&$\mathrm{SR}$&$\mathrm{P}_\mathrm{E}/\mathrm{P}_\mathrm{I}$&$\mathrm{R^2\exists}$&$\mathrm{OMT}$&$\mathrm{SR}$\\
+\hline
+\textsc{BlGrp} (S)&-&\textbf{90}&-&-&-&\textbf{70.6}&-&-&-&\textbf{7.2}&-&-&-&\textbf{158}&-&-&-&\textbf{41.2k}&-&-&-&\textbf{43.3k}&-&-\\
+\textsc{Cnt} (S)&-&\textbf{60}&-&-&-&\textbf{159.1}&-&-&-&\textbf{14.8}&-&-&-&\textbf{127}&-&-&-&\textbf{11.3k}&-&-&-&\textbf{12.9k}&-&-\\
+\textsc{Cnt} (L)&-&\textbf{20}&-&-&-&\textbf{240.2}&-&-&-&\textbf{2.0}&-&-&-&\textbf{10}&-&-&-&\textbf{344}&-&-&-&\textbf{442}&-&-\\
+\textsc{Del} (S)&-&\textbf{5}&-&-&-&\textbf{286.5}&-&-&-&\textbf{2.0}&-&-&-&\textbf{17}&-&-&-&\textbf{15.9k}&-&-&-&\textbf{16.7k}&-&-\\
+\textsc{Drn} (S)&-&\textbf{15}&-&-&-&\textbf{255.6}&-&-&-&\textbf{8.3}&-&-&-&\textbf{15}&-&-&-&\textbf{1.3k}&-&-&-&\textbf{1.6k}&-&-\\
+\textsc{Exp} (S)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{Farm} (S)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{Farm} (L)&-&\textbf{10}&-&-&-&\textbf{270.2}&-&-&-&\textbf{9.5}&-&-&-&\textbf{20}&-&-&-&\textbf{398}&-&-&-&\textbf{542}&-&-\\
+\textsc{HPwr} (S)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{MPrime} (S)&-&\textbf{25}&-&-&-&\textbf{233.2}&-&-&-&\textbf{2.2}&-&-&-&\textbf{6}&-&-&-&\textbf{36.3k}&-&-&-&\textbf{37.4k}&-&-\\
+\textsc{PathM} (S)&-&\textbf{10}&-&-&-&\textbf{280.3}&-&-&-&\textbf{8.0}&-&-&-&\textbf{51}&-&-&-&\textbf{57.8k}&-&-&-&\textbf{59.4k}&-&-\\
+\textsc{PlWat} (S)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{Rvr} (S)&-&\textbf{40}&-&-&-&\textbf{202.7}&-&-&-&\textbf{2.0}&-&-&-&\textbf{18}&-&-&-&\textbf{57.4k}&-&-&-&\textbf{58.4k}&-&-\\
+\textsc{Sail} (S)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{Sail} (L)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{Sat} (S)&-&\textbf{5}&-&-&-&\textbf{290.9}&-&-&-&\textbf{4.0}&-&-&-&\textbf{11}&-&-&-&\textbf{4.4k}&-&-&-&\textbf{5.0k}&-&-\\
+\textsc{Sgr} (S)&-&\textbf{5}&-&-&-&\textbf{288.1}&-&-&-&\textbf{2.0}&-&-&-&\textbf{28}&-&-&-&\textbf{55.5k}&-&-&-&\textbf{56.9k}&-&-\\
+\textsc{Tpp} (L)&-&\textbf{10}&-&-&-&\textbf{270.5}&-&-&-&\textbf{2.5}&-&-&-&\textbf{11}&-&-&-&\textbf{2.6k}&-&-&-&\textbf{3.0k}&-&-\\
+\textsc{Zeno} (S)&-&\textbf{40}&-&-&-&\textbf{184.5}&-&-&-&\textbf{1.5}&-&-&-&\textbf{14}&-&-&-&\textbf{11.0k}&-&-&-&\textbf{11.5k}&-&-\\
+\textsc{Line} (L)&-&\textbf{16}&-&-&-&\textbf{260.6}&-&-&-&\textbf{8.1}&-&-&-&\textbf{36}&-&-&-&\textbf{1.4k}&-&-&-&\textbf{1.8k}&-&-
+\\\hline
+\textit{Total}&\textbf{0}&\textbf{14}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{14}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{14}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{14}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{14}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{14}&\textbf{0}&\textbf{0}\\\hline
+
+        \end{tabular}}
+        \caption{Comparative analysis between symbolic planners}
+        \label{tab:symbolic}
+        \end{table*}
+        
+\end{document}

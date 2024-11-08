@@ -40,6 +40,14 @@ class Literal(Predicate):
         lit.alphaFunct = lit.atom.toAlphaFunctionName()
         return lit
 
+    @classmethod
+    def pos(cls, atom: Atom):
+        return cls.fromAtom(atom, "+")
+
+    @classmethod
+    def neg(cls, atom: Atom):
+        return cls.fromAtom(atom, "-")
+
     def replace(self, atom: Atom, w: Predicate):
         if self.atom != atom:
             return copy.deepcopy(self)
@@ -184,7 +192,7 @@ class Literal(Predicate):
         return len(finalSet) > 0
 
     def isDynamicLifted(self, problem) -> bool:
-        return not problem.isPredicateStatic[self.atom.name]
+        return self.atom.name not in problem.isPredicateStatic or not problem.isPredicateStatic[self.atom.name]
 
     def getLinearIncrement(self) -> float:
         return 0

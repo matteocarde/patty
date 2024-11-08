@@ -1,9 +1,7 @@
-from typing import List, Dict
+from typing import List
 
-from pyeda.boolalg.bdd import BDDVariable
-from pyeda.boolalg.expr import And as BDDAnd
+from pysmt.shortcuts import TRUE, FALSE
 
-from src.smt.SMTBoolVariable import SMTBoolVariable
 from src.smt.SMTExpression import SMTExpression
 
 
@@ -11,6 +9,17 @@ class SMTConjunction(List[SMTExpression]):
 
     def __init__(self):
         super().__init__()
+
+    def append(self, expr: SMTExpression) -> None:
+        if expr.expression == TRUE():
+            return
+        if expr.expression == FALSE():
+            raise Exception("Trying to append FALSE rule into conjunction")
+        super().append(expr)
+
+
+
+
 
     def toBDDExpression(self, map: Dict[SMTBoolVariable, BDDVariable]):
         clauses = [e.toBDDExpression(map) for e in self]

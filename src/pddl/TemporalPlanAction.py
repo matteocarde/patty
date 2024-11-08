@@ -11,7 +11,7 @@ class TemporalPlanAction:
         self.duration = duration
 
     def __str__(self):
-        return f"({self.time}:{self.action}) [{self.duration}]"
+        return f"({self.time}:{self.action.originalName}) [{self.duration}]"
 
     def __repr__(self):
         return str(self)

@@ -95,23 +95,15 @@ class TestAction(TestCase):
 
     def test_combinations(self):
         combinations1 = self.action1.getCombinations(self.problem)
-        self.assertEqual(len(combinations1), 3)
-        for i, c in enumerate(combinations1):
-            self.assertEqual(len(c.items()), 1)
-            self.assertIn("?b", c)
-            self.assertEqual(c["?b"], "b" + str(i + 1))
+        self.assertEqual(len(combinations1), 1)
+        self.assertEqual(combinations1[0], ['b1', 'b2', 'b3'])
 
         combinations2 = self.action2.getCombinations(self.problem)
 
-        self.assertEqual(len(combinations2), 3 * 3 * 3)
-        for i, c in enumerate(combinations2):
-            self.assertEqual(len(c.items()), 3)
-            self.assertIn("?a", c)
-            self.assertIn(c["?a"], {"b1", "b2", "b3"})
-            self.assertIn("?b", c)
-            self.assertIn(c["?b"], {"b1", "b2", "b3"})
-            self.assertIn("?c", c)
-            self.assertIn(c["?c"], {"o1", "o2", "o3"})
+        self.assertEqual(len(combinations2), 3)
+        self.assertEqual(combinations2[0], ['b1', 'b2', 'b3'])
+        self.assertEqual(combinations2[1], ['b1', 'b2', 'b3'])
+        self.assertEqual(combinations2[2], ['o1', 'o2', 'o3'])
 
     def test_grounding(self):
 

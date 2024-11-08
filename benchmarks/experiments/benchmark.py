@@ -8,7 +8,8 @@ import boto3
 from botocore.config import Config
 
 from classes.CloudLogger import CloudLogger
-from classes.ENHSP import ENHSP
+from classes.planners.AnmlSMT import AnmlSMT
+from classes.planners.ENHSP import ENHSP
 from classes.Envs import Envs
 from classes.ITSAT import ITSAT
 from classes.LPG import LPG
@@ -20,18 +21,22 @@ from classes.Optic import Optic
 from classes.Patty import Patty
 from classes.Planner import Planner
 from classes.Result import Result
-from classes.SpringRoll import SpringRoll
-from classes.TFD import TFD
+from classes.planners.SpringRoll import SpringRoll
+from classes.planners.TFD import TFD
 
 my_config = Config(
     region_name='eu-central-1',
 )
 
 PLANNERS: Dict[str, Planner] = {
-    "PATTY-O": Patty("PATTY-O", search="step"),
-    "PATTY-G": Patty("PATTY-G", search="static"),
-    "PATTY-H": Patty("PATTY-H", search="astar", noCompression=True),
-    "PATTY-F": Patty("PATTY-F", search="astar", noCompression=False),
+    "PATTY-T-OR": Patty("PATTY-T-OR", temporalConstraints='logical'),
+    "PATTY-T-SIGMA": Patty("PATTY-T-SIGMA", temporalConstraints='numerical'),
+    "PATTY-T-OR-ASTAR": Patty("PATTY-T-OR", temporalConstraints='logical', search="astar"),
+    "PATTY-T-SIGMA-ASTAR": Patty("PATTY-T-SIGMA", temporalConstraints='numerical', search="astar"),
+    "PATTY-O": Patty("PATTY-O", search="step", pattern="arpg"),
+    "PATTY-G": Patty("PATTY-G", search="static", pattern="arpg"),
+    "PATTY-H": Patty("PATTY-H", search="astar", pattern="arpg", noCompression=True),
+    "PATTY-F": Patty("PATTY-F", search="astar", pattern="arpg", noCompression=False),
     "PATTY-CES": Patty("PATTY-CES", search="chain", pattern="alpha", tcTime=40),
 
     "PATTY-R": Patty("PATTY-R", search="step", pattern="random", quality="none"),
@@ -41,9 +46,12 @@ PLANNERS: Dict[str, Planner] = {
     "PATTY-FE": Patty("PATTY-FE", search="astar", pattern="enhanced", quality="none"),
     "PATTY-M": Patty("PATTY-M", search="step", pattern="enhanced", quality="shortest-step"),
     "PATTY-I": Patty("PATTY-I", search="step", pattern="enhanced", quality="improve-plan"),
+    "PATTY-L": Patty("PATTY-L", search="step", pattern="enhanced", quality="improve-less"),
+    "RANTANPLAN": Patty("RANTANPLAN", search="static", pattern="arpg", hasEffectAxioms=True, rollBound=1),
     "SPRINGROLL": SpringRoll(),
 
     "ENHSP-SAT-HMRP": ENHSP(False, settings="-h hmrp -s gbfs -silent -pp -pe", name="ENHSP-SAT-HMRP"),
+    "ENHSP-SAT-HMRPHJ": ENHSP(False, settings="-planner sat-hmrphj -silent -pp -pe", name="ENHSP-SAT-HMRPHJ"),
     "ENHSP-SAT-HADD": ENHSP(False, settings="-h hadd -s gbfs -silent -pp -pe", name="ENHSP-SAT-HADD"),
     "ENHSP-SAT-HMAX": ENHSP(False, settings="-h hmax -s gbfs -silent -pp -pe", name="ENHSP-SAT-HMAX"),
     "ENHSP-SAT-AIBR": ENHSP(False, settings="-h aibr -s gbfs -silent -pp -pe", name="ENHSP-SAT-AIBR"),
@@ -51,7 +59,6 @@ PLANNERS: Dict[str, Planner] = {
     "ENHSP-SAT-BLIND": ENHSP(False, settings="-h blind -s gbfs -silent -pp -pe", name="ENHSP-SAT-BLIND"),
 
     "ENHSP-OPT-HMRP": ENHSP(False, settings="-h hmrp -s WAStar -silent -pp -pe", name="ENHSP-OPT-HMRP"),
-    "ENHSP-OPT-HMRPHJ": ENHSP(False, settings="-planner sat-hmrphj -silent -pp -pe", name="ENHSP-OPT-HMRPHJ"),
     "ENHSP-OPT-HADD": ENHSP(False, settings="-h hadd -s WAStar -silent -pp -pe", name="ENHSP-OPT-HADD"),
     "ENHSP-OPT-HMAX": ENHSP(False, settings="-h hadd -s WAStar -silent -pp -pe", name="ENHSP-OPT-HMAX"),
     "ENHSP-OPT-AIBR": ENHSP(False, settings="-h aibr -s WAStar -silent -pp -pe", name="ENHSP-OPT-AIBR"),
@@ -65,8 +72,9 @@ PLANNERS: Dict[str, Planner] = {
 
     "LPG": LPG(),
     "TFD": TFD(),
-    "Optic": Optic(),
+    "OPTIC": Optic(),
     "ITSAT": ITSAT(),
+    "ANMLSMT": AnmlSMT(),
 }
 
 
@@ -110,6 +118,7 @@ def main():
                 print(f"Starting {planner} {benchmark} {domainFile} {problemFile}")
             r: Result = planner.run(benchmark, domainFile, problemFile, logger, envs.timeout)
             print(r)
+            print(r.stdout)
             if not r.solved:
                 print(r.stdout)
 

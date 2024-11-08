@@ -1,0 +1,70 @@
+type Match;
+type Fuse;
+
+constant integer light_duration(Match m);
+constant integer mend_duration(Fuse f);
+
+fluent boolean handfree;
+fluent boolean match_used(Match m);
+fluent boolean fuse_mended(Fuse f);
+fluent boolean light;
+
+
+action light_match(Match m) {
+   duration := light_duration(m);
+
+   [start] match_used(m) == false;
+   [start] not light;
+   [start] match_used(m) := true;
+   [start] light := true;
+
+   [end] light := false;
+};
+
+action mend_fuse(Fuse f) {
+   duration := mend_duration(f);
+
+   [start] handfree == true;
+   [all] light == true;
+   [start] not fuse_mended(f);
+
+   [start] handfree := false;
+   [end] fuse_mended(f) := true;
+   [end] handfree := true;
+};
+
+
+instance Fuse f1, f2, f3, f4;
+instance Match m1, m2, m3, m4, m5;
+
+light_duration(m1) := 70;
+light_duration(m2) := 9;
+light_duration(m3) := 8;
+light_duration(m4) := 7;
+light_duration(m5) := 6;
+
+mend_duration(f1) := 1;
+mend_duration(f2) := 2;
+mend_duration(f3) := 4;
+mend_duration(f4) := 8;
+
+[start] light := false;
+[start] handfree := true;
+
+[start] match_used(m1) := false;
+[start] match_used(m2) := false;
+[start] match_used(m3) := false;
+[start] match_used(m4) := false;
+[start] match_used(m5) := false;
+
+[start] fuse_mended(f1) := false;
+[start] fuse_mended(f2) := false;
+[start] fuse_mended(f3) := false;
+[start] fuse_mended(f4) := false;
+
+[end] fuse_mended(f1);
+[end] fuse_mended(f2);
+[end] fuse_mended(f3);
+[end] fuse_mended(f4);
+
+::("metric", "minimize-makespan");

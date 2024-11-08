@@ -1,0 +1,46 @@
+
+               \documentclass[11pt]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||cccc||cccc||cccc||}
+\hline
+ & \multicolumn{4}{c||}{Coverage (\%)}&\multicolumn{4}{c||}{Time (s)}&\multicolumn{4}{c||}{$|\pi|$}\\
+Domain & $\mathrm{P}_\mathrm{E}/\mathrm{P}_\mathrm{I}$&$\mathrm{EN}$&$\mathrm{NFD}$&$\mathrm{FF}$&$\mathrm{P}_\mathrm{E}/\mathrm{P}_\mathrm{I}$&$\mathrm{EN}$&$\mathrm{NFD}$&$\mathrm{FF}$&$\mathrm{P}_\mathrm{E}/\mathrm{P}_\mathrm{I}$&$\mathrm{EN}$&$\mathrm{NFD}$&$\mathrm{FF}$\\
+\hline
+\textsc{BlGrp} (S)&\textbf{100}/95&-&-&-&\textbf{1.8}/2.5&-&-&-&626/\textbf{279}&-&-&-\\
+\textsc{Cnt} (S)&\textbf{100}/\textbf{100}&-&-&-&\textbf{0.9}/1.3&-&-&-&543/\textbf{415}&-&-&-\\
+\textsc{Cnt} (L)&\textbf{95}/70&-&-&-&\textbf{1.0}/140.1&-&-&-&66/\textbf{43}&-&-&-\\
+\textsc{Del} (S)&\textbf{25}/\textbf{25}&-&-&-&218.3/\textbf{214.4}&-&-&-&25/\textbf{23}&-&-&-\\
+\textsc{Drn} (S)&\textbf{15}/\textbf{15}&-&-&-&\textbf{253.0}/255.3&-&-&-&25/\textbf{12}&-&-&-\\
+\textsc{Exp} (S)&\textbf{10}/\textbf{10}&-&-&-&\textbf{270.2}/\textbf{270.2}&-&-&-&38/\textbf{28}&-&-&-\\
+\textsc{Farm} (S)&\textbf{100}/95&-&-&-&\textbf{2.4}/49.5&-&-&-&813/\textbf{348}&-&-&-\\
+\textsc{Farm} (L)&\textbf{100}/75&-&-&-&\textbf{2.7}/108.0&-&-&-&1.1k/\textbf{321}&-&-&-\\
+\textsc{HPwr} (S)&\textbf{100}/90&-&-&-&\textbf{9.4}/54.5&-&-&-&91/\textbf{74}&-&-&-\\
+\textsc{MPrime} (S)&\textbf{60}/50&-&-&-&\textbf{137.7}/151.7&-&-&-&75/\textbf{8}&-&-&-\\
+\textsc{PathM} (S)&\textbf{90}/30&-&-&-&\textbf{42.3}/211.0&-&-&-&684/\textbf{166}&-&-&-\\
+\textsc{PlWat} (S)&25/\textbf{30}&-&-&-&222.4/\textbf{217.4}&-&-&-&318/\textbf{212}&-&-&-\\
+\textsc{Rvr} (S)&\textbf{75}/\textbf{75}&-&-&-&101.4/\textbf{95.6}&-&-&-&84/\textbf{28}&-&-&-\\
+\textsc{Sail} (S)&\textbf{100}/65&-&-&-&\textbf{3.6}/149.3&-&-&-&7.6k/\textbf{1.1k}&-&-&-\\
+\textsc{Sail} (L)&90/\textbf{95}&-&-&-&\textbf{17.1}/44.5&-&-&-&568/\textbf{250}&-&-&-\\
+\textsc{Sat} (S)&\textbf{5}/\textbf{5}&-&-&-&286.0/\textbf{284.7}&-&-&-&24/\textbf{17}&-&-&-\\
+\textsc{Sgr} (S)&\textbf{95}/\textbf{95}&-&-&-&10.6/\textbf{10.2}&-&-&-&59/\textbf{31}&-&-&-\\
+\textsc{Tpp} (L)&\textbf{10}/\textbf{10}&-&-&-&\textbf{270.2}/\textbf{270.2}&-&-&-&13/\textbf{10}&-&-&-\\
+\textsc{Zeno} (S)&\textbf{55}/50&-&-&-&\textbf{136.4}/143.7&-&-&-&23/\textbf{20}&-&-&-\\
+\textsc{Line} (L)&\textbf{99}/97&-&-&-&\textbf{1.1}/4.2&-&-&-&296/\textbf{236}&-&-&-
+\\\hline
+\textit{Total}&\textbf{20}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{20}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{20}&\textbf{0}&\textbf{0}&\textbf{0}\\\hline
+
+        \end{tabular}}
+        \caption{Comparative analysis between search planners}
+        \label{tab:search}
+        \end{table*}
+        
+\end{document}

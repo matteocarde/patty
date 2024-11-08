@@ -1,12 +1,17 @@
 from src.pddl.Domain import GroundedDomain, Domain
 from src.pddl.Problem import Problem
 from src.plan.NumericEncoding import NumericEncoding
+from src.plan.Pattern import Pattern
+from src.smt.SMTSolution import SMTSolution
 from src.utils.Arguments import Arguments
 from src.utils.LogPrint import LogPrint, LogPrintLevel
 from src.utils.TimeStat import TimeStat
 
 
 class Search:
+    finalPattern: Pattern or None
+    finalSolution: SMTSolution or None
+    finalBound: int or None
 
     def __init__(self, domain: GroundedDomain, problem: Problem, args: Arguments, liftedDomain: Domain = None):
         self.domain = domain
@@ -21,6 +26,10 @@ class Search:
 
         self.console: LogPrint = LogPrint(self.args.verboseLevel)
         self.ts: TimeStat = TimeStat()
+
+        self.finalPattern = None
+        self.finalSolution = None
+        self.finalBound = None
 
         pass
 
