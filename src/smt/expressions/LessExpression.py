@@ -2,7 +2,7 @@ from typing import Dict
 
 from pyeda.boolalg.bdd import BDDVariable
 from pysmt.fnode import FNode
-from pysmt.shortcuts import Plus, Equals, LE
+from pysmt.shortcuts import Plus, Equals, LE, LT
 
 from src.smt.SMTBoolVariable import SMTBoolVariable
 from src.smt.SMTExpression import SMTExpression, NUMERIC, BOOLEAN
@@ -23,6 +23,7 @@ class LessExpression(BinaryExpression):
     def simplify(cls, *xs):
         lhs = SMTExpression.numericConstant(xs[0])
         rhs = SMTExpression.numericConstant(xs[1])
+        assert lhs.type == NUMERIC and rhs.type == NUMERIC
         if isinstance(lhs, ConstantExpression) and isinstance(rhs, ConstantExpression):
             return TrueExpression() if lhs.value < rhs.value else FalseExpression()
         return cls(lhs, rhs)
@@ -31,7 +32,7 @@ class LessExpression(BinaryExpression):
         raise NotImplementedError()
 
     def getExpression(self) -> FNode:
-        return LE(self.lhs.getExpression(), self.rhs.getExpression())
+        return LT(self.lhs.getExpression(), self.rhs.getExpression())
 
     def evaluate(self, solution):
         return self.lhs.evaluate(solution) < self.rhs.evaluate(solution)

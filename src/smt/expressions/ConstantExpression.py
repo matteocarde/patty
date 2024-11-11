@@ -2,6 +2,7 @@ from typing import Dict, Set
 
 from pyeda.boolalg.bdd import BDDVariable
 from pysmt.fnode import FNode
+from pysmt.shortcuts import Real
 
 from src.smt.SMTBoolVariable import SMTBoolVariable
 from src.smt.SMTExpression import SMTExpression, NUMERIC
@@ -18,7 +19,7 @@ class ConstantExpression(SMTExpression):
         raise NotImplementedError()
 
     def getExpression(self) -> FNode:
-        return self.value
+        return Real(float(self.value))
 
     def getVariables(self) -> Set:
         return set()

@@ -63,7 +63,7 @@ class Encoding:
             for r in self.rules:
                 # Assert formula
                 script.add_command(pysmt.smtlib.script.SmtLibCommand(name=smtcmd.ASSERT,
-                                                                     args=[r.expression]))
+                                                                     args=[r.getExpression()]))
 
             # check-sat
             script.add_command(pysmt.smtlib.script.SmtLibCommand(name=smtcmd.CHECK_SAT,
@@ -76,11 +76,11 @@ class Encoding:
     def getNVars(self):
         variables = set()
         for i, rule in enumerate(self.rules):
-            variables |= rule.variables
+            variables |= rule.getVariables()
         return len(variables)
 
     def getNRules(self):
         return len(self.rules)
 
     def getAvgRuleLength(self):
-        return round(statistics.mean([len(r.variables) for r in self.rules]), 2)
+        return round(statistics.mean([len(r.getVariables()) for r in self.rules]), 2)

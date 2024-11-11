@@ -22,7 +22,6 @@ class TestBlockGrouping(TestCase):
         self.args = Arguments(keepRequired=False)
         self.pddl2smt: NumericEncoding = NumericEncoding(self.gDomain, self.problem, self.pattern, self.horizon,
                                                          self.args)
-        print(self.pddl2smt.pattern)
         pass
 
     def test_transform(self):

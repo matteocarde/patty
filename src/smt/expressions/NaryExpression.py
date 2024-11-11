@@ -1,4 +1,4 @@
-from typing import List, Tuple, Dict
+from typing import List, Tuple, Dict, Set
 
 from pyeda.boolalg.bdd import BDDVariable
 from pysmt.fnode import FNode
@@ -18,7 +18,7 @@ class NaryExpression(SMTExpression):
     def simplify(cls, *xs):
         raise NotImplementedError()
 
-    def getVariables(self):
+    def getVariables(self) -> Set:
         variables = set()
         for c in self.children:
             variables |= c.getVariables()

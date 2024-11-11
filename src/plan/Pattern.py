@@ -4,12 +4,10 @@ import copy
 import random
 from typing import List, Dict, Tuple
 
-from src.pattern.PatternAction import PatternAction
 from src.pddl.ARPG import ARPG
 from src.pddl.Action import Operation, Action
 from src.pddl.Domain import GroundedDomain
 from src.pddl.Goal import Goal
-from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Plan import Plan
 from src.pddl.State import State
 

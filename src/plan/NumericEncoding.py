@@ -97,7 +97,7 @@ class NumericEncoding(Encoding):
                 raise NotImplemented("Shouldn't go here")
 
         for v in self.domain.predicates - trueAtoms:
-            rules.append(tVars.valueVariables[v].NOT())
+            rules.append(~tVars.valueVariables[v])
 
         return rules
 
@@ -116,7 +116,7 @@ class NumericEncoding(Encoding):
                 if condition.sign == "+":
                     rule = tVars.valueVariables[condition.getAtom()]
                 else:
-                    rule = tVars.valueVariables[condition.getAtom()].NOT()
+                    rule = ~tVars.valueVariables[condition.getAtom()]
             elif isinstance(condition, Formula):
                 rule = self.getGoalRuleFromFormula(condition, level + 1)
             else:
@@ -164,8 +164,8 @@ class NumericEncoding(Encoding):
                     sumOfActions += stepVar.actionVariables[action] * action.linearizationTimes
             return sumOfActions < metricBound
 
-    def getDeltaStepRules(self, prevVars: NumericTransitionVariables, stepVars: NumericTransitionVariables) -> List[
-        SMTExpression]:
+    def getDeltaStepRules(self, prevVars: NumericTransitionVariables, stepVars: NumericTransitionVariables) \
+            -> List[SMTExpression]:
         rules: List[SMTExpression] = []
 
         for v in self.domain.allAtoms:
@@ -191,15 +191,15 @@ class NumericEncoding(Encoding):
 
                 if v in action.getAddList():
                     if self.hasEffectAxioms:
-                        rules.append(stepVars.sigmaVariables[i][v] == d_bv.OR(b_n > 0))
+                        rules.append(stepVars.sigmaVariables[i][v] == (d_bv | (b_n > 0)))
                     else:
-                        stepVars.sigmaVariables[i][v] = d_bv.OR(b_n > 0)
+                        stepVars.sigmaVariables[i][v] = d_bv | (b_n > 0)
 
                 if v in action.getDelList():
                     if self.hasEffectAxioms:
-                        rules.append(stepVars.sigmaVariables[i][v] == d_bv.AND(b_n == 0))
+                        rules.append(stepVars.sigmaVariables[i][v] == (d_bv & (b_n == 0)))
                     else:
-                        stepVars.sigmaVariables[i][v] = d_bv.AND(b_n == 0)
+                        stepVars.sigmaVariables[i][v] = d_bv & (b_n == 0)
 
             # Case c) Numeric increases or decreases
             if not action.hasNonSimpleLinearIncrement(self.encoding):
@@ -282,13 +282,13 @@ class NumericEncoding(Encoding):
                 if isinstance(pre, Literal):
                     v = pre.getAtom()
                     d_av = stepVars.sigmaVariables[i - 1][v]
-                    rhs = d_av if pre.sign == "+" else d_av.NOT()
-                    preconditions0 = preconditions0.AND(rhs) if preconditions0 else rhs
-                    preconditions1 = preconditions1.AND(rhs) if preconditions1 else rhs
+                    rhs = d_av if pre.sign == "+" else ~d_av
+                    preconditions0 = preconditions0 & rhs if preconditions0 else rhs
+                    preconditions1 = preconditions1 & rhs if preconditions1 else rhs
                     continue
 
                 precondition0 = SMTNumericVariable.fromPddl(pre, stepVars.sigmaVariables[i - 1])
-                preconditions0 = preconditions0.AND(precondition0) if preconditions0 else precondition0
+                preconditions0 = preconditions0 & precondition0 if preconditions0 else precondition0
 
                 subs: Dict[Atom, SMTExpression] = dict()
                 # Searching for decrease effects
@@ -315,7 +315,7 @@ class NumericEncoding(Encoding):
                 if not precondition1:
                     isPre1Impossible = True
                 else:
-                    preconditions1 = preconditions1.AND(precondition1) if preconditions1 else precondition1
+                    preconditions1 = preconditions1 & precondition1 if preconditions1 else precondition1
 
             if preconditions0:
                 rules.append(lhs0.implies(preconditions0))
@@ -372,7 +372,7 @@ class NumericEncoding(Encoding):
         for v in self.domain.predicates:
             v_first = stepVars.valueVariables[v]
             delta_g_v = stepVars.sigmaVariables[self.k][v]
-            rules.append(delta_g_v.iff(v_first))
+            rules.append(delta_g_v == v_first)
 
         return rules
 

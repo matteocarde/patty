@@ -124,7 +124,7 @@ class SMTSolver:
                 solution.addVariable(variablesByName[varName], model[v])
         else:
             for variable in self.variables:
-                value = self.solver.get_value(variable.expression)
+                value = self.solver.get_value(variable.getSymbol())
                 solution.addVariable(variable, value)
 
         return solution

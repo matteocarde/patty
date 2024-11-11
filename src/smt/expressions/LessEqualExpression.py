@@ -23,6 +23,7 @@ class LessEqualExpression(BinaryExpression):
     def simplify(cls, *xs):
         lhs = SMTExpression.numericConstant(xs[0])
         rhs = SMTExpression.numericConstant(xs[1])
+        assert lhs.type == NUMERIC and rhs.type == NUMERIC
         if isinstance(lhs, ConstantExpression) and isinstance(rhs, ConstantExpression):
             return TrueExpression() if lhs.value <= rhs.value else FalseExpression()
         return cls(lhs, rhs)
@@ -31,7 +32,7 @@ class LessEqualExpression(BinaryExpression):
         raise NotImplementedError()
 
     def getExpression(self) -> FNode:
-        return LT(self.lhs.getExpression(), self.rhs.getExpression())
+        return LE(self.lhs.getExpression(), self.rhs.getExpression())
 
     def evaluate(self, solution):
         return self.lhs.evaluate(solution) <= self.rhs.evaluate(solution)

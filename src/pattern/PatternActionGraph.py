@@ -8,10 +8,14 @@ from src.pddl.Action import Action
 
 class PatternActionGraph:
     graphDict: Dict[PatternAction, List[PatternAction]]
+    action2patternAction: Dict[Action, PatternAction]
+    patternAction2action: Dict[PatternAction, Action]
 
     def __init__(self, actionList: Set[Action]):
 
-        patternActions = sorted([PatternAction.fromAction(a) for a in actionList])
+        self.action2patternAction = dict((a, PatternAction.fromAction(a)) for a in actionList)
+        self.patternAction2action = dict((pa, a) for (a, pa) in self.action2patternAction.items())
+        patternActions = sorted([self.action2patternAction[a] for a in actionList])
 
         self.graphDict = dict()
         for a in patternActions:
@@ -27,11 +31,11 @@ class PatternActionGraph:
 
         pass
 
-    def getSorted(self) -> List[PatternAction]:
+    def getSorted(self) -> List[Action]:
         while True:
             try:
                 ts = TopologicalSorter(self.graphDict)
-                return list(ts.static_order())
+                return [self.patternAction2action[pa] for pa in ts.static_order()]
             except CycleError as e:
                 cycle = e.args[1]
                 self.graphDict[cycle[1]].remove(cycle[0])

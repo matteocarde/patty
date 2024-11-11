@@ -2,7 +2,7 @@ from typing import Dict
 
 from pyeda.boolalg.bdd import BDDVariable
 from pysmt.fnode import FNode
-from pysmt.shortcuts import Plus, Equals
+from pysmt.shortcuts import Equals
 
 from src.smt.SMTBoolVariable import SMTBoolVariable
 from src.smt.SMTExpression import SMTExpression, NUMERIC, BOOLEAN

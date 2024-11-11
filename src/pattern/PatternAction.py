@@ -8,6 +8,8 @@ from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.Constant import Constant
 from src.pddl.Literal import Literal
+from src.pddl.SnapAction import SnapAction
+from src.pddl.TimePredicate import TimePredicateType
 
 
 class PatternAction(Action):
@@ -15,6 +17,7 @@ class PatternAction(Action):
     assignedAtoms: Set[Atom]
     linearlyIncrementedAtoms: Set[Atom]
     constantAssignments: Dict[Atom, float or bool]
+    original: Action
 
     def __init__(self):
         super().__init__()
@@ -24,7 +27,7 @@ class PatternAction(Action):
         pa = copy.deepcopy(action)
         pa.__class__ = PatternAction
         assert isinstance(pa, PatternAction)
-
+        pa.original = action
         pa.assignedAtoms = set()
         pa.linearlyIncrementedAtoms = set()
         pa.simpleAssignedAtoms = set()
@@ -52,6 +55,18 @@ class PatternAction(Action):
             return False
         a = self
         a_ = other
+
+        if isinstance(a.original, SnapAction) and isinstance(a_.original, SnapAction):
+            sa = a.original
+            sa_ = a_.original
+            if sa.durativeAction == sa_.durativeAction:
+                if sa.timeType == TimePredicateType.AT_START and sa_.timeType == TimePredicateType.AT_END:
+                    return -1
+                if sa.timeType == TimePredicateType.AT_END and sa_.timeType == TimePredicateType.AT_START:
+                    return 1
+        # if hasattr(a, "durativeAction") and hasattr(a_, "durativeAction"):
+        #     assert
+        #     if a.durativeAction == a_.durativeAction and a.timeType == TimePredicateType.AT_START
 
         if a.interferesWithEffects(a_) and a_.interferesWithEffects(a):
             return 0

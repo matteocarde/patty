@@ -18,7 +18,7 @@ class TestElevator(TestCase):
         self.domain: Domain = Domain.fromFile("../../files/numeric/elevator-num/domain.pddl")
         self.problem: Problem = Problem.fromFile("../../files/numeric/elevator-num/instances/problem-5-3-3.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
-        self.horizon = 3
+        self.horizon = 5
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
         self.args = Arguments(keepRequired=False)
         self.pddl2smt: NumericEncoding = NumericEncoding(self.gDomain, self.problem, self.pattern, self.horizon,

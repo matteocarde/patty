@@ -4,8 +4,6 @@ from typing import Set, Dict
 
 from pyeda.boolalg.expr import OrOp, AndOp, Variable, Complement, OrAndOp
 from pysmt.fnode import FNode
-from pysmt.shortcuts import Equals, LE, LT, GE, GT, NotEquals
-from pysmt.typing import BOOL
 
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
@@ -49,10 +47,6 @@ class SMTExpression:
     def implies(self, other: SMTExpression):
         from src.smt.expressions.ImpliesExpression import ImpliesExpression
         return ImpliesExpression.simplify(self, other)
-
-    def iff(self, other: SMTExpression):
-        from src.smt.expressions.IffExpression import IffExpression
-        return IffExpression.simplify(self, other)
 
     def impliedBy(self, other: SMTExpression):
         from src.smt.expressions.ImpliesExpression import ImpliesExpression

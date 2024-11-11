@@ -41,8 +41,6 @@ class TemporalTransitionVariables:
         variables: Dict[int, SMTVariable] = dict()
 
         for i, action in enumerate(self.pattern):
-            if action.isFake:
-                continue
             variables[i] = SMTIntVariable(f"{action.name}")
 
         return variables
@@ -83,7 +81,7 @@ class TemporalTransitionVariables:
                 if not eff.isLinearIncrement():
                     continue
                 var = eff.getAtom()
-                variables.setdefault(a, dict())
+                variables.setdefault(i, dict())
                 variables[i][var] = SMTRealVariable(f"{var}_{a}")
 
         return variables

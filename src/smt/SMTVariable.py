@@ -4,7 +4,17 @@ from src.smt.SMTExpression import SMTExpression
 
 
 class SMTVariable(SMTExpression):
-    expression: FNode
+    symbol: FNode
+    name: str
 
     def __init__(self):
         super().__init__()
+
+    def __repr__(self):
+        return self.name
+
+    def __str__(self):
+        return self.name
+
+    def getSymbol(self) -> FNode:
+        return self.symbol

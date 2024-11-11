@@ -16,12 +16,13 @@ class SMTBoolVariable(SMTVariable):
         super().__init__()
         self.name = name
         self.type = BOOLEAN
+        self.symbol = Symbol(self.name)
 
     def __hash__(self):
         return hash(self.name)
 
     def getExpression(self) -> FNode:
-        return Symbol(self.name)
+        return self.symbol
 
     def getVariables(self):
         return {self}

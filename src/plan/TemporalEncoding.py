@@ -122,7 +122,7 @@ class TemporalEncoding(Encoding):
                 raise NotImplemented("Shouldn't go here")
 
         for v in self.domain.predicates - trueAtoms:
-            rules.append(tVars.valueVariables[v].NOT())
+            rules.append(~tVars.valueVariables[v])
 
         return rules
 
@@ -141,7 +141,7 @@ class TemporalEncoding(Encoding):
                 if condition.sign == "+":
                     rule = tVars.valueVariables[condition.getAtom()]
                 else:
-                    rule = tVars.valueVariables[condition.getAtom()].NOT()
+                    rule = ~tVars.valueVariables[condition.getAtom()]
             elif isinstance(condition, Formula):
                 rule = self.getGoalRuleFromFormula(condition, level + 1)
             else:
@@ -161,11 +161,11 @@ class TemporalEncoding(Encoding):
 
         rules = []
         if andRules:
-            rules.append(SMTExpression.andOfExpressionsList(andRules))
+            rules.append(SMTExpression.bigand(andRules))
         if orRules:
-            rules.append(SMTExpression.orOfExpressionsList(orRules))
+            rules.append(SMTExpression.bigor(orRules))
 
-        return SMTExpression.andOfExpressionsList(rules)
+        return SMTExpression.bigand(rules)
 
     def getGoalExpression(self) -> SMTExpression:
         return self.getGoalRuleFromFormula(self.problem.goal, 0)
@@ -208,9 +208,9 @@ class TemporalEncoding(Encoding):
             # Case b) Boolean
             for v in action_i.getAddList() | action_i.getDelList():
                 if v in action_i.getAddList():
-                    sigma_i[v] = sigma_j[v].OR(a_i > 0)
+                    sigma_i[v] = sigma_j[v] | (a_i > 0)
                 if v in action_i.getDelList():
-                    sigma_i[v] = sigma_j[v].AND(a_i == 0)
+                    sigma_i[v] = sigma_j[v] & (a_i == 0)
 
             # Case c) Numeric increases or decreases
             modifications = [(+1, action_i.getIncreases()), (-1, action_i.getDecreases())]
@@ -247,16 +247,14 @@ class TemporalEncoding(Encoding):
             for p in a.preconditions:
                 if isinstance(p, Literal):
                     v = p.getAtom()
-                    if p.sign == "+":
-                        andPreconditions.append(sigma_j[v])
-                    else:
-                        andPreconditions.append(sigma_j[v].NOT())
+                    l = sigma_j[v] if p.sign == "+" else ~sigma_j[v]
+                    andPreconditions.append(l)
                 elif isinstance(p, BinaryPredicate):
                     andPreconditions.append(SMTExpression.fromPddl(p, sigma_j))
 
             if andPreconditions:
                 lhs: SMTExpression = a_i > 0
-                rhs: SMTExpression = SMTExpression.andOfExpressionsList(andPreconditions)
+                rhs: SMTExpression = SMTExpression.bigand(andPreconditions)
                 rules.append(lhs.implies(rhs))
 
             # 2) Start or end action
@@ -342,7 +340,7 @@ class TemporalEncoding(Encoding):
 
             a_i = stepVars.actionVariables[i]
             if not a.couldBeRepeated():
-                rules.append((a_i >= 0).AND(a_i <= 1))
+                rules.append((a_i >= 0) & (a_i <= 1))
             else:
                 rules.append(a_i >= 0)
 
@@ -362,7 +360,7 @@ class TemporalEncoding(Encoding):
         for v in predicates:
             v_first = stepVars.valueVariables[v]
             delta_g_v = stepVars.sigmaVariables[self.k][v]
-            rules.append(delta_g_v.iff(v_first))
+            rules.append(delta_g_v == v_first)
 
         return rules
 
@@ -385,9 +383,9 @@ class TemporalEncoding(Encoding):
                 t_i = stepVars.timeVariables[i]
                 d_i = stepVars.durVariables[i]
                 e_b = self.getEpsilonB(a.durativeAction)
-                rules.append((a_i == 0).implies((t_i == 0).AND(d_i == 0)))
+                rules.append((a_i == 0).implies((t_i == 0) & (d_i == 0)))
                 if a.durativeAction.couldBeRepeated():
-                    rhs = (a_i * (D + e_b) <= d_i + e_b).AND(d_i + e_b <= a_i * (D + e_b))
+                    rhs = (a_i * (D + e_b) <= d_i + e_b) & (d_i + e_b <= a_i * (D + e_b))
                     rules.append((a_i > 0).implies(rhs))
                 else:
                     rules.append((a_i > 0).implies(d_i == D))
@@ -418,11 +416,11 @@ class TemporalEncoding(Encoding):
                     a_j = stepVars.actionVariables[j]
                     t_j = stepVars.timeVariables[j]
 
-                    rhsList.append((a_i == a_j).AND(t_j == t_i + d_i))
+                    rhsList.append((a_i == a_j) & (t_j == t_i + d_i))
                     pass
 
                 lhs = a_i > 0
-                rhs = SMTExpression.orOfExpressionsList(rhsList)
+                rhs = SMTExpression.bigor(rhsList)
                 rules.append(lhs.implies(rhs))
             elif action.timeType == TimePredicateType.AT_END:
                 j = self.action2index[action]
@@ -436,11 +434,11 @@ class TemporalEncoding(Encoding):
                     t_i = stepVars.timeVariables[i]
                     d_i = stepVars.durVariables[i]
 
-                    rhsList.append((a_i == a_j).AND(t_j == t_i + d_i))
+                    rhsList.append((a_i == a_j) & (t_j == t_i + d_i))
                     pass
 
                 lhs = a_j > 0
-                rhs = SMTExpression.orOfExpressionsList(rhsList)
+                rhs = SMTExpression.bigor(rhsList)
                 rules.append(lhs.implies(rhs))
 
         return rules
@@ -470,7 +468,7 @@ class TemporalEncoding(Encoding):
                 sumTimeE_i = sum([stepVars.timeVariables[j] for j in E_i])
 
                 lhs = a_i > 0
-                rhs = (sumActionS_i == sumActionE_i).AND(sumTimeS_i == sumTimeE_i)
+                rhs = (sumActionS_i == sumActionE_i) & (sumTimeS_i == sumTimeE_i)
                 rules.append(lhs.implies(rhs))
                 # print(lhs.implies(rhs))
             elif action.timeType == TimePredicateType.AT_END:
@@ -523,7 +521,7 @@ class TemporalEncoding(Encoding):
                 t_j = stepVars.timeVariables[j]
                 d_j = stepVars.durVariables[j] if j in stepVars.durVariables else 0.0
                 rhsList.append(t_i >= t_j + d_j)
-            rules.append(lhs.implies(SMTExpression.andOfExpressionsList(rhsList)))
+            rules.append(lhs.implies(SMTExpression.bigand(rhsList)))
 
         return rules
 
@@ -558,15 +556,15 @@ class TemporalEncoding(Encoding):
                 for pre in lastingPre:
                     if isinstance(pre, Literal):
                         atom = pre.getAtom()
-                        preStartRules += [sigma_i[atom]] if pre.sign == "+" else [sigma_i[atom].NOT()]
+                        preStartRules += [sigma_i[atom]] if pre.sign == "+" else [~sigma_i[atom]]
                     if isinstance(pre, BinaryPredicate):
                         preStartRules.append(self.getSigmaPsi(pre, sigma_im1, 1, b.start, 0, b.end))
                         if b.couldBeRepeated():
                             preEndRules.append(self.getSigmaPsi(pre, sigma_im1, a_i, b.start, a_i - 1, b.end))
                 if preStartRules:
-                    rules.append((a_i > 0).implies(SMTExpression.andOfExpressionsList(preStartRules)))
+                    rules.append((a_i > 0).implies(SMTExpression.bigand(preStartRules)))
                 if preEndRules:
-                    rules.append((a_i > 1).implies(SMTExpression.andOfExpressionsList(preEndRules)))
+                    rules.append((a_i > 1).implies(SMTExpression.bigand(preEndRules)))
 
                 mutexWithLasting = set()
                 for j, action_j in enumerate(self.pattern):
@@ -586,7 +584,7 @@ class TemporalEncoding(Encoding):
                             and j in mutexWithLasting and action_j.couldBeRepeated():
                         a_j = stepVars.actionVariables[j]
                         d_j = stepVars.durVariables[j]
-                        lhs = (a_i > 0).AND(a_j > 1)
+                        lhs = (a_i > 0) & (a_j > 1)
                         rhs = t_j + d_j <= t_i
                         rules.append(lhs.implies(rhs))
 
@@ -597,20 +595,20 @@ class TemporalEncoding(Encoding):
                         a_j = stepVars.actionVariables[j]
                         t_j = stepVars.timeVariables[j]
                         sigma_j = stepVars.sigmaVariables[j]
-                        interval = (t_i <= t_j).AND(t_j < t_i + d_i)
+                        interval = (t_i <= t_j) & (t_j < t_i + d_i)
                         rhsList = []
                         for pre in lastingPre:
                             if isinstance(pre, Literal):
                                 v = pre.getAtom()
-                                rhsList += [sigma_j[v]] if pre.sign == "+" else [sigma_j[v].NOT()]
+                                rhsList += [sigma_j[v]] if pre.sign == "+" else [~sigma_j[v]]
                             if isinstance(pre, BinaryPredicate):
                                 rhsList += [SMTExpression.fromPddl(pre, sigma_j)]
 
                         if rhsList:
-                            rules.append(interval.implies(SMTExpression.andOfExpressionsList(rhsList)))
+                            rules.append(interval.implies(SMTExpression.bigand(rhsList)))
 
                         if action_j.couldBeRepeated() or action_i.couldBeRepeated():
-                            rhs = (a_i <= 1).AND(a_j <= 1)
+                            rhs = (a_i <= 1) & (a_j <= 1)
                             rules.append(interval.implies(rhs))
                             print(interval.implies(rhs))
 
@@ -649,7 +647,7 @@ class TemporalEncoding(Encoding):
             print(rule)
 
     def writeSMTLIB(self, filename: str):
-        formula = SMTExpression.andOfExpressionsList(self.rules).expression
+        formula = SMTExpression.bigand(self.rules).expression
         with open(filename, "w") as fout:
             script = pysmt.smtlib.script.SmtLibScript()
 
@@ -670,7 +668,7 @@ class TemporalEncoding(Encoding):
             for r in self.rules:
                 # Assert formula
                 script.add_command(pysmt.smtlib.script.SmtLibCommand(name=smtcmd.ASSERT,
-                                                                     args=[r.expression]))
+                                                                     args=[r.getExpression()]))
             # check-sat
             script.add_command(pysmt.smtlib.script.SmtLibCommand(name=smtcmd.CHECK_SAT,
                                                                  args=[]))

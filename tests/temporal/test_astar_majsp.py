@@ -5,8 +5,6 @@ from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.Plan import Plan
 from src.pddl.Problem import Problem
 from src.pddl.TemporalPlan import TemporalPlan
-from src.plan.Pattern import Pattern
-from src.plan.TemporalEncoding import TemporalEncoding
 from src.search.AStarSearchMax import AStarSearchMax
 from src.utils.Arguments import Arguments
 
