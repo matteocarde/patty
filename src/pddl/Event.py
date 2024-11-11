@@ -21,9 +21,9 @@ class Event(Operation):
     def type(self):
         return OperationType.EVENT
 
-    def ground(self, problem, isPredicateStatic, delta=1) -> List[Event]:
+    def ground(self, problem, delta=1) -> List[Event]:
         groundOps: List = []
-        for op in self.getGroundedOperations(problem, isPredicateStatic, delta=delta):
+        for op in self.getGroundedOperations(problem, delta=delta):
             event = Event()
             event.name = op.name
             event.preconditions = op.preconditions

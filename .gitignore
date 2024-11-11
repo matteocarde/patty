@@ -25,6 +25,6 @@ benchmarks/planners/cplex/installer.bin
 **/noise/
 **/partial/**
 
-benchmarks/planners/planutils
-
 *.sp_log
+
+*.dot

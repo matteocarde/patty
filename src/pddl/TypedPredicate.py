@@ -41,9 +41,9 @@ class TypedPredicate(Predicate):
             paramType = None
             for c in parameterNode.children:
                 if isinstance(c, pddlParser.LiftedAtomParameterContext):
-                    paramNames.append(c.getText())
+                    paramNames.append(c.getText().lower())
                 if isinstance(c, pddlParser.TypeNameContext):
-                    paramType = c.getText()
+                    paramType = c.getText().lower()
             for name in paramNames:
                 typedPredicate.parameters.append(Parameter(name, types[paramType]))
 

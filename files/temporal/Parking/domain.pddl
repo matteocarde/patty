@@ -11,7 +11,7 @@
 		(curb-clear ?curb - curb)
 	)
 	(:durative-action move-curb-to-curb
-		:parameters (?car - car ?curbsrc ?curbdest - curb)
+		:parameters (?car - car ?curbsrc - curb ?curbdest - curb)
 		:duration (= ?duration 1)
 		:condition (and
 			(at start (car-clear ?car))

@@ -1,0 +1,46 @@
+
+               \documentclass[11pt]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||ccccc||ccccc||}
+\hline
+ & \multicolumn{5}{c||}{Coverage (\%)}&\multicolumn{5}{c||}{Time (s)}\\
+Domain & $\mathrm{EN}$&$\mathrm{NFD}$&$\mathrm{FF}$&$\mathrm{P}_\mathrm{E}$&$\mathrm{P}_\mathrm{I}$&$\mathrm{EN}$&$\mathrm{NFD}$&$\mathrm{FF}$&$\mathrm{P}_\mathrm{E}$&$\mathrm{P}_\mathrm{I}$\\
+\hline
+\textsc{BlGrp} (S)&-&-&-&\textbf{100}&60&-&-&-&\textbf{1.6}&20.9\\
+\textsc{Cnt} (S)&-&-&-&\textbf{100}&60&-&-&-&\textbf{0.9}&13.2\\
+\textsc{Cnt} (L)&-&-&-&\textbf{100}&40&-&-&-&\textbf{1.2}&19.6\\
+\textsc{Del} (S)&-&-&-&\textbf{25}&\textbf{25}&-&-&-&24.4&\textbf{23.7}\\
+\textsc{Drn} (S)&-&-&-&\textbf{15}&\textbf{15}&-&-&-&\textbf{25.7}&\textbf{25.7}\\
+\textsc{Exp} (S)&-&-&-&15&\textbf{20}&-&-&-&25.8&\textbf{25.7}\\
+\textsc{Farm} (S)&-&-&-&\textbf{100}&35&-&-&-&\textbf{1.2}&22.3\\
+\textsc{Farm} (L)&-&-&-&\textbf{90}&30&-&-&-&\textbf{5.1}&22.2\\
+\textsc{HPwr} (S)&-&-&-&\textbf{95}&25&-&-&-&\textbf{9.7}&25.1\\
+\textsc{MPrime} (S)&-&-&-&\textbf{50}&\textbf{50}&-&-&-&\textbf{17.5}&17.8\\
+\textsc{PathM} (S)&-&-&-&\textbf{100}&15&-&-&-&\textbf{6.8}&26.7\\
+\textsc{PlWat} (S)&-&-&-&\textbf{25}&\textbf{25}&-&-&-&\textbf{23.3}&24.9\\
+\textsc{Rvr} (S)&-&-&-&\textbf{60}&50&-&-&-&\textbf{15.8}&17.2\\
+\textsc{Sail} (S)&-&-&-&\textbf{100}&\textbf{100}&-&-&-&\textbf{1.1}&2.8\\
+\textsc{Sail} (L)&-&-&-&\textbf{80}&65&-&-&-&\textbf{7.1}&12.4\\
+\textsc{Sat} (S)&-&-&-&\textbf{5}&\textbf{5}&-&-&-&\textbf{28.9}&\textbf{28.9}\\
+\textsc{Sgr} (S)&-&-&-&\textbf{100}&\textbf{100}&-&-&-&\textbf{4.3}&4.6\\
+\textsc{Tpp} (L)&-&-&-&\textbf{10}&\textbf{10}&-&-&-&\textbf{27.3}&\textbf{27.3}\\
+\textsc{Zeno} (S)&-&-&-&\textbf{55}&\textbf{55}&-&-&-&15.2&\textbf{15.0}\\
+\textsc{Line} (L)&-&-&-&\textbf{100}&88&-&-&-&\textbf{0.9}&7.2
+\\\hline
+\textit{Total}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{19}&\textbf{10}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{17}&\textbf{6}\\\hline
+
+        \end{tabular}}
+        \caption{Comparative analysis between search planners}
+        \label{tab:search}
+        \end{table*}
+        
+\end{document}

@@ -1,0 +1,1976 @@
+{
+  "numeric/ipc-2023/settlers-compiled": {
+    "pfile1.pddl": {
+      "METRIC-FF": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "NFD": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "OMT": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "PATTY-A": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 1760.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "RANTANPLAN": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 1670.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "SPRINGROLL": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 5760.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": 0,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "ENHSP": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ]
+    },
+    "pfile10.pddl": {
+      "METRIC-FF": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "NFD": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "OMT": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "PATTY-A": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 75690.0,
+          "bound": 1,
+          "planLength": 12318.0,
+          "nOfVars": 1938,
+          "nOfRules": 3927,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1
+        }
+      ],
+      "RANTANPLAN": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 328551,
+          "nOfRules": 333164,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 1,
+          "quantity": 0
+        }
+      ],
+      "SPRINGROLL": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 20650.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": 0,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "ENHSP": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ]
+    },
+    "pfile11.pddl": {
+      "METRIC-FF": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "NFD": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "OMT": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "PATTY-A": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "RANTANPLAN": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 344583,
+          "nOfRules": 349340,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 1,
+          "quantity": 0
+        }
+      ],
+      "SPRINGROLL": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 21340.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": 0,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "ENHSP": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ]
+    },
+    "pfile12.pddl": {
+      "METRIC-FF": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 186550.0,
+          "bound": -1,
+          "planLength": 151.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1
+        }
+      ],
+      "NFD": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "OMT": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "PATTY-A": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "RANTANPLAN": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 362985,
+          "nOfRules": 367850,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 1,
+          "quantity": 0
+        }
+      ],
+      "SPRINGROLL": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 16760.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": 0,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "ENHSP": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ]
+    },
+    "pfile13.pddl": {
+      "METRIC-FF": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "NFD": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 6720.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "OMT": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "PATTY-A": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 232800.0,
+          "bound": 1,
+          "planLength": 132612.0,
+          "nOfVars": 2386,
+          "nOfRules": 4878,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1
+        }
+      ],
+      "RANTANPLAN": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 471881,
+          "nOfRules": 477653,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 1,
+          "quantity": 0
+        }
+      ],
+      "SPRINGROLL": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 28200.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": 0,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "ENHSP": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ]
+    },
+    "pfile14.pddl": {
+      "METRIC-FF": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "NFD": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 10540.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "OMT": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "PATTY-A": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 14260.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "RANTANPLAN": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 9620.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "SPRINGROLL": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 81850.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": 0,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "ENHSP": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ]
+    },
+    "pfile15.pddl": {
+      "METRIC-FF": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "NFD": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 6980.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "OMT": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "PATTY-A": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 4920.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "RANTANPLAN": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 5000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "SPRINGROLL": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 25200.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": 0,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "ENHSP": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ]
+    },
+    "pfile16.pddl": {
+      "METRIC-FF": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "NFD": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 6700.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "OMT": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "PATTY-A": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 4940.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "RANTANPLAN": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 4940.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "SPRINGROLL": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 26220.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": 0,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "ENHSP": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ]
+    },
+    "pfile17.pddl": {
+      "METRIC-FF": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "NFD": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 7840.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "OMT": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "PATTY-A": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "RANTANPLAN": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 636105,
+          "nOfRules": 643044,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 1,
+          "quantity": 0
+        }
+      ],
+      "SPRINGROLL": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 38070.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": 0,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "ENHSP": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ]
+    },
+    "pfile18.pddl": {
+      "METRIC-FF": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 0.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "NFD": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 8560.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "OMT": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "PATTY-A": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "RANTANPLAN": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 544611,
+          "nOfRules": 549371,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 0,
+          "quantity": 0
+        }
+      ],
+      "SPRINGROLL": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 74930.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": 0,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "ENHSP": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ]
+    },
+    "pfile2.pddl": {
+      "METRIC-FF": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 0.0,
+          "bound": -1,
+          "planLength": 26.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1
+        }
+      ],
+      "NFD": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "OMT": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "PATTY-A": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 119690.0,
+          "bound": 1,
+          "planLength": 155893.0,
+          "nOfVars": 968,
+          "nOfRules": 1923,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1
+        }
+      ],
+      "RANTANPLAN": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 137994,
+          "nOfRules": 141265,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 2,
+          "quantity": 0
+        }
+      ],
+      "SPRINGROLL": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 7840.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": 0,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "ENHSP": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ]
+    },
+    "pfile3.pddl": {
+      "METRIC-FF": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "NFD": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "OMT": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "PATTY-A": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 122530.0,
+          "bound": 1,
+          "planLength": 99237.0,
+          "nOfVars": 998,
+          "nOfRules": 1989,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1
+        }
+      ],
+      "RANTANPLAN": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 152934,
+          "nOfRules": 156367,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 2,
+          "quantity": 0
+        }
+      ],
+      "SPRINGROLL": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 9140.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": 0,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "ENHSP": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 88830.0,
+          "bound": -1,
+          "planLength": 94.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1
+        }
+      ]
+    },
+    "pfile4.pddl": {
+      "METRIC-FF": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1560.0,
+          "bound": -1,
+          "planLength": 93.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1
+        }
+      ],
+      "NFD": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "OMT": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "PATTY-A": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 6100.0,
+          "bound": 1,
+          "planLength": 1279.0,
+          "nOfVars": 998,
+          "nOfRules": 1973,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1
+        }
+      ],
+      "RANTANPLAN": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 100996,
+          "nOfRules": 103263,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 1,
+          "quantity": 0
+        }
+      ],
+      "SPRINGROLL": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 8270.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": 0,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "ENHSP": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ]
+    },
+    "pfile5.pddl": {
+      "METRIC-FF": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "NFD": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "OMT": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "PATTY-A": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 8420.0,
+          "bound": 1,
+          "planLength": 1520.0,
+          "nOfVars": 1180,
+          "nOfRules": 2367,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1
+        }
+      ],
+      "RANTANPLAN": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 212115,
+          "nOfRules": 216252,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 2,
+          "quantity": 0
+        }
+      ],
+      "SPRINGROLL": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 10400.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": 0,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "ENHSP": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ]
+    },
+    "pfile6.pddl": {
+      "METRIC-FF": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 30.0,
+          "bound": -1,
+          "planLength": 49.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1
+        }
+      ],
+      "NFD": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "OMT": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "PATTY-A": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "RANTANPLAN": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 241269,
+          "nOfRules": 245863,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 2,
+          "quantity": 0
+        }
+      ],
+      "SPRINGROLL": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 12080.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": 0,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "ENHSP": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ]
+    },
+    "pfile7.pddl": {
+      "METRIC-FF": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 0.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "NFD": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 290.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "OMT": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "PATTY-A": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 1860.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "RANTANPLAN": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 2050.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "SPRINGROLL": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 4470.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "ENHSP": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 2020.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ]
+    },
+    "pfile8.pddl": {
+      "METRIC-FF": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "NFD": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "OMT": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "PATTY-A": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 28350.0,
+          "bound": 1,
+          "planLength": 7364.0,
+          "nOfVars": 1654,
+          "nOfRules": 3347,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1
+        }
+      ],
+      "RANTANPLAN": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 344910,
+          "nOfRules": 350677,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 2,
+          "quantity": 0
+        }
+      ],
+      "SPRINGROLL": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 16320.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": 0,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "ENHSP": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ]
+    },
+    "pfile9.pddl": {
+      "METRIC-FF": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "NFD": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "OMT": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "PATTY-A": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 212960.0,
+          "bound": 1,
+          "planLength": 50296.0,
+          "nOfVars": 1538,
+          "nOfRules": 3104,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1
+        }
+      ],
+      "RANTANPLAN": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 222183,
+          "nOfRules": 225837,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 1,
+          "quantity": 0
+        }
+      ],
+      "SPRINGROLL": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 15120.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": 0,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "ENHSP": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ]
+    },
+    "pfile19.pddl": {
+      "NFD": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 10090.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "OMT": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "PATTY-A": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "RANTANPLAN": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 805427,
+          "nOfRules": 811309,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 0,
+          "quantity": 0
+        }
+      ],
+      "SPRINGROLL": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 103470.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": 0,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "ENHSP": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ]
+    },
+    "pfile20.pddl": {
+      "NFD": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 10250.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "OMT": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "PATTY-A": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "RANTANPLAN": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 809169,
+          "nOfRules": 815057,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 0,
+          "quantity": 0
+        }
+      ],
+      "SPRINGROLL": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 117240.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": 0,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ],
+      "ENHSP": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0
+        }
+      ]
+    }
+  }
+}

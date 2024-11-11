@@ -24,7 +24,7 @@ INITIAL_CONDITION = """
 """
 
 
-class TestInitialContidition(TestCase):
+class TestInitialCondition(TestCase):
 
     def setUp(self) -> None:
         pass

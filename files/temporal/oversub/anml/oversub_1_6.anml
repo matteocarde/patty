@@ -1,0 +1,161 @@
+fluent boolean x1;
+fluent boolean x2;
+fluent boolean x3;
+fluent boolean x4;
+fluent boolean x5;
+fluent boolean x6;
+fluent boolean y;
+
+fluent boolean g1;
+fluent boolean g2;
+fluent boolean g3;
+fluent boolean g4;
+fluent boolean g5;
+fluent boolean g6;
+
+
+action set_x1() ::("cost", 1) {
+  duration := 1;
+  [start] not x1;
+  [start] x1 := true;
+};
+
+action set_x2() ::("cost", 1) {
+  duration := 1;
+  [start] not x2;
+  [start] x2 := true;
+};
+
+action set_x3() ::("cost", 1) {
+  duration := 1;
+  [start] not x3;
+  [start] x3 := true;
+};
+
+action set_x4() ::("cost", 1) {
+  duration := 1;
+  [start] not x4;
+  [start] x4 := true;
+};
+
+action set_x5() ::("cost", 1) {
+  duration := 1;
+  [start] not x5;
+  [start] x5 := true;
+};
+
+action set_x6() ::("cost", 1) {
+  duration := 1;
+  [start] not x6;
+  [start] x6 := true;
+};
+
+action set_y() ::("cost", 1) {
+  duration := 1;
+  [start] not y;
+  [start] y := true;
+};
+
+action goal1() ::("cost", 1) {
+  duration := 1;
+  [start] x1;
+  [start] not g1;
+  [end] g1 := true;
+};
+
+action goal2() ::("cost", 1) {
+  duration := 1;
+  [start] x2;
+  [start] not g2;
+  [end] g2 := true;
+};
+
+action goal3() ::("cost", 1) {
+  duration := 1;
+  [start] x3;
+  [start] not g3;
+  [end] g3 := true;
+};
+
+action goal4() ::("cost", 1) {
+  duration := 1;
+  [start] x4;
+  [start] not g4;
+  [end] g4 := true;
+};
+
+action goal5() ::("cost", 1) {
+  duration := 1;
+  [start] x5;
+  [start] not g5;
+  [end] g5 := true;
+};
+
+action goal6() ::("cost", 1) {
+  duration := 1;
+  [start] x6;
+  [start] not g6;
+  [end] g6 := true;
+};
+
+action goal1_fake() ::("cost", 200) {
+  duration := 1;
+  [start] not g1;
+  [end] g1 := true;
+};
+
+action goal2_fake() ::("cost", 200) {
+  duration := 1;
+  [start] not g2;
+  [end] g2 := true;
+};
+
+action goal3_fake() ::("cost", 200) {
+  duration := 1;
+  [start] not g3;
+  [end] g3 := true;
+};
+
+action goal4_fake() ::("cost", 200) {
+  duration := 1;
+  [start] not g4;
+  [end] g4 := true;
+};
+
+action goal5_fake() ::("cost", 200) {
+  duration := 1;
+  [start] not g5;
+  [end] g5 := true;
+};
+
+action goal6_fake() ::("cost", 200) {
+  duration := 1;
+  [start] not g6;
+  [end] g6 := true;
+};
+
+
+[start] x1 := false;
+[start] x2 := false;
+[start] x3 := false;
+[start] x4 := false;
+[start] x5 := false;
+[start] x6 := false;
+[start] y := false;
+
+[start] g1 := false;
+[start] g2 := false;
+[start] g3 := false;
+[start] g4 := false;
+[start] g5 := false;
+[start] g6 := false;
+
+[end] y;
+[end] g1;
+[end] g2;
+[end] g3;
+[end] g4;
+[end] g5;
+[end] g6;
+
+::("metric", "minimize-action-cost", 0);

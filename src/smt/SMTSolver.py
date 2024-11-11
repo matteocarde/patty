@@ -1,11 +1,11 @@
-from pysmt.logics import QF_LRA, QF_NRA
-from pysmt.shortcuts import Portfolio, write_smtlib, Solver
 from typing import Set, List, Dict
 
+from pysmt.logics import QF_LRA, QF_NRA
+from pysmt.shortcuts import Portfolio, Solver
 from z3 import Optimize
 
-from src.pddl.NumericPlan import NumericPlan
-from src.plan.PDDL2SMT import PDDL2SMT
+from src.pddl.Plan import Plan
+from src.plan.Encoding import Encoding
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTSolution import SMTSolution
 from src.smt.SMTVariable import SMTVariable
@@ -15,35 +15,39 @@ class SMTSolver:
     solver: Portfolio
     variables: Set[SMTVariable]
 
-    def __init__(self, pddl2smt: PDDL2SMT = None, maximize=False):
+    def __init__(self, encoding: Encoding = None):
         self.variables: Set[SMTVariable] = set()
         self.variablesByName: Dict[str, SMTVariable] = dict()
         self.assertions: List[SMTExpression] = list()
         self.softAssertions: List[SMTExpression] = list()
-        self.pddl2smt: PDDL2SMT = pddl2smt
-        self.maximize = True
+        self.encoding: Encoding = encoding
 
+        self.maximize = self.encoding and (bool(self.encoding.softRules) or bool(self.encoding.minimize))
         if self.maximize:
             self.solver = Optimize()
             self.z3: Solver = Solver("z3",
-                                     logic=QF_NRA,
+                                     logic=QF_LRA,
                                      incremental=True,
                                      generate_models=True)
         else:
             self.solver: Portfolio = Portfolio(["z3"],
-                                               logic=QF_NRA,
+                                               logic=QF_LRA,
                                                incremental=True,
                                                generate_models=True)
 
-        if self.pddl2smt:
-            self.addAssertions(self.pddl2smt.rules)
-            self.addSoftAssertions(self.pddl2smt.softRules)
+        if self.encoding:
+            self.addAssertions(self.encoding.rules)
+            self.addSoftAssertions(self.encoding.softRules)
+            self.setMinimize(self.encoding.minimize)
+
+        # signal.signal(signal.SIGTERM, self.z3.exit)
+        # signal.signal(signal.SIGINT, self.z3.exit)
 
     def addAssertion(self, expr: SMTExpression, push=True):
         self.assertions.append(expr)
-        self.variables.update(expr.variables)
+        self.variables.update(expr.getVariables())
 
-        z3Expr = self.z3.converter.convert(expr.expression) if self.maximize else expr.expression
+        z3Expr = self.z3.converter.convert(expr.getExpression()) if self.maximize else expr.getExpression()
 
         if self.maximize:
             self.solver.add(z3Expr)
@@ -62,20 +66,22 @@ class SMTSolver:
 
     def addSoftAssertion(self, expr: SMTExpression, push=True):
 
-        if not self.maximize:
-            return
-
         self.softAssertions.append(expr)
-        self.variables.update(expr.variables)
-        z3Expr = self.z3.converter.convert(expr.expression)
+        self.variables.update(expr.getVariables())
+        z3Expr = self.z3.converter.convert(expr.getExpression())
         self.solver.add_soft(z3Expr)
 
         if push:
             self.solver.push()
 
-    def addSoftAssertions(self, exprs: [SMTExpression], push=True):
-        if not self.maximize:
+    def setMinimize(self, expr: SMTExpression):
+        if not expr:
             return
+
+        z3Expr = self.z3.converter.convert(expr.getExpression())
+        self.solver.minimize(z3Expr)
+
+    def addSoftAssertions(self, exprs: [SMTExpression], push=True):
 
         for expr in exprs:
             self.addSoftAssertion(expr, push=False)
@@ -93,10 +99,8 @@ class SMTSolver:
             self.z3.exit()
         else:
             self.solver.exit()
-        pass
 
     def getSolution(self) -> SMTSolution or bool:
-
         if self.maximize:
             res = self.solver.check()
 
@@ -106,6 +110,7 @@ class SMTSolver:
             found = self.solver.solve()
             if not found:
                 return False
+
         solution = SMTSolution()
         if self.maximize:
             model = self.solver.model()
@@ -119,72 +124,17 @@ class SMTSolver:
                 solution.addVariable(variablesByName[varName], model[v])
         else:
             for variable in self.variables:
-                value = self.solver.get_value(variable.expression)
+                value = self.solver.get_value(variable.getSymbol())
                 solution.addVariable(variable, value)
 
         return solution
 
-    def solve(self) -> NumericPlan or bool:
+    def solve(self) -> Plan or bool:
 
         solution = self.getSolution()
         if not solution:
             return False
-        plan = self.pddl2smt.getPlanFromSolution(solution)
-        plan.quality = plan.getMetric(self.pddl2smt.problem)
+        plan = self.encoding.getPlanFromSolution(solution)
+        # plan.quality = plan.getMetric(self.encoding.problem)
 
         return plan
-
-    # Linear Optimization
-    def optimize(self) -> NumericPlan or bool:
-
-        lastPlanFound: NumericPlan = self.solve()
-        if not lastPlanFound:
-            return False
-
-        while True:
-            assert lastPlanFound.validate(self.pddl2smt.problem)
-            print(f"Found plan with quality {lastPlanFound.quality}. Improving...")
-            self.addAssertion(self.pddl2smt.getMetricExpression(lastPlanFound.quality))
-
-            plan = self.solve()
-            if not plan or plan.quality == lastPlanFound.quality:
-                lastPlanFound.optimal = True
-                return lastPlanFound
-
-            lastPlanFound = plan
-            self.popLastAssertion()
-
-    def __solveBelowQuality(self, quality: float):
-        # print("Searching below", quality)
-        self.addAssertion(self.pddl2smt.getMetricExpression(quality), push=False)
-        plan = self.solve()
-        self.popLastAssertion()
-        return plan
-
-    def __searchBetween(self, ub: float, lb: float, error: float, lastPlan: NumericPlan,
-                        onSolutionFound=None) -> NumericPlan:
-        if abs(ub - lb) < error:
-            lastPlan.optimal = True
-            return lastPlan
-
-        half = lb + (ub - lb) / 2
-        print(f"Searching plan with quality {half}.")
-        plan = self.__solveBelowQuality(half)
-        if plan and plan.quality != lastPlan.quality:
-            print(f"Plan FOUND with quality {plan.quality}.")
-            if onSolutionFound:
-                onSolutionFound(plan)
-            return self.__searchBetween(plan.quality, lb, error, plan, onSolutionFound)
-        if not plan or plan.quality == lastPlan.quality:
-            print(f"Plan NOT FOUND with quality {half}.")
-            return self.__searchBetween(ub, half, error, lastPlan, onSolutionFound)
-
-    def optimizeBinary(self, error=1, onSolutionFound=None) -> NumericPlan or bool:
-
-        lastPlanFound: NumericPlan = self.solve()
-        if not lastPlanFound:
-            return False
-        if onSolutionFound:
-            onSolutionFound(lastPlanFound)
-
-        return self.__searchBetween(lastPlanFound.quality, 0, error, lastPlanFound, onSolutionFound)

@@ -1,15 +1,17 @@
-import random
+import itertools
 from typing import Set, List, Dict
 
+from src.pattern.PatternActionGraph import PatternActionGraph
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.Domain import GroundedDomain
 from src.pddl.Goal import Goal
 from src.pddl.PDDLException import PDDLException
 from src.pddl.RelaxedIntervalState import RelaxedIntervalState
+from src.pddl.SnapAction import SnapAction
 from src.pddl.State import State
 from src.pddl.Supporter import Supporter
-from src.plan.AffectedGraph import AffectedGraph
+from src.pddl.TimePredicate import TimePredicateType
 
 SEED = 0
 
@@ -23,7 +25,7 @@ class ARPG:
         self.supporterLevels = list()
         self.stateLevels = list()
         self.actions: List[Action] = list(domain.actions)
-        self.affectedGraph: AffectedGraph = domain.affectedGraph
+        # self.affectedGraph: AffectedGraph = domain.affectedGraph
 
         self.originalOrder = dict([(action, i) for (i, action) in enumerate(self.actions)])
 
@@ -31,19 +33,22 @@ class ARPG:
         for a in self.actions:
             supporters |= a.getSupporters()
 
+        usedActions = set()
         state: RelaxedIntervalState = RelaxedIntervalState.fromState(state, domain.predicates)
-        activeSupporters = {s for s in supporters if s.isSatisfiedBy(state)}
-
+        activeSupporters = {s for s in supporters if s.isSatisfiedBy(state) and s.respectsTemporal(usedActions)}
+        usedActions = usedActions | {s.originatingAction for s in activeSupporters}
         self.supporterLevels.append(activeSupporters)
         self.stateLevels.append(state)
 
         fullBooleanGoal = len(goal.getFunctions()) == 0
 
         isFixpoint = False
-        while activeSupporters and not isFixpoint:
+        while activeSupporters or not isFixpoint:
             supporters = supporters - activeSupporters
             newState = state.applySupporters(activeSupporters)
-            activeSupporters = {s for s in supporters if s.isSatisfiedBy(newState)}
+            activeSupporters = {s for s in supporters if
+                                s.isSatisfiedBy(newState) and s.respectsTemporal(usedActions)}
+            usedActions = usedActions | {s.originatingAction for s in activeSupporters}
 
             self.supporterLevels.append(activeSupporters)
             self.stateLevels.append(newState)
@@ -63,33 +68,41 @@ class ARPG:
                 order.append(action)
         return order
 
-    def getActionsOrder(self, useSCCs=False) -> List[Action] or bool:
+    def getUsefulActions(self) -> Set[Action]:
+        usefulActions: Set[Action] = set()
+        for supporters in self.supporterLevels:
+            for supporter in supporters:
+                usefulActions.add(supporter.originatingAction)
+        return usefulActions
 
-        # if self.goalNotReachable:
-        #     return False
+    def getActionsOrder(self, enhanced=False) -> List[Action] or bool:
 
-        order: List[Action] = list()
-        usedActions: Set[Action] = set(order)
+        usedActions: Set[Action] = set()
+
+        layers: List[Set[Action]] = list()
+
         for supporters in self.supporterLevels:
             partialOrder = set()
             for supporter in supporters:
                 if supporter.originatingAction not in usedActions:
                     partialOrder.add(supporter.originatingAction)
                 usedActions.add(supporter.originatingAction)
-            if not useSCCs:
-                sortOrder = sorted(partialOrder, key=lambda a: a.name)
-                order += sortOrder
-            else:
-                subGraph = self.affectedGraph.getSubGraph(partialOrder)
-                graphOrder = subGraph.getOrderFromGraph()
-                order += graphOrder
+            layers.append(partialOrder)
+
         leftActions = set(self.actions) - usedActions
-        if not useSCCs:
-            sortOrder = sorted(leftActions, key=lambda a: a.name)
-            order += sortOrder
-        else:
-            graphOrder = self.affectedGraph.getSubGraph(leftActions).getOrderFromGraph()
-            order += graphOrder
+        layerInstant = {a for a in leftActions if not isinstance(a, SnapAction)}
+        layerSnap = {a for a in leftActions if isinstance(a, SnapAction) and a.timeType != TimePredicateType.OVER_ALL}
+        layers.append(layerInstant)
+        layers.append(layerSnap)
+
+        order = list()
+        for i, layer in enumerate(layers):
+            if enhanced:
+                sortedLayer = PatternActionGraph(layer).getSorted()
+                order += sortedLayer
+            else:
+                order += sorted(layer)
+
         return order
 
     def getConstantAtoms(self) -> Dict[Atom, float]:

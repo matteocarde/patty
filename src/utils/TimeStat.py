@@ -15,6 +15,14 @@ class TimeStat:
     def now() -> int:
         return round(time.perf_counter() * 1000)
 
+    @staticmethod
+    def timeCall(call):
+        a = time.time()
+        x = call()
+        b = time.time()
+        # print(f"{call.__name__} = {b - a}s")
+        return x
+
     def start(self, name: str, console: LogPrint or None = None):
         self.__timings[name] = TimeStat.now()
         if console:

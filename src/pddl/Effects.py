@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import copy
-
 from itertools import chain
 from typing import Dict, List, cast, Iterable, Tuple
 
@@ -9,6 +8,7 @@ from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate, BinaryPredicateType
 from src.pddl.Literal import Literal
 from src.pddl.PDDLWriter import PDDLWriter
+from src.pddl.TimePredicate import TimePredicate, TimePredicateType
 from src.pddl.grammar.pddlParser import pddlParser
 from src.pddl.grammar.pddlParser import pddlParser as p
 
@@ -26,20 +26,33 @@ class Effects:
         eff.__class__ = Effects
         return cast(Effects, eff)
 
+    def __add__(self, other):
+        if not isinstance(other, Effects):
+            raise Exception("Cannot add if other is not Effects")
+        eff = Effects()
+        eff.assignments = self.assignments + other.assignments
+        return eff
+
     @classmethod
     def fromNode(cls, node: pddlParser.EffectsContext) -> Effects:
+
+        from src.pddl.ConditionalEffect import ConditionalEffect
 
         effects = cls()
         nodes: [p.EffectContext] = []
 
-        if isinstance(node.getChild(0), p.AndEffectContext):
+        if type(node.getChild(0)) in {p.AndEffectContext, p.AndDurativeEffectContext}:
             nodes.extend([n.getChild(0) for n in node.getChild(0).children[2:-1]])
         else:
-            nodes.append(node.getChild(0))
+            nodes.append(node.getChild(0).getChild(0))
 
         for n in nodes:
             if isinstance(n, p.BooleanLiteralContext):
                 effects.assignments.append(Literal.fromNode(n.getChild(0)))
+            elif type(n) in {p.AtStartEffectContext, p.OverAllEffectContext, p.AtEndEffectContext}:
+                effects.assignments += TimePredicate.fromNode(n)
+            elif isinstance(n, p.CeContext):
+                effects.assignments.append(ConditionalEffect.fromNode(n))
             else:
                 effects.assignments.append(BinaryPredicate.fromNode(n))
 
@@ -137,3 +150,8 @@ class Effects:
             c.toPDDL(pw)
         pw.decreaseTab()
         pw.write(")")
+
+    def toTimePredicate(self, type: TimePredicateType) -> Effects:
+        eff = Effects()
+        eff.assignments = [a.toTimePredicate(type) for a in self.assignments]
+        return eff

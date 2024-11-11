@@ -1,0 +1,3 @@
+#!/bin/bash
+
+singularity pull symk.sif oras://ghcr.io/speckdavid/symk:latest

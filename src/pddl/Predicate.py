@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from sympy import Expr
-from typing import Dict, Set, Tuple
+from typing import Dict, Set, Tuple, List
 
 from src.pddl.Atom import Atom
 from src.pddl.PDDLWriter import PDDLWriter
@@ -28,6 +28,19 @@ class Predicate:
         raise NotImplemented
 
     def expressify(self, symbols: Dict[Atom, Expr]) -> Expr:
+        raise NotImplemented
+
+    def isDynamicLifted(self, problem) -> bool:
+        raise NotImplemented
+
+    def toTimePredicate(self, t):
+        from src.pddl.TimePredicate import TimePredicate
+        tp = TimePredicate()
+        tp.type = t
+        tp.subPredicate = self
+        return tp
+
+    def canHappenLiftedPartial(self, item: Tuple, params: List[str], problem) -> bool:
         raise NotImplemented
 
     def __eq__(self, other):

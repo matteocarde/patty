@@ -1,0 +1,12 @@
+instance bottle l1;
+instance bottle r1;
+instance bottle r2;
+[start] litres(l1) := 9;
+[start] litres(r1) := 0;
+[start] litres(r2) := 0;
+left(l1) := true;
+right(r1) := true;
+right(r2) := true;
+[end] litres(l1) == 0;
+[end] litres(r1) == 2;
+[end] litres(r2) == 7;

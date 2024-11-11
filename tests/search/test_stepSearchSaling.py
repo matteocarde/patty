@@ -4,6 +4,7 @@ from unittest import TestCase
 from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
+from src.search.PlanImproverPattern import PlanImproverPattern
 from src.search.StepSearch import StepSearch
 from src.utils.Arguments import Arguments
 
@@ -33,6 +34,25 @@ class TestStepSearchSailing(TestCase):
         plan.printWithRepetitions()
 
         self.assertTrue(plan.validate(self.problem))
+
+    def test_improve(self):
+        solver = StepSearch(self.gDomain, self.problem, self.args)
+        plan: NumericPlan = solver.solve()
+
+        self.assertIsInstance(plan, NumericPlan)
+
+        improver = PlanImproverPattern(self.gDomain, self.problem, self.args, plan)
+        improvedPlan = improver.solve()
+
+        self.assertIsInstance(improvedPlan, NumericPlan)
+        print("Plan length: ", len(improvedPlan))
+        print("With repetitions:")
+        improvedPlan.printWithRepetitions()
+
+        print(f"First Plan Length: {len(plan)}")
+        print(f"Improved Plan Length: {len(improvedPlan)}")
+
+        self.assertLessEqual(len(improvedPlan), len(plan))
 
 
 if __name__ == '__main__':

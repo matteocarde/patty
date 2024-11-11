@@ -1,0 +1,160 @@
+var0
+   0: Atom robot-at(<robot1>, <tile-0-1>)
+   1: Atom robot-at(<robot1>, <tile-0-2>)
+   2: Atom robot-at(<robot1>, <tile-0-3>)
+   3: Atom robot-at(<robot1>, <tile-0-4>)
+   4: Atom robot-at(<robot1>, <tile-1-1>)
+   5: Atom robot-at(<robot1>, <tile-1-2>)
+   6: Atom robot-at(<robot1>, <tile-1-3>)
+   7: Atom robot-at(<robot1>, <tile-1-4>)
+   8: Atom robot-at(<robot1>, <tile-2-1>)
+   9: Atom robot-at(<robot1>, <tile-2-2>)
+   10: Atom robot-at(<robot1>, <tile-2-3>)
+   11: Atom robot-at(<robot1>, <tile-2-4>)
+   12: Atom robot-at(<robot1>, <tile-3-1>)
+   13: Atom robot-at(<robot1>, <tile-3-2>)
+   14: Atom robot-at(<robot1>, <tile-3-3>)
+   15: Atom robot-at(<robot1>, <tile-3-4>)
+   16: Atom robot-at(<robot1>, <tile-4-1>)
+   17: Atom robot-at(<robot1>, <tile-4-2>)
+   18: Atom robot-at(<robot1>, <tile-4-3>)
+   19: Atom robot-at(<robot1>, <tile-4-4>)
+   20: <none of those>
+var1
+   0: Atom robot-at(<robot2>, <tile-0-1>)
+   1: Atom robot-at(<robot2>, <tile-0-2>)
+   2: Atom robot-at(<robot2>, <tile-0-3>)
+   3: Atom robot-at(<robot2>, <tile-0-4>)
+   4: Atom robot-at(<robot2>, <tile-1-1>)
+   5: Atom robot-at(<robot2>, <tile-1-2>)
+   6: Atom robot-at(<robot2>, <tile-1-3>)
+   7: Atom robot-at(<robot2>, <tile-1-4>)
+   8: Atom robot-at(<robot2>, <tile-2-1>)
+   9: Atom robot-at(<robot2>, <tile-2-2>)
+   10: Atom robot-at(<robot2>, <tile-2-3>)
+   11: Atom robot-at(<robot2>, <tile-2-4>)
+   12: Atom robot-at(<robot2>, <tile-3-1>)
+   13: Atom robot-at(<robot2>, <tile-3-2>)
+   14: Atom robot-at(<robot2>, <tile-3-3>)
+   15: Atom robot-at(<robot2>, <tile-3-4>)
+   16: Atom robot-at(<robot2>, <tile-4-1>)
+   17: Atom robot-at(<robot2>, <tile-4-2>)
+   18: Atom robot-at(<robot2>, <tile-4-3>)
+   19: Atom robot-at(<robot2>, <tile-4-4>)
+   20: <none of those>
+var2
+   0: Atom clear(<tile-0-1>)
+   1: Atom painted(<tile-0-1>, <black>)
+   2: Atom painted(<tile-0-1>, <white>)
+   3: <none of those>
+var3
+   0: Atom clear(<tile-0-2>)
+   1: Atom painted(<tile-0-2>, <black>)
+   2: Atom painted(<tile-0-2>, <white>)
+   3: <none of those>
+var4
+   0: Atom clear(<tile-0-3>)
+   1: Atom painted(<tile-0-3>, <black>)
+   2: Atom painted(<tile-0-3>, <white>)
+   3: <none of those>
+var5
+   0: Atom clear(<tile-0-4>)
+   1: Atom painted(<tile-0-4>, <black>)
+   2: Atom painted(<tile-0-4>, <white>)
+   3: <none of those>
+var6
+   0: Atom clear(<tile-1-1>)
+   1: Atom painted(<tile-1-1>, <black>)
+   2: Atom painted(<tile-1-1>, <white>)
+   3: <none of those>
+var7
+   0: Atom clear(<tile-1-2>)
+   1: Atom painted(<tile-1-2>, <black>)
+   2: Atom painted(<tile-1-2>, <white>)
+   3: <none of those>
+var8
+   0: Atom clear(<tile-1-3>)
+   1: Atom painted(<tile-1-3>, <black>)
+   2: Atom painted(<tile-1-3>, <white>)
+   3: <none of those>
+var9
+   0: Atom clear(<tile-1-4>)
+   1: Atom painted(<tile-1-4>, <black>)
+   2: Atom painted(<tile-1-4>, <white>)
+   3: <none of those>
+var10
+   0: Atom clear(<tile-2-1>)
+   1: Atom painted(<tile-2-1>, <black>)
+   2: Atom painted(<tile-2-1>, <white>)
+   3: <none of those>
+var11
+   0: Atom clear(<tile-2-2>)
+   1: Atom painted(<tile-2-2>, <black>)
+   2: Atom painted(<tile-2-2>, <white>)
+   3: <none of those>
+var12
+   0: Atom clear(<tile-2-3>)
+   1: Atom painted(<tile-2-3>, <black>)
+   2: Atom painted(<tile-2-3>, <white>)
+   3: <none of those>
+var13
+   0: Atom clear(<tile-2-4>)
+   1: Atom painted(<tile-2-4>, <black>)
+   2: Atom painted(<tile-2-4>, <white>)
+   3: <none of those>
+var14
+   0: Atom clear(<tile-3-1>)
+   1: Atom painted(<tile-3-1>, <black>)
+   2: Atom painted(<tile-3-1>, <white>)
+   3: <none of those>
+var15
+   0: Atom clear(<tile-3-2>)
+   1: Atom painted(<tile-3-2>, <black>)
+   2: Atom painted(<tile-3-2>, <white>)
+   3: <none of those>
+var16
+   0: Atom clear(<tile-3-3>)
+   1: Atom painted(<tile-3-3>, <black>)
+   2: Atom painted(<tile-3-3>, <white>)
+   3: <none of those>
+var17
+   0: Atom clear(<tile-3-4>)
+   1: Atom painted(<tile-3-4>, <black>)
+   2: Atom painted(<tile-3-4>, <white>)
+   3: <none of those>
+var18
+   0: Atom clear(<tile-4-1>)
+   1: Atom painted(<tile-4-1>, <black>)
+   2: Atom painted(<tile-4-1>, <white>)
+   3: <none of those>
+var19
+   0: Atom clear(<tile-4-2>)
+   1: Atom painted(<tile-4-2>, <black>)
+   2: Atom painted(<tile-4-2>, <white>)
+   3: <none of those>
+var20
+   0: Atom clear(<tile-4-3>)
+   1: Atom painted(<tile-4-3>, <black>)
+   2: Atom painted(<tile-4-3>, <white>)
+   3: <none of those>
+var21
+   0: Atom clear(<tile-4-4>)
+   1: Atom painted(<tile-4-4>, <black>)
+   2: Atom painted(<tile-4-4>, <white>)
+   3: <none of those>
+var22
+   0: Atom robot-has(<robot1>, <black>)
+   1: Atom robot-has(<robot2>, <black>)
+   2: <none of those>
+var23
+   0: Atom robot-has(<robot1>, <white>)
+   1: Atom robot-has(<robot2>, <white>)
+   2: <none of those>
+var24
+   -2: PNE derived!1()
+var25
+   -2: PNE derived!2()
+var26
+   -2: PNE derived!3()
+var27
+   -2: PNE derived!4()

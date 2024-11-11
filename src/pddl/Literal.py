@@ -17,6 +17,7 @@ class Literal(Predicate):
     sign: str
     atom: Atom
     funct: str
+    lifted: Literal or None
 
     def __init__(self):
         super().__init__()
@@ -27,6 +28,7 @@ class Literal(Predicate):
         l.sign = self.sign
         l.atom = copy.deepcopy(self.atom, m)
         l.funct = self.funct
+        l.lifted = self.lifted
         return l
 
     @classmethod
@@ -38,12 +40,25 @@ class Literal(Predicate):
         lit.alphaFunct = lit.atom.toAlphaFunctionName()
         return lit
 
-    def replace(self, atom: Atom, w):
+    @classmethod
+    def pos(cls, atom: Atom):
+        return cls.fromAtom(atom, "+")
+
+    @classmethod
+    def neg(cls, atom: Atom):
+        return cls.fromAtom(atom, "-")
+
+    def replace(self, atom: Atom, w: Predicate):
         if self.atom != atom:
             return copy.deepcopy(self)
         if self.sign != "+":
             raise Exception(f"Cannot replace {atom} with {w} since it appears as negated")
         return copy.deepcopy(w)
+
+    def replaceDict(self, r: Dict[Atom, Predicate]):
+        if self.atom in r:
+            return copy.deepcopy(r[self.atom])
+        return copy.deepcopy(self.atom)
 
     def isLinearIncrement(self):
         return False
@@ -74,14 +89,15 @@ class Literal(Predicate):
 
     def getLiterals(self) -> Set[Predicate]:
         return {self}
+
     def ground(self, subs: Dict[str, str], delta=1) -> Literal:
 
         literal = Literal()
         literal.sign = self.sign
-
         literal.atom = self.atom.ground(subs)
         literal.funct = literal.atom.toFunctionName()
         literal.alphaFunct = literal.atom.toAlphaFunctionName()
+        literal.lifted = self
 
         return literal
 
@@ -123,8 +139,11 @@ class Literal(Predicate):
         if self.atom in subs:
             return Constant(subs[self.atom])
 
-    def canHappen(self, subs: Dict[Atom, float], default=None) -> bool:
-        return True
+    def canHappen(self, subs: Dict[Atom, float or bool], default=None) -> bool:
+        return True if self.atom not in subs or subs[self.atom] else False
+
+    def isValid(self, subs: Dict[Atom, float or bool], default=None) -> bool:
+        return False if self.atom not in subs or not subs[self.atom] else True
 
     def canHappenLifted(self, sub: Tuple, params: List[str], problem) -> bool:
         if not problem.isPredicateStatic[self.atom.name]:
@@ -173,7 +192,7 @@ class Literal(Predicate):
         return len(finalSet) > 0
 
     def isDynamicLifted(self, problem) -> bool:
-        return not problem.isPredicateStatic[self.atom.name]
+        return self.atom.name not in problem.isPredicateStatic or not problem.isPredicateStatic[self.atom.name]
 
     def getLinearIncrement(self) -> float:
         return 0

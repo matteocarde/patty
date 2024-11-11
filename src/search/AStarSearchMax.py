@@ -2,10 +2,12 @@ import copy
 
 from src.pddl.Domain import GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
+from src.pddl.Plan import Plan
 from src.pddl.Problem import Problem
 from src.pddl.State import State
-from src.plan.PDDL2SMT import PDDL2SMT
+from src.plan.NumericEncoding import NumericEncoding
 from src.plan.Pattern import Pattern
+from src.plan.TemporalEncoding import TemporalEncoding
 from src.search.Search import Search
 from src.smt.SMTSolver import SMTSolver
 from src.utils.Arguments import Arguments
@@ -15,10 +17,10 @@ from src.utils.LogPrint import LogPrintLevel
 class AStarSearchMax(Search):
 
     def __init__(self, domain: GroundedDomain, problem: Problem, args: Arguments):
-        self.useSCCs = args.useSCCs
         super().__init__(domain, problem, args)
+        self.enhanced = self.args.pattern == "enhanced"
 
-    def solve(self) -> NumericPlan:
+    def solve(self) -> Plan:
         callsToSolver = 0
 
         totalSubgoals = self.problem.goal.conditions
@@ -29,7 +31,7 @@ class AStarSearchMax(Search):
         s: State = initialState
 
         patG: Pattern = Pattern.fromOrder([])
-        patH: Pattern = Pattern.fromState(s, self.problem.goal, self.domain, useSCCs=self.useSCCs)
+        patH: Pattern = Pattern.fromState(s, self.problem.goal, self.domain, enhanced=self.enhanced)
 
         while bound <= self.maxBound:
 
@@ -39,34 +41,49 @@ class AStarSearchMax(Search):
                 self.console.log("Pattern: " + str(patF), LogPrintLevel.PLAN)
 
             self.ts.start(f"Conversion to SMT at bound {bound}", console=self.console)
-            pddl2smt: PDDL2SMT = PDDL2SMT(
-                domain=self.domain,
-                problem=self.problem,
-                pattern=patF,
-                bound=1,
-                relaxGoal=True,
-                subgoalsAchieved=subgoalsAchieved,
-                encoding=self.args.encoding,
-                rollBound=self.args.rollBound,
-                hasEffectAxioms=self.args.hasEffectAxioms
-            )
+            if self.isTemporal:
+                encoding: TemporalEncoding = TemporalEncoding(
+                    domain=self.domain,
+                    problem=self.problem,
+                    pattern=patF,
+                    relaxGoal=True,
+                    subgoalsAchieved=subgoalsAchieved,
+                    constraints=self.args.temporalConstraints,
+                    bound=1)
+            else:
+                encoding: NumericEncoding = NumericEncoding(
+                    domain=self.domain,
+                    problem=self.problem,
+                    pattern=patF,
+                    bound=1,
+                    args=self.args,
+                    relaxGoal=True,
+                    subgoalsAchieved=subgoalsAchieved
+                )
             self.ts.end(f"Conversion to SMT at bound {bound}", console=self.console)
-            self.console.log(f"Bound {bound} - Vars = {pddl2smt.getNVars()}", LogPrintLevel.STATS)
-            self.console.log(f"Bound {bound} - Rules = {pddl2smt.getNRules()}", LogPrintLevel.STATS)
+            self.console.log(f"Bound {bound} - Vars = {encoding.getNVars()}", LogPrintLevel.STATS)
+            self.console.log(f"Bound {bound} - Rules = {encoding.getNRules()}", LogPrintLevel.STATS)
+            self.console.log(f"Bound {bound} - Avg Rule Length = {encoding.getAvgRuleLength()}", LogPrintLevel.STATS)
+            self.console.log(f"Bound {bound} - Pattern Length = {patF.getLength()}", LogPrintLevel.STATS)
 
             self.ts.start(f"Solving Bound {bound}", console=self.console)
-            solver: SMTSolver = SMTSolver(pddl2smt, maximize=True)
+            solver: SMTSolver = SMTSolver(encoding)
             callsToSolver += 1
-            plan: NumericPlan = solver.solve()
+            plan: Plan = solver.solve()
             solver.exit()
             self.ts.end(f"Solving Bound {bound}", console=self.console)
 
+            if self.args.printPartialPlan and plan:
+                print("--Partial Plan---")
+                print(plan)
+                print("-----------------")
+
             if self.args.saveSMT:
-                self.saveSMT(bound, pddl2smt, callsToSolver=callsToSolver)
+                self.saveSMT(bound, encoding, callsToSolver=callsToSolver)
 
             subgoalsAchievedNow = set()
             state = None
-            if isinstance(plan, NumericPlan):
+            if isinstance(plan, Plan):
                 state = initialState.applyPlan(plan)
                 subgoalsAchievedNow = {g for g in self.problem.goal.conditions if state.satisfies(g)}
 
@@ -79,9 +96,9 @@ class AStarSearchMax(Search):
                 subgoalsAchieved = subgoalsAchievedNow
                 self.console.log(f"Subgoals achieved: {len(subgoalsAchieved)}/{len(totalSubgoals)}: {subgoalsAchieved}",
                                  LogPrintLevel.STATS)
-                patG = Pattern.fromPlan(plan)
+                patG = Pattern.fromPlan(plan, addFake=not self.isTemporal) if not self.args.noCompression else patF
                 patG.addPostfix("G")
-                patH = Pattern.fromState(state, self.problem.goal, self.domain, useSCCs=self.useSCCs)
+                patH = Pattern.fromState(state, self.problem.goal, self.domain, enhanced=self.enhanced)
             else:
                 patF.addPostfix(bound)
                 patG = patF

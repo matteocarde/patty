@@ -1,11 +1,14 @@
 from __future__ import annotations
 
 import copy
-from typing import Dict
+from typing import Dict, Set
 
+from src.ices.ParallelIntermediateEffects import ParallelIntermediateEffects
+from src.ices.PlanIntermediateEffect import PlanIntermediateEffect
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
+from src.pddl.ConditionalEffect import ConditionalEffect
 from src.pddl.Constant import Constant
 from src.pddl.Formula import Formula
 from src.pddl.InitialCondition import InitialCondition
@@ -42,11 +45,30 @@ class State:
             return False
         return self.assignments[atom]
 
+    def setAtom(self, atom: Atom, assignment: bool or float):
+        self.assignments[atom] = assignment
+
     def __repr__(self):
         return repr(self.assignments)
 
-    def applyAction(self, action: Action):
+    def __str__(self):
+        return str(self.toClosedWorldSet())
 
+    def toClosedWorldSet(self) -> Set[Predicate]:
+
+        cwset = set()
+        for (atom, value) in self.assignments.items():
+            if type(value) == bool and value:
+                cwset.add(Literal.pos(atom))
+            if type(value) != bool:
+                cwset.add(BinaryPredicate.fromAssignment(atom, value))
+
+        return cwset
+
+    def asBooleanSet(self):
+        return sorted({v for (v, a) in self.assignments.items() if a})
+
+    def applyAction(self, action: Action):
         state = State()
         state.assignments = self.assignments.copy()
 
@@ -55,8 +77,33 @@ class State:
                 f"Tried to apply action {action} to a state {state} in which its preconditions {action.preconditions} are not satisfied")
 
         effect: Predicate
+        added: Set[Atom] = set()
+        deleted: Set[Atom] = set()
         for effect in action.effects:
-            state.assignments[effect.getAtom()] = self.getRealization(effect)
+            if not isinstance(effect, ConditionalEffect):
+                state.assignments[effect.getAtom()] = self.getRealization(effect)
+                continue
+            assert isinstance(effect, ConditionalEffect)
+            if state.satisfies(effect.conditions):
+                added |= effect.effects.getPositive()
+                deleted |= effect.effects.getNegative()
+        if added & deleted:
+            raise Exception(f"Action {action} has conflicting CES in state {state}")
+        for v in added:
+            state.assignments[v] = True
+        for v in deleted:
+            state.assignments[v] = False
+
+        return state
+
+    def applyParallelIntermediateEffects(self, pieff: ParallelIntermediateEffects) -> State:
+
+        state = State()
+        state.assignments = self.assignments.copy()
+
+        for eff in pieff:
+            for effect in eff.effects:
+                state.assignments[effect.getAtom()] = self.getRealization(effect)
 
         return state
 

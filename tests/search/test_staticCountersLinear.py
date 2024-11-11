@@ -4,7 +4,7 @@ from unittest import TestCase
 from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
-from src.search.StaticSearch import StaticSearch
+from src.search.ChainSearch import ChainSearch
 from src.utils.Arguments import Arguments
 
 
@@ -22,7 +22,7 @@ class TestAStarCountersLinear(TestCase):
 
     def test_solve(self):
         self.args.printPattern = True
-        solver = StaticSearch(self.gDomain, self.problem, self.args)
+        solver = ChainSearch(self.gDomain, self.problem, self.args)
         plan: NumericPlan = solver.solve()
 
         self.assertIsInstance(plan, NumericPlan)

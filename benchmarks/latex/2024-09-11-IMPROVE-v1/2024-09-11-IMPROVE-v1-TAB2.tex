@@ -1,0 +1,46 @@
+
+               \documentclass[11pt]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||cccc||cccc||cccc||}
+\hline
+ & \multicolumn{4}{c||}{Coverage (\%)}&\multicolumn{4}{c||}{Time (s)}&\multicolumn{4}{c||}{$|\pi|$}\\
+Domain & $\mathrm{P}_\mathrm{E}$&$\mathrm{P}_\mathrm{M}$&$\mathrm{P}_\mathrm{I}$&$\mathrm{P}_\leq$&$\mathrm{P}_\mathrm{E}$&$\mathrm{P}_\mathrm{M}$&$\mathrm{P}_\mathrm{I}$&$\mathrm{P}_\leq$&$\mathrm{P}_\mathrm{E}$&$\mathrm{P}_\mathrm{M}$&$\mathrm{P}_\mathrm{I}$&$\mathrm{P}_\leq$\\
+\hline
+\textsc{BlGrp} (S)&\textbf{100}&60&60&-&\textbf{1.6}&17.6&20.9&-&206&\textbf{91}&95&-\\
+\textsc{Cnt} (S)&\textbf{100}&90&60&-&\textbf{0.9}&5.6&13.2&-&422&\textbf{306}&\textbf{306}&-\\
+\textsc{Cnt} (L)&\textbf{100}&45&40&-&\textbf{1.2}&18.8&19.6&-&33&\textbf{19}&\textbf{19}&-\\
+\textsc{Del} (S)&\textbf{25}&15&\textbf{25}&-&24.4&25.9&\textbf{23.7}&-&17&\textbf{16}&\textbf{16}&-\\
+\textsc{Drn} (S)&\textbf{15}&\textbf{15}&\textbf{15}&-&\textbf{25.7}&26.0&\textbf{25.7}&-&21&\textbf{12}&\textbf{12}&-\\
+\textsc{Exp} (S)&15&15&\textbf{20}&-&25.8&26.0&\textbf{25.7}&-&51&\textbf{41}&\textbf{41}&-\\
+\textsc{Farm} (S)&\textbf{100}&35&35&-&\textbf{1.2}&24.5&22.3&-&899&\textbf{296}&\textbf{296}&-\\
+\textsc{Farm} (L)&\textbf{90}&5&30&-&\textbf{5.1}&28.6&22.2&-&167&\textbf{12}&112&-\\
+\textsc{HPwr} (S)&\textbf{95}&-&25&-&\textbf{9.7}&-&25.1&-&66&-&\textbf{36}&-\\
+\textsc{MPrime} (S)&\textbf{50}&20&\textbf{50}&-&\textbf{17.5}&24.5&17.8&-&50&\textbf{6}&\textbf{6}&-\\
+\textsc{PathM} (S)&\textbf{100}&-&15&-&\textbf{6.8}&-&26.7&-&338&-&\textbf{63}&-\\
+\textsc{PlWat} (S)&\textbf{25}&-&\textbf{25}&-&\textbf{23.3}&-&24.9&-&346&-&\textbf{183}&-\\
+\textsc{Rvr} (S)&\textbf{60}&35&50&-&\textbf{15.8}&20.9&17.2&-&58&\textbf{14}&15&-\\
+\textsc{Sail} (S)&\textbf{100}&25&\textbf{100}&-&\textbf{1.1}&25.0&2.8&-&619&\textbf{311}&432&-\\
+\textsc{Sail} (L)&\textbf{80}&-&65&-&\textbf{7.1}&-&12.4&-&386&-&\textbf{185}&-\\
+\textsc{Sat} (S)&\textbf{5}&-&\textbf{5}&-&\textbf{28.9}&-&\textbf{28.9}&-&47&-&\textbf{21}&-\\
+\textsc{Sgr} (S)&\textbf{100}&30&\textbf{100}&-&\textbf{4.3}&24.8&4.6&-&38&\textbf{18}&22&-\\
+\textsc{Tpp} (L)&\textbf{10}&\textbf{10}&\textbf{10}&-&\textbf{27.3}&27.7&\textbf{27.3}&-&10&\textbf{8}&10&-\\
+\textsc{Zeno} (S)&\textbf{55}&40&\textbf{55}&-&15.2&18.7&\textbf{15.0}&-&13&\textbf{11}&13&-\\
+\textsc{Line} (L)&\textbf{100}&90&88&-&\textbf{0.9}&7.8&7.2&-&241&\textbf{197}&198&-
+\\\hline
+\textit{Total}&\textbf{19}&\textbf{2}&\textbf{10}&\textbf{0}&\textbf{17}&\textbf{0}&\textbf{6}&\textbf{0}&\textbf{0}&\textbf{15}&\textbf{12}&\textbf{0}\\\hline
+
+        \end{tabular}}
+        \caption{Comparative analysis between  \pattye, \pattym and \pattyi. Each domain is labeled with S (for simple) if every numeric effect of each action either increases or decreases by a constant the assigned variable, and with L (for linear), otherwise. In the table, names have been abbreviated to save space.  See \cite{ipc2023} for other details.}
+        \label{tab:qual-plans}
+        \end{table*}
+        
+\end{document}

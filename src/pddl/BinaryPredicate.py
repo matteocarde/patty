@@ -93,7 +93,16 @@ class BinaryPredicate(Predicate):
 
         return bp
 
-    def replace(self, atom: Atom, w: BinaryPredicate):
+    def replaceDict(self, r: Dict[Atom, Predicate]) -> BinaryPredicate:
+        bp = BinaryPredicate()
+        bp.operator = self.operator
+        bp.lhs = self.lhs.replaceDict(r)
+        bp.rhs = self.lhs.replaceDict(r)
+        bp.type = self.type
+
+        return bp
+
+    def replace(self, atom: Atom, w: Predicate):
         bp = BinaryPredicate()
         bp.operator = self.operator
         bp.lhs = self.lhs.replace(atom, w)
@@ -187,6 +196,21 @@ class BinaryPredicate(Predicate):
             result = Utilities.compare(x.operator, x.lhs.value, x.rhs.value)
             return result
 
+    def isValid(self, subs: Dict[Atom, float], default=None) -> bool:
+        x = BinaryPredicate()
+        x.type = self.type
+        x.lhs = self.lhs.substitute(subs, default) if x.type != BinaryPredicateType.MODIFICATION else self.lhs
+        x.operator = self.operator
+        x.rhs = self.rhs.substitute(subs, default)
+
+        x.__functions = x.getFunctionsOverwrite()
+
+        if x.getFunctions() or x.getPredicates():
+            return False
+        else:
+            result = Utilities.compare(x.operator, x.lhs.value, x.rhs.value)
+            return result
+
     def canHappenLifted(self, sub, problem, isPredicateStatic: Dict[str, bool]) -> bool:
         # if all([not isPredicateStatic[f.name] for f in self.getFunctions()]):
         #     return False
@@ -256,8 +280,8 @@ class BinaryPredicate(Predicate):
         m = diff(f, var)  # m = df/dx
         q = f.subs(var, 0)  # q = f | 0
 
-        lb = float(-q / m) if self.operator in {">=", ">", "=", "!="} else float("-inf")
-        ub = float(-q / m) if self.operator in {"<=", "<", "=", "!="} else float("+inf")
+        lb = float(-q / m) if self.operator in {">=", ">", "=", "!="} and m != 0 else float("-inf")
+        ub = float(-q / m) if self.operator in {"<=", "<", "=", "!="} and m != 0 else float("+inf")
 
         return MooreInterval(lb, ub)
 

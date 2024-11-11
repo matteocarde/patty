@@ -1,0 +1,3 @@
+#!/bin/bash
+
+apptainer build enhsp.sif docker://enricos83/enhsp:latest

@@ -1,0 +1,2 @@
+axiom.o: axiom.cc helper_functions.h state.h variable.h \
+  successor_generator.h causal_graph.h axiom.h

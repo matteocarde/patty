@@ -1,0 +1,44 @@
+
+           \documentclass[11pt]{article}
+           \usepackage{graphicx}
+           \usepackage{lscape}
+           \usepackage{multirow}
+
+           \begin{document}
+
+            \begin{table}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||cc||cc||cc||cc||}
+\hline
+ & \multicolumn{2}{c||}{Time (s)}&\multicolumn{2}{c||}{$|\mathcal{X} \cup \mathcal{A}^\prec \cup \mathcal{X}'|$}&\multicolumn{2}{c||}{$|\mathcal{T}^\prec(\mathcal{X},\mathcal{A}^\prec,\mathcal{X}')|$}&\multicolumn{2}{c||}{Vars x Rule}\\
+Domain & $\pattyo$&$\pattyg$&$\pattyo$&$\pattyg$&$\pattyo$&$\pattyg$&$\pattyo$&$\pattyg$\\
+\hline
+\textsc{BlGrp} (S)&\textbf{1.6}&\textbf{1.6}&\textbf{182}&\textbf{182}&\textbf{448}&\textbf{448}&\textbf{2.0}&\textbf{2.0}\\
+\textsc{Cnt} (S)&\textbf{0.9}&\textbf{0.9}&\textbf{92}&\textbf{92}&\textbf{228}&\textbf{228}&\textbf{2.0}&\textbf{2.0}\\
+\textsc{Cnt} (L)&\textbf{1.0}&\textbf{1.0}&\textbf{96}&\textbf{96}&\textbf{202}&\textbf{202}&\textbf{2.3}&\textbf{2.3}\\
+\textsc{Del} (S)&\textbf{255.6}&\textbf{255.6}&1082&\textbf{809}&3277&\textbf{2946}&\textbf{14.4}&{41.3}\\
+\textsc{Drn} (S)&\textbf{255.3}&\textbf{255.3}&301&\textbf{137}&778&\textbf{322}&\textbf{2.8}&9.4\\
+\textsc{Exp} (S)&\textbf{262.0}&\textbf{262.0}&778&\textbf{420}&1814&\textbf{1333}&\textbf{7.3}&{38.7}\\
+\textsc{Farm} (S)&\textbf{0.9}&\textbf{0.9}&\textbf{50}&\textbf{50}&\textbf{107}&\textbf{107}&\textbf{4.1}&\textbf{4.1}\\
+\textsc{Farm} (L)&6.2&\textbf{5.4}&\textbf{64}&\textbf{64}&\textbf{129}&\textbf{129}&\textbf{5.1}&\textbf{5.1}\\
+\textsc{HPwr} (S)&\textbf{11.6}&12.2&\textbf{352}&\textbf{352}&\textbf{725}&\textbf{725}&\textbf{15.7}&\textbf{15.7}\\
+\textsc{MPrime} (S)&\textbf{154.8}&155.8&1570&\textbf{1318}&4916&\textbf{4645}&\textbf{16.7}&{30.4}\\
+\textsc{PathM} (S)&\textbf{6.1}&6.2&\textbf{3079}&\textbf{3079}&\textbf{4834}&\textbf{4834}&\textbf{1.9}&\textbf{1.9}\\
+\textsc{PlWat} (S)&\textbf{220.2}&224.0&623&\textbf{343}&1718&\textbf{915}&\textbf{4.4}&{27.5}\\
+\textsc{Rvr} (S)&156.1&\textbf{150.3}&1008&\textbf{562}&2251&\textbf{1847}&\textbf{15.9}&{36.9}\\
+\textsc{Sail} (S)&\textbf{1.1}&\textbf{1.1}&163&\textbf{117}&340&\textbf{254}&\textbf{3.6}&{6.7}\\
+\textsc{Sail} (L)&22.2&\textbf{21.1}&72&\textbf{65}&178&\textbf{165}&\textbf{2.6}&\textbf{2.6}\\
+\textsc{Sat} (S)&250.7&\textbf{242.1}&2061&\textbf{1441}&5761&\textbf{4644}&\textbf{15.8}&{49.2}\\
+\textsc{Sgr} (S)&9.4&\textbf{8.8}&1401&\textbf{920}&3465&\textbf{2792}&\textbf{9.1}&{24.8}\\
+\textsc{Tpp} (L)&\textbf{270.5}&272.7&452&\textbf{288}&1052&\textbf{703}&\textbf{3.2}&{6.4}\\
+\textsc{Zeno} (S)&\textbf{137.3}&138.4&603&\textbf{515}&1855&\textbf{1707}&\textbf{9.0}&{13.2}
+\\\hline
+\textit{Total}&\textbf{14}&\textbf{13}&\textbf{7}&\textbf{19}&\textbf{7}&\textbf{19}&\textbf{19}&\textbf{8}\\\hline
+
+        \end{tabular}}
+        \caption{$\textsc{patty}_\mathrm{O}$ (bound increase) vs. $\textsc{patty}_\mathrm{G}$ (concatenation). The coverage and both the bound ($\textsc{p}_\mathrm{O}$) and the number of concats ($\textsc{p}_\mathrm{G}$) were the same for both approaches. The table shows, in the last encoding before finding a solution, the number of variables, rules, and average number of variables per rule.}
+        \label{tab:experiments}
+        \end{table}
+        
+\end{document}

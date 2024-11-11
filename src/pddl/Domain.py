@@ -5,12 +5,15 @@ from typing import Dict, List, Set
 
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
+from src.pddl.DurativeAction import DurativeAction
 from src.pddl.Event import Event
 from src.pddl.Operation import Operation
 from src.pddl.PDDLWriter import PDDLWriter
 from src.pddl.Problem import Problem
 from src.pddl.Process import Process
+from src.pddl.SnapAction import SnapAction
 from src.pddl.State import State
+from src.pddl.TimePredicate import TimePredicateType
 from src.pddl.Type import Type
 from src.pddl.TypedPredicate import TypedPredicate
 from src.pddl.Utilities import Utilities
@@ -34,6 +37,7 @@ class Domain:
         self.predicates = set()
         self.functions = set()
         self.actions = set()
+        self.durativeActions = set()
         self.processes = set()
         self.events = set()
         self.requirements = list()
@@ -45,27 +49,35 @@ class Domain:
         m = {} if m is None else m
         domain = Domain()
         domain.name = self.name
+
         domain.requirements = copy.deepcopy(self.requirements, m)
         domain.types = copy.deepcopy(self.requirements, m)
         domain.predicates = copy.deepcopy(self.predicates, m)
         domain.actions = copy.deepcopy(self.actions, m)
         domain.events = copy.deepcopy(self.events, m)
         domain.processes = copy.deepcopy(self.processes, m)
+        domain.durativeActions = copy.deepcopy(self.durativeActions, m)
         domain.constants = copy.deepcopy(self.constants, m)
         return domain
+
+    def hasConditionalEffects(self) -> bool:
+        for a in self.actions:
+            if a.hasConditionalEffects():
+                return True
+        return False
 
     def ground(self, problem: Problem, avoidSimplification=False, console: LogPrint = None, delta=1) -> GroundedDomain:
 
         problem.computeWhatCanHappen(self)
 
-        gActions: Set[Action] = set(
-            [g for action in self.actions for g in action.ground(problem, self.isPredicateStatic, delta=delta)])
-        gEvents: Set[Event] = set(
-            [g for event in self.events for g in event.ground(problem, self.isPredicateStatic, delta=delta)])
-        gProcess: Set[Process] = set(
-            [g for process in self.processes for g in process.ground(problem, self.isPredicateStatic, delta=delta)])
+        gActions: Set[Action] = set([g for action in self.actions for g in action.ground(problem, delta=delta)])
+        gEvents: Set[Event] = set([g for event in self.events for g in event.ground(problem, delta=delta)])
+        gProcess: Set[Process] = set([g for process in self.processes for g in process.ground(problem, delta=delta)])
+        gDurativeActions: Set[DurativeAction] = set(
+            [g for dAction in self.durativeActions for g in dAction.ground(problem, delta=delta)])
 
-        gDomain = GroundedDomain(self.name, gActions, gEvents, gProcess)
+        gDomain = GroundedDomain(self.name, gActions, gEvents, gProcess, gDurativeActions)
+        gDomain.computeLists()
         gDomain.allAtoms |= problem.allAtoms
         gDomain.functions |= problem.functions
         gDomain.predicates |= problem.predicates
@@ -77,42 +89,42 @@ class Domain:
         if avoidSimplification:
             return gDomain
 
-        from src.pddl.RPG import RPG
         from src.pddl.ARPG import ARPG
 
-        constants: Dict[Atom, float] = dict()
-
-        for op in gActions | gEvents | gProcess:
-            for fun in op.getFunctions():
-                if fun not in problem.init.numericAssignments:
-                    # print(f"WARNING: {fun} was not initialized. Substituting it with 0")
-                    constants[fun] = 0
-
-        gDomain = gDomain.substitute(constants)
-
-        rpg = RPG(gDomain, problem)
-        orderedActions = rpg.getActionsOrder()
         initialState = State.fromInitialCondition(problem.init)
-        gDomain.actions = set(orderedActions)
-
         arpg = ARPG(gDomain, initialState, problem.goal)
         constants: Dict[Atom, float] = arpg.getConstantAtoms()
+        for fun in gDomain.functions:
+            if fun not in problem.init.numericAssignments:
+                # print(f"WARNING: {fun} was not initialized. Substituting it with 0")
+                constants[fun] = 0
 
-        for op in gActions | gEvents | gProcess:
-            for fun in op.getFunctions():
-                if fun not in problem.init.numericAssignments:
-                    # print(f"WARNING: {fun} was not initialized. Substituting it with 0")
-                    constants[fun] = 0
-
-        gDomain = gDomain.substitute(constants)
-        orderedActions = [a.substitute(constants) for a in orderedActions if a.canHappen(constants)]
+        gDomain.substitute(constants)
         problem.substitute(constants)
-        gDomain.actions = set(orderedActions)
 
-        from src.plan.AffectedGraph import AffectedGraph
-        gDomain.actions = sorted(gDomain.actions, key=lambda a: a.name)
-        gDomain.affectedGraph = AffectedGraph.fromActions(gDomain.actions)
+        actions = [a.substitute(constants) for a in gDomain.actions if a in arpg.getUsefulActions()]
+
+        gDomain.operations = set()
+        gDomain.actions = set()
+        starts = set([a for a in actions if isinstance(a, SnapAction) and a.timeType == TimePredicateType.AT_START])
+        ends = set([a for a in actions if isinstance(a, SnapAction) and a.timeType == TimePredicateType.AT_END])
+        for a in actions:
+            if not isinstance(a, SnapAction):
+                gDomain.actions.add(a)
+                continue
+            if a.timeType == TimePredicateType.AT_START and a.durativeAction.end in ends:
+                gDomain.actions.add(a)
+            if a.timeType == TimePredicateType.AT_END and a.durativeAction.start in starts:
+                gDomain.actions.add(a)
+
+        gDomain.durativeActions = set()
+        action: SnapAction
+        for action in gDomain.actions:
+            if isinstance(action, SnapAction):
+                gDomain.durativeActions.add(action.durativeAction)
+
         gDomain.arpg = ARPG(gDomain, initialState, problem.goal)
+        gDomain.computeLists()
 
         if console:
             console.log("Dynamic Grounding Stats:", LogPrintLevel.STATS)
@@ -139,13 +151,24 @@ class Domain:
                 domain.__setFunctions(child)
             elif isinstance(child, pddlParser.ActionContext):
                 domain.actions.add(Action.fromNode(child, domain.types))
+            elif isinstance(child, pddlParser.DurativeActionContext):
+                domain.durativeActions.add(DurativeAction.fromNode(child, domain.types))
             elif isinstance(child, pddlParser.EventContext):
                 domain.events.add(Event.fromNode(child, domain.types))
             elif isinstance(child, pddlParser.ProcessContext):
                 domain.processes.add(Process.fromNode(child, domain.types))
 
+            # dAction: DurativeAction
+            # for dAction in domain.durativeActions:
+            #     types = [TimePredicateType.AT_START, TimePredicateType.OVER_ALL, TimePredicateType.AT_END]
+            #     for t in types:
+            #         a: SnapAction = SnapAction.fromDurativeAction(dAction, t)
+            #         if a.predicates or a.functions:
+            #             domain.actions.add(a)
+            #             dAction.addSnapAction(t, a)
+
         domain.isPredicateStatic: Dict[str, bool] = dict([(p.name, True) for p in domain.predicates | domain.functions])
-        for action in domain.actions | domain.events | domain.processes:
+        for action in domain.actions | domain.events | domain.processes | domain.durativeActions:
             for eff in action.effects.getFunctions() | action.effects.getPredicates():
                 domain.isPredicateStatic[eff.name] = False
 
@@ -177,14 +200,14 @@ class Domain:
 
             parent = None
             if typeRows.parent:
-                name = typeRows.parent.getChild(1).getText()
+                name = typeRows.parent.getChild(1).getText().lower()
                 self.types[name] = self.types.setdefault(name, Type(name))
                 parent = self.types[name]
 
             for t in typeRows.children:
                 if not isinstance(t, pddlParser.TypeNameContext):
                     continue
-                name = t.getText()
+                name = t.getText().lower()
                 self.types[name] = self.types.setdefault(name, Type(name, parent))
                 if parent:
                     parent.addChild(self.types[name])
@@ -221,21 +244,26 @@ class GroundedDomain(Domain):
     delList: Dict[Atom, Set[Operation]]
     assList: Dict[Atom, Set[Operation]]
 
-    def __init__(self, name: str, actions: Set[Action], events: Set[Event], process: Set[Process], affectedGraph=None):
+    def __init__(self, name: str, actions: Set[Action], events: Set[Event], process: Set[Process],
+                 durativeActions: Set[DurativeAction], affectedGraph=None):
         super().__init__()
 
         self.name = name
-        self.actions = actions
         self.events = events
         self.processes = process
+        self.durativeActions = durativeActions
+        self.actions = actions
+
+        if self.durativeActions:
+            types = [TimePredicateType.AT_START, TimePredicateType.OVER_ALL, TimePredicateType.AT_END]
+            for dAction in self.durativeActions:
+                for type in types:
+                    sa = dAction.getSnapAction(type)
+                    self.actions.add(sa)
+            pass
 
         self.substitutions = dict()
-
         self.operations: Set[Operation] = set()
-        self.operations.update(self.actions)
-        self.operations.update(self.events)
-        self.operations.update(self.processes)
-
         self.functions: Set[Atom] = set()
         self.predicates: Set[Atom] = set()
         self.allAtoms: Set[Atom] = set()
@@ -243,6 +271,17 @@ class GroundedDomain(Domain):
         self.addList: Dict[Atom, Set[Operation]] = dict()
         self.delList: Dict[Atom, Set[Operation]] = dict()
         self.assList: Dict[Atom, Set[Operation]] = dict()
+        self.arpg = None
+
+    def computeLists(self):
+
+        self.operations = set()
+        self.operations.update(self.actions)
+        self.operations.update(self.events)
+        self.operations.update(self.processes)
+        self.operations.update(self.durativeActions)
+        self.functions = set()
+        self.predicates = set()
 
         for op in self.operations:
             self.__operationsDict[op.planName] = op
@@ -262,19 +301,15 @@ class GroundedDomain(Domain):
                 self.assList.setdefault(v, set())
                 self.assList[v].add(op)
 
-        self.allAtoms = self.functions | self.predicates
-        self.arpg = None
+            pass
 
-        from src.plan.AffectedGraph import AffectedGraph
-        self.affectedGraph: AffectedGraph = affectedGraph
+        self.allAtoms = self.functions | self.predicates
 
     def getOperationByPlanName(self, planName) -> Operation:
         return self.__operationsDict[planName]
 
-    def substitute(self, sub: Dict[Atom, float], default=None) -> GroundedDomain:
-        subActions: Set[Action] = {a.substitute(sub, default) for a in self.actions if a.canHappen(sub, default)}
-
-        return GroundedDomain(self.name, subActions, self.events, self.processes, self.affectedGraph)
+    def substitute(self, sub: Dict[Atom, float], default=None):
+        self.actions = {a.substitute(sub, default) for a in self.actions if a.canHappen(sub, default)}
 
     def getARPG(self):
         return self.arpg
@@ -302,7 +337,7 @@ class GroundedDomain(Domain):
             # Constants
             pw.write(f"(:constants")
             pw.increaseTab()
-            for (type, objects) in self.constants.items():
+            for (type, objects) in self.constants:
                 objStr = " ".join(objects)
                 pw.write(f"{objStr} - {type}")
             pw.decreaseTab()

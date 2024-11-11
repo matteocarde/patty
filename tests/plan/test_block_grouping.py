@@ -4,9 +4,10 @@ from unittest import TestCase
 from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
-from src.plan.PDDL2SMT import PDDL2SMT
+from src.plan.NumericEncoding import NumericEncoding
 from src.plan.Pattern import Pattern
 from src.smt.SMTSolver import SMTSolver
+from src.utils.Arguments import Arguments
 
 
 class TestBlockGrouping(TestCase):
@@ -14,12 +15,13 @@ class TestBlockGrouping(TestCase):
     def setUp(self) -> None:
         self.domain: Domain = Domain.fromFile("../../files/numeric/ipc-2023/block-grouping/domain.pddl")
         self.problem: Problem = Problem.fromFile(
-            "../../files/numeric/ipc-2023/block-grouping/instances/instance_7_10_2_1.pddl")
+            "../../files/numeric/ipc-2023/block-grouping/instances/instance_100_20_5_1.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.horizon = 1
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
-        self.pddl2smt: PDDL2SMT = PDDL2SMT(self.gDomain, self.problem, self.pattern, self.horizon)
-        print(self.pddl2smt.pattern)
+        self.args = Arguments(keepRequired=False)
+        self.pddl2smt: NumericEncoding = NumericEncoding(self.gDomain, self.problem, self.pattern, self.horizon,
+                                                         self.args)
         pass
 
     def test_transform(self):

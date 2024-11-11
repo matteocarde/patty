@@ -1,15 +1,17 @@
 from __future__ import annotations
 
+import copy
+import math
 import statistics
 
 import json
 
 import re
 
-from typing import List, Dict
+from typing import List, Dict, Callable
 
 
-class Result:
+class Result(dict):
     solver: str = ""
     domain: str
     problem: str
@@ -25,12 +27,21 @@ class Result:
     nOfRules: int = -1
     lastSearchedBound: int = -1
     lastCallsToSolver: int = -1
+    boolVariables: int = -1
+    numVariables: int = -1
+    actions: int = -1
+    patternLength: int = -1
+    maxRolling: int = -1
+    distinctActionsInPlan: int = -1
+    avgVarsInRules: float = -1
+    rolledActionsInPlan: int = -1
+    transitiveClosureTime: int = -1
 
     def __init__(self, domain: str, problem: str):
+        super().__init__()
         self.plan = list()
         self.domain = domain
         self.problem = problem.split("/")[-1]
-        pass
 
     @classmethod
     def fromCSVLine(cls, csvLine: str):
@@ -48,8 +59,32 @@ class Result:
         r.lastSearchedBound = int(csvLine[10])
         if len(csvLine) > 11:
             r.lastCallsToSolver = int(csvLine[11])
+        if len(csvLine) > 12:
+            r.boolVariables = int(csvLine[12])
+            r.numVariables = int(csvLine[13])
+            r.actions = int(csvLine[14])
+        if len(csvLine) > 14:
+            r.patternLength = int(csvLine[15])
+            r.maxRolling = int(csvLine[16])
+            r.distinctActionsInPlan = int(csvLine[17])
+            r.avgVarsInRules = float(csvLine[18])
+            r.rolledActionsInPlan = int(csvLine[19])
 
+            r.transitiveClosureTime = int(csvLine[20])
+        r.__setDict()
         return r
+
+    def __setDict(self):
+        self["solved"] = self.solved
+        self["timeout"] = self.timeout
+        self["time"] = self.time
+        self["bound"] = self.bound
+        self["planLength"] = self.planLength
+        self["nOfVars"] = self.nOfVars
+        self["nOfRules"] = self.nOfRules
+        self["lastSearchedBound"] = self.lastSearchedBound
+        self["lastCallsToSolver"] = self.lastCallsToSolver
+        self["quantity"] = 1 if self.solved else 0
 
     @classmethod
     def parseTime(cls, stdout):
@@ -70,15 +105,21 @@ class Result:
             (str(self.nOfVars), 5),
             (str(self.nOfRules), 5),
             (str(self.lastSearchedBound), 5),
-            (str(self.lastCallsToSolver), 5)
+            (str(self.lastCallsToSolver), 5),
+            (str(self.boolVariables), 5),
+            (str(self.numVariables), 5),
+            (str(self.actions), 5),
+            (str(self.patternLength), 5),
+            (str(self.maxRolling), 5),
+            (str(self.distinctActionsInPlan), 5),
+            (str(self.avgVarsInRules), 8),
+            (str(self.rolledActionsInPlan), 5),
+            (str(self.transitiveClosureTime), 5)
         ]
 
         string = "|" + "|".join(["{:^" + str(n[1]) + "}" for n in row]) + "|"
         values = [n[0] for n in row]
         return string.format(*values)
-
-    def toJSON(self):
-        return json.dumps(self.__dict__)
 
     def toCSV(self):
         return ",".join([
@@ -94,25 +135,59 @@ class Result:
             str(self.nOfRules),
             str(self.lastSearchedBound),
             str(self.lastCallsToSolver),
+            str(self.boolVariables),
+            str(self.numVariables),
+            str(self.actions),
+            str(self.patternLength),
+            str(self.maxRolling),
+            str(self.distinctActionsInPlan),
+            str(self.avgVarsInRules),
+            str(self.rolledActionsInPlan),
+            str(self.transitiveClosureTime)
         ])
 
     @classmethod
-    def average(cls, results: [Result]):
+    def aggregator(cls, results: [Result], agg: Callable[List[float], float], solver=None) -> Result:
         r = cls("x", "x")
-        r.solver = results[0].solver
+        r.solver = results[0].solver if not solver else solver
         r.domain = results[0].domain
         r.problem = results[0].problem
         r.solved = statistics.mean([1 if e.solved else 0 for e in results])
         r.timeout = statistics.mean([1 if e.timeout else 0 for e in results])
-        r.nOfVars = max([e.nOfVars for e in results])
-        r.nOfRules = max([e.nOfRules for e in results])
-        r.lastSearchedBound = max([e.lastSearchedBound for e in results])
-        r.lastCallsToSolver = max([e.lastCallsToSolver for e in results])
+        r.nOfVars = agg([e.nOfVars for e in results])
+        r.nOfRules = agg([e.nOfRules for e in results])
+        r.lastSearchedBound = agg([e.lastSearchedBound for e in results])
+        r.lastCallsToSolver = agg([e.lastCallsToSolver for e in results])
+        r.numVariables = agg([e.numVariables for e in results])
+        r.boolVariables = agg([e.boolVariables for e in results])
+        r.actions = agg([e.actions for e in results])
         if r.solved > 0:
-            r.time = max([e.time for e in results if e.solved])
-            r.bound = max([e.bound for e in results if e.solved])
+            r.time = agg([e.time for e in results if e.solved])
+            r.bound = agg([e.bound for e in results if e.solved])
             r.planLength = statistics.mean([e.planLength for e in results if e.solved])
+            r.patternLength = statistics.mean([e.patternLength for e in results if e.solved])
+            r.maxRolling = statistics.mean([e.maxRolling for e in results if e.solved])
+            r.distinctActionsInPlan = statistics.mean([e.distinctActionsInPlan for e in results if e.solved])
+            r.avgVarsInRules = statistics.mean([e.avgVarsInRules for e in results if e.solved])
+            r.rolledActionsInPlan = statistics.mean([e.rolledActionsInPlan for e in results if e.solved])
+        r.__setDict()
         return r
+
+    @classmethod
+    def max(cls, results: [Result], solver=None):
+        return Result.aggregator(results, max, solver)
+
+    @classmethod
+    def min(cls, results: [Result], solver=None):
+        return Result.aggregator(results, min, solver)
+
+    @classmethod
+    def avg(cls, results: [Result], solver=None):
+        return Result.aggregator(results, statistics.mean, solver)
+
+    @classmethod
+    def stdev(cls, results: [Result], solver=None):
+        return Result.aggregator(results, mystdev, solver)
 
     @classmethod
     def portfolio(cls, portfolio: [Result], solver: str) -> Result:
@@ -131,7 +206,7 @@ class Result:
         return minResult
 
     @classmethod
-    def joinPorfolios(cls, aResults: List[Result], PORTFOLIOS: Dict[str, str]):
+    def joinPorfolios(cls, aResults: List[Result], PORTFOLIOS: Dict[str, str]) -> List[Result]:
         results = list()
         pResults: Dict[str, Dict[str, Dict[str, List[Result]]]] = dict()
 
@@ -150,3 +225,44 @@ class Result:
                 for (problem, portfolio) in domainDict.items():
                     results.append(Result.portfolio(portfolio, solver))
         return results
+
+    def __lt__(self, other):
+        if not isinstance(other, Result):
+            return False
+        return self.time < other.time
+
+    @classmethod
+    def splitRandom(cls, aResults: List[Result], randomSolver: str) -> List[Result]:
+
+        results: List[Result] = list()
+        rResults: Dict[str, Dict[str, List[Result]]] = dict()
+
+        for r in aResults:
+            if r.solver != randomSolver:
+                results.append(r)
+                continue
+            rResults.setdefault(r.domain, dict())
+            rResults[r.domain].setdefault(r.problem, list())
+            rResults[r.domain][r.problem].append(r)
+
+        for (domain, domainDict) in rResults.items():
+            for (problem, problems) in domainDict.items():
+                sortedResults = sorted(problems)
+                min: Result = copy.deepcopy(sortedResults[0])
+                min.solver += "-MIN"
+                med: Result = copy.deepcopy(sortedResults[math.floor((len(problems) - 1) / 2)])
+                med.solver += "-MED"
+                max: Result = copy.deepcopy(sortedResults[-1])
+                max.solver += "-MAX"
+                results += [min, med, max]
+
+        return results
+
+    def toJSON(self):
+        return json.dumps(self.__dict__)
+
+
+def mystdev(el):
+    if len(el) < 2:
+        return 0
+    return statistics.stdev(el)

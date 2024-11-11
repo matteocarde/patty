@@ -1,0 +1,9 @@
+#! /bin/bash
+
+export PATH=$PATH:/var/tfd/downward/search
+
+if [ $# != 3 ] ; then
+    echo "Usage: plan <domainFile> <problemFile> <solutionFile>"
+else
+    python2.7 /var/tfd/downward/plan.py "y+Y+e+O+1+C+1+b" $1 $2 $3
+fi

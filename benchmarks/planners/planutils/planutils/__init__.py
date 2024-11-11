@@ -1,0 +1,178 @@
+
+import argparse, os
+from pathlib import Path
+
+from planutils import settings
+from planutils.package_installation import PACKAGES
+
+
+def minimal_setup():
+    script_dir = Path(__file__).resolve().parent
+    planutils_dir = Path(settings.PLANUTILS_PREFIX)
+    if not planutils_dir.is_dir():
+        print(f"Creating {planutils_dir}...")
+        planutils_dir.mkdir()
+        os.symlink(script_dir / "packages", planutils_dir / "packages")
+        settings.save({'installed': []})
+
+
+def setup(forced=False):
+
+    if setup_done():
+        print("\nWarning: planutils is already setup. Setting up again will wipe all cached packages and settings.")
+        if forced or input("  Proceed? [y/N] ").lower() in ['y', 'yes']:
+            os.system("rm -rf %s" % os.path.join(os.path.expanduser('~'), '.planutils'))
+        else:
+            return
+
+    minimal_setup()
+    os.mkdir(os.path.join(os.path.expanduser('~'), '.planutils', 'bin'))
+
+    print("Installing package scripts...")
+    for p in PACKAGES:
+        if PACKAGES[p]['runnable']:
+            script  = "#!/bin/bash\n"
+            script += "if $(planutils check-installed %s)\n" % p
+            script += "then\n"
+            script += "  ~/.planutils/packages/%s/run $@\n" % p
+            script += "else\n"
+            script += "  echo\n"
+            script += "  echo 'Package not installed!'\n"
+            script += "  read -r -p \"  Download & install? [Y/n] \" varchoice\n"
+            script += "  varchoice=${varchoice,,}\n" # tolower
+            script += "  if ! [[ \"$varchoice\" =~ ^(no|n)$ ]]\n"
+            script += "  then\n"
+            script += "    if planutils install %s;\n" % p
+            script += "    then\n"
+            script += "      echo 'Successfully installed %s!'\n" % p
+            script += "      echo\n"
+            script += "      echo \"Original command: %s $@\"\n" % p
+            script += "      read -r -p \"  Re-run command? [Y/n] \" varchoice\n"
+            script += "      varchoice=${varchoice,,}\n" # tolower
+            script += "      if ! [[ \"$varchoice\" =~ ^(no|n)$ ]]\n"
+            script += "      then\n"
+            script += "        ~/.planutils/packages/%s/run $@\n" % p
+            script += "      fi\n"
+            script += "    fi\n"
+            script += "  fi\n"
+            script += "  echo\n"
+            script += "fi\n"
+            with open(os.path.join(os.path.expanduser('~'), '.planutils', 'bin', p), 'w') as f:
+                f.write(script)
+            os.chmod(os.path.join(os.path.expanduser('~'), '.planutils', 'bin', p), 0o0755)
+
+
+    print("\nAll set! Use \"planutils activate\" to activate the environment, or run through \"planutils\" directly.\n")
+
+
+def setup_done():
+    return os.path.exists(os.path.join(os.path.expanduser('~'), '.planutils'))
+
+
+def main():
+    parser = argparse.ArgumentParser(prog="planutils")
+    subparsers = parser.add_subparsers(help='sub-command help', dest='command')
+
+    parser_install = subparsers.add_parser('install', help='install package(s) such as a planner')
+    parser_install.add_argument('-f', '--force', help='force reinstallation if the package is already installed', action='store_true')
+    parser_install.add_argument('-y', '--yes', help='Answer yes to all user queries automatically', action='store_true')
+    parser_install.add_argument('package', help='package name', nargs='+')
+
+    parser_uninstall = subparsers.add_parser('uninstall', help='uninstall package(s)')
+    parser_uninstall.add_argument('package', help='package name', nargs='+')
+
+    parser_run = subparsers.add_parser('run', help='run package')
+    parser_run.add_argument('package', help='package name')
+    parser_run.add_argument('options', help='commandline options for the package', nargs="*")
+
+    parser_remote = subparsers.add_parser('remote', help='run package remotely')
+    parser_remote.add_argument('package', help='package name')
+    parser_remote.add_argument('options', help='commandline options for the package', nargs="*")
+
+    parser_remote_list = subparsers.add_parser('remote-list', help='list the available remote packages')
+
+
+    parser_checkinstalled = subparsers.add_parser('check-installed', help='check if a package is installed')
+    parser_checkinstalled.add_argument('package', help='package name')
+
+    parser_server = subparsers.add_parser('server', help='start a server for runnable packages')
+    parser_server.add_argument('-p', '--port', type=int, help='port to listen on', default=8080)
+    parser_server.add_argument('-i', '--host', type=str, help='host to listen on', default='127.0.0.1')
+
+    parser_list = subparsers.add_parser('list', help='list the available packages')
+    parser_setup = subparsers.add_parser('setup', help='setup planutils for current user')
+    parser_setup.add_argument('-f', '--force', help='force setting up again (will wipe all cached packages and settings)', action='store_true')
+    parser_upgrade = subparsers.add_parser('upgrade', help='upgrade all of the installed packages')
+
+    parser_configure = subparsers.add_parser('configure', help='configure planutils')
+    parser_configure.add_argument('-l', '--list', help='list the current configuration', action='store_true')
+    parser_configure.add_argument('-s', '--set', help='set a configuration option', nargs=2, metavar=('KEY', 'VALUE'))
+
+    parser_show = subparsers.add_parser('show', help='show details about a particular package')
+    parser_show.add_argument('package', help='package name', nargs='+')
+
+    args = parser.parse_args()
+
+    if 'setup' == args.command:
+        setup(args.force)
+        return
+    else:
+        minimal_setup()
+
+    if 'configure' == args.command:
+        if args.list:
+            s = settings.load()
+            print("\nCurrent configuration:")
+            for k in s:
+                print("  %s: %s" % (k, s[k]))
+            print()
+        elif args.set:
+            s = settings.load()
+            s[args.set[0]] = args.set[1]
+            settings.save(s)
+        else:
+            parser_configure.print_help()
+        return
+
+    if 'check-installed' == args.command:
+        from planutils.package_installation import check_installed
+        exit({True:0, False:1}[check_installed(args.package)])
+
+    elif 'install' == args.command:
+        from planutils.package_installation import install
+        exit({True:0, False:1}[install(args.package, args.force, args.yes)])
+
+    elif 'uninstall' == args.command:
+        from planutils.package_installation import uninstall
+        uninstall(args.package)
+
+    elif 'run' == args.command:
+        from planutils.package_installation import run
+        run(args.package, args.options)
+
+    elif 'remote' == args.command:
+        from planutils.server import remote
+        remote(args.package, args.options)
+
+    elif 'remote-list' == args.command:
+        from planutils.server import package_remote_list
+        package_remote_list()
+
+    elif 'list' == args.command:
+        from planutils.package_installation import package_list
+        package_list()
+
+    elif 'upgrade' == args.command:
+        from planutils.package_installation import upgrade
+        upgrade()
+
+    elif 'server' == args.command:
+        from planutils.server import run_server
+        run_server(args.port, args.host)
+
+    elif 'show' == args.command:
+        from planutils.package_installation import package_info
+        package_info(args.package)
+
+    else:
+        parser.print_help()

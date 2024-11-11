@@ -1,0 +1,666 @@
+#include "tsat/alg2layer/Alg2Layer.h"
+#include "tsat/graph/ITGraph.h"
+#include "tsat/alg2layer/ITGraphUsage.h"
+#include "tsat/alg2layer/FSM_General.h"
+#include "tsat/alg2layer/TimedPlan.h"
+
+#include "tsat/parser/ParserClasses.h"
+#include "tsat/satlayer/SatLayer.h"
+#include "tsat/utils.h"
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <string>
+#include <cfloat> // for DBL_MAX
+using namespace std;
+using namespace MyParser;
+using namespace nsSatLayer;
+
+bool Alg2Layer(AlgCommonParams p)
+{
+	//if(p.satsolver=="minisat")
+	//	limitMemory(2*1024); // 2 GB
+	if(p.satsolver!="minisat" && p.satsolver!="precosat")
+		return false;
+
+	ITGraph *g = NULL;
+	vector< vector<Mutex> > *fact_mutex = NULL;
+	vector<int> prop_layer;
+
+	bool solutionFound = false;
+	int solfoundStep = 1; // 1 => -2 => 3 => -4 => 5 ...
+	int maxLookingAround = 10; // FIXME: move this to the program switches
+	double bestMakeSpan = DBL_MAX;
+	vector<SATResults *> elapsed;
+	SatLayer *solver = NULL;
+	SATResults *res = new SATResults;
+	res->outcome = INDET;
+	vector<vector<PlanEvent> > negcyclePool;
+	int T = 0, planNumber = 0, restarts = 0;
+	set<int> checkedT;
+	double t2, t1;
+
+	t1 = CPUTime();
+	cout << "Domain: " << pDomain.name << " Objects: " << pProblem.pObjects.size() << endl;
+	cout << "Predicates: " << pDomain.predicates.size() << " Operators: " << pDomain.operators.size() << endl;
+	cout << "Propositions: " << pProblem.pAllProposition.size() << " Actions: " << pProblem.pAllAction.size() << endl;
+	cout << "Time taken : " << t1 << " secs" << endl;
+
+	if(p.graphUsage != 0) // if graph usage is enabled
+	{
+		cout << endl << "Constructing temporal planning graph:" << endl;
+		g = new ITGraph();
+		cout << "  1. Converting temporal to classical setting ..." << endl;
+		GraphInit(*g);
+		cout << "       Done." << endl;
+		cout << "  2. Constructing the graph ..." << endl;
+		try
+		{
+			g->CreateGraph(pProblem.initialState, p.AvailableTime - CPUTime());
+			if(g->Layers == -1) // construction failed
+			{
+				delete g;
+				g = NULL;
+				p.graphUsage = 0;
+			}
+		}
+		catch(const bad_alloc &e) // out of memory
+		{
+			cout << endl << "Out of memory exception from g->CreateGraph(): " << e.what() << endl;
+			cout << "Running the planner without planning graph analysis." << endl;
+			cout << "Ignoring the time wasted on planning graph construction." << endl << endl;
+			cout << "Total time so far: " << CPUTime() << endl;
+			delete g;
+			g = NULL;
+			p.graphUsage = 0;
+			t1 = CPUTime() - t1;
+		}
+		catch(const overflow_error &e) // ID or COUNTER or LAYER overflow
+		{
+			cout << endl << "Overflow exception from g->CreateGraph(): " << e.what() << endl;
+			cout << "Running the planner without planning graph analysis." << endl;
+			cout << "But considering the time wasted on planning graph construction." << endl << endl;
+			cout << "Total time so far: " << CPUTime() << endl;
+			delete g;
+			g = NULL;
+			p.graphUsage = 0;
+		}
+		catch(const runtime_error &e) // timeout
+		{
+			// NOTE: we assume that the assigned time to g->CreateGraph() is less than total available time,
+			//       otherwise we should abort the planner with a "throw;"
+			string ewhat = e.what();
+			if(ewhat != "Timeout during graph construction.") // Unhandled exception
+				throw;
+			cout << endl << "Timeout exception from g->CreateGraph(): " << e.what() << endl;
+			cout << "Running the planner without planning graph analysis." << endl;
+			cout << "But considering the time wasted on planning graph construction." << endl << endl;
+			cout << "Total time so far: " << CPUTime() << endl;
+			delete g;
+			g = NULL;
+			p.graphUsage = 0;
+		}
+		if(g!=NULL) // construction was successful
+		{
+			cout << "       Done.\t# of Layers: " << g->Layers << endl;
+			int nGoalLayer = g->GoalsLayer(pProblem.goals);
+			cout << "       Goals first appear at " << nGoalLayer << "th Layer non-mutex." << endl;
+			//if(p.TStart < nGoalLayer)
+
+				//p.TStart = nGoalLayer;
+			//GraphPrintFactMutex(*g);
+			cout << "  3. Extracting mutexes between facts ...";
+			int nFactMutex = GraphExtractFactMutex(*g, fact_mutex, p.graphUsage==2);
+			cout << " done." << endl;
+			cout << "       # of mutexes: " << nFactMutex << endl;
+			prop_layer.swap(*g->PropAddedOnLayer);
+			if(p.graphUsage == 1) // mutex between facts only
+				prop_layer.resize(pProblem.pAllProposition.size());
+			delete g;
+			g = NULL;
+			t2 = CPUTime();
+			cout << "Time taken : " << t2-t1 << " secs.";
+			cout << "Total time so far: " << t2 << " secs." << endl;
+			t1 = t2;
+		}
+	}
+
+	cout << endl << "Process started:" << endl << endl << flush;
+	///////////////////////////////////////////////// New: New Graph/////////////////////////////////////////////////////////////
+	int nProp = pProblem.pAllProposition.size();
+	int nAction = pProblem.pAllAction.size();	
+	set<int>::const_iterator it1, it2, it3;
+	bool **mutextable = new bool*[nProp];
+	short **nps=new short*[nProp];
+	for (int j=0; j<nProp; j++)
+	{
+		nps[j]=new short[nAction];
+
+		for (int k=0; k<nAction; k++)
+		{
+			const PAction *a1 = pProblem.pAllAction.GetActionById(k);
+			nps[j][k]=(short)(a1->conditionAtStart.size());
+		}
+		const PProposition *p1 = pProblem.pAllProposition.GetPropositionById(j);
+		for (it1=p1->delEffectAtStart.begin(); it1!=p1->delEffectAtStart.end(); it1++)
+			nps[j][*it1]++;
+	}
+	short **npd=new short*[nProp];
+	for (int j=0; j<nProp; j++)
+	{
+		npd[j]=new short[nAction];
+
+		for (int k=0; k<nAction; k++)
+		{
+			const PAction *a1 = pProblem.pAllAction.GetActionById(k);
+			npd[j][k]=(short)(1+(a1->conditionOverAll.size()));
+		}
+	}
+	short **npe=new short*[nProp];
+	for (int j=0; j<nProp; j++)
+	{
+		npe[j]=new short[nAction];
+
+		for (int k=0; k<nAction; k++)
+		{
+			const PAction *a1 = pProblem.pAllAction.GetActionById(k);
+			npe[j][k]=(short)(1+(a1->conditionAtEnd.size()));
+		}
+		const PProposition *p1 = pProblem.pAllProposition.GetPropositionById(j);
+		for (it1=p1->delEffectAtEnd.begin(); it1!=p1->delEffectAtEnd.end(); it1++)
+			npe[j][*it1]++;	
+	}
+
+	short *npp=new short[nProp];
+	for (int j=0; j<nProp; j++)
+	{
+		npp[j]=1;
+	}
+	short *nss=new short[nAction];
+	for (int j=0; j<nAction; j++)
+	{
+		const PAction *a1 = pProblem.pAllAction.GetActionById(j);
+		nss[j]=(short)(a1->conditionAtStart.size()*a1->conditionAtStart.size());
+	}
+	short *ndd=new short[nAction];
+	for (int j=0; j<nAction; j++)
+	{
+		const PAction *a1 = pProblem.pAllAction.GetActionById(j);
+		ndd[j]=(short)(2*a1->conditionOverAll.size()+a1->conditionOverAll.size()*a1->conditionOverAll.size());
+	}
+	short *nee=new short[nAction];
+	for (int j=0; j<nAction; j++)
+	{
+		const PAction *a1 = pProblem.pAllAction.GetActionById(j);
+		nee[j]=(short)(2*a1->conditionAtEnd.size()+a1->conditionAtEnd.size()*a1->conditionAtEnd.size());
+	}
+	for (int j=0; j<nProp; j++)
+	{
+		mutextable[j]=new bool[nProp+nAction+nAction];
+		for (int k=0; k<nProp+nAction+nAction; k++)
+			mutextable[j][k]=true;
+	}
+	short **newmux= new short*[nProp*nProp*2];
+	for (int j=0; j<nProp*nProp*2; j++)
+	{
+		newmux[j]=new short[2];
+	}
+	int nnewmux=0;
+	//cout << endl;
+	for (int j=0; j<pProblem.initialState.size(); ++j)
+		for (int k=j; k<pProblem.initialState.size(); ++k)
+		{
+			mutextable[pProblem.initialState[j]][pProblem.initialState[k]]=false;
+			mutextable[pProblem.initialState[k]][pProblem.initialState[j]]=false;
+			newmux[nnewmux][0]=pProblem.initialState[j];
+			//cout << newmux[nnewmux][0] << "   ";
+			newmux[nnewmux][1]=pProblem.initialState[k];
+			//cout << newmux[nnewmux][1] << endl;
+			nnewmux++;
+		}
+	bool muxflag;
+	bool finished=true;
+	for (int j=0; j<nAction; j++)
+	{
+					const PAction *a1 = pProblem.pAllAction.GetActionById(j);
+					if (nss[j]==0)
+					{
+						for (it2=a1->addEffectAtStart.begin(); it2!=a1->addEffectAtStart.end(); it2++)
+							for (it3=a1->addEffectAtStart.begin(); it3!=a1->addEffectAtStart.end(); it3++)
+							{
+								if (!mutextable[*it2][*it3])
+									continue;
+								mutextable[*it3][*it2]=false;
+								mutextable[*it2][*it3]=false;
+								newmux[nnewmux][0]=*it2;
+								newmux[nnewmux][1]=*it3;
+								nnewmux++;
+							}
+						for (it3=a1->addEffectAtStart.begin(); it3!=a1->addEffectAtStart.end(); it3++)
+						{
+							if (!mutextable[*it3][nProp+j])
+								continue;
+							mutextable[*it3][nProp+j]=false;
+							newmux[nnewmux][0]=*it3;
+							newmux[nnewmux][1]=nProp+j;
+							nnewmux++;
+						}
+					}
+	}
+	for (int j=0; j<nAction; j++)
+	{
+					const PAction *a1 = pProblem.pAllAction.GetActionById(j);
+					if (nee[j]==0)
+					{
+						for (it2=a1->addEffectAtEnd.begin(); it2!=a1->addEffectAtEnd.end(); it2++)
+							for (it3=a1->addEffectAtEnd.begin(); it3!=a1->addEffectAtEnd.end(); it3++)
+							{
+								if (!mutextable[*it2][*it3])
+									continue;
+								mutextable[*it3][*it2]=false;
+								mutextable[*it2][*it3]=false;
+								newmux[nnewmux][0]=*it2;
+								newmux[nnewmux][1]=*it3;
+								nnewmux++;
+							}
+
+
+					}
+	}
+int p1=0;
+int p2=0;
+	while (nnewmux>0)
+	{
+
+				
+		//if (nnewmux>nProp*nProp)
+		{
+			cout << endl << nnewmux- nProp*nProp << "    " << nnewmux << endl;//"Too Many Mutexes";
+			//exit(0);
+		}
+		if ((p1==442) && (p2==10031))
+			exit(0);
+		//cout << newmux[nnewmux-1][0] << "  " << newmux[nnewmux-1][1] << endl;
+		finished=true;
+		p1=newmux[nnewmux-1][0];
+		p2=newmux[nnewmux-1][1];
+		cout << endl << p1 << "    " << p2 << "   " << nProp+nAction+nAction;//"Too Many Mutexes";
+		const PProposition *prop1 = pProblem.pAllProposition.GetPropositionById(p1);
+		nnewmux--;
+
+		if (p2<nProp)
+		{
+			//cout << "* ";
+			if (p1==p2)
+			{
+				
+				npp[p1]=0;
+				for (int j=0; j<nAction; j++)
+					if ((nss[j]==0) && (nps[p1][j]==0))
+					{
+						//cout << endl << "ERROR";
+						//exit(0);
+						const PAction *a1 = pProblem.pAllAction.GetActionById(j);
+						for (it1=a1->addEffectAtStart.begin(); it1!=a1->addEffectAtStart.end(); ++it1)
+						{
+							if (!mutextable[p1][*it1])
+								continue;
+							mutextable[p1][*it1]=false;
+							mutextable[*it1][p1]=false;
+							newmux[nnewmux][0]=p1;
+							newmux[nnewmux][1]=*it1;
+							nnewmux++;
+						}
+						if (!mutextable[p1][nProp+j])
+							continue;
+						mutextable[p1][nProp+j]=false;
+						newmux[nnewmux][0]=p1;
+						newmux[nnewmux][1]=nProp+j;
+						nnewmux++;
+					}
+				for (int j=0; j<nAction; j++)
+					if ((ndd[j]==0) && (npd[p1][j]==0))
+					{
+						//cout << endl << "ERROR";
+						//exit(0);
+
+						if (!mutextable[p1][nProp+nAction+j])
+							continue;
+						mutextable[p1][nProp+nAction+j]=false;
+						newmux[nnewmux][0]=p1;
+						newmux[nnewmux][1]=nProp+nAction+j;
+						nnewmux++;
+					}
+				for (int j=0; j<nAction; j++)
+					if ((nee[j]==0) && (npe[p1][j]==0))
+					{
+						//cout << endl << "ERROR";
+						//exit(0);
+						const PAction *a1 = pProblem.pAllAction.GetActionById(j);
+						for (it1=a1->addEffectAtEnd.begin(); it1!=a1->addEffectAtEnd.end(); ++it1)
+						{
+							if (!mutextable[p1][*it1])
+								continue;
+							mutextable[p1][*it1]=false;
+							mutextable[*it1][p1]=false;
+							newmux[nnewmux][0]=p1;
+							newmux[nnewmux][1]=*it1;
+							nnewmux++;
+						}
+
+					}
+				for (it1=prop1->conditionAtStart.begin();it1!=prop1->conditionAtStart.end(); it1++)
+				{
+					const PAction *a1 = pProblem.pAllAction.GetActionById(*it1);
+					nss[*it1]--;
+					if (nss[*it1]==0)
+					{
+						for (it2=a1->addEffectAtStart.begin(); it2!=a1->addEffectAtStart.end(); it2++)
+							for (it3=a1->addEffectAtStart.begin(); it3!=a1->addEffectAtStart.end(); it3++)
+							{
+								if (!mutextable[*it2][*it3])
+									continue;
+								mutextable[*it3][*it2]=false;
+								mutextable[*it2][*it3]=false;
+								newmux[nnewmux][0]=*it2;
+								newmux[nnewmux][1]=*it3;
+								nnewmux++;
+							}
+						for (it3=a1->addEffectAtStart.begin(); it3!=a1->addEffectAtStart.end(); it3++)
+						{
+							if (!mutextable[*it3][nProp+*it1])
+								continue;
+							mutextable[*it3][nProp+*it1]=false;
+							newmux[nnewmux][0]=*it3;
+							newmux[nnewmux][1]=nProp+*it1;
+							nnewmux++;
+						}
+						for (int j=0; j<nProp; j++)
+							if ((npp[j]==0) && (nps[j][*it1]==0))
+							{
+								for (it3=a1->addEffectAtStart.begin(); it3!=a1->addEffectAtStart.end(); it3++)
+								{
+									if (!mutextable[j][*it3])
+										continue;
+									mutextable[*it3][j]=false;
+									mutextable[j][*it3]=false;
+									newmux[nnewmux][0]=j;
+									newmux[nnewmux][1]=*it3;
+									nnewmux++;
+								}
+								if (!mutextable[j][*it1+nProp])
+									continue;
+								mutextable[j][*it1+nProp]=false;
+								newmux[nnewmux][0]=j;
+								newmux[nnewmux][1]=*it1+nProp;
+								nnewmux++;
+							}
+
+					}
+				}
+
+
+				for (it1=prop1->conditionOverAll.begin();it1!=prop1->conditionOverAll.end(); it1++)
+				{
+
+					ndd[*it1]--;
+					if (ndd[*it1]==0)
+					{
+						for (int j=0; j<nProp; j++)
+							if ((npp[j]==0) && (npd[j][*it1]==0))
+							{
+								if (!mutextable[j][*it1+nProp+nAction])
+									continue;
+								mutextable[j][*it1+nProp+nAction]=false;
+								newmux[nnewmux][0]=j;
+								newmux[nnewmux][1]=*it1+nProp+nAction;
+								nnewmux++;
+							}
+
+					}
+				}
+
+
+				for (it1=prop1->conditionAtEnd.begin();it1!=prop1->conditionAtEnd.end(); it1++)
+				{
+					const PAction *a1 = pProblem.pAllAction.GetActionById(*it1);
+					nee[*it1]--;
+					if (nee[*it1]==0)
+					{
+						for (it2=a1->addEffectAtEnd.begin(); it2!=a1->addEffectAtEnd.end(); it2++)
+							for (it3=a1->addEffectAtEnd.begin(); it3!=a1->addEffectAtEnd.end(); it3++)
+							{
+								if (!mutextable[*it2][*it3])
+									continue;
+								mutextable[*it3][*it2]=false;
+								mutextable[*it2][*it3]=false;
+								newmux[nnewmux][0]=*it2;
+								newmux[nnewmux][1]=*it3;
+								nnewmux++;
+							}
+						for (int j=0; j<nProp; j++)
+							if ((npp[j]==0) && (npe[j][*it1]==0))
+							{
+								for (it3=a1->addEffectAtEnd.begin(); it3!=a1->addEffectAtEnd.end(); it3++)
+								{
+									if (!mutextable[j][*it3])
+										continue;
+									mutextable[*it3][j]=false;
+									mutextable[j][*it3]=false;
+									newmux[nnewmux][0]=j;
+									newmux[nnewmux][1]=*it3;
+									nnewmux++;
+								}
+							}
+
+					}
+				}
+
+				for (it1=prop1->conditionAtStart.begin();it1!=prop1->conditionAtStart.end(); it1++)
+				{
+					const PAction *a1 = pProblem.pAllAction.GetActionById(*it1);
+					nps[p1][*it1]--;
+					if (nps[p1][*it1]==0)
+					{
+
+
+							if ((npp[p1]==0) && (nss[*it1]==0))
+							{
+								for (it3=a1->addEffectAtStart.begin(); it3!=a1->addEffectAtStart.end(); it3++)
+								{
+									if (!mutextable[p1][*it3])
+										continue;
+									mutextable[*it3][p1]=false;
+									mutextable[p1][*it3]=false;
+									newmux[nnewmux][0]=p1;
+									newmux[nnewmux][1]=*it3;
+									nnewmux++;
+								}
+								if (!mutextable[p1][nProp+*it1])
+									continue;
+								mutextable[p1][nProp+*it1]=false;
+								newmux[nnewmux][0]=p1;
+								newmux[nnewmux][1]=*it1+nProp;
+								nnewmux++;
+							}
+
+					}
+				}
+				for (it1=prop1->conditionOverAll.begin();it1!=prop1->conditionOverAll.end(); it1++)
+				{
+					const PAction *a1 = pProblem.pAllAction.GetActionById(*it1);
+					npd[p1][*it1]--;
+					if (npd[p1][*it1]==0)
+					{
+
+
+							if ((npp[p1]==0) && (ndd[*it1]==0))
+							{
+
+								if (!mutextable[p1][nAction+nProp+*it1])
+									continue;
+								mutextable[p1][nAction+nProp+*it1]=false;
+								newmux[nnewmux][0]=p1;
+								newmux[nnewmux][1]=*it1+nProp+nAction;
+								nnewmux++;
+							}
+
+					}
+				}
+				for (it1=prop1->conditionAtEnd.begin();it1!=prop1->conditionAtEnd.end(); it1++)
+				{
+					const PAction *a1 = pProblem.pAllAction.GetActionById(*it1);
+					npe[p1][*it1]--;
+					if (npe[p1][*it1]==0)
+					{
+
+
+							if ((npp[p1]==0) && (nee[*it1]==0))
+							{
+								for (it3=a1->addEffectAtEnd.begin(); it3!=a1->addEffectAtEnd.end(); it3++)
+								{
+									if (!mutextable[p1][*it3])
+										continue;
+									mutextable[*it3][p1]=false;
+									mutextable[p1][*it3]=false;
+									newmux[nnewmux][0]=p1;
+									newmux[nnewmux][1]=*it3;
+									nnewmux++;
+								}
+
+							}
+
+					}
+				}				
+
+				
+			}
+			else //p1!=p2
+			{
+				//cout << "*+  ";
+				const PProposition *prop1 = pProblem.pAllProposition.GetPropositionById(p1);
+				const PProposition *prop2 = pProblem.pAllProposition.GetPropositionById(p2);
+				int *aclist= new int[nAction];
+				int naclist=0;
+				for (it1=prop1->conditionAtStart.begin();it1!=prop1->conditionAtStart.end(); it1++)
+					for (it2=prop2->conditionAtStart.begin();it2!=prop2->conditionAtStart.end(); it2++)
+						if (*it1==*it2)
+						{
+							aclist[naclist]=*it1;
+							naclist++;
+						}
+
+
+				for (int j=0; j<naclist; j++)
+				{
+					const PAction *a1 = pProblem.pAllAction.GetActionById(aclist[j]);
+					nss[aclist[j]]--;
+					nss[aclist[j]]--;
+					if (nss[aclist[j]]==0)
+					{
+						for (it2=a1->addEffectAtStart.begin(); it2!=a1->addEffectAtStart.end(); it2++)
+							for (it3=a1->addEffectAtStart.begin(); it3!=a1->addEffectAtStart.end(); it3++)
+							{
+								if (!mutextable[*it2][*it3])
+									continue;
+								mutextable[*it3][*it2]=false;
+								mutextable[*it2][*it3]=false;
+								newmux[nnewmux][0]=*it2;
+								newmux[nnewmux][1]=*it3;
+								nnewmux++;
+							}
+						for (it3=a1->addEffectAtStart.begin(); it3!=a1->addEffectAtStart.end(); it3++)
+						{
+							if (!mutextable[*it3][nProp+aclist[j]])
+								continue;
+							mutextable[*it3][nProp+aclist[j]]=false;
+							newmux[nnewmux][0]=*it3;
+							newmux[nnewmux][1]=nProp+aclist[j];
+							nnewmux++;
+						}
+						for (int k=0; k<nProp; k++)
+							if ((npp[k]==0) && (nps[k][aclist[j]]==0))
+							{
+								for (it3=a1->addEffectAtStart.begin(); it3!=a1->addEffectAtStart.end(); it3++)
+								{
+									if (!mutextable[k][*it3])
+										continue;
+									mutextable[*it3][k]=false;
+									mutextable[k][*it3]=false;
+									newmux[nnewmux][0]=k;
+									newmux[nnewmux][1]=*it3;
+									nnewmux++;
+								}
+								if (!mutextable[k][aclist[j]+nProp])
+									continue;
+								mutextable[k][aclist[j]+nProp]=false;
+								newmux[nnewmux][0]=k;
+								newmux[nnewmux][1]=aclist[j]+nProp;
+								nnewmux++;
+							}
+
+					}
+				}
+
+				naclist=0;
+				for (it1=prop1->conditionOverAll.begin();it1!=prop1->conditionOverAll.end(); it1++)
+					for (it2=prop2->conditionOverAll.begin();it2!=prop2->conditionOverAll.end(); it2++)
+						if (*it1==*it2)
+						{
+							aclist[naclist]=*it1;
+							naclist++;
+						}
+
+				for (int j=0; j<naclist; j++)
+				{
+
+					ndd[aclist[j]]--;
+					ndd[aclist[j]]--;
+					if (ndd[aclist[j]]==0)
+					{
+						for (int k=0; k<nProp; k++)
+							if ((npp[k]==0) && (npd[k][aclist[j]]==0))
+							{
+								if (!mutextable[k][aclist[j]+nProp+nAction])
+									continue;
+								mutextable[k][aclist[j]+nProp+nAction]=false;
+								newmux[nnewmux][0]=k;
+								newmux[nnewmux][1]=aclist[j]+nProp+nAction;
+								nnewmux++;
+							}
+
+					}
+				}
+
+				naclist=0;
+				for (it1=prop1->conditionAtEnd.begin();it1!=prop1->conditionAtEnd.end(); it1++)
+					for (it2=prop2->conditionAtEnd.begin();it2!=prop2->conditionAtEnd.end(); it2++)
+						if (*it1==*it2)
+						{
+							aclist[naclist]=*it1;
+							naclist++;
+						}
+				for (int j=0; j<naclist; j++)
+				{
+					const PAction *a1 = pProblem.pAllAction.GetActionById(aclist[j]);
+					nee[aclist[j]]--;
+					nee[aclist[j]]--;
+					if (nee[aclist[j]]==0)
+					{
+						for (it2=a1->addEffectAtEnd.begin(); it2!=a1->addEffectAtEnd.end(); it2++)
+							for (it3=a1->addEffectAtEnd.begin(); it3!=a1->addEffectAtEnd.end(); it3++)
+							{
+								if (!mutextable[*it2][*it3])
+									continue;
+								mutextable[*it3][*it2]=false;
+								mutextable[*it2][*it3]=false;
+								newmux[nnewmux][0]=*it2;
+								newmux[nnewmux][1]=*it3;
+								nnewmux++;
+							}
+						for (int k=0; k<nProp; j++)
+							if ((npp[k]==0) && (npe[k][*it1]==0))
+							{
+								for (it3=a1->addEffectAtEnd.begin(); it3!=a1->addEffectAtEnd.end(); it3++)
+								{
+					

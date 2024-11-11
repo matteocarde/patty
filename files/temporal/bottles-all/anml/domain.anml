@@ -1,0 +1,86 @@
+type bottle;
+
+fluent boolean packed(bottle a);
+fluent boolean packing(bottle a);
+fluent boolean is_packing;
+fluent boolean capped(bottle a);
+
+fluent integer on_platform;
+fluent integer litres(bottle a);
+
+constant boolean left(bottle a);
+constant boolean right(bottle a);
+
+
+action cap_uncap(bottle a) {
+   duration := 5.0;
+   [start] capped(a) == false;
+   [start] packed(a) == false;
+   [end] capped(a) == true;
+
+   [start] capped(a) := true;
+   [end] capped(a) := false;
+};
+
+action uncap_cap(bottle a) {
+   duration := 5.0;
+   [start] capped(a) == true;
+   [start] packed(a) == false;
+   [end] capped(a) == false;
+
+   [start] capped(a) := false;
+   [end] capped(a) := true;
+};
+
+
+action pour(bottle a, bottle b) {
+   duration := 1.0;
+   [start] left(a) == true;
+   [start] right(b) == true;
+
+   [start] litres(a) > 0;
+   [start] capped(a) == false;
+   [start] capped(b) == false;
+   [start] packed(a) == false;
+   [start] packed(b) == false;
+   [all] capped(a) == false;
+   [all] capped(b) == false;
+
+   [start] litres(a) := litres(a) - 1;
+   [end] litres(b) := litres(b) + 1;
+};
+
+
+action shake(bottle a) {
+   duration := 5.0;
+   [start] litres(a) > 0;
+   [start] capped(a) == true;
+   [end] capped(a) == false;
+
+   [end] litres(a) := 0;
+};
+
+
+action pack(bottle a) {
+   duration := 3.0;
+   [start] packed(a) == false;
+   [start] packing(a) == false;
+   [start] on_platform < 2;
+   [start] capped(a) == true;
+   [all] capped(a) == true;
+   [end] on_platform == 2;
+
+   [start] is_packing := true;
+   [start] packing(a) := true;
+   [start] on_platform := on_platform + 1;
+   [end] packed(a) := true;
+   [end] is_packing := false;
+};
+
+action clear_platform() {
+   duration := 1.0;
+   [start] is_packing == false;
+   [start] on_platform := 0;
+};
+
+

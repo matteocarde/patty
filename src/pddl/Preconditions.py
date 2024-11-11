@@ -1,8 +1,7 @@
 from __future__ import annotations
 
 import copy
-
-from typing import Dict, cast, Tuple
+from typing import Dict, cast
 
 from src.pddl.Formula import Formula
 from src.pddl.PDDLWriter import PDDLWriter
@@ -21,7 +20,7 @@ class Preconditions(Formula):
         return cast(Preconditions, p)
 
     @classmethod
-    def fromNode(cls, node: pddlParser.PreconditionsContext) -> Preconditions:
+    def fromNode(cls, node: pddlParser.PreconditionsContext or pddlParser.OpDurativeConditionContext) -> Preconditions:
         p = super().fromNode(node)
         p.__class__ = Preconditions
         return cast(Preconditions, p)
@@ -39,6 +38,7 @@ class Preconditions(Formula):
         # pw.increaseTab()
         super().toPDDL(pw)
         # pw.decreaseTab()
+
 
 
 

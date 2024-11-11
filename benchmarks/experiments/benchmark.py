@@ -8,27 +8,50 @@ import boto3
 from botocore.config import Config
 
 from classes.CloudLogger import CloudLogger
-from classes.ENHSP import ENHSP
+from classes.planners.AnmlSMT import AnmlSMT
+from classes.planners.ENHSP import ENHSP
 from classes.Envs import Envs
+from classes.ITSAT import ITSAT
+from classes.LPG import LPG
+from classes.Madagascar import Madagascar
 from classes.MetricFF import MetricFF
 from classes.NFD import NFD
 from classes.OMT import OMT
+from classes.Optic import Optic
 from classes.Patty import Patty
 from classes.Planner import Planner
 from classes.Result import Result
-from classes.SpringRoll import SpringRoll
+from classes.planners.SpringRoll import SpringRoll
+from classes.planners.TFD import TFD
 
 my_config = Config(
     region_name='eu-central-1',
 )
 
 PLANNERS: Dict[str, Planner] = {
-    "PATTY": Patty("PATTY", "arpg", solver="z3", encoding="non-linear"),
-    "PATTY-R": Patty("PATTY-R", "random", solver="z3", encoding="non-linear"),
+    "PATTY-T-OR": Patty("PATTY-T-OR", temporalConstraints='logical'),
+    "PATTY-T-SIGMA": Patty("PATTY-T-SIGMA", temporalConstraints='numerical'),
+    "PATTY-T-OR-ASTAR": Patty("PATTY-T-OR", temporalConstraints='logical', search="astar"),
+    "PATTY-T-SIGMA-ASTAR": Patty("PATTY-T-SIGMA", temporalConstraints='numerical', search="astar"),
+    "PATTY-O": Patty("PATTY-O", search="step", pattern="arpg"),
+    "PATTY-G": Patty("PATTY-G", search="static", pattern="arpg"),
+    "PATTY-H": Patty("PATTY-H", search="astar", pattern="arpg", noCompression=True),
+    "PATTY-F": Patty("PATTY-F", search="astar", pattern="arpg", noCompression=False),
+    "PATTY-CES": Patty("PATTY-CES", search="chain", pattern="alpha", tcTime=40),
+
+    "PATTY-R": Patty("PATTY-R", search="step", pattern="random", quality="none"),
+    "PATTY-A": Patty("PATTY-A", search="step", pattern="arpg", quality="none"),
+    "PATTY-E": Patty("PATTY-E", search="step", pattern="enhanced", quality="none"),
+    "PATTY-FA": Patty("PATTY-FA", search="astar", pattern="arpg", quality="none"),
+    "PATTY-FE": Patty("PATTY-FE", search="astar", pattern="enhanced", quality="none"),
+    "PATTY-M": Patty("PATTY-M", search="step", pattern="enhanced", quality="shortest-step"),
+    "PATTY-I": Patty("PATTY-I", search="step", pattern="enhanced", quality="improve-plan"),
+    "PATTY-L": Patty("PATTY-L", search="step", pattern="enhanced", quality="improve-less"),
+    "RANTANPLAN": Patty("RANTANPLAN", search="static", pattern="arpg", hasEffectAxioms=True, rollBound=1),
     "SPRINGROLL": SpringRoll(),
-    "RANTANPLAN": Patty("RANTANPLAN", "arpg", solver="z3", encoding="non-linear", rollBound=1, hasEffectAxioms=True),
 
     "ENHSP-SAT-HMRP": ENHSP(False, settings="-h hmrp -s gbfs -silent -pp -pe", name="ENHSP-SAT-HMRP"),
+    "ENHSP-SAT-HMRPHJ": ENHSP(False, settings="-planner sat-hmrphj -silent -pp -pe", name="ENHSP-SAT-HMRPHJ"),
     "ENHSP-SAT-HADD": ENHSP(False, settings="-h hadd -s gbfs -silent -pp -pe", name="ENHSP-SAT-HADD"),
     "ENHSP-SAT-HMAX": ENHSP(False, settings="-h hmax -s gbfs -silent -pp -pe", name="ENHSP-SAT-HMAX"),
     "ENHSP-SAT-AIBR": ENHSP(False, settings="-h aibr -s gbfs -silent -pp -pe", name="ENHSP-SAT-AIBR"),
@@ -36,7 +59,6 @@ PLANNERS: Dict[str, Planner] = {
     "ENHSP-SAT-BLIND": ENHSP(False, settings="-h blind -s gbfs -silent -pp -pe", name="ENHSP-SAT-BLIND"),
 
     "ENHSP-OPT-HMRP": ENHSP(False, settings="-h hmrp -s WAStar -silent -pp -pe", name="ENHSP-OPT-HMRP"),
-    "ENHSP-OPT-HMRPHJ": ENHSP(False, settings="-planner sat-hmrphj -silent -pp -pe", name="ENHSP-OPT-HMRPHJ"),
     "ENHSP-OPT-HADD": ENHSP(False, settings="-h hadd -s WAStar -silent -pp -pe", name="ENHSP-OPT-HADD"),
     "ENHSP-OPT-HMAX": ENHSP(False, settings="-h hadd -s WAStar -silent -pp -pe", name="ENHSP-OPT-HMAX"),
     "ENHSP-OPT-AIBR": ENHSP(False, settings="-h aibr -s WAStar -silent -pp -pe", name="ENHSP-OPT-AIBR"),
@@ -46,6 +68,13 @@ PLANNERS: Dict[str, Planner] = {
     "METRIC-FF": MetricFF(),
     "NFD": NFD(),
     "OMT": OMT(),
+    "MADAGASCAR": Madagascar(),
+
+    "LPG": LPG(),
+    "TFD": TFD(),
+    "OPTIC": Optic(),
+    "ITSAT": ITSAT(),
+    "ANMLSMT": AnmlSMT(),
 }
 
 
@@ -57,7 +86,7 @@ def main():
     if envs.isInsideAWS:
         time.sleep(envs.index / 4)
     else:
-        envs.file = "benchmarks/instances/icr-plan.csv"
+        envs.file = "benchmarks/instances/ces.csv"
 
     logger = CloudLogger(envs.experiment)
 
@@ -89,20 +118,26 @@ def main():
                 print(f"Starting {planner} {benchmark} {domainFile} {problemFile}")
             r: Result = planner.run(benchmark, domainFile, problemFile, logger, envs.timeout)
             print(r)
+            print(r.stdout)
             if not r.solved:
                 print(r.stdout)
+
             logger.log(r.toCSV())
-            if r.solved:
-                s3.put_object(
-                    Key=f"{envs.experiment}/{r.solver}/{r.domain}/plans/{r.problem}.txt",
-                    Bucket="patty-benchmarks",
-                    Body=bytes(r.stdout, 'utf-8')
-                )
+            s3.put_object(
+                Key=f"{envs.experiment}/{r.solver}/{r.domain}/plans/{r.problem}{'-unsolved' if not r.solved else ''}.txt",
+                Bucket="patty-benchmarks",
+                Body=bytes(r.stdout, 'utf-8'),
+                ContentType='text/plain'
+            )
 
         except Exception as error:
             if isinstance(error, KeyboardInterrupt):
                 print("Interrupted by user...")
                 break
+            r: Result = Result(domainFile, problemFile)
+            r.solver = benchmark
+            print(r)
+            logger.log(r.toCSV())
             logger.error(traceback.format_exc())
             print(traceback.format_exc(), file=sys.stderr)
 

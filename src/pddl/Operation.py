@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 import copy
-
 import itertools
 from typing import Dict, List, Set, Tuple
 
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate, BinaryPredicateType
+from src.pddl.ConditionalEffect import ConditionalEffect
+from src.pddl.Constant import Constant
 from src.pddl.Effects import Effects
 from src.pddl.Literal import Literal
 from src.pddl.OperationType import OperationType
@@ -23,30 +24,43 @@ class Operation:
     valName: str
     planName: str
     parameters: List[Parameter]
+    duration: Predicate
     preconditions: Preconditions
     effects: Effects
+    __hash: int
+    lifted: Operation or None
 
     def __init__(self):
         self.name: str = ""
         self.valName: str = ""
         self.parameters = list()
+        self.duration: Predicate = Constant(0)
         self.preconditions = Preconditions()
         self.effects = Effects()
         self.functions = set()
         self.predicates = set()
         self.preB = set()
+        self.preN = set()
         self.addList = set()
         self.delList = set()
         self.assList = set()
         self.incrList = set()
         self.decrList = set()
+        self.numEffList = set()
         self.influencedAtoms = set()
         self.increases = dict()
         self.decreases = dict()
         self.assignments = dict()
         self.linearizationOf = self
+        self.originalName: str = ""
         self.linearizationTimes = 1
+        self.__couldBeRepeated = False
         self.isFake = False
+        self.lifted = None
+        self.addedAtoms: Set[Atom] = set()
+        self.deletedAtoms: Set[Atom] = set()
+        self.deltaPlus: Dict[Atom, List[ConditionalEffect]] = dict()
+        self.deltaMinus: Dict[Atom, List[ConditionalEffect]] = dict()
 
     def __deepcopy__(self, m=None) -> Operation:
         m = {} if m is None else m
@@ -60,6 +74,7 @@ class Operation:
         a.functions = copy.deepcopy(self.functions, m)
         a.predicates = copy.deepcopy(self.predicates, m)
         a.preB = copy.deepcopy(self.preB, m)
+        a.preN = copy.deepcopy(self.preN, m)
         a.addList = copy.deepcopy(self.addList, m)
         a.delList = copy.deepcopy(self.delList, m)
         a.assList = copy.deepcopy(self.assList, m)
@@ -70,7 +85,13 @@ class Operation:
         a.decreases = copy.deepcopy(self.decreases, m)
         a.assignments = copy.deepcopy(self.assignments, m)
         a.linearizationOf = self.linearizationOf
+        a.originalName = self.originalName
         a.linearizationTimes = self.linearizationTimes
+        a.originalName = self.originalName
+        a.duration = copy.deepcopy(self.duration)
+        a.lifted = self.lifted
+
+        a.cacheLists()
 
         return a
 
@@ -81,31 +102,36 @@ class Operation:
             if isinstance(child, p.OpNameContext):
                 operation.name = child.getText()
             elif isinstance(child, p.OpParametersContext):
-                operation.__setParameters(child.getChild(1), types)
+                operation.setParameters(child.getChild(1), types)
             elif isinstance(child, p.OpPreconditionContext):
-                operation.__addPreconditions(child)
+                operation.addPreconditions(child)
             elif isinstance(child, p.OpEffectContext):
-                operation.__addEffects(child)
+                operation.addEffects(child)
+        operation.duration = Constant(0)
 
-        operation.__cacheLists()
+        operation.cacheLists()
         return operation
 
     @classmethod
-    def fromProperties(cls, name: str, preconditions: Preconditions, effects: Effects, planName: str):
+    def fromProperties(cls, name: str, parameters: List[Parameter], preconditions: Preconditions, effects: Effects,
+                       planName: str, duration=Predicate or None):
         operation = cls()
         operation.name = name
+        operation.parameters = parameters
         operation.preconditions = preconditions
         operation.effects = effects
         operation.planName = planName
-        operation.__cacheLists()
+        operation.duration = duration
+        operation.originalName = name
+        operation.cacheLists()
         return operation
 
-    def __setParameters(self, node: p.ParametersContext, types: Dict[str, Type]):
+    def setParameters(self, node: p.ParametersContext, types: Dict[str, Type]):
         for child in node.children:
             if not isinstance(child, p.TypedAtomParameterContext):
                 continue
             varNames = []
-            varType = types[child.atomsType.getText()]
+            varType = types[child.atomsType.getText().lower()]
 
             for x in child.children:
                 if isinstance(x, p.LiftedAtomParameterContext):
@@ -114,17 +140,17 @@ class Operation:
             for name in varNames:
                 self.parameters.append(Parameter(name, varType))
 
-    def __addPreconditions(self, node: p.OpPreconditionContext):
+    def addPreconditions(self, node: p.OpPreconditionContext or p.OpDurativeConditionContext):
         self.preconditions = Preconditions.fromNode(node.getChild(1))
 
-    def __addEffects(self, node: p.OpEffectContext):
+    def addEffects(self, node: p.OpEffectContext or p.OpDurativeEffectContext):
         self.effects = Effects.fromNode(node.getChild(1))
 
     def getSignature(self):
         params = [p.name for p in self.parameters]
         return f"{self.name}({','.join(params)})"
 
-    def getCombinations(self, problem: Problem) -> List[Dict[str, str]]:
+    def getCombinations(self, problem: Problem) -> List[List[str, str]]:
         subs: List[List[str]] = list()
         for parameter in self.parameters:
             pSubs = list()
@@ -158,7 +184,7 @@ class Operation:
         paths: List[Tuple] = self.__getValidCombinationsSub(problem, tuple(), [], levels, params)
         return paths
 
-    def getGroundedOperations(self, problem, isPredicateStatic: Dict[str, bool], delta=1):
+    def getGroundedOperations(self, problem, delta=1):
         levels: List[List[str]] = self.getCombinations(problem)
 
         combinations: List[Tuple]
@@ -179,7 +205,12 @@ class Operation:
             planName = self.__getGroundedPlanName(sub)
             preconditions = self.preconditions.ground(sub, delta=delta)
             effects = self.effects.ground(sub)
-            operation: Operation = Operation.fromProperties(name, preconditions, effects, planName)
+            duration = None
+            if self.duration:
+                duration = self.duration.ground(sub)
+            operation: Operation = Operation.fromProperties(name, [], preconditions, effects, planName,
+                                                            duration=duration)
+            operation.lifted = self
             gOperations.append(operation)
         return gOperations
 
@@ -202,7 +233,10 @@ class Operation:
         return str(self)
 
     def __getFunctions(self) -> Set[Atom]:
-        return self.preconditions.getFunctions() | self.effects.getFunctions()
+        functions = self.preconditions.getFunctions() | self.effects.getFunctions()
+        if self.duration and isinstance(self.duration, Predicate):
+            functions |= self.duration.getFunctions()
+        return functions
 
     def __getPredicates(self) -> Set[Atom]:
         return self.preconditions.getPredicates() | self.effects.getPredicates()
@@ -223,6 +257,14 @@ class Operation:
             atomList = atomList | {c.getAtom()}
         return atomList
 
+    def __getEffectFunctions(self) -> Set[Atom]:
+        atomList: Set[Atom] = set()
+        for c in self.effects:
+            if not isinstance(c, BinaryPredicate):
+                continue
+            atomList |= c.getFunctions()
+        return atomList
+
     def __getModifiedFunctions(self, operator: str = None) -> Set[Atom]:
         atomList: Set[Atom] = set()
         for c in self.effects:
@@ -241,6 +283,9 @@ class Operation:
 
     def __getPreB(self) -> Set[Atom]:
         return self.__getPreconditionAtoms(Literal)
+
+    def __getPreN(self) -> Set[Atom]:
+        return self.preconditions.getFunctions()
 
     def __getAddList(self) -> Set[Atom]:
         return self.__getModifiedPredicates("+")
@@ -306,28 +351,86 @@ class Operation:
         return self.assignments
 
     def couldBeRepeated(self) -> bool:
-        return len(self.getIncrList() | self.getDecrList()) > 0 and \
-            len(self.getPreB().intersection(self.getAddList() | self.getDelList())) == 0
+        return self.__couldBeRepeated
 
     def substitute(self, sub: Dict[Atom, float], default=None) -> Operation:
         raise NotImplemented()
 
-    def __cacheLists(self):
+    def cacheLists(self):
+        self.__hash = hash(self.name)
         self.functions = self.__getFunctions()
         self.predicates = self.__getPredicates()
         self.preB = self.__getPreB()
+        self.preN = self.__getPreN()
+        self.effN = self.__getEffectFunctions()
         self.addList = self.__getAddList()
         self.delList = self.__getDelList()
         self.assList = self.__getAssList()
         self.incrList = self.__getIncrList()
         self.decrList = self.__getDecrList()
+        self.numEffList = self.assList | self.incrList | self.decrList
+        self.effRhs = self.effN - self.numEffList
         self.influencedAtoms = self.__getInfluencedAtoms()
         self.increases = self.__getIncreases()
         self.decreases = self.__getDecreases()
         self.assignments = self.__getAssignments()
+        self.__couldBeRepeated = self.__checkIfCanBeRepeated()
+
+        self.deltaPlus: Dict[Atom, List[ConditionalEffect]] = dict()
+        self.deltaMinus: Dict[Atom, List[ConditionalEffect]] = dict()
+        self.addedAtoms: Set[Atom] = set()
+        self.deletedAtoms: Set[Atom] = set()
+        for v in self.predicates:
+            self.deltaPlus.setdefault(v, list())
+            self.deltaMinus.setdefault(v, list())
+
+        if not self.hasConditionalEffects():
+            return
+
+        toBeRemoved = set()
+        noCondition = ConditionalEffect()
+        newEffects = Effects()
+        for e in self.effects:
+            if isinstance(e, ConditionalEffect):
+                newEffects.addEffect(e)
+                continue
+            noCondition.effects.addEffect(e)
+        newEffects.addEffect(noCondition)
+        self.effects = newEffects
+
+        for ce in self.effects:
+            assert isinstance(ce, ConditionalEffect)
+            for l in ce.effects:
+                assert isinstance(l, Literal)
+                v = l.getAtom()
+                if l.sign == "+":
+                    self.addedAtoms.add(v)
+                    self.deltaPlus[v].append(ce)
+                if l.sign == "-":
+                    self.deletedAtoms.add(v)
+                    self.deltaMinus[v].append(ce)
 
     def __hash__(self):
-        return hash(self.name)
+        return self.__hash
+
+    def __checkIfCanBeRepeated(self):
+        if not self.getIncrList() and not self.getDecrList():
+            return False
+        if self.getPreB().intersection(self.getAddList() | self.getDelList()):
+            return False
+
+        lhs = set()
+        rhs = set()
+        for e in self.effects:
+            if not isinstance(e, BinaryPredicate):
+                continue
+            lhs |= {e.getAtom()}
+            rhs |= e.rhs.getFunctions()
+
+        if lhs.intersection(rhs):
+            return False
+
+        return True
 
     def __eq__(self, other: Operation):
         if not isinstance(other, Operation):
@@ -336,6 +439,12 @@ class Operation:
 
     def nameToLatex(self):
         return self.planName.replace("_", r"\_")
+
+    def hasConditionalEffects(self):
+        for eff in self.effects:
+            if isinstance(eff, ConditionalEffect):
+                return True
+        return False
 
     def hasNonSimpleLinearIncrement(self, encoding=""):
         if encoding == "non-linear":
@@ -381,18 +490,31 @@ class Operation:
         o_i.name = f"{o_i.name}_{2 ** i}"
         return o_i
 
-    def isMutex(self, other: Operation) -> bool:
-        mutex = self.addList.intersection(other.delList)
-        mutex |= self.delList.intersection(other.addList)
-        mutex |= self.addList.intersection(other.preB)
-        mutex |= self.delList.intersection(other.preB)
-        mutex |= self.preB.intersection(other.addList)
-        mutex |= self.preB.intersection(other.delList)
-        mutex |= self.assList.intersection(other.assList)
-        return len(mutex) > 0
+    def interferes(self, other: Operation) -> bool:
+        return bool(self.influencedAtoms.intersection(other.preB | other.preN))
 
-    def isMutexSet(self, operations: Set[Operation]):
-        isMutex = False
-        for op in operations:
-            isMutex = isMutex or self.isMutex(op)
-        return isMutex
+    @staticmethod
+    def __isMutex(a_i: Operation, a_j: Operation) -> bool:
+        # Condition 1 - Paper Temporal
+        if a_i.addList.intersection(a_j.preB) or \
+                a_i.delList.intersection(a_j.preB) or \
+                a_i.numEffList.intersection(a_j.preN):
+            # print(f"{a_i} and {a_j} are in mutex due to C1")
+            return True
+        # Condition 2 - Paper Temporal
+        if a_i.addList.intersection(a_j.delList) or a_i.delList.intersection(a_j.addList):
+            # print(f"{a_i} and {a_j} are in mutex due to C2")
+            return True
+        # Condition 3 - Paper Temporal
+        if a_i.assList.intersection(a_j.assList) or a_i.effRhs.intersection(a_j.numEffList):
+            # print(f"{a_i} and {a_j} are in mutex due to C3")
+            return True
+
+        # print(f"{a_i} and {a_j} are NOT in mutex")
+        return False
+
+    def isMutex(self, other: Operation) -> bool:
+        return Operation.__isMutex(self, other) or Operation.__isMutex(other, self)
+
+    def isSame(self, end: Operation):
+        return self.originalName == end.originalName

@@ -5,21 +5,24 @@ from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
 
-from src.plan.PDDL2SMT import PDDL2SMT
+from src.plan.NumericEncoding import NumericEncoding
 from src.plan.Pattern import Pattern
 from src.smt.SMTSolution import SMTSolution
 from src.smt.SMTSolver import SMTSolver
+from src.utils.Arguments import Arguments
 
 
 class TestLineExchangeGeneral(TestCase):
 
     def setUp(self) -> None:
-        self.domain: Domain = Domain.fromFile("../../files/numerical/line-exchange/domain.pddl")
-        self.problem: Problem = Problem.fromFile("../../files/numerical/line-exchange/instances/2_10_90_10.pddl")
+        self.domain: Domain = Domain.fromFile("../../files/numeric/line-exchange/domain.pddl")
+        self.problem: Problem = Problem.fromFile("../../files/numeric/line-exchange/instances/4_5_25_50.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
-        self.horizon = 5
+        self.horizon = 3
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
-        self.pddl2smt: PDDL2SMT = PDDL2SMT(self.gDomain, self.problem, self.pattern, self.horizon)
+        self.args = Arguments(keepRequired=False)
+        self.pddl2smt: NumericEncoding = NumericEncoding(self.gDomain, self.problem, self.pattern, self.horizon,
+                                                         self.args)
         print(self.pddl2smt.pattern)
         self.pddl2smt.printRules()
         pass

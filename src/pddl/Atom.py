@@ -16,6 +16,7 @@ class Atom:
     __hash: int
     __functionName: str
     __alphaFunctionName: str
+    lifted: Atom
     attributes: list[str]
 
     def __init__(self):
@@ -29,6 +30,7 @@ class Atom:
         a.__hash = self.__hash
         a.__functionName = self.__functionName
         a.__alphaFunctionName = self.__alphaFunctionName
+        a.lifted = self.lifted
         a.attributes = copy.deepcopy(self.attributes)
         return a
 
@@ -53,6 +55,14 @@ class Atom:
 
         return atom
 
+    @classmethod
+    def simple(cls, name: str):
+        atom = cls()
+        atom.name = name
+        atom.__setProperties()
+
+        return atom
+
     def __setProperties(self):
         parts = [self.name] + [a for a in self.attributes]
         self.__string = " ".join(parts)
@@ -68,6 +78,7 @@ class Atom:
         atom.name = self.name
         atom.attributes = [sub[attr] for attr in self.attributes]
         atom.__setProperties()
+        atom.lifted = self
         return atom
 
     def __str__(self):
@@ -83,6 +94,11 @@ class Atom:
         if not isinstance(other, Atom):
             return False
         return self.__string == other.__string
+
+    def __lt__(self, other):
+        if not isinstance(other, Atom):
+            return False
+        return self.name < other.name
 
     def toFunctionName(self):
         return self.__functionName

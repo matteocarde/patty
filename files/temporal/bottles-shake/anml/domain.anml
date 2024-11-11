@@ -1,0 +1,21 @@
+type bottle;
+
+fluent boolean capped(bottle a);
+fluent integer litres(bottle a);
+
+action cap_uncap(bottle a) {
+   duration := 5.0;
+   [start] capped(a) == false;
+   [start] capped(a) := true;
+   [end] capped(a) == true;
+   [end] capped(a) := false;
+};
+
+action shake(bottle a) {
+   duration := 5.0;
+   [start] litres(a) > 0;
+   [start] capped(a) == true;
+   
+   [end] capped(a) == false;
+   [end] litres(a) := 0;
+};

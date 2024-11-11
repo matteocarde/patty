@@ -55,7 +55,7 @@
    :condition
    (and (at start (located_at_1 ?q1))
         (at start (located_at_2 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_1 ?q1)))
            (at start (not (located_at_2 ?q2)))
@@ -73,7 +73,7 @@
    :condition
    (and (at start (located_at_2 ?q1))
         (at start (located_at_3 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_2 ?q1)))
            (at start (not (located_at_3 ?q2)))
@@ -91,7 +91,7 @@
    :condition
    (and (at start (located_at_3 ?q1))
         (at start (located_at_4 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_3 ?q1)))
            (at start (not (located_at_4 ?q2)))
@@ -109,7 +109,7 @@
    :condition
    (and (at start (located_at_4 ?q1))
         (at start (located_at_5 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_4 ?q1)))
            (at start (not (located_at_5 ?q2)))
@@ -127,7 +127,7 @@
    :condition
    (and (at start (located_at_5 ?q1))
         (at start (located_at_6 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_5 ?q1)))
            (at start (not (located_at_6 ?q2)))
@@ -145,7 +145,7 @@
    :condition
    (and (at start (located_at_6 ?q1))
         (at start (located_at_7 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_6 ?q1)))
            (at start (not (located_at_7 ?q2)))
@@ -163,7 +163,7 @@
    :condition
    (and (at start (located_at_1 ?q1))
         (at start (located_at_8 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_1 ?q1)))
            (at start (not (located_at_8 ?q2)))
@@ -181,7 +181,7 @@
    :condition
    (and (at start (located_at_3 ?q1))
         (at start (located_at_9 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_3 ?q1)))
            (at start (not (located_at_9 ?q2)))
@@ -199,7 +199,7 @@
    :condition
    (and (at start (located_at_5 ?q1))
         (at start (located_at_10 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_5 ?q1)))
            (at start (not (located_at_10 ?q2)))
@@ -217,7 +217,7 @@
    :condition
    (and (at start (located_at_7 ?q1))
         (at start (located_at_11 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_7 ?q1)))
            (at start (not (located_at_11 ?q2)))
@@ -235,7 +235,7 @@
    :condition
    (and (at start (located_at_8 ?q1))
         (at start (located_at_12 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_8 ?q1)))
            (at start (not (located_at_12 ?q2)))
@@ -253,7 +253,7 @@
    :condition
    (and (at start (located_at_9 ?q1))
         (at start (located_at_14 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_9 ?q1)))
            (at start (not (located_at_14 ?q2)))
@@ -271,7 +271,7 @@
    :condition
    (and (at start (located_at_10 ?q1))
         (at start (located_at_16 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_10 ?q1)))
            (at start (not (located_at_16 ?q2)))
@@ -289,7 +289,7 @@
    :condition
    (and (at start (located_at_11 ?q1))
         (at start (located_at_18 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_11 ?q1)))
            (at start (not (located_at_18 ?q2)))
@@ -307,7 +307,7 @@
    :condition
    (and (at start (located_at_12 ?q1))
         (at start (located_at_13 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_12 ?q1)))
            (at start (not (located_at_13 ?q2)))
@@ -325,7 +325,7 @@
    :condition
    (and (at start (located_at_13 ?q1))
         (at start (located_at_14 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_13 ?q1)))
            (at start (not (located_at_14 ?q2)))
@@ -343,7 +343,7 @@
    :condition
    (and (at start (located_at_14 ?q1))
         (at start (located_at_15 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_14 ?q1)))
            (at start (not (located_at_15 ?q2)))
@@ -361,7 +361,7 @@
    :condition
    (and (at start (located_at_15 ?q1))
         (at start (located_at_16 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_15 ?q1)))
            (at start (not (located_at_16 ?q2)))
@@ -379,7 +379,7 @@
    :condition
    (and (at start (located_at_16 ?q1))
         (at start (located_at_17 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_16 ?q1)))
            (at start (not (located_at_17 ?q2)))
@@ -397,7 +397,7 @@
    :condition
    (and (at start (located_at_17 ?q1))
         (at start (located_at_18 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_17 ?q1)))
            (at start (not (located_at_18 ?q2)))
@@ -415,7 +415,7 @@
    :condition
    (and (at start (located_at_12 ?q1))
         (at start (located_at_19 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_12 ?q1)))
            (at start (not (located_at_19 ?q2)))
@@ -433,7 +433,7 @@
    :condition
    (and (at start (located_at_14 ?q1))
         (at start (located_at_20 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_14 ?q1)))
            (at start (not (located_at_20 ?q2)))
@@ -451,7 +451,7 @@
    :condition
    (and (at start (located_at_16 ?q1))
         (at start (located_at_21 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_16 ?q1)))
            (at start (not (located_at_21 ?q2)))
@@ -469,7 +469,7 @@
    :condition
    (and (at start (located_at_18 ?q1))
         (at start (located_at_22 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_18 ?q1)))
            (at start (not (located_at_22 ?q2)))
@@ -487,7 +487,7 @@
    :condition
    (and (at start (located_at_19 ?q1))
         (at start (located_at_23 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_19 ?q1)))
            (at start (not (located_at_23 ?q2)))
@@ -505,7 +505,7 @@
    :condition
    (and (at start (located_at_20 ?q1))
         (at start (located_at_25 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_20 ?q1)))
            (at start (not (located_at_25 ?q2)))
@@ -523,7 +523,7 @@
    :condition
    (and (at start (located_at_21 ?q1))
         (at start (located_at_27 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_21 ?q1)))
            (at start (not (located_at_27 ?q2)))
@@ -541,7 +541,7 @@
    :condition
    (and (at start (located_at_22 ?q1))
         (at start (located_at_29 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_22 ?q1)))
            (at start (not (located_at_29 ?q2)))
@@ -559,7 +559,7 @@
    :condition
    (and (at start (located_at_23 ?q1))
         (at start (located_at_24 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_23 ?q1)))
            (at start (not (located_at_24 ?q2)))
@@ -577,7 +577,7 @@
    :condition
    (and (at start (located_at_24 ?q1))
         (at start (located_at_25 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_24 ?q1)))
            (at start (not (located_at_25 ?q2)))
@@ -595,7 +595,7 @@
    :condition
    (and (at start (located_at_25 ?q1))
         (at start (located_at_26 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_25 ?q1)))
            (at start (not (located_at_26 ?q2)))
@@ -613,7 +613,7 @@
    :condition
    (and (at start (located_at_26 ?q1))
         (at start (located_at_27 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_26 ?q1)))
            (at start (not (located_at_27 ?q2)))
@@ -631,7 +631,7 @@
    :condition
    (and (at start (located_at_27 ?q1))
         (at start (located_at_28 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_27 ?q1)))
            (at start (not (located_at_28 ?q2)))
@@ -649,7 +649,7 @@
    :condition
    (and (at start (located_at_28 ?q1))
         (at start (located_at_29 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_28 ?q1)))
            (at start (not (located_at_29 ?q2)))
@@ -667,7 +667,7 @@
    :condition
    (and (at start (located_at_23 ?q1))
         (at start (located_at_30 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_23 ?q1)))
            (at start (not (located_at_30 ?q2)))
@@ -685,7 +685,7 @@
    :condition
    (and (at start (located_at_25 ?q1))
         (at start (located_at_31 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_25 ?q1)))
            (at start (not (located_at_31 ?q2)))
@@ -703,7 +703,7 @@
    :condition
    (and (at start (located_at_27 ?q1))
         (at start (located_at_32 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_27 ?q1)))
            (at start (not (located_at_32 ?q2)))
@@ -721,7 +721,7 @@
    :condition
    (and (at start (located_at_29 ?q1))
         (at start (located_at_33 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_29 ?q1)))
            (at start (not (located_at_33 ?q2)))
@@ -739,7 +739,7 @@
    :condition
    (and (at start (located_at_30 ?q1))
         (at start (located_at_34 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_30 ?q1)))
            (at start (not (located_at_34 ?q2)))
@@ -757,7 +757,7 @@
    :condition
    (and (at start (located_at_31 ?q1))
         (at start (located_at_36 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_31 ?q1)))
            (at start (not (located_at_36 ?q2)))
@@ -775,7 +775,7 @@
    :condition
    (and (at start (located_at_32 ?q1))
         (at start (located_at_38 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_32 ?q1)))
            (at start (not (located_at_38 ?q2)))
@@ -793,7 +793,7 @@
    :condition
    (and (at start (located_at_33 ?q1))
         (at start (located_at_40 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_33 ?q1)))
            (at start (not (located_at_40 ?q2)))
@@ -811,7 +811,7 @@
    :condition
    (and (at start (located_at_34 ?q1))
         (at start (located_at_35 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_34 ?q1)))
            (at start (not (located_at_35 ?q2)))
@@ -829,7 +829,7 @@
    :condition
    (and (at start (located_at_35 ?q1))
         (at start (located_at_36 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_35 ?q1)))
            (at start (not (located_at_36 ?q2)))
@@ -847,7 +847,7 @@
    :condition
    (and (at start (located_at_36 ?q1))
         (at start (located_at_37 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_36 ?q1)))
            (at start (not (located_at_37 ?q2)))
@@ -865,7 +865,7 @@
    :condition
    (and (at start (located_at_37 ?q1))
         (at start (located_at_38 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_37 ?q1)))
            (at start (not (located_at_38 ?q2)))
@@ -883,7 +883,7 @@
    :condition
    (and (at start (located_at_38 ?q1))
         (at start (located_at_39 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_38 ?q1)))
            (at start (not (located_at_39 ?q2)))
@@ -901,7 +901,7 @@
    :condition
    (and (at start (located_at_39 ?q1))
         (at start (located_at_40 ?q2))
-        (at start (not_U_GOAL ?q1 ?q2)))
+        (at start (NOT_U_GOAL ?q1 ?q2)))
    :effect
       (and (at start (not (located_at_39 ?q1)))
            (at start (not (located_at_40 ?q2)))

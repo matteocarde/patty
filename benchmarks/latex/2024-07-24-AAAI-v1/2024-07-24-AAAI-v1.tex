@@ -1,0 +1,49 @@
+
+           \documentclass[11pt,landscape]{article}
+           \usepackage{graphicx}
+           \usepackage{lscape}
+           \usepackage{multirow}
+           \usepackage[a4paper,margin=1in,landscape]{geometry}
+
+           \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||cccc||cccc||cccc||cccc||cccc||}
+\hline
+ & \multicolumn{4}{c||}{Coverage (\%)}&\multicolumn{4}{c||}{Time (s)}&\multicolumn{4}{c||}{Calls to \textsc{Solve}}&\multicolumn{4}{c||}{$|\mathcal{X} \cup \mathcal{A} \cup \mathcal{X}'|$}&\multicolumn{4}{c||}{$|\mathcal{T}(\mathcal{X},\mathcal{A},\mathcal{X}')|$}\\
+Domain & $P_O$&$P_G$&$P_H$&$P_F$&$P_O$&$P_G$&$P_H$&$P_F$&$P_O$&$P_G$&$P_H$&$P_F$&$P_O$&$P_G$&$P_H$&$P_F$&$P_O$&$P_G$&$P_H$&$P_F$\\
+\hline
+\textit{Highly Numeric}&\textbf{7}&\textbf{7}&\textbf{8}&\textbf{11}&\textbf{4}&\textbf{4}&\textbf{4}&\textbf{7}&\textbf{11}&\textbf{11}&\textbf{10}&\textbf{8}&\textbf{6}&\textbf{6}&\textbf{7}&\textbf{10}&\textbf{6}&\textbf{6}&\textbf{7}&\textbf{10}\\\hline
+\textsc{BlockGrouping} (S)&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{1.5}&1.6&1.7&1.8&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{182}&\textbf{182}&\textbf{182}&\textbf{182}&\textbf{448}&\textbf{448}&\textbf{448}&\textbf{448}\\
+\textsc{Counters} (S)&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{0.9}&\textbf{0.9}&\textbf{0.9}&\textbf{0.9}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{92}&\textbf{92}&\textbf{92}&\textbf{92}&\textbf{228}&\textbf{228}&\textbf{228}&\textbf{228}\\
+\textsc{Counters} (L)&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{100}&1.0&\textbf{0.9}&\textbf{0.9}&1.0&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{96}&\textbf{96}&\textbf{96}&\textbf{96}&\textbf{202}&\textbf{202}&\textbf{202}&\textbf{202}\\
+\textsc{Drone} (S)&15&15&15&\textbf{45}&25.8&25.7&25.8&\textbf{20.8}&\textbf{5.7}&\textbf{5.7}&\textbf{5.7}&8.3&301&137&137&\textbf{97}&778&322&322&\textbf{200}\\
+\textsc{PlantWatering} (S)&25&25&25&\textbf{100}&23.5&24.2&24.8&\textbf{9.8}&\textbf{7.6}&\textbf{7.6}&7.8&9.6&540&303&310&\textbf{219}&1486&804&823&\textbf{551}\\
+\textsc{Farmland} (S)&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{0.9}&\textbf{0.9}&\textbf{0.9}&\textbf{0.9}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{50}&\textbf{50}&\textbf{50}&\textbf{50}&\textbf{107}&\textbf{107}&\textbf{107}&\textbf{107}\\
+\textsc{Farmland} (L)&95&95&\textbf{100}&\textbf{100}&4.0&4.2&\textbf{1.9}&2.0&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{62}&\textbf{62}&\textbf{62}&\textbf{62}&\textbf{125}&\textbf{125}&\textbf{125}&\textbf{125}\\
+\textsc{HydroPower} (S)&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{100}&11.6&11.2&11.3&\textbf{10.9}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{352}&\textbf{352}&\textbf{352}&\textbf{352}&\textbf{725}&\textbf{725}&\textbf{725}&\textbf{725}\\
+\textsc{Sailing} (S)&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{100}&1.1&1.1&1.3&\textbf{0.9}&\textbf{3.3}&\textbf{3.3}&\textbf{3.3}&\textbf{3.3}&163&117&117&\textbf{73}&340&254&254&\textbf{135}\\
+\textsc{Sailing} (L)&90&85&90&\textbf{100}&4.3&6.4&4.8&\textbf{1.9}&\textbf{1.3}&\textbf{1.3}&\textbf{1.3}&\textbf{1.3}&66&62&62&\textbf{59}&163&155&155&\textbf{148}\\
+\textsc{LineExchange} (L)&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{1.3}&\textbf{1.3}&1.4&1.6&\textbf{4.1}&\textbf{4.1}&\textbf{4.1}&6.2&231&146&\textbf{144}&152&565&402&\textbf{396}&416
+\\\hline
+\textit{Lowly Numeric}&\textbf{4}&\textbf{4}&\textbf{4}&\textbf{8}&\textbf{2}&\textbf{1}&\textbf{0}&\textbf{7}&\textbf{9}&\textbf{9}&\textbf{6}&\textbf{4}&\textbf{1}&\textbf{2}&\textbf{2}&\textbf{8}&\textbf{1}&\textbf{2}&\textbf{2}&\textbf{8}\\\hline
+\textsc{Delivery} (S)&15&15&15&\textbf{25}&26.1&26.2&26.2&\textbf{24.1}&\textbf{3.3}&\textbf{3.3}&\textbf{3.3}&\textbf{3.3}&1082&809&809&\textbf{508}&3277&2946&2946&\textbf{1741}\\
+\textsc{Expedition} (S)&\textbf{10}&\textbf{10}&\textbf{10}&\textbf{10}&27.7&27.9&28.0&\textbf{27.5}&\textbf{6.0}&\textbf{6.0}&6.5&7.0&534&312&334&\textbf{297}&1272&968&1044&\textbf{918}\\
+\textsc{MPrime} (S)&\textbf{50}&45&45&45&\textbf{19.8}&20.0&20.5&20.4&\textbf{2.0}&\textbf{2.0}&\textbf{2.0}&2.2&1373&\textbf{1154}&\textbf{1154}&1157&4267&\textbf{4030}&\textbf{4030}&4037\\
+\textsc{PathwaysMetric} (S)&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{100}&\textbf{6.2}&\textbf{6.2}&6.4&6.5&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{3079}&\textbf{3079}&\textbf{3079}&\textbf{3079}&\textbf{4834}&\textbf{4834}&\textbf{4834}&\textbf{4834}\\
+\textsc{Rover} (S)&40&45&40&\textbf{50}&19.4&19.2&19.8&\textbf{18.6}&\textbf{2.0}&\textbf{2.0}&2.1&2.6&826&455&507&\textbf{426}&1793&1460&1664&\textbf{1344}\\
+\textsc{Satellite} (S)&5&5&5&\textbf{20}&28.8&28.8&28.8&\textbf{25.3}&\textbf{3.0}&\textbf{3.0}&\textbf{3.0}&4.0&1132&697&697&\textbf{387}&2928&2149&2149&\textbf{983}\\
+\textsc{Sugar} (S)&95&\textbf{100}&95&\textbf{100}&9.3&8.6&9.3&\textbf{5.8}&\textbf{3.1}&\textbf{3.1}&3.2&4.1&1381&908&919&\textbf{738}&3410&2748&2789&\textbf{2147}\\
+\textsc{TPP} (L)&\textbf{10}&5&\textbf{10}&\textbf{10}&27.5&28.6&27.3&\textbf{27.1}&\textbf{2.0}&\textbf{2.0}&\textbf{2.0}&\textbf{2.0}&317&219&219&\textbf{171}&741&526&526&\textbf{364}\\
+\textsc{ZenoTravel} (S)&50&\textbf{55}&\textbf{55}&\textbf{55}&17.1&16.1&16.2&\textbf{15.1}&\textbf{1.6}&\textbf{1.6}&\textbf{1.6}&\textbf{1.6}&525&452&452&\textbf{341}&1598&1474&1474&\textbf{1031}
+\\\hline
+\textit{Total}&\textbf{11}&\textbf{11}&\textbf{12}&\textbf{19}&\textbf{6}&\textbf{5}&\textbf{4}&\textbf{14}&\textbf{20}&\textbf{20}&\textbf{16}&\textbf{12}&\textbf{7}&\textbf{8}&\textbf{9}&\textbf{18}&\textbf{7}&\textbf{8}&\textbf{9}&\textbf{18}\\\hline
+
+        \end{tabular}}
+        \caption{Comparative analysis between \pattyg, \pattyh, \pattyf and the search based planners \textsc{ENHSP}, \textsc{MetricFF} and \textsc{NFD}.}
+        \label{tab:experiments}
+        \end{table*}
+        
+\end{document}

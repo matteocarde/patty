@@ -1,10 +1,13 @@
+from typing import Tuple
+
 from src.pddl.Domain import GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
 from src.pddl.State import State
-from src.plan.PDDL2SMT import PDDL2SMT
+from src.plan.NumericEncoding import NumericEncoding
 from src.plan.Pattern import Pattern
 from src.search.Search import Search
+from src.smt.SMTSolution import SMTSolution
 from src.smt.SMTSolver import SMTSolver
 from src.utils.Arguments import Arguments
 from src.utils.LogPrint import LogPrintLevel
@@ -13,12 +16,13 @@ from src.utils.LogPrint import LogPrintLevel
 class StepSearch(Search):
 
     def __init__(self, domain: GroundedDomain, problem: Problem, args: Arguments):
-        self.useSCCs = args.useSCCs
         super().__init__(domain, problem, args)
 
     def getPattern(self) -> Pattern:
         if self.args.pattern == "arpg":
-            return Pattern.fromARPG(self.domain, useSCCs=self.useSCCs)
+            return Pattern.fromARPG(self.domain)
+        if self.args.pattern == "enhanced":
+            return Pattern.fromARPGEnhanced(self.domain)
         if self.args.pattern == "random":
             return Pattern.fromRandom(self.domain)
 
@@ -43,41 +47,41 @@ class StepSearch(Search):
         while bound <= self.maxBound:
 
             self.ts.start(f"Conversion to SMT at bound {bound}", console=self.console)
-            pddl2smt: PDDL2SMT = PDDL2SMT(
+            encoding: NumericEncoding = NumericEncoding(
                 domain=self.domain,
                 problem=self.problem,
                 pattern=pattern,
                 bound=bound,
-                relaxGoal=self.args.maximize,
-                subgoalsAchieved=set() if self.args.maximize else None,
-                encoding=self.args.encoding,
-                binaryActions=self.args.binaryActions,
-                rollBound=self.args.rollBound,
-                hasEffectAxioms=self.args.hasEffectAxioms
+                args=self.args
             )
             self.ts.end(f"Conversion to SMT at bound {bound}", console=self.console)
 
             self.ts.start(f"Solving Bound {bound}", console=self.console)
-            solver: SMTSolver = SMTSolver(pddl2smt, maximize=self.args.maximize)
+            solver: SMTSolver = SMTSolver(encoding)
 
             plan: NumericPlan
-            plan = solver.solve()
+            solution = solver.getSolution()
             callsToSolver += 1
             solver.exit()
             self.ts.end(f"Solving Bound {bound}", console=self.console)
 
-            self.console.log(f"Bound {bound} - Vars = {pddl2smt.getNVars()}", LogPrintLevel.STATS)
-            self.console.log(f"Bound {bound} - Rules = {pddl2smt.getNRules()}", LogPrintLevel.STATS)
+            self.console.log(f"Bound {bound} - Vars = {encoding.getNVars()}", LogPrintLevel.STATS)
+            self.console.log(f"Bound {bound} - Rules = {encoding.getNRules()}", LogPrintLevel.STATS)
+            self.console.log(f"Bound {bound} - Avg Rule Length = {encoding.getAvgRuleLength()}", LogPrintLevel.STATS)
+            self.console.log(f"Bound {bound} - Pattern Length = {pattern.getLength()}", LogPrintLevel.STATS)
             self.console.log(f"Calls to Solver: {callsToSolver}", LogPrintLevel.STATS)
 
             if self.args.saveSMT:
-                self.saveSMT(bound, pddl2smt)
+                self.saveSMT(bound, encoding)
 
-            if isinstance(plan, NumericPlan):
+            if solution:
+                plan = encoding.getPlanFromSolution(solution)
                 state = initialState.applyPlan(plan)
                 subgoalsAchieved = {g for g in self.problem.goal.conditions if state.satisfies(g)}
                 if len(subgoalsAchieved) == len(totalSubgoals):
                     self.console.log(f"Bound: {bound}", LogPrintLevel.STATS)
+                    self.finalBound = bound
+                    self.finalPattern = pattern
                     return plan
 
             self.console.log(f"NO SOLUTION: No solution with bound {bound}. Try to increase the bound",

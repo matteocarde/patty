@@ -1,0 +1,53 @@
+(define (problem p_2_1)
+
+  (:domain bottles)
+
+  (:objects
+    b1 b2 b3 b4 b5 b6 b7 b8 b9 b10 - bottle
+  )
+
+  (:init
+    (= (litres b1) 5)
+    (= (litres b2) 10)
+    (= (litres b3) 13)
+    (= (litres b4) 4)
+    (= (litres b5) 13)
+    (= (litres b6) 0)
+    (= (litres b7) 0)
+    (= (litres b8) 0)
+    (= (litres b9) 0)
+    (= (litres b10) 0)
+    (= (index b1) 1)
+    (= (index b2) 2)
+    (= (index b3) 3)
+    (= (index b4) 4)
+    (= (index b5) 5)
+    (= (index b6) 6)
+    (= (index b7) 7)
+    (= (index b8) 8)
+    (= (index b9) 9)
+    (= (index b10) 10)
+    (= (p) 5)
+    (capped b6)
+    (capped b7)
+    (capped b8)
+    (capped b9)
+    (capped b10)
+  )
+
+  (:goal
+    (and
+      ; (= (litres b1) 1)
+      (= (litres b6) 9)
+      (= (litres b7) 9)
+      (= (litres b8) 9)
+      (= (litres b9) 9)
+      (= (litres b10) 9)
+      (capped b6)
+      (capped b7)
+      (capped b8)
+      (capped b9)
+      (capped b10)
+    )
+  )
+)

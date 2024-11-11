@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
-import copy
-from typing import List, Dict, Set, cast
+from typing import List, Dict, Set
 
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
+from src.pddl.ConditionalEffect import ConditionalEffect
 from src.pddl.Constant import Constant
+from src.pddl.Effects import Effects
 from src.pddl.MooreInterval import MooreInterval
 from src.pddl.Operation import Operation
 from src.pddl.OperationType import OperationType
@@ -19,25 +20,30 @@ from src.pddl.grammar.pddlParser import pddlParser as p
 
 
 class Action(Operation):
+    lifted: Action or None
 
     def __init__(self):
         self.isFake = False
         super().__init__()
 
     def __deepcopy__(self, m=None):
+
         m = {} if m is None else m
-        a = copy.deepcopy(super(), m)
+        a = super().__deepcopy__(m)
         a.__class__ = Action
         a.isFake = self.isFake
-        return cast(Action, a)
+        return a
+
+    def __lt__(self, other):
+        return self.name < other.name
 
     @classmethod
     def fromNode(cls, node: p.ActionContext, types: Dict[str, Type]):
         return super().fromNode(node, types)
 
     @classmethod
-    def fromProperties(cls, name, preconditions, effects, planName):
-        return super().fromProperties(name, preconditions, effects, planName)
+    def fromProperties(cls, name, parameters, preconditions, effects, planName=None, duration=None) -> Action:
+        return super().fromProperties(name, parameters, preconditions, effects, planName, duration=duration)
 
     @classmethod
     def fromString(cls, string: str, types: Dict[str, Type]) -> Action:
@@ -47,16 +53,12 @@ class Action(Operation):
     def type(self):
         return OperationType.ACTION
 
-    def ground(self, problem, isPredicateStatic: Dict[str, bool], delta=1) -> List[Action]:
+    def ground(self, problem, delta=1) -> List[Action]:
         groundOps: List = []
-        toGroundOps = self.getGroundedOperations(problem, isPredicateStatic, delta=delta)
+        toGroundOps = self.getGroundedOperations(problem, delta=delta)
         for op in toGroundOps:
-            name = op.name
-            preconditions = op.preconditions
-            effects = op.effects
-            planName = op.planName
-            action = Action.fromProperties(name, preconditions, effects, planName)
-            groundOps.append(action)
+            op.__class__ = Action
+            groundOps.append(op)
         return groundOps
 
     def getSupporters(self) -> Set[Supporter]:
@@ -116,15 +118,39 @@ class Action(Operation):
 
         return supporters
 
+    def isNonIdempotent(self) -> bool:
+        if not self.hasConditionalEffects():
+            return False
+        for e1 in [e1 for e1 in self.effects if isinstance(e1, ConditionalEffect)]:
+            for e2 in [e2 for e2 in self.effects if isinstance(e2, ConditionalEffect) and e1 != e2]:
+                c11 = e1.effects.getNegative() & e2.conditions.getPositive()
+                c12 = e1.effects.getPositive() & e2.conditions.getNegative()
+                c21 = e1.effects.getPositive() & e2.conditions.getNegative()
+                c22 = e1.effects.getNegative() & e2.conditions.getNegative()
+                if (not c11 or not c12) and (c21 or c22):
+                    return True
+        return False
+
+    def isIdempotent(self) -> bool:
+        return not self.isNonIdempotent()
+
     def substitute(self, sub: Dict[Atom, float], default=None) -> Action:
+
+        atoms = self.functions | self.predicates
+        subAtoms = sub.keys()
+
+        if not atoms.intersection(subAtoms):
+            return self
+
         name = self.name
         preconditions = self.preconditions.substitute(sub, default)
         effects = self.effects.substitute(sub, default)
         planName = self.planName
-        action = Action.fromProperties(name, preconditions, effects, planName)
+        duration = self.duration.substitute(sub, default)
+        action = Action.fromProperties(name, [], preconditions, effects, planName, duration=duration)
         return action
 
-    def canHappen(self, sub: Dict[Atom, float], default=None) -> bool:
+    def canHappen(self, sub: Dict[Atom, float or bool], default=None) -> bool:
         return self.preconditions.canHappen(sub, default)
 
     def getBinaryOperation(self, i: int) -> Action:

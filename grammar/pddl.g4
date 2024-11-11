@@ -22,7 +22,7 @@ pddlDoc : domain | problem;
 
 /************* DOMAINS ****************************/
 
-domain : LP 'define' domainName requirements? types? predicates? functions? (action | event | process)* RP;
+domain : LP 'define' domainName requirements? types? predicates? functions? (action | durativeAction | event | process)* RP;
 
 //DOMAIN NAME
 domainName: LP 'domain' NAME RP;
@@ -73,32 +73,64 @@ operationSide: operation | positiveLiteral | constant;
 operation: LP operator operationSide operationSide RP;
 
 assignment: LP '=' positiveLiteral assignmentSide RP;
+durationAssignment: LP '=' '?duration' op=operationSide RP;
 comparation: LP comparator operationSide operationSide RP;
 negatedComparation: LP 'not' comparation RP;
 modification: LP modificator positiveLiteral operationSide RP;
 
-effect:  booleanLiteral | modification;
+ceCond: andClause | orClause | booleanLiteral | negatedComparation | comparation | emptyPrecondition;
+ceEff: effectNoCes | andEffectNoCes;
+ce: LP 'when' cond=ceCond eff=ceEff RP;
+
+effect:  booleanLiteral | modification | ce;
+effectNoCes:  booleanLiteral | modification;
 
 andClause: LP 'and' (andClause | orClause | booleanLiteral | negatedComparation  | comparation)+ RP;
 orClause: LP 'or' (andClause | orClause | booleanLiteral | negatedComparation  | comparation)+ RP;
-andEffect : LP 'and' effect+ RP;
+andEffect: LP 'and' effect+ RP;
+andEffectNoCes: LP 'and' effectNoCes+ RP;
 emptyPrecondition: LP RP;
 preconditions: andClause | orClause | booleanLiteral | negatedComparation | comparation | emptyPrecondition;
 effects: effect | andEffect;
+
+andDurClause: LP 'and' (atStartPre | overAllPre | atEndPre)+ RP;
+atStartPre: LP 'at start' (booleanLiteral | negatedComparation | comparation | andClause) RP;
+overAllPre: LP 'over all' (booleanLiteral | negatedComparation | comparation | andClause) RP;
+atEndPre: LP 'at end' (booleanLiteral| negatedComparation | comparation | andClause) RP;
+durativeConditions: andDurClause | atStartPre | overAllPre | atEndPre | emptyPrecondition;
+
+atStartEffect: LP 'at start' (booleanLiteral | modification | andEffect) RP;
+overAllEffect: LP 'overall' (booleanLiteral | modification | andEffect) RP;
+atEndEffect: LP 'at end' (booleanLiteral | modification | andEffect) RP;
+durativeEffect: atStartEffect | overAllEffect | atEndEffect;
+andDurativeEffect: LP 'and' durativeEffect+ RP;
+durativeEffects: durativeEffect | andDurativeEffect;
 
 parameters: LP typedAtomParameter* RP;
 
 opName: NAME;
 opParameters: ':parameters' parameters;
 opPrecondition: ':precondition' preconditions;
+opDurativeCondition: ':condition' c=durativeConditions;
 opEffect: ':effect' effects;
+opDurativeEffect: ':effect' e=durativeEffects;
+opDuration: ':duration' durationAssignment;
 
 //ACTION
 action:  LP ':action' opName
 	        opParameters?
-            opPrecondition?
-            opEffect
+          opPrecondition?
+          opEffect
 		    RP;
+
+//DURATIVE-ACTION
+durativeAction:  LP ':durative-action' opName
+	        opParameters?
+	        opDuration?
+          opDurativeCondition?
+          opDurativeEffect
+		    RP;
+
 //EVENT
 event:  LP ':event' opName
 	        opParameters?

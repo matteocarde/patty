@@ -1,0 +1,46 @@
+
+               \documentclass[11pt]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||ccc||ccc||ccc||}
+\hline
+ & \multicolumn{3}{c||}{Coverage (\%)}&\multicolumn{3}{c||}{Time (s)}&\multicolumn{3}{c||}{$|\pi|$}\\
+Domain & $\mathrm{P}_\mathrm{E}$&$\mathrm{P}_\mathrm{M}$&$\mathrm{P}_\mathrm{I}$&$\mathrm{P}_\mathrm{E}$&$\mathrm{P}_\mathrm{M}$&$\mathrm{P}_\mathrm{I}$&$\mathrm{P}_\mathrm{E}$&$\mathrm{P}_\mathrm{M}$&$\mathrm{P}_\mathrm{I}$\\
+\hline
+\textsc{BlGrp} (S)&-&-&-&-&-&-&-&-&-\\
+\textsc{Cnt} (S)&-&-&-&-&-&-&-&-&-\\
+\textsc{Cnt} (L)&-&-&-&-&-&-&-&-&-\\
+\textsc{Del} (S)&-&-&-&-&-&-&-&-&-\\
+\textsc{Drn} (S)&-&-&-&-&-&-&-&-&-\\
+\textsc{Exp} (S)&-&-&-&-&-&-&-&-&-\\
+\textsc{Farm} (S)&-&-&-&-&-&-&-&-&-\\
+\textsc{Farm} (L)&-&-&-&-&-&-&-&-&-\\
+\textsc{HPwr} (S)&-&-&-&-&-&-&-&-&-\\
+\textsc{MPrime} (S)&-&-&-&-&-&-&-&-&-\\
+\textsc{PathM} (S)&-&-&-&-&-&-&-&-&-\\
+\textsc{PlWat} (S)&-&-&-&-&-&-&-&-&-\\
+\textsc{Rvr} (S)&-&-&-&-&-&-&-&-&-\\
+\textsc{Sail} (S)&-&-&-&-&-&-&-&-&-\\
+\textsc{Sail} (L)&-&-&-&-&-&-&-&-&-\\
+\textsc{Sat} (S)&-&-&-&-&-&-&-&-&-\\
+\textsc{Sgr} (S)&-&-&-&-&-&-&-&-&-\\
+\textsc{Tpp} (L)&-&-&-&-&-&-&-&-&-\\
+\textsc{Zeno} (S)&-&-&-&-&-&-&-&-&-\\
+\textsc{Line} (L)&-&-&-&-&-&-&-&-&-
+\\\hline
+\textit{Total}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}\\\hline
+
+        \end{tabular}}
+        \caption{Comparative analysis between  \pattye, \pattym and \pattyi. Each domain is labeled with S (for simple) if every numeric effect of each action either increases or decreases by a constant the assigned variable, and with L (for linear), otherwise. In the table, names have been abbreviated to save space.  See \cite{ipc2023} for other details.}
+        \label{tab:qual-plans}
+        \end{table*}
+        
+\end{document}
