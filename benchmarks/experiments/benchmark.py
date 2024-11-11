@@ -8,19 +8,20 @@ import boto3
 from botocore.config import Config
 
 from classes.CloudLogger import CloudLogger
+from classes.planners.Madagascar import Madagascar
 from classes.planners.AnmlSMT import AnmlSMT
 from classes.planners.ENHSP import ENHSP
 from classes.Envs import Envs
-from classes.ITSAT import ITSAT
-from classes.LPG import LPG
-from classes.Madagascar import Madagascar
-from classes.MetricFF import MetricFF
-from classes.NFD import NFD
-from classes.OMT import OMT
-from classes.Optic import Optic
-from classes.Patty import Patty
-from classes.Planner import Planner
 from classes.Result import Result
+from classes.planners.ENHSP_SOCS import ENHSP_SOCS
+from classes.planners.ITSAT import ITSAT
+from classes.planners.LPG import LPG
+from classes.planners.MetricFF import MetricFF
+from classes.planners.NFD import NFD
+from classes.planners.OMT import OMT
+from classes.planners.Optic import Optic
+from classes.planners.Patty import Patty
+from classes.planners.Planner import Planner
 from classes.planners.SpringRoll import SpringRoll
 from classes.planners.TFD import TFD
 
@@ -50,6 +51,7 @@ PLANNERS: Dict[str, Planner] = {
     "RANTANPLAN": Patty("RANTANPLAN", search="static", pattern="arpg", hasEffectAxioms=True, rollBound=1),
     "SPRINGROLL": SpringRoll(),
 
+    "ENHSP-SOCS": ENHSP_SOCS(),
     "ENHSP-SAT-HMRP": ENHSP(False, settings="-h hmrp -s gbfs -silent -pp -pe", name="ENHSP-SAT-HMRP"),
     "ENHSP-SAT-HMRPHJ": ENHSP(False, settings="-planner sat-hmrphj -silent -pp -pe", name="ENHSP-SAT-HMRPHJ"),
     "ENHSP-SAT-HADD": ENHSP(False, settings="-h hadd -s gbfs -silent -pp -pe", name="ENHSP-SAT-HADD"),
@@ -86,7 +88,7 @@ def main():
     if envs.isInsideAWS:
         time.sleep(envs.index / 4)
     else:
-        envs.file = "benchmarks/instances/ces.csv"
+        envs.file = "benchmarks/instances/aij.csv"
 
     logger = CloudLogger(envs.experiment)
 

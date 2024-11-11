@@ -181,6 +181,19 @@ RUN mv /var/lama/lama-planner/bin/lama-planner /var/lama/lama-planner/bin/lama
 ENV PATH /var/lama/lama-planner/bin/:${PATH}
 RUN chmod +x /var/lama/lama-planner/bin/lama
 
+# Install enhsp-socs
+COPY /benchmarks/planners/enhsp-socs /var/enhsp-socs
+ENV PATH /var/enhsp-socs/:${PATH}
+RUN chmod +x /var/enhsp-socs/enhsp-socs
+
+# Install val
+COPY /benchmarks/planners/val /var/val
+ENV PATH /var/val/:${PATH}
+WORKDIR /var/val
+RUN ls
+RUN chmod +x scripts/linux/build_linux64.sh
+RUN ./scripts/linux/build_linux64.sh
+RUN chmod +x /var/val/val
 
 
 WORKDIR /project
