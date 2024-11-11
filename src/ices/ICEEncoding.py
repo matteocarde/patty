@@ -83,7 +83,7 @@ class ICEEncoding(Encoding):
                 if condition.sign == "+":
                     rule = sigma[condition.getAtom()]
                 else:
-                    rule = sigma[condition.getAtom()].NOT()
+                    rule = ~sigma[condition.getAtom()]
             else:
                 raise NotImplemented("I cannot handle sub formulas in goal at the moment")
 
@@ -109,7 +109,7 @@ class ICEEncoding(Encoding):
         rules: SMTConjunction = SMTConjunction()
 
         for v in self.task.propVariables:
-            rules.append(self.transVars.nextVariables[v].iff(self.transVars.sigmaExpressions[self.k][v]))
+            rules.append(self.transVars.nextVariables[v] == self.transVars.sigmaExpressions[self.k][v])
 
         for x in self.task.numVariables:
             rules.append(self.transVars.nextVariables[x] == self.transVars.sigmaExpressions[self.k][x])
@@ -128,7 +128,7 @@ class ICEEncoding(Encoding):
             d_i = tVars.durVariables[h]
             t_i = tVars.timeVariables[h]
 
-            rules.append((h_i == 0).implies((d_i == 0).AND(t_i == 0)))
+            rules.append((h_i == 0).implies((d_i == 0) & (t_i == 0)))
             rules.append((h_i > 0).implies(d_i == b.duration))
 
         return rules
@@ -139,8 +139,8 @@ class ICEEncoding(Encoding):
 
         endingTimes = [tVars.timeVariables[h] for h in self.pattern if isinstance(h, HappeningActionEnd)]
         M = self.transVars.makespan
-        rules.append(SMTExpression.andOfExpressionsList([M >= t_i for t_i in endingTimes]))
-        rules.append(SMTExpression.orOfExpressionsList([M == t_i for t_i in endingTimes]))
+        rules.append(SMTExpression.bigand([M >= t_i for t_i in endingTimes]))
+        rules.append(SMTExpression.bigor([M == t_i for t_i in endingTimes]))
 
         return rules
 
@@ -154,7 +154,7 @@ class ICEEncoding(Encoding):
             h_j = hVars[happening_j]
             t_i = tVars[happening_i]
             t_j = tVars[happening_j]
-            rules.append(((h_i > 0).AND(h_j > 0)).implies(t_j >= t_i + delta))
+            rules.append(((h_i > 0) & (h_j > 0)).implies(t_j >= t_i + delta))
 
         return rules
 
@@ -178,9 +178,9 @@ class ICEEncoding(Encoding):
 
         if piEff:
             effSum = sum([hVars[h] for h in piEff]) == len(self.task.effects)
-            effAnd = SMTExpression.andOfExpressionsList([hVars[h] <= 1 for h in piEff])
+            effAnd = SMTExpression.bigand([hVars[h] <= 1 for h in piEff])
             # 5.a
-            rules.append(effSum.AND(effAnd))
+            rules.append(effSum & effAnd)
 
         # 5.b
         for h in piEff:
@@ -192,9 +192,9 @@ class ICEEncoding(Encoding):
         if piCondStart:
             condStartSum = sum([hVars[h] for h in piCondStart]) == len(self.task.conditions)
             condEndSum = sum([hVars[h] for h in piCondEnd]) == len(self.task.conditions)
-            condStartAnd = SMTExpression.andOfExpressionsList([hVars[h] <= 1 for h in piCondStart])
-            condEndAnd = SMTExpression.andOfExpressionsList([hVars[h] <= 1 for h in piCondEnd])
-            rules.append(condStartSum.AND(condEndSum).AND(condStartAnd).AND(condEndAnd))
+            condStartAnd = SMTExpression.bigand([hVars[h] <= 1 for h in piCondStart])
+            condEndAnd = SMTExpression.bigand([hVars[h] <= 1 for h in piCondEnd])
+            rules.append(SMTExpression.bigand([condStartSum, condEndSum, condStartAnd, condEndAnd]))
 
         # 5.d
         for h in piCondStart:
@@ -229,8 +229,8 @@ class ICEEncoding(Encoding):
                         continue
                     ending.append((hVars[ha_j], tVars[ha_j]))
 
-                orSubFormulas = [(h_j == h_i).AND(t_j == t_i + d_i) for (h_j, t_j) in ending]
-                rules.append((h_i > 0).implies(SMTExpression.orOfExpressionsList(orSubFormulas)))
+                orSubFormulas = [(h_j == h_i) & (t_j == t_i + d_i) for (h_j, t_j) in ending]
+                rules.append((h_i > 0).implies(SMTExpression.bigor(orSubFormulas)))
 
             # 6.b
             if isinstance(h, HappeningActionEnd):
@@ -239,8 +239,8 @@ class ICEEncoding(Encoding):
                 starting = [(hVars[ha_i], tVars[ha_i], dVars[ha_i])
                             for ha_i in self.pattern[:i]
                             if isinstance(ha_i, HappeningActionStart) and h.action == ha_i.action]
-                orSubFormulas = [(h_j == h_i).AND(t_j == t_i + d_i) for (h_i, t_i, d_i) in starting]
-                rules.append((h_j > 0).implies(SMTExpression.orOfExpressionsList(orSubFormulas)))
+                orSubFormulas = [(h_j == h_i) & (t_j == t_i + d_i) for (h_i, t_i, d_i) in starting]
+                rules.append((h_j > 0).implies(SMTExpression.bigor(orSubFormulas)))
 
             # 6.c
             if not isinstance(h, HappeningAction) and isinstance(h.parent, ICEAction):
@@ -265,7 +265,7 @@ class ICEEncoding(Encoding):
 
                 rules.append((h_p > 0)
                              .implies((sum(startBeforeP) - sum(endBeforeP) > 0)
-                                      .AND(sum(endAfterP) - sum(startAfterP) > 0)))
+                                      & (sum(endAfterP) - sum(startAfterP) > 0)))
 
         return rules
 
@@ -286,14 +286,14 @@ class ICEEncoding(Encoding):
                                             if isinstance(h_p, HappeningEffect) and h_p.parent == pair.action]
 
             effectsSum = sum([hVars[h_p] for h_p in ieffs]) == len(b.ieff)
-            effectsAnd = SMTExpression.andOfExpressionsList([hVars[h_p] <= 1 for h_p in ieffs])
-            rules.append(b_ij.implies(effectsSum.AND(effectsAnd)))
+            effectsAnd = SMTExpression.bigand([hVars[h_p] <= 1 for h_p in ieffs])
+            rules.append(b_ij.implies(effectsSum & effectsAnd))
 
             ## 7.b
             for ha_p in ieffs:
                 h_p = hVars[ha_p]
                 t_p = tVars[ha_p]
-                rules.append((b_ij.AND(h_p > 0)).implies(t_p == ha_p.effect.time.absolute(t_i, t_j)))
+                rules.append((b_ij & (h_p > 0)).implies(t_p == ha_p.effect.time.absolute(t_i, t_j)))
 
             ## 7.c
             icondsStart = [h_p for h_p in self.pattern[pair.i:pair.j]
@@ -303,17 +303,17 @@ class ICEEncoding(Encoding):
 
             condStartSum = sum([hVars[h_p] for h_p in icondsStart]) == len(b.icond)
             condEndSum = sum([hVars[h_p] for h_p in icondsEnd]) == len(b.icond)
-            condAnd = SMTExpression.andOfExpressionsList([hVars[h_p] <= 1 for h_p in icondsStart + icondsEnd])
-            rules.append(b_ij.implies(condStartSum.AND(condEndSum).AND(condAnd)))
+            condAnd = SMTExpression.bigand([hVars[h_p] <= 1 for h_p in icondsStart + icondsEnd])
+            rules.append(b_ij.implies(condStartSum & condEndSum & condAnd))
 
             ## 7.d
             for ha_p in icondsStart + icondsEnd:
                 h_p = hVars[ha_p]
                 t_p = tVars[ha_p]
                 if isinstance(ha_p, HappeningConditionStart):
-                    rules.append(b_ij.AND(h_p > 0).implies(t_p == ha_p.condition.fromTime.absolute(t_i, t_j)))
+                    rules.append((b_ij & (h_p > 0)).implies(t_p == ha_p.condition.fromTime.absolute(t_i, t_j)))
                 if isinstance(ha_p, HappeningConditionEnd):
-                    rules.append(b_ij.AND(h_p > 0).implies(t_p == ha_p.condition.toTime.absolute(t_i, t_j)))
+                    rules.append((b_ij & (h_p > 0)).implies(t_p == ha_p.condition.toTime.absolute(t_i, t_j)))
 
         return rules
 
@@ -337,7 +337,7 @@ class ICEEncoding(Encoding):
             for p in range(i + 1, j):
                 f = SMTExpression.fromFormula(cond, sigma[p])
                 conditions[str(f)] = f
-            cond_p = SMTExpression.andOfExpressionsList(list(conditions.values()))
-            rules.append(((h_i > 0).AND(h_j > 0)).implies(cond_p))
+            cond_p = SMTExpression.bigand(list(conditions.values()))
+            rules.append(((h_i > 0) & (h_j > 0)).implies(cond_p))
 
         return rules

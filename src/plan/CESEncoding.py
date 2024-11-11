@@ -15,8 +15,6 @@ from src.plan.TransitionRelations import TransitionRelations
 from src.smt.SMTConjunction import SMTConjunction
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTSolution import SMTSolution
-from src.utils.LogPrint import LogPrint, LogPrintLevel
-from src.utils.TimeStat import TimeStat
 
 
 class CESEncoding(Encoding):
@@ -45,6 +43,8 @@ class CESEncoding(Encoding):
         self.rules = SMTConjunction()
         for conj in self.rulesByName.values():
             self.rules += conj
+
+        pass
 
     def getInitRules(self) -> SMTConjunction:
 
@@ -93,7 +93,7 @@ class CESEncoding(Encoding):
         rules = SMTConjunction()
 
         for v in self.atoms:
-            rules.append(self.vars.nextState[v].iff(self.vars.sigma[self.k][v]))
+            rules.append(self.vars.nextState[v] == self.vars.sigma[self.k][v])
 
         return rules
 
@@ -111,7 +111,6 @@ class CESEncoding(Encoding):
 
     def repetitions(self, a: Action, s0: State, s2: State, m: int) -> int:
         for j in range(0, m + 1):
-            print(j, len(self.relations.closures[a.lifted]))
             T_a = self.relations.closures[a.lifted][j]
             if not T_a.reachable(a, s0, s2):
                 continue

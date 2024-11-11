@@ -10,6 +10,9 @@ from src.smt.SMTBoolVariable import SMTBoolVariable
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTNumericVariable import SMTRealVariable, SMTIntVariable
 from src.smt.SMTVariable import SMTVariable
+from src.smt.expressions.FalseExpression import FalseExpression
+from src.smt.expressions.ITEExpression import ITEExpression
+from src.smt.expressions.TrueExpression import TrueExpression
 
 
 class ICETransitionVariables:
@@ -77,13 +80,13 @@ class ICETransitionVariables:
                         k = float(str(assignment.rhs))
                         sigmas[i][v] = k
                     elif isinstance(assignment, Literal):
-                        sigmas[i][assignment.getAtom()] = SMTExpression.TRUE()
+                        sigmas[i][assignment.getAtom()] = TrueExpression()
                         trueAtoms.add(assignment.getAtom())
                     else:
                         raise NotImplemented("Shouldn't go here")
 
                 for v in self.task.propVariables - trueAtoms:
-                    sigmas[i][v] = SMTExpression.FALSE()
+                    sigmas[i][v] = FalseExpression()
                 continue
 
             if not isinstance(h, HappeningEffect):
@@ -93,9 +96,9 @@ class ICETransitionVariables:
             h_i = self.happeningVariables[h]
             for v in self.task.propVariables:
                 if v in h.effect.atomsAdded:
-                    sigmas[i][v] = sigmas[i - 1][v].OR(h_i > 0)
+                    sigmas[i][v] = sigmas[i - 1][v] | (h_i > 0)
                 elif v in h.effect.atomsDeleted:
-                    sigmas[i][v] = sigmas[i - 1][v].AND(h_i == 0)
+                    sigmas[i][v] = sigmas[i - 1][v] & (h_i == 0)
                 else:
                     sigmas[i][v] = sigmas[i - 1][v]
 
@@ -109,7 +112,7 @@ class ICETransitionVariables:
                 if eff.isLinearIncrement():
                     sigmas[i][v] = sigmas[i - 1][v] + h_i * psi
                 else:
-                    sigmas[i][v] = SMTExpression.ITE(h_i > 0, psi, sigmas[i - 1][v])
+                    sigmas[i][v] = ITEExpression.simplify(h_i > 0, psi, sigmas[i - 1][v])
 
         return sigmas
 

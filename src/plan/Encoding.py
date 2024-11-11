@@ -20,7 +20,8 @@ class Encoding:
     minimize: SMTExpression or None
     actionVariables: Set[SMTVariable]
 
-    def __init__(self, domain: GroundedDomain, problem: Problem, pattern: Pattern, bound: int):
+    def __init__(self, domain: GroundedDomain = None, problem: Problem = None, pattern: Pattern = None,
+                 bound: int = None):
         self.domain = domain
         self.problem = problem
         self.pattern = pattern

@@ -1,5 +1,6 @@
 from typing import Dict
 
+from pysmt.shortcuts import FALSE, TRUE
 from z3 import RatNumRef
 
 from src.smt.SMTBoolVariable import SMTBoolVariable
@@ -27,7 +28,7 @@ class SMTSolution:
                 return float(n) / float(d)
             return float(str(node))
         if isinstance(var, SMTBoolVariable):
-            return node
+            return False if node == FALSE() else True
 
     def __str__(self):
         return str(self.__variables)

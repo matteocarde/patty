@@ -44,7 +44,7 @@ class ActionStateTransitionFunction:
         for ce in self.action.effects:
             assert isinstance(ce, ConditionalEffect)
             atLeastOneCe.append(SMTExpression.fromFormula(ce.conditions, self.current))
-        clauses.append(SMTExpression.orOfExpressionsList(atLeastOneCe))
+        clauses.append(SMTExpression.bigor(atLeastOneCe))
 
         return clauses
 
@@ -56,15 +56,15 @@ class ActionStateTransitionFunction:
             andExpr = [vCurrent]
             for e in self.action.deltaMinus[v]:
                 andExpr.append(~SMTExpression.fromFormula(e.conditions, self.current))
-            orExpr = [SMTExpression.andOfExpressionsList(andExpr)]
+            orExpr = [SMTExpression.bigand(andExpr)]
             for e in self.action.deltaPlus[v]:
                 orExpr.append(SMTExpression.fromFormula(e.conditions, self.current))
-            one.append(SMTExpression.orOfExpressionsList(orExpr).iff(vNext))
+            one.append(vNext == SMTExpression.bigor(orExpr))
         zero = []
         for v in self.atoms:
             vNext = self.next[v]
             vCurrent = self.current[v]
-            zero.append(vNext.iff(vCurrent))
+            zero.append(vNext == vCurrent)
         return one
 
     def getConflictClauses(self) -> List[SMTExpression]:
@@ -76,7 +76,7 @@ class ActionStateTransitionFunction:
                 cesAdding.append(~SMTExpression.fromFormula(e1.conditions, self.current))
             for e2 in self.action.deltaMinus[v]:
                 cesDeleting.append(~SMTExpression.fromFormula(e2.conditions, self.current))
-            fAdding = SMTExpression.andOfExpressionsList(cesAdding)
-            fDeleting = SMTExpression.andOfExpressionsList(cesDeleting)
-            clauses.append(fAdding.OR(fDeleting))
+            fAdding = SMTExpression.bigand(cesAdding)
+            fDeleting = SMTExpression.bigand(cesDeleting)
+            clauses.append(fAdding | fDeleting)
         return clauses
