@@ -186,15 +186,6 @@ COPY /benchmarks/planners/enhsp-socs /var/enhsp-socs
 ENV PATH /var/enhsp-socs/:${PATH}
 RUN chmod +x /var/enhsp-socs/enhsp-socs
 
-# Install val
-COPY /benchmarks/planners/val /var/val
-ENV PATH /var/val/:${PATH}
-WORKDIR /var/val
-RUN ls
-RUN chmod +x scripts/linux/build_linux64.sh
-RUN ./scripts/linux/build_linux64.sh
-RUN chmod +x /var/val/val
-
 
 WORKDIR /project
 # Copying
