@@ -6,13 +6,13 @@ from benchmarks.tables.aij.domains_left import AIJ_DOMAINS_LEFT
 
 # PLANNERS = ["PATTY", "PATTY-R-YICES", "PATTY-R-Z3-NL", "PATTY-NL", "PATTY-Z3", "SPRINGROLL"]
 PLANNERS = [
-    "PATTY-R",
+    # "PATTY-R",
     "PATTY-A",
     # "PATTY-G",
     # "PATTY-H",
     # "PATTY-F",
     "PATTY-E",
-    "PATTY-M",
+    # "PATTY-M",
     # "PATTY-I",
     "PATTY-L",
     # "SPRINGROLL",
