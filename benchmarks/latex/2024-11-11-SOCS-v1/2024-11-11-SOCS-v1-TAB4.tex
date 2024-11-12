@@ -1,0 +1,46 @@
+
+               \documentclass[11pt]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||cccccccc||cccccccc||cccccccc||}
+\hline
+ & \multicolumn{8}{c||}{Solved (out of $20$)}&\multicolumn{8}{c||}{Time (s)}&\multicolumn{8}{c||}{Plan Length}\\
+Domain & $\mathrm{P}_\mathrm{E}$&$$\mathrm{EN}$$&$$\mathrm{EN}_{DT}$$&$$\mathrm{NFD}$$&$$\mathrm{FF}$$&$$\mathrm{R}^2\exists$$&$$\mathrm{OMT}$$&$$\mathrm{SR}$$&$\mathrm{P}_\mathrm{E}$&$$\mathrm{EN}$$&$$\mathrm{EN}_{DT}$$&$$\mathrm{NFD}$$&$$\mathrm{FF}$$&$$\mathrm{R}^2\exists$$&$$\mathrm{OMT}$$&$$\mathrm{SR}$$&$\mathrm{P}_\mathrm{E}$&$$\mathrm{EN}$$&$$\mathrm{EN}_{DT}$$&$$\mathrm{NFD}$$&$$\mathrm{FF}$$&$$\mathrm{R}^2\exists$$&$$\mathrm{OMT}$$&$$\mathrm{SR}$$\\
+\hline
+\textsc{BlGrp} (S)&\textbf{20}&16&14&-&2&17&2&\textbf{20}&1.8&81.5&117.2&-&270.2&83.4&270.2&\textbf{1.6}&124&\textbf{22}&\textbf{22}&-&24&\textbf{22}&60&74\\
+\textsc{Stlrs} (S)&-&-&\textbf{2}&-&-&-&-&-&-&-&\textbf{278.4}&-&-&-&-&-&-&-&\textbf{62}&-&-&-&-&-\\
+\textsc{Cnt} (S)&\textbf{20}&12&10&11&15&11&18&\textbf{20}&\textbf{0.9}&133.8&163.8&149.8&95.7&169.2&92.7&\textbf{0.9}&128&85&85&\textbf{84}&\textbf{84}&94&124&95\\
+\textsc{Cnt} (L)&\textbf{20}&10&12&6&8&4&3&6&\textbf{1.1}&170.9&142.3&214.0&180.0&240.3&255.3&227.6&10&6&6&\textbf{5}&\textbf{5}&8&\textbf{5}&7\\
+\textsc{Del} (S)&5&13&14&9&\textbf{18}&1&1&-&226.4&121.7&117.1&165.2&\textbf{41.2}&285.7&295.6&-&\textbf{10}&\textbf{10}&\textbf{10}&\textbf{10}&\textbf{10}&\textbf{10}&\textbf{10}&-\\
+\textsc{Drn} (S)&3&16&\textbf{18}&16&2&3&3&3&255.3&62.9&\textbf{55.4}&66.0&268.4&259.0&256.3&256.3&16&8&\textbf{7}&\textbf{7}&\textbf{7}&10&\textbf{7}&10\\
+\textsc{Exp} (S)&2&\textbf{6}&\textbf{6}&3&-&-&2&-&270.2&\textbf{212.3}&224.0&253.7&-&-&276.2&-&36&72&48&54&-&-&\textbf{26}&-\\
+\textsc{Farm} (S)&\textbf{20}&\textbf{20}&\textbf{20}&15&9&-&-&\textbf{20}&2.4&\textbf{0.9}&1.8&85.3&188.1&-&-&1.3&701&\textbf{292}&\textbf{292}&\textbf{292}&341&-&-&382\\
+\textsc{Farm} (L)&\textbf{20}&18&\textbf{20}&11&15&2&1&-&2.7&48.6&\textbf{2.5}&151.2&80.5&270.2&286.2&-&145&13&22&\textbf{12}&14&14&19&-\\
+\textsc{HPwr} (S)&\textbf{20}&2&\textbf{20}&1&1&-&-&-&9.4&270.3&\textbf{4.6}&285.1&285.0&-&-&-&64&20&\textbf{16}&35&\textbf{16}&-&-&-\\
+\textsc{MPrime} (S)&12&\textbf{17}&\textbf{17}&14&\textbf{17}&5&6&10&137.7&68.1&74.6&127.2&\textbf{45.1}&233.2&229.6&174.2&54&\textbf{6}&\textbf{6}&\textbf{6}&7&7&8&34\\
+\textsc{PathM} (S)&\textbf{18}&2&3&1&10&1&3&1&\textbf{42.3}&272.2&262.8&284.2&154.9&286.1&262.4&286.0&57&18&\textbf{12}&\textbf{12}&14&\textbf{12}&28&57\\
+\textsc{PlWat} (S)&6&16&\textbf{20}&14&3&-&-&-&215.3&101.3&\textbf{41.1}&167.2&268.3&-&-&-&285&429&\textbf{235}&393&455&-&-&-\\
+\textsc{Rvr} (S)&\textbf{15}&8&12&4&10&8&7&11&\textbf{101.4}&197.4&143.7&240.8&133.3&202.6&232.6&181.8&34&33&13&\textbf{9}&\textbf{9}&10&11&13\\
+\textsc{Sail} (S)&\textbf{20}&\textbf{20}&\textbf{20}&10&1&-&-&\textbf{20}&3.6&\textbf{2.0}&5.0&150.3&285.0&-&-&5.5&\textbf{174}&\textbf{174}&\textbf{174}&\textbf{174}&179&-&-&353\\
+\textsc{Sail} (L)&\textbf{19}&2&2&15&8&-&1&-&\textbf{16.3}&270.6&270.8&96.8&182.8&-&285.8&-&161&-&-&23&\textbf{13}&-&59&-\\
+\textsc{Sgr} (S)&\textbf{20}&8&11&4&13&1&18&-&\textbf{10.3}&182.5&144.5&245.7&122.5&288.2&113.7&-&32&-&-&\textbf{10}&-&29&18&-\\
+\textsc{Tpp} (L)&2&3&\textbf{7}&2&2&2&-&-&270.2&255.2&\textbf{212.3}&270.0&266.7&271.9&-&-&13&11&11&\textbf{5}&9&10&-&-\\
+\textsc{Zeno} (S)&11&\textbf{19}&17&9&11&9&7&-&136.4&\textbf{28.1}&89.5&172.5&135.0&174.6&209.6&-&17&12&12&16&\textbf{11}&16&13&-\\
+\textsc{Line} (L)&\textbf{20}&9&11&6&6&-&-&5&\textbf{1.2}&175.4&149.5&235.0&211.6&-&-&262.4&102&\textbf{95}&100&180&134&-&-&142
+\\\hline
+\textit{Best}&\textbf{273}&\textbf{217}&\textbf{256}&\textbf{151}&\textbf{151}&\textbf{64}&\textbf{72}&\textbf{116}&\textbf{116}&\textbf{36}&\textbf{46}&\textbf{37}&\textbf{91}&\textbf{0}&\textbf{0}&\textbf{17}&\textbf{47}&\textbf{91}&\textbf{142}&\textbf{84}&\textbf{85}&\textbf{18}&\textbf{21}&\textbf{16}\\\hline
+
+        \end{tabular}}
+        \caption{Comparative analysis between search planners}
+        \label{tab:search}
+        \end{table*}
+        
+\end{document}

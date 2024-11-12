@@ -6,24 +6,24 @@ from benchmarks.tables.aij.domains import AIJ_DOMAINS
 
 # PLANNERS = ["PATTY", "PATTY-R-YICES", "PATTY-R-Z3-NL", "PATTY-NL", "PATTY-Z3", "SPRINGROLL"]
 PLANNERS = [
-    # "PATTY-R",
-    # "PATTY-A",
+    "PATTY-R",
+    "PATTY-A",
     # "PATTY-G",
     # "PATTY-H",
     # "PATTY-F",
-    # "PATTY-E",
-    # "PATTY-M",
+    "PATTY-E",
+    "PATTY-M",
     # "PATTY-I",
-    # "PATTY-L",
-    # "SPRINGROLL",
+    "PATTY-L",
+    "SPRINGROLL",
     "ENHSP-SOCS",
-    # "ENHSP-SAT-HADD",
-    # "ENHSP-SAT-AIBR",
-    # "ENHSP-SAT-HMRP",
-    # "METRIC-FF",
-    # "NFD",
-    # "OMT",
-    # "RANTANPLAN"
+    "ENHSP-SAT-HADD",
+    "ENHSP-SAT-AIBR",
+    "ENHSP-SAT-HMRP",
+    "METRIC-FF",
+    "NFD",
+    "OMT",
+    "RANTANPLAN"
 ]
 RANDOM = 5
 NAME = "aij.csv"

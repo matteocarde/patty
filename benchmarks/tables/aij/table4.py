@@ -12,33 +12,21 @@ AIJ_TABLE4 = {
         "quantity": {
             "name": "Solved (out of $20$)",
             "winner": +1,
+            "avg": True
         },
         "time": {
             "name": "Time (s)",
             "winner": -1,
+            "stdev": True
         },
         "planLength": {
             "name": r"Plan Length",
             "winner": -1
         },
-        "bound": {
-            "name": r"Bound $n$",
-            "winner": -1
-        },
     },
     "planners": {
-        'PATTY-G': {
-            "name": r"\mathrm{P}_\mathrm{G}",
-            "type": "scalar",
-            # "slashedWith": "PATTY-L"
-        },
-        'PATTY-H': {
-            "name": r"\mathrm{P}_\mathrm{H}",
-            "type": "scalar",
-            # "slashedWith": "PATTY-L"
-        },
-        'PATTY-F': {
-            "name": r"\mathrm{P}_\mathrm{F}",
+        'PATTY-E': {
+            "name": r"\mathrm{P}_\mathrm{E}",
             "type": "scalar",
             # "slashedWith": "PATTY-L"
         },
@@ -48,6 +36,10 @@ AIJ_TABLE4 = {
         # },
         'ENHSP': {
             "name": AIJ_PLANNERS['ENHSP']["name"],
+            "type": "scalar",
+        },
+        'ENHSP-SOCS': {
+            "name": AIJ_PLANNERS['ENHSP-SOCS']["name"],
             "type": "scalar",
         },
         'NFD': {

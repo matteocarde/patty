@@ -37,7 +37,7 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2024-11-04-REBUTTAL-v6"
+    exp = "2024-11-11-SOCS-v1"
     file = f"benchmarks/results/csv/{exp}.csv"
 
     folder = f'benchmarks/latex/{exp}'
@@ -47,20 +47,19 @@ def main():
 
     if os.path.exists(file):
         os.remove(file)
-    # joinWith = [
-    #     (exp, ["PATTY-R"]),
-    #     ("2024-10-07-AIJ-FINAL-v10", ["PATTY-A"]),
-    #     ("2024-10-07-AIJ-FINAL-v9", ["PATTY-E", "PATTY-L", "PATTY-M"]),
-    #     ("2024-10-07-AIJ-FINAL-v7", ["RANTANPLAN"]),
-    #     ("2024-10-07-AIJ-FINAL-v6", ["SPRINGROLL"]),
-    #     ("2024-10-07-AIJ-FINAL-v5", ["OMT"]),
-    #     ("2024-10-07-AIJ-FINAL-v2",
-    #      ["ENHSP-SAT-AIBR", "PATTY-A", "PATTY-E", "ENHSP-SAT-HADD", "ENHSP-SAT-HMRP", "METRIC-FF", "NFD"])
-    # ]
     joinWith = [
-        (exp, ["PATTY-G", "PATTY-H", "PATTY-F", "ENHSP-SAT-AIBR", "RANTANPLAN", "SPRINGROLL", "ENHSP-SAT-HADD",
-               "ENHSP-SAT-HMRP", "METRIC-FF",
-               "NFD", "OMT"])
+        (exp, ["ENHSP-SOCS"]),
+        # ("2024-11-04-REBUTTAL-v6", ["PATTY-G", "PATTY-H", "PATTY-F", "ENHSP-SAT-AIBR",
+        #                             "RANTANPLAN", "SPRINGROLL", "ENHSP-SAT-HADD",
+        #                             "ENHSP-SAT-HMRP", "METRIC-FF",
+        #                             "NFD", "OMT"]),
+        ("2024-10-07-AIJ-FINAL-v10", ["PATTY-A"]),
+        ("2024-10-07-AIJ-FINAL-v9", ["PATTY-E", "PATTY-L", "PATTY-M"]),
+        ("2024-10-07-AIJ-FINAL-v7", ["RANTANPLAN"]),
+        ("2024-10-07-AIJ-FINAL-v6", ["SPRINGROLL"]),
+        ("2024-10-07-AIJ-FINAL-v5", ["OMT"]),
+        ("2024-10-07-AIJ-FINAL-v2",
+         ["ENHSP-SAT-AIBR", "PATTY-A", "PATTY-E", "ENHSP-SAT-HADD", "ENHSP-SAT-HMRP", "METRIC-FF", "NFD"])
     ]
 
     for (exp2, keepSolvers) in joinWith:
