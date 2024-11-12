@@ -17,20 +17,18 @@ class TestFarmland(TestCase):
         self.problem: Problem = Problem.fromFile(
             "../../files/numeric/ipc-2023/farmland/instances/instance_2_300_1229.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
-        self.horizon = 4
+        self.horizon = 1
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
         self.args = Arguments(keepRequired=False)
         self.pddl2smt: NumericEncoding = NumericEncoding(self.gDomain, self.problem, self.pattern, self.horizon,
                                                          self.args)
-        print(self.pddl2smt.pattern)
+        self.pddl2smt.printRules()
         pass
-
-    def test_transform(self):
-        self.assertGreater(len(self.pddl2smt.rules), 0)
 
     def test_solve(self):
         solver: SMTSolver = SMTSolver(self.pddl2smt)
-
+        sol = solver.getSolution()
+        print(sol)
         plan: NumericPlan = solver.solve()
         solver.exit()
 

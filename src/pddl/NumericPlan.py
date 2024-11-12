@@ -59,6 +59,7 @@ class NumericPlan(Plan):
                 if logger:
                     logger.log(f"Plan doesn't satisfies goal", LogPrintLevel.PLAN)
                 return False
+            print(state, problem.goal)
             raise PDDLException.InvalidPlan(f"Plan doesn't satisfies goal")
 
         return True

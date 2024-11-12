@@ -30,11 +30,11 @@ class AddExpression(NaryExpression):
         if isinstance(lhs, ConstantExpression) and isinstance(rhs, ConstantExpression):
             return ConstantExpression(lhs.value + rhs.value)
         if isinstance(lhs, AddExpression):
-            lhs.children.append(rhs)
-            return lhs
+            children = lhs.children + [rhs]
+            return AddExpression(*children)
         if isinstance(rhs, AddExpression):
-            rhs.children.append(lhs)
-            return rhs
+            children = rhs.children + [lhs]
+            return AddExpression(*children)
         return cls(lhs, rhs)
 
     def toBDDExpression(self, map: Dict[SMTBoolVariable, BDDVariable]):

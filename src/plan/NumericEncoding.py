@@ -136,11 +136,11 @@ class NumericEncoding(Encoding):
 
         rules = []
         if andRules:
-            rules.append(SMTExpression.andOfExpressionsList(andRules))
+            rules.append(SMTExpression.bigand(andRules))
         if orRules:
-            rules.append(SMTExpression.orOfExpressionsList(orRules))
+            rules.append(SMTExpression.bigor(orRules))
 
-        return SMTExpression.andOfExpressionsList(rules)
+        return SMTExpression.bigand(rules)
 
     def getGoalExpression(self) -> SMTExpression:
 
@@ -184,10 +184,10 @@ class NumericEncoding(Encoding):
                 b_n = stepVars.actionVariables[i]
 
                 if v in action.getAddList():
-                    stepVars.sigmaVariables[i][v] = d_bv | (b_n > 0)
+                    stepVars.sigmaVariables[i][v] = (d_bv | (b_n > 0))
 
                 if v in action.getDelList():
-                    stepVars.sigmaVariables[i][v] = d_bv & (b_n == 0)
+                    stepVars.sigmaVariables[i][v] = (d_bv & (b_n == 0))
 
             # Case c) Numeric increases or decreases
             if not action.hasNonSimpleLinearIncrement(self.encoding):
@@ -197,7 +197,7 @@ class NumericEncoding(Encoding):
                         d_bv = stepVars.sigmaVariables[i - 1][v]
                         k = SMTNumericVariable.fromPddl(funct, stepVars.sigmaVariables[i - 1])
                         b_n = stepVars.actionVariables[i]
-                        stepVars.sigmaVariables[i][v] = d_bv + (k * b_n) if sign > 0 else d_bv - (k * b_n)
+                        stepVars.sigmaVariables[i][v] = (d_bv + (k * b_n)) if sign > 0 else (d_bv - (k * b_n))
 
             # Case d) Numeric assignments
             for v in action.getAssList():
@@ -272,8 +272,7 @@ class NumericEncoding(Encoding):
                         subs[v] = rhsExpr
                         continue
                     if eff.operator == "increase":
-                        x = stepVars.sigmaVariables[i - 1][v] + rhsExpr * (stepVars.actionVariables[i] - 1)
-                        subs[v] = x
+                        subs[v] = stepVars.sigmaVariables[i - 1][v] + rhsExpr * (stepVars.actionVariables[i] - 1)
                         pass
                     else:
                         subs[v] = stepVars.sigmaVariables[i - 1][v] - rhsExpr * (stepVars.actionVariables[i] - 1)
