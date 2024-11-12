@@ -42,7 +42,7 @@ dependencies:
       - numpy==1.24.4
       - prettytable==3.11.0
       - pysmt==0.9.6
-      - z3-solver==4.8.7.0
+      - z3-solver==4.12.2.0
       - sympy==1.13.2
       - tarjan==0.2.4
       - wcwidth==0.2.13
