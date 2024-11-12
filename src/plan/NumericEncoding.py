@@ -272,13 +272,13 @@ class NumericEncoding(Encoding):
                         subs[v] = rhsExpr
                         continue
                     if eff.operator == "increase":
-                        x = stepVars.sigmaVariables[i][v] + rhsExpr * (stepVars.actionVariables[i] - 1)
+                        x = stepVars.sigmaVariables[i - 1][v] + rhsExpr * (stepVars.actionVariables[i] - 1)
                         subs[v] = x
                         pass
                     else:
-                        subs[v] = stepVars.sigmaVariables[i][v] - rhsExpr * (stepVars.actionVariables[i] - 1)
+                        subs[v] = stepVars.sigmaVariables[i - 1][v] - rhsExpr * (stepVars.actionVariables[i] - 1)
 
-                for v in stepVars.sigmaVariables[i].keys():
+                for v in stepVars.sigmaVariables[i - 1].keys():
                     subs[v] = subs[v] if v in subs else stepVars.sigmaVariables[i - 1][v]
 
                 # Transformed precondition
