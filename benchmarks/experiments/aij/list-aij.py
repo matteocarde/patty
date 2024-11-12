@@ -2,7 +2,7 @@ import random
 import os
 from natsort import natsort
 
-from benchmarks.tables.aij.domains import AIJ_DOMAINS
+from benchmarks.tables.aij.domains_left import AIJ_DOMAINS_LEFT
 
 # PLANNERS = ["PATTY", "PATTY-R-YICES", "PATTY-R-Z3-NL", "PATTY-NL", "PATTY-Z3", "SPRINGROLL"]
 PLANNERS = [
@@ -15,22 +15,22 @@ PLANNERS = [
     "PATTY-M",
     # "PATTY-I",
     "PATTY-L",
-    "SPRINGROLL",
-    "ENHSP-SOCS",
-    "ENHSP-SAT-HADD",
-    "ENHSP-SAT-AIBR",
-    "ENHSP-SAT-HMRP",
-    "METRIC-FF",
-    "NFD",
-    "OMT",
-    "RANTANPLAN"
+    # "SPRINGROLL",
+    # "ENHSP-SOCS",
+    # "ENHSP-SAT-HADD",
+    # "ENHSP-SAT-AIBR",
+    # "ENHSP-SAT-HMRP",
+    # "METRIC-FF",
+    # "NFD",
+    # "OMT",
+    # "RANTANPLAN"
 ]
 RANDOM = 5
 NAME = "aij.csv"
 
 
 def main():
-    domains = AIJ_DOMAINS.keys()
+    domains = AIJ_DOMAINS_LEFT.keys()
 
     instances = list()
 
@@ -49,15 +49,12 @@ def main():
                 for i in range(0, n):
                     instances.append([planner, domain, domainFile, problemFile])
         assert len(problemFiles) == 20
-        print(domain, problemFiles)
 
     random.shuffle(instances)
     print(f"Listing {len(instances)} instances")
     f = open(f"benchmarks/instances/{NAME}", "w")
     f.write("\n".join([",".join(i) for i in instances]))
     f.close()
-
-    print(AIJ_DOMAINS)
 
 
 if __name__ == '__main__':

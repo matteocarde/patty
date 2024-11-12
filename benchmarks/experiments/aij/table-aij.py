@@ -37,7 +37,7 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2024-11-11-SOCS-v1"
+    exp = "2024-11-12-DOMAINS-v1"
     file = f"benchmarks/results/csv/{exp}.csv"
 
     folder = f'benchmarks/latex/{exp}'
@@ -48,11 +48,11 @@ def main():
     if os.path.exists(file):
         os.remove(file)
     joinWith = [
-        (exp, ["ENHSP-SOCS"]),
-        # ("2024-11-04-REBUTTAL-v6", ["PATTY-G", "PATTY-H", "PATTY-F", "ENHSP-SAT-AIBR",
-        #                             "RANTANPLAN", "SPRINGROLL", "ENHSP-SAT-HADD",
-        #                             "ENHSP-SAT-HMRP", "METRIC-FF",
-        #                             "NFD", "OMT"]),
+        (exp, ["PATTY-A", "PATTY-E", "PATTY-R", "ENHSP-SAT-AIBR",
+               "RANTANPLAN", "SPRINGROLL", "ENHSP-SAT-HADD",
+               "ENHSP-SAT-HMRP", "METRIC-FF",
+               "NFD", "OMT", "ENHSP-SOCS"]),
+        ("2024-11-11-SOCS-v1", ["ENHSP-SOCS"]),
         ("2024-10-07-AIJ-FINAL-v10", ["PATTY-A"]),
         ("2024-10-07-AIJ-FINAL-v9", ["PATTY-E", "PATTY-L", "PATTY-M"]),
         ("2024-10-07-AIJ-FINAL-v7", ["RANTANPLAN"]),

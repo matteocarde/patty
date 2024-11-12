@@ -17,6 +17,8 @@ BOOLEAN = "B"
 
 class SMTExpression:
     type: str
+    variables: set
+    depth: int
 
     def __init__(self):
         pass

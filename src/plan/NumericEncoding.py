@@ -169,20 +169,14 @@ class NumericEncoding(Encoding):
         rules: List[SMTExpression] = []
 
         for v in self.domain.allAtoms:
-            if self.hasEffectAxioms:
-                rules.append(stepVars.sigmaVariables[0][v] == prevVars.valueVariables[v])
-            else:
-                stepVars.sigmaVariables[0][v] = prevVars.valueVariables[v]
+            stepVars.sigmaVariables[0][v] = prevVars.valueVariables[v]
 
         for i, action in self.pattern.enumerate():
 
             # Case a) Not influenced
             notInfluenced = self.domain.allAtoms - (action.getInfluencedAtoms())
             for v in notInfluenced:
-                if self.hasEffectAxioms:
-                    rules.append(stepVars.sigmaVariables[i][v] == stepVars.sigmaVariables[i - 1][v])
-                else:
-                    stepVars.sigmaVariables[i][v] = stepVars.sigmaVariables[i - 1][v]
+                stepVars.sigmaVariables[i][v] = stepVars.sigmaVariables[i - 1][v]
 
             # Case b) Boolean
             for v in action.getAddList() | action.getDelList():
@@ -190,54 +184,31 @@ class NumericEncoding(Encoding):
                 b_n = stepVars.actionVariables[i]
 
                 if v in action.getAddList():
-                    if self.hasEffectAxioms:
-                        rules.append(stepVars.sigmaVariables[i][v] == (d_bv | (b_n > 0)))
-                    else:
-                        stepVars.sigmaVariables[i][v] = d_bv | (b_n > 0)
+                    stepVars.sigmaVariables[i][v] = d_bv | (b_n > 0)
 
                 if v in action.getDelList():
-                    if self.hasEffectAxioms:
-                        rules.append(stepVars.sigmaVariables[i][v] == (d_bv & (b_n == 0)))
-                    else:
-                        stepVars.sigmaVariables[i][v] = d_bv & (b_n == 0)
+                    stepVars.sigmaVariables[i][v] = d_bv & (b_n == 0)
 
             # Case c) Numeric increases or decreases
             if not action.hasNonSimpleLinearIncrement(self.encoding):
                 modifications = [(+1, action.getIncreases()), (-1, action.getDecreases())]
                 for sign, modificationDict in modifications:
                     for v, funct in modificationDict.items():
-
                         d_bv = stepVars.sigmaVariables[i - 1][v]
                         k = SMTNumericVariable.fromPddl(funct, stepVars.sigmaVariables[i - 1])
                         b_n = stepVars.actionVariables[i]
-
-                        if self.hasEffectAxioms:
-                            if sign > 0:
-                                rules.append(stepVars.sigmaVariables[i][v] == d_bv + (k * b_n))
-                            else:
-                                rules.append(stepVars.sigmaVariables[i][v] == d_bv - (k * b_n))
-                        else:
-                            if sign > 0:
-                                stepVars.sigmaVariables[i][v] = d_bv + (k * b_n)
-                            else:
-                                stepVars.sigmaVariables[i][v] = d_bv - (k * b_n)
+                        stepVars.sigmaVariables[i][v] = d_bv + (k * b_n) if sign > 0 else d_bv - (k * b_n)
 
             # Case d) Numeric assignments
             for v in action.getAssList():
-                if self.hasEffectAxioms:
-                    rules.append(stepVars.sigmaVariables[i][v] == stepVars.auxVariables[i][v])
-                else:
-                    stepVars.sigmaVariables[i][v] = stepVars.auxVariables[i][v]
+                stepVars.sigmaVariables[i][v] = stepVars.auxVariables[i][v]
 
             if action.hasNonSimpleLinearIncrement(self.encoding):
                 for eff in action.effects:
                     if not eff.isLinearIncrement():
                         continue
                     v = eff.getAtom()
-                    if self.hasEffectAxioms:
-                        rules.append(stepVars.sigmaVariables[i][v] == stepVars.auxVariables[i][v])
-                    else:
-                        stepVars.sigmaVariables[i][v] = stepVars.auxVariables[i][v]
+                    stepVars.sigmaVariables[i][v] = stepVars.auxVariables[i][v]
 
         return rules
 
@@ -324,7 +295,7 @@ class NumericEncoding(Encoding):
                 rules.append(lhs1.implies(preconditions1))
 
             if isPre1Impossible:
-                rules.append(lhs1.NOT())
+                rules.append(~lhs1)
 
         return rules
 
@@ -372,7 +343,7 @@ class NumericEncoding(Encoding):
         for v in self.domain.predicates:
             v_first = stepVars.valueVariables[v]
             delta_g_v = stepVars.sigmaVariables[self.k][v]
-            rules.append(delta_g_v == v_first)
+            rules.append(v_first == delta_g_v)
 
         return rules
 

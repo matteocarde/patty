@@ -1,3 +1,4 @@
+import sys
 from typing import Set, List, Dict
 
 from pysmt.logics import QF_LRA, QF_NRA
@@ -46,7 +47,6 @@ class SMTSolver:
     def addAssertion(self, expr: SMTExpression, push=True):
         self.assertions.append(expr)
         self.variables.update(expr.getVariables())
-
         z3Expr = self.z3.converter.convert(expr.getExpression()) if self.maximize else expr.getExpression()
 
         if self.maximize:

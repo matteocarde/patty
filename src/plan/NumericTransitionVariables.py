@@ -88,7 +88,7 @@ class NumericTransitionVariables:
                 if not eff.isLinearIncrement():
                     continue
                 var = eff.getAtom()
-                variables.setdefault(a, dict())
+                variables.setdefault(i, dict())
                 variables[i][var] = SMTRealVariable(f"{var}_{a}_{index}")
 
         return variables

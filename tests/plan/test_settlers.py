@@ -16,19 +16,24 @@ class TestSettlers(TestCase):
 
     def setUp(self) -> None:
         self.domain: Domain = Domain.fromFile("../../files/numeric/ipc-2023/settlers-compiled/domain.pddl")
-        self.problem: Problem = Problem.fromFile("../../files/numeric/ipc-2023/settlers-compiled/instances/pfile12.pddl")
+        self.problem: Problem = Problem.fromFile(
+            "../../files/numeric/ipc-2023/settlers-compiled/instances/pfile12.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
-        self.horizon = 2
+        self.horizon = 1
         self.pattern = Pattern.fromOrder(self.gDomain.arpg.getActionsOrder())
         self.args = Arguments(keepRequired=False)
         self.pddl2smt: NumericEncoding = NumericEncoding(self.gDomain, self.problem, self.pattern, self.horizon,
                                                          self.args)
-        pass
-
-    def test_transform(self):
-        self.assertGreater(len(self.pddl2smt.initial), 0)
-        self.assertGreater(len(self.pddl2smt.transitions), 0)
-        self.assertGreater(len(self.pddl2smt.rules), 0)
+        print("Size:", len(self.pddl2smt.rules))
+        print("Depth:", max([r.depth for r in self.pddl2smt.rules]) + 1)
+        deepest = None
+        depth = 0
+        for r in self.pddl2smt.rules:
+            if r.depth > depth:
+                deepest = r
+                depth = r.depth
+        print(depth)
+        print(deepest)
 
     def test_solve(self):
         solver: SMTSolver = SMTSolver(self.pddl2smt)

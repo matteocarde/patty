@@ -13,6 +13,7 @@ class FalseExpression(SMTExpression):
     def __init__(self):
         super().__init__()
         self.type = BOOLEAN
+        self.depth = 1
 
     def __hash__(self):
         return hash(True)
