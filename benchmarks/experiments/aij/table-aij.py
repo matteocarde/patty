@@ -27,7 +27,7 @@ def rVec(v, n):
 
 
 def transformTextValue(v):
-    if v == "-":
+    if v in {"-", "*"}:
         return v
     val = float(v)
     if val > 1000:
@@ -37,7 +37,7 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2024-11-12-DOMAINS-v1"
+    exp = "2024-11-12-DOMAINS-v6"
     file = f"benchmarks/results/csv/{exp}.csv"
 
     folder = f'benchmarks/latex/{exp}'
@@ -48,10 +48,11 @@ def main():
     if os.path.exists(file):
         os.remove(file)
     joinWith = [
-        (exp, ["PATTY-A", "PATTY-E", "PATTY-R", "ENHSP-SAT-AIBR",
-               "RANTANPLAN", "SPRINGROLL", "ENHSP-SAT-HADD",
-               "ENHSP-SAT-HMRP", "METRIC-FF",
-               "NFD", "OMT", "ENHSP-SOCS"]),
+        (exp, ["PATTY-A", "PATTY-L", "PATTY-E"]),
+        ("2024-11-12-DOMAINS-v1", ["ENHSP-SAT-AIBR",
+                                   "RANTANPLAN", "SPRINGROLL", "ENHSP-SAT-HADD",
+                                   "ENHSP-SAT-HMRP", "METRIC-FF",
+                                   "NFD", "OMT", "ENHSP-SOCS"]),
         ("2024-11-11-SOCS-v1", ["ENHSP-SOCS"]),
         ("2024-10-07-AIJ-FINAL-v10", ["PATTY-A"]),
         ("2024-10-07-AIJ-FINAL-v9", ["PATTY-E", "PATTY-L", "PATTY-M"]),
@@ -150,18 +151,17 @@ def main():
                 "nOfRules": dict(),
                 "lastCallsToSolver": dict(),
             }
-            commonlySolved = {}
-            commonlyGrounded = {}
+            commonlySolved = None
             for planner in table["planners"].keys():
                 if planner not in d[domain]:
                     continue
                 solved = {r.problem for r in d[domain][planner] if r.solved}
-                print(planner, "solved", solved)
-                grounded = {r.problem for r in d[domain][planner] if r.nOfVars > 0}
+                if commonlySolved is None:
+                    commonlySolved = solved
+                    continue
                 if solved:
-                    commonlySolved = solved if not commonlySolved else commonlySolved.intersection(solved)
-                if grounded:
-                    commonlyGrounded = solved if not commonlyGrounded else commonlyGrounded.intersection(grounded)
+                    commonlySolved &= solved
+
             for planner, plannerInfo in table["planners"].items():
                 if planner not in d[domain]:
                     continue
@@ -174,32 +174,34 @@ def main():
                     print(f"In {planner} the domain {domain} has {len(pResult)}/{instances} instances", file=sys.stderr)
 
                 hasCoverage = sum([r.solved for r in pResult]) > 0
+                hasCommonlySolved = bool([r for r in pResult if r.solved and r.problem in commonlySolved])
+                symb = "*" if not hasCommonlySolved and hasCoverage else "-"
                 t[domain]["coverage"][planner] = round(sum([r.solved for r in pResult]) / instances * 100, 0)
-                t[domain]["coverage"][planner] = "-" if not hasCoverage else t[domain]["coverage"][planner]
+                t[domain]["coverage"][planner] = symb if not hasCoverage else t[domain]["coverage"][planner]
 
                 v = round(sum([r.solved for r in pResult]), 0)
-                t[domain]["quantity"][planner] = v if hasCoverage else "-"
+                t[domain]["quantity"][planner] = v if hasCoverage else symb
 
                 if table.get("time-limit"):
                     v = [r.time / 1000 if r.solved else table["time-limit"] / 1000 for r in pResult]
                 else:
                     v = [r.time / 1000 for r in pResult if r.solved and r.problem in commonlySolved]
-                t[domain]["time"][planner] = rVec(v, 1) if hasCoverage else "-"
+                t[domain]["time"][planner] = rVec(v, 1) if hasCoverage and v else symb
 
                 v = [r.bound for r in pResult if r.solved and r.problem in commonlySolved]
-                t[domain]["bound"][planner] = rVec(v, 1) if hasCoverage else "-"
+                t[domain]["bound"][planner] = rVec(v, 1) if hasCoverage and v else symb
 
                 v = [r.planLength for r in pResult if r.solved and r.problem in commonlySolved]
-                t[domain]["planLength"][planner] = rVec(v, 0) if hasCoverage else "-"
+                t[domain]["planLength"][planner] = rVec(v, 0) if hasCoverage and v else symb
 
                 v = [r.nOfVars for r in pResult if r.nOfVars > 0 and r.problem in commonlySolved]
-                t[domain]["nOfVars"][planner] = rVec(v, 0) if hasCoverage else "-"
+                t[domain]["nOfVars"][planner] = rVec(v, 0) if hasCoverage and v else symb
 
                 v = [r.nOfRules for r in pResult if r.nOfRules > 0 and r.problem in commonlySolved]
-                t[domain]["nOfRules"][planner] = rVec(v, 0) if hasCoverage else "-"
+                t[domain]["nOfRules"][planner] = rVec(v, 0) if hasCoverage and v else symb
 
                 v = [r.lastCallsToSolver for r in pResult if r.lastCallsToSolver > 0 and r.problem in commonlySolved]
-                t[domain]["lastCallsToSolver"][planner] = rVec(v, 2) if hasCoverage else "-"
+                t[domain]["lastCallsToSolver"][planner] = rVec(v, 2) if hasCoverage and v else symb
 
         latex = list()
         orientation = ",landscape" if table["orientation"] == "landscape" else ""
@@ -227,7 +229,7 @@ def main():
                     if plannerInfo["type"] in {"stdev"}:
                         continue
                     value = t[domain][column][planner]
-                    if value in {"-", "G", "-1.00"}:
+                    if value in {"-", "*", "G", "-1.00"}:
                         continue
                     if float(value) * winner > betterValue * winner:
                         betterValue = float(value)
@@ -255,7 +257,6 @@ def main():
                         if not result.solved:
                             continue
                         value: int = result.get(column)
-                        print(column, value)
                         if float(value) * winner > betterValue * winner:
                             betterValue = float(value)
                             better = {planner}
@@ -305,7 +306,7 @@ def main():
                     if plannerInfo["type"] in {"stdev", "skip"}:
                         continue
                     if planner not in t[domain][column]:
-                        row.append("-")
+                        row.append("X")
                         continue
                     value = transformTextValue(t[domain][column][planner])
                     if plannerInfo["type"] in {"slashed"} and not columnInfo.get("avoidSlashing"):

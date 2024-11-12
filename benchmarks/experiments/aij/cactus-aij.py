@@ -15,10 +15,8 @@ from classes.Result import Result
 
 def main():
     # Parsing the results
-    exp = "2024-10-24-AIJ-v1"
+    exp = "2024-11-12-DOMAINS-v6"
     file = f"benchmarks/results/csv/{exp}.csv"
-    if os.path.exists(file):
-        os.remove(file)
 
     folder = f'benchmarks/figures/{exp}'
     if os.path.exists(folder):
@@ -26,7 +24,12 @@ def main():
     os.mkdir(folder)
 
     joinWith = [
-        (exp, ["PATTY-R"]),
+        (exp, ["PATTY-A", "PATTY-L", "PATTY-E"]),
+        ("2024-11-12-DOMAINS-v1", ["ENHSP-SAT-AIBR",
+                                   "RANTANPLAN", "SPRINGROLL", "ENHSP-SAT-HADD",
+                                   "ENHSP-SAT-HMRP", "METRIC-FF",
+                                   "NFD", "OMT", "ENHSP-SOCS"]),
+        ("2024-11-11-SOCS-v1", ["ENHSP-SOCS"]),
         ("2024-10-07-AIJ-FINAL-v10", ["PATTY-A"]),
         ("2024-10-07-AIJ-FINAL-v9", ["PATTY-E", "PATTY-L", "PATTY-M"]),
         ("2024-10-07-AIJ-FINAL-v7", ["RANTANPLAN"]),
