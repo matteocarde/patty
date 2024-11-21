@@ -37,23 +37,13 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2024-11-12-DOMAINS-v6"
-    file = f"benchmarks/results/csv/{exp}.csv"
-
-    folder = f'benchmarks/latex/{exp}'
-    if os.path.exists(folder):
-        shutil.rmtree(folder)
-    os.mkdir(folder)
-
-    if os.path.exists(file):
-        os.remove(file)
+    exp = "2024-11-12-DOMAINS-v7"
     joinWith = [
-        (exp, ["PATTY-A", "PATTY-L", "PATTY-E"]),
-        ("2024-11-12-DOMAINS-v1", ["ENHSP-SAT-AIBR",
-                                   "RANTANPLAN", "SPRINGROLL", "ENHSP-SAT-HADD",
-                                   "ENHSP-SAT-HMRP", "METRIC-FF",
-                                   "NFD", "OMT", "ENHSP-SOCS"]),
+        (exp, ["PATTY-A", "PATTY-L", "PATTY-M", "PATTY-R", "PATTY-E"]),
+        ("2024-11-12-DOMAINS-v1", ["ENHSP-SAT-AIBR", "RANTANPLAN", "SPRINGROLL", "ENHSP-SAT-HADD",
+                                   "ENHSP-SAT-HMRP", "METRIC-FF", "NFD", "OMT", "ENHSP-SOCS"]),
         ("2024-11-11-SOCS-v1", ["ENHSP-SOCS"]),
+        ("2024-10-24-AIJ-v1", ["PATTY-R"]),
         ("2024-10-07-AIJ-FINAL-v10", ["PATTY-A"]),
         ("2024-10-07-AIJ-FINAL-v9", ["PATTY-E", "PATTY-L", "PATTY-M"]),
         ("2024-10-07-AIJ-FINAL-v7", ["RANTANPLAN"]),
@@ -63,13 +53,23 @@ def main():
          ["ENHSP-SAT-AIBR", "PATTY-A", "PATTY-E", "ENHSP-SAT-HADD", "ENHSP-SAT-HMRP", "METRIC-FF", "NFD"])
     ]
 
+    file = f"benchmarks/results/csv/{exp}.csv"
+
+    folder = f'benchmarks/latex/{exp}'
+    if os.path.exists(folder):
+        shutil.rmtree(folder)
+    os.mkdir(folder)
+
+    if os.path.exists(file):
+        os.remove(file)
+
     for (exp2, keepSolvers) in joinWith:
         CloudLogger.appendLogs(exp2, file, keepSolvers)
 
     tables = [
-        # ("TAB1", AIJ_TABLE1),
-        # ("TAB2", AIJ_TABLE2),
-        # ("TAB3", AIJ_TABLE3),
+        ("TAB1", AIJ_TABLE1),
+        ("TAB2", AIJ_TABLE2),
+        ("TAB3", AIJ_TABLE3),
         ("TAB4", AIJ_TABLE4)
     ]
 
@@ -156,11 +156,13 @@ def main():
                 if planner not in d[domain]:
                     continue
                 solved = {r.problem for r in d[domain][planner] if r.solved}
-                if commonlySolved is None:
+                print(domain, planner, solved, commonlySolved)
+                if commonlySolved is None and solved:
                     commonlySolved = solved
                     continue
                 if solved:
                     commonlySolved &= solved
+            commonlySolved = commonlySolved if commonlySolved else set()
 
             for planner, plannerInfo in table["planners"].items():
                 if planner not in d[domain]:

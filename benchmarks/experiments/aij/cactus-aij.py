@@ -15,21 +15,13 @@ from classes.Result import Result
 
 def main():
     # Parsing the results
-    exp = "2024-11-12-DOMAINS-v6"
-    file = f"benchmarks/results/csv/{exp}.csv"
-
-    folder = f'benchmarks/figures/{exp}'
-    if os.path.exists(folder):
-        shutil.rmtree(folder)
-    os.mkdir(folder)
-
+    exp = "2024-11-12-DOMAINS-v7"
     joinWith = [
-        (exp, ["PATTY-A", "PATTY-L", "PATTY-E"]),
-        ("2024-11-12-DOMAINS-v1", ["ENHSP-SAT-AIBR",
-                                   "RANTANPLAN", "SPRINGROLL", "ENHSP-SAT-HADD",
-                                   "ENHSP-SAT-HMRP", "METRIC-FF",
-                                   "NFD", "OMT", "ENHSP-SOCS"]),
+        (exp, ["PATTY-A", "PATTY-L", "PATTY-M", "PATTY-R", "PATTY-E"]),
+        ("2024-11-12-DOMAINS-v1", ["ENHSP-SAT-AIBR", "RANTANPLAN", "SPRINGROLL", "ENHSP-SAT-HADD",
+                                   "ENHSP-SAT-HMRP", "METRIC-FF", "NFD", "OMT", "ENHSP-SOCS"]),
         ("2024-11-11-SOCS-v1", ["ENHSP-SOCS"]),
+        ("2024-10-24-AIJ-v1", ["PATTY-R"]),
         ("2024-10-07-AIJ-FINAL-v10", ["PATTY-A"]),
         ("2024-10-07-AIJ-FINAL-v9", ["PATTY-E", "PATTY-L", "PATTY-M"]),
         ("2024-10-07-AIJ-FINAL-v7", ["RANTANPLAN"]),
@@ -38,6 +30,12 @@ def main():
         ("2024-10-07-AIJ-FINAL-v2",
          ["ENHSP-SAT-AIBR", "PATTY-A", "PATTY-E", "ENHSP-SAT-HADD", "ENHSP-SAT-HMRP", "METRIC-FF", "NFD"])
     ]
+    file = f"benchmarks/results/csv/{exp}.csv"
+
+    folder = f'benchmarks/figures/{exp}'
+    if os.path.exists(folder):
+        shutil.rmtree(folder)
+    os.mkdir(folder)
 
     for (exp2, keepSolvers) in joinWith:
         CloudLogger.appendLogs(exp2, file, keepSolvers)
@@ -61,6 +59,7 @@ def main():
     dOrig = dict()
     planners = [
         "PATTY-E",
+        "ENHSP-SOCS",
         "PATTY-A",
         "PATTY-R-MIN",
         "PATTY-R-MED",
@@ -147,7 +146,7 @@ def main():
 
         ax.grid()
         ax.set_xlabel(p["xLabel"])
-        ax.set_xlim([-10, 280])
+        ax.set_xlim([-10, 290])
         ax.set_ylim([0, p["yLim"]])
         ax.set_ylabel(p["yLabel"])
         ax.set_yscale(p["yScale"])

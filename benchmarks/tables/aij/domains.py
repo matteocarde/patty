@@ -24,31 +24,6 @@ AIJ_DOMAINS = {
             'instance_11_40_10_1.pddl'
         }
     },
-    "numeric/ipc-2023/settlers-compiled": {
-        "name": r"\textsc{Stlrs} (S)",
-        "instances": {
-            "pfile1.pddl",
-            "pfile10.pddl",
-            "pfile11.pddl",
-            "pfile12.pddl",
-            "pfile13.pddl",
-            "pfile14.pddl",
-            "pfile15.pddl",
-            "pfile16.pddl",
-            "pfile17.pddl",
-            "pfile18.pddl",
-            "pfile19.pddl",
-            "pfile2.pddl",
-            "pfile20.pddl",
-            "pfile3.pddl",
-            "pfile4.pddl",
-            "pfile5.pddl",
-            "pfile6.pddl",
-            "pfile7.pddl",
-            "pfile8.pddl",
-            "pfile9.pddl",
-        }
-    },
     "numeric/ipc-2023/counters": {
         "name": r"\textsc{Cnt} (S)",
         "instances": {
@@ -422,6 +397,31 @@ AIJ_DOMAINS = {
             'instance_4_1_1229.pddl',
             'instance_5_1_1229.pddl',
             'instance_5_2_1229.pddl'
+        }
+    },
+    "numeric/ipc-2023/settlers-compiled": {
+        "name": r"\textsc{Stlrs} (S)",
+        "instances": {
+            "pfile1.pddl",
+            "pfile10.pddl",
+            "pfile11.pddl",
+            "pfile12.pddl",
+            "pfile13.pddl",
+            "pfile14.pddl",
+            "pfile15.pddl",
+            "pfile16.pddl",
+            "pfile17.pddl",
+            "pfile18.pddl",
+            "pfile19.pddl",
+            "pfile2.pddl",
+            "pfile20.pddl",
+            "pfile3.pddl",
+            "pfile4.pddl",
+            "pfile5.pddl",
+            "pfile6.pddl",
+            "pfile7.pddl",
+            "pfile8.pddl",
+            "pfile9.pddl",
         }
     },
     "numeric/ipc-2023/sugar": {

@@ -32,7 +32,7 @@ AIJ_PLANNERS = {
         "style": "--"
     },
     "ENHSP-SOCS": {
-        "name": r"$\mathrm{EN}_{DT}$",
+        "name": r"$\mathrm{EN}_\mathrm{CT}$",
         "style": "--"
     },
     "NFD": {

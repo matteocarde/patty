@@ -7,7 +7,9 @@ AIJ_TABLE3 = {
     "orientation": "landscape",
     "width": r"\textwidth",
     "time-limit": 300 * 1000,
-    "caption": r"Comparative analysis between symbolic planners",
+    "caption": r"Comparative analysis between \pattye and other symbolic planners. In the table, names have been "
+               r"abbreviated to save space. See \cite{ipc2023} for more details. A ``-'' indicates that no problem in "
+               r"the domain has been solved with the given resources.  Best results are in bold.",
     "columns": {
         "quantity": {
             "name": "Solved (out of $20$)",
@@ -25,7 +27,7 @@ AIJ_TABLE3 = {
             "stdev": True
         },
         "planLength": {
-            "name": r"$Plan length$",
+            "name": r"Plan length",
             "winner": -1
         },
         "nOfVars": {

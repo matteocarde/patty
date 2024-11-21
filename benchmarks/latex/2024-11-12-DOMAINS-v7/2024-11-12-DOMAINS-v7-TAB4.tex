@@ -1,0 +1,47 @@
+
+               \documentclass[11pt]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||ccccc||ccccc||ccccc||}
+\hline
+ & \multicolumn{5}{c||}{Solved (out of $20$)}&\multicolumn{5}{c||}{Time (s)}&\multicolumn{5}{c||}{Plan Length}\\
+Domain & $\mathrm{P}_\mathrm{E}$&$$\mathrm{EN}_\mathrm{CT}$$&$$\mathrm{EN}$$&$$\mathrm{NFD}$$&$$\mathrm{FF}$$&$\mathrm{P}_\mathrm{E}$&$$\mathrm{EN}_\mathrm{CT}$$&$$\mathrm{EN}$$&$$\mathrm{NFD}$$&$$\mathrm{FF}$$&$\mathrm{P}_\mathrm{E}$&$$\mathrm{EN}_\mathrm{CT}$$&$$\mathrm{EN}$$&$$\mathrm{NFD}$$&$$\mathrm{FF}$$\\
+\hline
+\textsc{BlGrp} (S)&\textbf{20}&14&16&-&2&\textbf{1.8}&117.2&81.5&-&270.2&124&\textbf{22}&\textbf{22}&-&24\\
+\textsc{Cnt} (S)&\textbf{20}&10&12&11&15&\textbf{0.9}&163.8&133.8&149.8&95.7&128&85&85&\textbf{84}&\textbf{84}\\
+\textsc{Cnt} (L)&\textbf{20}&12&10&6&8&\textbf{1.1}&142.3&170.9&214.0&180.0&30&16&29&16&\textbf{13}\\
+\textsc{Del} (S)&5&14&13&9&\textbf{18}&226.4&117.1&121.7&165.2&\textbf{41.2}&\textbf{25}&28&31&35&\textbf{25}\\
+\textsc{Drn} (S)&3&\textbf{18}&16&16&2&255.3&\textbf{55.4}&62.9&66.0&268.4&16&\textbf{7}&8&\textbf{7}&\textbf{7}\\
+\textsc{Exp} (S)&2&\textbf{6}&\textbf{6}&3&-&270.2&224.0&\textbf{212.3}&253.7&-&\textbf{36}&48&72&54&-\\
+\textsc{Farm} (S)&\textbf{20}&\textbf{20}&\textbf{20}&15&9&2.4&1.8&\textbf{0.9}&85.3&188.1&701&\textbf{292}&\textbf{292}&\textbf{292}&341\\
+\textsc{Farm} (L)&\textbf{20}&\textbf{20}&18&11&15&2.7&\textbf{2.5}&48.6&151.2&80.5&864&254&34&\textbf{21}&34\\
+\textsc{HPwr} (S)&\textbf{20}&\textbf{20}&2&1&1&9.4&\textbf{4.6}&270.3&285.1&285.0&64&\textbf{16}&20&35&\textbf{16}\\
+\textsc{Mrkt} (L)&-&\textbf{20}&4&-&-&-&\textbf{35.0}&259.3&-&-&-&\textbf{424}&594&-&-\\
+\textsc{MPrime} (S)&12&\textbf{17}&\textbf{17}&14&\textbf{17}&137.7&74.6&68.1&127.2&\textbf{45.1}&63&\textbf{7}&9&\textbf{7}&8\\
+\textsc{PathM} (S)&\textbf{18}&3&2&1&10&\textbf{42.3}&262.8&272.2&284.2&154.9&57&\textbf{12}&18&\textbf{12}&14\\
+\textsc{PlWat} (S)&6&\textbf{20}&16&14&3&215.3&\textbf{41.1}&101.3&167.2&268.3&285&\textbf{235}&429&393&455\\
+\textsc{Rvr} (S)&\textbf{15}&12&8&4&10&\textbf{101.4}&143.7&197.4&240.8&133.3&34&13&33&\textbf{9}&\textbf{9}\\
+\textsc{Sail} (S)&\textbf{20}&\textbf{20}&\textbf{20}&10&1&3.6&5.0&\textbf{2.0}&150.3&285.0&\textbf{174}&\textbf{174}&\textbf{174}&\textbf{174}&179\\
+\textsc{Sail} (L)&\textbf{19}&2&2&15&8&\textbf{16.3}&270.8&270.6&96.8&182.8&*&*&*&*&*\\
+\textsc{Stlrs} (S)&\textbf{8}&2&1&-&4&\textbf{210.5}&279.0&288.6&-&243.8&*&*&*&-&*\\
+\textsc{Sgr} (S)&\textbf{20}&11&8&4&13&\textbf{10.3}&144.5&182.5&245.7&122.5&*&*&*&*&*\\
+\textsc{Tpp} (L)&2&\textbf{7}&3&2&2&270.2&\textbf{212.3}&255.2&270.0&266.7&13&11&11&\textbf{5}&9\\
+\textsc{Zeno} (S)&11&17&\textbf{19}&9&11&136.4&89.5&\textbf{28.1}&172.5&135.0&20&15&\textbf{14}&21&\textbf{14}\\
+\textsc{Line} (L)&\textbf{20}&11&9&6&6&\textbf{1.2}&149.5&175.4&235.0&211.6&211&\textbf{171}&276&234&187
+\\\hline
+\textit{Best}&\textbf{281}&\textbf{276}&\textbf{222}&\textbf{151}&\textbf{155}&\textbf{136}&\textbf{62}&\textbf{41}&\textbf{37}&\textbf{94}&\textbf{65}&\textbf{162}&\textbf{96}&\textbf{85}&\textbf{92}\\\hline
+
+        \end{tabular}}
+        \caption{Comparative analysis between \pattye and other publicly available search-based planners. In the table, names have been abbreviated to save space. A ``-'' indicates that no problem in the domain has been solved with the given resources. The ``*'' in the \textsc{Sugar} domain, indicates that there was not a single problem solved by all the considered planners. Best results are in bold.}
+        \label{tab:search}
+        \end{table*}
+        
+\end{document}

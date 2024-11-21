@@ -1,0 +1,47 @@
+
+               \documentclass[11pt,landscape]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in,landscape]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||ccccc||ccccc||ccccc||}
+\hline
+ & \multicolumn{5}{c||}{Solved (out of $20$)}&\multicolumn{5}{c||}{Time (s)}&\multicolumn{5}{c||}{\textsc{smt} calls}\\
+Domain & $$\mathrm{P}_\mathrm{E}$$&$$\mathrm{P}_\mathrm{A}$$&$$\mathrm{P}_\mathrm{R}^{min}$$&$$\mathrm{P}_\mathrm{R}^{med}$$&$$\mathrm{P}_\mathrm{R}^{max}$$&$$\mathrm{P}_\mathrm{E}$$&$$\mathrm{P}_\mathrm{A}$$&$$\mathrm{P}_\mathrm{R}^{min}$$&$$\mathrm{P}_\mathrm{R}^{med}$$&$$\mathrm{P}_\mathrm{R}^{max}$$&$$\mathrm{P}_\mathrm{E}$$&$$\mathrm{P}_\mathrm{A}$$&$$\mathrm{P}_\mathrm{R}^{min}$$&$$\mathrm{P}_\mathrm{R}^{med}$$&$$\mathrm{P}_\mathrm{R}^{max}$$\\
+\hline
+\textsc{BlGrp} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&1.8&\textbf{1.6}&\textbf{1.6}&1.7&1.8&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}\\
+\textsc{Cnt} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&0.9&0.9&\textbf{0.8}&0.9&1.0&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}\\
+\textsc{Cnt} (L)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&17&1.1&\textbf{0.9}&11.2&34.4&105.2&\textbf{1.0}&\textbf{1.0}&1.9&1.9&1.9\\
+\textsc{Del} (S)&5&3&\textbf{6}&\textbf{6}&4&226.4&256.0&\textbf{208.3}&212.9&236.0&\textbf{1.7}&3.3&2.3&2.3&3.0\\
+\textsc{Drn} (S)&3&3&\textbf{5}&3&3&255.3&255.2&\textbf{246.5}&255.2&255.4&5.7&5.7&\textbf{4.3}&5.0&5.3\\
+\textsc{Exp} (S)&2&2&\textbf{3}&\textbf{3}&2&270.2&273.9&\textbf{257.9}&261.0&275.9&\textbf{3.0}&6.0&5.0&5.5&7.5\\
+\textsc{Farm} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&2.4&2.8&\textbf{0.9}&2.1&7.3&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&1.1&1.1\\
+\textsc{Farm} (L)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&19&2.7&2.7&\textbf{1.1}&2.9&27.4&\textbf{1.0}&\textbf{1.0}&1.1&1.1&1.4\\
+\textsc{HPwr} (S)&\textbf{20}&\textbf{20}&1&-&-&\textbf{9.4}&22.9&295.2&-&-&\textbf{1.0}&\textbf{1.0}&7.0&-&-\\
+\textsc{Mrkt} (L)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{MPrime} (S)&\textbf{12}&10&11&9&8&\textbf{137.7}&166.2&165.2&185.1&207.8&\textbf{1.1}&2.0&2.0&2.6&3.1\\
+\textsc{PathM} (S)&18&\textbf{19}&13&12&6&42.3&\textbf{37.2}&117.9&147.7&232.7&\textbf{1.0}&\textbf{1.0}&2.8&3.7&3.8\\
+\textsc{PlWat} (S)&6&6&\textbf{7}&6&6&215.3&217.8&\textbf{198.0}&212.8&214.4&7.6&7.6&\textbf{6.8}&7.8&8.8\\
+\textsc{Rvr} (S)&15&11&\textbf{16}&\textbf{16}&11&101.4&149.4&\textbf{96.7}&124.9&166.7&\textbf{1.7}&2.4&2.8&3.0&3.9\\
+\textsc{Sail} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&3.6&1.1&\textbf{0.9}&1.2&24.4&3.3&3.3&\textbf{2.3}&2.8&3.0\\
+\textsc{Sail} (L)&19&\textbf{20}&\textbf{20}&\textbf{20}&19&16.3&8.2&\textbf{0.9}&1.0&16.2&1.5&1.5&\textbf{1.2}&1.6&1.8\\
+\textsc{Stlrs} (S)&8&\textbf{9}&3&-&-&210.5&\textbf{193.1}&265.8&-&-&\textbf{1.0}&\textbf{1.0}&2.3&-&-\\
+\textsc{Sgr} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&10.3&14.6&\textbf{6.2}&14.4&28.8&\textbf{2.5}&3.1&2.8&3.3&3.5\\
+\textsc{Tpp} (L)&2&2&\textbf{3}&\textbf{3}&2&270.2&270.2&\textbf{259.3}&260.4&270.6&\textbf{2.5}&\textbf{2.5}&\textbf{2.5}&\textbf{2.5}&3.5\\
+\textsc{Zeno} (S)&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{136.4}&\textbf{136.4}&137.7&138.8&140.7&\textbf{1.6}&\textbf{1.6}&2.7&3.0&3.5\\
+\textsc{Line} (L)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&19&\textbf{1.2}&8.3&2.1&3.4&50.4&\textbf{2.8}&4.7&4.4&5.0&5.7
+\\\hline
+\textit{Best}&\textbf{281}&\textbf{276}&\textbf{259}&\textbf{249}&\textbf{227}&\textbf{85}&\textbf{86}&\textbf{134}&\textbf{2}&\textbf{0}&\textbf{256}&\textbf{197}&\textbf{156}&\textbf{115}&\textbf{92}\\\hline
+
+        \end{tabular}}
+        \caption{Comparative analysis between  \pattya and \pattye. Each domain is labeled with S (for simple) if every numeric effect of each action either increases or decreases by a constant the assigned variable, and with L (for linear), otherwise. In the table, names have been abbreviated to save space.  See \cite{ipc2023} for more details. A ``-'' indicates that no problem in the domain has been solved with the given resources. Best results are in bold}
+        \label{tab:exp-patty-a-patty-e}
+        \end{table*}
+        
+\end{document}

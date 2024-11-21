@@ -9,7 +9,7 @@ AIJ_TABLE2 = {
     "caption": r"Comparative analysis between  \pattye, \pattym and \pattyi. Each domain is labeled with S (for "
                r"simple) if every numeric effect of each action either increases or decreases by a constant the "
                r"assigned variable, and with L (for linear), otherwise. In the table, names have been abbreviated to "
-               r"save space.  See \cite{ipc2023} for other details.",
+               r"save space.  See \cite{ipc2023} for more details. Best results are in bold.",
     "columns": {
         "quantity": {
             "name": "Solved (out of $20$)",

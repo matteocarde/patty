@@ -11,7 +11,8 @@ AIJ_TABLE1 = {
     "caption": r"Comparative analysis between  \pattya and \pattye. Each domain is labeled with S (for simple) if "
                r"every numeric effect of each action either increases or decreases by a constant the assigned "
                r"variable, and with L (for linear), otherwise. In the table, names have been abbreviated to save "
-               r"space.  See \cite{ipc2023} for other details.",
+               r"space.  See \cite{ipc2023} for more details. A ``-'' indicates that no problem in the domain has "
+               r"been solved with the given resources. Best results are in bold",
     "columns": {
         # "coverage": {
         #     "name": "Coverage (\%)",
