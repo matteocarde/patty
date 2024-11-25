@@ -1,0 +1,41 @@
+(define (problem pb01)
+	(:domain dig)
+	(:objects
+		c01 c02 c03 c04 c05 c06 c07 c08 c09 c10 - cell
+		r1 r2 r3 r4 r5 r6 - robot
+	)
+	(:init
+		(isLeft c01 c02)
+		(isLeft c02 c03)
+		(isLeft c03 c04)
+		(isLeft c04 c05)
+		(isLeft c05 c06)
+		(isLeft c06 c07)
+		(isLeft c07 c08)
+		(isLeft c08 c09)
+		(isLeft c09 c10)
+		(isLeft c10 c01)
+
+		(isDown c01 c02)
+		(isDown c02 c03)
+		(isDown c03 c04)
+		(isDown c04 c05)
+		(isDown c05 c06)
+		(isDown c06 c07)
+		(isDown c07 c08)
+		(isDown c08 c09)
+		(isDown c09 c10)
+		(isDown c10 c01)
+
+		; (at r c01 c01)
+		(at r1 c05 c05)
+		(at r2 c01 c05)
+		(at r3 c02 c09)
+		(at r4 c05 c03)
+		(at r5 c03 c04)
+		(at r6 c09 c01)
+	)
+	(:goal
+		(and (at r1 c05 c05)(at r2 c05 c05)(at r3 c05 c05)(at r4 c05 c05)(at r5 c05 c05)(at r6 c05 c05))
+	)
+)
