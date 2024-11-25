@@ -54,7 +54,11 @@ class SMTExpression:
         from src.smt.expressions.ImpliesExpression import ImpliesExpression
         return ImpliesExpression(other, self)
 
-    def __eq__(self, other: SMTExpression or int):
+    # def __eq__(self, other: SMTExpression or int):
+    #     from src.smt.expressions.EqualExpression import EqualExpression
+    #     return EqualExpression.simplify(self, other)
+
+    def equal(self, other: SMTExpression or int):
         from src.smt.expressions.EqualExpression import EqualExpression
         return EqualExpression.simplify(self, other)
 

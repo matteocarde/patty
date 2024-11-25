@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, Set
 
 from pyeda.boolalg.bdd import BDDVariable
 from pysmt.fnode import FNode
@@ -20,6 +20,9 @@ class FalseExpression(SMTExpression):
 
     def getExpression(self) -> FNode:
         return FALSE()
+
+    def getVariables(self) -> Set:
+        return set()
 
     def toBDDExpression(self, map: Dict[SMTBoolVariable, BDDVariable]):
         return 0

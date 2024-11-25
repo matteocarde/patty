@@ -10,6 +10,7 @@ from src.pddl.Literal import Literal
 from src.smt.SMTBoolVariable import SMTBoolVariable
 from src.smt.SMTConjunction import SMTConjunction
 from src.smt.SMTExpression import SMTExpression
+from src.smt.SMTVariable import SMTVariable
 
 
 class ActionStateTransitionFunction:
@@ -31,51 +32,53 @@ class ActionStateTransitionFunction:
         self.clauses: SMTConjunction = SMTConjunction()
 
         self.clausesByName = dict()
-        self.clausesByName["pre"] = self.getPreconditionClauses()
-        self.clausesByName["eff"] = self.getEffectClauses()
-        self.clausesByName["conflict"] = self.getConflictClauses()
+        self.clausesByName["pre"] = self.getPreconditionClauses(self.action, self.current, self.next)
+        self.clausesByName["eff"] = self.getEffectClauses(self.action, self.current, self.next)
+        self.clausesByName["conflict"] = self.getConflictClauses(self.action, self.current, self.next)
         for name, clauses in self.clausesByName.items():
             self.clauses += clauses
 
-    def getPreconditionClauses(self) -> List[SMTExpression]:
-        preFormula = SMTExpression.fromFormula(self.action.preconditions, self.current)
+    @staticmethod
+    def getPreconditionClauses(a: Action, X: Dict[Atom, SMTVariable], X_: Dict[Atom, SMTVariable]) -> List[
+        SMTExpression]:
+        preFormula = SMTExpression.fromFormula(a.preconditions, X)
         clauses = [preFormula]
         atLeastOneCe = []
-        for ce in self.action.effects:
+        for ce in a.effects:
             assert isinstance(ce, ConditionalEffect)
-            atLeastOneCe.append(SMTExpression.fromFormula(ce.conditions, self.current))
+            atLeastOneCe.append(SMTExpression.fromFormula(ce.conditions, X))
         clauses.append(SMTExpression.bigor(atLeastOneCe))
 
         return clauses
 
-    def getEffectClauses(self) -> List[SMTExpression]:
+    @staticmethod
+    def getEffectClauses(a: Action, X: Dict[Atom, SMTVariable], X_: Dict[Atom, SMTVariable]) -> List[SMTExpression]:
         one = []
-        for v in self.atoms:
-            vNext = self.next[v]
-            vCurrent = self.current[v]
+        for v in a.predicates:
+            vNext = X_[v]
+            vCurrent = X[v]
             andExpr = [vCurrent]
-            for e in self.action.deltaMinus[v]:
-                andExpr.append(~SMTExpression.fromFormula(e.conditions, self.current))
+            for e in a.deltaMinus[v]:
+                andExpr.append(~SMTExpression.fromFormula(e.conditions, X))
             orExpr = [SMTExpression.bigand(andExpr)]
-            for e in self.action.deltaPlus[v]:
-                orExpr.append(SMTExpression.fromFormula(e.conditions, self.current))
-            one.append(vNext == SMTExpression.bigor(orExpr))
+            for e in a.deltaPlus[v]:
+                orExpr.append(SMTExpression.fromFormula(e.conditions, X))
+            one.append(vNext.equal(SMTExpression.bigor(orExpr)))
         zero = []
-        for v in self.atoms:
-            vNext = self.next[v]
-            vCurrent = self.current[v]
-            zero.append(vNext == vCurrent)
+        for v in a.predicates:
+            zero.append(X_[v].equal(X[v]))
         return one
 
-    def getConflictClauses(self) -> List[SMTExpression]:
+    @staticmethod
+    def getConflictClauses(a: Action, X: Dict[Atom, SMTVariable], X_: Dict[Atom, SMTVariable]) -> List[SMTExpression]:
         clauses = []
-        for v in self.action.addedAtoms | self.action.deletedAtoms:
+        for v in a.addedAtoms | a.deletedAtoms:
             cesAdding = []
             cesDeleting = []
-            for e1 in self.action.deltaPlus[v]:
-                cesAdding.append(~SMTExpression.fromFormula(e1.conditions, self.current))
-            for e2 in self.action.deltaMinus[v]:
-                cesDeleting.append(~SMTExpression.fromFormula(e2.conditions, self.current))
+            for e1 in a.deltaPlus[v]:
+                cesAdding.append(~SMTExpression.fromFormula(e1.conditions, X))
+            for e2 in a.deltaMinus[v]:
+                cesDeleting.append(~SMTExpression.fromFormula(e2.conditions, X))
             fAdding = SMTExpression.bigand(cesAdding)
             fDeleting = SMTExpression.bigand(cesDeleting)
             clauses.append(fAdding | fDeleting)

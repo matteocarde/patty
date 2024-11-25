@@ -139,7 +139,7 @@ class TransitionFunctionBDD:
             liftedVar2sigma[liftedVar] = next[liftedAtom2groundAtom[liftedAtom]]
 
         bddVar2sigma: Dict[str, SMTExpression] = dict()
-        for smtvar, bddvar in {**self.Xs[0], **self.Xs[2]}.items():
+        for smtvar, bddvar in {**self.Xs[2], **self.Xs[0]}.items():
             bddVar2sigma[bddvar.name] = liftedVar2sigma[smtvar]
 
         groundExpr = SMTExpression.fromBDDExpression(self.expr, bddVar2sigma)

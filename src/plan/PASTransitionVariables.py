@@ -10,9 +10,9 @@ from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTVariable import SMTVariable
 
 
-class CESPASTransitionVariables:
-    stateVariables: List[Dict[Atom, SMTVariable]]
-    actionVariables: List[Dict[Action, SMTVariable]]
+class PASTransitionVariables:
+    stateVariables: Dict[int, Dict[Atom, SMTVariable]]
+    actionVariables: Dict[int, Dict[Action, SMTVariable]]
 
     def __init__(self, gDomain: GroundedDomain, bound: int):
         self.domain = gDomain
@@ -23,21 +23,21 @@ class CESPASTransitionVariables:
         self.actionVariables = self.__getActionVariables()
         pass
 
-    def __getStateVariables(self) -> List[Dict[Atom, SMTVariable]]:
-        state: List[Dict[Atom, SMTVariable]] = list()
+    def __getStateVariables(self) -> Dict[int, Dict[Atom, SMTVariable]]:
+        state: Dict[int, Dict[Atom, SMTVariable]] = dict()
         for i in range(0, self.n + 1):
             stateI: Dict[Atom, SMTVariable] = dict()
             for v in self.predicates:
                 stateI[v] = SMTBoolVariable(f"{v}_{i}")
-            state.append(stateI)
+            state[i] = stateI
 
         return state
 
-    def __getActionVariables(self) -> List[Dict[Action, SMTVariable]]:
-        action: List[Dict[Action, SMTVariable]] = list()
+    def __getActionVariables(self) -> Dict[int, Dict[Action, SMTVariable]]:
+        action: Dict[int, Dict[Action, SMTVariable]] = dict()
         for i in range(1, self.n + 1):
             actionI: Dict[Action, SMTVariable] = dict()
             for a in self.domain.actions:
-                actionI[a] = SMTBoolVariable(f"{a.name}_{a}")
-            action.append(actionI)
+                actionI[a] = SMTBoolVariable(f"{a.name}_{i}")
+            action[i] = actionI
         return action

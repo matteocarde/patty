@@ -3,7 +3,7 @@ import os
 import shutil
 
 MAX_BITS = 15
-MAX_COUNTERS = 6
+MAX_COUNTERS = 2
 NEWLINE = "\n"
 
 

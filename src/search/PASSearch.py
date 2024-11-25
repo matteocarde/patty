@@ -1,6 +1,6 @@
 from typing import Tuple
 
-from src.pddl.Domain import GroundedDomain
+from src.pddl.Domain import GroundedDomain, Domain
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Plan import Plan
 from src.pddl.Problem import Problem
@@ -18,8 +18,8 @@ from src.utils.LogPrint import LogPrintLevel
 
 class PASSearch(Search):
 
-    def __init__(self, domain: GroundedDomain, problem: Problem, args: Arguments):
-        super().__init__(domain, problem, args)
+    def __init__(self, domain: GroundedDomain, problem: Problem, args: Arguments, liftedDomain: Domain = None):
+        super().__init__(domain, problem, args, liftedDomain=liftedDomain)
         self.isCES = self.domain.hasConditionalEffects()
 
     def solve(self) -> NumericPlan:
@@ -49,7 +49,6 @@ class PASSearch(Search):
             self.ts.end(f"Conversion to SMT at bound {bound}", console=self.console)
 
             self.ts.start(f"Solving Bound {bound}", console=self.console)
-            solver: SMTSolver = SMTSolver(encoding)
 
             solver: SMTSolver = SMTSolver(encoding)
             self.ts.end(f"Conversion to SMT at bound {bound}", console=self.console)

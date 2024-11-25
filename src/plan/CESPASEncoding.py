@@ -1,5 +1,6 @@
 from typing import Dict, Set
 
+from src.ces.ActionStateTransitionFunction import ActionStateTransitionFunction
 from src.ces.TransitionFunctionBDD import TransitionFunctionBDD
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
@@ -8,13 +9,12 @@ from src.pddl.Literal import Literal
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
 from src.pddl.State import State
-from src.plan.CESPASTransitionVariables import CESPASTransitionVariables
-from src.plan.CESTransitionVariables import CESTransitionVariables
 from src.plan.Encoding import Encoding
-from src.plan.Pattern import Pattern
+from src.plan.PASTransitionVariables import PASTransitionVariables
 from src.plan.TransitionRelations import TransitionRelations
 from src.smt.SMTConjunction import SMTConjunction
 from src.smt.SMTExpression import SMTExpression
+from src.smt.SMTRulesTree import SMTRulesTree
 from src.smt.SMTSolution import SMTSolution
 
 
@@ -31,19 +31,21 @@ class CESPASEncoding(Encoding):
         self.bound: int = bound
         self.relations: TransitionRelations = transitionRelations
 
-        self.vars = CESPASTransitionVariables(self.domain, self.bound)
+        self.vars = PASTransitionVariables(self.domain, self.bound)
 
-        self.rulesByName: Dict[str, SMTConjunction] = dict()
-        self.rulesByName["init"] = self.getInitRules()
+        self.rulesByName = SMTRulesTree()
+
+        self.rulesByName.append("init", 0, self.getInitRules())
         for i in range(0, self.bound):
-            self.rulesByName["closure"] = self.getClosureRules(i)
-            self.rulesByName["frame"] = self.getFrameRules(i)
-            self.rulesByName["amo"] = self.getAmoRules(i)
-        self.rulesByName["goal"] = self.getGoalRules()
+            self.rulesByName.append("closure", i, self.getClosureRules(i))
+            self.rulesByName.append("pre", i, self.getPreRules(i))
+            self.rulesByName.append("eff", i, self.getEffRules(i))
+            self.rulesByName.append("conflict", i, self.getConflictRules(i))
+            self.rulesByName.append("frame", i, self.getFrameRules(i))
+            self.rulesByName.append("amo", i, self.getAmoRules(i))
+        self.rulesByName.append("goal", self.bound, self.getGoalRules())
 
-        self.rules = SMTConjunction()
-        for conj in self.rulesByName.values():
-            self.rules += conj
+        self.rules = self.rulesByName.getConjunction()
 
         pass
 
@@ -70,9 +72,50 @@ class CESPASEncoding(Encoding):
         X = self.vars.stateVariables
 
         for a in self.actions:
+            if a.isIdempotent():
+                continue
             T_a: TransitionFunctionBDD = self.relations.closures[a.lifted][-1]
             groundExpr: SMTExpression = T_a.toGroundSMTExpression(a, X[i], X[i + 1])
             rules.append(groundExpr)
+
+        return rules
+
+    def getPreRules(self, i: int) -> SMTConjunction:
+        rules = SMTConjunction()
+        X = self.vars.stateVariables
+        A = self.vars.actionVariables[i + 1]
+
+        for a in self.actions:
+            if a.isNonIdempotent():
+                continue
+            pre = ActionStateTransitionFunction.getPreconditionClauses(a, X[i], X[i + 1])
+            rules.append(A[a].implies(SMTExpression.bigand(pre)))
+
+        return rules
+
+    def getEffRules(self, i: int) -> SMTConjunction:
+        rules = SMTConjunction()
+        X = self.vars.stateVariables
+        A = self.vars.actionVariables[i + 1]
+
+        for a in self.actions:
+            if a.isNonIdempotent():
+                continue
+            eff = ActionStateTransitionFunction.getEffectClauses(a, X[i], X[i + 1])
+            rules.append(A[a].implies(SMTExpression.bigand(eff)))
+
+        return rules
+
+    def getConflictRules(self, i: int) -> SMTConjunction:
+        rules = SMTConjunction()
+        X = self.vars.stateVariables
+        A = self.vars.actionVariables[i + 1]
+
+        for a in self.actions:
+            if a.isNonIdempotent():
+                continue
+            conflict = ActionStateTransitionFunction.getConflictClauses(a, X[i], X[i + 1])
+            rules.append(A[a].implies(SMTExpression.bigand(conflict)))
 
         return rules
 
@@ -86,7 +129,7 @@ class CESPASEncoding(Encoding):
             for a in self.actions:
                 if v in a.addedAtoms or v in a.deletedAtoms:
                     lhs.append(~A[a])
-            rules.append(SMTExpression.bigand(lhs).implies(X[i + 1][v] == X[i][v]))
+            rules.append(SMTExpression.bigand(lhs).implies(X[i + 1][v].equal(X[i][v])))
 
         return rules
 
@@ -141,11 +184,11 @@ class CESPASEncoding(Encoding):
         if not solution:
             return plan
 
-        for i in range(0, self.bound + 1):
+        for i in range(1, self.bound + 1):
             for a in self.actions:
                 isExecuted = solution.getVariable(self.vars.actionVariables[i][a])
                 if isExecuted:
-                    r = self.getRepetitions(a, i, solution) if a.isNonIdempotent() else 1
+                    r = self.getRepetitions(a, i - 1, solution) if a.isNonIdempotent() else 1
                     plan.addRepeatedAction(a, r)
 
         return plan
