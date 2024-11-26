@@ -69,6 +69,7 @@ class Domain:
     def ground(self, problem: Problem, avoidSimplification=False, console: LogPrint = None, delta=1) -> GroundedDomain:
 
         problem.computeWhatCanHappen(self)
+        # self.eliminateQuantifiers(problem)
 
         gActions: Set[Action] = set([g for action in self.actions for g in action.ground(problem, delta=delta)])
         gEvents: Set[Event] = set([g for event in self.events for g in event.ground(problem, delta=delta)])

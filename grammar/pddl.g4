@@ -82,7 +82,9 @@ ceCond: andClause | orClause | booleanLiteral | negatedComparation | comparation
 ceEff: effectNoCes | andEffectNoCes;
 ce: LP 'when' cond=ceCond eff=ceEff RP;
 
-effect:  booleanLiteral | modification | ce;
+forall: LP 'forall' parameters (booleanLiteral | modification | ce) RP;
+
+effect:  booleanLiteral | modification | ce | forall;
 effectNoCes:  booleanLiteral | modification;
 
 andClause: LP 'and' (andClause | orClause | booleanLiteral | negatedComparation  | comparation)+ RP;

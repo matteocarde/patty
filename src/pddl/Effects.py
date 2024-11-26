@@ -9,6 +9,7 @@ from src.pddl.BinaryPredicate import BinaryPredicate, BinaryPredicateType
 from src.pddl.Literal import Literal
 from src.pddl.PDDLWriter import PDDLWriter
 from src.pddl.TimePredicate import TimePredicate, TimePredicateType
+from src.pddl.Type import Type
 from src.pddl.grammar.pddlParser import pddlParser
 from src.pddl.grammar.pddlParser import pddlParser as p
 
@@ -34,14 +35,16 @@ class Effects:
         return eff
 
     @classmethod
-    def fromNode(cls, node: pddlParser.EffectsContext) -> Effects:
+    def fromNode(cls, node: pddlParser.EffectsContext, types: Dict[str, Type]) -> Effects:
 
         from src.pddl.ConditionalEffect import ConditionalEffect
+        from src.pddl.Forall import Forall
 
         effects = cls()
         nodes: [p.EffectContext] = []
-
-        if type(node.getChild(0)) in {p.AndEffectContext, p.AndDurativeEffectContext}:
+        if type(node) in {p.BooleanLiteralContext, p.CeContext}:
+            nodes.append(node)
+        elif type(node.getChild(0)) in {p.AndEffectContext, p.AndDurativeEffectContext}:
             nodes.extend([n.getChild(0) for n in node.getChild(0).children[2:-1]])
         else:
             nodes.append(node.getChild(0).getChild(0))
@@ -53,6 +56,8 @@ class Effects:
                 effects.assignments += TimePredicate.fromNode(n)
             elif isinstance(n, p.CeContext):
                 effects.assignments.append(ConditionalEffect.fromNode(n))
+            elif isinstance(n, p.ForallContext):
+                effects.assignments.append(Forall.fromNode(n, types))
             else:
                 effects.assignments.append(BinaryPredicate.fromNode(n))
 

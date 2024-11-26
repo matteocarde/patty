@@ -359,6 +359,15 @@ class pddlListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by pddlParser#forall.
+    def enterForall(self, ctx:pddlParser.ForallContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#forall.
+    def exitForall(self, ctx:pddlParser.ForallContext):
+        pass
+
+
     # Enter a parse tree produced by pddlParser#effect.
     def enterEffect(self, ctx:pddlParser.EffectContext):
         pass

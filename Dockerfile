@@ -186,7 +186,6 @@ COPY /benchmarks/planners/enhsp-socs /var/enhsp-socs
 ENV PATH /var/enhsp-socs/:${PATH}
 RUN chmod +x /var/enhsp-socs/enhsp-socs
 
-
 WORKDIR /project
 # Copying
 COPY . .
