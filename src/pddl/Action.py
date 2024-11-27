@@ -123,11 +123,7 @@ class Action(Operation):
             return False
         for e1 in [e1 for e1 in self.effects if isinstance(e1, ConditionalEffect)]:
             for e2 in [e2 for e2 in self.effects if isinstance(e2, ConditionalEffect) and e1 != e2]:
-                c11 = e1.effects.getNegative() & e2.conditions.getPositive()
-                c12 = e1.effects.getPositive() & e2.conditions.getNegative()
-                c21 = e1.effects.getPositive() & e2.conditions.getNegative()
-                c22 = e1.effects.getNegative() & e2.conditions.getNegative()
-                if (not c11 or not c12) and (c21 or c22):
+                if e1.allows(e2) and not e1.blocks(e2):
                     return True
         return False
 
@@ -169,4 +165,3 @@ class Action(Operation):
         pw.decreaseTab()
         pw.write(")")
         pass
-

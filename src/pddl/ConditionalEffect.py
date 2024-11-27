@@ -61,6 +61,14 @@ class ConditionalEffect(Predicate):
 
         return ce
 
+    def blocks(self, other: ConditionalEffect) -> bool:
+        return bool(self.effects.getNegative() & other.conditions.getPositive()) or \
+            bool(self.effects.getPositive() & other.conditions.getNegative())
+
+    def allows(self, other: ConditionalEffect) -> bool:
+        return bool(self.effects.getNegative() & other.conditions.getNegative()) or \
+            bool(self.effects.getPositive() & other.conditions.getPositive())
+
     def substitute(self, subs: Dict[Atom, float], default=None) -> ConditionalEffect:
         ce = ConditionalEffect()
         ce.conditions = self.conditions.substitute(subs, default)

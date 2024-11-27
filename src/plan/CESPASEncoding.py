@@ -31,7 +31,7 @@ class CESPASEncoding(Encoding):
         self.bound: int = bound
         self.relations: TransitionRelations = transitionRelations
 
-        self.vars = PASTransitionVariables(self.domain, self.bound)
+        self.vars = PASTransitionVariables(self.domain, self.problem, self.bound)
 
         self.rulesByName = SMTRulesTree()
 
