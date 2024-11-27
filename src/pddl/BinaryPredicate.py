@@ -93,6 +93,9 @@ class BinaryPredicate(Predicate):
 
         return bp
 
+    def getDynamicAtoms(self):
+        return {self.lhs.getAtom()}
+
     def replaceDict(self, r: Dict[Atom, Predicate]) -> BinaryPredicate:
         bp = BinaryPredicate()
         bp.operator = self.operator

@@ -4,14 +4,14 @@ from src.ces.ActionStateTransitionFunction import ActionStateTransitionFunction
 from src.ces.TransitionFunctionBDD import TransitionFunctionBDD
 from src.ces.TransitiveClosure import TransitiveClosure
 from src.pddl.Action import Action
-from src.pddl.Domain import Domain
+from src.pddl.Domain import Domain, GroundedDomain
 
 
 class TransitionRelations:
     closures: Dict[Action, List[TransitionFunctionBDD]]
     reachability: Dict[Action, List[TransitionFunctionBDD]]
 
-    def __init__(self, domain: Domain, maxTime: None or int = None):
+    def __init__(self, domain: GroundedDomain, maxTime: None or int = None):
 
         self.closures = dict()
         self.reachability = dict()

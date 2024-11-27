@@ -20,6 +20,7 @@ class Literal(Predicate):
     lifted: Literal or None
 
     def __init__(self):
+        self.lifted = None
         super().__init__()
 
     def __deepcopy__(self, m=None) -> Literal:
@@ -62,6 +63,9 @@ class Literal(Predicate):
 
     def isLinearIncrement(self):
         return False
+
+    def getDynamicAtoms(self):
+        return {self.atom}
 
     @classmethod
     def fromNode(cls, node: p.PositiveLiteralContext or p.NegativeLiteralContext) -> Literal:

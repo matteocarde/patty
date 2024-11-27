@@ -30,7 +30,7 @@ class PASSearch(Search):
         relations = None
         if self.isCES:
             self.ts.start(f"Computing Transitive Closure", console=self.console)
-            relations = TransitionRelations(self.liftedDomain, self.args.maxClosureTime)
+            relations = TransitionRelations(self.domain, self.args.maxClosureTime)
             self.ts.end(f"Computing Transitive Closure", console=self.console)
 
         while bound <= self.maxBound:

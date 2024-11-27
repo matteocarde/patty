@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import copy
-from typing import Set, Dict
+from typing import Set, Dict, List, Tuple
 
 from src.pddl.Atom import Atom
 from src.pddl.CEConditions import CEConditions
 from src.pddl.CEEffects import CEEffects
+from src.pddl.Parameters import Parameters
 from src.pddl.Predicate import Predicate
+from src.pddl.Problem import Problem
 from src.pddl.grammar.pddlParser import pddlParser as p
 
 
@@ -40,11 +42,17 @@ class ConditionalEffect(Predicate):
         ce.effects = copy.deepcopy(self.effects, m)
         return ce
 
+    def canHappenLifted(self, sub: Tuple, params: List[str], problem) -> bool:
+        return self.conditions.canHappenLifted(sub, params, problem)
+
     def getPredicates(self) -> Set[Atom]:
         return self.conditions.getPredicates() | self.effects.getPredicates()
 
     def getFunctions(self) -> Set[Atom]:
         return self.conditions.getFunctions() | self.effects.getFunctions()
+
+    def getDynamicAtoms(self) -> Set[Atom]:
+        return self.effects.getDynamicAtoms()
 
     def ground(self, subs: Dict[str, str], delta=1) -> ConditionalEffect:
         ce = ConditionalEffect()

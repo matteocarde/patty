@@ -5,6 +5,7 @@ from typing import Dict, List, Set
 
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
+from src.pddl.ConditionalEffect import ConditionalEffect
 from src.pddl.DurativeAction import DurativeAction
 from src.pddl.Event import Event
 from src.pddl.Operation import Operation
@@ -66,10 +67,24 @@ class Domain:
                 return True
         return False
 
+    def eliminateQuantifiers(self, problem) -> Domain:
+
+        problem.computeWhatCanHappen(self)
+
+        qeDomain = copy.deepcopy(self)
+        qeDomain.actions = {a.eliminateQuantifiers(problem) for a in qeDomain.actions}
+
+        return qeDomain
+
+    def hasQuantifiers(self) -> bool:
+        for a in self.actions:
+            if a.hasQuantifiers():
+                return True
+        return False
+
     def ground(self, problem: Problem, avoidSimplification=False, console: LogPrint = None, delta=1) -> GroundedDomain:
 
         problem.computeWhatCanHappen(self)
-        # self.eliminateQuantifiers(problem)
 
         gActions: Set[Action] = set([g for action in self.actions for g in action.ground(problem, delta=delta)])
         gEvents: Set[Event] = set([g for event in self.events for g in event.ground(problem, delta=delta)])
@@ -169,11 +184,16 @@ class Domain:
             #             dAction.addSnapAction(t, a)
 
         domain.isPredicateStatic: Dict[str, bool] = dict([(p.name, True) for p in domain.predicates | domain.functions])
-        for action in domain.actions | domain.events | domain.processes | domain.durativeActions:
-            for eff in action.effects.getFunctions() | action.effects.getPredicates():
-                domain.isPredicateStatic[eff.name] = False
+        for v in domain.getDynamicAtoms():
+            domain.isPredicateStatic[v.name] = False
 
         return domain
+
+    def getDynamicAtoms(self) -> Set[Atom]:
+        dAtoms: Set[Atom] = set()
+        for a in self.actions | self.events | self.processes | self.durativeActions:
+            dAtoms |= a.getDynamicAtoms()
+        return dAtoms
 
     @classmethod
     def fromFile(cls, filename) -> Domain:

@@ -8,6 +8,7 @@ from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate, BinaryPredicateType
 from src.pddl.Literal import Literal
 from src.pddl.PDDLWriter import PDDLWriter
+from src.pddl.Problem import Problem
 from src.pddl.TimePredicate import TimePredicate, TimePredicateType
 from src.pddl.Type import Type
 from src.pddl.grammar.pddlParser import pddlParser
@@ -67,6 +68,25 @@ class Effects:
         e = Effects()
         e.assignments = [predicate.ground(sub, delta=1) for predicate in self.assignments]
         return e
+
+    def eliminateQuantifiers(self, problem: Problem) -> Effects:
+
+        from src.pddl.Forall import Forall
+        qeEffects = copy.deepcopy(self)
+        assignments = list()
+        for eff in qeEffects.assignments:
+            if not isinstance(eff, Forall):
+                assignments.append(eff)
+            assignments += eff.eliminate(problem)
+        qeEffects.assignments = assignments
+        return qeEffects
+
+    def hasQuantifiers(self):
+        from src.pddl.Forall import Forall
+        for eff in self.assignments:
+            if isinstance(eff, Forall):
+                return True
+        return False
 
     def getFunctions(self):
         return set(chain.from_iterable([c.getFunctions() for c in self.assignments if isinstance(c, BinaryPredicate)]))
@@ -160,3 +180,13 @@ class Effects:
         eff = Effects()
         eff.assignments = [a.toTimePredicate(type) for a in self.assignments]
         return eff
+
+    def getDynamicAtoms(self):
+        return {v for eff in self.assignments for v in eff.getDynamicAtoms()}
+
+    def hasConditionalEffects(self):
+        from src.pddl.ConditionalEffect import ConditionalEffect
+        for e in self.assignments:
+            if isinstance(e, ConditionalEffect):
+                return True
+        return False

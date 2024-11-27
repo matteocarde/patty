@@ -137,6 +137,18 @@ class Operation:
         params = [p.name for p in self.parameters]
         return f"{self.name}({','.join(params)})"
 
+    def eliminateQuantifiers(self, problem: Problem) -> Operation:
+        qeOperation = copy.deepcopy(self)
+        qeOperation.effects = qeOperation.effects.eliminateQuantifiers(problem)
+
+        return qeOperation
+
+    def hasQuantifiers(self):
+        return self.effects.hasQuantifiers()
+
+    def getDynamicAtoms(self):
+        return self.effects.getDynamicAtoms()
+
     def __getValidCombinationsSub(self, problem: Problem, item: Tuple, itemParams: List[str],
                                   downLevels: List[List[str]], paramsLeft: List[str]) -> List[Tuple]:
 

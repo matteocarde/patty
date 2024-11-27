@@ -14,7 +14,8 @@ class TestCES(TestCase):
     def setUp(self) -> None:
         self.domain: Domain = Domain.fromFile(f"../../files/ces/littlealchemy/domain.pddl")
         self.problem: Problem = Problem.fromFile(f"../../files/ces/littlealchemy/example/problem.pddl")
-        self.gDomain: GroundedDomain = self.domain.ground(self.problem)
+        self.qeDomain: Domain = self.domain.eliminateQuantifiers(self.problem)
+        self.gDomain: GroundedDomain = self.qeDomain.ground(self.problem)
         self.args = Arguments(keepRequired=False)
 
     def test_solver(self):

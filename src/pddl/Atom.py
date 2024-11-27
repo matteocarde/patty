@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 
-from typing import Dict, Tuple
+from typing import Dict, Tuple, List
 
 from sympy import Symbol, Expr
 
@@ -16,11 +16,12 @@ class Atom:
     __hash: int
     __functionName: str
     __alphaFunctionName: str
-    lifted: Atom
+    lifted: Atom or None
     attributes: list[str]
 
     def __init__(self):
         self.attributes = []
+        self.lifted = None
         pass
 
     def __deepcopy__(self, m=None):
@@ -76,7 +77,7 @@ class Atom:
     def ground(self, sub: Dict[str, str]) -> Atom:
         atom = Atom()
         atom.name = self.name
-        atom.attributes = [sub[attr] for attr in self.attributes]
+        atom.attributes = [sub[attr] if attr in sub else attr for attr in self.attributes]
         atom.__setProperties()
         atom.lifted = self
         return atom
@@ -112,6 +113,10 @@ class Atom:
     @classmethod
     def fromString(cls, string):
         return cls.fromNode(Utilities.getParseTree(string).atom())
+
+    def getAttributesMap(self, attrs: List[str]):
+        assert len(attrs) == len(self.attributes)
+        return dict(zip(attrs, self.attributes))
 
     def toLatex(self):
         return f"\\operatorname{{{self.__functionName}}}"
