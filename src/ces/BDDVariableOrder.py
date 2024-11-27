@@ -23,7 +23,7 @@ class BDDVariableOrder:
         # 2) v \in pre(a), w \nin \pre(a), v < w
         for v in action.preconditions.getPredicates():
             for w in action.predicates - action.preconditions.getPredicates():
-                self.nodes[v].append(w)
+                self.nodes[w].append(v)
 
         # 3) \forall e \in post(a), v \in cond(e), w \in post(e) -> v < w
         for e in action.effects:
@@ -31,7 +31,7 @@ class BDDVariableOrder:
                 continue
             for v in e.conditions.getPredicates():
                 for w in e.effects.getPredicates():
-                    self.nodes[v].append(w)
+                    self.nodes[w].append(v)
 
     def getOrder(self) -> List[Atom]:
         nodes = copy.deepcopy(self.nodes)
@@ -44,8 +44,9 @@ class BDDVariableOrder:
                 nodes[cycle[1]].remove(cycle[0])
 
     def toDot(self):
-        dot = ["graph order {"]
+        dot = ["digraph order {"]
         for v in self.nodes.keys():
+            dot += [f'"{v}";']
             for w in self.nodes[v]:
                 dot += [f'"{v}" -> "{w}";']
         dot += ["}"]

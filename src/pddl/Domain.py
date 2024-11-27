@@ -109,11 +109,18 @@ class Domain:
 
         initialState = State.fromInitialCondition(problem.init)
         arpg = ARPG(gDomain, initialState, problem.goal)
-        constants: Dict[Atom, float] = arpg.getConstantAtoms()
+        constants: Dict[Atom, float or bool] = arpg.getConstantAtoms()
         for fun in gDomain.functions:
             if fun not in problem.init.numericAssignments:
                 # print(f"WARNING: {fun} was not initialized. Substituting it with 0")
                 constants[fun] = 0
+
+        # for v in gDomain.predicates:
+        #     if problem.isPredicateStatic[v.name]:
+        #         constants[v] = problem.init
+
+        for v in gDomain.predicates - gDomain.getDynamicAtoms():
+            constants[v] = problem.init.getAssignment(v)
 
         gDomain.substitute(constants)
         problem.substitute(constants)

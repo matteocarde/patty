@@ -115,8 +115,11 @@ class Formula:
     def substitute(self, subs: Dict[Atom, float], default=None) -> Formula:
         x = Formula()
         x.type = self.type
-        x.conditions = [c.substitute(subs, default) for c in self.conditions]
-        x.conditions = [c for c in x.conditions if c]
+        x.conditions = []
+        for c in self.conditions:
+            if isinstance(c, Literal) and c.getAtom() in subs and subs[c.getAtom()]:
+                continue
+            x.conditions.append(c.substitute(subs, default))
         return x
 
     def canHappen(self, subs: Dict[Atom, float or bool], default=None) -> bool:

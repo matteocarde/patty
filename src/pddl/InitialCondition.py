@@ -111,8 +111,12 @@ class InitialCondition:
         return ic
 
     def getAssignment(self, atom: Atom) -> float:
-        return self.numericAssignments[atom]
-        pass
+        if atom in self.functions:
+            return self.numericAssignments[atom]
+        if atom in self.predicates:
+            return True
+        else:
+            return False
 
     def addPredicate(self, l: Literal):
         self.assignments.append(l)

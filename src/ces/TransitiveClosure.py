@@ -15,7 +15,6 @@ class TransitiveClosure(TransitionFunctionBDD):
 
     @staticmethod
     def setOrder(action, order, reflexive):
-        p = 1 if reflexive else 0
         for v in order:
             bddvar(f"{action}_{v}_0")
             bddvar(f"{action}_{v}_1")

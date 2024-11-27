@@ -96,7 +96,11 @@ class Effects:
 
     def substitute(self, sub: Dict[Atom, float], default=None):
         e = Effects()
-        e.assignments = [predicate.substitute(sub, default) for predicate in self.assignments]
+        e.assignments = []
+        for p in self.assignments:
+            if isinstance(p, Literal) and p.getAtom() in sub and sub[p.getAtom()]:
+                continue
+            e.assignments.append(p.substitute(sub, default))
         return e
 
     def __iter__(self) -> Iterable[Literal or BinaryPredicate]:
