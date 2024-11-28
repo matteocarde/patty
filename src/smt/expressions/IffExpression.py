@@ -1,6 +1,6 @@
 from typing import Dict
 
-from pyeda.boolalg.bdd import BDDVariable
+from pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram
 from pysmt.fnode import FNode
 from pysmt.shortcuts import Iff
 from pyeda.boolalg.expr import Or as BDDOr
@@ -37,9 +37,9 @@ class IffExpression(BinaryExpression):
         return cls(lhs, rhs)
 
     def toBDDExpression(self, map: Dict[SMTBoolVariable, BDDVariable]):
-        lhs = self.lhs.toBDDExpression(map)
-        rhs = self.rhs.toBDDExpression(map)
-        return (lhs & rhs) | (~lhs & ~rhs)
+        lhs: BinaryDecisionDiagram = self.lhs.toBDDExpression(map)
+        rhs: BinaryDecisionDiagram = self.rhs.toBDDExpression(map)
+        return lhs.iff(rhs)
 
     def getExpression(self) -> FNode:
         return Iff(self.lhs.getExpression(), self.rhs.getExpression())

@@ -48,7 +48,7 @@ class BDDVariableOrder:
         for v in self.nodes.keys():
             dot += [f'"{v}";']
             for w in self.nodes[v]:
-                dot += [f'"{v}" -> "{w}";']
+                dot += [f'"{w}" -> "{v}";']
         dot += ["}"]
 
         return " ".join(dot)

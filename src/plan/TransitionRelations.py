@@ -21,7 +21,10 @@ class TransitionRelations:
                 continue
 
             T_a = ActionStateTransitionFunction(a)
-            order = BDDVariableOrder(a).getOrder()
+            bddorder = BDDVariableOrder(a)
+            print(bddorder.toDot())
+            order = bddorder.getOrder()
+            print(order)
             print(f"Computing Transitive Closure of {a}")
             self.closures[a.lifted] = TransitiveClosure.fromActionStateTransitionFunction(T_a, order, reflexive=True,
                                                                                           maxTime=maxTime)

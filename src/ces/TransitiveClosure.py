@@ -30,6 +30,8 @@ class TransitiveClosure(TransitionFunctionBDD):
         currentBDD: TransitionFunctionBDD = super().fromActionStateTransitionFunction(t, atomsOrder)
         bdds.append(currentBDD)
 
+        print(currentBDD.bdd.to_dot())
+
         if maxTime:
             signal.alarm(maxTime)
 

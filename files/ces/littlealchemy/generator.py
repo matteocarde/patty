@@ -1,3 +1,7 @@
+import os
+import shutil
+from typing import Tuple, Dict
+
 RECIPES = [
     ["pressure", ["air", "air"]],
     ["energy", ["air", "fire"]],
@@ -103,13 +107,62 @@ RECIPES = [
     ["god", ["death", "life"]]
 ]
 
+DOMAINS = 20
+
 
 def main():
-    print("digraph little_alchemy{")
+    path = "instances"
+    if os.path.exists(path):
+        shutil.rmtree(path)
+    os.makedirs(path)
+
+    elements = set()
+
+    index: Dict[str, int] = {
+        "earth": 1,
+        "water": 1,
+        "air": 1,
+        "fire": 1
+    }
+    parents: Dict[str, Tuple[str, str]] = dict()
+
     for r in RECIPES:
-        print(f'"{r[1][0]}" -> "{r[0]}"')
-        print(f'"{r[1][1]}" -> "{r[0]}"')
-    print("}")
+        elements.add(r[0])
+        elements.add(r[1][0])
+        elements.add(r[1][1])
+        parents[r[0]] = (r[1][0], r[1][1])
+
+    def getIndex(el) -> int:
+        if el in index:
+            return index[el]
+        index[el] = max(getIndex(parents[el][0]), getIndex(parents[el][1])) + 1
+        return index[el]
+
+    for el in elements:
+        getIndex(el)
+
+    sortedElements = sorted(elements, key=lambda a: -index[a])
+    print(sortedElements)
+
+    for i in range(1, DOMAINS + 1):
+        problem = f'''(define (problem pb01)
+            (:domain counters)
+            (:objects {" ".join([f'{el}' for el in elements])} - element)
+            (:init
+                (have water)
+                (have earth)
+                (have fire)
+                (have air)
+                {" ".join([f'(combination {r[1][0]} {r[1][1]} {r[0]})' for r in RECIPES])}
+            )
+            (:goal
+                (and  (have {sortedElements[DOMAINS - (i - 1)]}))
+            )
+            )
+
+                    '''
+        with open(f"{path}/problem-{i}.pddl", "w") as f:
+            f.write(problem)
 
 
 if __name__ == '__main__':

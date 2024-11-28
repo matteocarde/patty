@@ -1,8 +1,6 @@
 from typing import List, Dict
 
-from pyeda.boolalg.bdd import BDDVariable
-from pysmt.shortcuts import TRUE, FALSE
-
+from pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram
 from src.smt.SMTBoolVariable import SMTBoolVariable
 from src.smt.SMTExpression import SMTExpression
 from src.smt.expressions.FalseExpression import FalseExpression
@@ -25,12 +23,31 @@ class SMTConjunction(List[SMTExpression]):
         self.depth = max(expr.depth, self.depth) + 1
         self.variables |= expr.getVariables()
 
+    def __andOfSubClauses(self, clauses):
+        if len(clauses) == 1:
+            return clauses[0]
+        elif len(clauses) == 0:
+            return 1
+
+        mid = len(clauses) // 2
+
+        # Recursively compute the sum of each half
+        left = self.__andOfSubClauses(clauses[:mid])
+        right = self.__andOfSubClauses(clauses[mid:])
+
+        print("left", left.to_dot() if isinstance(left, BinaryDecisionDiagram) else left)
+        print("right", right.to_dot() if isinstance(right, BinaryDecisionDiagram) else right)
+
+        # Combine the results
+        return left & right
+
     def toBDDExpression(self, map: Dict[SMTBoolVariable, BDDVariable]):
-        clauses = [e.toBDDExpression(map) for e in self]
-        f = clauses[0]
-        for c in clauses[1:]:
-            f = f & c
-        return f
+        clauses: List[BinaryDecisionDiagram] = [e.toBDDExpression(map) for e in self]
+        return self.__andOfSubClauses(clauses)
+        # f: BinaryDecisionDiagram = clauses[0]
+        # for i, c in enumerate(clauses[1:]):
+        #     f = f & c
+        # return f
 
     def getVariables(self):
         return self.variables

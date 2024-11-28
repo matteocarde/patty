@@ -52,8 +52,11 @@ class TransitionFunctionBDD:
         tfbdd = cls(t)
         tfbdd.atomsOrder = atomsOrder
         tfbdd.Xs = tfbdd.getXs(0, 2)
+        print(tfbdd.clauses)
         bdd = tfbdd.clauses.toBDDExpression({**tfbdd.Xs[0], **tfbdd.Xs[2]})
+        print("b")
         tfbdd.bdd = bdd
+        print("c")
         tfbdd.expr = bdd2expr(bdd, conj=True)
         return tfbdd
 
