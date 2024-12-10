@@ -1,5 +1,5 @@
 (define (domain dig)
-  (:requirements :strips :equality)
+  (:requirements :strips :equality )
   (:types
     element
   )
@@ -21,8 +21,6 @@
             (have ?b)
           )
           (and
-            (not (have ?a))
-            (not (have ?b))
             (have ?c)
           )
         )
