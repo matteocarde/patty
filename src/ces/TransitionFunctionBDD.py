@@ -136,10 +136,10 @@ class TransitionFunctionBDD:
             liftedAtom2groundAtom[groundAtom.lifted] = groundAtom
 
         liftedVar2sigma: Dict[SMTBoolVariable, SMTExpression] = dict()
-        for (liftedAtom, liftedVar) in self.currentState.items():
-            liftedVar2sigma[liftedVar] = current[liftedAtom2groundAtom[liftedAtom]]
-        for (liftedAtom, liftedVar) in self.nextState.items():
-            liftedVar2sigma[liftedVar] = next[liftedAtom2groundAtom[liftedAtom]]
+        for (groundAtom, groundVar) in self.currentState.items():
+            liftedVar2sigma[groundVar] = current[liftedAtom2groundAtom[groundAtom.lifted]]
+        for (groundAtom, groundVar) in self.nextState.items():
+            liftedVar2sigma[groundVar] = next[liftedAtom2groundAtom[groundAtom.lifted]]
 
         bddVar2sigma: Dict[str, SMTExpression] = dict()
         for smtvar, bddvar in {**self.Xs[2], **self.Xs[0]}.items():
@@ -148,13 +148,13 @@ class TransitionFunctionBDD:
         groundExpr = SMTExpression.fromBDDExpression(self.expr, bddVar2sigma)
         return groundExpr
 
-    def getRestriction(self, a: Action, s: State, Xs, vars) -> Dict[BDDVariable, float]:
+    def getRestriction(self, a: Action, s: State, Xs, vars) -> Dict[BDDVariable, bool]:
         restrict = dict()
         for atom in a.predicates:
             # for atom, ass in s.assignments.items():
-            if atom.lifted not in vars:
+            if atom not in vars:
                 continue
-            v0 = Xs[vars[atom.lifted]]
+            v0 = Xs[vars[atom]]
             restrict[v0] = bool(s.assignments[atom])
         return restrict
 
@@ -180,8 +180,8 @@ class TransitionFunctionBDD:
 
         s1 = copy.deepcopy(s0)
         for atom in a.predicates:
-            if atom.lifted not in self.nextState:
+            if atom not in self.nextState:
                 continue
-            var = self.Xs[2][self.nextState[atom.lifted]]
+            var = self.Xs[2][self.nextState[atom]]
             s1.setAtom(atom, sat[var] if var in sat else s0.getAtom(atom))
         return s1
