@@ -52,12 +52,9 @@ class TransitionFunctionBDD:
         tfbdd = cls(t)
         tfbdd.atomsOrder = atomsOrder
         tfbdd.Xs = tfbdd.getXs(0, 2)
-        print(tfbdd.clauses)
         bdd = tfbdd.clauses.toBDDExpression({**tfbdd.Xs[0], **tfbdd.Xs[2]})
-        print("b")
         tfbdd.bdd = bdd
-        print("c")
-        tfbdd.expr = bdd2expr(bdd, conj=True)
+        tfbdd.expr = bdd2expr(bdd)
         return tfbdd
 
     def getXs(self, a: int, b: int) -> Dict[int, Dict[SMTBoolVariable, BDDVariable]]:
@@ -111,7 +108,7 @@ class TransitionFunctionBDD:
             ith.bdd = smoothed | self.bdd
         else:
             ith.bdd = smoothed
-        ith.expr = bdd2expr(ith.bdd, conj=True)
+        ith.expr = bdd2expr(ith.bdd)
 
         return ith
 
@@ -136,6 +133,7 @@ class TransitionFunctionBDD:
             liftedAtom2groundAtom[groundAtom.lifted] = groundAtom
 
         liftedVar2sigma: Dict[SMTBoolVariable, SMTExpression] = dict()
+        print(self.action, groundAction, groundAction.lifted, liftedAtom2groundAtom)
         for (groundAtom, groundVar) in self.currentState.items():
             liftedVar2sigma[groundVar] = current[liftedAtom2groundAtom[groundAtom.lifted]]
         for (groundAtom, groundVar) in self.nextState.items():

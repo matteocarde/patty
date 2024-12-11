@@ -144,7 +144,10 @@ class Literal(Predicate):
             return Constant(subs[self.atom])
 
     def canHappen(self, subs: Dict[Atom, float or bool], default=None) -> bool:
-        return True if self.atom not in subs or subs[self.atom] else False
+        if self.sign == "+":
+            return True if self.atom not in subs or subs[self.atom] else False
+        if self.sign == "-":
+            return True if self.atom not in subs or not subs[self.atom] else False
 
     def isValid(self, subs: Dict[Atom, float or bool], default=None) -> bool:
         return False if self.atom not in subs or not subs[self.atom] else True
@@ -152,8 +155,8 @@ class Literal(Predicate):
     def canHappenLifted(self, sub: Tuple, params: List[str], problem) -> bool:
         if not problem.isPredicateStatic[self.atom.name]:
             return True
-        attSet = set(self.atom.attributes)
-        subStr = ",".join([sub[i] for i, p in enumerate(params) if p in attSet])
+        subDict: dict = dict(zip(params, sub))
+        subStr = ",".join([subDict.get(p, p) for p in self.atom.attributes])
         atomStr = f"{self.atom.name}({subStr})"
         if self.sign == "+":
             return atomStr in problem.canHappenValue

@@ -77,6 +77,7 @@ class Effects:
         for eff in qeEffects.assignments:
             if not isinstance(eff, Forall):
                 assignments.append(eff)
+                continue
             assignments += eff.eliminate(problem)
         qeEffects.assignments = assignments
         return qeEffects
@@ -94,11 +95,13 @@ class Effects:
     def getPredicates(self):
         return set(chain.from_iterable([c.getPredicates() for c in self.assignments]))
 
-    def substitute(self, sub: Dict[Atom, float], default=None):
+    def substitute(self, sub: Dict[Atom, float or bool], default=None):
         e = Effects()
+        from src.pddl.ConditionalEffect import ConditionalEffect
         e.assignments = []
         for p in self.assignments:
-            if isinstance(p, Literal) and p.getAtom() in sub and sub[p.getAtom()]:
+            if isinstance(p, ConditionalEffect) and not p.canHappen(sub):
+                print(p, "cannot happen", sub)
                 continue
             e.assignments.append(p.substitute(sub, default))
         return e

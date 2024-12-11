@@ -6,6 +6,7 @@ from typing import Set, Dict, List, Tuple
 from src.pddl.Atom import Atom
 from src.pddl.CEConditions import CEConditions
 from src.pddl.CEEffects import CEEffects
+from src.pddl.Literal import Literal
 from src.pddl.Parameters import Parameters
 from src.pddl.Predicate import Predicate
 from src.pddl.Problem import Problem
@@ -75,3 +76,6 @@ class ConditionalEffect(Predicate):
         ce.effects = self.effects.substitute(subs, default)
 
         return ce
+
+    def canHappen(self, sub: Dict[Atom, float or bool]):
+        return self.conditions.canHappen(sub)

@@ -32,6 +32,7 @@ class Action(Operation):
         a = super().__deepcopy__(m)
         a.__class__ = Action
         a.isFake = self.isFake
+        a.lifted = self.lifted
         return a
 
     def __lt__(self, other):
@@ -144,6 +145,7 @@ class Action(Operation):
         planName = self.planName
         duration = self.duration.substitute(sub, default)
         action = Action.fromProperties(name, [], preconditions, effects, planName, duration=duration)
+        action.lifted = self.lifted
         return action
 
     def canHappen(self, sub: Dict[Atom, float or bool], default=None) -> bool:

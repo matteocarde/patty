@@ -70,13 +70,14 @@ class CESPASEncoding(Encoding):
     def getClosureRules(self, i: int) -> SMTConjunction:
         rules = SMTConjunction()
         X = self.vars.stateVariables
+        A = self.vars.actionVariables[i + 1]
 
         for a in self.actions:
             if a.isIdempotent():
                 continue
             T_a: TransitionFunctionBDD = self.relations.closures[a.lifted][-1]
             groundExpr: SMTExpression = T_a.toGroundSMTExpression(a, X[i], X[i + 1])
-            rules.append(groundExpr)
+            rules.append(A[a].implies(groundExpr))
 
         return rules
 

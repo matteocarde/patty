@@ -21,16 +21,17 @@ class TransitiveClosure(TransitionFunctionBDD):
             bddvar(f"{action}_{v}_2")
 
     @classmethod
-    def fromActionStateTransitionFunction(cls, t: ActionStateTransitionFunction, atomsOrder: List[Atom],
-                                          reflexive=True, maxTime: None or int = None) -> List[TransitionFunctionBDD]:
+    def fromTransitionFunction(cls, t: ActionStateTransitionFunction,
+                               atomsOrder: List[Atom],
+                               reflexive=True,
+                               maxTime: None or int = None,
+                               maxReachabilityIndex=0) -> List[TransitionFunctionBDD]:
 
         bdds = []
         i = 0
         TransitiveClosure.setOrder(t.action, atomsOrder, reflexive)
         currentBDD: TransitionFunctionBDD = super().fromActionStateTransitionFunction(t, atomsOrder)
         bdds.append(currentBDD)
-
-        print(currentBDD.bdd.to_dot())
 
         if maxTime:
             signal.alarm(maxTime)
@@ -43,6 +44,8 @@ class TransitiveClosure(TransitionFunctionBDD):
             while True:
                 i += 1
                 nextBDD: TransitionFunctionBDD = currentBDD.computeTransition(reflexive=reflexive)
+                if not reflexive and i > maxReachabilityIndex:
+                    return bdds
                 if currentBDD.isEquivalent(nextBDD):
                     nextBDD.__class__ = TransitiveClosure
                     signal.alarm(0)

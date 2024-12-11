@@ -35,9 +35,6 @@ class SMTConjunction(List[SMTExpression]):
         left = self.__andOfSubClauses(clauses[:mid])
         right = self.__andOfSubClauses(clauses[mid:])
 
-        print("left", left.to_dot() if isinstance(left, BinaryDecisionDiagram) else left)
-        print("right", right.to_dot() if isinstance(right, BinaryDecisionDiagram) else right)
-
         # Combine the results
         return left & right
 
