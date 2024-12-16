@@ -1,30 +1,30 @@
-(define (domain dig)
+(define (domain grid)
 	(:requirements :strips :equality :conditional-effects)
 	(:types
-		cell ongrid - object
-		robot treasure - ongrid
+		column row - object
+		robot
 	)
 	(:predicates
-		(isLeft ?x2 - cell ?x1 - cell)
-		(isDown ?x2 - cell ?x1 - cell)
-		(at ?o - ongrid ?x - cell ?y - cell)
-		(picked ?r - robot ?t - treasure)
+		(isLeft ?c1 - column ?c2 - column)
+		(isDown ?r2 - row ?r1 - row)
+		(atColumn ?r - robot ?c - column)
+		(atRow ?r - robot ?r - row)
 	)
 
 	(:action lft
-		:parameters (?r - robot ?y - cell)
+		:parameters (?r - robot)
 		:precondition()
 		:effect(and
 			(forall
-				(?fromX - cell ?toX - cell) ;x2 <- x1
+				(?fromColumn - column ?toColumn - column)
 				(when
 					(and
-						(at ?r ?fromX ?y)
-						(isLeft ?toX ?fromX)
+						(atColumn ?r ?fromColumn)
+						(isLeft ?toColumn ?fromColumn)
 					)
 					(and
-						(not (at ?r ?fromX ?y))
-						(at ?r ?toX ?y)
+						(not (atColumn ?r ?fromColumn))
+						(atColumn ?r ?toColumn)
 					)
 				)
 			)
@@ -32,19 +32,19 @@
 	)
 
 	(:action rgt
-		:parameters (?r - robot ?y - cell)
+		:parameters (?r - robot)
 		:precondition()
 		:effect(and
 			(forall
-				(?fromX - cell ?toX - cell) ;x1 -> x2
+				(?fromColumn - column ?toColumn - column)
 				(when
 					(and
-						(at ?r ?fromX ?y)
-						(isLeft ?fromX ?toX)
+						(atColumn ?r ?fromColumn)
+						(isLeft ?fromColumn ?toColumn)
 					)
 					(and
-						(not (at ?r ?fromX ?y))
-						(at ?r ?toX ?y)
+						(not (atColumn ?r ?fromColumn))
+						(atColumn ?r ?toColumn)
 					)
 				)
 			)
@@ -52,19 +52,19 @@
 	)
 
 	(:action up
-		:parameters (?r - robot ?x - cell)
+		:parameters (?r - robot)
 		:precondition()
 		:effect(and
 			(forall
-				(?fromY - cell ?toY - cell)
+				(?fromRow - row ?toRow - row)
 				(when
 					(and
-						(at ?r ?x ?fromY)
-						(isDown ?fromY ?toY)
+						(atRow ?r ?fromRow)
+						(isDown ?fromRow ?toRow)
 					)
 					(and
-						(not (at ?r ?x ?fromY))
-						(at ?r ?x ?toY)
+						(not (atRow ?r ?fromRow))
+						(atRow ?r ?toRow)
 					)
 				)
 			)
@@ -72,34 +72,22 @@
 	)
 
 	(:action dwn
-		:parameters (?r - robot ?x - cell)
+		:parameters (?r - robot)
 		:precondition()
 		:effect(and
 			(forall
-				(?fromY - cell ?toY - cell)
+				(?fromRow - row ?toRow - row)
 				(when
 					(and
-						(at ?r ?x ?fromY)
-						(isDown ?toY ?fromY)
+						(atRow ?r ?fromRow)
+						(isDown ?toRow ?fromRow)
 					)
 					(and
-						(not (at ?r ?x ?fromY))
-						(at ?r ?x ?toY)
+						(not (atRow ?r ?fromRow))
+						(atRow ?r ?toRow)
 					)
 				)
 			)
-		)
-	)
-
-	(:action pick
-		:parameters (?r - robot ?t - treasure ?x - cell ?y - cell)
-		:precondition(and
-			(at ?r ?x ?y)
-			(at ?t ?x ?y)
-		)
-		:effect(and
-			(picked ?r ?t)
-			(not (at ?t ?x ?y))
 		)
 	)
 

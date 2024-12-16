@@ -12,8 +12,8 @@ from src.utils.Arguments import Arguments
 class TestCESGrid(TestCase):
 
     def setUp(self) -> None:
-        domain = f"../../files/ces/grid/domain-noparam.pddl"
-        problem = f"../../files/ces/grid/problem-3.pddl"
+        domain = f"../../files/ces/grid/domain.pddl"
+        problem = f"../../files/ces/grid/problem-5.pddl"
         self.domain: Domain = Domain.fromFile(domain)
         self.problem: Problem = Problem.fromFile(problem)
         self.qeDomain: Domain = self.domain.eliminateQuantifiers(self.problem)
