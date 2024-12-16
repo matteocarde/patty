@@ -116,9 +116,9 @@
 				)
 			)
 			(exists
-				(?r - robot ?r - row)
+				(?r - robot ?row - row)
 				(and
-					(atRow ?r ?r)
+					(atRow ?r ?row)
 				)
 			)
 		)

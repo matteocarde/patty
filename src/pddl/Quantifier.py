@@ -18,3 +18,6 @@ class Quantifier(Predicate):
 
     def getPredicates(self) -> Set[Atom]:
         return self.formula.getPredicates()
+
+    def eliminate(self, problem):
+        raise NotImplementedError()

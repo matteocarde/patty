@@ -71,7 +71,7 @@ class CESEncoding(Encoding):
             if a.isIdempotent():
                 continue
             T_a: TransitionFunctionBDD = self.relations.closures[a.lifted][-1]
-            groundExpr: SMTExpression = T_a.toGroundSMTExpression(a, sigmas[i - 1], sigmas[i])
+            groundExpr: SMTExpression = T_a.toGroundSMTExpression(a, self.domain, sigmas[i - 1], sigmas[i])
             rules.append(groundExpr)
 
         return rules

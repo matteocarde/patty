@@ -3139,6 +3139,8 @@ class pddlParser ( Parser ):
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
+            self.a1 = None # LiftedAtomParameterContext
+            self.a2 = None # LiftedAtomParameterContext
 
         def LP(self, i:int=None):
             if i is None:
@@ -3146,18 +3148,18 @@ class pddlParser ( Parser ):
             else:
                 return self.getToken(pddlParser.LP, i)
 
+        def RP(self, i:int=None):
+            if i is None:
+                return self.getTokens(pddlParser.RP)
+            else:
+                return self.getToken(pddlParser.RP, i)
+
         def liftedAtomParameter(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(pddlParser.LiftedAtomParameterContext)
             else:
                 return self.getTypedRuleContext(pddlParser.LiftedAtomParameterContext,i)
 
-
-        def RP(self, i:int=None):
-            if i is None:
-                return self.getTokens(pddlParser.RP)
-            else:
-                return self.getToken(pddlParser.RP, i)
 
         def getRuleIndex(self):
             return pddlParser.RULE_inequality
@@ -3188,9 +3190,9 @@ class pddlParser ( Parser ):
             self.state = 419
             self.match(pddlParser.T__19)
             self.state = 420
-            self.liftedAtomParameter()
+            localctx.a1 = self.liftedAtomParameter()
             self.state = 421
-            self.liftedAtomParameter()
+            localctx.a2 = self.liftedAtomParameter()
             self.state = 422
             self.match(pddlParser.RP)
             self.state = 423

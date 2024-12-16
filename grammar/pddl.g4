@@ -99,7 +99,7 @@ exists: LP 'exists' parameters andClause RP;
 effect:  booleanLiteral | modification | ce | forallEffect;
 effectNoCes:  booleanLiteral | modification;
 
-inequality: LP 'not' LP '=' liftedAtomParameter liftedAtomParameter RP RP;
+inequality: LP 'not' LP '=' a1=liftedAtomParameter a2=liftedAtomParameter RP RP;
 
 andClause: LP 'and' (andClause | orClause | inequality| booleanLiteral | negatedComparation  | comparation)+ RP;
 orClause: LP 'or' (andClause | orClause | inequality |booleanLiteral | negatedComparation  | comparation)+ RP;

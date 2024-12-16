@@ -1,3 +1,4 @@
+import itertools
 from typing import List, Dict
 
 from src.pddl.Parameter import Parameter
@@ -27,7 +28,7 @@ class Parameters(List[Parameter]):
                 p.append(Parameter(name, varType))
         return p
 
-    def getCombinations(self, problem: Problem):
+    def getCombinations(self, problem: Problem) -> List[List[str]]:
         subs: List[List[str]] = list()
         for parameter in self:
             pSubs = list()
@@ -38,3 +39,10 @@ class Parameters(List[Parameter]):
             subs.append(pSubs)
 
         return subs  # list(itertools.product(*subs))
+
+    def getAllSubstitutions(self, problem: Problem) -> List[Dict[str, str]]:
+        validCombinations: List[Dict[str, str]] = []
+        subs = list(itertools.product(*self.getCombinations(problem)))
+        for sub in subs:
+            validCombinations.append(dict([(p.name, sub[i]) for i, p in enumerate(self)]))
+        return validCombinations

@@ -9,6 +9,8 @@ from pyeda.boolalg.expr import OrAndOp
 from src.ces.ActionStateTransitionFunction import ActionStateTransitionFunction
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
+from src.pddl.Domain import GroundedDomain
+from src.pddl.Formula import Formula
 from src.pddl.State import State
 from src.smt.SMTBoolVariable import SMTBoolVariable
 from src.smt.SMTExpression import SMTExpression
@@ -125,11 +127,12 @@ class TransitionFunctionBDD:
 
     def toGroundSMTExpression(self,
                               groundAction: Action,
+                              domain: GroundedDomain,
                               current: Dict[Atom, SMTExpression],
                               next: Dict[Atom, SMTExpression]):
 
         liftedAtom2groundAtom: Dict[Atom, Atom] = dict()
-        for groundAtom in groundAction.predicates:
+        for groundAtom in domain.predicates:
             liftedAtom2groundAtom[groundAtom.lifted] = groundAtom
 
         liftedVar2sigma: Dict[SMTBoolVariable, SMTExpression] = dict()

@@ -16,11 +16,12 @@ class TransitionRelations:
 
         self.closures = dict()
         self.reachability = dict()
+
         for a in domain.actions:
             if a.isIdempotent():
                 continue
 
-            T_a = ActionStateTransitionFunction(a)
+            T_a = ActionStateTransitionFunction(a, domain)
             bddorder = BDDVariableOrder(a)
             order = bddorder.getOrder()
             print(f"Order {a}: {bddorder.toDot()}")

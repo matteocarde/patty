@@ -6,6 +6,7 @@ from pyeda.boolalg.bdd import bddvar
 from src.ces.ActionStateTransitionFunction import ActionStateTransitionFunction
 from src.ces.TransitionFunctionBDD import TransitionFunctionBDD
 from src.pddl.Atom import Atom
+from src.pddl.Formula import Formula
 
 
 class TransitiveClosure(TransitionFunctionBDD):

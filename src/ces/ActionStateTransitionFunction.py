@@ -6,6 +6,9 @@ from pyeda.boolalg.bdd import bddvar, BDDVariable
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.ConditionalEffect import ConditionalEffect
+from src.pddl.Constraints import Constraints
+from src.pddl.Domain import Domain, GroundedDomain
+from src.pddl.Formula import Formula
 from src.pddl.Literal import Literal
 from src.smt.SMTBoolVariable import SMTBoolVariable
 from src.smt.SMTConjunction import SMTConjunction
@@ -22,10 +25,11 @@ class ActionStateTransitionFunction:
     countingCurrent: List[SMTBoolVariable]
     countingNext: List[SMTBoolVariable]
 
-    def __init__(self, action: Action):
+    def __init__(self, action: Action, domain: GroundedDomain):
         self.m = len(action.effects)
         self.action = action
-        self.atoms = self.action.predicates
+        self.domain = domain
+        self.atoms = self.domain.predicates
         self.current = dict([(v, SMTBoolVariable(f"{v}")) for v in self.atoms])
         self.next = dict([(v, SMTBoolVariable(f"{v}'")) for v in self.atoms])
 
@@ -37,6 +41,8 @@ class ActionStateTransitionFunction:
         self.clausesByName["conflict"] = self.getConflictClauses(self.action, self.current, self.next)
         for name, clauses in self.clausesByName.items():
             self.clauses += clauses
+
+        self.constraints = SMTExpression.fromFormula(domain.constraints, self.current)
 
     @staticmethod
     def getPreconditionClauses(a: Action, X: Dict[Atom, SMTVariable], X_: Dict[Atom, SMTVariable]) -> List[

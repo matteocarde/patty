@@ -20,10 +20,10 @@ class Exists(Quantifier):
     def __init__(self):
         super().__init__()
 
-    def __deepcopy__(self, memodict={}):
+    def __deepcopy__(self, memodict=None):
         ex = Exists()
         ex.parameters = copy.deepcopy(self.parameters, memodict)
-        ex.body = copy.deepcopy(self.formula, memodict)
+        ex.formula = copy.deepcopy(self.formula, memodict)
         return ex
 
     @classmethod
@@ -32,3 +32,12 @@ class Exists(Quantifier):
         ex.parameters = Parameters.fromNode(node.getChild(2), types)
         ex.formula = Formula.fromNode(node.getChild(3))
         return ex
+
+    def eliminate(self, problem: Problem) -> Formula:
+        subs = self.parameters.getAllSubstitutions(problem)
+        f = Formula()
+        f.type = "OR"
+        for sub in subs:
+            if self.formula.canHappen(sub):
+                f.addClause(self.formula.ground(sub))
+        return f

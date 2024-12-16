@@ -20,10 +20,10 @@ class Forall(Quantifier):
     def __init__(self):
         super().__init__()
 
-    def __deepcopy__(self, memodict={}):
+    def __deepcopy__(self, memodict=None):
         fa = Forall()
         fa.parameters = copy.deepcopy(self.parameters, memodict)
-        fa.body = copy.deepcopy(self.formula, memodict)
+        fa.formula = copy.deepcopy(self.formula, memodict)
         return fa
 
     @classmethod
@@ -33,19 +33,11 @@ class Forall(Quantifier):
         forall.formula = Formula.fromNode(node.getChild(3))
         return forall
 
-    # def eliminate(self, problem: Problem) -> List[Predicate]:
-    #     from src.pddl.ConditionalEffect import ConditionalEffect
-    #     levels = self.parameters.getCombinations(problem)
-    #     combinations = list(itertools.product(*levels))
-    #
-    #     params = [p.name for p in self.parameters]
-    #     predicates = list()
-    #     for comb in combinations:
-    #         sub = dict([(p.name, comb[i]) for i, p in enumerate(self.parameters)])
-    #         if isinstance(self.effect, ConditionalEffect):
-    #             if self.effect.canHappenLifted(comb, params, problem):
-    #                 predicates.append(self.effect.ground(sub))
-    #         else:
-    #             predicates.append(self.effect.ground(sub))
-    #
-    #     return predicates
+    def eliminate(self, problem: Problem) -> Formula:
+        subs = self.parameters.getAllSubstitutions(problem)
+        f = Formula()
+        f.type = "AND"
+        for sub in subs:
+            if self.formula.canHappen(sub):
+                f.addClause(self.formula.ground(sub))
+        return f

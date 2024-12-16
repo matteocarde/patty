@@ -8,6 +8,7 @@ from sympy import Expr
 
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
+from src.pddl.Inequality import Inequality
 from src.pddl.Literal import Literal
 from src.pddl.PDDLWriter import PDDLWriter
 from src.pddl.Predicate import Predicate
@@ -66,7 +67,8 @@ class Formula:
         formulaComponent = node.getChild(0) if type(node) in {p.PreconditionsContext,
                                                               p.DurativeConditionsContext} else node
         formula.type = "OR" if type(formulaComponent) == p.OrClauseContext else "AND"
-        if type(formulaComponent) in {p.BooleanLiteralContext, p.ComparationContext, p.NegatedComparationContext}:
+        if type(formulaComponent) in {p.BooleanLiteralContext, p.InequalityContext,
+                                      p.ComparationContext, p.NegatedComparationContext}:
             clauses.append(formulaComponent)
         elif type(formulaComponent) in {p.AndClauseContext, p.OrClauseContext, p.AndDurClauseContext}:
             clauses = formulaComponent.children
@@ -84,6 +86,8 @@ class Formula:
                 formula.conditions.append(BinaryPredicate.fromNode(clause))
             elif type(clause) in {p.AtStartPreContext, p.OverAllPreContext, p.AtEndPreContext}:
                 formula.conditions += TimePredicate.fromNode(clause)
+            elif isinstance(clause, p.InequalityContext):
+                formula.conditions.append(Inequality.fromNode(clause))
 
         return formula
 
@@ -95,6 +99,10 @@ class Formula:
         gFormula = Formula()
         gFormula.type = self.type
         for condition in self.conditions:
+            if isinstance(condition, Inequality):
+                if not condition.canHappen(subs):
+                    raise Exception("Inequality not satisfied when grounding")
+                continue
             gFormula.conditions.append(condition.ground(subs, delta))
         return gFormula
 

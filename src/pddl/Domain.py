@@ -5,7 +5,6 @@ from typing import Dict, List, Set
 
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
-from src.pddl.ConditionalEffect import ConditionalEffect
 from src.pddl.Constraints import Constraints
 from src.pddl.DurativeAction import DurativeAction
 from src.pddl.Event import Event
@@ -62,6 +61,7 @@ class Domain:
         domain.processes = copy.deepcopy(self.processes, m)
         domain.durativeActions = copy.deepcopy(self.durativeActions, m)
         domain.constants = copy.deepcopy(self.constants, m)
+        domain.constraints = copy.deepcopy(self.constraints, m)
         return domain
 
     def hasConditionalEffects(self) -> bool:
@@ -96,6 +96,7 @@ class Domain:
             [g for dAction in self.durativeActions for g in dAction.ground(problem, delta=delta)])
 
         gDomain = GroundedDomain(self.name, gActions, gEvents, gProcess, gDurativeActions)
+        gDomain.constraints = self.constraints.ground(problem)
         gDomain.computeLists()
         gDomain.allAtoms |= problem.allAtoms
         gDomain.functions |= problem.functions
@@ -270,6 +271,7 @@ class GroundedDomain(Domain):
     __operationsDict: Dict[str, Operation] = dict()
     functions: Set[Atom]
     predicates: Set[Atom]
+    constraints: Formula
     pre: Dict[Atom, Set[Operation]]
     preN: Dict[Atom, Set[Operation]]
     preB: Dict[Atom, Set[Operation]]
