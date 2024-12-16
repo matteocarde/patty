@@ -6,8 +6,10 @@ from typing import Dict, List, Set
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.ConditionalEffect import ConditionalEffect
+from src.pddl.Constraints import Constraints
 from src.pddl.DurativeAction import DurativeAction
 from src.pddl.Event import Event
+from src.pddl.Formula import Formula
 from src.pddl.Operation import Operation
 from src.pddl.PDDLWriter import PDDLWriter
 from src.pddl.Problem import Problem
@@ -31,6 +33,7 @@ class Domain:
     actions: set[Action]
     events: set[Event]
     processes: set[Process]
+    constraints: Constraints
     __operationsDict: Dict[str, Operation]
 
     def __init__(self):
@@ -180,6 +183,8 @@ class Domain:
                 domain.events.add(Event.fromNode(child, domain.types))
             elif isinstance(child, pddlParser.ProcessContext):
                 domain.processes.add(Process.fromNode(child, domain.types))
+            elif isinstance(child, pddlParser.ConstraintsContext):
+                domain.constraints = Constraints.fromNode(child, domain.types)
 
             # dAction: DurativeAction
             # for dAction in domain.durativeActions:

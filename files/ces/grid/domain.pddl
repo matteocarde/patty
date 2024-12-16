@@ -91,4 +91,37 @@
 		)
 	)
 
+	(:constraints
+		(and
+			(forall
+				(?r - robot ?r1 - row ?r2 - row)
+				(and
+					(not (= ?r1 ?r2))
+					(or (not (atRow ?r ?r1))
+						(not (atRow ?r ?r2)))
+				)
+			)
+			(forall
+				(?r - robot ?c1 - column ?c2 - column)
+				(and
+					(not (= ?c1 ?c2))
+					(or (not (atColumn ?r ?c1))
+						(not (atColumn ?r ?c2)))
+				)
+			)
+			(exists
+				(?r - robot ?c - column)
+				(and
+					(atColumn ?r ?c)
+				)
+			)
+			(exists
+				(?r - robot ?r - row)
+				(and
+					(atRow ?r ?r)
+				)
+			)
+		)
+
+	)
 )

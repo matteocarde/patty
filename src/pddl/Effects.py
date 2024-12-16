@@ -39,7 +39,7 @@ class Effects:
     def fromNode(cls, node: pddlParser.EffectsContext, types: Dict[str, Type]) -> Effects:
 
         from src.pddl.ConditionalEffect import ConditionalEffect
-        from src.pddl.Forall import Forall
+        from src.pddl.ForallEffect import ForallEffect
 
         effects = cls()
         nodes: [p.EffectContext] = []
@@ -57,8 +57,8 @@ class Effects:
                 effects.assignments += TimePredicate.fromNode(n)
             elif isinstance(n, p.CeContext):
                 effects.assignments.append(ConditionalEffect.fromNode(n))
-            elif isinstance(n, p.ForallContext):
-                effects.assignments.append(Forall.fromNode(n, types))
+            elif isinstance(n, p.ForallEffectContext):
+                effects.assignments.append(ForallEffect.fromNode(n, types))
             else:
                 effects.assignments.append(BinaryPredicate.fromNode(n))
 
@@ -71,11 +71,11 @@ class Effects:
 
     def eliminateQuantifiers(self, problem: Problem) -> Effects:
 
-        from src.pddl.Forall import Forall
+        from src.pddl.ForallEffect import ForallEffect
         qeEffects = copy.deepcopy(self)
         assignments = list()
         for eff in qeEffects.assignments:
-            if not isinstance(eff, Forall):
+            if not isinstance(eff, ForallEffect):
                 assignments.append(eff)
                 continue
             assignments += eff.eliminate(problem)
@@ -83,9 +83,9 @@ class Effects:
         return qeEffects
 
     def hasQuantifiers(self):
-        from src.pddl.Forall import Forall
+        from src.pddl.ForallEffect import ForallEffect
         for eff in self.assignments:
-            if isinstance(eff, Forall):
+            if isinstance(eff, ForallEffect):
                 return True
         return False
 
