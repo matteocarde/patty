@@ -37,8 +37,7 @@ def closureRelaxed(X0, X1, X2, T, C):
     prev02 = T(X0, X2)
 
     while True:
-        trans = (C(X0) & (C(X1) | C(X2))) >> (prev01 & C(X1) & prev12)
-        now = smooth(trans | prev02, list(X1.values()))
+        now = (C(X0) & C(X2)) >> (smooth(prev01 & C(X1) & prev12, list(X1.values())) | prev02)
         if now.equivalent(prev02):
             return now
         prev02 = now
@@ -69,14 +68,15 @@ class TestCES(TestCase):
         X0 = dict()
         X1 = dict()
         X2 = dict()
-        for i in range(1, n + 1):
+        cells = range(1, n + 1)
+        for i in cells:
             X0[i] = bddvar(f"x{i}")
-            # for i in range(1, n + 1):
+        for i in cells:
             X1[i] = bddvar(f"x{i}'")
-            # for i in range(1, n + 1):
+        for i in cells:
             X2[i] = bddvar(f"x{i}''")
 
-        T = lambda X0, X1: \
+        T_irr = lambda X0, X1: \
             X1[1].iff(X0[4]) & \
             X1[2].iff(X0[1]) & \
             X1[3].iff(X0[2]) & \
@@ -86,6 +86,8 @@ class TestCES(TestCase):
             (~X0[2] | ~X0[3]) & \
             (~X0[3] | ~X0[4]) & \
             (~X0[4] | ~X0[1])
+        E = lambda X0, X1: (X0[1].iff(X1[1])) & (X0[2].iff(X1[2])) & (X0[3].iff(X1[3])) & (X0[4].iff(X1[4]))
+
         C = lambda X: (~X[1] | ~X[2]) & \
                       (~X[1] | ~X[3]) & \
                       (~X[1] | ~X[4]) & \
@@ -94,7 +96,8 @@ class TestCES(TestCase):
                       (~X[3] | ~X[4]) & \
                       (X[1] | X[2] | X[3] | X[4])
 
-        T_and = lambda X0, X1: T(X0, X1) & C(X0) & C(X1)
+        T_and = lambda X0, X1: T_irr(X0, X1) & C(X0) & C(X1)
+        T = lambda X0, X1: T_irr(X0, X1) | E(X0, X1)
 
         # print("T", T(X0, X1).to_dot())
         # print("T_iff", T_iff(X0, X1).to_dot())
@@ -123,8 +126,8 @@ class TestCES(TestCase):
         print("C(X) & C(X'') models: ", models(X0, X2, C(X0) & C(X2)))
 
         self.assertTrue(T_and_plus.equivalent((C(X0) & C(X2))))
-        self.assertTrue(T_and_plus.equivalent((C(X0) & C(X2) & T_hat_plus)))
         self.assertTrue(T_hat_plus.is_one())
+        # self.assertTrue((T_and_plus).equivalent((C(X0) & C(X2) & T_hat_plus & ~E(X0, X2))))
 
         # self.assertTrue((T_hat_plus & C(X0) & C(X2)).equivalent((T_hat1_plus & C(X0) & C(X2))))
 

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import copy
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 from pyeda.boolalg.bdd import BDDVariable, bddvar, BinaryDecisionDiagram, bdd2expr
 from pyeda.boolalg.expr import OrAndOp
@@ -14,6 +14,8 @@ from src.pddl.Formula import Formula
 from src.pddl.State import State
 from src.smt.SMTBoolVariable import SMTBoolVariable
 from src.smt.SMTExpression import SMTExpression
+from src.smt.expressions.FalseExpression import FalseExpression
+from src.smt.expressions.TrueExpression import TrueExpression
 from src.utils.LogPrint import LogPrint, LogPrintLevel
 from src.utils.TimeStat import TimeStat
 
@@ -39,10 +41,10 @@ class TransitionFunctionBDD:
     def __init__(self, t: ActionStateTransitionFunction):
         self.transitionFunction = t
         self.action = self.transitionFunction.action
+        self.domain = self.transitionFunction.domain
         self.m = self.transitionFunction.m
-        self.atoms = list(self.action.predicates)
-        self.staticAtoms = self.action.predicates - (
-                self.action.addedAtoms | self.action.deletedAtoms)
+        self.atoms = list(self.domain.predicates)
+        self.staticAtoms = self.domain.predicates - (self.action.addedAtoms | self.action.deletedAtoms)
         self.currentState = self.transitionFunction.current
         self.nextState = self.transitionFunction.next
         self.staticVars = {self.currentState[v] for v in self.staticAtoms} | {self.nextState[v] for v in
@@ -69,6 +71,21 @@ class TransitionFunctionBDD:
                 f"{self.action}_{v}_0")
         return Xs
 
+    def getConstraints(self) -> Tuple[BinaryDecisionDiagram, BinaryDecisionDiagram, BinaryDecisionDiagram]:
+        X0 = dict()
+        X1 = dict()
+        X2 = dict()
+        for v in self.atoms:
+            v0 = bddvar(f"{self.action}_{v}_0")
+            X0[self.currentState[v]] = v0
+            X1[self.currentState[v]] = bddvar(f"{self.action}_{v}_1") if v not in self.staticAtoms else v0
+            X2[self.currentState[v]] = bddvar(f"{self.action}_{v}_2") if v not in self.staticAtoms else v0
+
+        C0 = self.transitionFunction.constraints.toBDDExpression(X0)
+        C1 = self.transitionFunction.constraints.toBDDExpression(X1)
+        C2 = self.transitionFunction.constraints.toBDDExpression(X2)
+        return C0, C1, C2
+
     def smoothingSet(self, func: BinaryDecisionDiagram, vars: List[BDDVariable],
                      var: BDDVariable or None = None):
         if not var:
@@ -80,7 +97,7 @@ class TransitionFunctionBDD:
         join = left | right
         return join
 
-    def computeTransition(self, reflexive=True) -> TransitionFunctionBDD:
+    def computeTransition(self, reflexive=True, relaxed=True) -> TransitionFunctionBDD:
         ith = TransitionFunctionBDD(self.transitionFunction)
         ith.Xs = self.Xs
         ith.atomsOrder = self.atomsOrder
@@ -100,16 +117,17 @@ class TransitionFunctionBDD:
         bdd1 = self.bdd.compose(rep1)
         bdd2 = self.bdd.compose(rep2)
 
-        toBeSmoothed = bdd1 & bdd2
+        C0, C1, C2 = self.getConstraints() if relaxed else (1, 1, 1)
+        toBeSmoothed = bdd1 & C1 & bdd2
 
         smoothVariables = [Xs2[1][self.currentState[v]] for v in self.atomsOrder if v not in self.staticAtoms]
 
         smoothed = self.smoothingSet(toBeSmoothed, smoothVariables)
 
         if reflexive:
-            ith.bdd = smoothed | self.bdd
+            ith.bdd = (C0 & C2) >> (smoothed | self.bdd)
         else:
-            ith.bdd = smoothed
+            ith.bdd = C0 & smoothed & C2
         ith.expr = bdd2expr(ith.bdd)
 
         return ith
@@ -131,6 +149,11 @@ class TransitionFunctionBDD:
                               current: Dict[Atom, SMTExpression],
                               next: Dict[Atom, SMTExpression]):
 
+        if self.expr.is_one():
+            return TrueExpression()
+        if self.expr.is_zero():
+            return FalseExpression()
+
         liftedAtom2groundAtom: Dict[Atom, Atom] = dict()
         for groundAtom in domain.predicates:
             liftedAtom2groundAtom[groundAtom.lifted] = groundAtom
@@ -151,12 +174,12 @@ class TransitionFunctionBDD:
 
     def getRestriction(self, a: Action, s: State, Xs, vars) -> Dict[BDDVariable, bool]:
         restrict = dict()
-        for atom in a.predicates:
+        for atom in self.atoms:
             # for atom, ass in s.assignments.items():
             if atom not in vars:
                 continue
             v0 = Xs[vars[atom]]
-            restrict[v0] = bool(s.assignments[atom])
+            restrict[v0] = bool(s.assignments[atom]) if atom in s.assignments else False
         return restrict
 
     def reachable(self, a: Action, s0: State, s2: State) -> bool:

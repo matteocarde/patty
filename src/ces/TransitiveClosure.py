@@ -25,6 +25,7 @@ class TransitiveClosure(TransitionFunctionBDD):
     def fromTransitionFunction(cls, t: ActionStateTransitionFunction,
                                atomsOrder: List[Atom],
                                reflexive=True,
+                               relaxed=True,
                                maxTime: None or int = None,
                                maxReachabilityIndex=0) -> List[TransitionFunctionBDD]:
 
@@ -38,13 +39,16 @@ class TransitiveClosure(TransitionFunctionBDD):
             signal.alarm(maxTime)
 
         def handler(signum, frame):
-            raise Exception("Timeout!!!")
+            raise TimeoutError("Timeout!!!")
 
         signal.signal(signal.SIGALRM, handler)
         try:
             while True:
                 i += 1
-                nextBDD: TransitionFunctionBDD = currentBDD.computeTransition(reflexive=reflexive)
+                nextBDD: TransitionFunctionBDD = currentBDD.computeTransition(
+                    reflexive=reflexive,
+                    relaxed=relaxed
+                )
                 if not reflexive and i > maxReachabilityIndex:
                     return bdds
                 if currentBDD.isEquivalent(nextBDD):
@@ -53,7 +57,7 @@ class TransitiveClosure(TransitionFunctionBDD):
                     return bdds
                 bdds.append(nextBDD)
                 currentBDD = nextBDD
-        except:
+        except TimeoutError:
             print(len(bdds))
             print(f"Timeout when computing transitive closure of {t.action} at step {i}, i.e., {2 ** i} steps")
             return bdds

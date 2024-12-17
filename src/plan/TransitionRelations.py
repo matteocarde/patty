@@ -12,7 +12,7 @@ class TransitionRelations:
     closures: Dict[Action, List[TransitionFunctionBDD]]
     reachability: Dict[Action, List[TransitionFunctionBDD]]
 
-    def __init__(self, domain: GroundedDomain, maxTime: None or int = None):
+    def __init__(self, domain: GroundedDomain, maxTime: None or int = None, relaxed=True):
 
         self.closures = dict()
         self.reachability = dict()
@@ -27,15 +27,18 @@ class TransitionRelations:
             print(f"Order {a}: {bddorder.toDot()}")
             print(f"Computing Transitive Closure of {a}")
             Ts = TransitiveClosure.fromTransitionFunction(T_a, order,
+                                                          relaxed=relaxed,
                                                           reflexive=True,
                                                           maxTime=maxTime)
 
             print(a, Ts[-1].bdd.to_dot())
+            print(a, Ts[-1].expr)
             self.closures[a.lifted] = Ts
 
             print(f"Computing Reachability of {a}")
             Rs = TransitiveClosure.fromTransitionFunction(T_a,
                                                           order,
+                                                          relaxed=relaxed,
                                                           reflexive=False,
                                                           maxTime=maxTime,
                                                           maxReachabilityIndex=len(Ts))

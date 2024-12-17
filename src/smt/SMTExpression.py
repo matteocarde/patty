@@ -174,7 +174,7 @@ class SMTExpression:
         if formula.type == "AND":
             return SMTExpression.andOfExpressionsList(preRules)
         else:
-            return SMTExpression.andOfExpressionsList(preRules)
+            return SMTExpression.orOfExpressionsList(preRules)
 
     @classmethod
     def __connectiveOfExpressionList(cls, rules: [SMTExpression], connective):

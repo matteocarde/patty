@@ -42,6 +42,8 @@ class Arguments:
                             action="store_true", default=False)
         parser.add_argument('--no-compression', help="Avoid using compression when is doing A*",
                             action="store_true", default=False)
+        parser.add_argument('--avoid-closure-relaxation', help="Avoid using the relaxation when computing the closure",
+                            action="store_true", default=False)
         parser.add_argument('--temporal-constraints', help="'numerical' or 'logical' following IJCAI-24",
                             default='numerical')
         parser.add_argument('--quality',
@@ -86,3 +88,4 @@ class Arguments:
         self.noCompression = args.no_compression
         self.quality = args.quality
         self.temporalConstraints = args.temporal_constraints
+        self.avoidClosureRelaxation = args.avoid_closure_relaxation

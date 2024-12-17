@@ -38,6 +38,7 @@ class CESPASEncoding(Encoding):
         self.rulesByName.append("init", 0, self.getInitRules())
         for i in range(0, self.bound):
             self.rulesByName.append("closure", i, self.getClosureRules(i))
+            self.rulesByName.append("constraints", i, self.getConstraintRules(i))
             self.rulesByName.append("pre", i, self.getPreRules(i))
             self.rulesByName.append("eff", i, self.getEffRules(i))
             self.rulesByName.append("conflict", i, self.getConflictRules(i))
@@ -68,6 +69,15 @@ class CESPASEncoding(Encoding):
         return rules
 
     def getClosureRules(self, i: int) -> SMTConjunction:
+        rules = SMTConjunction()
+        X = self.vars.stateVariables
+
+        rules.append(SMTExpression.fromFormula(self.domain.constraints, X[i]))
+        rules.append(SMTExpression.fromFormula(self.domain.constraints, X[i + 1]))
+
+        return rules
+
+    def getConstraintRules(self, i: int) -> SMTConjunction:
         rules = SMTConjunction()
         X = self.vars.stateVariables
         A = self.vars.actionVariables[i + 1]

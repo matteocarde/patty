@@ -1,7 +1,8 @@
 (define (problem pb01)
 	(:domain dig)
 	(:objects
-		c01 c02 c03 c04 c05 c06 c07 - cell
+		r01 r02 r03 r04 r05 r06 r07 - row
+		c01 c02 c03 c04 c05 c06 c07 - column
 		r1 - robot
 	)
 	(:init
@@ -13,17 +14,21 @@
 		(isLeft c06 c07)
 		(isLeft c07 c01)
 
-		(isDown c01 c02)
-		(isDown c02 c03)
-		(isDown c03 c04)
-		(isDown c04 c05)
-		(isDown c05 c06)
-		(isDown c06 c07)
-		(isDown c07 c01)
+		(isDown r01 r02)
+		(isDown r02 r03)
+		(isDown r03 r04)
+		(isDown r04 r05)
+		(isDown r05 r06)
+		(isDown r06 r07)
+		(isDown r07 r01)
 
-		(at r1 c05 c05)
+		(atColumn r1 c01)
+		(atRow r1 r01)
 	)
 	(:goal
-		(and (at r1 c01 c01))
+		(and
+			(atColumn r1 c03)
+			(atRow r1 r03)
+		)
 	)
 )
