@@ -20,7 +20,7 @@ class TestCESGrid(TestCase):
         self.gDomain: GroundedDomain = self.qeDomain.ground(self.problem)
         self.args = Arguments(keepRequired=False)
         self.args.pattern = "alpha"
-        self.args.avoidClosureRelaxation = False
+        self.args.avoidClosureRelaxation = True
 
     def test_solver(self):
         search = PASSearch(self.gDomain, self.problem, self.args, liftedDomain=self.domain)

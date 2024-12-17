@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from pyeda.boolalg.bdd import BinaryDecisionDiagram, BDDVariable
 from sympy import Expr
 from typing import Dict, Set, Tuple, List
 
@@ -99,3 +100,6 @@ class Predicate:
 
     def toPDDL(self, pw: PDDLWriter = PDDLWriter()):
         pw.write(str(self))
+
+    def toBDD(self, vars: Dict[Atom, BDDVariable]) -> BinaryDecisionDiagram:
+        raise NotImplementedError()

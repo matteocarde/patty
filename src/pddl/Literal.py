@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 from typing import Dict, Set, Tuple, List
 
+from pyeda.boolalg.bdd import BinaryDecisionDiagram, BDDVariable
 from sympy import Expr
 
 from src.pddl.Atom import Atom
@@ -216,3 +217,9 @@ class Literal(Predicate):
     def expressifyWithEquation(self, symbols: Dict[Atom, Expr]) -> Expr:
         # return Eq(self.expressify(symbols), 1) if self.sign == "+" else Eq(self.expressify(symbols), -1)
         return self.expressify(symbols) - 1 if self.sign == "+" else self.expressify(symbols) + 1
+    
+    def toBDD(self, vars: Dict[Atom, BDDVariable]) -> BinaryDecisionDiagram:
+        if self.sign == "+":
+            return vars[self.atom]
+        if self.sign == "-":
+            return ~vars[self.atom]

@@ -24,15 +24,14 @@ class TransitionRelations:
             T_a = ActionStateTransitionFunction(a, domain)
             bddorder = BDDVariableOrder(a)
             order = bddorder.getOrder()
-            print(f"Order {a}: {bddorder.toDot()}")
+            # print(f"Order {a}: {bddorder.toDot()}")
             print(f"Computing Transitive Closure of {a}")
             Ts = TransitiveClosure.fromTransitionFunction(T_a, order,
                                                           relaxed=relaxed,
                                                           reflexive=True,
                                                           maxTime=maxTime)
 
-            print(a, Ts[-1].bdd.to_dot())
-            print(a, Ts[-1].expr)
+            # print(a, Ts[-1].bdd.to_dot())
             self.closures[a.lifted] = Ts
 
             print(f"Computing Reachability of {a}")

@@ -1,12 +1,12 @@
 import signal
-from typing import List
+from typing import List, Dict
 
-from pyeda.boolalg.bdd import bddvar
+from pyeda.boolalg.bdd import bddvar, BDDVariable
 
 from src.ces.ActionStateTransitionFunction import ActionStateTransitionFunction
 from src.ces.TransitionFunctionBDD import TransitionFunctionBDD
+from src.pddl.Action import Action
 from src.pddl.Atom import Atom
-from src.pddl.Formula import Formula
 
 
 class TransitiveClosure(TransitionFunctionBDD):
@@ -15,11 +15,14 @@ class TransitiveClosure(TransitionFunctionBDD):
         super().__init__(t)
 
     @staticmethod
-    def setOrder(action, order, reflexive):
+    def getOrder(action, order) -> Dict[Atom, Dict[int, BDDVariable]]:
+        d = dict()
         for v in order:
-            bddvar(f"{action}_{v}_0")
-            bddvar(f"{action}_{v}_1")
-            bddvar(f"{action}_{v}_2")
+            d[v] = dict()
+            d[v][0] = bddvar(f"{action}_{v}_0")
+            d[v][1] = bddvar(f"{action}_{v}_1")
+            d[v][2] = bddvar(f"{action}_{v}_2")
+        return d
 
     @classmethod
     def fromTransitionFunction(cls, t: ActionStateTransitionFunction,
@@ -31,9 +34,11 @@ class TransitiveClosure(TransitionFunctionBDD):
 
         bdds = []
         i = 0
-        TransitiveClosure.setOrder(t.action, atomsOrder, reflexive)
-        currentBDD: TransitionFunctionBDD = super().fromActionStateTransitionFunction(t, atomsOrder)
+        variables = TransitiveClosure.getOrder(t.action, atomsOrder)
+        currentBDD: TransitionFunctionBDD = super().fromActionStateTransitionFunction(t, atomsOrder, variables)
         bdds.append(currentBDD)
+
+        print(t.action, i, currentBDD.bdd.to_dot())
 
         if maxTime:
             signal.alarm(maxTime)
@@ -49,6 +54,7 @@ class TransitiveClosure(TransitionFunctionBDD):
                     reflexive=reflexive,
                     relaxed=relaxed
                 )
+                print(t.action, i, nextBDD.bdd.to_dot())
                 if not reflexive and i > maxReachabilityIndex:
                     return bdds
                 if currentBDD.isEquivalent(nextBDD):

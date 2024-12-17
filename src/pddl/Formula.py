@@ -4,6 +4,8 @@ import copy
 from itertools import chain
 from typing import Dict, Set, Tuple, List
 
+from pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram, bdd2expr
+from pyeda.boolalg.expr import OrOp, AndOp, Complement, Variable
 from sympy import Expr
 
 from src.pddl.Atom import Atom
@@ -218,3 +220,48 @@ class Formula:
         pw.decreaseTab()
         pw.write(")")
         pw.decreaseTab()
+
+    def toBDD(self, vars: Dict[Atom, BDDVariable]):
+        if self.type == "AND":
+            f = 1
+            for a in self.conditions:
+                f &= a.toBDD(vars)
+            return f
+        if self.type == "OR":
+            f = 0
+            for a in self.conditions:
+                f |= a.toBDD(vars)
+            return f
+
+    @classmethod
+    def fromNary(cls, fType: str, expr, var2atom: Dict[str, Atom]):
+        assert type(expr) in {OrOp, AndOp}
+        f = cls()
+        f.type = fType
+        for subf in expr.xs:
+            f.addClause(Formula.fromExpr(subf, var2atom))
+        return f
+
+    @classmethod
+    def fromOrOp(cls, expr: OrOp, var2atom: Dict[str, Atom]):
+        return Formula.fromNary("OR", expr, var2atom)
+
+    @classmethod
+    def fromAndOp(cls, expr: AndOp, var2atom: Dict[str, Atom]):
+        return Formula.fromNary("AND", expr, var2atom)
+
+    @classmethod
+    def fromExpr(cls, expr, var2atom: Dict[str, Atom]):
+        if isinstance(expr, OrOp):
+            return Formula.fromOrOp(expr, var2atom)
+        if isinstance(expr, AndOp):
+            return Formula.fromAndOp(expr, var2atom)
+        if isinstance(expr, Complement):
+            return Literal.neg(var2atom[expr.top.name])
+        if isinstance(expr, Variable):
+            return Literal.pos(var2atom[expr.name])
+
+    @staticmethod
+    def fromBDD(bdd: BinaryDecisionDiagram, var2atom: Dict[str, Atom]):
+        expr = bdd2expr(bdd)
+        return Formula.fromOrOp(expr, var2atom)
