@@ -23,7 +23,8 @@ class BDDVariableOrder:
         # 2) v \in pre(a), w \nin \pre(a), v < w
         for v in action.preconditions.getPredicates():
             for w in action.predicates - action.preconditions.getPredicates():
-                self.nodes[w].append(v)
+                if v != w:
+                    self.nodes[w].append(v)
 
         # 3) \forall e \in post(a), v \in cond(e), w \in post(e) -> v < w
         for e in action.effects:
@@ -31,7 +32,8 @@ class BDDVariableOrder:
                 continue
             for v in e.conditions.getPredicates():
                 for w in e.effects.getPredicates():
-                    self.nodes[w].append(v)
+                    if v != w:
+                        self.nodes[w].append(v)
 
     def getOrder(self) -> List[Atom]:
         nodes = copy.deepcopy(self.nodes)

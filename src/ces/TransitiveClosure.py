@@ -5,14 +5,13 @@ from pyeda.boolalg.bdd import bddvar, BDDVariable
 
 from src.ces.ActionStateTransitionFunction import ActionStateTransitionFunction
 from src.ces.TransitionFunctionBDD import TransitionFunctionBDD
-from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 
 
 class TransitiveClosure(TransitionFunctionBDD):
 
-    def __init__(self, t: ActionStateTransitionFunction):
-        super().__init__(t)
+    def __init__(self):
+        super().__init__()
 
     @staticmethod
     def getOrder(action, order) -> Dict[Atom, Dict[int, BDDVariable]]:
@@ -38,7 +37,7 @@ class TransitiveClosure(TransitionFunctionBDD):
         currentBDD: TransitionFunctionBDD = super().fromActionStateTransitionFunction(t, atomsOrder, variables)
         bdds.append(currentBDD)
 
-        print(t.action, i, currentBDD.bdd.to_dot())
+        print("Transitive" if reflexive else "Reachability", t.action, i, currentBDD.bdd.to_dot())
 
         if maxTime:
             signal.alarm(maxTime)
@@ -54,12 +53,13 @@ class TransitiveClosure(TransitionFunctionBDD):
                     reflexive=reflexive,
                     relaxed=relaxed
                 )
-                print(t.action, i, nextBDD.bdd.to_dot())
+                print("Transitive" if reflexive else "Reachability", t.action, i, nextBDD.bdd.to_dot())
                 if not reflexive and i > maxReachabilityIndex:
                     return bdds
                 if currentBDD.isEquivalent(nextBDD):
                     nextBDD.__class__ = TransitiveClosure
                     signal.alarm(0)
+                    print(nextBDD.bdd.to_dot())
                     return bdds
                 bdds.append(nextBDD)
                 currentBDD = nextBDD
