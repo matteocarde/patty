@@ -1,0 +1,40 @@
+
+               \documentclass[11pt,landscape]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in,landscape]{geometry}
+
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||cccc||cccc||cccc||cccc||cccc||}
+\hline
+ & \multicolumn{4}{c||}{Solved (out of $20$)}&\multicolumn{4}{c||}{Time (s)}&\multicolumn{4}{c||}{\textsc{smt} calls}&\multicolumn{4}{c||}{$|\mathcal{X} \cup \mathcal{A}^\prec \cup \mathcal{X}'|$}&\multicolumn{4}{c||}{$|\mathcal{T}^\prec(\mathcal{X},\mathcal{A}^\prec,\mathcal{X}')|$}\\
+Domain & $\mathrm{P}_\mathrm{O}$&$\mathrm{P}_\mathrm{G}$&$\mathrm{P}_\mathrm{H}$&$\mathrm{P}_\mathrm{F}$&$\mathrm{P}_\mathrm{O}$&$\mathrm{P}_\mathrm{G}$&$\mathrm{P}_\mathrm{H}$&$\mathrm{P}_\mathrm{F}$&$\mathrm{P}_\mathrm{O}$&$\mathrm{P}_\mathrm{G}$&$\mathrm{P}_\mathrm{H}$&$\mathrm{P}_\mathrm{F}$&$\mathrm{P}_\mathrm{O}$&$\mathrm{P}_\mathrm{G}$&$\mathrm{P}_\mathrm{H}$&$\mathrm{P}_\mathrm{F}$&$\mathrm{P}_\mathrm{O}$&$\mathrm{P}_\mathrm{G}$&$\mathrm{P}_\mathrm{H}$&$\mathrm{P}_\mathrm{F}$\\
+\hline
+\textsc{Del} (S)&3&3&5&\textbf{8}&255.6&255.6&241.8&\textbf{191.1}&\textbf{3.3}&\textbf{3.3}&\textbf{3.3}&\textbf{3.3}&1.1k&809&809&\textbf{507}&3.3k&2.9k&2.9k&\textbf{1.7k}\\
+\textsc{Drn} (S)&3&3&3&\textbf{16}&255.3&255.3&255.3&\textbf{81.9}&\textbf{5.7}&\textbf{5.7}&\textbf{5.7}&8.3&301&137&137&\textbf{95}&778&322&322&\textbf{194}\\
+\textsc{Exp} (S)&\textbf{3}&\textbf{3}&\textbf{3}&\textbf{3}&\textbf{262.0}&\textbf{262.0}&267.3&266.7&\textbf{7.7}&\textbf{7.7}&8.0&8.3&778&420&434&\textbf{410}&1.8k&1.3k&1.4k&\textbf{1.3k}\\
+\textsc{Mrkt} (L)&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X\\
+\textsc{MPrime} (S)&\textbf{10}&\textbf{10}&\textbf{10}&\textbf{10}&\textbf{154.8}&155.8&155.5&157.1&\textbf{2.0}&\textbf{2.0}&\textbf{2.0}&2.2&1.6k&\textbf{1.3k}&\textbf{1.3k}&1.3k&4.9k&\textbf{4.6k}&\textbf{4.6k}&4.7k\\
+\textsc{PlWat} (S)&6&6&5&\textbf{20}&220.2&224.0&227.0&\textbf{10.2}&\textbf{7.6}&\textbf{7.6}&7.8&10.0&540&303&310&\textbf{222}&1.5k&804&823&\textbf{561}\\
+\textsc{Rvr} (S)&10&11&9&\textbf{13}&156.1&150.3&171.9&\textbf{143.6}&\textbf{2.1}&\textbf{2.1}&2.3&3.1&1.0k&562&651&\textbf{499}&2.3k&1.8k&2.2k&\textbf{1.6k}\\
+\textsc{Sail} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&1.1&1.1&1.3&\textbf{0.9}&\textbf{3.3}&\textbf{3.3}&\textbf{3.3}&\textbf{3.3}&163&117&117&\textbf{72}&340&254&254&\textbf{134}\\
+\textsc{Sail} (L)&19&19&\textbf{20}&\textbf{20}&22.2&21.1&4.5&\textbf{1.8}&\textbf{1.5}&\textbf{1.5}&\textbf{1.5}&\textbf{1.5}&72&65&65&\textbf{61}&178&165&165&\textbf{151}\\
+\textsc{Stlrs} (S)&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X\\
+\textsc{Sgr} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&9.4&8.8&9.5&\textbf{6.1}&\textbf{3.1}&\textbf{3.1}&3.2&4.0&1.4k&920&931&\textbf{725}&3.5k&2.8k&2.8k&\textbf{2.1k}\\
+\textsc{Tpp} (L)&\textbf{2}&\textbf{2}&\textbf{2}&\textbf{2}&270.5&272.7&270.4&\textbf{270.1}&2.5&2.5&\textbf{2.0}&\textbf{2.0}&452&288&251&\textbf{196}&1.1k&703&588&\textbf{408}\\
+\textsc{Zeno} (S)&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{11}&137.3&138.4&138.2&\textbf{136.6}&\textbf{1.6}&\textbf{1.6}&\textbf{1.6}&1.7&603&515&515&\textbf{376}&1.9k&1.7k&1.7k&\textbf{1.1k}\\
+\textsc{Line} (L)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{1.5}&\textbf{1.5}&1.7&1.9&\textbf{4.7}&\textbf{4.7}&\textbf{4.7}&7.4&290&\textbf{182}&\textbf{182}&198&714&\textbf{507}&\textbf{507}&555
+\\\hline
+\textit{Best}&\textbf{127}&\textbf{128}&\textbf{128}&\textbf{163}&\textbf{39}&\textbf{18}&\textbf{24}&\textbf{87}&\textbf{124}&\textbf{125}&\textbf{122}&\textbf{114}&\textbf{22}&\textbf{61}&\textbf{59}&\textbf{139}&\textbf{22}&\textbf{61}&\textbf{59}&\textbf{139}\\\hline
+
+        \end{tabular}}
+        \caption{Comparative analysis of \pattyo, \pattyg, \pattyh and \pattyf. The labels (S) and (L) indicate if the domain is Simple or Linear, according to the \ipc definition. The table with all the 19 domains is in the supplementary material.}
+        \label{tab:experiments}
+        \end{table*}
+        
+\end{document}

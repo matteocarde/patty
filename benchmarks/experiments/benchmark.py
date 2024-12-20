@@ -38,6 +38,10 @@ PLANNERS: Dict[str, Planner] = {
     "PATTY-G": Patty("PATTY-G", search="static", pattern="arpg"),
     "PATTY-H": Patty("PATTY-H", search="astar", pattern="arpg", noCompression=True),
     "PATTY-F": Patty("PATTY-F", search="astar", pattern="arpg", noCompression=False),
+    "PATTY-EO": Patty("PATTY-EO", search="step", pattern="enhanced"),
+    "PATTY-EG": Patty("PATTY-EG", search="static", pattern="enhanced"),
+    "PATTY-EH": Patty("PATTY-EH", search="astar", pattern="enhanced", noCompression=True),
+    "PATTY-EF": Patty("PATTY-EF", search="astar", pattern="enhanced", noCompression=False),
     "PATTY-CES": Patty("PATTY-CES", search="chain", pattern="alpha", tcTime=40),
 
     "PATTY-R": Patty("PATTY-R", search="step", pattern="random", quality="none"),
