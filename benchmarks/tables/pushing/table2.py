@@ -13,16 +13,16 @@ PUSHING_TABLE2 = {
         "quantity": {
             "name": "Solved (out of $20$)",
             "winner": +1,
-            "avg": True
+            "avg": False
         },
         "time": {
             "name": "Time (s)",
             "winner": -1,
-            "stdev": True
+            "avg": True
         },
     },
     "planners": {
-        'PATTY-F': {
+        'PATTY-EF': {
             "name": PUSHING_PLANNERS['PATTY-F']["name"],
             "type": "scalar"
         },

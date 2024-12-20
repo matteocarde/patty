@@ -14,8 +14,7 @@ PUSHING_TABLE1 = {
     "columns": {
         "quantity": {
             "name": "Solved (out of $20$)",
-            "winner": +1,
-            "avg": True
+            "winner": +1
         },
         "time": {
             "name": "Time (s)",
@@ -30,28 +29,28 @@ PUSHING_TABLE1 = {
         "nOfVars": {
             "name": "$|\mathcal{X} \cup \mathcal{A}^\prec \cup \mathcal{X}'|$",
             "winner": -1,
-            "stdev": False
+            "avg": True
         },
         "nOfRules": {
             "name": "$|\mathcal{T}^\prec(\mathcal{X},\mathcal{A}^\prec,\mathcal{X}')|$",
             "winner": -1,
-            "stdev": False
+            "avg": True
         },
     },
     "planners": {
-        'PATTY-O': {
+        'PATTY-EO': {
             "name": PUSHING_PLANNERS['PATTY-O']["name"],
             "type": "scalar"
         },
-        'PATTY-G': {
+        'PATTY-EG': {
             "name": PUSHING_PLANNERS['PATTY-G']["name"],
             "type": "scalar"
         },
-        'PATTY-H': {
+        'PATTY-EH': {
             "name": PUSHING_PLANNERS['PATTY-H']["name"],
             "type": "scalar"
         },
-        'PATTY-F': {
+        'PATTY-EF': {
             "name": PUSHING_PLANNERS['PATTY-F']["name"],
             "type": "scalar"
         },

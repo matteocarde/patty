@@ -1,0 +1,47 @@
+
+               \documentclass[11pt]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in]{geometry}
+
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||cccc||cccc||}
+\hline
+ & \multicolumn{4}{c||}{Solved (out of $20$)}&\multicolumn{4}{c||}{Time (s)}\\
+Domain & $\mathrm{P}_\mathrm{F}$&$\mathrm{EN}$&$\mathrm{EN}_\mathrm{CT}$&$\mathrm{FF}$&$\mathrm{P}_\mathrm{F}$&$\mathrm{EN}$&$\mathrm{EN}_\mathrm{CT}$&$\mathrm{FF}$\\
+\hline
+\textsc{BlGrp} (S)&\textbf{20}&16&14&2&\textbf{1.8}&81.5&117.2&270.2\\
+\textsc{Cnt} (S)&\textbf{20}&12&10&15&\textbf{0.9}&133.8&163.8&95.7\\
+\textsc{Cnt} (L)&\textbf{20}&10&12&8&\textbf{1.0}&170.9&142.3&180.0\\
+\textsc{Del} (S)&5&13&14&\textbf{18}&208.7&121.7&117.1&\textbf{41.2}\\
+\textsc{Drn} (S)&3&16&\textbf{18}&2&255.3&62.9&\textbf{55.4}&268.4\\
+\textsc{Exp} (S)&2&\textbf{6}&\textbf{6}&-&270.2&\textbf{212.3}&224.0&-\\
+\textsc{Farm} (S)&\textbf{20}&\textbf{20}&\textbf{20}&9&2.9&\textbf{0.9}&1.8&188.1\\
+\textsc{Farm} (L)&\textbf{20}&18&\textbf{20}&15&\textbf{2.2}&48.6&2.5&80.5\\
+\textsc{HPwr} (S)&\textbf{20}&2&\textbf{20}&1&11.4&270.3&\textbf{4.6}&285.0\\
+\textsc{Mrkt} (L)&-&4&\textbf{20}&-&-&259.3&\textbf{35.0}&-\\
+\textsc{MPrime} (S)&11&\textbf{17}&\textbf{17}&\textbf{17}&142.7&68.1&74.6&\textbf{45.1}\\
+\textsc{PathM} (S)&\textbf{19}&2&3&10&\textbf{33.6}&272.2&262.8&154.9\\
+\textsc{PlWat} (S)&5&16&\textbf{20}&3&232.9&101.3&\textbf{41.1}&268.3\\
+\textsc{Rvr} (S)&\textbf{15}&8&12&10&\textbf{99.5}&197.4&143.7&133.3\\
+\textsc{Sail} (S)&\textbf{20}&\textbf{20}&\textbf{20}&1&\textbf{1.5}&2.0&5.0&285.0\\
+\textsc{Sail} (L)&\textbf{18}&2&2&8&\textbf{31.8}&270.6&270.8&182.8\\
+\textsc{Stlrs} (S)&\textbf{6}&1&2&4&\textbf{223.4}&288.6&279.0&243.8\\
+\textsc{Sgr} (S)&\textbf{20}&8&11&13&\textbf{12.5}&182.5&144.5&122.5\\
+\textsc{Tpp} (L)&2&3&\textbf{7}&2&270.2&255.2&\textbf{212.3}&266.7\\
+\textsc{Zeno} (S)&11&\textbf{19}&17&11&136.5&\textbf{28.1}&89.5&135.0\\
+\textsc{Line} (L)&\textbf{20}&9&11&6&\textbf{1.2}&175.4&149.5&211.6
+\\\hline
+\textit{Best}&\textbf{277}&\textbf{222}&\textbf{276}&\textbf{155}&\textbf{105.1}&\textbf{152.5}&\textbf{120.8}&\textbf{193.4}\\\hline
+
+        \end{tabular}}
+        \caption{Comparative analysis of \pattyf and the search based planners \textsc{ENHSP}, \textsc{MetricFF} and \textsc{NFD}. A ‘‘-” means that no problem in the domain was solved by the planner.}
+        \label{tab:exp-search}
+        \end{table*}
+        
+\end{document}

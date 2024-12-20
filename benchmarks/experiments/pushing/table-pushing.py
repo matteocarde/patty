@@ -35,9 +35,9 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2024-12-20-IJCAI-PUSHING-V1"
+    exp = "2024-12-20-IJCAI-v1"
     joinWith = [
-        ("2024-07-24-AAAI-PUSHING-V2", ["PATTY-O", "PATTY-G", "PATTY-H", "PATTY-F"]),
+        ("2024-12-20-IJCAI-v1", ["PATTY-EO", "PATTY-EG", "PATTY-H", "PATTY-F"]),
         ("2024-11-12-DOMAINS-v1", ["ENHSP-SAT-AIBR", "RANTANPLAN", "SPRINGROLL", "ENHSP-SAT-HADD",
                                    "ENHSP-SAT-HMRP", "METRIC-FF", "NFD", "OMT", "ENHSP-SOCS"]),
         ("2024-11-11-SOCS-v1", ["ENHSP-SOCS"]),
@@ -128,18 +128,21 @@ def main():
                     p[domain][planner][problem] = d[domain][planner][problem][0]
                 d[domain][planner] = problems
 
+        STATS = [
+            "coverage",
+            "quantity",
+            "bound",
+            "time",
+            "planLength",
+            "nOfVars",
+            "nOfRules",
+            "lastCallsToSolver",
+        ]
         t = dict()
+        all = dict([(s, dict([(p, list()) for p in planners])) for s in STATS])
         for domain in domains:
-            t[domain] = {
-                "coverage": dict(),
-                "quantity": dict(),
-                "bound": dict(),
-                "time": dict(),
-                "planLength": dict(),
-                "nOfVars": dict(),
-                "nOfRules": dict(),
-                "lastCallsToSolver": dict(),
-            }
+            t[domain] = dict([(s, dict()) for s in STATS])
+
             commonlySolved = None
             for planner in table["planners"].keys():
                 if planner not in d[domain]:
@@ -178,21 +181,27 @@ def main():
                 else:
                     v = [r.time / 1000 for r in pResult if r.solved and r.problem in commonlySolved]
                 t[domain]["time"][planner] = rVec(v, 1) if hasCoverage and v else symb
+                all["time"][planner] += [r.time / 1000 if r.solved else table["time-limit"] / 1000 for r in pResult]
 
                 v = [r.bound for r in pResult if r.solved and r.problem in commonlySolved]
                 t[domain]["bound"][planner] = rVec(v, 1) if hasCoverage and v else symb
+                all["bound"][planner] += v
 
                 v = [r.planLength for r in pResult if r.solved and r.problem in commonlySolved]
                 t[domain]["planLength"][planner] = rVec(v, 0) if hasCoverage and v else symb
+                all["planLength"][planner] += v
 
                 v = [r.nOfVars for r in pResult if r.nOfVars > 0 and r.problem in commonlySolved]
                 t[domain]["nOfVars"][planner] = rVec(v, 0) if hasCoverage and v else symb
+                all["nOfVars"][planner] += v
 
                 v = [r.nOfRules for r in pResult if r.nOfRules > 0 and r.problem in commonlySolved]
                 t[domain]["nOfRules"][planner] = rVec(v, 0) if hasCoverage and v else symb
+                all["nOfRules"][planner] += v
 
                 v = [r.lastCallsToSolver for r in pResult if r.lastCallsToSolver > 0 and r.problem in commonlySolved]
                 t[domain]["lastCallsToSolver"][planner] = rVec(v, 2) if hasCoverage and v else symb
+                all["lastCallsToSolver"][planner] += v
 
         latex = list()
         orientation = ",landscape" if table["orientation"] == "landscape" else ""
@@ -328,6 +337,10 @@ def main():
         for column, columnInfo in table["columns"].items():
             for planner, plannerInfo in table["planners"].items():
                 if plannerInfo["type"] in {"stdev", "skip"}:
+                    continue
+                if columnInfo.get("avg"):
+                    value = transformTextValue(round(statistics.mean(all[column][planner]), 1))
+                    row.append(r"\textbf{" + value + "}")
                     continue
                 nOfWinning = 0
                 for domain, domainInfo in table["domains"].items():

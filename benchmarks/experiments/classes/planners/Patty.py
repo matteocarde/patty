@@ -78,6 +78,7 @@ class Patty(Planner):
             # "-pp",
             "-o", domain,
             "-f", problem,
+            "-s", self.search,
             "--pattern", self.pattern,
             "--quality", self.quality,
             "-pp"

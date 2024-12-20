@@ -1,0 +1,40 @@
+
+               \documentclass[11pt,landscape]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in,landscape]{geometry}
+
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||cccc||cccc||cccc||cccc||cccc||}
+\hline
+ & \multicolumn{4}{c||}{Solved (out of $20$)}&\multicolumn{4}{c||}{Time (s)}&\multicolumn{4}{c||}{\textsc{smt} calls}&\multicolumn{4}{c||}{$|\mathcal{X} \cup \mathcal{A}^\prec \cup \mathcal{X}'|$}&\multicolumn{4}{c||}{$|\mathcal{T}^\prec(\mathcal{X},\mathcal{A}^\prec,\mathcal{X}')|$}\\
+Domain & $\mathrm{P}_\mathrm{O}$&$\mathrm{P}_\mathrm{G}$&$\mathrm{P}_\mathrm{H}$&$\mathrm{P}_\mathrm{F}$&$\mathrm{P}_\mathrm{O}$&$\mathrm{P}_\mathrm{G}$&$\mathrm{P}_\mathrm{H}$&$\mathrm{P}_\mathrm{F}$&$\mathrm{P}_\mathrm{O}$&$\mathrm{P}_\mathrm{G}$&$\mathrm{P}_\mathrm{H}$&$\mathrm{P}_\mathrm{F}$&$\mathrm{P}_\mathrm{O}$&$\mathrm{P}_\mathrm{G}$&$\mathrm{P}_\mathrm{H}$&$\mathrm{P}_\mathrm{F}$&$\mathrm{P}_\mathrm{O}$&$\mathrm{P}_\mathrm{G}$&$\mathrm{P}_\mathrm{H}$&$\mathrm{P}_\mathrm{F}$\\
+\hline
+\textsc{Del} (S)&\textbf{5}&\textbf{5}&\textbf{5}&\textbf{5}&208.4&208.6&\textbf{208.3}&208.7&\textbf{2.2}&\textbf{2.2}&\textbf{2.2}&\textbf{2.2}&\textbf{1.0k}&\textbf{1.0k}&\textbf{1.0k}&\textbf{1.0k}&\textbf{3.1k}&\textbf{3.1k}&\textbf{3.1k}&\textbf{3.1k}\\
+\textsc{Drn} (S)&\textbf{3}&\textbf{3}&\textbf{3}&\textbf{3}&\textbf{252.9}&255.3&255.3&255.3&\textbf{5.7}&\textbf{5.7}&\textbf{5.7}&\textbf{5.7}&\textbf{142}&\textbf{142}&\textbf{142}&\textbf{142}&\textbf{344}&\textbf{344}&\textbf{344}&\textbf{344}\\
+\textsc{Exp} (S)&\textbf{3}&2&2&2&\textbf{257.7}&270.2&270.3&270.2&\textbf{3.0}&\textbf{3.0}&\textbf{3.0}&\textbf{3.0}&\textbf{254}&\textbf{254}&\textbf{254}&\textbf{254}&\textbf{612}&\textbf{612}&\textbf{612}&\textbf{612}\\
+\textsc{Mrkt} (L)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{MPrime} (S)&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{11}&143.3&\textbf{132.7}&143.9&142.7&\textbf{1.1}&\textbf{1.1}&\textbf{1.1}&\textbf{1.1}&\textbf{1.2k}&\textbf{1.2k}&\textbf{1.2k}&\textbf{1.2k}&\textbf{3.6k}&\textbf{3.6k}&\textbf{3.6k}&\textbf{3.6k}\\
+\textsc{PlWat} (S)&\textbf{6}&5&\textbf{6}&5&\textbf{214.7}&226.2&217.9&232.9&\textbf{7.8}&\textbf{7.8}&\textbf{7.8}&\textbf{7.8}&\textbf{366}&\textbf{366}&\textbf{366}&\textbf{366}&\textbf{1.0k}&\textbf{1.0k}&\textbf{1.0k}&\textbf{1.0k}\\
+\textsc{Rvr} (S)&15&\textbf{16}&\textbf{16}&15&99.8&93.9&\textbf{86.3}&99.5&\textbf{2.0}&\textbf{2.0}&\textbf{2.0}&\textbf{2.0}&\textbf{1.2k}&\textbf{1.2k}&\textbf{1.2k}&\textbf{1.2k}&\textbf{3.1k}&\textbf{3.1k}&\textbf{3.1k}&\textbf{3.1k}\\
+\textsc{Sail} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&11.5&\textbf{1.4}&3.4&1.5&\textbf{3.3}&\textbf{3.3}&\textbf{3.3}&\textbf{3.3}&\textbf{135}&\textbf{135}&\textbf{135}&\textbf{135}&\textbf{266}&\textbf{266}&\textbf{266}&\textbf{266}\\
+\textsc{Sail} (L)&19&\textbf{20}&\textbf{20}&18&32.6&\textbf{7.1}&12.9&31.8&\textbf{1.4}&\textbf{1.4}&\textbf{1.4}&\textbf{1.4}&\textbf{68}&\textbf{68}&\textbf{68}&\textbf{68}&\textbf{163}&\textbf{163}&\textbf{163}&\textbf{163}\\
+\textsc{Stlrs} (S)&\textbf{7}&6&5&6&\textbf{211.6}&222.5&233.7&223.4&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.5k}&\textbf{1.5k}&\textbf{1.5k}&\textbf{1.5k}&\textbf{3.1k}&\textbf{3.1k}&\textbf{3.1k}&\textbf{3.1k}\\
+\textsc{Sgr} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{11.0}&12.1&11.4&12.5&\textbf{2.5}&\textbf{2.5}&\textbf{2.5}&\textbf{2.5}&\textbf{1.0k}&\textbf{1.0k}&\textbf{1.0k}&\textbf{1.0k}&\textbf{2.6k}&\textbf{2.6k}&\textbf{2.6k}&\textbf{2.6k}\\
+\textsc{Tpp} (L)&2&\textbf{3}&\textbf{3}&2&270.1&\textbf{267.6}&268.4&270.2&\textbf{2.5}&\textbf{2.5}&\textbf{2.5}&\textbf{2.5}&\textbf{237}&\textbf{237}&\textbf{237}&\textbf{237}&\textbf{651}&\textbf{651}&\textbf{651}&\textbf{651}\\
+\textsc{Zeno} (S)&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{136.5}&\textbf{136.5}&136.6&\textbf{136.5}&\textbf{1.6}&\textbf{1.6}&\textbf{1.6}&\textbf{1.6}&\textbf{542}&\textbf{542}&\textbf{542}&\textbf{542}&\textbf{1.7k}&\textbf{1.7k}&\textbf{1.7k}&\textbf{1.7k}\\
+\textsc{Line} (L)&\textbf{20}&\textbf{20}&19&\textbf{20}&\textbf{1.1}&1.2&2.5&1.2&\textbf{2.8}&\textbf{2.8}&\textbf{2.8}&\textbf{2.8}&\textbf{164}&\textbf{164}&\textbf{164}&\textbf{164}&\textbf{388}&\textbf{388}&\textbf{388}&\textbf{388}
+\\\hline
+\textit{Best}&\textbf{142}&\textbf{142}&\textbf{141}&\textbf{138}&\textbf{152.5}&\textbf{151.8}&\textbf{153.4}&\textbf{154.9}&\textbf{2.5}&\textbf{2.5}&\textbf{2.5}&\textbf{2.5}&\textbf{569.1}&\textbf{569.1}&\textbf{569.1}&\textbf{569.1}&\textbf{1.5k}&\textbf{1.5k}&\textbf{1.5k}&\textbf{1.5k}\\\hline
+
+        \end{tabular}}
+        \caption{Comparative analysis of \pattyo, \pattyg, \pattyh and \pattyf. The labels (S) and (L) indicate if the domain is Simple or Linear, according to the \ipc definition. The table with all the 19 domains is in the supplementary material.}
+        \label{tab:experiments}
+        \end{table*}
+        
+\end{document}
