@@ -9,6 +9,7 @@ from typing import Dict, List, Set
 
 from benchmarks.tables.pushing.table1 import PUSHING_TABLE1
 from benchmarks.tables.pushing.table2 import PUSHING_TABLE2
+from benchmarks.tables.pushing.table1full import PUSHING_TABLE1_FULL
 from classes.CloudLogger import CloudLogger
 from classes.Result import Result
 
@@ -35,9 +36,9 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2024-12-20-IJCAI-v1"
+    exp = "2024-12-20-IJCAI-v2"
     joinWith = [
-        ("2024-12-20-IJCAI-v1", ["PATTY-EO", "PATTY-EG", "PATTY-H", "PATTY-F"]),
+        ("2024-12-20-IJCAI-v2", ["PATTY-EO", "PATTY-EG", "PATTY-EH", "PATTY-EF"]),
         ("2024-11-12-DOMAINS-v1", ["ENHSP-SAT-AIBR", "RANTANPLAN", "SPRINGROLL", "ENHSP-SAT-HADD",
                                    "ENHSP-SAT-HMRP", "METRIC-FF", "NFD", "OMT", "ENHSP-SOCS"]),
         ("2024-11-11-SOCS-v1", ["ENHSP-SOCS"]),
@@ -59,7 +60,8 @@ def main():
 
     tables = [
         ("TAB1", PUSHING_TABLE1),
-        ("TAB2", PUSHING_TABLE2)
+        ("TAB2", PUSHING_TABLE2),
+        ("TAB1-FULL", PUSHING_TABLE1_FULL)
     ]
 
     joinWith = [file]
@@ -332,7 +334,7 @@ def main():
 
         latex.append("\\\\\n".join(rows))
         latex.append(fr"\\\hline")
-        row = [r"\textit{Best}"]
+        row = [r"\textit{All}"]
 
         for column, columnInfo in table["columns"].items():
             for planner, plannerInfo in table["planners"].items():

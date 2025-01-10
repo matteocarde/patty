@@ -1,17 +1,17 @@
 PUSHING_PLANNERS = {
-    "PATTY-O": {
+    "PATTY-EO": {
         "name": r"\mathrm{P}_\mathrm{O}",
         "style": "-"
     },
-    "PATTY-G": {
+    "PATTY-EG": {
         "name": r"\mathrm{P}_\mathrm{G}",
         "style": "-"
     },
-    "PATTY-H": {
+    "PATTY-EH": {
         "name": r"\mathrm{P}_\mathrm{H}",
         "style": "-"
     },
-    "PATTY-F": {
+    "PATTY-EF": {
         "name": r"\mathrm{P}_\mathrm{F}",
         "style": "-"
     },
@@ -29,6 +29,18 @@ PUSHING_PLANNERS = {
     },
     'METRIC-FF': {
         "name": r"\mathrm{FF}",
+        "style": "--"
+    },
+    "OMT": {
+        "name": r"$\mathrm{OMT}$",
+        "style": "--"
+    },
+    "SPRINGROLL": {
+        "name": r"$\mathrm{SR}$",
+        "style": "--"
+    },
+    "RANTANPLAN": {
+        "name": r"$\mathrm{R}^2\exists$",
         "style": "--"
     }
 }

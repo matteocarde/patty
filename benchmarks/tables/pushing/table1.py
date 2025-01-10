@@ -38,20 +38,20 @@ PUSHING_TABLE1 = {
         },
     },
     "planners": {
-        'PATTY-EO': {
-            "name": PUSHING_PLANNERS['PATTY-O']["name"],
-            "type": "scalar"
-        },
-        'PATTY-EG': {
-            "name": PUSHING_PLANNERS['PATTY-G']["name"],
+        'PATTY-EF': {
+            "name": PUSHING_PLANNERS['PATTY-EF']["name"],
             "type": "scalar"
         },
         'PATTY-EH': {
-            "name": PUSHING_PLANNERS['PATTY-H']["name"],
+            "name": PUSHING_PLANNERS['PATTY-EH']["name"],
             "type": "scalar"
         },
-        'PATTY-EF': {
-            "name": PUSHING_PLANNERS['PATTY-F']["name"],
+        'PATTY-EG': {
+            "name": PUSHING_PLANNERS['PATTY-EG']["name"],
+            "type": "scalar"
+        },
+        'PATTY-EO': {
+            "name": PUSHING_PLANNERS['PATTY-EO']["name"],
             "type": "scalar"
         },
     },
