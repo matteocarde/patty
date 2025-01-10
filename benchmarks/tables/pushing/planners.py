@@ -24,7 +24,7 @@ PUSHING_PLANNERS = {
         "style": "--"
     },
     "NFD": {
-        "name": r"\mathrm{NFD}",
+        "name": r"\mathrm{NLM}",
         "style": "--"
     },
     'METRIC-FF': {

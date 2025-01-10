@@ -118,9 +118,9 @@ def main():
     for i, p in enumerate(plots):
         plt.rcParams.update({
             "text.usetex": True,
-            "figure.figsize": [12.50, 3.0],
+            "figure.figsize": [12.50, 5.0],
             "figure.autolayout": True,
-            'font.size': 14
+            'font.size': 22
         })
 
         figs, ax = plt.subplots(1, 1)
@@ -151,9 +151,9 @@ def main():
         for planner in planners:
             pInfo = PUSHING_PLANNERS[planner]
             ax.plot(cactusByPlanner[planner], Y / p["scalingFactor"], label=f"${pInfo['name']}$",
-                    linestyle=pInfo["style"], linewidth=2)
+                    linestyle=pInfo["style"], linewidth=4)
 
-        ax.legend(loc="upper left", fontsize="8")
+        ax.legend(loc="upper left", fontsize="14")
 
         filename = f"{exp}-{p['key']}.pdf"
         plt.savefig(f'{folder}/{filename}', bbox_inches='tight', pad_inches=0.01)
