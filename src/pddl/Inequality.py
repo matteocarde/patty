@@ -1,7 +1,6 @@
 import copy
-from typing import Tuple, Any, Dict
+from typing import Tuple, Any, Dict, List
 
-from src.pddl.Parameter import Parameter
 from src.pddl.Predicate import Predicate
 from src.pddl.grammar.pddlParser import pddlParser
 
@@ -26,10 +25,15 @@ class Inequality(Predicate):
         ineq.params = (node.a1.getText(), node.a2.getText())
         return ineq
 
-    def ground(self, subs: Dict[str, str], delta=1) -> Predicate:
-        if not self.canHappen(subs):
-            raise Exception("Inequality not respected when grounding")
-        return True
+    def ground(self, subs: Dict[str, str], problem) -> Predicate:
+        from src.pddl.TruePredicate import TruePredicate
+        from src.pddl.FalsePredicate import FalsePredicate
+        return TruePredicate() if self.canHappen(subs) else FalsePredicate()
 
     def canHappen(self, subs: Dict[Any, Any], default=None) -> bool:
         return subs[self.params[0]] != subs[self.params[1]]
+
+    def canHappenLifted(self, sub: Tuple, params: List[str], problem) -> bool:
+        a = sub[params.index(self.params[0])]
+        b = sub[params.index(self.params[1])]
+        return a != b

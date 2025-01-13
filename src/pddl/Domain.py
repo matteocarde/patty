@@ -63,6 +63,7 @@ class Domain:
         domain.durativeActions = copy.deepcopy(self.durativeActions, m)
         domain.constants = copy.deepcopy(self.constants, m)
         domain.constraints = copy.deepcopy(self.constraints, m)
+        domain.isPredicateStatic = copy.deepcopy(self.isPredicateStatic, m)
         return domain
 
     def hasConditionalEffects(self) -> bool:
@@ -90,11 +91,11 @@ class Domain:
 
         problem.computeWhatCanHappen(self)
 
-        gActions: Set[Action] = set([g for action in self.actions for g in action.ground(problem, delta=delta)])
-        gEvents: Set[Event] = set([g for event in self.events for g in event.ground(problem, delta=delta)])
-        gProcess: Set[Process] = set([g for process in self.processes for g in process.ground(problem, delta=delta)])
+        gActions: Set[Action] = set([g for action in self.actions for g in action.ground(problem)])
+        gEvents: Set[Event] = set([g for event in self.events for g in event.ground(problem)])
+        gProcess: Set[Process] = set([g for process in self.processes for g in process.ground(problem)])
         gDurativeActions: Set[DurativeAction] = set(
-            [g for dAction in self.durativeActions for g in dAction.ground(problem, delta=delta)])
+            [g for dAction in self.durativeActions for g in dAction.ground(problem)])
 
         gDomain = GroundedDomain(self.name, gActions, gEvents, gProcess, gDurativeActions)
         gDomain.constraints = self.constraints.ground(problem)

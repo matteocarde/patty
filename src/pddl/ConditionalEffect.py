@@ -55,10 +55,13 @@ class ConditionalEffect(Predicate):
     def getDynamicAtoms(self) -> Set[Atom]:
         return self.effects.getDynamicAtoms()
 
-    def ground(self, subs: Dict[str, str], delta=1) -> ConditionalEffect:
+    def ground(self, subs: Dict[str, str], problem) -> Predicate:
         ce = ConditionalEffect()
-        ce.conditions = self.conditions.ground(subs, delta)
-        ce.effects = self.effects.ground(subs, delta)
+        ce.conditions = self.conditions.ground(subs, problem)
+        from src.pddl.FalsePredicate import FalsePredicate
+        if isinstance(ce.conditions.simplify(), FalsePredicate):
+            return FalsePredicate()
+        ce.effects = self.effects.ground(subs, problem)
 
         return ce
 

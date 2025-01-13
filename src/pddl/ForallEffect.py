@@ -39,7 +39,7 @@ class ForallEffect(Predicate):
         return forall
 
     def eliminate(self, problem: Problem) -> List[Predicate]:
-        from src.pddl.ConditionalEffect import ConditionalEffect
+        from src.pddl.FalsePredicate import FalsePredicate
         levels = self.parameters.getCombinations(problem)
         combinations = list(itertools.product(*levels))
 
@@ -47,11 +47,10 @@ class ForallEffect(Predicate):
         predicates = list()
         for comb in combinations:
             sub = dict([(p.name, comb[i]) for i, p in enumerate(self.parameters)])
-            if isinstance(self.effect, ConditionalEffect):
-                if self.effect.canHappenLifted(comb, params, problem):
-                    predicates.append(self.effect.ground(sub))
-            else:
-                predicates.append(self.effect.ground(sub))
+            eff = self.effect.ground(sub, problem)
+            if isinstance(eff, FalsePredicate):
+                continue
+            predicates.append(self.effect.ground(sub, problem))
 
         return predicates
 

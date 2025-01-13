@@ -154,12 +154,21 @@ class SMTExpression:
             result = SMTExpression.opByString(predicate.operator, lhs, rhs)
             return result
         if isinstance(predicate, Literal):
+            atom = predicate.getAtom()
             if predicate.sign == "+":
-                return variables[predicate.getAtom()]
+                return variables[atom]
             else:
-                return ~variables[predicate.getAtom()]
+                return ~variables[atom]
         if isinstance(predicate, Constant):
             return predicate.value
+        from src.pddl.TruePredicate import TruePredicate
+        from src.smt.expressions.TrueExpression import TrueExpression
+        from src.pddl.FalsePredicate import FalsePredicate
+        from src.smt.expressions.FalseExpression import FalseExpression
+        if isinstance(predicate, TruePredicate):
+            return TrueExpression()
+        if isinstance(predicate, FalsePredicate):
+            return FalseExpression()
         raise Exception(f"Don't know how to convert {predicate} to Expression")
 
     @classmethod

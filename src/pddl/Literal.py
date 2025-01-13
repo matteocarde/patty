@@ -95,7 +95,13 @@ class Literal(Predicate):
     def getLiterals(self) -> Set[Predicate]:
         return {self}
 
-    def ground(self, subs: Dict[str, str], delta=1) -> Literal:
+    def ground(self, subs: Dict[str, str], problem) -> Predicate:
+
+        if problem.isPredicateStatic[self.atom.name]:
+            from src.pddl.TruePredicate import TruePredicate
+            from src.pddl.FalsePredicate import FalsePredicate
+            sValue = self.getStaticValue(subs, problem)
+            return TruePredicate() if sValue else FalsePredicate()
 
         literal = Literal()
         literal.sign = self.sign
@@ -152,6 +158,14 @@ class Literal(Predicate):
 
     def isValid(self, subs: Dict[Atom, float or bool], default=None) -> bool:
         return False if self.atom not in subs or not subs[self.atom] else True
+
+    def getStaticValue(self, subs: Dict[str, str], problem) -> bool:
+        subStr = ",".join([subs[p] for p in self.atom.attributes])
+        atomStr = f"{self.atom.name}({subStr})"
+        if self.sign == "+":
+            return atomStr in problem.canHappenValue
+        if self.sign == "-":
+            return atomStr not in problem.canHappenValue
 
     def canHappenLifted(self, sub: Tuple, params: List[str], problem) -> bool:
         if not problem.isPredicateStatic[self.atom.name]:
@@ -217,7 +231,7 @@ class Literal(Predicate):
     def expressifyWithEquation(self, symbols: Dict[Atom, Expr]) -> Expr:
         # return Eq(self.expressify(symbols), 1) if self.sign == "+" else Eq(self.expressify(symbols), -1)
         return self.expressify(symbols) - 1 if self.sign == "+" else self.expressify(symbols) + 1
-    
+
     def toBDD(self, vars: Dict[Atom, BDDVariable]) -> BinaryDecisionDiagram:
         if self.sign == "+":
             return vars[self.atom]

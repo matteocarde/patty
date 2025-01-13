@@ -8,7 +8,6 @@ from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.ConditionalEffect import ConditionalEffect
 from src.pddl.Constant import Constant
-from src.pddl.Effects import Effects
 from src.pddl.MooreInterval import MooreInterval
 from src.pddl.Operation import Operation
 from src.pddl.OperationType import OperationType
@@ -54,9 +53,9 @@ class Action(Operation):
     def type(self):
         return OperationType.ACTION
 
-    def ground(self, problem, delta=1) -> List[Action]:
+    def ground(self, problem) -> List[Action]:
         groundOps: List = []
-        toGroundOps = self.getGroundedOperations(problem, delta=delta)
+        toGroundOps = self.getGroundedOperations(problem)
         for op in toGroundOps:
             op.__class__ = Action
             groundOps.append(op)

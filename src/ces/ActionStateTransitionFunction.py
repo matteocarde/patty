@@ -43,6 +43,7 @@ class ActionStateTransitionFunction:
             self.clauses += clauses
 
         self.constraints: SMTExpression = SMTExpression.fromFormula(domain.constraints, self.current)
+        pass
 
     @staticmethod
     def getPreconditionClauses(a: Action, X: Dict[Atom, SMTVariable], X_: Dict[Atom, SMTVariable]) -> List[

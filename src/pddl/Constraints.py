@@ -6,6 +6,7 @@ from typing import Dict, List
 from src.pddl.Exists import Exists
 from src.pddl.Forall import Forall
 from src.pddl.Formula import Formula
+from src.pddl.Predicate import Predicate
 from src.pddl.Problem import Problem
 from src.pddl.Quantifier import Quantifier
 from src.pddl.Type import Type
@@ -34,8 +35,16 @@ class Constraints:
                 c.constraints.append(Exists.fromNode(child, types))
         return c
 
-    def ground(self, problem: Problem) -> Formula:
-        f = Formula()
+    def ground(self, problem: Problem) -> Formula or Predicate:
+        from src.pddl.TruePredicate import TruePredicate
+        from src.pddl.FalsePredicate import FalsePredicate
+        f: Formula = Formula()
         f.type = "AND"
-        f.conditions = [c.eliminate(problem) for c in self.constraints]
-        return f
+        for c in self.constraints:
+            subF = c.eliminate(problem)
+            if isinstance(subF, TruePredicate):
+                continue
+            if isinstance(subF, FalsePredicate):
+                return FalsePredicate()
+            f.conditions.append(subF)
+        return f.simplify()

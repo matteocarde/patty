@@ -34,6 +34,6 @@ class Forall(Quantifier):
         f = Formula()
         f.type = "AND"
         for sub in subs:
-            if self.formula.canHappen(sub):
-                f.addClause(self.formula.ground(sub))
+            if self.formula.canHappenLifted(tuple(sub.values()), list(sub.keys()), problem):
+                f.addClause(self.formula.ground(sub, problem))
         return f

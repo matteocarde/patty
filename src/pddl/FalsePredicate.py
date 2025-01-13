@@ -1,0 +1,56 @@
+from __future__ import annotations
+
+import copy
+from typing import Dict, Set
+
+from pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram
+from pyeda.boolalg.exprnode import Zero
+from sympy import Expr
+
+from src.pddl.Atom import Atom
+from src.pddl.Predicate import Predicate
+
+
+class FalsePredicate(Predicate):
+
+    def __init__(self):
+        super().__init__()
+
+    def __deepcopy__(self, m=None) -> FalsePredicate:
+        return FalsePredicate()
+
+    def ground(self, subs: Dict[str, str], delta=1) -> FalsePredicate:
+        return self
+
+    def __str__(self):
+        return "FALSE"
+
+    def __repr__(self):
+        return str(self)
+
+    def getPredicates(self) -> Set[Atom]:
+        return set()
+
+    def getFunctions(self) -> Set[Atom]:
+        return set()
+
+    def substitute(self, subs: Dict[Atom, float], default=None) -> Predicate:
+        return self
+
+    def isLinearIncrement(self):
+        raise False
+
+    def getLinearIncrement(self) -> float:
+        return 0
+
+    def toExpression(self, onlyExpr=False) -> Expr or float:
+        return True
+
+    def replace(self, atom: Atom, w):
+        return FalsePredicate()
+
+    def replaceDict(self, r: Dict[Atom, Predicate]):
+        return copy.deepcopy(self)
+
+    def toBDD(self, vars: Dict[Atom, BDDVariable]) -> BinaryDecisionDiagram:
+        return Zero()

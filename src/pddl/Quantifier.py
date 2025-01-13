@@ -1,4 +1,6 @@
-from typing import Set
+from typing import Set, Dict
+
+from pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram
 
 from src.pddl.Atom import Atom
 from src.pddl.Formula import Formula
@@ -20,4 +22,7 @@ class Quantifier(Predicate):
         return self.formula.getPredicates()
 
     def eliminate(self, problem):
+        raise NotImplementedError()
+
+    def toBDD(self, vars: Dict[Atom, BDDVariable]) -> BinaryDecisionDiagram:
         raise NotImplementedError()

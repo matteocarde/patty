@@ -97,15 +97,11 @@ class Formula:
     def fromString(cls, string: str) -> Formula:
         return Formula.fromNode(Utilities.getParseTree(string).preconditions())
 
-    def ground(self, subs: Dict[str, str], delta=1):
+    def ground(self, subs: Dict[str, str], problem):
         gFormula = Formula()
         gFormula.type = self.type
         for condition in self.conditions:
-            if isinstance(condition, Inequality):
-                if not condition.canHappen(subs):
-                    raise Exception("Inequality not satisfied when grounding")
-                continue
-            gFormula.conditions.append(condition.ground(subs, delta))
+            gFormula.addClause(condition.ground(subs, problem))
         return gFormula
 
     def getFunctions(self) -> Set[Atom]:
@@ -138,15 +134,27 @@ class Formula:
                 return False
         return True
 
-    def isValid(self, subs: Dict[Atom, float or bool], default=None) -> bool:
+    def __canHappenLiftedAnd(self, sub: Tuple, params: List[str], problem):
         for c in self.conditions:
-            if not c.isValid(subs, default):
+            if not c.canHappenLifted(sub, params, problem):
                 return False
         return True
 
-    def canHappenLifted(self, sub: Tuple, params: List[str], problem):
+    def __canHappenLiftedOr(self, sub: Tuple, params: List[str], problem):
         for c in self.conditions:
-            if not c.canHappenLifted(sub, params, problem):
+            if c.canHappenLifted(sub, params, problem):
+                return True
+        return False
+
+    def canHappenLifted(self, sub: Tuple, params: List[str], problem):
+        if self.type == "AND":
+            return self.__canHappenLiftedAnd(sub, params, problem)
+        if self.type == "OR":
+            return self.__canHappenLiftedOr(sub, params, problem)
+
+    def isValid(self, subs: Dict[Atom, float or bool], default=None) -> bool:
+        for c in self.conditions:
+            if not c.isValid(subs, default):
                 return False
         return True
 
@@ -265,3 +273,27 @@ class Formula:
     def fromBDD(bdd: BinaryDecisionDiagram, var2atom: Dict[str, Atom]):
         expr = bdd2expr(bdd)
         return Formula.fromOrOp(expr, var2atom)
+
+    def simplify(self) -> Formula or Predicate:
+        from src.pddl.FalsePredicate import FalsePredicate
+        from src.pddl.TruePredicate import TruePredicate
+        f = Formula()
+        f.type = self.type
+        f.conditions = []
+        for c in self.conditions:
+            if isinstance(c, Formula):
+                c = c.simplify()
+            if f.type == "AND":
+                if isinstance(c, FalsePredicate):
+                    return FalsePredicate()
+                if isinstance(c, TruePredicate):
+                    continue
+            if f.type == "OR":
+                if isinstance(c, TruePredicate):
+                    return TruePredicate()
+                if isinstance(c, FalsePredicate):
+                    continue
+            f.addClause(c)
+        if not f.conditions:
+            return TruePredicate() if self.type == "AND" else FalsePredicate()
+        return f

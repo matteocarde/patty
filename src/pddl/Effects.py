@@ -64,9 +64,9 @@ class Effects:
 
         return effects
 
-    def ground(self, sub: Dict[str, str], delta=1) -> Effects:
+    def ground(self, sub: Dict[str, str], problem: Problem) -> Effects:
         e = Effects()
-        e.assignments = [predicate.ground(sub, delta=1) for predicate in self.assignments]
+        e.assignments = [predicate.ground(sub, problem) for predicate in self.assignments]
         return e
 
     def eliminateQuantifiers(self, problem: Problem) -> Effects:
@@ -97,12 +97,8 @@ class Effects:
 
     def substitute(self, sub: Dict[Atom, float or bool], default=None):
         e = Effects()
-        from src.pddl.ConditionalEffect import ConditionalEffect
         e.assignments = []
         for p in self.assignments:
-            if isinstance(p, ConditionalEffect) and not p.canHappen(sub):
-                print(p, "cannot happen", sub)
-                continue
             e.assignments.append(p.substitute(sub, default))
         return e
 

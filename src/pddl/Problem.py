@@ -43,6 +43,7 @@ class Problem:
         cp.allAtoms = copy.deepcopy(self.allAtoms, m)
         cp.predicates = copy.deepcopy(self.predicates, m)
         cp.functions = copy.deepcopy(self.functions, m)
+        cp.isPredicateStatic = copy.deepcopy(self.isPredicateStatic, m)
         return cp
 
     @classmethod

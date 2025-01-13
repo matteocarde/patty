@@ -84,11 +84,11 @@ class BinaryPredicate(Predicate):
         else:
             raise NotImplemented()
 
-    def ground(self, subs: Dict[str, str], delta=1) -> BinaryPredicate:
+    def ground(self, subs: Dict[str, str], problem) -> BinaryPredicate:
         bp = BinaryPredicate()
         bp.operator = self.operator
-        bp.lhs = self.lhs.ground(subs, delta)
-        bp.rhs = self.rhs.ground(subs, delta)
+        bp.lhs = self.lhs.ground(subs, problem)
+        bp.rhs = self.rhs.ground(subs, problem)
         bp.type = self.type
 
         return bp

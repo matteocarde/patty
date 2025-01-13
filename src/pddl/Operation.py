@@ -171,7 +171,7 @@ class Operation:
         paths: List[Tuple] = self.__getValidCombinationsSub(problem, tuple(), [], levels, params)
         return paths
 
-    def getGroundedOperations(self, problem, delta=1):
+    def getGroundedOperations(self, problem):
         levels: List[List[str]] = self.parameters.getCombinations(problem)
 
         combinations: List[Tuple]
@@ -190,11 +190,11 @@ class Operation:
         for sub in validCombinations:
             name = self.__getGroundedName(sub)
             planName = self.__getGroundedPlanName(sub)
-            preconditions = self.preconditions.ground(sub, delta=delta)
-            effects = self.effects.ground(sub)
+            preconditions = self.preconditions.ground(sub, problem)
+            effects = self.effects.ground(sub, problem)
             duration = None
             if self.duration:
-                duration = self.duration.ground(sub)
+                duration = self.duration.ground(sub, problem)
             operation: Operation = Operation.fromProperties(name, [], preconditions, effects, planName,
                                                             duration=duration)
             operation.lifted = self

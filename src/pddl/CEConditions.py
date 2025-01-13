@@ -6,6 +6,7 @@ from typing import Dict, cast
 from src.pddl.Atom import Atom
 from src.pddl.Formula import Formula
 from src.pddl.Literal import Literal
+from src.pddl.Predicate import Predicate
 
 
 class CEConditions(Formula):
@@ -19,8 +20,8 @@ class CEConditions(Formula):
     def getNegative(self):
         return {e.getAtom() for e in self.conditions if isinstance(e, Literal) and e.sign == "-"}
 
-    def ground(self, subs: Dict[str, str], delta=1) -> CEConditions:
-        g = super().ground(subs, delta)
+    def ground(self, subs: Dict[str, str], problem) -> CEConditions:
+        g = super().ground(subs, problem)
         g.__class__ = CEConditions
         return cast(CEConditions, g)
 
@@ -34,3 +35,8 @@ class CEConditions(Formula):
         f = copy.deepcopy(super(), m)
         f.__class__ = CEConditions
         return cast(CEConditions, f)
+
+    def simplify(self) -> Formula or Predicate:
+        c = super().simplify()
+        c.__class__ = CEConditions
+        return c
