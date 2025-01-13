@@ -93,8 +93,8 @@ ce: LP 'when' cond=ceCond eff=ceEff RP;
 
 forallEffect: LP 'forall' parameters ce RP;
 
-forall: LP 'forall' parameters andClause RP;
-exists: LP 'exists' parameters andClause RP;
+forall: LP 'forall' parameters (andClause | orClause) RP;
+exists: LP 'exists' parameters (andClause | orClause) RP;
 
 effect:  booleanLiteral | modification | ce | forallEffect;
 effectNoCes:  booleanLiteral | modification;

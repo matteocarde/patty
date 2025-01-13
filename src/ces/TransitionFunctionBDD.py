@@ -96,6 +96,9 @@ class TransitionFunctionBDD:
 
     def computeConstraints(self, c: Formula) -> Formula:
 
+        if not c.conditions:
+            return c
+
         atom2var: Dict[Atom, BDDVariable] = dict()
         var2atom: Dict[str, Atom] = dict()
         for atom in c.getPredicates():
@@ -103,8 +106,9 @@ class TransitionFunctionBDD:
             atom2var[atom] = bddvar(name)
             var2atom[name] = atom
         nonInAction: List[BDDVariable] = [atom2var[v] for v in c.getPredicates() - self.action.predicates]
-
+        print(c)
         cBDD: BinaryDecisionDiagram = c.toBDD(atom2var)
+        print(cBDD)
         cBDDRemoved = cBDD.smoothing(nonInAction)
         return Formula.fromBDD(cBDDRemoved, var2atom)
 

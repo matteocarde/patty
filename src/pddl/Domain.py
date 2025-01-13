@@ -45,6 +45,7 @@ class Domain:
         self.events = set()
         self.requirements = list()
         self.constants = set()
+        self.constraints = Constraints()
         self.isPredicateStatic: Dict[str, bool] = dict()
         pass
 

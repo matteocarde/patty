@@ -13,7 +13,7 @@ class TestCESGrid(TestCase):
 
     def setUp(self) -> None:
         domain = f"../../files/ces/grid/domain.pddl"
-        problem = f"../../files/ces/grid/problem-9.pddl"
+        problem = f"../../files/ces/grid/instances/problem-8.pddl"
         self.domain: Domain = Domain.fromFile(domain)
         self.problem: Problem = Problem.fromFile(problem)
         self.qeDomain: Domain = self.domain.eliminateQuantifiers(self.problem)

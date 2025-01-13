@@ -1,4 +1,4 @@
-(define (domain dig)
+(define (domain alchemy)
   (:requirements :strips :equality)
   (:types
     element
@@ -21,12 +21,33 @@
             (have ?b)
           )
           (and
-            (not (have ?a))
-            (not (have ?b))
             (have ?c)
           )
         )
       )
     )
   )
+
+  (:constraints
+    (and
+      (forall
+        (?a - element ?b - element ?c - element)
+        (and
+          (not (= ?a ?b))
+          (not (= ?a ?c))
+          (not (= ?b ?c))
+          (or
+            (not (combination ?a ?b ?c))
+            (not (have ?c))
+            (and
+              (have ?a)
+              (have ?b)
+            )
+          )
+        )
+      )
+    )
+
+  )
+
 )
