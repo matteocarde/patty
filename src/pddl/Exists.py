@@ -39,5 +39,5 @@ class Exists(Quantifier):
         f.type = "OR"
         for sub in subs:
             if self.formula.canHappen(sub):
-                f.addClause(self.formula.ground(sub))
+                f.addClause(self.formula.ground(sub, problem))
         return f

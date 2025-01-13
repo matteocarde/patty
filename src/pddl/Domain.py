@@ -121,12 +121,8 @@ class Domain:
                 # print(f"WARNING: {fun} was not initialized. Substituting it with 0")
                 constants[fun] = 0
 
-        # for v in gDomain.predicates:
-        #     if problem.isPredicateStatic[v.name]:
-        #         constants[v] = problem.init
-
-        for v in gDomain.predicates - gDomain.getDynamicAtoms():
-            constants[v] = problem.init.getAssignment(v)
+        # for v in gDomain.predicates - gDomain.getDynamicAtoms():
+        #     constants[v] = problem.init.getAssignment(v)
 
         gDomain.substitute(constants)
         problem.substitute(constants)
@@ -347,6 +343,7 @@ class GroundedDomain(Domain):
 
     def substitute(self, sub: Dict[Atom, float], default=None):
         self.actions = {a.substitute(sub, default) for a in self.actions if a.canHappen(sub, default)}
+        self.constraints = self.constraints.substitute(sub, default)
 
     def getARPG(self):
         return self.arpg

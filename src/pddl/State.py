@@ -150,6 +150,13 @@ class State:
             else:
                 return atom not in self.assignments or not self.assignments[atom]
 
+        from src.pddl.TruePredicate import TruePredicate
+        if isinstance(p, TruePredicate):
+            return True
+        from src.pddl.FalsePredicate import FalsePredicate
+        if isinstance(p, FalsePredicate):
+            return False
+
         if not isinstance(p, BinaryPredicate):
             raise "Precondition can only be BinaryPredicate or Literal"
 

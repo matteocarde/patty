@@ -33,7 +33,6 @@
       (forall
         (?a - element ?b - element ?c - element)
         (and
-          (not (= ?a ?b))
           (not (= ?a ?c))
           (not (= ?b ?c))
           (or

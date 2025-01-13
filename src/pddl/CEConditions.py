@@ -25,6 +25,13 @@ class CEConditions(Formula):
         g.__class__ = CEConditions
         return cast(CEConditions, g)
 
+    def simplify(self) -> CEConditions or Predicate:
+        g = super().simplify()
+        if not isinstance(g, Formula):
+            return g
+        g.__class__ = CEConditions
+        return cast(CEConditions, g)
+
     def substitute(self, subs: Dict[Atom, float], default=None) -> CEConditions:
         s = super().substitute(subs, default)
         s.__class__ = CEConditions
@@ -35,8 +42,3 @@ class CEConditions(Formula):
         f = copy.deepcopy(super(), m)
         f.__class__ = CEConditions
         return cast(CEConditions, f)
-
-    def simplify(self) -> Formula or Predicate:
-        c = super().simplify()
-        c.__class__ = CEConditions
-        return c

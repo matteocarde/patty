@@ -57,9 +57,9 @@ class ConditionalEffect(Predicate):
 
     def ground(self, subs: Dict[str, str], problem) -> Predicate:
         ce = ConditionalEffect()
-        ce.conditions = self.conditions.ground(subs, problem)
+        ce.conditions = self.conditions.ground(subs, problem).simplify()
         from src.pddl.FalsePredicate import FalsePredicate
-        if isinstance(ce.conditions.simplify(), FalsePredicate):
+        if isinstance(ce.conditions, FalsePredicate):
             return FalsePredicate()
         ce.effects = self.effects.ground(subs, problem)
 

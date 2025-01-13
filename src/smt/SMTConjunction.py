@@ -23,6 +23,12 @@ class SMTConjunction(List[SMTExpression]):
         self.depth = max(expr.depth, self.depth) + 1
         self.variables |= expr.getVariables()
 
+    def __add__(self, other):
+        if not type(other, list):
+            raise Exception()
+        for c in other:
+            self.append(c)
+
     def __andOfSubClauses(self, clauses):
         if len(clauses) == 1:
             return clauses[0]

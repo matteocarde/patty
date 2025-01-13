@@ -106,9 +106,7 @@ class TransitionFunctionBDD:
             atom2var[atom] = bddvar(name)
             var2atom[name] = atom
         nonInAction: List[BDDVariable] = [atom2var[v] for v in c.getPredicates() - self.action.predicates]
-        print(c)
         cBDD: BinaryDecisionDiagram = c.toBDD(atom2var)
-        print(cBDD)
         cBDDRemoved = cBDD.smoothing(nonInAction)
         return Formula.fromBDD(cBDDRemoved, var2atom)
 
@@ -120,21 +118,20 @@ class TransitionFunctionBDD:
 
         tf = TransitionFunctionBDD.fromProperties(t, atomsOrder, variables)
         bdd = t.clauses.toBDDExpression({**tf.Xs[0], **tf.Xs[2]})
-        # C0, C1, C2 = tf.getConstraints()
-        # equal = 1
-        # for v in atomsOrder:
-        #     equal &= tf.atom2var[v][0].iff(tf.atom2var[v][2])
         tf.bdd = bdd
         tf.expr = SMTExpression.fromBDDExpression(bdd2expr(tf.bdd), tf.bdd2smt)
         return tf
+
+    def getVarFromAtom(self, v, i):
+        return self.atom2var[v][i] if v not in self.staticAtoms else self.atom2var[v][0]
 
     def getXs(self, a: int, b: int) -> Dict[int, Dict[SMTBoolVariable, BDDVariable]]:
         Xs: Dict[int, Dict[SMTBoolVariable, BDDVariable]] = dict()
         Xs[a] = dict()
         Xs[b] = dict()
         for v in self.atomsOrder:
-            Xs[a][self.currentState[v]] = self.atom2var[v][a]
-            Xs[b][self.nextState[v]] = self.atom2var[v][b] if v not in self.staticAtoms else self.atom2var[v][0]
+            Xs[a][self.currentState[v]] = self.getVarFromAtom(v, a)
+            Xs[b][self.nextState[v]] = self.getVarFromAtom(v, b)
         return Xs
 
     def getConstraints(self) -> Tuple[BinaryDecisionDiagram, BinaryDecisionDiagram, BinaryDecisionDiagram]:
@@ -142,7 +139,7 @@ class TransitionFunctionBDD:
         for i in range(0, 3):
             X[i] = dict()
             for v in self.atoms:
-                X[i][v] = self.atom2var[v][i]
+                X[i][v] = self.getVarFromAtom(v, i)
 
         C0 = self.constraints.toBDD(X[0])
         C1 = self.constraints.toBDD(X[1])
