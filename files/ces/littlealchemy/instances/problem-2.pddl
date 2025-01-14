@@ -1,7 +1,8 @@
 (define (problem pb01)
     (:domain counters)
     (:objects
-        sea steam water stone lava atmosphere energy air rain mud fire pressure wind earth dust - element
+        water earth fire air - primary
+        sea stone mud wind steam dust pressure rain lava energy - element
     )
     (:init
         (have water)
@@ -9,9 +10,17 @@
         (have fire)
         (have air)
         (combination air air pressure)
-        (combination air pressure atmosphere)
+        (combination air fire energy)
+        (combination air earth dust)
+        (combination earth fire lava)
+        (combination air water rain)
+        (combination earth water mud)
+        (combination fire water steam)
+        (combination water water sea)
+        (combination air energy wind)
+        (combination air lava stone)
     )
     (:goal
-        (and (have atmosphere))
+        (and (have stone))
     )
 )

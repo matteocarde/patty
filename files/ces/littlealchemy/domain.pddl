@@ -1,7 +1,8 @@
 (define (domain alchemy)
   (:requirements :strips :equality)
   (:types
-    element
+    element - object
+    primary - element
   )
   (:predicates
     (have ?e - element)
@@ -20,9 +21,7 @@
             (have ?a)
             (have ?b)
           )
-          (and
-            (have ?c)
-          )
+          (have ?c)
         )
       )
     )
@@ -30,6 +29,12 @@
 
   (:constraints
     (and
+      (forall
+        (?a - primary)
+        (and
+          (have ?a)
+        )
+      )
       (forall
         (?a - element ?b - element ?c - element)
         (and

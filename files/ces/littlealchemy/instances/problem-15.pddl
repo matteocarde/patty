@@ -1,0 +1,16 @@
+(define (problem pb01)
+            (:domain counters)
+            (:objects sea atomic bomb stone rain fireworks earthquake mountain range air fog cactus desert steel boiler flower tobacco mud mountain sand blade seaweed pressure sun grenade gunpowder sandstorm diamond ash algae horizon moss eruption coal clay flood brick glass energy volcano earth archipelago tsunami electricity lava geyser explosion wind dew rust obsidian sky storm granite dune ivy grass swamp moon atmosphere wall hurricane dust fire garden water wave isle ocean salt sound metal beach bullet plant quicksand cloud cotton steam river - element)
+            (:init
+                (have water)
+                (have earth)
+                (have fire)
+                (have air)
+                (combination air air pressure) (combination air fire energy) (combination air earth dust) (combination earth fire lava) (combination air water rain) (combination earth water mud) (combination fire water steam) (combination water water sea) (combination air energy wind) (combination air lava stone) (combination air pressure atmosphere) (combination air steam cloud) (combination earth energy earthquake) (combination dust fire gunpowder) (combination fire sea salt) (combination earth lava volcano) (combination lava pressure granite) (combination lava water obsidian) (combination fire mud brick) (combination earth rain plant) (combination rain rain flood) (combination sea sea ocean) (combination steam earth geyser) (combination air cloud sky) (combination air stone sand) (combination brick brick wall) (combination cloud earth fog) (combination earth earthquake mountain) (combination cloud energy storm) (combination fire stone metal) (combination fire gunpowder explosion) (combination mud plant swamp) (combination earthquake ocean tsunami) (combination ocean plant algae) (combination ocean volcano isle) (combination ocean wind wave) (combination cloud plant cotton) (combination earth plant grass) (combination fire plant tobacco) (combination ocean plant seaweed) (combination plant plant garden) (combination plant stone moss) (combination plant pressure coal) (combination energy volcano ash) (combination air steam cloud) (combination energy volcano eruption) (combination energy wind hurricane) (combination air metal rust) (combination air wave sound) (combination energy explosion atomic bomb) (combination explosion metal grenade) (combination explosion sky fireworks) (combination fire sand glass) (combination fire sky sun) (combination fog grass dew) (combination gunpowder metal bullet) (combination isle isle archipelago) (combination coal metal steel) (combination energy metal electricity) (combination metal stone blade) (combination mountain mountain mountain range) (combination mountain water river) (combination ocean sand beach) (combination ocean sky horizon) (combination garden plant flower) (combination plant wall ivy) (combination coal pressure diamond) (combination energy sand sandstorm) (combination mud sand clay) (combination plant sand cactus) (combination sand sand desert) (combination sand swamp quicksand) (combination sand wind dune) (combination sky stone moon) (combination metal steam boiler)
+            )
+            (:goal
+                (and  (have atomic bomb))
+            )
+            )
+
+                    

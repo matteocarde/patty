@@ -42,6 +42,10 @@ class TransitionFunctionBDD:
     expr: SMTExpression
     smt2bdd: Dict[SMTBoolVariable, BDDVariable]
     bdd2smt: Dict[str, SMTBoolVariable]
+    C0: BinaryDecisionDiagram
+    C1: BinaryDecisionDiagram
+    C2: BinaryDecisionDiagram
+    CLHS: BinaryDecisionDiagram
 
     def __init__(self):
         pass
@@ -63,6 +67,9 @@ class TransitionFunctionBDD:
         tf.atomsOrder = atomsOrder
         tf.atom2var: Dict[Atom, Dict[int, BDDVariable]] = variables
         tf.constraints = tf.computeConstraints(t.domain.constraints)
+
+        tf.C0, tf.C1, tf.C2 = tf.getConstraints()
+        tf.CLHS = tf.C0 & tf.C2
 
         tf.Xs: Dict[int, Dict[SMTBoolVariable, BDDVariable]] = tf.getXs(0, 2)
         tf.smt2bdd: Dict[SMTBoolVariable, BDDVariable] = dict()
@@ -92,6 +99,8 @@ class TransitionFunctionBDD:
         tf.bdd2smt = self.bdd2smt
         tf.constraints = self.constraints
         tf.Xs = self.Xs
+        tf.C0, tf.C1, tf.C2 = self.C0, self.C1, self.C2
+        tf.CLHS = self.CLHS
         return tf
 
     def computeConstraints(self, c: Formula) -> Formula:
@@ -117,7 +126,7 @@ class TransitionFunctionBDD:
                                           variables: Dict[Atom, Dict[int, BDDVariable]]):
 
         tf = TransitionFunctionBDD.fromProperties(t, atomsOrder, variables)
-        bdd = t.clauses.toBDDExpression({**tf.Xs[0], **tf.Xs[2]})
+        bdd = tf.CLHS >> t.clauses.toBDDExpression({**tf.Xs[0], **tf.Xs[2]})
         tf.bdd = bdd
         tf.expr = SMTExpression.fromBDDExpression(bdd2expr(tf.bdd), tf.bdd2smt)
         return tf
@@ -164,7 +173,8 @@ class TransitionFunctionBDD:
         bdd1 = self.bdd.compose(rep1)
         bdd2 = self.bdd.compose(rep2)
 
-        C0, C1, C2 = self.getConstraints() if relaxed else (1, 1, 1)
+        CLHS = self.CLHS if relaxed else 1
+        C1 = self.C1 if relaxed else 1
         toBeSmoothed: BinaryDecisionDiagram = bdd1 & C1 & bdd2
 
         smoothVariables = [Xs2[1][self.currentState[v]] for v in reversed(self.atomsOrder) if v not in self.staticAtoms]
@@ -172,9 +182,9 @@ class TransitionFunctionBDD:
         smoothed = toBeSmoothed.smoothing(smoothVariables)
 
         if reflexive:
-            ith.bdd = (C0 & C2) >> (smoothed | self.bdd)
+            ith.bdd = CLHS >> (smoothed | self.bdd)
         else:
-            ith.bdd = C0 & smoothed & C2
+            ith.bdd = CLHS & smoothed
 
         ith.expr = SMTExpression.fromBDDExpression(bdd2expr(ith.bdd), ith.bdd2smt)
 
