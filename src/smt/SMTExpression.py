@@ -8,8 +8,10 @@ from pysmt.fnode import FNode
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.Constant import Constant
+from src.pddl.FalsePredicate import FalsePredicate
 from src.pddl.Formula import Formula
 from src.pddl.Literal import Literal
+from src.pddl.TruePredicate import TruePredicate
 
 NUMERIC = "N"
 BOOLEAN = "B"
@@ -174,6 +176,15 @@ class SMTExpression:
     @classmethod
     def fromFormula(cls, formula: Formula,
                     variables: Dict[Atom, SMTExpression]) -> SMTExpression or float:
+
+        from src.smt.expressions.TrueExpression import TrueExpression
+        from src.smt.expressions.FalseExpression import FalseExpression
+
+        if isinstance(formula, TruePredicate):
+            return TrueExpression()
+        if isinstance(formula, FalsePredicate):
+            return FalseExpression()
+
         preRules = []
         for pre in formula:
             if isinstance(pre, Formula):

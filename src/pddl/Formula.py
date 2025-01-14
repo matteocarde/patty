@@ -5,11 +5,12 @@ from itertools import chain
 from typing import Dict, Set, Tuple, List
 
 from pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram, bdd2expr
-from pyeda.boolalg.expr import OrOp, AndOp, Complement, Variable
+from pyeda.boolalg.expr import OrOp, AndOp, Complement, Variable, One, Zero
 from sympy import Expr
 
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
+from src.pddl.FalsePredicate import FalsePredicate
 from src.pddl.Inequality import Inequality
 from src.pddl.Literal import Literal
 from src.pddl.PDDLWriter import PDDLWriter
@@ -243,6 +244,13 @@ class Formula:
 
     @classmethod
     def fromNary(cls, fType: str, expr, var2atom: Dict[str, Atom]):
+        if expr == One:
+            from src.pddl.TruePredicate import TruePredicate
+            return TruePredicate()
+        if expr == Zero:
+            from src.pddl.TruePredicate import TruePredicate
+            return FalsePredicate()
+
         assert type(expr) in {OrOp, AndOp}
         f = cls()
         f.type = fType

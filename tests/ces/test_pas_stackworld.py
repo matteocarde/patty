@@ -7,17 +7,14 @@ from src.search.PASSearch import PASSearch
 from src.utils.Arguments import Arguments
 
 
-class TestCESCounters(TestCase):
+class TestStackWorld(TestCase):
 
     def setUp(self) -> None:
-        self.b = 3
-        self.c = 2
-        self.domain: Domain = Domain.fromFile(f"../../files/ces/counters/domains/{self.b}/domain-{self.b}.pddl")
-        self.problem: Problem = Problem.fromFile(
-            f"../../files/ces/counters/domains/{self.b}/instances/problem-{self.b}-{self.c}.pddl")
-        self.gDomain: GroundedDomain = self.domain.ground(self.problem)
+        self.domain: Domain = Domain.fromFile(f"../../files/ces/stackworld/domain.pddl")
+        self.problem: Problem = Problem.fromFile(f"../../files/ces/stackworld/example/problem-2.pddl")
+        self.qeDomain: Domain = self.domain.eliminateQuantifiers(self.problem)
+        self.gDomain: GroundedDomain = self.qeDomain.ground(self.problem)
         self.args = Arguments(keepRequired=False)
-        self.args.pattern = "alpha"
 
     def test_solver(self):
         search = PASSearch(self.gDomain, self.problem, self.args, liftedDomain=self.domain)

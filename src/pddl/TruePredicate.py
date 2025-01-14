@@ -53,4 +53,4 @@ class TruePredicate(Predicate):
         return copy.deepcopy(self)
 
     def toBDD(self, vars: Dict[Atom, BDDVariable]) -> BinaryDecisionDiagram:
-        return One()
+        return 1

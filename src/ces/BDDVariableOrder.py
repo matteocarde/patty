@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import copy
-from typing import List, Dict
+from typing import List, Dict, Set
 
 from graphlib import TopologicalSorter, CycleError
 
@@ -11,12 +11,12 @@ from src.pddl.ConditionalEffect import ConditionalEffect
 
 
 class BDDVariableOrder:
-    nodes: Dict[Atom, List[Atom]]
+    nodes: Dict[Atom, Set[Atom]]
 
     def __init__(self, action: Action):
         self.nodes = dict()
         for v in action.predicates:
-            self.nodes[v] = list()
+            self.nodes[v] = set()
 
         # 1) v < v' -> Already dealt inside the bdd formulas
 
@@ -24,7 +24,7 @@ class BDDVariableOrder:
         for v in action.preconditions.getPredicates():
             for w in action.predicates - action.preconditions.getPredicates():
                 if v != w:
-                    self.nodes[w].append(v)
+                    self.nodes[w].add(v)
 
         # 3) \forall e \in post(a), v \in cond(e), w \in post(e) -> v < w
         for e in action.effects:
@@ -33,7 +33,7 @@ class BDDVariableOrder:
             for v in e.conditions.getPredicates():
                 for w in e.effects.getPredicates():
                     if v != w:
-                        self.nodes[w].append(v)
+                        self.nodes[w].add(v)
 
     def getOrder(self) -> List[Atom]:
         nodes = copy.deepcopy(self.nodes)

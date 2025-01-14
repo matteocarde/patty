@@ -43,6 +43,7 @@ class ActionStateTransitionFunction:
             self.clauses += clauses
 
         self.constraints: SMTExpression = SMTExpression.fromFormula(domain.constraints, self.current)
+        print(self.constraints)
         pass
 
     @staticmethod

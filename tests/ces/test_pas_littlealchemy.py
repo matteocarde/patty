@@ -7,7 +7,7 @@ from src.search.PASSearch import PASSearch
 from src.utils.Arguments import Arguments
 
 
-class TestCES(TestCase):
+class TestLittleAlchemy(TestCase):
 
     def setUp(self) -> None:
         self.domain: Domain = Domain.fromFile(f"../../files/ces/littlealchemy/domain.pddl")

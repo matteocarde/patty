@@ -11,8 +11,10 @@ from src.ces.ActionStateTransitionFunction import ActionStateTransitionFunction
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.Domain import GroundedDomain
+from src.pddl.FalsePredicate import FalsePredicate
 from src.pddl.Formula import Formula
 from src.pddl.State import State
+from src.pddl.TruePredicate import TruePredicate
 from src.smt.SMTBoolVariable import SMTBoolVariable
 from src.smt.SMTExpression import SMTExpression
 from src.smt.expressions.FalseExpression import FalseExpression
@@ -104,6 +106,9 @@ class TransitionFunctionBDD:
         return tf
 
     def computeConstraints(self, c: Formula) -> Formula:
+
+        if isinstance(c, TruePredicate) or isinstance(c, FalsePredicate):
+            return c
 
         if not c.conditions:
             return c

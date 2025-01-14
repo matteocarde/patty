@@ -316,6 +316,7 @@ class GroundedDomain(Domain):
         self.functions = set()
         self.predicates = set()
 
+        self.predicates |= self.constraints.getPredicates()
         for op in self.operations:
             self.__operationsDict[op.planName] = op
             self.functions |= op.getFunctions()

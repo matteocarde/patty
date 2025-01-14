@@ -1,6 +1,7 @@
 import copy
-from typing import Tuple, Any, Dict, List
+from typing import Tuple, Any, Dict, List, Set
 
+from src.pddl.Atom import Atom
 from src.pddl.Predicate import Predicate
 from src.pddl.grammar.pddlParser import pddlParser
 
@@ -18,6 +19,12 @@ class Inequality(Predicate):
 
     def __str__(self):
         return f"({self.params[0]} != {self.params[1]})"
+
+    def getPredicates(self) -> Set[Atom]:
+        return set()
+
+    def getFunctions(self) -> Set[Atom]:
+        return set()
 
     @classmethod
     def fromNode(cls, node: pddlParser.InequalityContext):

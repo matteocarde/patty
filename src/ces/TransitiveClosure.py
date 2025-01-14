@@ -59,7 +59,7 @@ class TransitiveClosure(TransitionFunctionBDD):
                 if currentBDD.isEquivalent(nextBDD):
                     nextBDD.__class__ = TransitiveClosure
                     signal.alarm(0)
-                    print(nextBDD.bdd.to_dot())
+                    print(nextBDD.bdd.satisfy_count())
                     return bdds
                 bdds.append(nextBDD)
                 currentBDD = nextBDD
