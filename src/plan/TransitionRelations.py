@@ -32,7 +32,7 @@ class TransitionRelations:
                                                           maxTime=maxTime)
 
             # print(a, Ts[-1].bdd.to_dot())
-            self.closures[a.lifted] = Ts
+            self.closures[a] = Ts
 
             print(f"Computing Reachability of {a}")
             Rs = TransitiveClosure.fromTransitionFunction(T_a,
@@ -41,6 +41,6 @@ class TransitionRelations:
                                                           reflexive=False,
                                                           maxTime=maxTime,
                                                           maxReachabilityIndex=len(Ts))
-            self.reachability[a.lifted] = Rs
+            self.reachability[a] = Rs
 
         pass

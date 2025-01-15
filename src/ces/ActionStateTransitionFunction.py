@@ -75,9 +75,9 @@ class ActionStateTransitionFunction:
             for e in a.deltaPlus[v]:
                 orExpr.append(SMTExpression.fromFormula(e.conditions, X))
             one.append(vNext.equal(SMTExpression.bigor(orExpr)))
-        zero = []
-        for v in a.predicates:
-            zero.append(X_[v].equal(X[v]))
+        # zero = []
+        # for v in a.predicates:
+        #     zero.append(X_[v].equal(X[v]))
         return one
 
     @staticmethod

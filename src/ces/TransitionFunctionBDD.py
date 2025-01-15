@@ -217,22 +217,17 @@ class TransitionFunctionBDD:
         if self.bdd.is_zero():
             return FalseExpression()
 
-        liftedAtom2groundAtom: Dict[Atom, Atom] = dict()
-        for groundAtom in domain.predicates:
-            liftedAtom2groundAtom[groundAtom.lifted] = groundAtom
-
-        liftedVar2sigma: Dict[SMTBoolVariable, SMTExpression] = dict()
-        print(self.action, groundAction, groundAction.lifted, liftedAtom2groundAtom)
+        groundAtom2StateVariable: Dict[SMTBoolVariable, SMTExpression] = dict()
         for (groundAtom, groundVar) in self.currentState.items():
-            liftedVar2sigma[groundVar] = current[liftedAtom2groundAtom[groundAtom.lifted]]
+            groundAtom2StateVariable[groundVar] = current[groundAtom]
         for (groundAtom, groundVar) in self.nextState.items():
-            liftedVar2sigma[groundVar] = next[liftedAtom2groundAtom[groundAtom.lifted]]
+            groundAtom2StateVariable[groundVar] = next[groundAtom]
 
-        bddVar2sigma: Dict[str, SMTExpression] = dict()
+        bddVar2StateVariable: Dict[str, SMTExpression] = dict()
         for smtvar, bddvar in {**self.Xs[2], **self.Xs[0]}.items():
-            bddVar2sigma[bddvar.name] = liftedVar2sigma[smtvar]
+            bddVar2StateVariable[bddvar.name] = groundAtom2StateVariable[smtvar]
 
-        groundExpr = SMTExpression.fromBDDExpression(bdd2expr(self.bdd), bddVar2sigma)
+        groundExpr = SMTExpression.fromBDDExpression(bdd2expr(self.bdd), bddVar2StateVariable)
         return groundExpr
 
     def getRestriction(self, a: Action, s: State, Xs, vars) -> Dict[BDDVariable, bool]:

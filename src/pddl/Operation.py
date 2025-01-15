@@ -372,18 +372,29 @@ class Operation:
             self.deltaMinus.setdefault(v, list())
 
         if not self.hasConditionalEffects():
+            for e in self.effects:
+                if not isinstance(e, Literal):
+                    continue
+                noCondition = ConditionalEffect()
+                noCondition.effects.addEffect(e)
+                v = e.getAtom()
+                if e.sign == "+":
+                    self.deltaPlus[v].append(noCondition)
+                    self.addedAtoms.add(v)
+                if e.sign == "-":
+                    self.deltaMinus[v].append(noCondition)
+                    self.deletedAtoms.add(v)
             return
 
-        toBeRemoved = set()
-        noCondition = ConditionalEffect()
-        newEffects = Effects()
-        for e in self.effects:
-            if isinstance(e, ConditionalEffect):
-                newEffects.addEffect(e)
-                continue
-            noCondition.effects.addEffect(e)
-        newEffects.addEffect(noCondition)
-        self.effects = newEffects
+        # noCondition = ConditionalEffect()
+        # newEffects = Effects()
+        # for e in self.effects:
+        #     if isinstance(e, ConditionalEffect):
+        #         newEffects.addEffect(e)
+        #         continue
+        #     noCondition.effects.addEffect(e)
+        # newEffects.addEffect(noCondition)
+        # self.effects = newEffects
 
         for ce in self.effects:
             assert isinstance(ce, ConditionalEffect)

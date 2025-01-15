@@ -47,10 +47,11 @@ class CESPASEncoding(Encoding):
         self.rulesByName.append("goal", self.bound, self.getGoalRules())
 
         self.rules = self.rulesByName.getConjunction()
-        print("--- Rules ---")
-        self.rulesByName.print()
 
-        exit()
+        # print("--- Rules ---")
+        # self.rulesByName.print()
+        #
+        # exit()
 
         pass
 
@@ -89,7 +90,7 @@ class CESPASEncoding(Encoding):
         for a in self.actions:
             if a.isIdempotent():
                 continue
-            T_a: TransitionFunctionBDD = self.relations.closures[a.lifted][-1]
+            T_a: TransitionFunctionBDD = self.relations.closures[a][-1]
             groundExpr: SMTExpression = T_a.toGroundSMTExpression(a, self.domain, X[i], X[i + 1])
             rules.append(A[a].implies(groundExpr))
 
@@ -177,13 +178,13 @@ class CESPASEncoding(Encoding):
 
     def repetitions(self, a: Action, s0: State, s2: State, m: int) -> int:
         for j in range(0, m + 1):
-            T_a = self.relations.closures[a.lifted][j]
+            T_a = self.relations.closures[a][j]
             if not T_a.reachable(a, s0, s2):
                 continue
 
             if j == 0:
                 return 1
-            R_a = self.relations.reachability[a.lifted][j - 1]
+            R_a = self.relations.reachability[a][j - 1]
             s1: State = R_a.jumpState(a, s0)
             return 2 ** (j - 1) + self.repetitions(a, s1, s2, j - 1)
         return 0
@@ -191,7 +192,7 @@ class CESPASEncoding(Encoding):
     def getRepetitions(self, a: Action, i: int, solution: SMTSolution):
         s0: State = self.getState(self.vars.stateVariables[i], solution)
         s2: State = self.getState(self.vars.stateVariables[i + 1], solution)
-        m = len(self.relations.closures[a.lifted])
+        m = len(self.relations.closures[a])
         return self.repetitions(a, s0, s2, m)
 
     def getPlanFromSolution(self, solution: SMTSolution) -> NumericPlan:

@@ -98,6 +98,7 @@ class Domain:
             [g for dAction in self.durativeActions for g in dAction.ground(problem)])
 
         gDomain = GroundedDomain(self.name, gActions, gEvents, gProcess, gDurativeActions)
+        gDomain.lifted = self
         gDomain.constraints = self.constraints.ground(problem)
         gDomain.computeLists()
         gDomain.allAtoms |= problem.allAtoms
@@ -270,6 +271,7 @@ class GroundedDomain(Domain):
     functions: Set[Atom]
     predicates: Set[Atom]
     constraints: Formula
+    lifted: Domain
     pre: Dict[Atom, Set[Operation]]
     preN: Dict[Atom, Set[Operation]]
     preB: Dict[Atom, Set[Operation]]
