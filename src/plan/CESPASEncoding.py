@@ -47,6 +47,10 @@ class CESPASEncoding(Encoding):
         self.rulesByName.append("goal", self.bound, self.getGoalRules())
 
         self.rules = self.rulesByName.getConjunction()
+        print("--- Rules ---")
+        self.rulesByName.print()
+
+        exit()
 
         pass
 
@@ -68,7 +72,7 @@ class CESPASEncoding(Encoding):
 
         return rules
 
-    def getClosureRules(self, i: int) -> SMTConjunction:
+    def getConstraintRules(self, i: int) -> SMTConjunction:
         rules = SMTConjunction()
         X = self.vars.stateVariables
 
@@ -77,7 +81,7 @@ class CESPASEncoding(Encoding):
 
         return rules
 
-    def getConstraintRules(self, i: int) -> SMTConjunction:
+    def getClosureRules(self, i: int) -> SMTConjunction:
         rules = SMTConjunction()
         X = self.vars.stateVariables
         A = self.vars.actionVariables[i + 1]
@@ -100,6 +104,7 @@ class CESPASEncoding(Encoding):
             if a.isNonIdempotent():
                 continue
             pre = ActionStateTransitionFunction.getPreconditionClauses(a, X[i], X[i + 1])
+            print("PRE", a, A[a], SMTExpression.bigand(pre))
             rules.append(A[a].implies(SMTExpression.bigand(pre)))
 
         return rules

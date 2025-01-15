@@ -239,7 +239,7 @@ class TransitionFunctionBDD:
         restrict = dict()
         for atom in a.getPredicates():
             # for atom, ass in s.assignments.items():
-            if atom not in vars:
+            if atom not in vars or vars[atom] not in Xs:
                 continue
             v0 = Xs[vars[atom]]
             restrict[v0] = bool(s.assignments[atom]) if atom in s.assignments else False

@@ -14,6 +14,7 @@ from src.smt.SMTBoolVariable import SMTBoolVariable
 from src.smt.SMTConjunction import SMTConjunction
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTVariable import SMTVariable
+from src.smt.expressions.TrueExpression import TrueExpression
 
 
 class ActionStateTransitionFunction:
@@ -53,8 +54,10 @@ class ActionStateTransitionFunction:
         clauses = [preFormula]
         atLeastOneCe = []
         for ce in a.effects:
-            assert isinstance(ce, ConditionalEffect)
-            atLeastOneCe.append(SMTExpression.fromFormula(ce.conditions, X))
+            if isinstance(ce, ConditionalEffect):
+                atLeastOneCe.append(SMTExpression.fromFormula(ce.conditions, X))
+            else:
+                atLeastOneCe.append(TrueExpression())
         clauses.append(SMTExpression.bigor(atLeastOneCe))
 
         return clauses

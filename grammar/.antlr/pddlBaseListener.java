@@ -484,6 +484,42 @@ public class pddlBaseListener implements pddlListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterForallEffect(pddlParser.ForallEffectContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitForallEffect(pddlParser.ForallEffectContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterForall(pddlParser.ForallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitForall(pddlParser.ForallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExists(pddlParser.ExistsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExists(pddlParser.ExistsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterEffect(pddlParser.EffectContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -503,6 +539,18 @@ public class pddlBaseListener implements pddlListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitEffectNoCes(pddlParser.EffectNoCesContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterInequality(pddlParser.InequalityContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitInequality(pddlParser.InequalityContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -863,6 +911,18 @@ public class pddlBaseListener implements pddlListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitProcess(pddlParser.ProcessContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterConstraints(pddlParser.ConstraintsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitConstraints(pddlParser.ConstraintsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

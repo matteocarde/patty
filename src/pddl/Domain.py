@@ -127,7 +127,7 @@ class Domain:
         gDomain.substitute(constants)
         problem.substitute(constants)
 
-        actions = [a.substitute(constants) for a in gDomain.actions if a in arpg.getUsefulActions()]
+        actions = [a.substitute(constants) for a in gDomain.actions]  # if a in arpg.getUsefulActions()]
 
         gDomain.operations = set()
         gDomain.actions = set()

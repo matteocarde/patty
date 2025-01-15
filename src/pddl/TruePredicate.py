@@ -43,6 +43,9 @@ class TruePredicate(Predicate):
     def getLinearIncrement(self) -> float:
         return 0
 
+    def canHappen(self, subs: Dict[Atom, float or bool], default=None) -> bool:
+        return True
+
     def toExpression(self, onlyExpr=False) -> Expr or float:
         return True
 

@@ -33,3 +33,11 @@ class SMTRulesTree:
             for (index, rules) in dName.items():
                 conj += rules
         return conj
+
+    def print(self):
+        for (key, steps) in self.dict.items():
+            for i, rules in steps.items():
+                print(f"-- {key} {i} --")
+                for r in rules:
+                    print(r)
+        pass

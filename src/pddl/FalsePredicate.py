@@ -22,6 +22,9 @@ class FalsePredicate(Predicate):
     def ground(self, subs: Dict[str, str], delta=1) -> FalsePredicate:
         return self
 
+    def canHappen(self, subs: Dict[Atom, float or bool], default=None) -> bool:
+        return False
+
     def __str__(self):
         return "FALSE"
 
