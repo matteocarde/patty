@@ -89,37 +89,35 @@ def main():
         '''
 
         os.makedirs(f"{path}/{b}")
-        os.makedirs(f"{path}/{b}/instances")
-        with open(f"{path}/{b}/domain-{b}.pddl", "w") as f:
+        with open(f"{path}/{b}/domain.pddl", "w") as f:
             f.write(domain)
 
-        for c in range(2, MAX_COUNTERS + 1):
-            rX = 0
-            rY = math.ceil(2 ** (b - 1))
-            rXb = format(rX, f"0{b}b")
-            rYb = format(rY, f"0{b}b")
-            rrXb = list(reversed(rXb))
-            rrYb = list(reversed(rYb))
+        rX = 0
+        rY = math.ceil(2 ** (b - 1))
+        rXb = format(rX, f"0{b}b")
+        rYb = format(rY, f"0{b}b")
+        rrXb = list(reversed(rXb))
+        rrYb = list(reversed(rYb))
 
-            counters = range(1, c + 1)
+        counters = range(1, 2 + 1)
 
-            problem = f'''(define (problem pb01)
-    (:domain counters)
-    (:objects {" ".join([f'c{i}' for i in counters])} - counter)
-    (:init
-        {"".join([f'(z c{i})' for i in range(1, c + 1)])}
-        {"".join([f'(next c{i} c{i + 1})' for i in range(1, c)])}
-        {"".join([f"(x{'{:02d}'.format(i + 1)} c{j})" for i in reversed(range(0, b)) if rrXb[i] == '1' for j in counters if j % 1])} ;{rX} - {rXb}
-        {"".join([f"(x{'{:02d}'.format(i + 1)} c{j})" for i in reversed(range(0, b)) if rrYb[i] == '1' for j in counters if j % 2])} ;{rY} - {rYb}
-    )
-    (:goal
-        (and  {"".join([f"(l{i} c{j} c{j + 1})" for i in bits for j in range(1, c)])})
-    )
-    )
-            
-            '''
-            with open(f"{path}/{b}/instances/problem-{b}-{c}.pddl", "w") as f:
-                f.write(problem)
+        problem = f'''(define (problem pb01)
+(:domain counters)
+(:objects {" ".join([f'c{i}' for i in counters])} - counter)
+(:init
+    {"".join([f'(z c{i})' for i in range(1, 2 + 1)])}
+    {"".join([f'(next c{i} c{i + 1})' for i in range(1, 2)])}
+    {"".join([f"(x{'{:02d}'.format(i + 1)} c{j})" for i in reversed(range(0, b)) if rrXb[i] == '1' for j in counters if j % 1])} ;{rX} - {rXb}
+    {"".join([f"(x{'{:02d}'.format(i + 1)} c{j})" for i in reversed(range(0, b)) if rrYb[i] == '1' for j in counters if j % 2])} ;{rY} - {rYb}
+)
+(:goal
+    (and  {"".join([f"(l{i} c{j} c{j + 1})" for i in bits for j in range(1, 2)])})
+)
+)
+        
+        '''
+        with open(f"{path}/{b}/problem.pddl", "w") as f:
+            f.write(problem)
 
 
 if __name__ == '__main__':

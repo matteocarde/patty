@@ -9,8 +9,18 @@ NAME = "PATTY"
 class Patty(Planner):
     name = NAME
 
-    def __init__(self, name, search="static", maximize=False, useSCCs=False, noCompression=False,
-                 pattern="enhanced", quality="none", tcTime=0, hasEffectAxioms=False, rollBound=0, temporalConstraints=None):
+    def __init__(self, name, search="static",
+                 maximize=False,
+                 useSCCs=False,
+                 noCompression=False,
+                 pattern="enhanced",
+                 quality="none",
+                 tcTime=0,
+                 hasEffectAxioms=False,
+                 rollBound=0,
+                 temporalConstraints=None,
+                 avoidClosure=False,
+                 avoidClosureRelaxation=False):
         self.search = search
         self.maximize = maximize
         self.name = name
@@ -22,6 +32,8 @@ class Patty(Planner):
         self.rollBound = rollBound
         self.temporalConstraints = temporalConstraints
         self.tcTime = tcTime
+        self.avoidClosure = avoidClosure
+        self.avoidClosureRelaxation = avoidClosureRelaxation
         super().__init__()
 
     @staticmethod
@@ -96,4 +108,8 @@ class Patty(Planner):
             cmd += ["--max-closure-time", str(self.tcTime)]
         if self.temporalConstraints:
             cmd += ["--temporal-constraints", self.temporalConstraints]
+        if self.avoidClosure:
+            cmd += ["--avoid-closure"]
+        if self.avoidClosureRelaxation:
+            cmd += ["--avoid-closure-relaxation"]
         return cmd

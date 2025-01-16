@@ -186,6 +186,12 @@ COPY /benchmarks/planners/enhsp-socs /var/enhsp-socs
 ENV PATH /var/enhsp-socs/:${PATH}
 RUN chmod +x /var/enhsp-socs/enhsp-socs
 
+#Install local pyeda
+WORKDIR /
+COPY /libs/pyeda /libs/pyeda
+RUN ls -la
+RUN pip install -e libs/pyeda
+
 WORKDIR /project
 # Copying
 COPY . .
