@@ -6,10 +6,12 @@ from typing import Set, Dict, List, Tuple
 from src.pddl.Atom import Atom
 from src.pddl.CEConditions import CEConditions
 from src.pddl.CEEffects import CEEffects
+from src.pddl.FalsePredicate import FalsePredicate
 from src.pddl.Literal import Literal
 from src.pddl.Parameters import Parameters
 from src.pddl.Predicate import Predicate
 from src.pddl.Problem import Problem
+from src.pddl.TruePredicate import TruePredicate
 from src.pddl.grammar.pddlParser import pddlParser as p
 
 
@@ -66,10 +68,18 @@ class ConditionalEffect(Predicate):
         return ce
 
     def blocks(self, other: ConditionalEffect) -> bool:
+        if isinstance(other.conditions, TruePredicate):
+            return False
+        if isinstance(other.conditions, FalsePredicate):
+            return False
         return bool(self.effects.getNegative() & other.conditions.getPositive()) or \
             bool(self.effects.getPositive() & other.conditions.getNegative())
 
     def allows(self, other: ConditionalEffect) -> bool:
+        if isinstance(other.conditions, TruePredicate):
+            return False
+        if isinstance(other.conditions, FalsePredicate):
+            return False
         return bool(self.effects.getNegative() & other.conditions.getNegative()) or \
             bool(self.effects.getPositive() & other.conditions.getPositive())
 

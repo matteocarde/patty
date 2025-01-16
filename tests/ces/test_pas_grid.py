@@ -13,7 +13,7 @@ class TestCESGrid(TestCase):
 
     def setUp(self) -> None:
         domain = f"../../files/ces/grid/domain.pddl"
-        problem = f"../../files/ces/grid/instances/problem-5.pddl"
+        problem = f"../../files/ces/grid/instances/problem-4.pddl"
         self.domain: Domain = Domain.fromFile(domain)
         self.problem: Problem = Problem.fromFile(problem)
         self.qeDomain: Domain = self.domain.eliminateQuantifiers(self.problem)
@@ -23,6 +23,7 @@ class TestCESGrid(TestCase):
         self.args.avoidClosureRelaxation = False
 
     def test_solver(self):
+        self.assertTrue(self.gDomain.hasConditionalEffects())
         search = PASSearch(self.gDomain, self.problem, self.args, liftedDomain=self.domain)
         plan = search.solve()
         print(plan)

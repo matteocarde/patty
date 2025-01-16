@@ -45,7 +45,7 @@ def main():
         pattern: Pattern
         bound: int
 
-        if domain.hasConditionalEffects():
+        if gDomain.hasConditionalEffects():
             solver = PASSearch(gDomain, problem, args, liftedDomain=domain)
         elif args.search == "astar":
             solver = AStarSearchMax(gDomain, problem, args)

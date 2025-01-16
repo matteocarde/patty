@@ -15,7 +15,7 @@ def main():
     domains = [
         "ces/counters",
         "ces/grid",
-        "ces/tapes"
+        # "ces/tapes"
     ]
 
     instances = list()

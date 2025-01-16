@@ -46,6 +46,8 @@ class Arguments:
                             action="store_true", default=False)
         parser.add_argument('--avoid-closure', help="Avoid using the transitive closure for CEs",
                             action="store_true", default=False)
+        parser.add_argument('-ptc', help="Print the Transitive Closure",
+                            action="store_true", default=False)
         parser.add_argument('--temporal-constraints', help="'numerical' or 'logical' following IJCAI-24",
                             default='numerical')
         parser.add_argument('--quality',
@@ -92,3 +94,4 @@ class Arguments:
         self.temporalConstraints = args.temporal_constraints
         self.avoidClosureRelaxation = args.avoid_closure_relaxation
         self.avoidClosure = args.avoid_closure
+        self.printTransitiveClosures = args.ptc

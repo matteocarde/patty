@@ -386,15 +386,15 @@ class Operation:
                     self.deletedAtoms.add(v)
             return
 
-        # noCondition = ConditionalEffect()
-        # newEffects = Effects()
-        # for e in self.effects:
-        #     if isinstance(e, ConditionalEffect):
-        #         newEffects.addEffect(e)
-        #         continue
-        #     noCondition.effects.addEffect(e)
-        # newEffects.addEffect(noCondition)
-        # self.effects = newEffects
+        noCondition = ConditionalEffect()
+        newEffects = Effects()
+        for e in self.effects:
+            if isinstance(e, ConditionalEffect):
+                newEffects.addEffect(e)
+                continue
+            noCondition.effects.addEffect(e)
+        newEffects.addEffect(noCondition)
+        self.effects = newEffects
 
         for ce in self.effects:
             assert isinstance(ce, ConditionalEffect)
