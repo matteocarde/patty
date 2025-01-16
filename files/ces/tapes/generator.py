@@ -43,10 +43,11 @@ def main():
         incrCEs.append(ce(oCond, oEff))
 
         incr = f'''
-            :parameters (?r - robot ?a - counter)
-                :precondition(and
-                    (connected ?r ?a)
-                )
+            (:action incr
+		        :parameters (?r - robot ?a - counter)
+		        :precondition(and
+			        (connected ?r ?a)
+		        )
                 :effect(and
                     {NEWLINE.join([e for e in incrCEs])}
                 )

@@ -50,8 +50,6 @@ class CESPASEncoding(Encoding):
 
         # print("--- Rules ---")
         # self.rulesByName.print()
-        #
-        # exit()
 
         pass
 
@@ -102,10 +100,10 @@ class CESPASEncoding(Encoding):
         A = self.vars.actionVariables[i + 1]
 
         for a in self.actions:
-            if a.isNonIdempotent():
-                continue
+            # if a.isNonIdempotent():
+            #     continue
             pre = ActionStateTransitionFunction.getPreconditionClauses(a, X[i])
-            rules.append(A[a].implies(SMTExpression.bigand(pre)))
+            rules.append(A[a].implies(pre))
 
         return rules
 

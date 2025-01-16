@@ -91,10 +91,11 @@
 	)
 
 	
-            :parameters (?r - robot ?a - counter)
-                :precondition(and
-                    (connected ?r ?a)
-                )
+            (:action incr
+		        :parameters (?r - robot ?a - counter)
+		        :precondition(and
+			        (connected ?r ?a)
+		        )
                 :effect(and
                                         (when
                         (and (not (x01 ?a)))

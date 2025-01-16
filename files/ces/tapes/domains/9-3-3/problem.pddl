@@ -14,7 +14,7 @@
         (startCell c01)
         (isNextCell c01 c02) (isNextCell c02 c03) (isNextCell c03 c01)
         (isNextTape t01 t02) (isNextTape t02 t03) (isNextTape t03 t01)
-        (x08 a01) (x07 a01) (x05 a01) (x04 a01) (x01 a01) (x06 a02) (x05 a02) (x01 a02) (x09 a03) (x06 a03) (x05 a03) (x04 a03) (x02 a03)
+        (x07 a01) (x06 a01) (x02 a01) (x09 a02) (x08 a02) (x07 a02) (x06 a02) (x01 a02) (x09 a03) (x08 a03) (x06 a03) (x04 a03) (x02 a03)
     )
     (:goal
         (and  

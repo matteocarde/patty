@@ -53,11 +53,11 @@ class TransitiveClosure(TransitionFunctionBDD):
                     reflexive=reflexive,
                     relaxed=relaxed
                 )
-                print("Transitive" if reflexive else "Reachability", t.action, i, nextBDD.bdd.to_dot())
+                # print("Transitive" if reflexive else "Reachability", t.action, i, nextBDD.bdd.to_dot())
                 if (reflexive and currentBDD.isEquivalent(nextBDD)) or (not reflexive and i > maxReachabilityIndex):
                     nextBDD.__class__ = TransitiveClosure
                     signal.alarm(0)
-                    print("TC", currentBDD.isEquivalent(nextBDD), t.action, nextBDD.bdd.to_dot())
+                    # print("TC", currentBDD.isEquivalent(nextBDD), t.action, nextBDD.bdd.to_dot())
                     return bdds
                 bdds.append(nextBDD)
                 currentBDD = nextBDD

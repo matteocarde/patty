@@ -41,9 +41,9 @@ class ActionStateTransitionFunction:
         self.clauses = self.rulesByName.getConjunction()
 
         self.constraints: SMTExpression = SMTExpression.fromFormula(domain.constraints, self.current)
-        print(f"---- {action} ----")
-        self.rulesByName.print()
-        print(self.constraints)
+        # print(f"---- {action} ----")
+        # self.rulesByName.print()
+        # print(self.constraints)
 
         pass
 
