@@ -15,7 +15,7 @@ def main():
     domains = [
         "ces/counters",
         "ces/grid",
-        # "ces/tapes"
+        "ces/tapes"
     ]
 
     instances = list()
@@ -34,7 +34,7 @@ def main():
             subDomains = natsort.natsorted(os.listdir(f"{dFolder}/domains"))
             for subDomain in subDomains:
                 subDFolder = f"{dFolder}/domains/{subDomain}"
-                files.append((f"{subDFolder}/domain.pddl", f"{subDFolder}/problem.pddl"))
+                files.append((f"{subDFolder}/domain-{subDomain}.pddl", f"{subDFolder}/problem-{subDomain}.pddl"))
 
         for planner in PLANNERS:
             for (domainFile, problemFile) in files:

@@ -89,7 +89,7 @@ def main():
         '''
 
         os.makedirs(f"{path}/{b}")
-        with open(f"{path}/{b}/domain.pddl", "w") as f:
+        with open(f"{path}/{b}/domain-{b}.pddl", "w") as f:
             f.write(domain)
 
         rX = 0
@@ -116,7 +116,7 @@ def main():
 )
         
         '''
-        with open(f"{path}/{b}/problem.pddl", "w") as f:
+        with open(f"{path}/{b}/problem-{b}.pddl", "w") as f:
             f.write(problem)
 
 

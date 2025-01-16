@@ -102,11 +102,12 @@ def main():
     )
     )
  '''
-                domainFolder = f"{path}/{b}-{t}-{l}"
+                name = f"{b}-{t}-{l}"
+                domainFolder = f"{path}/{name}"
                 os.makedirs(domainFolder)
-                with open(f"{domainFolder}/domain.pddl", "w") as f:
+                with open(f"{domainFolder}/domain-{name}.pddl", "w") as f:
                     f.write(domain)
-                with open(f"{domainFolder}/problem.pddl", "w") as f:
+                with open(f"{domainFolder}/problem-{name}.pddl", "w") as f:
                     f.write(problem)
 
 
