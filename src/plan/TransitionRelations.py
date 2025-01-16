@@ -24,7 +24,7 @@ class TransitionRelations:
             T_a = ActionStateTransitionFunction(a, domain)
             bddorder = BDDVariableOrder(a)
             order = bddorder.getOrder()
-            print(f"Order {a}: {bddorder.toDot()}")
+            # print(f"Order {a}: {bddorder.toDot()}")
             print(f"Computing Transitive Closure of {a}")
             Ts = TransitiveClosure.fromTransitionFunction(T_a, order,
                                                           relaxed=relaxed,

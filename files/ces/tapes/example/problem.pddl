@@ -8,7 +8,7 @@
     )
     (:init
         (onTape r t01)
-        (onCellRobot r t01 c01)
+        (onCellRobot r c01)
         (onCellCounter a01 t01 c03)
         (onCellCounter a02 t02 c03)
         (onCellCounter a03 t03 c03)

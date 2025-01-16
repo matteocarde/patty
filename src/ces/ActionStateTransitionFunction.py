@@ -1,18 +1,13 @@
-import copy
 from typing import Dict, List, Set
-
-from pyeda.boolalg.bdd import bddvar, BDDVariable
 
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.ConditionalEffect import ConditionalEffect
-from src.pddl.Constraints import Constraints
-from src.pddl.Domain import Domain, GroundedDomain
-from src.pddl.Formula import Formula
-from src.pddl.Literal import Literal
+from src.pddl.Domain import GroundedDomain
 from src.smt.SMTBoolVariable import SMTBoolVariable
 from src.smt.SMTConjunction import SMTConjunction
 from src.smt.SMTExpression import SMTExpression
+from src.smt.SMTRulesTree import SMTRulesTree
 from src.smt.SMTVariable import SMTVariable
 from src.smt.expressions.TrueExpression import TrueExpression
 
@@ -25,6 +20,8 @@ class ActionStateTransitionFunction:
     next: Dict[Atom, SMTBoolVariable]
     countingCurrent: List[SMTBoolVariable]
     countingNext: List[SMTBoolVariable]
+    preconditions: SMTExpression
+    constraints: SMTExpression
 
     def __init__(self, action: Action, domain: GroundedDomain):
         self.m = len(action.effects)
@@ -36,20 +33,22 @@ class ActionStateTransitionFunction:
 
         self.clauses: SMTConjunction = SMTConjunction()
 
-        self.clausesByName = dict()
-        self.clausesByName["pre"] = self.getPreconditionClauses(self.action, self.current, self.next)
-        self.clausesByName["eff"] = self.getEffectClauses(self.action, self.current, self.next)
-        self.clausesByName["conflict"] = self.getConflictClauses(self.action, self.current, self.next)
-        for name, clauses in self.clausesByName.items():
-            self.clauses += clauses
+        self.preconditions = self.getPreconditionClauses(self.action, self.current)
+        self.rulesByName = SMTRulesTree()
+        self.rulesByName.append("pre", 0, [self.preconditions])
+        self.rulesByName.append("eff", 0, self.getEffectClauses(self.action, self.current, self.next))
+        self.rulesByName.append("conflict", 0, self.getConflictClauses(self.action, self.current, self.next))
+        self.clauses = self.rulesByName.getConjunction()
 
         self.constraints: SMTExpression = SMTExpression.fromFormula(domain.constraints, self.current)
+        print(f"---- {action} ----")
+        self.rulesByName.print()
         print(self.constraints)
+
         pass
 
     @staticmethod
-    def getPreconditionClauses(a: Action, X: Dict[Atom, SMTVariable], X_: Dict[Atom, SMTVariable]) -> List[
-        SMTExpression]:
+    def getPreconditionClauses(a: Action, X: Dict[Atom, SMTVariable]) -> SMTExpression:
         preFormula = SMTExpression.fromFormula(a.preconditions, X)
         clauses = [preFormula]
         atLeastOneCe = []
@@ -60,7 +59,7 @@ class ActionStateTransitionFunction:
                 atLeastOneCe.append(TrueExpression())
         clauses.append(SMTExpression.bigor(atLeastOneCe))
 
-        return clauses
+        return SMTExpression.bigand(clauses)
 
     @staticmethod
     def getEffectClauses(a: Action, X: Dict[Atom, SMTVariable], X_: Dict[Atom, SMTVariable]) -> List[SMTExpression]:

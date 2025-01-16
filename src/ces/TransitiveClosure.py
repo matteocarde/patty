@@ -37,7 +37,7 @@ class TransitiveClosure(TransitionFunctionBDD):
         currentBDD: TransitionFunctionBDD = super().fromActionStateTransitionFunction(t, atomsOrder, variables)
         bdds.append(currentBDD)
 
-        print("Transitive" if reflexive else "Reachability", t.action, i, currentBDD.bdd.to_dot())
+        # print("Transitive" if reflexive else "Reachability", t.action, i, currentBDD.bdd.to_dot())
 
         if maxTime:
             signal.alarm(maxTime)
@@ -53,13 +53,11 @@ class TransitiveClosure(TransitionFunctionBDD):
                     reflexive=reflexive,
                     relaxed=relaxed
                 )
-                # print("Transitive" if reflexive else "Reachability", t.action, i, nextBDD.bdd.to_dot())
-                if not reflexive and i > maxReachabilityIndex:
-                    return bdds
-                if currentBDD.isEquivalent(nextBDD):
+                print("Transitive" if reflexive else "Reachability", t.action, i, nextBDD.bdd.to_dot())
+                if (reflexive and currentBDD.isEquivalent(nextBDD)) or (not reflexive and i > maxReachabilityIndex):
                     nextBDD.__class__ = TransitiveClosure
                     signal.alarm(0)
-                    # print(nextBDD.bdd.satisfy_count())
+                    print("TC", currentBDD.isEquivalent(nextBDD), t.action, nextBDD.bdd.to_dot())
                     return bdds
                 bdds.append(nextBDD)
                 currentBDD = nextBDD
@@ -67,3 +65,5 @@ class TransitiveClosure(TransitionFunctionBDD):
             print(len(bdds))
             print(f"Timeout when computing transitive closure of {t.action} at step {i}, i.e., {2 ** i} steps")
             return bdds
+        except Exception:
+            print("ERROR")

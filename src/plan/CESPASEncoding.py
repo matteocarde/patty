@@ -104,8 +104,7 @@ class CESPASEncoding(Encoding):
         for a in self.actions:
             if a.isNonIdempotent():
                 continue
-            pre = ActionStateTransitionFunction.getPreconditionClauses(a, X[i], X[i + 1])
-            print("PRE", a, A[a], SMTExpression.bigand(pre))
+            pre = ActionStateTransitionFunction.getPreconditionClauses(a, X[i])
             rules.append(A[a].implies(SMTExpression.bigand(pre)))
 
         return rules

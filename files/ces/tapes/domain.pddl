@@ -5,7 +5,7 @@
 	)
 	(:predicates
 		(onTape ?r - robot ?t - tape)
-		(onCellRobot ?r - robot ?t - tape ?c - cell)
+		(onCellRobot ?r - robot ?c - cell)
 		(onCellCounter ?a - counter ?t - tape ?c - cell)
 		(connected ?r - robot ?a - counter)
 		(connected ?r - robot)
@@ -22,7 +22,8 @@
 	(:action connect
 		:parameters (?r - robot ?t - tape ?c - cell ?a - counter)
 		:precondition(and
-			(onCellRobot ?r ?t ?c)
+			(onTape ?r ?t)
+			(onCellRobot ?r ?c)
 			(onCellCounter ?a ?t ?c)
 			(not (connected ?r ?a))
 		)
@@ -54,12 +55,12 @@
 				(?from - cell ?to - cell)
 				(when
 					(and
-						(onCellRobot ?r ?t ?from)
 						(isNextCell ?from ?to)
+						(onCellRobot ?r ?from)
 					)
 					(and
-						(not (onCellRobot ?r ?t ?from))
-						(onCellRobot ?r ?t ?to)
+						(not (onCellRobot ?r ?from))
+						(onCellRobot ?r ?to)
 					)
 				)
 			)
@@ -67,22 +68,22 @@
 	)
 
 	(:action change
-		:parameters (?r - robot)
-		:precondition()
+		:parameters (?r - robot ?c - cell)
+		:precondition(and
+			(startCell ?c)
+			(onCellRobot ?r ?c)
+		)
 		:effect(and
 			(forall
 				(?from - tape ?to - tape ?c - cell)
 				(when
 					(and
-						(startCell ?c)
-						(onCellRobot ?r ?from ?c)
+						(onTape ?r ?from)
 						(isNextTape ?from ?to)
 					)
 					(and
-						(not (onCellRobot ?r ?from ?c))
 						(not (onTape ?r ?from))
 						(onTape ?r ?to)
-						(onCellRobot ?r ?to ?c)
 					)
 				)
 			)
@@ -134,6 +135,44 @@
 					(not (x01 ?a)))
 			)
 		)
+	)
+
+	(:constraints
+		(and
+			(forall
+				(?r - robot ?c1 - cell ?c2 - cell)
+				(and
+					(not (= ?c1 ?c2))
+					(or
+						(not (onCellRobot ?r ?c1))
+						(not (onCellRobot ?r ?c2))
+					)
+				)
+			)
+			(forall
+				(?r - robot ?t1 - tape ?t2 - tape)
+				(and
+					(not (= ?t1 ?t2))
+					(or
+						(not (onTape ?r ?t1))
+						(not (onTape ?r ?t2))
+					)
+				)
+			)
+			(exists
+				(?r - robot ?c - cell)
+				(and
+					(onCellRobot ?r ?c)
+				)
+			)
+			(exists
+				(?r - robot ?t - tape)
+				(and
+					(onTape ?r ?t)
+				)
+			)
+		)
+
 	)
 
 )

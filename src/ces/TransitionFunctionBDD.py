@@ -47,6 +47,7 @@ class TransitionFunctionBDD:
     C0: BinaryDecisionDiagram
     C1: BinaryDecisionDiagram
     C2: BinaryDecisionDiagram
+    P0: BinaryDecisionDiagram
     CLHS: BinaryDecisionDiagram
 
     def __init__(self):
@@ -70,8 +71,9 @@ class TransitionFunctionBDD:
         tf.atom2var: Dict[Atom, Dict[int, BDDVariable]] = variables
         tf.constraints = tf.computeConstraints(t.domain.constraints)
 
+        tf.P0 = tf.getPrecondition()
         tf.C0, tf.C1, tf.C2 = tf.getConstraints()
-        tf.CLHS = tf.C0 & tf.C2
+        tf.CLHS = tf.P0 & tf.C0 & tf.C2
 
         tf.Xs: Dict[int, Dict[SMTBoolVariable, BDDVariable]] = tf.getXs(0, 2)
         tf.smt2bdd: Dict[SMTBoolVariable, BDDVariable] = dict()
@@ -103,6 +105,7 @@ class TransitionFunctionBDD:
         tf.Xs = self.Xs
         tf.C0, tf.C1, tf.C2 = self.C0, self.C1, self.C2
         tf.CLHS = self.CLHS
+        tf.P0 = self.P0
         return tf
 
     def computeConstraints(self, c: Formula) -> Formula:
@@ -159,6 +162,14 @@ class TransitionFunctionBDD:
         C1 = self.constraints.toBDD(X[1])
         C2 = self.constraints.toBDD(X[2])
         return C0, C1, C2
+
+    def getPrecondition(self) -> BinaryDecisionDiagram:
+        X0 = dict()
+        for v in self.atoms:
+            X0[self.currentState[v]] = self.getVarFromAtom(v, 0)
+
+        bdd = self.transitionFunction.preconditions.toBDDExpression(X0)
+        return bdd
 
     def computeTransition(self, reflexive=True, relaxed=True) -> TransitionFunctionBDD:
         ith = copy.copy(self)
@@ -252,7 +263,6 @@ class TransitionFunctionBDD:
             return True
         if res.is_zero():
             return False
-        print(a, res.to_dot())
         raise Exception("When computing reachability, there are some variables missing")
 
     def jumpState(self, a: Action, s0: State) -> State:
