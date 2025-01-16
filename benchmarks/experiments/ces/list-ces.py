@@ -13,9 +13,10 @@ NAME = "ces.csv"
 
 def main():
     domains = [
-        "ces/counters",
-        "ces/grid",
-        "ces/tapes"
+        # "ces/counters",
+        # "ces/grid",
+        # "ces/tapes",
+        "ces/meeting"
     ]
 
     instances = list()

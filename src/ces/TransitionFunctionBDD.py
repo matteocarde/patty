@@ -123,9 +123,13 @@ class TransitionFunctionBDD:
             name = f"c_{self.action}_{atom}"
             atom2var[atom] = bddvar(name)
             var2atom[name] = atom
-        nonInAction: List[BDDVariable] = [atom2var[v] for v in c.getPredicates() - self.action.predicates]
-        cBDD: BinaryDecisionDiagram = c.toBDD(atom2var)
-        cBDDRemoved = cBDD.smoothing(nonInAction)
+
+        atomsNonInAction: Set[Atom] = c.getPredicates() - self.action.predicates
+        prunedC: Formula = c.pruneSubFormulasWithAllVariablesIn(atomsNonInAction)
+        cBDD: BinaryDecisionDiagram = prunedC.toBDD(atom2var)
+        bddVarsNonInAction: Set[BDDVariable] = set([atom2var[v] for v in prunedC.atoms - self.action.predicates])
+        cBDDRemoved = cBDD.smoothing(bddVarsNonInAction)
+
         return Formula.fromBDD(cBDDRemoved, var2atom)
 
     @classmethod

@@ -23,16 +23,19 @@ from src.pddl.grammar.pddlParser import pddlParser as p
 class Formula:
     type: str
     conditions: [Formula or Predicate]
+    atoms: Set[Atom]
 
     def __init__(self):
         self.type = "AND"
         self.conditions: [Formula or Predicate] = list()
+        self.atoms = set()
 
     def __deepcopy__(self, m=None) -> Formula:
         m = {} if m is None else m
         f = Formula()
         f.type = self.type
         f.conditions = copy.deepcopy(self.conditions, m)
+        f.atoms = copy.copy(self.atoms)
         return f
 
     def __iter__(self):
@@ -82,11 +85,17 @@ class Formula:
 
         for clause in clauses:
             if type(clause) in {p.AndClauseContext, p.OrClauseContext}:
-                formula.conditions.append(Formula.fromNode(clause))
+                sub = Formula.fromNode(clause)
+                formula.conditions.append(sub)
+                formula.atoms |= sub.atoms
             elif isinstance(clause, p.BooleanLiteralContext):
-                formula.conditions.append(Literal.fromNode(clause.getChild(0)))
+                l = Literal.fromNode(clause.getChild(0))
+                formula.conditions.append(l)
+                formula.atoms.add(l.getAtom())
             elif type(clause) in {p.ComparationContext, p.NegatedComparationContext}:
-                formula.conditions.append(BinaryPredicate.fromNode(clause))
+                bp = BinaryPredicate.fromNode(clause)
+                formula.conditions.append(bp)
+                formula.atoms |= bp.getPredicates()
             elif type(clause) in {p.AtStartPreContext, p.OverAllPreContext, p.AtEndPreContext}:
                 formula.conditions += TimePredicate.fromNode(clause)
             elif isinstance(clause, p.InequalityContext):
@@ -123,6 +132,7 @@ class Formula:
         x = Formula()
         x.type = self.type
         x.conditions = []
+        x.atoms = self.atoms - set(subs.keys())
         for c in self.conditions:
             if isinstance(c, Literal) and c.getAtom() in subs and subs[c.getAtom()]:
                 continue
@@ -207,6 +217,10 @@ class Formula:
 
     def addClause(self, clause: Formula or Predicate):
         self.conditions.append(clause)
+        if isinstance(clause, Formula):
+            self.atoms |= clause.atoms
+        if isinstance(clause, Predicate):
+            self.atoms |= clause.getPredicates()
 
     @classmethod
     def join(cls, formulas: List[Formula]) -> Formula:
@@ -217,6 +231,7 @@ class Formula:
             if type != f.type:
                 raise Exception("Cannot join together preconditions of different types")
             joinedF.conditions += f.conditions
+            joinedF.atoms |= f.atoms
         joinedF.type = type
         return joinedF
 
@@ -304,4 +319,17 @@ class Formula:
             f.addClause(c)
         if not f.conditions:
             return TruePredicate() if self.type == "AND" else FalsePredicate()
+        return f
+
+    def pruneSubFormulasWithAllVariablesIn(self, nonInAction: Set[Atom]):
+        # if self.type == "OR":
+        #     return self
+        f = Formula()
+        f.type = self.type
+        for c in self.conditions:
+            if isinstance(c, Formula) and not c.atoms.issubset(nonInAction):
+                f.addClause(c.pruneSubFormulasWithAllVariablesIn(nonInAction))
+            if isinstance(c, Predicate) and not c.getPredicates().issubset(nonInAction):
+                f.addClause(c)
+
         return f
