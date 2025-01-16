@@ -86,7 +86,7 @@ class CESPASEncoding(Encoding):
         A = self.vars.actionVariables[i + 1]
 
         for a in self.actions:
-            if a.isIdempotent():
+            if a.isIdempotent() or not self.relations:
                 continue
             T_a: TransitionFunctionBDD = self.relations.closures[a][-1]
             groundExpr: SMTExpression = T_a.toGroundSMTExpression(a, self.domain, X[i], X[i + 1])
@@ -100,8 +100,6 @@ class CESPASEncoding(Encoding):
         A = self.vars.actionVariables[i + 1]
 
         for a in self.actions:
-            # if a.isNonIdempotent():
-            #     continue
             pre = ActionStateTransitionFunction.getPreconditionClauses(a, X[i])
             rules.append(A[a].implies(pre))
 
@@ -113,7 +111,7 @@ class CESPASEncoding(Encoding):
         A = self.vars.actionVariables[i + 1]
 
         for a in self.actions:
-            if a.isNonIdempotent():
+            if a.isNonIdempotent() and self.relations:
                 continue
             eff = ActionStateTransitionFunction.getEffectClauses(a, X[i], X[i + 1])
             rules.append(A[a].implies(SMTExpression.bigand(eff)))
@@ -126,7 +124,7 @@ class CESPASEncoding(Encoding):
         A = self.vars.actionVariables[i + 1]
 
         for a in self.actions:
-            if a.isNonIdempotent():
+            if a.isNonIdempotent() and self.relations:
                 continue
             conflict = ActionStateTransitionFunction.getConflictClauses(a, X[i], X[i + 1])
             rules.append(A[a].implies(SMTExpression.bigand(conflict)))
@@ -202,7 +200,7 @@ class CESPASEncoding(Encoding):
             for a in self.actions:
                 isExecuted = solution.getVariable(self.vars.actionVariables[i][a])
                 if isExecuted:
-                    r = self.getRepetitions(a, i - 1, solution) if a.isNonIdempotent() else 1
+                    r = self.getRepetitions(a, i - 1, solution) if a.isNonIdempotent() and self.relations else 1
                     plan.addRepeatedAction(a, r)
 
         return plan

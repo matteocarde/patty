@@ -34,7 +34,7 @@ class TransitiveClosure(TransitionFunctionBDD):
         bdds = []
         i = 0
         variables = TransitiveClosure.getOrder(t.action, atomsOrder)
-        currentBDD: TransitionFunctionBDD = super().fromActionStateTransitionFunction(t, atomsOrder, variables)
+        currentBDD: TransitionFunctionBDD = super().fromActionStateTransitionFunction(t, atomsOrder, variables, relaxed)
         bdds.append(currentBDD)
 
         # print("Transitive" if reflexive else "Reachability", t.action, i, currentBDD.bdd.to_dot())
@@ -50,8 +50,7 @@ class TransitiveClosure(TransitionFunctionBDD):
             while True:
                 i += 1
                 nextBDD: TransitionFunctionBDD = currentBDD.computeTransition(
-                    reflexive=reflexive,
-                    relaxed=relaxed
+                    reflexive=reflexive
                 )
                 # print("Transitive" if reflexive else "Reachability", t.action, i, nextBDD.bdd.to_dot())
                 if (reflexive and currentBDD.isEquivalent(nextBDD)) or (not reflexive and i > maxReachabilityIndex):
