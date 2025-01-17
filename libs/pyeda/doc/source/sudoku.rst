@@ -26,11 +26,11 @@ First, let's get a few ground rules straight:
 Getting Started
 ===============
 
-First, import all the standard symbols from libs.pyeda.pyeda.
+First, import all the standard symbols from PyEDA.
 
 ::
 
-   >>> from libs.pyeda.pyeda.inter import *
+   >>> from pyeda.inter import *
 
 Let's also define a variable "DIGITS" that makes it easier to access the
 Sudoku square values.

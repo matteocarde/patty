@@ -11,7 +11,7 @@ This chapter will explain how to construct and manipulate Boolean expressions.
 The code examples in this chapter assume that you have already prepared your
 terminal by importing all interactive symbols from PyEDA::
 
-   >>> from libs.pyeda.pyeda.inter import *
+   >>> from pyeda.inter import *
 
 Expression Constants
 ====================
@@ -944,7 +944,7 @@ be converted efficiently to a CNF.
 Let's test whether bit 6 of a ripple carry adder is equivalent to bit 6 of a
 Kogge Stone adder::
 
-   >>> from libs.pyeda.pyeda.logic.addition import ripple_carry_add, kogge_stone_add
+   >>> from pyeda.logic.addition import ripple_carry_add, kogge_stone_add
    >>> A = exprvars('a', 16)
    >>> B = exprvars('b', 16)
    >>> S1, C1 = ripple_carry_add(A, B)

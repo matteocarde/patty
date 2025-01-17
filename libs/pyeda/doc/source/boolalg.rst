@@ -168,7 +168,7 @@ Import Symbols from PyEDA
 All examples in this document require that you execute the following statements
 in your interpreter::
 
-   >>> from libs.pyeda.pyeda.inter import *
+   >>> from pyeda.inter import *
 
 If you want to see all the symbols you import with this statement,
 look into ``pyeda/inter.py``.

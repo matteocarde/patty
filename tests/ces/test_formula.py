@@ -2,7 +2,7 @@ import unittest
 from typing import List
 from unittest import TestCase
 
-from pyeda.boolalg.bdd import BinaryDecisionDiagram, bddvar, BDDVariable
+from pyeda_linux.boolalg.bdd import BinaryDecisionDiagram, bddvar, BDDVariable
 
 
 def smooth(func: BinaryDecisionDiagram, vars: List[BDDVariable],

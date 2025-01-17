@@ -25,7 +25,7 @@ we will discuss how to construct and visualize ROBDDs using PyEDA.
 The code examples in this chapter assume that you have already prepared your
 terminal by importing all interactive symbols from PyEDA::
 
-   >>> from libs.pyeda.pyeda.inter import *
+   >>> from pyeda.inter import *
 
 Constructing BDDs
 =================
@@ -293,14 +293,14 @@ This is best illustrated with an example.
 If you look directly into the ``pyeda.boolalg.bdd`` module,
 you can find the memory structure that holds BDD nodes::
 
-   >>> from libs.pyeda.pyeda.boolalg.bdd import _NODES
+   >>> from pyeda.boolalg.bdd import _NODES
    >>> len(_NODES)
    2
 
 The table contains two static nodes: zero and one.
 Let's define a few variables::
 
-   >>> from libs.pyeda.pyeda.inter import *
+   >>> from pyeda.inter import *
    >>> a, b = map(bddvar, 'ab')
    >>> len(_NODES)
    4

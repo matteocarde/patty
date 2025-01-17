@@ -29,7 +29,7 @@ We have purposefully adopted many of the conventions used by the
 The code examples in this chapter assume that you have already prepared your
 terminal by importing all interactive symbols from PyEDA::
 
-   >>> from libs.pyeda.pyeda.inter import *
+   >>> from pyeda.inter import *
 
 Construction
 ============

@@ -7,8 +7,8 @@ Minimize a PLA file
 import argparse
 import sys
 
-from libs.pyeda.pyeda.boolalg import espresso
-from libs.pyeda.pyeda.parsing import pla
+from pyeda.boolalg import espresso
+from pyeda.parsing import pla
 
 
 PARSER = argparse.ArgumentParser(description=__doc__)

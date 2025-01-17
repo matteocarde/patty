@@ -13,11 +13,11 @@ In this essay we will use the PyEDA SAT solver to find all solutions to the eigh
 Getting Started
 ===============
 
-First, import all the standard symbols from libs.pyeda.pyeda.
+First, import all the standard symbols from PyEDA.
 
 ::
 
-   >>> from libs.pyeda.pyeda.inter import *
+   >>> from pyeda.inter import *
 
 Setting Up the Chess Board
 ==========================

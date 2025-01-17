@@ -18,13 +18,13 @@ PyEDA uses a C extension to the famous Berkeley Espresso library [#f1]_.
 
 All examples in this chapter assume you have interactive symbols imported::
 
-   >>> from libs.pyeda.pyeda.inter import *
+   >>> from pyeda.inter import *
 
 Minimize Boolean Expressions
 ============================
 
 Consider the three-input function
-:math:`f_{1} = a' \cdot b' \cdot c' + a' \cdot b' \cdot c + a \cdot b' \cdot c + a \cdot b \cdot c + a \cdot b \cdot c'`
+:math:`f_{1} = a \cdot b' \cdot c' + a' \cdot b' \cdot c + a \cdot b' \cdot c + a \cdot b \cdot c + a \cdot b \cdot c'`
 
 ::
 

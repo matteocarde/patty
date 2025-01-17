@@ -3,13 +3,8 @@
 ***************************************
 
 Hello all,
-
-I have moved on from this project,
-and will not spend time on maintenance or bug fixes.
-I welcome any discussion in Issues.
-I also welcome forks of any kind, for any reason.
-
---------------------
+I haven't maintained this repository in years.
+It appears to need some TLC.
 
 PyEDA is a Python library for electronic design automation.
 
@@ -54,13 +49,6 @@ Latest release version using
 
    $ pip3 install pyeda
 
-Latest release version using
-`conda <https://anaconda.org/anaconda/conda>`_
-and
-`conda-forge <https://conda-forge.org/docs/user/introduction/>`_::
-
-   $ conda install pyeda
-
 Installation from the repository::
 
    $ python3 setup.py install
@@ -87,7 +75,7 @@ Logic Expressions
 Invoke your favorite Python terminal,
 and invoke an interactive ``pyeda`` session::
 
-   >>> from libs.pyeda.pyeda.inter import *
+   >>> from pyeda.inter import *
 
 Create some Boolean expression variables::
 
@@ -288,7 +276,7 @@ Reduce bit vectors using unary OR, AND, XOR::
 
 Create and test functions that implement non-trivial logic such as arithmetic::
 
-   >>> from libs.pyeda.pyeda.logic.addition import *
+   >>> from pyeda.logic.addition import *
    >>> S, C = ripple_carry_add(A, B)
    # Note "1110" is LSB first. This says: "7 + 1 = 8".
    >>> S.vrestrict({A: "1110", B: "1000"}).to_uint()

@@ -742,7 +742,7 @@ and returns an ``Expression`` instance.
 This makes it easy to form symbolic expression without even having to declare
 variables ahead of time::
 
-   >>> from libs.pyeda.pyeda.boolalg.expr import expr
+   >>> from pyeda.boolalg.expr import expr
    >>> f = expr("-a * b + -b * c")
    >>> g = expr("(-x[0] + x[1]) * (-x[1] + x[2])")
 
@@ -778,7 +778,7 @@ This allows you to represent arbitrary expressions, for example::
 * Changed constructors for ``Variable`` factories.
   Unified ``namespace`` as just a part of the ``name``.
 * Changed interactive usage. Originally was ``from pyeda import *``.
-  Now use ``from libs.pyeda.pyeda.inter import *``.
+  Now use ``from pyeda.inter import *``.
 * Some more miscellaneous refactoring on logic expressions:
 
   * Fixed weirdness with ``Expression.simplified`` implementation.

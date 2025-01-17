@@ -7,9 +7,9 @@ PicoSAT solver
 import argparse
 import sys
 
-from libs.pyeda.pyeda.boolalg.expr import ast2expr
-from libs.pyeda.pyeda.boolalg import picosat
-from libs.pyeda.pyeda.parsing import dimacs
+from pyeda.boolalg.expr import ast2expr
+from pyeda.boolalg import picosat
+from pyeda.parsing import dimacs
 
 # Return values (standardized by http://www.satcompetition.org):
 UNKNOWN, SATISFIABLE, UNSATISFIABLE = 0, 10, 20
