@@ -11,7 +11,7 @@ from classes.Result import Result
 
 def main():
     # Parsing the results
-    exp = "2025-01-16-IJCAI-CES-v6"
+    exp = "2025-01-16-IJCAI-CES-v8"
     joinWith = [
         (exp, ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-C"]),
         # ("2025-01-16-IJCAI-CES-v3", ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-TC-NO-C"])
