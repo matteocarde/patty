@@ -45,7 +45,7 @@ class BDDVariableOrder:
                 cycle: List[Atom] = e.args[1]
                 smallestAtom = sorted(cycle)[0]
                 index = cycle.index(smallestAtom)
-                nodes[cycle[index + 1]].remove(cycle[index])
+                nodes[cycle[index+1]].remove(cycle[index])
 
     def toDot(self):
         dot = ["digraph order {"]

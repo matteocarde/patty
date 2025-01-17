@@ -11,7 +11,7 @@ from classes.Result import Result
 
 def main():
     # Parsing the results
-    exp = "2025-01-16-IJCAI-CES-v11"
+    exp = "2025-01-16-IJCAI-CES-v12"
     joinWith = [
         (exp, ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-C"]),
         # ("2025-01-16-IJCAI-CES-v3", ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-TC-NO-C"])
@@ -20,7 +20,7 @@ def main():
     if os.path.exists(file):
         os.remove(file)
 
-    folder = f'benchmarks/figures/{exp}'
+    folder = f'benchmarks/figures/{exp}-single'
     if os.path.exists(folder):
         shutil.rmtree(folder)
     os.mkdir(folder)
