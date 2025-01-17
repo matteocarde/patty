@@ -72,7 +72,6 @@ class TransitionFunctionBDD:
         tf.atom2var: Dict[Atom, Dict[int, BDDVariable]] = variables
         tf.constraints = tf.computeConstraints(t.domain.constraints)
 
-        print("relaxed", relaxed, "reflexive", reflexive)
         tf.P0 = tf.getPrecondition() if relaxed and reflexive else 1
         tf.C0, tf.C1, tf.C2 = tf.getConstraints()
         tf.CLHS = tf.P0 & tf.C0 & tf.C2 if relaxed and reflexive else 1
@@ -135,7 +134,6 @@ class TransitionFunctionBDD:
 
         f = Formula.fromBDD(cBDDRemoved, var2atom)
 
-        print("klajfdlkasjdl", f, cBDDRemoved.to_dot())
         return f
 
     @classmethod
