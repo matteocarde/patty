@@ -18,15 +18,18 @@ def main():
         shutil.rmtree(path)
     os.makedirs(path)
 
-    BITS = range(3, 10)
-    TAPES = range(2, 10)
-    LENGTH = range(3, 10)
+    BITS = range(3, 23)
+    TAPES = range(3, 23)
+    LENGTH = range(3, 23)
+
+    PROBLEMS = [(b, TAPES[0], LENGTH[0]) for b in BITS] + [(BITS[0], t, LENGTH[0]) for t in TAPES[1:]] + [
+        (BITS[0], TAPES[0], l) for l in LENGTH[1:]]
 
     with open(f"domain-template.pddl", "r") as f:
         domainTemplate = f.read()
 
     problemIndex = 0
-    for b in BITS:
+    for (b, t, l) in PROBLEMS:
 
         incrCEs = list()
 
@@ -56,28 +59,26 @@ def main():
 
         domain = domainTemplate.replace(";#INCR#", incr)
 
-        for t in TAPES:
-            for l in LENGTH:
-                problemIndex = problemIndex + 1
+        problemIndex = problemIndex + 1
 
-                tapes = ["t{:02d}".format(j) for j in range(1, t + 1)]
-                counters = ["a{:02d}".format(j) for j in range(1, t + 1)]
-                cells = ["c{:02d}".format(j) for j in range(1, l + 1)]
-                bits = ["x{:02d}".format(j) for j in range(1, b + 1)]
-                counterCell = cells[len(cells) // 2]
+        tapes = ["t{:02d}".format(j) for j in range(1, t + 1)]
+        counters = ["a{:02d}".format(j) for j in range(1, t + 1)]
+        cells = ["c{:02d}".format(j) for j in range(1, l + 1)]
+        bits = ["x{:02d}".format(j) for j in range(1, b + 1)]
+        counterCell = cells[len(cells) // 2]
 
-                countersInit = []
-                for i, c in enumerate(counters):
-                    r = (2 ** (b - 1)) if (i % 2 == 0) else 0
-                    rb = list(reversed(format(r, f"0{b}b")))
-                    bitsInit = [i + 1 for i in reversed(range(b)) if rb[i] == '1']
-                    countersInit += [f"(x{'{:02d}'.format(i)} {c})" for i in bitsInit]
+        countersInit = []
+        for i, c in enumerate(counters):
+            r = (2 ** (b - 1)) if (i % 2 == 0) else 0
+            rb = list(reversed(format(r, f"0{b}b")))
+            bitsInit = [i + 1 for i in reversed(range(b)) if rb[i] == '1']
+            countersInit += [f"(x{'{:02d}'.format(i)} {c})" for i in bitsInit]
 
-                goal = [(f"({b} {c1})", f"({b} {c2})") for b in bits for c1, c2 in zip(counters[:-1], counters[1:])]
+        goal = [(f"({b} {c1})", f"({b} {c2})") for b in bits for c1, c2 in zip(counters[:-1], counters[1:])]
 
-                goalPDDL = [f"(or (and {b1} {b2})(and (not {b1}) (not {b2})))" for (b1, b2) in goal]
+        goalPDDL = [f"(or (and {b1} {b2})(and (not {b1}) (not {b2})))" for (b1, b2) in goal]
 
-                problem = f'''
+        problem = f'''
 (define (problem pb{problemIndex})
     (:domain tapes)
     (:objects 
@@ -102,13 +103,13 @@ def main():
     )
     )
  '''
-                name = f"{b}-{t}-{l}"
-                domainFolder = f"{path}/{name}"
-                os.makedirs(domainFolder)
-                with open(f"{domainFolder}/domain-{name}.pddl", "w") as f:
-                    f.write(domain)
-                with open(f"{domainFolder}/problem-{name}.pddl", "w") as f:
-                    f.write(problem)
+        name = f"{b}-{t}-{l}"
+        domainFolder = f"{path}/{name}"
+        os.makedirs(domainFolder)
+        with open(f"{domainFolder}/domain-{name}.pddl", "w") as f:
+            f.write(domain)
+        with open(f"{domainFolder}/problem-{name}.pddl", "w") as f:
+            f.write(problem)
 
 
 if __name__ == '__main__':

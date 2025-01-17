@@ -46,6 +46,7 @@ class TransitiveClosure(TransitionFunctionBDD):
             raise TimeoutError("Timeout!!!")
 
         signal.signal(signal.SIGALRM, handler)
+        lastFound = i
         try:
             while True:
                 i += 1
@@ -59,10 +60,12 @@ class TransitiveClosure(TransitionFunctionBDD):
                     # print("TC", currentBDD.isEquivalent(nextBDD), t.action, nextBDD.bdd.to_dot())
                     return bdds
                 bdds.append(nextBDD)
+                lastFound = i
                 currentBDD = nextBDD
         except TimeoutError:
             print(len(bdds))
-            print(f"Timeout when computing transitive closure of {t.action} at step {i}, i.e., {2 ** i} steps")
+            print(
+                f"Timeout when computing transitive closure of {t.action} at step {lastFound}, i.e., {2 ** lastFound} steps")
             return bdds
         except Exception:
             print("ERROR")

@@ -14,7 +14,7 @@ from classes.Result import Result
 
 def main():
     # Parsing the results
-    exp = "2025-01-16-IJCAI-CES-v12"
+    exp = "2025-01-16-IJCAI-CES-v13"
     joinWith = [
         (exp, ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-C"]),
         # ("2025-01-16-IJCAI-CES-v3", ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-TC-NO-C"])
@@ -58,11 +58,13 @@ def main():
     PROPERTIES = {
         "bound": {
             "yAxis": "Bound",
-            "showClosureTime": False
+            "showClosureTime": False,
+            "scalingFactor": 1
         },
         "time": {
             "yAxis": "Planning Time [s]",
-            "showClosureTime": True
+            "showClosureTime": True,
+            "scalingFactor": 1000
         }
     }
 
@@ -142,11 +144,11 @@ def main():
 
             for solver, sDict in SOLVERS.items():
                 xs = sorted(points[d][p][solver].keys())
-                ys = [min(points[d][p][solver][x])[1] for x in xs]
+                ys = [min(points[d][p][solver][x])[1] / pDict["scalingFactor"] for x in xs]
                 ax.plot(xs, ys, color=sDict["color"], label=sDict["label"])
 
                 if pDict["showClosureTime"] and sDict["hasClosure"]:
-                    ys = [min(closurePoints[d][p][solver][x])[1] for x in xs]
+                    ys = [min(closurePoints[d][p][solver][x])[1] / pDict["scalingFactor"] for x in xs]
                     ax.plot(xs, ys, linestyle="dashed", color=sDict["color"], label=f"TC {sDict['label']}")
 
             ax.legend(loc="upper left", fontsize="8")
