@@ -322,8 +322,8 @@ class Formula:
         return f
 
     def pruneSubFormulasWithAllVariablesIn(self, nonInAction: Set[Atom]):
-        # if self.type == "OR":
-        #     return self
+        if self.type == "OR":
+            return self
         f = Formula()
         f.type = self.type
         for c in self.conditions:

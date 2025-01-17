@@ -92,7 +92,8 @@ class Patty(Planner):
             "-f", problem,
             "--pattern", self.pattern,
             "--quality", self.quality,
-            "-pp"
+            "-pp",
+            "-ptc"
         ]
         if self.rollBound:
             cmd += ["--roll-bound", str(self.rollBound)]

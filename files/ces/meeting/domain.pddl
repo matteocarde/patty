@@ -99,24 +99,6 @@
 						(not (atZ ?r ?z2)))
 				)
 			)
-			(exists
-				(?r - robot ?x - x)
-				(and
-					(atX ?r ?x)
-				)
-			)
-			(exists
-				(?r - robot ?y - y)
-				(and
-					(atY ?r ?y)
-				)
-			)
-			(exists
-				(?r - robot ?z - z)
-				(and
-					(atZ ?r ?z)
-				)
-			)
 		)
 
 	)

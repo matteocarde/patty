@@ -11,7 +11,7 @@ from classes.Result import Result
 
 def main():
     # Parsing the results
-    exp = "2025-01-16-IJCAI-CES-v8"
+    exp = "2025-01-16-IJCAI-CES-v9"
     joinWith = [
         (exp, ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-C"]),
         # ("2025-01-16-IJCAI-CES-v3", ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-TC-NO-C"])
@@ -47,37 +47,46 @@ def main():
 
     PROPERTIES = {
         "bound": {
-            "yAxis": "Bound"
+            "yAxis": "Bound",
+            "showClosureTime": False
         },
         "time": {
-            "yAxis": "Planning Time [s]"
+            "yAxis": "Planning Time [s]",
+            "showClosureTime": True
         }
     }
 
     SOLVERS = {
         "PATTY-CES": {
             "color": "blue",
-            "label": r"$\Pi^+_C$"
+            "label": r"$\Pi^+_C$",
+            "hasClosure": True
         },
         "PATTY-CES-NO-C": {
             "color": "red",
-            "label": r"$\Pi^+_\top$"
+            "label": r"$\Pi^+_\top$",
+            "hasClosure": True
         },
         "PATTY-CES-NO-TC": {
             "color": "green",
-            "label": r"$\Pi^0$"
+            "label": r"$\Pi^0$",
+            "hasClosure": False
         },
     }
 
     # points[domain][property][solver] = List[Tuple[int,float]]
     points: Dict[str, Dict[str, Dict[str, List[Tuple[int, float]]]]] = dict()
+    closurePoints: Dict[str, Dict[str, Dict[str, List[Tuple[int, float]]]]] = dict()
 
     for d in DOMAINS.keys():
         points[d] = dict()
+        closurePoints[d] = dict()
         for p in PROPERTIES.keys():
             points[d][p] = dict()
+            closurePoints[d][p] = dict()
             for s in SOLVERS.keys():
                 points[d][p][s] = list()
+                closurePoints[d][p][s] = list()
 
     for r in aResults:
         if r.domain not in DOMAINS or r.solver not in SOLVERS or not r.solved:
@@ -87,6 +96,9 @@ def main():
             y = r.get(p)
 
             points[r.domain][p][r.solver].append((x, y))
+            if SOLVERS[r.solver]["hasClosure"]:
+                y = r.transitiveClosureTime
+                closurePoints[r.domain][p][r.solver].append((x, y))
 
     pass
 
@@ -108,17 +120,18 @@ def main():
             ax.set_xlabel(dDict["xAxis"])
             ax.set_ylabel(pDict["yAxis"])
             # ax.set_xscale("log")
-            # if p == "time":
-            #     ps = sorted(closurePoints[fCounters])
-            #     x = [p[0] for p in ps]
-            #     y = [p[1] for p in ps]
-            #     ax.plot(x, y, linestyle="dashed", color="black", label=r"${\textsc{tc}}$")
 
             for solver, sDict in SOLVERS.items():
                 ps = sorted(points[d][p][solver])
                 x = [p[0] for p in ps]
                 y = [p[1] for p in ps]
                 ax.plot(x, y, color=sDict["color"], label=sDict["label"])
+
+                if pDict["showClosureTime"] and sDict["hasClosure"]:
+                    ps = sorted(closurePoints[d][p][solver])
+                    x = [p[0] for p in ps]
+                    y = [p[1] for p in ps]
+                    ax.plot(x, y, linestyle="dashed", color=sDict["color"], label=f"TC {sDict['label']}")
 
             ax.legend(loc="upper left", fontsize="8")
 

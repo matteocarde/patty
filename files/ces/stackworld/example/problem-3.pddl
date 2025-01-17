@@ -1,16 +1,18 @@
 (define (problem pb01)
     (:domain stackworld)
     (:objects
-        c1 c2 c3 - card
+        f - first
+        l - last
+        c1 c2 c3 - movable
     )
     (:init
-        (first c1)
+        (on-top f c1)
         (on-top c1 c2)
         (on-top c2 c3)
-        (last c3)
+        (on-top c3 l)
     )
     (:goal
-        (first c3)
-        (last c2)
+        (on-top c3 c2)
+        (on-top c2 c1)
     )
 )

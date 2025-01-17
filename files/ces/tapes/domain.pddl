@@ -159,18 +159,6 @@
 					)
 				)
 			)
-			(exists
-				(?r - robot ?c - cell)
-				(and
-					(onCellRobot ?r ?c)
-				)
-			)
-			(exists
-				(?r - robot ?t - tape)
-				(and
-					(onTape ?r ?t)
-				)
-			)
 		)
 
 	)

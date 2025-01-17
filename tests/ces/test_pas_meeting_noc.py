@@ -9,7 +9,7 @@ from src.search.PASSearch import PASSearch
 from src.utils.Arguments import Arguments
 
 
-class TestCESMeeting(TestCase):
+class TestCESMeetingNOC(TestCase):
 
     def setUp(self) -> None:
         domain = f"../../files/ces/meeting/domain.pddl"
@@ -20,7 +20,8 @@ class TestCESMeeting(TestCase):
         self.gDomain: GroundedDomain = self.qeDomain.ground(self.problem)
         self.args = Arguments(keepRequired=False)
         self.args.pattern = "alpha"
-        self.args.avoidClosureRelaxation = False
+        self.args.avoidClosureRelaxation = True
+        self.args.printTransitiveClosures = True
 
     def test_solver(self):
         self.assertTrue(self.gDomain.hasConditionalEffects())
