@@ -1,0 +1,15 @@
+include Makefile
+include LICENSE
+include README.rst
+include requirements.txt
+
+recursive-include doc *
+
+include extension/boolexpr/*
+
+include thirdparty/espresso/src/*
+include thirdparty/picosat/*
+
+include pyeda/logic/test/top95.txt
+include pyeda/logic/test/top95_solns.txt
+
