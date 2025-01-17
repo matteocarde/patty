@@ -99,7 +99,7 @@ class Atom:
     def __lt__(self, other):
         if not isinstance(other, Atom):
             return False
-        return self.name < other.name
+        return self.__functionName < other.__functionName
 
     def toFunctionName(self):
         return self.__functionName

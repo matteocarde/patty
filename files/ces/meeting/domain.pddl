@@ -99,7 +99,30 @@
 						(not (atZ ?r ?z2)))
 				)
 			)
+			(forall
+				(?r - robot )
+				(exists (?x - x)
+					(and
+						(atX ?r ?x)
+					)
+				)
+			)
+			(forall
+				(?r - robot )
+				(exists (?y - y)
+					(and
+						(atY ?r ?y)
+					)
+				)
+			)
+			(forall
+				(?r - robot )
+				(exists (?z - z)
+					(and
+						(atZ ?r ?z)
+					)
+				)
+			)
 		)
-
 	)
 )

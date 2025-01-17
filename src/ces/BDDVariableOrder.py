@@ -42,8 +42,10 @@ class BDDVariableOrder:
                 ts = TopologicalSorter(nodes)
                 return list(ts.static_order())
             except CycleError as e:
-                cycle = e.args[1]
-                nodes[cycle[1]].remove(cycle[0])
+                cycle: List[Atom] = e.args[1]
+                smallestAtom = sorted(cycle)[0]
+                index = cycle.index(smallestAtom)
+                nodes[cycle[index + 1]].remove(cycle[index])
 
     def toDot(self):
         dot = ["digraph order {"]

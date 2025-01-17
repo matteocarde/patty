@@ -11,7 +11,7 @@ from src.pddl.grammar.pddlParser import pddlParser
 
 class Forall(Quantifier):
     parameters: Parameters
-    formula: Formula
+    formula: Formula or Quantifier
 
     def __init__(self):
         super().__init__()
@@ -24,16 +24,26 @@ class Forall(Quantifier):
 
     @classmethod
     def fromNode(cls, node: pddlParser.ForallContext, types: Dict[str, Type]):
+        from src.pddl.Exists import Exists
         forall = cls()
         forall.parameters = Parameters.fromNode(node.getChild(2), types)
-        forall.formula = Formula.fromNode(node.getChild(3))
+        child = node.getChild(3)
+        if isinstance(child, pddlParser.ForallContext):
+            forall.formula = Forall.fromNode(child, types)
+        elif isinstance(child, pddlParser.ExistsContext):
+            forall.formula = Exists.fromNode(child, types)
+        else:
+            forall.formula = Formula.fromNode(node.getChild(3))
         return forall
 
     def eliminate(self, problem: Problem) -> Formula:
         subs = self.parameters.getAllSubstitutions(problem)
         f = Formula()
         f.type = "AND"
+        subF = self.formula
+        if isinstance(self.formula, Quantifier):
+            subF = self.formula.eliminate(problem)
         for sub in subs:
-            if self.formula.canHappenLifted(tuple(sub.values()), list(sub.keys()), problem):
-                f.addClause(self.formula.ground(sub, problem))
+            if subF.canHappenLifted(tuple(sub.values()), list(sub.keys()), problem):
+                f.addClause(subF.ground(sub, problem))
         return f
