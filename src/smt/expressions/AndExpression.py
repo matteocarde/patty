@@ -1,7 +1,7 @@
 from typing import Dict, List
 
-from pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram
-from pyeda.boolalg.expr import AndOp, Variable, Complement, OrOp
+from libs.pyeda.pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram
+from libs.pyeda.pyeda.boolalg.expr import AndOp, Variable, Complement, OrOp
 from pysmt.fnode import FNode
 from pysmt.shortcuts import And as SMTAnd
 

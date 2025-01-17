@@ -4,10 +4,8 @@ import copy
 import time
 from typing import Dict, List, Tuple, Set
 
-from pyeda.boolalg.bdd import BDDVariable, bdd2expr, bddvar
-from pyeda.boolalg.expr import OrAndOp
-
-from libs.pyeda.pyeda.boolalg.bdd import BinaryDecisionDiagram
+from libs.pyeda.pyeda.boolalg.bdd import BinaryDecisionDiagram, BDDVariable, bddvar, bdd2expr
+from libs.pyeda.pyeda.boolalg.expr import OrAndOp
 from src.ces.ActionStateTransitionFunction import ActionStateTransitionFunction
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
@@ -59,7 +57,8 @@ class TransitionFunctionBDD:
                        t: ActionStateTransitionFunction,
                        atomsOrder: List[Atom],
                        variables: Dict[Atom, Dict[int, BDDVariable]],
-                       relaxed: bool):
+                       relaxed: bool,
+                       reflexive: bool):
         tf = cls()
         tf.transitionFunction = t
         tf.action = tf.transitionFunction.action
@@ -73,9 +72,10 @@ class TransitionFunctionBDD:
         tf.atom2var: Dict[Atom, Dict[int, BDDVariable]] = variables
         tf.constraints = tf.computeConstraints(t.domain.constraints)
 
-        tf.P0 = tf.getPrecondition() if relaxed else 1
+        print("relaxed", relaxed, "reflexive", reflexive)
+        tf.P0 = tf.getPrecondition() if relaxed and reflexive else 1
         tf.C0, tf.C1, tf.C2 = tf.getConstraints()
-        tf.CLHS = tf.P0 & tf.C0 & tf.C2 if relaxed else 1
+        tf.CLHS = tf.P0 & tf.C0 & tf.C2 if relaxed and reflexive else 1
 
         tf.Xs: Dict[int, Dict[SMTBoolVariable, BDDVariable]] = tf.getXs(0, 2)
         tf.smt2bdd: Dict[SMTBoolVariable, BDDVariable] = dict()
@@ -133,16 +133,21 @@ class TransitionFunctionBDD:
         bddVarsNonInAction: Set[BDDVariable] = set([atom2var[v] for v in prunedC.atoms - self.action.predicates])
         cBDDRemoved = cBDD.smoothing(bddVarsNonInAction)
 
-        return Formula.fromBDD(cBDDRemoved, var2atom)
+        f = Formula.fromBDD(cBDDRemoved, var2atom)
+
+        print("klajfdlkasjdl", f, cBDDRemoved.to_dot())
+        return f
 
     @classmethod
     def fromActionStateTransitionFunction(cls,
                                           t: ActionStateTransitionFunction,
                                           atomsOrder: List[Atom],
                                           variables: Dict[Atom, Dict[int, BDDVariable]],
-                                          relaxed: bool):
+                                          relaxed: bool,
+                                          reflexive: bool):
 
-        tf = TransitionFunctionBDD.fromProperties(t, atomsOrder, variables, relaxed)
+        tf = TransitionFunctionBDD.fromProperties(t, atomsOrder, variables, relaxed, reflexive)
+
         bdd = tf.CLHS >> t.clauses.toBDDExpression({**tf.Xs[0], **tf.Xs[2]})
         tf.bdd = bdd
         tf.expr = SMTExpression.fromBDDExpression(bdd2expr(tf.bdd), tf.bdd2smt)
@@ -207,7 +212,7 @@ class TransitionFunctionBDD:
         if reflexive:
             ith.bdd = self.CLHS >> (smoothed | self.bdd)
         else:
-            ith.bdd = self.CLHS & smoothed
+            ith.bdd = smoothed
 
         ith.expr = SMTExpression.fromBDDExpression(bdd2expr(ith.bdd), ith.bdd2smt)
 

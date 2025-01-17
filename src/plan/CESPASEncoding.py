@@ -51,6 +51,8 @@ class CESPASEncoding(Encoding):
         # print("--- Rules ---")
         # self.rulesByName.print()
 
+        # exit()
+
         pass
 
     def getInitRules(self) -> SMTConjunction:

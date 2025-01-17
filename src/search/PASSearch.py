@@ -35,6 +35,8 @@ class PASSearch(Search):
             if self.args.printTransitiveClosures:
                 for a, steps in relations.closures.items():
                     print(f"TC of {a}:", steps[-1].bdd.to_dot())
+                for a, steps in relations.reachability.items():
+                    print(f"R of {a}:", steps[-1].bdd.to_dot())
             self.ts.end(f"Computing Transitive Closure", console=self.console)
 
         while bound <= self.maxBound:

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from pyeda.boolalg.bdd import BinaryDecisionDiagram, BDDVariable
+from libs.pyeda.pyeda.boolalg.bdd import BinaryDecisionDiagram, BDDVariable
 from sympy import Expr
 from typing import Dict, Set, Tuple, List
 

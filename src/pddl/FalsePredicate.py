@@ -3,8 +3,7 @@ from __future__ import annotations
 import copy
 from typing import Dict, Set
 
-from pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram
-from pyeda.boolalg.exprnode import Zero
+from libs.pyeda.pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram
 from sympy import Expr
 
 from libs.pyeda.pyeda.boolalg.bdd import BDDZERO

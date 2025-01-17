@@ -1,8 +1,7 @@
 import signal
 from typing import List, Dict
 
-from pyeda.boolalg.bdd import bddvar, BDDVariable
-
+from libs.pyeda.pyeda.boolalg.bdd import BDDVariable, bddvar
 from src.ces.ActionStateTransitionFunction import ActionStateTransitionFunction
 from src.ces.TransitionFunctionBDD import TransitionFunctionBDD
 from src.pddl.Atom import Atom
@@ -34,7 +33,8 @@ class TransitiveClosure(TransitionFunctionBDD):
         bdds = []
         i = 0
         variables = TransitiveClosure.getOrder(t.action, atomsOrder)
-        currentBDD: TransitionFunctionBDD = super().fromActionStateTransitionFunction(t, atomsOrder, variables, relaxed)
+        currentBDD: TransitionFunctionBDD = super().fromActionStateTransitionFunction(t, atomsOrder, variables,
+                                                                                      relaxed, reflexive)
         bdds.append(currentBDD)
 
         # print("Transitive" if reflexive else "Reachability", t.action, i, currentBDD.bdd.to_dot())

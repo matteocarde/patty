@@ -1,6 +1,6 @@
 from typing import List, Dict
 
-from pyeda.boolalg.bdd import BDDVariable
+from libs.pyeda.pyeda.boolalg.bdd import BDDVariable
 from pysmt.shortcuts import TRUE, FALSE
 
 from src.smt.SMTBoolVariable import SMTBoolVariable

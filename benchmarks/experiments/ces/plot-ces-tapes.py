@@ -14,10 +14,10 @@ from classes.Result import Result
 
 def main():
     # Parsing the results
-    exp = "2025-01-16-IJCAI-CES-v4"
+    exp = "2025-01-16-IJCAI-CES-v5"
     joinWith = [
-        (exp, ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-TC-NO-C"]),
-        ("2025-01-16-IJCAI-CES-v3", ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-TC-NO-C"])
+        (exp, ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-C"]),
+        # ("2025-01-16-IJCAI-CES-v3", ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-TC-NO-C"])
     ]
     file = f"benchmarks/results/csv/{exp}.csv"
     if os.path.exists(file):
@@ -69,7 +69,7 @@ def main():
             "color": "blue",
             "label": r"$\Pi^+_C$"
         },
-        "PATTY-CES-NO-TC-NO-C": {
+        "PATTY-CES-NO-C": {
             "color": "red",
             "label": r"$\Pi^+_\top$"
         },
@@ -127,7 +127,6 @@ def main():
             #     ax.plot(x, y, linestyle="dashed", color="black", label=r"${\textsc{tc}}$")
 
             for solver, sDict in SOLVERS.items():
-
                 xs = sorted(points[d][p][solver].keys())
                 ys = [min(points[d][p][solver][x])[1] for x in xs]
                 ax.plot(xs, ys, color=sDict["color"], label=sDict["label"])

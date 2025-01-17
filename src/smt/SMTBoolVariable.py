@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Dict
 
-from pyeda.boolalg.bdd import BDDVariable
+from libs.pyeda.pyeda.boolalg.bdd import BDDVariable
 from pysmt.fnode import FNode
 from pysmt.shortcuts import Symbol
 

@@ -1,6 +1,6 @@
 from typing import Set, Dict
 
-from pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram
+from libs.pyeda.pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram
 
 from src.pddl.Atom import Atom
 from src.pddl.Formula import Formula

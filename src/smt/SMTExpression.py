@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Set, Dict
 
-from pyeda.boolalg.expr import OrOp, AndOp, Variable, Complement, OrAndOp
+from libs.pyeda.pyeda.boolalg.expr import OrOp, AndOp, Variable, Complement, OrAndOp
 from pysmt.fnode import FNode
 
 from src.pddl.Atom import Atom

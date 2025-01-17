@@ -1,6 +1,6 @@
 from typing import Dict, Set
 
-from pyeda.boolalg.bdd import BDDVariable
+from libs.pyeda.pyeda.boolalg.bdd import BDDVariable
 from pysmt.fnode import FNode
 from pysmt.shortcuts import TRUE
 

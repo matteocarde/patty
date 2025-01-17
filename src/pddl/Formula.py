@@ -4,11 +4,10 @@ import copy
 from itertools import chain
 from typing import Dict, Set, Tuple, List
 
-from pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram, bdd2expr
-from pyeda.boolalg.expr import OrOp, AndOp, Complement, Variable, One, Zero
 from sympy import Expr
 
-from libs.pyeda.pyeda.boolalg.bdd import BDDONE, BDDZERO
+from libs.pyeda.pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram, bdd2expr
+from libs.pyeda.pyeda.boolalg.expr import One, Zero, Complement, Variable, OrOp, AndOp
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.FalsePredicate import FalsePredicate
@@ -323,8 +322,8 @@ class Formula:
         return f
 
     def pruneSubFormulasWithAllVariablesIn(self, nonInAction: Set[Atom]):
-        # if self.type == "OR":
-        #     return self
+        if self.type == "OR":
+            return self
         f = Formula()
         f.type = self.type
         for c in self.conditions:

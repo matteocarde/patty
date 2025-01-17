@@ -1,10 +1,7 @@
 import csv
-import json
 import os
 import shutil
-import statistics
-import sys
-from typing import Dict, List, Set, Tuple
+from typing import Dict, List, Tuple
 
 from matplotlib import pyplot as plt
 
@@ -14,10 +11,10 @@ from classes.Result import Result
 
 def main():
     # Parsing the results
-    exp = "2025-01-16-IJCAI-CES-v4"
+    exp = "2025-01-16-IJCAI-CES-v5"
     joinWith = [
-        (exp, ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-TC-NO-C"]),
-        ("2025-01-16-IJCAI-CES-v3", ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-TC-NO-C"])
+        (exp, ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-C"]),
+        # ("2025-01-16-IJCAI-CES-v3", ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-TC-NO-C"])
     ]
     file = f"benchmarks/results/csv/{exp}.csv"
     if os.path.exists(file):
@@ -40,7 +37,7 @@ def main():
             aResults.append(Result.fromCSVLine(line[0].split(",")))
 
     DOMAINS = {
-        "ces/counters": {
+        "ces/counter": {
             "xAxis": "Number of bits"
         },
         "ces/meeting": {
@@ -62,7 +59,7 @@ def main():
             "color": "blue",
             "label": r"$\Pi^+_C$"
         },
-        "PATTY-CES-NO-TC-NO-C": {
+        "PATTY-CES-NO-C": {
             "color": "red",
             "label": r"$\Pi^+_\top$"
         },

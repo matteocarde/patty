@@ -1,10 +1,10 @@
 from typing import Dict
 
-from pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram
+from libs.pyeda.pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram
 from pysmt.fnode import FNode
 from pysmt.shortcuts import Iff
-from pyeda.boolalg.expr import Or as BDDOr
-from pyeda.boolalg.expr import And as BDDAnd
+from libs.pyeda.pyeda.boolalg.expr import Or as BDDOr
+from libs.pyeda.pyeda.boolalg.expr import And as BDDAnd
 
 from src.smt.SMTBoolVariable import SMTBoolVariable
 from src.smt.SMTExpression import SMTExpression, BOOLEAN

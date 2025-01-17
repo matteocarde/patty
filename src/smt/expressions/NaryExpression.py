@@ -1,6 +1,6 @@
 from typing import List, Tuple, Dict, Set
 
-from pyeda.boolalg.bdd import BDDVariable
+from libs.pyeda.pyeda.boolalg.bdd import BDDVariable
 from pysmt.fnode import FNode
 
 from src.smt.SMTBoolVariable import SMTBoolVariable

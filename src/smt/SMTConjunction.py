@@ -1,6 +1,6 @@
 from typing import List, Dict
 
-from pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram
+from libs.pyeda.pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram
 from src.smt.SMTBoolVariable import SMTBoolVariable
 from src.smt.SMTExpression import SMTExpression
 from src.smt.expressions.FalseExpression import FalseExpression
