@@ -13,8 +13,8 @@ class TestTapes(TestCase):
         # self.domain: Domain = Domain.fromFile(f"../../files/ces/tapes/domain.pddl")
         # self.problem: Problem = Problem.fromFile(f"../../files/ces/tapes/example/problem.pddl")
 
-        self.domain: Domain = Domain.fromFile(f"../../files/ces/tapes/domains/3-3-3/domain.pddl")
-        self.problem: Problem = Problem.fromFile(f"../../files/ces/tapes/domains/3-3-3/problem.pddl")
+        self.domain: Domain = Domain.fromFile(f"../../files/ces/tapes/domains/3-3-3/domain-3-3-3.pddl")
+        self.problem: Problem = Problem.fromFile(f"../../files/ces/tapes/domains/3-3-3/problem-3-3-3.pddl")
         self.qeDomain: Domain = self.domain.eliminateQuantifiers(self.problem)
         self.gDomain: GroundedDomain = self.qeDomain.ground(self.problem)
         self.args = Arguments(keepRequired=False)

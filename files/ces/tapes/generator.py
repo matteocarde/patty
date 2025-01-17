@@ -67,8 +67,8 @@ def main():
                 counterCell = cells[len(cells) // 2]
 
                 countersInit = []
-                for c in counters:
-                    r = random.randint(1, (2 ** b) - 1)
+                for i, c in enumerate(counters):
+                    r = (2 ** (b - 1)) if (i % 2 == 0) else 0
                     rb = list(reversed(format(r, f"0{b}b")))
                     bitsInit = [i + 1 for i in reversed(range(b)) if rb[i] == '1']
                     countersInit += [f"(x{'{:02d}'.format(i)} {c})" for i in bitsInit]

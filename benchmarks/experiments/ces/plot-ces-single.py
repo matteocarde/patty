@@ -14,9 +14,10 @@ from classes.Result import Result
 
 def main():
     # Parsing the results
-    exp = "2025-01-16-IJCAI-CES-v3"
+    exp = "2025-01-16-IJCAI-CES-v4"
     joinWith = [
-        (exp, ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-TC-NO-C"])
+        (exp, ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-TC-NO-C"]),
+        ("2025-01-16-IJCAI-CES-v3", ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-TC-NO-C"])
     ]
     file = f"benchmarks/results/csv/{exp}.csv"
     if os.path.exists(file):
@@ -42,8 +43,8 @@ def main():
         "ces/counters": {
             "xAxis": "Number of bits"
         },
-        "ces/grid": {
-            "xAxis": "Grid dimension"
+        "ces/meeting": {
+            "xAxis": "Cube dimension"
         }
     }
 

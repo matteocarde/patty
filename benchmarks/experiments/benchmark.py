@@ -40,7 +40,7 @@ PLANNERS: Dict[str, Planner] = {
     "PATTY-F": Patty("PATTY-F", search="astar", pattern="arpg", noCompression=False),
     "PATTY-CES": Patty("PATTY-CES", tcTime=40),
     "PATTY-CES-NO-TC": Patty("PATTY-CES", avoidClosure=True),
-    "PATTY-CES-NO-TC-NO-C": Patty("PATTY-CES", avoidClosureRelaxation=True),
+    "PATTY-CES-NO-C": Patty("PATTY-CES", avoidClosureRelaxation=True),
 
     "PATTY-R": Patty("PATTY-R", search="step", pattern="random", quality="none"),
     "PATTY-A": Patty("PATTY-A", search="step", pattern="arpg", quality="none"),

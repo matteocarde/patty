@@ -14,7 +14,7 @@
         (startCell c01)
         (isNextCell c01 c02) (isNextCell c02 c03) (isNextCell c03 c04) (isNextCell c04 c05) (isNextCell c05 c06) (isNextCell c06 c07) (isNextCell c07 c08) (isNextCell c08 c09) (isNextCell c09 c01)
         (isNextTape t01 t02) (isNextTape t02 t03) (isNextTape t03 t04) (isNextTape t04 t05) (isNextTape t05 t06) (isNextTape t06 t07) (isNextTape t07 t08) (isNextTape t08 t09) (isNextTape t09 t01)
-        (x08 a01) (x06 a01) (x04 a01) (x02 a01) (x01 a01) (x05 a02) (x08 a03) (x07 a03) (x06 a03) (x04 a03) (x03 a03) (x02 a03) (x08 a04) (x07 a04) (x06 a04) (x04 a04) (x03 a04) (x01 a04) (x08 a05) (x07 a05) (x06 a05) (x05 a05) (x04 a05) (x02 a05) (x05 a06) (x04 a06) (x02 a06) (x07 a07) (x06 a07) (x03 a07) (x01 a07) (x06 a08) (x03 a08) (x01 a08) (x08 a09) (x07 a09) (x06 a09) (x02 a09) (x01 a09)
+        (x08 a01) (x08 a03) (x08 a05) (x08 a07) (x08 a09)
     )
     (:goal
         (and  

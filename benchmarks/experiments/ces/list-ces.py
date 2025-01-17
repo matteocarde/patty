@@ -6,16 +6,16 @@ from natsort import natsort
 PLANNERS = [
     "PATTY-CES",
     "PATTY-CES-NO-TC",
-    "PATTY-CES-NO-TC-NO-C"
+    "PATTY-CES-NO-C"
 ]
 NAME = "ces.csv"
 
 
 def main():
     domains = [
-        # "ces/counters",
+        "ces/counter",
         # "ces/grid",
-        # "ces/tapes",
+        "ces/tapes",
         "ces/meeting"
     ]
 

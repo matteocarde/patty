@@ -8,6 +8,7 @@ from pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram, bdd2expr
 from pyeda.boolalg.expr import OrOp, AndOp, Complement, Variable, One, Zero
 from sympy import Expr
 
+from libs.pyeda.pyeda.boolalg.bdd import BDDONE, BDDZERO
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.FalsePredicate import FalsePredicate

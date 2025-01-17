@@ -4,9 +4,10 @@ import copy
 import time
 from typing import Dict, List, Tuple, Set
 
-from pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram, bdd2expr, bddvar
+from pyeda.boolalg.bdd import BDDVariable, bdd2expr, bddvar
 from pyeda.boolalg.expr import OrAndOp
 
+from libs.pyeda.pyeda.boolalg.bdd import BinaryDecisionDiagram
 from src.ces.ActionStateTransitionFunction import ActionStateTransitionFunction
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
@@ -73,8 +74,8 @@ class TransitionFunctionBDD:
         tf.constraints = tf.computeConstraints(t.domain.constraints)
 
         tf.P0 = tf.getPrecondition() if relaxed else 1
-        tf.C0, tf.C1, tf.C2 = tf.getConstraints() if relaxed else (1, 1, 1)
-        tf.CLHS = tf.P0 & tf.C0 & tf.C2
+        tf.C0, tf.C1, tf.C2 = tf.getConstraints()
+        tf.CLHS = tf.P0 & tf.C0 & tf.C2 if relaxed else 1
 
         tf.Xs: Dict[int, Dict[SMTBoolVariable, BDDVariable]] = tf.getXs(0, 2)
         tf.smt2bdd: Dict[SMTBoolVariable, BDDVariable] = dict()
@@ -127,6 +128,8 @@ class TransitionFunctionBDD:
         atomsNonInAction: Set[Atom] = c.getPredicates() - self.action.predicates
         prunedC: Formula = c.pruneSubFormulasWithAllVariablesIn(atomsNonInAction)
         cBDD: BinaryDecisionDiagram = prunedC.toBDD(atom2var)
+        if type(cBDD) == int:
+            return prunedC
         bddVarsNonInAction: Set[BDDVariable] = set([atom2var[v] for v in prunedC.atoms - self.action.predicates])
         cBDDRemoved = cBDD.smoothing(bddVarsNonInAction)
 

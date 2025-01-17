@@ -7,6 +7,7 @@ from pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram
 from pyeda.boolalg.exprnode import Zero
 from sympy import Expr
 
+from libs.pyeda.pyeda.boolalg.bdd import BDDZERO
 from src.pddl.Atom import Atom
 from src.pddl.Predicate import Predicate
 
@@ -56,4 +57,4 @@ class FalsePredicate(Predicate):
         return copy.deepcopy(self)
 
     def toBDD(self, vars: Dict[Atom, BDDVariable]) -> BinaryDecisionDiagram:
-        return Zero()
+        return 0
