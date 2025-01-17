@@ -1,5 +1,5 @@
 
-(define (problem pb10)
+(define (problem pb12)
     (:domain tapes)
     (:objects 
         r - robot

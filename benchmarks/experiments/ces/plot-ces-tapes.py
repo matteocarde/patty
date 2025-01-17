@@ -11,10 +11,9 @@ from matplotlib import pyplot as plt
 from classes.CloudLogger import CloudLogger
 from classes.Result import Result
 
-
-def main():
+if __name__ == '__main__':
     # Parsing the results
-    exp = "2025-01-16-IJCAI-CES-v13"
+    exp = "2025-01-17-IJCAI-CES-v1"
     joinWith = [
         (exp, ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-C"]),
         # ("2025-01-16-IJCAI-CES-v3", ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-TC-NO-C"])
@@ -108,7 +107,7 @@ def main():
                 prob = r.problem.replace(".pddl", "").split("-")[1:]
                 x = int(prob[dDict["filenameIndex"]])
                 y = r.get(p)
-                prob = "-".join(prob)
+                prob = [int(i) for i in prob]
 
                 points[d][p][r.solver].setdefault(x, list())
                 points[d][p][r.solver][x].append((prob, y))
@@ -135,15 +134,10 @@ def main():
             ax.grid()
             ax.set_xlabel(dDict["xAxis"])
             ax.set_ylabel(pDict["yAxis"])
-            # ax.set_xscale("log")
-            # if p == "time":
-            #     ps = sorted(closurePoints[fCounters])
-            #     x = [p[0] for p in ps]
-            #     y = [p[1] for p in ps]
-            #     ax.plot(x, y, linestyle="dashed", color="black", label=r"${\textsc{tc}}$")
 
             for solver, sDict in SOLVERS.items():
                 xs = sorted(points[d][p][solver].keys())
+                print(d, p, solver, [(x, min(points[d][p][solver][x])[0]) for x in xs])
                 ys = [min(points[d][p][solver][x])[1] / pDict["scalingFactor"] for x in xs]
                 ax.plot(xs, ys, color=sDict["color"], label=sDict["label"])
 
@@ -153,20 +147,6 @@ def main():
 
             ax.legend(loc="upper left", fontsize="8")
 
-            # ax.spines['top'].set_visible(False)
-            # ax.spines['right'].set_visible(False)
-
-            # ax.set_xticks(range(1, 13))
-            # if p == "bound":
-            #     ax.set_yticks([0, 2, 4, 6, 8, 10])
-            # ax.spines['bottom'].set_visible(False)
-            # ax.spines['left'].set_visible(False)
-            # ax.legend(loc="upper left", fontsize="8")
-
         plt.savefig(f'{folder}/{exp}-tapes-{d}.pdf', bbox_inches='tight', pad_inches=0.01)
         # plt.show()
         os.system(f"open {folder}/{exp}-tapes-{d}.pdf")
-
-
-if __name__ == '__main__':
-    main()

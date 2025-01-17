@@ -9,9 +9,9 @@ from classes.CloudLogger import CloudLogger
 from classes.Result import Result
 
 
-def main():
+if __name__ == '__main__':
     # Parsing the results
-    exp = "2025-01-16-IJCAI-CES-v13"
+    exp = "2025-01-17-IJCAI-CES-v2"
     joinWith = [
         (exp, ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-C"]),
         # ("2025-01-16-IJCAI-CES-v3", ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-TC-NO-C"])
@@ -152,6 +152,3 @@ def main():
         # plt.show()
         os.system(f"open {folder}/{exp}-{domain}.pdf")
 
-
-if __name__ == '__main__':
-    main()

@@ -17,6 +17,8 @@ class TransitionRelations:
         self.closures = dict()
         self.reachability = dict()
 
+        maxTime = maxTime // len([a for a in domain.actions if a.isNonIdempotent()])
+
         for a in domain.actions:
             if a.isIdempotent():
                 continue
@@ -25,7 +27,7 @@ class TransitionRelations:
             bddorder = BDDVariableOrder(a)
             order = bddorder.getOrder()
             # print(f"Order {a}: {bddorder.toDot()}")
-            print(f"Computing Transitive Closure of {a}")
+            print(f"Computing Transitive Closure of {a} - Timeout {maxTime}")
             Ts = TransitiveClosure.fromTransitionFunction(T_a, order,
                                                           relaxed=relaxed,
                                                           reflexive=True,
@@ -34,7 +36,7 @@ class TransitionRelations:
             # print(a, Ts[-1].bdd.to_dot())
             self.closures[a] = Ts
 
-            print(f"Computing Reachability of {a}")
+            print(f"Computing Reachability of {a} - Timeout {maxTime}")
             Rs = TransitiveClosure.fromTransitionFunction(T_a,
                                                           order,
                                                           relaxed=relaxed,

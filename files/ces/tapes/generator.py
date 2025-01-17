@@ -12,7 +12,7 @@ def ce(cond, eff):
                     )'''
 
 
-def main():
+if __name__ == '__main__':
     path = "domains"
     if os.path.exists(path):
         shutil.rmtree(path)
@@ -22,8 +22,8 @@ def main():
     TAPES = range(3, 23)
     LENGTH = range(3, 23)
 
-    PROBLEMS = [(b, TAPES[0], LENGTH[0]) for b in BITS] + [(BITS[0], t, LENGTH[0]) for t in TAPES[1:]] + [
-        (BITS[0], TAPES[0], l) for l in LENGTH[1:]]
+    PROBLEMS = {(b, TAPES[0], LENGTH[0]) for b in BITS} | {(BITS[0], t, LENGTH[0]) for t in TAPES} | \
+               {(BITS[0], TAPES[0], l) for l in LENGTH}
 
     with open(f"domain-template.pddl", "r") as f:
         domainTemplate = f.read()
@@ -110,7 +110,3 @@ def main():
             f.write(domain)
         with open(f"{domainFolder}/problem-{name}.pddl", "w") as f:
             f.write(problem)
-
-
-if __name__ == '__main__':
-    main()
