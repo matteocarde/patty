@@ -17,7 +17,7 @@ class TransitionRelations:
         self.closures = dict()
         self.reachability = dict()
 
-        maxTime = maxTime // len([a for a in domain.actions if a.isNonIdempotent()])
+        maxTime = maxTime // len([a for a in domain.actions if a.isNonIdempotent()]) if maxTime else None
 
         for a in domain.actions:
             if a.isIdempotent():
