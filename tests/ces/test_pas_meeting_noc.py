@@ -13,7 +13,7 @@ class TestCESMeetingNOC(TestCase):
 
     def setUp(self) -> None:
         domain = f"../../files/ces/meeting/domain.pddl"
-        problem = f"../../files/ces/meeting/instances/problem-9.pddl"
+        problem = f"../../files/ces/meeting/instances/problem-4.pddl"
         self.domain: Domain = Domain.fromFile(domain)
         self.problem: Problem = Problem.fromFile(problem)
         self.qeDomain: Domain = self.domain.eliminateQuantifiers(self.problem)
@@ -21,7 +21,6 @@ class TestCESMeetingNOC(TestCase):
         self.args = Arguments(keepRequired=False)
         self.args.pattern = "alpha"
         self.args.avoidClosureRelaxation = True
-        self.args.printTransitiveClosures = True
 
     def test_solver(self):
         self.assertTrue(self.gDomain.hasConditionalEffects())

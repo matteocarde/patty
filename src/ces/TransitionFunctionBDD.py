@@ -146,7 +146,7 @@ class TransitionFunctionBDD:
 
         tf = TransitionFunctionBDD.fromProperties(t, atomsOrder, variables, relaxed, reflexive)
 
-        bdd = tf.CLHS >> t.clauses.toBDDExpression({**tf.Xs[0], **tf.Xs[2]})
+        bdd = t.clauses.toBDDExpression({**tf.Xs[0], **tf.Xs[2]})
         tf.bdd = bdd
         tf.expr = SMTExpression.fromBDDExpression(bdd2expr(tf.bdd), tf.bdd2smt)
         return tf
