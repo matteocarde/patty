@@ -3,15 +3,15 @@ import os
 import shutil
 from typing import Dict, List, Tuple
 
+import numpy
 from matplotlib import pyplot as plt
 
 from classes.CloudLogger import CloudLogger
 from classes.Result import Result
 
-
 if __name__ == '__main__':
     # Parsing the results
-    exp = "2025-01-17-IJCAI-CES-v4"
+    exp = "2025-01-17-IJCAI-CES-v5"
     joinWith = [
         (exp, ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-C"]),
         # ("2025-01-16-IJCAI-CES-v3", ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-TC-NO-C"])
@@ -38,10 +38,20 @@ if __name__ == '__main__':
 
     DOMAINS = {
         "ces/counter": {
-            "xAxis": "Number of bits"
+            "xAxis": "Number of bits",
+            "xLimit": [3, 14],
+            "yLimit": {
+                "bound": [0, 300],
+                "time": [0, 600],
+            }
         },
         "ces/meeting": {
-            "xAxis": "Cube dimension"
+            "xAxis": "Cube dimension",
+            "xLimit": [3, 14],
+            "yLimit": {
+                "bound": [0, 32],
+                "time": [0, 600],
+            }
         }
     }
 
@@ -60,17 +70,17 @@ if __name__ == '__main__':
 
     SOLVERS = {
         "PATTY-CES": {
-            "color": "blue",
-            "label": r"$\Pi^+_C$",
-            "hasClosure": True
-        },
-        "PATTY-CES-NO-C": {
-            "color": "red",
-            "label": r"$\Pi^+_\top$",
-            "hasClosure": True
-        },
-        "PATTY-CES-NO-TC": {
             "color": "green",
+            "label": r"$\Pi^+$",
+            "hasClosure": True
+        },
+        # "PATTY-CES-NO-C": {
+        #     "color": "red",
+        #     "label": r"$\Pi^+_\top$",
+        #     "hasClosure": True
+        # },
+        "PATTY-CES-NO-TC": {
+            "color": "red",
             "label": r"$\Pi^0$",
             "hasClosure": False
         },
@@ -109,7 +119,8 @@ if __name__ == '__main__':
         plt.rcParams.update({
             "text.usetex": True,
             "figure.figsize": [7.50, 4.0],
-            "figure.autolayout": True
+            "figure.autolayout": True,
+            'font.size': 12
         })
 
         figs, axs = plt.subplots(len(PROPERTIES), 1)
@@ -135,20 +146,20 @@ if __name__ == '__main__':
                     y = [p[1] / pDict["scalingFactor"] for p in ps]
                     ax.plot(x, y, linestyle="dashed", color=sDict["color"], label=f"TC {sDict['label']}")
 
-            ax.legend(loc="upper left", fontsize="8")
+            ax.legend(loc="upper right", fontsize="10")
 
-            # ax.spines['top'].set_visible(False)
-            # ax.spines['right'].set_visible(False)
+            ax.set_xlim(dDict["xLimit"])
+            ax.set_xticks(range(dDict["xLimit"][0], dDict["xLimit"][1] + 1))
+            ax.set_ylim(dDict["yLimit"][p])
+            ticks = numpy.linspace(dDict["yLimit"][p][0], dDict["yLimit"][p][1], 5)
+            ax.set_yticks(ticks)
 
-            # ax.set_xticks(range(1, 13))
-            # if p == "bound":
-            #     ax.set_yticks([0, 2, 4, 6, 8, 10])
-            # ax.spines['bottom'].set_visible(False)
-            # ax.spines['left'].set_visible(False)
-            # ax.legend(loc="upper left", fontsize="8")
+            ax.spines['top'].set_visible(False)
+            ax.spines['right'].set_visible(False)
+            ax.spines['bottom'].set_visible(False)
+            ax.spines['left'].set_visible(False)
 
         domain = d.replace("ces/", "")
         plt.savefig(f'{folder}/{exp}-{domain}.pdf', bbox_inches='tight', pad_inches=0.01)
         # plt.show()
         os.system(f"open {folder}/{exp}-{domain}.pdf")
-

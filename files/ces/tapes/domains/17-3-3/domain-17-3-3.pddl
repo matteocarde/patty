@@ -91,13 +91,13 @@
 	)
 
 	
-            (:action incr
-		        :parameters (?r - robot ?a - counter)
-		        :precondition(and
-			        (connected ?r ?a)
-		        )
-                :effect(and
-                                        (when
+                (:action incr
+                    :parameters (?r - robot ?a - counter)
+                    :precondition(and
+                        (connected ?r ?a)
+                    )
+                    :effect(and
+                                            (when
                         (and (not (x01 ?a)))
                         (and (x01 ?a))
                     )
@@ -169,9 +169,9 @@
                         (and (x17 ?a)(x16 ?a)(x15 ?a)(x14 ?a)(x13 ?a)(x12 ?a)(x11 ?a)(x10 ?a)(x09 ?a)(x08 ?a)(x07 ?a)(x06 ?a)(x05 ?a)(x04 ?a)(x03 ?a)(x02 ?a)(x01 ?a))
                         (and (not (x17 ?a))(not (x16 ?a))(not (x15 ?a))(not (x14 ?a))(not (x13 ?a))(not (x12 ?a))(not (x11 ?a))(not (x10 ?a))(not (x09 ?a))(not (x08 ?a))(not (x07 ?a))(not (x06 ?a))(not (x05 ?a))(not (x04 ?a))(not (x03 ?a))(not (x02 ?a))(not (x01 ?a)))
                     )
+                    )
                 )
-            )
-        
+            
 
 	(:constraints
 		(and
