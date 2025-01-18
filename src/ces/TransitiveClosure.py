@@ -30,15 +30,6 @@ class TransitiveClosure(TransitionFunctionBDD):
                                maxTime: None or int = None,
                                maxReachabilityIndex=0) -> List[TransitionFunctionBDD]:
 
-        bdds = []
-        i = 0
-        variables = TransitiveClosure.getOrder(t.action, atomsOrder)
-        currentBDD: TransitionFunctionBDD = super().fromActionStateTransitionFunction(t, atomsOrder, variables,
-                                                                                      relaxed, reflexive)
-        bdds.append(currentBDD)
-
-        # print("Transitive" if reflexive else "Reachability", t.action, i, currentBDD.bdd.to_dot())
-
         if maxTime:
             signal.alarm(maxTime)
 
@@ -46,8 +37,18 @@ class TransitiveClosure(TransitionFunctionBDD):
             raise TimeoutError("Timeout!!!")
 
         signal.signal(signal.SIGALRM, handler)
-        lastFound = i
         try:
+
+            bdds = []
+            i = 0
+            lastFound = i
+            variables = TransitiveClosure.getOrder(t.action, atomsOrder)
+            currentBDD: TransitionFunctionBDD = super().fromActionStateTransitionFunction(t, atomsOrder, variables,
+                                                                                          relaxed, reflexive)
+
+            # print("Transitive" if reflexive else "Reachability", t.action, i, currentBDD.bdd.to_dot())
+            bdds.append(currentBDD)
+
             while True:
                 i += 1
                 nextBDD: TransitionFunctionBDD = currentBDD.computeTransition(

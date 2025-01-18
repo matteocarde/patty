@@ -13,7 +13,7 @@ from classes.Result import Result
 
 if __name__ == '__main__':
     # Parsing the results
-    exp = "2025-01-17-IJCAI-CES-v1"
+    exp = "2025-01-17-IJCAI-CES-v4"
     joinWith = [
         (exp, ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-C"]),
         # ("2025-01-16-IJCAI-CES-v3", ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-TC-NO-C"])
