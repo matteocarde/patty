@@ -12,11 +12,7 @@
 		(startCell ?c - cell)
 		(isNextCell ?c1 - cell ?c2 - cell)
 		(isNextTape ?t1 - tape ?t2 - tape)
-		(x01 ?c - counter)
-		(x02 ?c - counter)
-		(x03 ?c - counter)
-		(x04 ?c - counter)
-		(x05 ?c - counter)
+		;#COUNTERS#
 	)
 
 	(:action connect

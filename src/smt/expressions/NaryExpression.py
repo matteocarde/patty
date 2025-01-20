@@ -16,6 +16,7 @@ class NaryExpression(SMTExpression):
         self.children = list(xs)
         self.variables = set()
         self.depth = (max([c.depth for c in self.children]) if self.children else 0) + 1
+        self.size = sum([c.size for c in self.children]) if self.children else 0
         for c in self.children:
             self.variables |= c.getVariables()
 

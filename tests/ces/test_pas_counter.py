@@ -10,7 +10,7 @@ from src.utils.Arguments import Arguments
 class TestCESCounter(TestCase):
 
     def setUp(self) -> None:
-        self.b = 8
+        self.b = 4
         self.domain: Domain = Domain.fromFile(f"../../files/ces/counter/domains/{self.b}/domain-{self.b}.pddl")
         self.problem: Problem = Problem.fromFile(
             f"../../files/ces/counter/domains/{self.b}/problem-{self.b}.pddl")

@@ -1,10 +1,10 @@
 (define (problem pb01)
 (:domain counters)
 (:init
-
+    (x02)
 )
 (:goal
-    (and  (x02))
+    (and  (x01)(not(x02)))
 )
 )
         

@@ -55,8 +55,10 @@ class Patty(Planner):
         r.lastCallsToSolver = -1 if not lastCallsToSolver else int(lastCallsToSolver[-1])
 
         transitiveClosureTime = re.findall(r"Ended Computing Transitive Closure: (\d*?)$", stdout, re.MULTILINE)
-        print(transitiveClosureTime)
         r.transitiveClosureTime = -1 if not transitiveClosureTime else int(transitiveClosureTime[-1])
+
+        transitiveClosureSize = re.findall(r"Avg. TC Size: (\d*?)$", stdout, re.MULTILINE)
+        r.transitiveClosureSize = -1 if not transitiveClosureSize else int(transitiveClosureSize[-1])
 
         boolVariables = re.findall(r"^\|V_b\|=(\d*?)$", stdout, re.MULTILINE)
         r.boolVariables = -1 if not boolVariables else int(boolVariables[-1])

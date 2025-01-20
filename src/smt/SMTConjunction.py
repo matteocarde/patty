@@ -12,6 +12,7 @@ class SMTConjunction(List[SMTExpression]):
     def __init__(self):
         super().__init__()
         self.depth = max([c.depth for c in self]) + 1 if len(self) else 1
+        self.size = sum([c.size for c in self]) if len(self) else 1
         self.variables = set()
 
     def append(self, expr: SMTExpression) -> None:

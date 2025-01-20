@@ -36,7 +36,6 @@ class TransitionFunctionBDD:
     Xs: Dict[int, Dict[SMTBoolVariable, BDDVariable]]
     atomsOrder: List[Atom]
     bdd: BinaryDecisionDiagram
-    expr: OrAndOp
     atom2var: Dict[Atom, Dict[int, BDDVariable]]
     var2atom: Dict[str, Atom]
     constraints: Formula

@@ -16,6 +16,7 @@ class TrueExpression(NaryExpression):
         self.isConstant = True
         self.type = BOOLEAN
         self.depth = 1
+        self.size = 0
 
     def __hash__(self):
         return hash(True)

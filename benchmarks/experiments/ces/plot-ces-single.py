@@ -74,11 +74,11 @@ if __name__ == '__main__':
             "label": r"$\Pi^+$",
             "hasClosure": True
         },
-        # "PATTY-CES-NO-C": {
-        #     "color": "red",
-        #     "label": r"$\Pi^+_\top$",
-        #     "hasClosure": True
-        # },
+        "PATTY-CES-NO-C": {
+            "color": "red",
+            "label": r"$\Pi^+_\top$",
+            "hasClosure": True
+        },
         "PATTY-CES-NO-TC": {
             "color": "red",
             "label": r"$\Pi^0$",

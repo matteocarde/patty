@@ -1,10 +1,7 @@
 import csv
-import json
 import os
 import shutil
-import statistics
-import sys
-from typing import Dict, List, Set, Tuple
+from typing import Dict, List, Tuple
 
 from matplotlib import pyplot as plt
 from sympy.physics.continuum_mechanics.beam import numpy
@@ -39,19 +36,25 @@ if __name__ == '__main__':
                 continue
             aResults.append(Result.fromCSVLine(line[0].split(",")))
 
+    aResults = Result.joinPorfolios(aResults, {
+        "ENHSP-SAT-HADD": "ENHSP",
+        "ENHSP-SAT-HRADD": "ENHSP",
+        "ENHSP-SAT-HMAX": "ENHSP",
+    })
+
     DOMAIN = "ces/tapes"
     DIMENSIONS = {
-        "bits": {
-            "xAxis": "Number of bits",
-            "filenameIndex": 0
-        },
         "tapes": {
-            "xAxis": "Number of tapes/counters",
+            "xAxis": "Number of loops/counters (K)",
             "filenameIndex": 1
         },
         "length": {
-            "xAxis": "Length of tape",
+            "xAxis": "Length of tape (L)",
             "filenameIndex": 2
+        },
+        "bits": {
+            "xAxis": "Number of bits (B)",
+            "filenameIndex": 0
         },
     }
 
@@ -77,7 +80,7 @@ if __name__ == '__main__':
             "hasClosure": True
         },
         # "PATTY-CES-NO-C": {
-        #     "color": "red",
+        #     "color": "blue",
         #     "label": r"$\Pi^+_\top$",
         #     "hasClosure": True
         # },

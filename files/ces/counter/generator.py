@@ -1,5 +1,6 @@
 import math
 import os
+import random
 import shutil
 
 MAX_BITS = 15
@@ -13,7 +14,7 @@ def ce(cond, eff):
                     )'''
 
 
-def main():
+if __name__ == '__main__':
     path = "domains"
     if os.path.exists(path):
         shutil.rmtree(path)
@@ -57,20 +58,27 @@ def main():
         with open(f"{path}/{b}/domain-{b}.pddl", "w") as f:
             f.write(domain)
 
+        rX = random.randint(1, 2 ** b - 1)
+        rY = rX - 1
+        rXb = format(rX, f"0{b}b")
+        rYb = format(rY, f"0{b}b")
+        rrXb = list(reversed(rXb))
+        rrYb = list(reversed(rYb))
+        init = "".join([f"(x{'{:02d}'.format(i + 1)})" for i in range(0, b) if rrXb[i] == '1'])
+        goal = "".join(
+            [f"(x{'{:02d}'.format(i + 1)})" if rrYb[i] == '1' else f"(not(x{'{:02d}'.format(i + 1)}))" for i in
+             range(0, b)])
+
         problem = f'''(define (problem pb01)
 (:domain counters)
 (:init
-
+    {init}
 )
 (:goal
-    (and  (x{bits[-1]}))
+    (and  {goal})
 )
 )
         
         '''
         with open(f"{path}/{b}/problem-{b}.pddl", "w") as f:
             f.write(problem)
-
-
-if __name__ == '__main__':
-    main()

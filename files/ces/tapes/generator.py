@@ -49,6 +49,8 @@ if __name__ == '__main__':
             oEff = [f"(not (x{j} ?a))" for j in reversed(bits)]
             incrCEs.append(ce(oCond, oEff))
 
+            bitsPDDL = "\n".join([f"(x{b} ?c - counter)" for b in bits])
+
             incr = f'''
                 (:action incr
                     :parameters (?r - robot ?a - counter)
@@ -62,6 +64,7 @@ if __name__ == '__main__':
             '''
 
             domain = domainTemplate.replace(";#INCR#", incr)
+            domain = domain.replace(";#COUNTERS#", bitsPDDL)
 
             problemIndex = problemIndex + 1
 

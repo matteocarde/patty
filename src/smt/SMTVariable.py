@@ -10,6 +10,7 @@ class SMTVariable(SMTExpression):
     def __init__(self):
         super().__init__()
         self.depth = 1
+        self.size = 1
 
     def __repr__(self):
         return self.name
