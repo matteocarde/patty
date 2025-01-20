@@ -4,7 +4,8 @@ import copy
 import time
 from typing import Dict, List, Tuple, Set
 
-from libs.pyeda.pyeda.boolalg.bdd import BinaryDecisionDiagram, BDDVariable, bddvar, bdd2expr
+from libs.pyeda.pyeda.boolalg.bdd import BinaryDecisionDiagram, BDDVariable, bddvar, bdd2expr, _NODES, BDDNODEZERO, \
+    BDDNODEONE
 from libs.pyeda.pyeda.boolalg.expr import OrAndOp
 from src.ces.ActionStateTransitionFunction import ActionStateTransitionFunction
 from src.pddl.Action import Action
@@ -130,7 +131,6 @@ class TransitionFunctionBDD:
             return prunedC
         bddVarsNonInAction: Set[BDDVariable] = set([atom2var[v] for v in prunedC.atoms - self.action.predicates])
         cBDDRemoved = cBDD.smoothing(bddVarsNonInAction)
-
         f = Formula.fromBDD(cBDDRemoved, var2atom)
 
         return f
@@ -149,6 +149,13 @@ class TransitionFunctionBDD:
         tf.bdd = bdd
         tf.expr = SMTExpression.fromBDDExpression(bdd2expr(tf.bdd), tf.bdd2smt)
         return tf
+
+    def size(self):
+        size = 0
+        for node in self.bdd.dfs_postorder():
+            if node is not BDDNODEZERO and node is not BDDNODEONE:
+                size += 1
+        return size
 
     def getVarFromAtom(self, v, i):
         return self.atom2var[v][i] if v not in self.staticAtoms else self.atom2var[v][0]

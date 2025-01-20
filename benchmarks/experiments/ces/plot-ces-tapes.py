@@ -49,7 +49,7 @@ if __name__ == '__main__':
             "filenameIndex": 1
         },
         "length": {
-            "xAxis": "Length of tape (L)",
+            "xAxis": "Length of loops (L)",
             "filenameIndex": 2
         },
         "bits": {

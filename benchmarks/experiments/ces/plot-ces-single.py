@@ -11,7 +11,7 @@ from classes.Result import Result
 
 if __name__ == '__main__':
     # Parsing the results
-    exp = "2025-01-17-IJCAI-CES-v5"
+    exp = "2025-01-20-IJCAI-CES-FINAL-v1"
     joinWith = [
         (exp, ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-C"]),
         # ("2025-01-16-IJCAI-CES-v3", ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-TC-NO-C"])
@@ -38,21 +38,32 @@ if __name__ == '__main__':
 
     DOMAINS = {
         "ces/counter": {
-            "xAxis": "Number of bits",
+            "xAxis": "Number of bits (B)",
             "xLimit": [3, 14],
             "yLimit": {
                 "bound": [0, 300],
                 "time": [0, 600],
+                "transitiveClosureSize": [0, 5000]
             }
         },
         "ces/meeting": {
-            "xAxis": "Cube dimension",
-            "xLimit": [3, 14],
+            "xAxis": "Cube side (L)",
+            "xLimit": [3, 15],
             "yLimit": {
                 "bound": [0, 32],
                 "time": [0, 600],
+                "transitiveClosureSize": [0, 5000]
             }
-        }
+        },
+        # "ces/meeting-no-pacman": {
+        #     "xAxis": "NO PAC Cube dimension",
+        #     "xLimit": [3, 14],
+        #     "yLimit": {
+        #         "bound": [0, 32],
+        #         "time": [0, 600],
+        #         "transitiveClosureSize": [0, 5000]
+        #     }
+        # }
     }
 
     PROPERTIES = {
@@ -65,7 +76,12 @@ if __name__ == '__main__':
             "yAxis": "Planning Time [s]",
             "showClosureTime": True,
             "scalingFactor": 1000
-        }
+        },
+        # "transitiveClosureSize": {
+        #     "yAxis": "TC Size",
+        #     "showClosureTime": False,
+        #     "scalingFactor": 1
+        # }
     }
 
     SOLVERS = {
@@ -74,11 +90,11 @@ if __name__ == '__main__':
             "label": r"$\Pi^+$",
             "hasClosure": True
         },
-        "PATTY-CES-NO-C": {
-            "color": "red",
-            "label": r"$\Pi^+_\top$",
-            "hasClosure": True
-        },
+        # "PATTY-CES-NO-C": {
+        #     "color": "blue",
+        #     "label": r"$\Pi^+_\top$",
+        #     "hasClosure": True
+        # },
         "PATTY-CES-NO-TC": {
             "color": "red",
             "label": r"$\Pi^0$",

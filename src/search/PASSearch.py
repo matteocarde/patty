@@ -35,7 +35,7 @@ class PASSearch(Search):
                                             relaxed=not self.args.avoidClosureRelaxation)
             tcSizes = []
             for a, steps in relations.closures.items():
-                tcSizes.append(steps[-1].expr.size if steps[-1].expr else 0)
+                tcSizes.append(steps[-1].size())
                 if self.args.printTransitiveClosures:
                     print(f"BDD Order of of {a}:", steps[-1].atomsOrder)
                     print(f"TC of {a}:", steps[-1].bdd.to_dot())
