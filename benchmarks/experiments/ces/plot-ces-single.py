@@ -11,7 +11,7 @@ from classes.Result import Result
 
 if __name__ == '__main__':
     # Parsing the results
-    exp = "2025-01-20-IJCAI-CES-FINAL-v1"
+    exp = "2025-01-20-IJCAI-CES-FINAL-v2"
     joinWith = [
         (exp, ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-C"]),
         # ("2025-01-16-IJCAI-CES-v3", ["PATTY-CES", "PATTY-CES-NO-TC", "PATTY-CES-NO-TC-NO-C"])
@@ -43,7 +43,7 @@ if __name__ == '__main__':
             "yLimit": {
                 "bound": [0, 300],
                 "time": [0, 600],
-                "transitiveClosureSize": [0, 5000]
+                "transitiveClosureSize": [0, 500]
             }
         },
         "ces/meeting": {
@@ -52,18 +52,18 @@ if __name__ == '__main__':
             "yLimit": {
                 "bound": [0, 32],
                 "time": [0, 600],
-                "transitiveClosureSize": [0, 5000]
+                "transitiveClosureSize": [0, 500]
             }
         },
-        # "ces/meeting-no-pacman": {
-        #     "xAxis": "NO PAC Cube dimension",
-        #     "xLimit": [3, 14],
-        #     "yLimit": {
-        #         "bound": [0, 32],
-        #         "time": [0, 600],
-        #         "transitiveClosureSize": [0, 5000]
-        #     }
-        # }
+        "ces/meeting-no-pacman": {
+            "xAxis": "Cube side (L)",
+            "xLimit": [3, 15],
+            "yLimit": {
+                "bound": [0, 32],
+                "time": [0, 600],
+                "transitiveClosureSize": [0, 200]
+            }
+        }
     }
 
     PROPERTIES = {
@@ -77,11 +77,11 @@ if __name__ == '__main__':
             "showClosureTime": True,
             "scalingFactor": 1000
         },
-        # "transitiveClosureSize": {
-        #     "yAxis": "TC Size",
-        #     "showClosureTime": False,
-        #     "scalingFactor": 1
-        # }
+        "transitiveClosureSize": {
+            "yAxis": "TC Size",
+            "showClosureTime": False,
+            "scalingFactor": 1
+        }
     }
 
     SOLVERS = {
@@ -90,11 +90,11 @@ if __name__ == '__main__':
             "label": r"$\Pi^+$",
             "hasClosure": True
         },
-        # "PATTY-CES-NO-C": {
-        #     "color": "blue",
-        #     "label": r"$\Pi^+_\top$",
-        #     "hasClosure": True
-        # },
+        "PATTY-CES-NO-C": {
+            "color": "blue",
+            "label": r"$\Pi^+_\top$",
+            "hasClosure": True
+        },
         "PATTY-CES-NO-TC": {
             "color": "red",
             "label": r"$\Pi^0$",

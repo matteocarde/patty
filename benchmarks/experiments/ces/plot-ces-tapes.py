@@ -3,7 +3,8 @@ import os
 import shutil
 from typing import Dict, List, Tuple
 
-from matplotlib import pyplot as plt
+from matplotlib import pyplot as plt, gridspec
+from matplotlib.pyplot import gcf
 from sympy.physics.continuum_mechanics.beam import numpy
 
 from classes.CloudLogger import CloudLogger
@@ -168,6 +169,10 @@ if __name__ == '__main__':
             ax.spines['right'].set_visible(False)
             ax.spines['bottom'].set_visible(False)
             ax.spines['left'].set_visible(False)
+    plt.plot([0.05, 0.97], [1 / 3, 1 / 3], color='gray', linestyle="dashed", lw=1, transform=gcf().transFigure,
+             clip_on=False)
+    plt.plot([0.05, 0.97], [2 / 3, 2 / 3], color='gray', linestyle="dashed", lw=1, transform=gcf().transFigure,
+             clip_on=False)
 
     plt.savefig(f'{folder}/{exp}-tapes-{d}.pdf', bbox_inches='tight', pad_inches=0.01)
     # plt.show()
