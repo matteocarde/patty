@@ -14,7 +14,7 @@ from src.smt.expressions.TrueExpression import TrueExpression
 
 class MinExpression(NaryExpression):
 
-    def __init__(self, *xs: SMTExpression):
+    def __init__(self, *xs: SMTExpression or float):
         super().__init__(*xs)
         self.type = BOOLEAN
 

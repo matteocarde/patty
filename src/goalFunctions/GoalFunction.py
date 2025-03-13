@@ -9,6 +9,8 @@ from src.pddl.State import State
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTVariable import SMTVariable
 
+EPSILON = 0.01
+
 
 class GoalFunction:
 
