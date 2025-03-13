@@ -18,7 +18,7 @@ from src.smt.expressions.TrueExpression import TrueExpression
 
 class ITEExpression(NaryExpression):
 
-    def __init__(self, c: SMTExpression, t: SMTExpression, e: SMTExpression):
+    def __init__(self, c: SMTExpression, t: SMTExpression or float, e: SMTExpression or float):
         super().__init__(c, t, e)
         self.type = BOOLEAN
         self.c = c

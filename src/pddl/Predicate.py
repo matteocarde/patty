@@ -99,3 +99,6 @@ class Predicate:
 
     def toPDDL(self, pw: PDDLWriter = PDDLWriter()):
         pw.write(str(self))
+
+    def isAtomic(self):
+        return True

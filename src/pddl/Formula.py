@@ -207,3 +207,6 @@ class Formula:
         pw.decreaseTab()
         pw.write(")")
         pw.decreaseTab()
+
+    def isAtomic(self):
+        return len(self.conditions) == 1 and isinstance(self.conditions[0], Predicate)

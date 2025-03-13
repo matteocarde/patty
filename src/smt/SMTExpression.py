@@ -10,6 +10,7 @@ from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.Constant import Constant
 from src.pddl.Formula import Formula
 from src.pddl.Literal import Literal
+from src.pddl.Predicate import Predicate
 
 NUMERIC = "N"
 BOOLEAN = "B"
@@ -159,9 +160,12 @@ class SMTExpression:
         raise Exception(f"Don't know how to convert {predicate} to Expression")
 
     @classmethod
-    def fromFormula(cls, formula: Formula,
+    def fromFormula(cls, formula: Formula or Predicate,
                     variables: Dict[Atom, SMTExpression]) -> SMTExpression or float:
         preRules = []
+        if isinstance(formula, Predicate):
+            return SMTExpression.fromPddl(formula, variables)
+
         for pre in formula:
             if isinstance(pre, Formula):
                 preRules += [SMTExpression.fromFormula(pre, variables)]
