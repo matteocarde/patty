@@ -1,8 +1,6 @@
 from typing import Dict
 
-from src.goalFunctions.Delta import Delta
 from src.goalFunctions.DeltaPlus import DeltaPlus
-from src.goalFunctions.Gamma import Gamma
 from src.goalFunctions.GoalFunction import GoalFunction, EPSILON
 from src.pddl.Atom import Atom
 from src.pddl.Formula import Formula
@@ -12,7 +10,6 @@ from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTVariable import SMTVariable
 from src.smt.expressions.ITEExpression import ITEExpression
 from src.smt.expressions.MaxExpression import MaxExpression
-from src.smt.expressions.MinExpression import MinExpression
 
 
 class DeltaMax(GoalFunction):
@@ -22,7 +19,17 @@ class DeltaMax(GoalFunction):
 
     @staticmethod
     def compute(s: State, g: Goal) -> float:
-        pass
+        G = len(g) if g.type == "AND" else 1
+        groups = [g]
+        if g.type == "AND" and not g.isAtomic():
+            groups = g.conditions
+
+        addends = []
+        for subgoal in groups:
+            deltaPlus = DeltaPlus.compute(s, subgoal)
+            expr = 0 if s.satisfies(subgoal) else (G - 1 + deltaPlus) / G
+            addends.append(expr)
+        return 0 if s.satisfies(g) else max(EPSILON, sum(*addends))
 
     @staticmethod
     def getExpression(vars: Dict[Atom, SMTVariable], g: Formula, init: State) -> SMTExpression:

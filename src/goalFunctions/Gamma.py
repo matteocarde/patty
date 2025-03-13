@@ -3,6 +3,7 @@ from typing import Dict
 from src.goalFunctions.GoalFunction import GoalFunction
 from src.pddl.Atom import Atom
 from src.pddl.Domain import GroundedDomain
+from src.pddl.Formula import Formula
 from src.pddl.Goal import Goal
 from src.pddl.Problem import Problem
 from src.pddl.State import State
@@ -17,8 +18,10 @@ class Gamma(GoalFunction):
         super().__init__()
 
     @staticmethod
-    def compute(s: State, g: Goal) -> float:
-        pass
+    def compute(s: State, g: Formula) -> float:
+        if not g.isAtomic():
+            raise Exception(f"Goal {g} is not atomic")
+        return 0 if s.satisfies(g) else 1
 
     @staticmethod
     def getFormula(vars: Dict[Atom, SMTVariable], g: Goal, init: State) -> SMTExpression:

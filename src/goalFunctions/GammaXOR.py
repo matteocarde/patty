@@ -23,7 +23,19 @@ class GammaXOR(GoalFunction):
 
     @staticmethod
     def compute(s: State, g: Goal) -> float:
-        pass
+        G = len(g) if g.type == "AND" else 1
+        groups = [g]
+        if g.type == "AND" and not g.isAtomic():
+            groups = g.conditions
+
+        addends = []
+        for subgoal in groups:
+            gammaPlus = GammaPlus.computeFromFormula(s, g)
+            e = (G - 1 + gammaPlus) / G
+            expr = 0 if s.satisfies(subgoal) else e
+            addends.append(expr)
+
+        return sum(*addends)
 
     @staticmethod
     def getExpression(vars: Dict[Atom, SMTVariable], g: Formula, init: State) -> SMTExpression:

@@ -18,7 +18,7 @@ class GoalFunction:
         pass
 
     @staticmethod
-    def compute(s: State, g: Goal) -> float:
+    def compute(s: State, g: Formula) -> float:
         raise NotImplementedError()
 
     @staticmethod

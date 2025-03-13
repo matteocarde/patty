@@ -23,7 +23,9 @@ class Delta(GoalFunction):
 
     @staticmethod
     def compute(s: State, g: Formula) -> float:
-        pass
+        if not g.isAtomic():
+            raise Exception(f"Goal {g} is not atomic")
+        return 0 if s.satisfies(g) else 1
 
     @staticmethod
     def getFormula(vars: Dict[Atom, SMTVariable], g: Formula, init: State) -> SMTExpression:

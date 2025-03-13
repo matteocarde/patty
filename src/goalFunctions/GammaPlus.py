@@ -20,8 +20,22 @@ class GammaPlus(GoalFunction):
         super().__init__()
 
     @staticmethod
+    def computeFromFormula(s: State, f: Formula):
+        if f.isAtomic():
+            return Gamma.compute(s, f)
+        gammas = [GammaPlus.computeFromFormula(s, phi) for phi in f.conditions]
+        if f.type == "OR":
+            return min(*gammas)
+        if f.type == "AND":
+            n = len(gammas)
+            return 1 / n * sum(*gammas)
+
+    @staticmethod
     def compute(s: State, g: Goal) -> float:
-        pass
+        if g.type == "OR" or g.isAtomic():
+            return GammaPlus.computeFromFormula(s, g)
+        gammas = [GammaPlus.computeFromFormula(s, phi) for phi in g.conditions]
+        return sum(*gammas)
 
     @staticmethod
     def getExpressionForFormula(vars: Dict[Atom, SMTVariable], f: Formula, init: State):
