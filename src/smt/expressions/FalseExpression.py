@@ -1,9 +1,9 @@
 from typing import Dict, Set
 
-from libs.pyeda.pyeda.boolalg.bdd import BDDVariable
 from pysmt.fnode import FNode
-from pysmt.shortcuts import TRUE, FALSE
+from pysmt.shortcuts import FALSE
 
+from libs.pyeda.pyeda.boolalg.bdd import BDDVariable
 from src.smt.SMTBoolVariable import SMTBoolVariable
 from src.smt.SMTExpression import SMTExpression, BOOLEAN
 

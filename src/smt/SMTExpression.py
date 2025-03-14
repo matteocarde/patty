@@ -142,13 +142,21 @@ class SMTExpression:
         if op == "<":
             return left < right
         if op == "=":
-            return left == right
+            from src.smt.expressions.EqualExpression import EqualExpression
+            return EqualExpression(left, right)
         if op == "!=":
             return left != right
 
     @classmethod
     def fromPddl(cls, predicate: BinaryPredicate or Literal or Constant,
                  variables: Dict[Atom, SMTExpression]) -> SMTExpression or float:
+
+        from src.pddl.TruePredicate import TruePredicate
+        from src.smt.expressions.TrueExpression import TrueExpression
+        from src.pddl.FalsePredicate import FalsePredicate
+        from src.smt.expressions.FalseExpression import FalseExpression
+        from src.smt.expressions.ConstantExpression import ConstantExpression
+
         if isinstance(predicate, BinaryPredicate):
             lhs = SMTExpression.fromPddl(predicate.lhs, variables)
             rhs = SMTExpression.fromPddl(predicate.rhs, variables)
@@ -161,11 +169,7 @@ class SMTExpression:
             else:
                 return ~variables[atom]
         if isinstance(predicate, Constant):
-            return predicate.value
-        from src.pddl.TruePredicate import TruePredicate
-        from src.smt.expressions.TrueExpression import TrueExpression
-        from src.pddl.FalsePredicate import FalsePredicate
-        from src.smt.expressions.FalseExpression import FalseExpression
+            return ConstantExpression(predicate.value)
         if isinstance(predicate, TruePredicate):
             return TrueExpression()
         if isinstance(predicate, FalsePredicate):

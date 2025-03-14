@@ -81,7 +81,7 @@ class TypedPredicate(Predicate):
         literal.sign = "+"
 
         literal.atom = self.atom.ground(subs)
-        literal.funct = literal.atom.toFunctionName()
+        literal.funct = literal.atom.getFunctionName()
         literal.alphaFunct = literal.atom.toAlphaFunctionName()
 
         return literal

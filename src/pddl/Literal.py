@@ -38,7 +38,7 @@ class Literal(Predicate):
         lit = cls()
         lit.atom = atom
         lit.sign = sign
-        lit.funct = lit.atom.toFunctionName()
+        lit.funct = lit.atom.getFunctionName()
         lit.alphaFunct = lit.atom.toAlphaFunctionName()
         return lit
 
@@ -78,7 +78,7 @@ class Literal(Predicate):
 
         literal.atom = Atom.fromNode(atomNode)
         literal.string = f"({literal.atom})"
-        literal.funct = literal.atom.toFunctionName()
+        literal.funct = literal.atom.getFunctionName()
         literal.alphaFunct = literal.atom.toAlphaFunctionName()
 
         return literal
@@ -97,16 +97,21 @@ class Literal(Predicate):
 
     def ground(self, subs: Dict[str, str], problem) -> Predicate:
 
+        atom = self.atom.ground(subs)
+
         if problem.isPredicateStatic[self.atom.name]:
             from src.pddl.TruePredicate import TruePredicate
             from src.pddl.FalsePredicate import FalsePredicate
-            sValue = self.getStaticValue(subs, problem)
-            return TruePredicate() if sValue else FalsePredicate()
+            sValue = self.getStaticValue(atom, problem)
+            if type(sValue) == bool:
+                return TruePredicate() if sValue else FalsePredicate()
+            else:
+                return Constant(sValue)
 
         literal = Literal()
         literal.sign = self.sign
-        literal.atom = self.atom.ground(subs)
-        literal.funct = literal.atom.toFunctionName()
+        literal.atom = atom
+        literal.funct = literal.atom.getFunctionName()
         literal.alphaFunct = literal.atom.toAlphaFunctionName()
         literal.lifted = self
 
@@ -159,13 +164,16 @@ class Literal(Predicate):
     def isValid(self, subs: Dict[Atom, float or bool], default=None) -> bool:
         return False if self.atom not in subs or not subs[self.atom] else True
 
-    def getStaticValue(self, subs: Dict[str, str], problem) -> bool:
-        subStr = ",".join([subs[p] for p in self.atom.attributes])
-        atomStr = f"{self.atom.name}({subStr})"
-        if self.sign == "+":
-            return atomStr in problem.canHappenValue
-        if self.sign == "-":
-            return atomStr not in problem.canHappenValue
+    def getStaticValue(self, atom: Atom, problem) -> bool or float:
+        atomStr = atom.getFunctionName()
+        if atom in problem.predicates:
+            if self.sign == "+":
+                return atomStr in problem.canHappenValue
+            if self.sign == "-":
+                return atomStr not in problem.canHappenValue
+        if atom in problem.functions:
+            return problem.init.numericAssignments[atom]
+        raise Exception("Not here")
 
     def canHappenLifted(self, sub: Tuple, params: List[str], problem) -> bool:
         if not problem.isPredicateStatic[self.atom.name]:

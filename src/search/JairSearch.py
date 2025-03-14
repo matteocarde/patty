@@ -3,13 +3,11 @@ from typing import Type
 
 from src.goalFunctions.GoalFunction import GoalFunction
 from src.pddl.Domain import GroundedDomain
-from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Plan import Plan
 from src.pddl.Problem import Problem
 from src.pddl.State import State
 from src.plan.NumericEncoding import NumericEncoding
 from src.plan.Pattern import Pattern
-from src.plan.TemporalEncoding import TemporalEncoding
 from src.search.Search import Search
 from src.smt.SMTSolver import SMTSolver
 from src.utils.Arguments import Arguments
@@ -63,7 +61,7 @@ class JairSearch(Search):
             self.console.log(f"Bound {bound} - Vars = {encoding.getNVars()}", LogPrintLevel.STATS)
             self.console.log(f"Bound {bound} - Rules = {encoding.getNRules()}", LogPrintLevel.STATS)
             self.console.log(f"Bound {bound} - Avg Rule Length = {encoding.getAvgRuleLength()}", LogPrintLevel.STATS)
-            self.console.log(f"Bound {bound} - Pattern Length = {patF.getLength()}", LogPrintLevel.STATS)
+            self.console.log(f"Bound {bound} - Pattern Length = {pat.getLength()}", LogPrintLevel.STATS)
 
             self.ts.start(f"Solving Bound {bound}", console=self.console)
             solver: SMTSolver = SMTSolver(encoding)

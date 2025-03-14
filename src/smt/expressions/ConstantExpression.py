@@ -15,6 +15,7 @@ class ConstantExpression(SMTExpression):
         self.value = value
         self.type = NUMERIC
         self.depth = 1
+        self.size = 1
 
     def toBDDExpression(self, map: Dict[SMTBoolVariable, BDDVariable]):
         raise NotImplementedError()

@@ -94,7 +94,7 @@ class NumericEncoding(Encoding):
                 if assignment.getAtom() not in self.domain.allAtoms:
                     # print(f"Atom {assignments.getAtom()} was pruned since it's a constant")
                     continue
-                rules.append(tVars.valueVariables[assignment.getAtom()] == float(str(assignment.rhs)))
+                rules.append(tVars.valueVariables[assignment.getAtom()].equal(float(str(assignment.rhs))))
             elif isinstance(assignment, Literal):
                 rules.append(tVars.valueVariables[assignment.getAtom()])
                 trueAtoms.add(assignment.getAtom())
@@ -197,7 +197,7 @@ class NumericEncoding(Encoding):
                     stepVars.sigmaVariables[i][v] = (d_bv | (b_n > 0))
 
                 if v in action.getDelList():
-                    stepVars.sigmaVariables[i][v] = (d_bv & (b_n == 0))
+                    stepVars.sigmaVariables[i][v] = (d_bv & (b_n.equal(0)))
 
             # Case c) Numeric increases or decreases
             if not action.hasNonSimpleLinearIncrement(self.encoding):
@@ -319,8 +319,8 @@ class NumericEncoding(Encoding):
                 d_psi = rhs.value if isinstance(rhs, Constant) else \
                     SMTNumericVariable.fromPddl(rhs, stepVars.sigmaVariables[i - 1])
 
-                rules.append((a_n > 0).implies(v_a == d_psi))
-                rules.append((a_n == 0).implies(v_a == d_a_v))
+                rules.append((a_n > 0).implies(v_a.equal(d_psi)))
+                rules.append((a_n.equal(0)).implies(v_a.equal(d_a_v)))
 
             if not a.hasNonSimpleLinearIncrement(self.encoding):
                 continue
@@ -334,10 +334,10 @@ class NumericEncoding(Encoding):
                 d_a_v = stepVars.sigmaVariables[i - 1][var]
                 d_a_phi = SMTNumericVariable.fromPddl(eff.rhs, stepVars.sigmaVariables[i - 1])
                 if eff.operator == "increase":
-                    rules.append((a_n > 0).implies(v_a == d_a_v + d_a_phi))
+                    rules.append((a_n > 0).implies(v_a.equal(d_a_v + d_a_phi)))
                 else:
-                    rules.append((a_n > 0).implies(v_a == d_a_v - d_a_phi))
-                rules.append((a_n == 0).implies(v_a == d_a_v))
+                    rules.append((a_n > 0).implies(v_a.equal(d_a_v - d_a_phi)))
+                rules.append((a_n.equal(0)).implies(v_a.equal(d_a_v)))
 
         return rules
 
@@ -347,12 +347,12 @@ class NumericEncoding(Encoding):
         for v in self.domain.functions:
             v_first = stepVars.valueVariables[v]
             delta_g_v = stepVars.sigmaVariables[self.k][v]
-            rules.append(v_first == delta_g_v)
+            rules.append(v_first.equal(delta_g_v))
 
         for v in self.domain.predicates:
             v_first = stepVars.valueVariables[v]
             delta_g_v = stepVars.sigmaVariables[self.k][v]
-            rules.append(v_first == delta_g_v)
+            rules.append(v_first.equal(delta_g_v))
 
         return rules
 

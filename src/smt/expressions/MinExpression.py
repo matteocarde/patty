@@ -6,7 +6,7 @@ from pysmt.fnode import FNode
 from pysmt.shortcuts import Min as SMTMin
 
 from src.smt.SMTBoolVariable import SMTBoolVariable
-from src.smt.SMTExpression import SMTExpression, BOOLEAN
+from src.smt.SMTExpression import SMTExpression, BOOLEAN, NUMERIC
 from src.smt.expressions.FalseExpression import FalseExpression
 from src.smt.expressions.NaryExpression import NaryExpression
 from src.smt.expressions.TrueExpression import TrueExpression
@@ -16,7 +16,7 @@ class MinExpression(NaryExpression):
 
     def __init__(self, *xs: SMTExpression or float):
         super().__init__(*xs)
-        self.type = BOOLEAN
+        self.type = NUMERIC
 
     @classmethod
     def simplify(cls, lhs, rhs):

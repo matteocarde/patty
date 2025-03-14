@@ -24,7 +24,8 @@ class Gamma(GoalFunction):
         return 0 if s.satisfies(g) else 1
 
     @staticmethod
-    def getFormula(vars: Dict[Atom, SMTVariable], g: Goal, init: State) -> SMTExpression:
+    def getExpression(vars: Dict[Atom, SMTVariable], g: Goal, init: State) -> SMTExpression:
         if not g.isAtomic():
             raise Exception(f"Goal {g} is not atomic")
-        return ITEExpression.simplify(SMTExpression.fromFormula(g, vars), 0, 1)
+        gf = SMTExpression.fromFormula(g, vars)
+        return ITEExpression.simplify(gf, 0, 1)

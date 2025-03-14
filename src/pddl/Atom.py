@@ -101,7 +101,7 @@ class Atom:
             return False
         return self.__functionName < other.__functionName
 
-    def toFunctionName(self):
+    def getFunctionName(self):
         return self.__functionName
 
     def toAlphaFunctionName(self):
