@@ -28,10 +28,10 @@ class Delta(GoalFunction):
         return 0 if s.satisfies(g) else 1
 
     @staticmethod
-    def getFormula(vars: Dict[Atom, SMTVariable], g: Formula, init: State) -> SMTExpression:
+    def getExpression(vars: Dict[Atom, SMTVariable], g: Formula, init: State) -> SMTExpression:
         if not g.isAtomic():
             raise Exception(f"Goal {g} is not atomic")
-        g = g.conditions[0]
+        g = g if isinstance(g, Predicate) else g.conditions[0]
         initValue = init.getRealization(g)
         gf = SMTExpression.fromFormula(g, vars)
         if isinstance(g, Literal) or isinstance(g, BinaryPredicate) and initValue >= 0:

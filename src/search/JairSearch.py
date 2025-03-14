@@ -23,7 +23,6 @@ class JairSearch(Search):
     def solve(self) -> Plan:
         callsToSolver = 0
 
-        totalSubgoals = self.problem.goal.conditions
         subgoalsAchieved = set()
 
         bound = self.startBound
@@ -53,7 +52,7 @@ class JairSearch(Search):
                 goalFunctionValue=c,
                 bound=1,
                 args=self.args,
-                relaxGoal=True,
+                relaxGoal=False,
                 subgoalsAchieved=subgoalsAchieved
             )
 
@@ -78,15 +77,15 @@ class JairSearch(Search):
             if self.args.saveSMT:
                 self.saveSMT(bound, encoding, callsToSolver=callsToSolver)
 
-            if not isinstance(plan, Plan):
-                continue
-
-            s = initialState.applyPlan(plan)
-            if s.satisfies(self.problem.goal):
-                return plan
-            c = GF.compute(s, self.problem.goal)
-            patH: Pattern = Pattern.fromState(s, self.problem.goal, self.domain, enhanced=self.enhanced)
-            patH.addPostfix(bound)
+            if isinstance(plan, Plan):
+                s = initialState.applyPlan(plan)
+                if s.satisfies(self.problem.goal):
+                    return plan
+                c = GF.compute(s, self.problem.goal)
+                self.console.log(f"New Goal Function Value: {c}", LogPrintLevel.PLAN)
+                patH: Pattern = Pattern.fromState(s, self.problem.goal, self.domain, enhanced=self.enhanced)
 
             bound = bound + 1
+            patH.addPostfix(bound)
+
         pass

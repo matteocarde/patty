@@ -28,14 +28,14 @@ class GammaPlus(GoalFunction):
             return min(*gammas)
         if f.type == "AND":
             n = len(gammas)
-            return 1 / n * sum(*gammas)
+            return 1 / n * sum(gammas)
 
     @staticmethod
     def compute(s: State, g: Goal) -> float:
         if g.type == "OR" or g.isAtomic():
             return GammaPlus.computeFromFormula(s, g)
         gammas = [GammaPlus.computeFromFormula(s, phi) for phi in g.conditions]
-        return sum(*gammas)
+        return sum(gammas)
 
     @staticmethod
     def getExpressionForFormula(vars: Dict[Atom, SMTVariable], f: Formula, init: State):
@@ -50,7 +50,7 @@ class GammaPlus(GoalFunction):
 
     @staticmethod
     def getExpression(vars: Dict[Atom, SMTVariable], g: Formula, init: State) -> SMTExpression:
-        if g.type == "OR" or g.isAtomic():
+        if g.isAtomic() or g.type == "OR":
             return GammaPlus.getExpressionForFormula(vars, g, init)
         gammas = [GammaPlus.getExpressionForFormula(vars, phi, init) for phi in g.conditions]
-        return sum(*gammas)
+        return sum(gammas)

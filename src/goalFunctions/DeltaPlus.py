@@ -34,11 +34,11 @@ class DeltaPlus(GoalFunction):
     def compute(s: State, g: Goal) -> float:
         # G = len(g) if g.type == "AND" else 1
         groups = [g]
-        if g.type == "AND" and not g.isAtomic():
+        if not g.isAtomic() and g.type == "AND":
             groups = g.conditions
 
         deltas = [DeltaPlus.computeFromFormula(s, group) for group in groups]
-        return 0 if s.satisfies(g) else max(EPSILON, sum(*deltas))
+        return 0 if s.satisfies(g) else max(EPSILON, sum(deltas))
 
     @staticmethod
     def getExpressionForFormula(vars: Dict[Atom, SMTVariable], f: Formula, init: State):
@@ -55,9 +55,9 @@ class DeltaPlus(GoalFunction):
     def getExpression(vars: Dict[Atom, SMTVariable], g: Formula, init: State) -> SMTExpression:
         # G = len(g) if g.type == "AND" else 1
         groups = [g]
-        if g.type == "AND" and not g.isAtomic():
+        if not g.isAtomic() and g.type == "AND":
             groups = g.conditions
 
         deltas = [DeltaPlus.getExpressionForFormula(vars, g, init) for g in groups]
         gf = SMTExpression.fromFormula(g, vars)
-        return ITEExpression(gf, 0, MaxExpression(EPSILON, sum(*deltas)))
+        return ITEExpression(gf, 0, MaxExpression(EPSILON, sum(deltas)))

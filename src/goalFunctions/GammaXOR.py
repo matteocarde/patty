@@ -35,7 +35,7 @@ class GammaXOR(GoalFunction):
             expr = 0 if s.satisfies(subgoal) else e
             addends.append(expr)
 
-        return sum(*addends)
+        return sum(addends)
 
     @staticmethod
     def getExpression(vars: Dict[Atom, SMTVariable], g: Formula, init: State) -> SMTExpression:
@@ -51,4 +51,4 @@ class GammaXOR(GoalFunction):
             expr = ITEExpression(SMTExpression.fromFormula(subgoal, vars), 0, e)
             addends.append(expr)
 
-        return sum(*addends)
+        return sum(addends)

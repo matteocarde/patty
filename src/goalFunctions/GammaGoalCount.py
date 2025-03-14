@@ -25,11 +25,11 @@ class GammaGoalCount(GoalFunction):
         if g.type == "OR" or g.isAtomic():
             return GammaMax.computeFromFormula(s, g)
         gammas = [GammaMax.computeFromFormula(s, phi) for phi in g.conditions]
-        return sum(*gammas)
+        return sum(gammas)
 
     @staticmethod
     def getExpression(vars: Dict[Atom, SMTVariable], g: Formula, init: State) -> SMTExpression:
         if g.type == "OR" or g.isAtomic():
             return GammaMax.getExpressionForFormula(vars, g, init)
         gammas = [GammaMax.getExpressionForFormula(vars, phi, init) for phi in g.conditions]
-        return sum(*gammas)
+        return sum(gammas)

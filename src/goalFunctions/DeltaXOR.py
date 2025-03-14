@@ -29,7 +29,7 @@ class DeltaXOR(GoalFunction):
             deltaPlus = DeltaPlus.compute(s, subgoal)
             expr = 0 if s.satisfies(subgoal) else (G - 1 + deltaPlus) / G
             addends.append(expr)
-        return 0 if s.satisfies(g) else max(EPSILON, sum(*addends))
+        return 0 if s.satisfies(g) else max(EPSILON, sum(addends))
 
     @staticmethod
     def getExpression(vars: Dict[Atom, SMTVariable], g: Formula, init: State) -> SMTExpression:
@@ -45,4 +45,4 @@ class DeltaXOR(GoalFunction):
             e = (G - 1 + deltaPlus) / G
             expr = ITEExpression(SMTExpression.fromFormula(subgoal, vars), 0, e)
             addends.append(expr)
-        return ITEExpression(gf, 0, MaxExpression(EPSILON, sum(*addends)))
+        return ITEExpression(gf, 0, MaxExpression(EPSILON, sum(addends)))

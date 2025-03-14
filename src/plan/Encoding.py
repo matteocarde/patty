@@ -43,7 +43,7 @@ class Encoding:
             print(rule)
 
     def writeSMTLIB(self, filename: str):
-        formula = SMTExpression.andOfExpressionsList(self.rules).expression
+        formula = SMTExpression.andOfExpressionsList(self.rules).getExpression()
         with open(filename, "w") as fout:
             script = pysmt.smtlib.script.SmtLibScript()
 

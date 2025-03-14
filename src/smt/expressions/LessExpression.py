@@ -23,7 +23,6 @@ class LessExpression(BinaryExpression):
     def simplify(cls, *xs):
         lhs = SMTExpression.numericConstant(xs[0])
         rhs = SMTExpression.numericConstant(xs[1])
-        assert lhs.type == NUMERIC and rhs.type == NUMERIC
         if isinstance(lhs, ConstantExpression) and isinstance(rhs, ConstantExpression):
             return TrueExpression() if lhs.value < rhs.value else FalseExpression()
         return cls(lhs, rhs)
