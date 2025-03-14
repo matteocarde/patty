@@ -12,7 +12,7 @@ from src.smt.expressions.ITEExpression import ITEExpression
 from src.smt.expressions.MaxExpression import MaxExpression
 
 
-class DeltaMax(GoalFunction):
+class DeltaXOR(GoalFunction):
 
     def __init__(self):
         super().__init__()

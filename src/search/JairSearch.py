@@ -1,0 +1,94 @@
+import copy
+from typing import Type
+
+from src.goalFunctions.GoalFunction import GoalFunction
+from src.pddl.Domain import GroundedDomain
+from src.pddl.NumericPlan import NumericPlan
+from src.pddl.Plan import Plan
+from src.pddl.Problem import Problem
+from src.pddl.State import State
+from src.plan.NumericEncoding import NumericEncoding
+from src.plan.Pattern import Pattern
+from src.plan.TemporalEncoding import TemporalEncoding
+from src.search.Search import Search
+from src.smt.SMTSolver import SMTSolver
+from src.utils.Arguments import Arguments
+from src.utils.LogPrint import LogPrintLevel
+
+
+class JairSearch(Search):
+
+    def __init__(self, domain: GroundedDomain, problem: Problem, args: Arguments):
+        super().__init__(domain, problem, args)
+        self.enhanced = self.args.pattern == "enhanced"
+
+    def solve(self) -> Plan:
+        callsToSolver = 0
+
+        totalSubgoals = self.problem.goal.conditions
+        subgoalsAchieved = set()
+
+        bound = self.startBound
+        initialState: State = State.fromInitialCondition(self.problem.init)
+        s: State = initialState
+
+        pat: Pattern = Pattern.fromOrder([])
+        GF: Type[GoalFunction] = GoalFunction.getGoalFunctionFromString(self.args.goalFunction)
+        c = GF.compute(s, self.problem.goal)
+        patH: Pattern = Pattern.fromState(s, self.problem.goal, self.domain, enhanced=self.enhanced)
+
+        self.console.log(f"Goal Function Value: {c}", LogPrintLevel.PLAN)
+
+        while bound <= self.maxBound:
+
+            pat: Pattern = copy.deepcopy(pat + patH)
+
+            if self.args.printPattern:
+                self.console.log("Pattern: " + str(pat), LogPrintLevel.PLAN)
+
+            self.ts.start(f"Conversion to SMT at bound {bound}", console=self.console)
+            encoding: NumericEncoding = NumericEncoding(
+                domain=self.domain,
+                problem=self.problem,
+                pattern=pat,
+                goalFunction=GF,
+                goalFunctionValue=c,
+                bound=1,
+                args=self.args,
+                relaxGoal=True,
+                subgoalsAchieved=subgoalsAchieved
+            )
+
+            self.ts.end(f"Conversion to SMT at bound {bound}", console=self.console)
+            self.console.log(f"Bound {bound} - Vars = {encoding.getNVars()}", LogPrintLevel.STATS)
+            self.console.log(f"Bound {bound} - Rules = {encoding.getNRules()}", LogPrintLevel.STATS)
+            self.console.log(f"Bound {bound} - Avg Rule Length = {encoding.getAvgRuleLength()}", LogPrintLevel.STATS)
+            self.console.log(f"Bound {bound} - Pattern Length = {patF.getLength()}", LogPrintLevel.STATS)
+
+            self.ts.start(f"Solving Bound {bound}", console=self.console)
+            solver: SMTSolver = SMTSolver(encoding)
+            callsToSolver += 1
+            plan: Plan = solver.solve()
+            solver.exit()
+            self.ts.end(f"Solving Bound {bound}", console=self.console)
+
+            if self.args.printPartialPlan and plan:
+                print("--Partial Plan---")
+                print(plan)
+                print("-----------------")
+
+            if self.args.saveSMT:
+                self.saveSMT(bound, encoding, callsToSolver=callsToSolver)
+
+            if not isinstance(plan, Plan):
+                continue
+
+            s = initialState.applyPlan(plan)
+            if s.satisfies(self.problem.goal):
+                return plan
+            c = GF.compute(s, self.problem.goal)
+            patH: Pattern = Pattern.fromState(s, self.problem.goal, self.domain, enhanced=self.enhanced)
+            patH.addPostfix(bound)
+
+            bound = bound + 1
+        pass

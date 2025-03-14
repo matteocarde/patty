@@ -1,5 +1,6 @@
-from typing import List, Dict, Set
+from typing import List, Dict, Set, Type
 
+from src.goalFunctions.GoalFunction import GoalFunction
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
@@ -9,6 +10,7 @@ from src.pddl.Formula import Formula
 from src.pddl.Literal import Literal
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
+from src.pddl.State import State
 from src.plan.Encoding import Encoding
 from src.plan.NumericTransitionVariables import NumericTransitionVariables
 from src.plan.Pattern import Pattern
@@ -27,7 +29,8 @@ class NumericEncoding(Encoding):
 
     def __init__(self, domain: GroundedDomain, problem: Problem, pattern: Pattern, bound: int,
                  args: Arguments, relaxGoal=False, subgoalsAchieved=None, minimizeQuality=False,
-                 maxActionsRolling: Dict[int, Dict[Action, int]] = None):
+                 maxActionsRolling: Dict[int, Dict[Action, int]] = None,
+                 goalFunction: Type[GoalFunction] = None, goalFunctionValue: float = 0.0):
 
         super().__init__(domain, problem, pattern, bound)
         self.domain = domain
@@ -42,6 +45,8 @@ class NumericEncoding(Encoding):
         self.binaryActions: int = args.binaryActions
         self.hasEffectAxioms = args.hasEffectAxioms
         self.maxActionsRolling = maxActionsRolling
+        self.goalFunction = goalFunction
+        self.goalFunctionValue = goalFunctionValue
 
         self.transitionVariables: [NumericTransitionVariables] = list()
 
@@ -146,6 +151,11 @@ class NumericEncoding(Encoding):
 
         if self.relaxGoal and self.problem.goal.type != "AND":
             raise Exception("At the moment I cannot relax the goal if it is not expressed as a conjunction of formulas")
+
+        if self.goalFunction:
+            vars = self.transitionVariables[-1].valueVariables
+            init = State.fromInitialCondition(self.problem.init)
+            return self.goalFunction.getExpression(vars, self.problem.goal, init) < self.goalFunctionValue
 
         return self.getGoalRuleFromFormula(self.problem.goal, 0)
 
