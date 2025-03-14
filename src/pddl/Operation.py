@@ -12,6 +12,7 @@ from src.pddl.Effects import Effects
 from src.pddl.Literal import Literal
 from src.pddl.OperationType import OperationType
 from src.pddl.Parameter import Parameter
+from src.pddl.Parameters import Parameters
 from src.pddl.Preconditions import Preconditions
 from src.pddl.Predicate import Predicate
 from src.pddl.Problem import Problem
@@ -23,7 +24,7 @@ class Operation:
     name: str
     valName: str
     planName: str
-    parameters: List[Parameter]
+    parameters: Parameters
     duration: Predicate
     preconditions: Preconditions
     effects: Effects
@@ -33,7 +34,7 @@ class Operation:
     def __init__(self):
         self.name: str = ""
         self.valName: str = ""
-        self.parameters = list()
+        self.parameters = Parameters()
         self.duration: Predicate = Constant(0)
         self.preconditions = Preconditions()
         self.effects = Effects()
@@ -102,11 +103,11 @@ class Operation:
             if isinstance(child, p.OpNameContext):
                 operation.name = child.getText()
             elif isinstance(child, p.OpParametersContext):
-                operation.setParameters(child.getChild(1), types)
+                operation.parameters = Parameters.fromNode(child.getChild(1), types)
             elif isinstance(child, p.OpPreconditionContext):
                 operation.addPreconditions(child)
             elif isinstance(child, p.OpEffectContext):
-                operation.addEffects(child)
+                operation.addEffects(child, types)
         operation.duration = Constant(0)
 
         operation.cacheLists()
@@ -126,41 +127,27 @@ class Operation:
         operation.cacheLists()
         return operation
 
-    def setParameters(self, node: p.ParametersContext, types: Dict[str, Type]):
-        for child in node.children:
-            if not isinstance(child, p.TypedAtomParameterContext):
-                continue
-            varNames = []
-            varType = types[child.atomsType.getText().lower()]
-
-            for x in child.children:
-                if isinstance(x, p.LiftedAtomParameterContext):
-                    varNames.append(x.getText())
-
-            for name in varNames:
-                self.parameters.append(Parameter(name, varType))
-
     def addPreconditions(self, node: p.OpPreconditionContext or p.OpDurativeConditionContext):
         self.preconditions = Preconditions.fromNode(node.getChild(1))
 
-    def addEffects(self, node: p.OpEffectContext or p.OpDurativeEffectContext):
-        self.effects = Effects.fromNode(node.getChild(1))
+    def addEffects(self, node: p.OpEffectContext or p.OpDurativeEffectContext, types):
+        self.effects = Effects.fromNode(node.getChild(1), types)
 
     def getSignature(self):
         params = [p.name for p in self.parameters]
         return f"{self.name}({','.join(params)})"
 
-    def getCombinations(self, problem: Problem) -> List[List[str, str]]:
-        subs: List[List[str]] = list()
-        for parameter in self.parameters:
-            pSubs = list()
-            for childType in parameter.type.getMeAndMyChildren():
-                if childType.name not in problem.objectsByType:
-                    continue
-                pSubs += problem.objectsByType[childType.name]
-            subs.append(pSubs)
+    def eliminateQuantifiers(self, problem: Problem) -> Operation:
+        qeOperation = copy.deepcopy(self)
+        qeOperation.effects = qeOperation.effects.eliminateQuantifiers(problem)
 
-        return subs  # list(itertools.product(*subs))
+        return qeOperation
+
+    def hasQuantifiers(self):
+        return self.effects.hasQuantifiers()
+
+    def getDynamicAtoms(self):
+        return self.effects.getDynamicAtoms()
 
     def __getValidCombinationsSub(self, problem: Problem, item: Tuple, itemParams: List[str],
                                   downLevels: List[List[str]], paramsLeft: List[str]) -> List[Tuple]:
@@ -184,8 +171,8 @@ class Operation:
         paths: List[Tuple] = self.__getValidCombinationsSub(problem, tuple(), [], levels, params)
         return paths
 
-    def getGroundedOperations(self, problem, delta=1):
-        levels: List[List[str]] = self.getCombinations(problem)
+    def getGroundedOperations(self, problem):
+        levels: List[List[str]] = self.parameters.getCombinations(problem)
 
         combinations: List[Tuple]
 
@@ -203,11 +190,11 @@ class Operation:
         for sub in validCombinations:
             name = self.__getGroundedName(sub)
             planName = self.__getGroundedPlanName(sub)
-            preconditions = self.preconditions.ground(sub, delta=delta)
-            effects = self.effects.ground(sub)
+            preconditions = self.preconditions.ground(sub, problem)
+            effects = self.effects.ground(sub, problem)
             duration = None
             if self.duration:
-                duration = self.duration.ground(sub)
+                duration = self.duration.ground(sub, problem)
             operation: Operation = Operation.fromProperties(name, [], preconditions, effects, planName,
                                                             duration=duration)
             operation.lifted = self
@@ -385,9 +372,20 @@ class Operation:
             self.deltaMinus.setdefault(v, list())
 
         if not self.hasConditionalEffects():
+            for e in self.effects:
+                if not isinstance(e, Literal):
+                    continue
+                noCondition = ConditionalEffect()
+                noCondition.effects.addEffect(e)
+                v = e.getAtom()
+                if e.sign == "+":
+                    self.deltaPlus[v].append(noCondition)
+                    self.addedAtoms.add(v)
+                if e.sign == "-":
+                    self.deltaMinus[v].append(noCondition)
+                    self.deletedAtoms.add(v)
             return
 
-        toBeRemoved = set()
         noCondition = ConditionalEffect()
         newEffects = Effects()
         for e in self.effects:

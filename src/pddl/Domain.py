@@ -5,8 +5,10 @@ from typing import Dict, List, Set
 
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
+from src.pddl.Constraints import Constraints
 from src.pddl.DurativeAction import DurativeAction
 from src.pddl.Event import Event
+from src.pddl.Formula import Formula
 from src.pddl.Operation import Operation
 from src.pddl.PDDLWriter import PDDLWriter
 from src.pddl.Problem import Problem
@@ -30,6 +32,7 @@ class Domain:
     actions: set[Action]
     events: set[Event]
     processes: set[Process]
+    constraints: Constraints
     __operationsDict: Dict[str, Operation]
 
     def __init__(self):
@@ -42,6 +45,7 @@ class Domain:
         self.events = set()
         self.requirements = list()
         self.constants = set()
+        self.constraints = Constraints()
         self.isPredicateStatic: Dict[str, bool] = dict()
         pass
 
@@ -58,6 +62,8 @@ class Domain:
         domain.processes = copy.deepcopy(self.processes, m)
         domain.durativeActions = copy.deepcopy(self.durativeActions, m)
         domain.constants = copy.deepcopy(self.constants, m)
+        domain.constraints = copy.deepcopy(self.constraints, m)
+        domain.isPredicateStatic = copy.deepcopy(self.isPredicateStatic, m)
         return domain
 
     def hasConditionalEffects(self) -> bool:
@@ -66,17 +72,34 @@ class Domain:
                 return True
         return False
 
+    def eliminateQuantifiers(self, problem) -> Domain:
+
+        problem.computeWhatCanHappen(self)
+
+        qeDomain = copy.deepcopy(self)
+        qeDomain.actions = {a.eliminateQuantifiers(problem) for a in qeDomain.actions}
+
+        return qeDomain
+
+    def hasQuantifiers(self) -> bool:
+        for a in self.actions:
+            if a.hasQuantifiers():
+                return True
+        return False
+
     def ground(self, problem: Problem, avoidSimplification=False, console: LogPrint = None, delta=1) -> GroundedDomain:
 
         problem.computeWhatCanHappen(self)
 
-        gActions: Set[Action] = set([g for action in self.actions for g in action.ground(problem, delta=delta)])
-        gEvents: Set[Event] = set([g for event in self.events for g in event.ground(problem, delta=delta)])
-        gProcess: Set[Process] = set([g for process in self.processes for g in process.ground(problem, delta=delta)])
+        gActions: Set[Action] = set([g for action in self.actions for g in action.ground(problem)])
+        gEvents: Set[Event] = set([g for event in self.events for g in event.ground(problem)])
+        gProcess: Set[Process] = set([g for process in self.processes for g in process.ground(problem)])
         gDurativeActions: Set[DurativeAction] = set(
-            [g for dAction in self.durativeActions for g in dAction.ground(problem, delta=delta)])
+            [g for dAction in self.durativeActions for g in dAction.ground(problem)])
 
         gDomain = GroundedDomain(self.name, gActions, gEvents, gProcess, gDurativeActions)
+        gDomain.lifted = self
+        gDomain.constraints = self.constraints.ground(problem)
         gDomain.computeLists()
         gDomain.allAtoms |= problem.allAtoms
         gDomain.functions |= problem.functions
@@ -93,16 +116,19 @@ class Domain:
 
         initialState = State.fromInitialCondition(problem.init)
         arpg = ARPG(gDomain, initialState, problem.goal)
-        constants: Dict[Atom, float] = arpg.getConstantAtoms()
+        constants: Dict[Atom, float or bool] = arpg.getConstantAtoms()
         for fun in gDomain.functions:
             if fun not in problem.init.numericAssignments:
                 # print(f"WARNING: {fun} was not initialized. Substituting it with 0")
                 constants[fun] = 0
 
+        # for v in gDomain.predicates - gDomain.getDynamicAtoms():
+        #     constants[v] = problem.init.getAssignment(v)
+
         gDomain.substitute(constants)
         problem.substitute(constants)
 
-        actions = [a.substitute(constants) for a in gDomain.actions if a in arpg.getUsefulActions()]
+        actions = [a.substitute(constants) for a in gDomain.actions]  # if a in arpg.getUsefulActions()]
 
         gDomain.operations = set()
         gDomain.actions = set()
@@ -157,6 +183,8 @@ class Domain:
                 domain.events.add(Event.fromNode(child, domain.types))
             elif isinstance(child, pddlParser.ProcessContext):
                 domain.processes.add(Process.fromNode(child, domain.types))
+            elif isinstance(child, pddlParser.ConstraintsContext):
+                domain.constraints = Constraints.fromNode(child, domain.types)
 
             # dAction: DurativeAction
             # for dAction in domain.durativeActions:
@@ -168,11 +196,16 @@ class Domain:
             #             dAction.addSnapAction(t, a)
 
         domain.isPredicateStatic: Dict[str, bool] = dict([(p.name, True) for p in domain.predicates | domain.functions])
-        for action in domain.actions | domain.events | domain.processes | domain.durativeActions:
-            for eff in action.effects.getFunctions() | action.effects.getPredicates():
-                domain.isPredicateStatic[eff.name] = False
+        for v in domain.getDynamicAtoms():
+            domain.isPredicateStatic[v.name] = False
 
         return domain
+
+    def getDynamicAtoms(self) -> Set[Atom]:
+        dAtoms: Set[Atom] = set()
+        for a in self.actions | self.events | self.processes | self.durativeActions:
+            dAtoms |= a.getDynamicAtoms()
+        return dAtoms
 
     @classmethod
     def fromFile(cls, filename) -> Domain:
@@ -237,6 +270,8 @@ class GroundedDomain(Domain):
     __operationsDict: Dict[str, Operation] = dict()
     functions: Set[Atom]
     predicates: Set[Atom]
+    constraints: Formula
+    lifted: Domain
     pre: Dict[Atom, Set[Operation]]
     preN: Dict[Atom, Set[Operation]]
     preB: Dict[Atom, Set[Operation]]
@@ -283,6 +318,7 @@ class GroundedDomain(Domain):
         self.functions = set()
         self.predicates = set()
 
+        self.predicates |= self.constraints.getPredicates()
         for op in self.operations:
             self.__operationsDict[op.planName] = op
             self.functions |= op.getFunctions()
@@ -310,6 +346,7 @@ class GroundedDomain(Domain):
 
     def substitute(self, sub: Dict[Atom, float], default=None):
         self.actions = {a.substitute(sub, default) for a in self.actions if a.canHappen(sub, default)}
+        self.constraints = self.constraints.substitute(sub, default)
 
     def getARPG(self):
         return self.arpg

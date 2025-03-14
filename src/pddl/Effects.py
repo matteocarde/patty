@@ -8,7 +8,9 @@ from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate, BinaryPredicateType
 from src.pddl.Literal import Literal
 from src.pddl.PDDLWriter import PDDLWriter
+from src.pddl.Problem import Problem
 from src.pddl.TimePredicate import TimePredicate, TimePredicateType
+from src.pddl.Type import Type
 from src.pddl.grammar.pddlParser import pddlParser
 from src.pddl.grammar.pddlParser import pddlParser as p
 
@@ -34,14 +36,16 @@ class Effects:
         return eff
 
     @classmethod
-    def fromNode(cls, node: pddlParser.EffectsContext) -> Effects:
+    def fromNode(cls, node: pddlParser.EffectsContext, types: Dict[str, Type]) -> Effects:
 
         from src.pddl.ConditionalEffect import ConditionalEffect
+        from src.pddl.ForallEffect import ForallEffect
 
         effects = cls()
         nodes: [p.EffectContext] = []
-
-        if type(node.getChild(0)) in {p.AndEffectContext, p.AndDurativeEffectContext}:
+        if type(node) in {p.BooleanLiteralContext, p.CeContext}:
+            nodes.append(node)
+        elif type(node.getChild(0)) in {p.AndEffectContext, p.AndDurativeEffectContext}:
             nodes.extend([n.getChild(0) for n in node.getChild(0).children[2:-1]])
         else:
             nodes.append(node.getChild(0).getChild(0))
@@ -53,15 +57,37 @@ class Effects:
                 effects.assignments += TimePredicate.fromNode(n)
             elif isinstance(n, p.CeContext):
                 effects.assignments.append(ConditionalEffect.fromNode(n))
+            elif isinstance(n, p.ForallEffectContext):
+                effects.assignments.append(ForallEffect.fromNode(n, types))
             else:
                 effects.assignments.append(BinaryPredicate.fromNode(n))
 
         return effects
 
-    def ground(self, sub: Dict[str, str], delta=1) -> Effects:
+    def ground(self, sub: Dict[str, str], problem: Problem) -> Effects:
         e = Effects()
-        e.assignments = [predicate.ground(sub, delta=1) for predicate in self.assignments]
+        e.assignments = [predicate.ground(sub, problem) for predicate in self.assignments]
         return e
+
+    def eliminateQuantifiers(self, problem: Problem) -> Effects:
+
+        from src.pddl.ForallEffect import ForallEffect
+        qeEffects = copy.deepcopy(self)
+        assignments = list()
+        for eff in qeEffects.assignments:
+            if not isinstance(eff, ForallEffect):
+                assignments.append(eff)
+                continue
+            assignments += eff.eliminate(problem)
+        qeEffects.assignments = assignments
+        return qeEffects
+
+    def hasQuantifiers(self):
+        from src.pddl.ForallEffect import ForallEffect
+        for eff in self.assignments:
+            if isinstance(eff, ForallEffect):
+                return True
+        return False
 
     def getFunctions(self):
         return set(chain.from_iterable([c.getFunctions() for c in self.assignments if isinstance(c, BinaryPredicate)]))
@@ -69,9 +95,11 @@ class Effects:
     def getPredicates(self):
         return set(chain.from_iterable([c.getPredicates() for c in self.assignments]))
 
-    def substitute(self, sub: Dict[Atom, float], default=None):
+    def substitute(self, sub: Dict[Atom, float or bool], default=None):
         e = Effects()
-        e.assignments = [predicate.substitute(sub, default) for predicate in self.assignments]
+        e.assignments = []
+        for p in self.assignments:
+            e.assignments.append(p.substitute(sub, default))
         return e
 
     def __iter__(self) -> Iterable[Literal or BinaryPredicate]:
@@ -155,3 +183,13 @@ class Effects:
         eff = Effects()
         eff.assignments = [a.toTimePredicate(type) for a in self.assignments]
         return eff
+
+    def getDynamicAtoms(self):
+        return {v for eff in self.assignments for v in eff.getDynamicAtoms()}
+
+    def hasConditionalEffects(self):
+        from src.pddl.ConditionalEffect import ConditionalEffect
+        for e in self.assignments:
+            if isinstance(e, ConditionalEffect):
+                return True
+        return False

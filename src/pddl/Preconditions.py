@@ -25,8 +25,8 @@ class Preconditions(Formula):
         p.__class__ = Preconditions
         return cast(Preconditions, p)
 
-    def ground(self, sub: Dict[str, str], delta=1) -> Preconditions:
-        f = super().ground(sub, delta)
+    def ground(self, sub: Dict[str, str], problem) -> Preconditions:
+        f = super().ground(sub, problem)
         f.__class__ = Preconditions
         return f
 
@@ -38,7 +38,3 @@ class Preconditions(Formula):
         # pw.increaseTab()
         super().toPDDL(pw)
         # pw.decreaseTab()
-
-
-
-

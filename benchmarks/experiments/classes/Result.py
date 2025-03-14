@@ -36,6 +36,7 @@ class Result(dict):
     avgVarsInRules: float = -1
     rolledActionsInPlan: int = -1
     transitiveClosureTime: int = -1
+    transitiveClosureSize: int = -1
 
     def __init__(self, domain: str, problem: str):
         super().__init__()
@@ -71,6 +72,8 @@ class Result(dict):
             r.rolledActionsInPlan = int(csvLine[19])
 
             r.transitiveClosureTime = int(csvLine[20])
+        if len(csvLine) > 21:
+            r.transitiveClosureSize = int(csvLine[21])
         r.__setDict()
         return r
 
@@ -85,6 +88,7 @@ class Result(dict):
         self["lastSearchedBound"] = self.lastSearchedBound
         self["lastCallsToSolver"] = self.lastCallsToSolver
         self["quantity"] = 1 if self.solved else 0
+        self["transitiveClosureSize"] = self.transitiveClosureSize
 
     @classmethod
     def parseTime(cls, stdout):
@@ -114,7 +118,8 @@ class Result(dict):
             (str(self.distinctActionsInPlan), 5),
             (str(self.avgVarsInRules), 8),
             (str(self.rolledActionsInPlan), 5),
-            (str(self.transitiveClosureTime), 5)
+            (str(self.transitiveClosureTime), 5),
+            (str(self.transitiveClosureSize), 5),
         ]
 
         string = "|" + "|".join(["{:^" + str(n[1]) + "}" for n in row]) + "|"
@@ -143,7 +148,8 @@ class Result(dict):
             str(self.distinctActionsInPlan),
             str(self.avgVarsInRules),
             str(self.rolledActionsInPlan),
-            str(self.transitiveClosureTime)
+            str(self.transitiveClosureTime),
+            str(self.transitiveClosureSize)
         ])
 
     @classmethod

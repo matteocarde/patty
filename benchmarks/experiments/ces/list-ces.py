@@ -5,33 +5,42 @@ from natsort import natsort
 # PLANNERS = ["PATTY", "PATTY-R-YICES", "PATTY-R-Z3-NL", "PATTY-NL", "PATTY-Z3", "SPRINGROLL"]
 PLANNERS = [
     "PATTY-CES",
-    "MADAGASCAR",
-    "ENHSP-SAT-HADD",
-    "ENHSP-SAT-HMAX",
-    "ENHSP-SAT-HMRP"
+    "PATTY-CES-NO-TC",
+    "PATTY-CES-NO-C"
 ]
 NAME = "ces.csv"
 
 
 def main():
     domains = [
-        "ces/counters"
+        "ces/counter",
+        # "ces/grid",
+        # "ces/tapes",
+        "ces/meeting",
+        "ces/meeting-no-pacman"
     ]
 
     instances = list()
 
     for domain in domains:
-        folders = natsort.natsorted(os.listdir(f"files/{domain}/domains/"))
-        for folder in folders:
-            problems = natsort.natsorted(os.listdir(f"files/{domain}/domains/{folder}/instances"))
+        files = []
+        dFolder = f"files/{domain}"
+        if os.path.exists(f"{dFolder}/instances"):
+            problems = natsort.natsorted(os.listdir(f"{dFolder}/instances"))
             for problem in problems:
                 if problem[-5:] != ".pddl":
                     continue
-                domainFile = f"files/{domain}/domains/{folder}/domain-{folder}.pddl"
-                problemFile = f"files/{domain}/domains/{folder}/instances/{problem}"
+                files.append((f"{dFolder}/domain.pddl", f"{dFolder}/instances/{problem}"))
 
-                for planner in PLANNERS:
-                    instances.append([planner, domain, domainFile, problemFile])
+        if os.path.exists(f"{dFolder}/domains"):
+            subDomains = natsort.natsorted(os.listdir(f"{dFolder}/domains"))
+            for subDomain in subDomains:
+                subDFolder = f"{dFolder}/domains/{subDomain}"
+                files.append((f"{subDFolder}/domain-{subDomain}.pddl", f"{subDFolder}/problem-{subDomain}.pddl"))
+
+        for planner in PLANNERS:
+            for (domainFile, problemFile) in files:
+                instances.append([planner, domain, domainFile, problemFile])
 
     random.shuffle(instances)
     print(f"Listing {len(instances)} instances")

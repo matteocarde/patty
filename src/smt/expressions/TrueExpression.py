@@ -1,6 +1,6 @@
-from typing import Dict
+from typing import Dict, Set
 
-from pyeda.boolalg.bdd import BDDVariable
+from libs.pyeda.pyeda.boolalg.bdd import BDDVariable
 from pysmt.fnode import FNode
 from pysmt.shortcuts import TRUE
 
@@ -16,12 +16,16 @@ class TrueExpression(NaryExpression):
         self.isConstant = True
         self.type = BOOLEAN
         self.depth = 1
+        self.size = 0
 
     def __hash__(self):
         return hash(True)
 
     def getExpression(self) -> FNode:
         return TRUE()
+
+    def getVariables(self) -> Set:
+        return set()
 
     def toBDDExpression(self, map: Dict[SMTBoolVariable, BDDVariable]):
         return 1

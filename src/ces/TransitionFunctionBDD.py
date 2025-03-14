@@ -1,19 +1,24 @@
 from __future__ import annotations
 
 import copy
-from typing import Dict, List
+import time
+from typing import Dict, List, Tuple, Set
 
-from pyeda.boolalg.bdd import BDDVariable, bddvar, BinaryDecisionDiagram, bdd2expr
-from pyeda.boolalg.expr import OrAndOp
-
+from libs.pyeda.pyeda.boolalg.bdd import BinaryDecisionDiagram, BDDVariable, bddvar, bdd2expr, _NODES, BDDNODEZERO, \
+    BDDNODEONE
+from libs.pyeda.pyeda.boolalg.expr import OrAndOp
 from src.ces.ActionStateTransitionFunction import ActionStateTransitionFunction
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
+from src.pddl.Domain import GroundedDomain
+from src.pddl.FalsePredicate import FalsePredicate
+from src.pddl.Formula import Formula
 from src.pddl.State import State
+from src.pddl.TruePredicate import TruePredicate
 from src.smt.SMTBoolVariable import SMTBoolVariable
 from src.smt.SMTExpression import SMTExpression
-from src.utils.LogPrint import LogPrint, LogPrintLevel
-from src.utils.TimeStat import TimeStat
+from src.smt.expressions.FalseExpression import FalseExpression
+from src.smt.expressions.TrueExpression import TrueExpression
 
 
 def Iff(a, b):
@@ -23,65 +28,169 @@ def Iff(a, b):
 class TransitionFunctionBDD:
     transitionFunction: ActionStateTransitionFunction
     atoms: List[Atom]
+    staticAtoms: Set[Atom]
+    staticVars: Set[BDDVariable]
     action: Action
     m: int
     currentState: Dict[Atom, SMTBoolVariable]
     nextState: Dict[Atom, SMTBoolVariable]
-    currentCounting: List[SMTBoolVariable]
-    nextCounting: List[SMTBoolVariable]
     Xs: Dict[int, Dict[SMTBoolVariable, BDDVariable]]
     atomsOrder: List[Atom]
     bdd: BinaryDecisionDiagram
-    expr: OrAndOp
+    atom2var: Dict[Atom, Dict[int, BDDVariable]]
+    var2atom: Dict[str, Atom]
+    constraints: Formula
+    expr: SMTExpression
+    smt2bdd: Dict[SMTBoolVariable, BDDVariable]
+    bdd2smt: Dict[str, SMTBoolVariable]
+    C0: BinaryDecisionDiagram
+    C1: BinaryDecisionDiagram
+    C2: BinaryDecisionDiagram
+    P0: BinaryDecisionDiagram
+    CLHS: BinaryDecisionDiagram
 
-    def __init__(self, t: ActionStateTransitionFunction):
-        self.transitionFunction = t
-        self.action = self.transitionFunction.action
-        self.m = self.transitionFunction.m
-        self.atoms = list(self.action.predicates)
-        self.staticAtoms = self.action.predicates - (
-                self.action.addedAtoms | self.action.deletedAtoms)
-        self.currentState = self.transitionFunction.current
-        self.nextState = self.transitionFunction.next
-        self.staticVars = {self.currentState[v] for v in self.staticAtoms} | {self.nextState[v] for v in
-                                                                              self.staticAtoms}
-        self.clauses = self.transitionFunction.clauses
+    def __init__(self):
+        pass
 
     @classmethod
-    def fromActionStateTransitionFunction(cls, t: ActionStateTransitionFunction, atomsOrder: List[Atom]):
-        tfbdd = cls(t)
-        tfbdd.atomsOrder = atomsOrder
-        tfbdd.Xs = tfbdd.getXs(0, 2)
-        bdd = tfbdd.clauses.toBDDExpression({**tfbdd.Xs[0], **tfbdd.Xs[2]})
-        tfbdd.bdd = bdd
-        tfbdd.expr = bdd2expr(bdd, conj=True)
-        return tfbdd
+    def fromProperties(cls,
+                       t: ActionStateTransitionFunction,
+                       atomsOrder: List[Atom],
+                       variables: Dict[Atom, Dict[int, BDDVariable]],
+                       relaxed: bool,
+                       reflexive: bool):
+        tf = cls()
+        tf.transitionFunction = t
+        tf.action = tf.transitionFunction.action
+        tf.m = tf.transitionFunction.m
+        tf.atoms = list(tf.action.predicates)
+        tf.staticAtoms = tf.action.predicates - (tf.action.addedAtoms | tf.action.deletedAtoms)
+        tf.currentState = tf.transitionFunction.current
+        tf.nextState = tf.transitionFunction.next
+        tf.staticVars = {tf.currentState[v] for v in tf.staticAtoms} | {tf.nextState[v] for v in tf.staticAtoms}
+        tf.atomsOrder = atomsOrder
+        tf.atom2var: Dict[Atom, Dict[int, BDDVariable]] = variables
+        tf.constraints = tf.computeConstraints(t.domain.constraints)
+
+        tf.P0 = tf.getPrecondition()
+        tf.C0, tf.C1, tf.C2 = tf.getConstraints()
+        tf.CLHS = tf.P0 & tf.C0 & tf.C2 if relaxed and reflexive else 1
+
+        tf.Xs: Dict[int, Dict[SMTBoolVariable, BDDVariable]] = tf.getXs(0, 2)
+        tf.smt2bdd: Dict[SMTBoolVariable, BDDVariable] = dict()
+        tf.bdd2smt: Dict[str, SMTBoolVariable] = dict()
+        for smt, bdd in tf.Xs[0].items():
+            tf.smt2bdd[smt] = bdd
+            tf.bdd2smt[bdd.name] = smt
+        for smt, bdd in tf.Xs[2].items():
+            tf.smt2bdd[smt] = bdd
+            tf.bdd2smt[bdd.name] = smt
+
+        return tf
+
+    def __copy__(self):
+        tf = TransitionFunctionBDD()
+        tf.transitionFunction = self.transitionFunction
+        tf.action = self.action
+        tf.m = self.m
+        tf.atoms = self.atoms
+        tf.staticAtoms = self.staticAtoms
+        tf.currentState = self.currentState
+        tf.nextState = self.nextState
+        tf.staticVars = self.staticVars
+        tf.atomsOrder = self.atomsOrder
+        tf.atom2var = self.atom2var
+        tf.smt2bdd = self.smt2bdd
+        tf.bdd2smt = self.bdd2smt
+        tf.constraints = self.constraints
+        tf.Xs = self.Xs
+        tf.C0, tf.C1, tf.C2 = self.C0, self.C1, self.C2
+        tf.CLHS = self.CLHS
+        tf.P0 = self.P0
+        return tf
+
+    def computeConstraints(self, c: Formula) -> Formula:
+
+        if isinstance(c, TruePredicate) or isinstance(c, FalsePredicate):
+            return c
+
+        if not c.conditions:
+            return c
+
+        atom2var: Dict[Atom, BDDVariable] = dict()
+        var2atom: Dict[str, Atom] = dict()
+        for atom in c.getPredicates():
+            name = f"c_{self.action}_{atom}"
+            atom2var[atom] = bddvar(name)
+            var2atom[name] = atom
+
+        atomsNonInAction: Set[Atom] = c.getPredicates() - self.action.predicates
+        prunedC: Formula = c.pruneSubFormulasWithAllVariablesIn(atomsNonInAction)
+        cBDD: BinaryDecisionDiagram = prunedC.toBDD(atom2var)
+        if type(cBDD) == int:
+            return prunedC
+        bddVarsNonInAction: Set[BDDVariable] = set([atom2var[v] for v in prunedC.atoms - self.action.predicates])
+        cBDDRemoved = cBDD.smoothing(bddVarsNonInAction)
+        f = Formula.fromBDD(cBDDRemoved, var2atom)
+
+        return f
+
+    @classmethod
+    def fromActionStateTransitionFunction(cls,
+                                          t: ActionStateTransitionFunction,
+                                          atomsOrder: List[Atom],
+                                          variables: Dict[Atom, Dict[int, BDDVariable]],
+                                          relaxed: bool,
+                                          reflexive: bool):
+
+        tf = TransitionFunctionBDD.fromProperties(t, atomsOrder, variables, relaxed, reflexive)
+
+        bdd = t.clauses.toBDDExpression({**tf.Xs[0], **tf.Xs[2]})
+        tf.bdd = bdd
+        tf.expr = SMTExpression.fromBDDExpression(bdd2expr(tf.bdd), tf.bdd2smt)
+        return tf
+
+    def size(self):
+        size = 0
+        for node in self.bdd.dfs_postorder():
+            if node is not BDDNODEZERO and node is not BDDNODEONE:
+                size += 1
+        return size
+
+    def getVarFromAtom(self, v, i):
+        return self.atom2var[v][i] if v not in self.staticAtoms else self.atom2var[v][0]
 
     def getXs(self, a: int, b: int) -> Dict[int, Dict[SMTBoolVariable, BDDVariable]]:
         Xs: Dict[int, Dict[SMTBoolVariable, BDDVariable]] = dict()
         Xs[a] = dict()
         Xs[b] = dict()
-        for v in self.atoms:
-            Xs[a][self.currentState[v]] = bddvar(f"{self.action}_{v}_{a}")
-            Xs[b][self.nextState[v]] = bddvar(f"{self.action}_{v}_{b}") if v not in self.staticAtoms else bddvar(
-                f"{self.action}_{v}_0")
+        for v in self.atomsOrder:
+            Xs[a][self.currentState[v]] = self.getVarFromAtom(v, a)
+            Xs[b][self.nextState[v]] = self.getVarFromAtom(v, b)
         return Xs
 
-    def smoothingSet(self, func: BinaryDecisionDiagram, vars: List[BDDVariable],
-                     var: BDDVariable or None = None):
-        if not var:
-            return self.smoothingSet(func, vars[1:], vars[0])
+    def getConstraints(self) -> Tuple[BinaryDecisionDiagram, BinaryDecisionDiagram, BinaryDecisionDiagram]:
+        X = dict()
+        for i in range(0, 3):
+            X[i] = dict()
+            for v in self.atoms:
+                X[i][v] = self.getVarFromAtom(v, i)
 
-        sFunc = self.smoothingSet(func, vars[1:], vars[0]) if vars else func
-        left = sFunc.restrict({var: 0})
-        right = sFunc.restrict({var: 1})
-        join = left | right
-        return join
+        C0 = self.constraints.toBDD(X[0])
+        C1 = self.constraints.toBDD(X[1])
+        C2 = self.constraints.toBDD(X[2])
+        return C0, C1, C2
+
+    def getPrecondition(self) -> BinaryDecisionDiagram:
+        X0 = dict()
+        for v in self.atoms:
+            X0[self.currentState[v]] = self.getVarFromAtom(v, 0)
+
+        bdd = self.transitionFunction.preconditions.toBDDExpression(X0)
+        return bdd
 
     def computeTransition(self, reflexive=True) -> TransitionFunctionBDD:
-        ith = TransitionFunctionBDD(self.transitionFunction)
-        ith.Xs = self.Xs
-        ith.atomsOrder = self.atomsOrder
+        ith = copy.copy(self)
 
         Xs1 = ith.getXs(0, 1)
         Xs2 = ith.getXs(1, 2)
@@ -98,17 +207,18 @@ class TransitionFunctionBDD:
         bdd1 = self.bdd.compose(rep1)
         bdd2 = self.bdd.compose(rep2)
 
-        toBeSmoothed = bdd1 & bdd2
+        toBeSmoothed: BinaryDecisionDiagram = bdd1 & self.C1 & bdd2
 
-        smoothVariables = [Xs2[1][self.currentState[v]] for v in self.atomsOrder if v not in self.staticAtoms]
+        smoothVariables = [Xs2[1][self.currentState[v]] for v in reversed(self.atomsOrder) if v not in self.staticAtoms]
 
-        smoothed = self.smoothingSet(toBeSmoothed, smoothVariables)
+        smoothed = toBeSmoothed.smoothing(smoothVariables)
 
         if reflexive:
-            ith.bdd = smoothed | self.bdd
+            ith.bdd = self.CLHS >> (smoothed | self.bdd)
         else:
             ith.bdd = smoothed
-        ith.expr = bdd2expr(ith.bdd, conj=True)
+
+        ith.expr = SMTExpression.fromBDDExpression(bdd2expr(ith.bdd), ith.bdd2smt)
 
         return ith
 
@@ -125,34 +235,36 @@ class TransitionFunctionBDD:
 
     def toGroundSMTExpression(self,
                               groundAction: Action,
+                              domain: GroundedDomain,
                               current: Dict[Atom, SMTExpression],
                               next: Dict[Atom, SMTExpression]):
 
-        liftedAtom2groundAtom: Dict[Atom, Atom] = dict()
-        for groundAtom in groundAction.predicates:
-            liftedAtom2groundAtom[groundAtom.lifted] = groundAtom
+        if self.bdd.is_one():
+            return TrueExpression()
+        if self.bdd.is_zero():
+            return FalseExpression()
 
-        liftedVar2sigma: Dict[SMTBoolVariable, SMTExpression] = dict()
-        for (liftedAtom, liftedVar) in self.currentState.items():
-            liftedVar2sigma[liftedVar] = current[liftedAtom2groundAtom[liftedAtom]]
-        for (liftedAtom, liftedVar) in self.nextState.items():
-            liftedVar2sigma[liftedVar] = next[liftedAtom2groundAtom[liftedAtom]]
+        groundAtom2StateVariable: Dict[SMTBoolVariable, SMTExpression] = dict()
+        for (groundAtom, groundVar) in self.currentState.items():
+            groundAtom2StateVariable[groundVar] = current[groundAtom]
+        for (groundAtom, groundVar) in self.nextState.items():
+            groundAtom2StateVariable[groundVar] = next[groundAtom]
 
-        bddVar2sigma: Dict[str, SMTExpression] = dict()
-        for smtvar, bddvar in {**self.Xs[0], **self.Xs[2]}.items():
-            bddVar2sigma[bddvar.name] = liftedVar2sigma[smtvar]
+        bddVar2StateVariable: Dict[str, SMTExpression] = dict()
+        for smtvar, bddvar in {**self.Xs[2], **self.Xs[0]}.items():
+            bddVar2StateVariable[bddvar.name] = groundAtom2StateVariable[smtvar]
 
-        groundExpr = SMTExpression.fromBDDExpression(self.expr, bddVar2sigma)
+        groundExpr = SMTExpression.fromBDDExpression(bdd2expr(self.bdd), bddVar2StateVariable)
         return groundExpr
 
-    def getRestriction(self, a: Action, s: State, Xs, vars) -> Dict[BDDVariable, float]:
+    def getRestriction(self, a: Action, s: State, Xs, vars) -> Dict[BDDVariable, bool]:
         restrict = dict()
-        for atom in a.predicates:
+        for atom in a.getPredicates():
             # for atom, ass in s.assignments.items():
-            if atom.lifted not in vars:
+            if atom not in vars or vars[atom] not in Xs:
                 continue
-            v0 = Xs[vars[atom.lifted]]
-            restrict[v0] = bool(s.assignments[atom])
+            v0 = Xs[vars[atom]]
+            restrict[v0] = bool(s.assignments[atom]) if atom in s.assignments else False
         return restrict
 
     def reachable(self, a: Action, s0: State, s2: State) -> bool:
@@ -167,7 +279,6 @@ class TransitionFunctionBDD:
             return True
         if res.is_zero():
             return False
-        print(a, res.to_dot())
         raise Exception("When computing reachability, there are some variables missing")
 
     def jumpState(self, a: Action, s0: State) -> State:
@@ -177,8 +288,8 @@ class TransitionFunctionBDD:
 
         s1 = copy.deepcopy(s0)
         for atom in a.predicates:
-            if atom.lifted not in self.nextState:
+            if atom not in self.nextState:
                 continue
-            var = self.Xs[2][self.nextState[atom.lifted]]
+            var = self.Xs[2][self.nextState[atom]]
             s1.setAtom(atom, sat[var] if var in sat else s0.getAtom(atom))
         return s1

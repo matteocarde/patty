@@ -8,7 +8,6 @@ from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.ConditionalEffect import ConditionalEffect
 from src.pddl.Constant import Constant
-from src.pddl.Effects import Effects
 from src.pddl.MooreInterval import MooreInterval
 from src.pddl.Operation import Operation
 from src.pddl.OperationType import OperationType
@@ -32,6 +31,7 @@ class Action(Operation):
         a = super().__deepcopy__(m)
         a.__class__ = Action
         a.isFake = self.isFake
+        a.lifted = self.lifted
         return a
 
     def __lt__(self, other):
@@ -53,9 +53,9 @@ class Action(Operation):
     def type(self):
         return OperationType.ACTION
 
-    def ground(self, problem, delta=1) -> List[Action]:
+    def ground(self, problem) -> List[Action]:
         groundOps: List = []
-        toGroundOps = self.getGroundedOperations(problem, delta=delta)
+        toGroundOps = self.getGroundedOperations(problem)
         for op in toGroundOps:
             op.__class__ = Action
             groundOps.append(op)
@@ -123,11 +123,7 @@ class Action(Operation):
             return False
         for e1 in [e1 for e1 in self.effects if isinstance(e1, ConditionalEffect)]:
             for e2 in [e2 for e2 in self.effects if isinstance(e2, ConditionalEffect) and e1 != e2]:
-                c11 = e1.effects.getNegative() & e2.conditions.getPositive()
-                c12 = e1.effects.getPositive() & e2.conditions.getNegative()
-                c21 = e1.effects.getPositive() & e2.conditions.getNegative()
-                c22 = e1.effects.getNegative() & e2.conditions.getNegative()
-                if (not c11 or not c12) and (c21 or c22):
+                if e1.allows(e2) and not e1.blocks(e2):
                     return True
         return False
 
@@ -148,6 +144,7 @@ class Action(Operation):
         planName = self.planName
         duration = self.duration.substitute(sub, default)
         action = Action.fromProperties(name, [], preconditions, effects, planName, duration=duration)
+        action.lifted = self.lifted
         return action
 
     def canHappen(self, sub: Dict[Atom, float or bool], default=None) -> bool:

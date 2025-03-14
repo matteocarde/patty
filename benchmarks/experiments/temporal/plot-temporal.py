@@ -1,7 +1,6 @@
 import csv
 import os
 import shutil
-import statistics
 from typing import List, Dict
 
 import numpy
@@ -11,13 +10,13 @@ from matplotlib import pyplot as plt
 from classes.Result import Result
 
 SOLVERS = {
-    "PATTY-T-OR-ASTAR": r"\textsc{Patty}_\vee",
-    "PATTY-T-SIGMA-ASTAR": r"\textsc{Patty}_\Sigma",
+    "PATTY-T-OR-ASTAR": r"\textsc{Patty}_\textsc{T}",
+    # "PATTY-T-SIGMA-ASTAR": r"\textsc{Patty}_\Sigma",
     "ANMLSMT": r"\textsc{AnmlSMT}",
     "ITSAT": r"\textsc{ITSat}",
-    # "LPG": r"\textsc{LPG}",
+    "LPG": r"\textsc{LPG}",
     "OPTIC": r"\textsc{Optic}",
-    # "TFD": r"\textsc{TFD}",
+    "TFD": r"\textsc{TFD}",
 }
 
 DOMAINS = {
@@ -25,12 +24,13 @@ DOMAINS = {
                       "temporal/match-ac",
                       "temporal/match-ms",
                       "temporal/oversub",
-                      "temporal/painter"},
-    "numeric": {"temporal/bottles-pour",
-                "temporal/bottles-shake",
-                "temporal/bottles-pack",
-                "temporal/bottles-all",
-                "temporal/majsp"},
+                      "temporal/painter",
+                      "temporal/bottles-pour",
+                      "temporal/bottles-shake",
+                      "temporal/bottles-pack",
+                      "temporal/bottles-all",
+                      "temporal/majsp"
+                      }
 }
 
 TIMEOUT = 300 * 1000
@@ -38,7 +38,7 @@ TIMEOUT = 300 * 1000
 
 def main():
     filename = "2024-01-14-TOTAL-v1.csv"
-    files = [f"benchmarks/results/{filename}"]
+    files = [f"benchmarks/results/csv/{filename}"]
 
     plt.rcParams.update({
         "text.usetex": True,
@@ -56,8 +56,7 @@ def main():
                 results.append(Result.fromCSVLine(line[0].split(",")))
 
     for key, domains in DOMAINS.items():
-        line = "dashed" if key == "propositional" else "solid"
-        suffix = "B" if key == "propositional" else "N"
+        line = "solid"
         bins: Dict[str, List[int]] = dict()
         ys = np.linspace(0, TIMEOUT, TIMEOUT // 600)
         for solver in SOLVERS:
@@ -79,7 +78,7 @@ def main():
 
         for solver in SOLVERS.keys():
             xs = xsSolver[solver]
-            plt.plot(xs, ys / 1000, label=f"${SOLVERS[solver]} ({suffix})$", linestyle=line)
+            plt.plot(xs, ys / 1000, label=f"${SOLVERS[solver]}$", linestyle=line)
             pass
 
     plt.xlabel("Instances solved")

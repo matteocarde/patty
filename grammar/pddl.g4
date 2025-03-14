@@ -22,7 +22,16 @@ pddlDoc : domain | problem;
 
 /************* DOMAINS ****************************/
 
-domain : LP 'define' domainName requirements? types? predicates? functions? (action | durativeAction | event | process)* RP;
+domain : LP
+            'define'
+            domainName
+            requirements?
+            types?
+            predicates?
+            functions?
+            (action | durativeAction | event | process)*
+            constraints?
+        RP;
 
 //DOMAIN NAME
 domainName: LP 'domain' NAME RP;
@@ -82,11 +91,18 @@ ceCond: andClause | orClause | booleanLiteral | negatedComparation | comparation
 ceEff: effectNoCes | andEffectNoCes;
 ce: LP 'when' cond=ceCond eff=ceEff RP;
 
-effect:  booleanLiteral | modification | ce;
+forallEffect: LP 'forall' parameters ce RP;
+
+forall: LP 'forall' parameters (forall | exists | andClause | orClause) RP;
+exists: LP 'exists' parameters (forall | exists | andClause | orClause) RP;
+
+effect:  booleanLiteral | modification | ce | forallEffect;
 effectNoCes:  booleanLiteral | modification;
 
-andClause: LP 'and' (andClause | orClause | booleanLiteral | negatedComparation  | comparation)+ RP;
-orClause: LP 'or' (andClause | orClause | booleanLiteral | negatedComparation  | comparation)+ RP;
+inequality: LP 'not' LP '=' a1=liftedAtomParameter a2=liftedAtomParameter RP RP;
+
+andClause: LP 'and' (andClause | orClause | inequality| booleanLiteral | negatedComparation  | comparation)+ RP;
+orClause: LP 'or' (andClause | orClause | inequality |booleanLiteral | negatedComparation  | comparation)+ RP;
 andEffect: LP 'and' effect+ RP;
 andEffectNoCes: LP 'and' effectNoCes+ RP;
 emptyPrecondition: LP RP;
@@ -144,6 +160,9 @@ process:  LP ':process' opName
             opPrecondition?
             opEffect
 		    RP;
+
+//CONSTRAINTS
+constraints:  LP ':constraints' LP 'and' (forall|exists)+ RP RP;
 
 /************* PROBLEM ****************************/
 

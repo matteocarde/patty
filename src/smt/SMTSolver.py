@@ -46,7 +46,7 @@ class SMTSolver:
 
     def addAssertion(self, expr: SMTExpression, push=True):
         self.assertions.append(expr)
-        self.variables.update(expr.getVariables())
+        self.variables |= expr.getVariables()
         z3Expr = self.z3.converter.convert(expr.getExpression()) if self.maximize else expr.getExpression()
 
         if self.maximize:

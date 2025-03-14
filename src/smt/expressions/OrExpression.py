@@ -1,10 +1,10 @@
-from typing import Dict
+from typing import Dict, List
 
-from pyeda.boolalg.bdd import BDDVariable
-from pyeda.boolalg.expr import OrOp, Variable, Complement, AndOp
 from pysmt.fnode import FNode
 from pysmt.shortcuts import Or as SMTOr
 
+from libs.pyeda.pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram
+from libs.pyeda.pyeda.boolalg.expr import OrOp, Variable, Complement, AndOp
 from src.smt.SMTBoolVariable import SMTBoolVariable
 from src.smt.SMTExpression import SMTExpression, BOOLEAN
 from src.smt.expressions.FalseExpression import FalseExpression
@@ -28,12 +28,24 @@ class OrExpression(NaryExpression):
             return lhs
         return cls(lhs, rhs)
 
+    def __orOfSubClauses(self, clauses):
+        if len(clauses) == 1:
+            return clauses[0]
+        elif len(clauses) == 0:
+            return 1
+
+        mid = len(clauses) // 2
+
+        # Recursively compute the sum of each half
+        left = self.__orOfSubClauses(clauses[:mid])
+        right = self.__orOfSubClauses(clauses[mid:])
+
+        # Combine the results
+        return left | right
+
     def toBDDExpression(self, map: Dict[SMTBoolVariable, BDDVariable]):
-        exprs = [c.toBDDExpression(map) for c in self.children]
-        f = exprs[0]
-        for c in exprs[1:]:
-            f = f | c
-        return f
+        clauses: List[BinaryDecisionDiagram] = [e.toBDDExpression(map) for e in self.children]
+        return self.__orOfSubClauses(clauses)
 
     def getExpression(self) -> FNode:
         return SMTOr([x.getExpression() for x in self.children])

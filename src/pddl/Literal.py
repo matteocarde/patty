@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 from typing import Dict, Set, Tuple, List
 
+from libs.pyeda.pyeda.boolalg.bdd import BinaryDecisionDiagram, BDDVariable
 from sympy import Expr
 
 from src.pddl.Atom import Atom
@@ -20,6 +21,7 @@ class Literal(Predicate):
     lifted: Literal or None
 
     def __init__(self):
+        self.lifted = None
         super().__init__()
 
     def __deepcopy__(self, m=None) -> Literal:
@@ -63,6 +65,9 @@ class Literal(Predicate):
     def isLinearIncrement(self):
         return False
 
+    def getDynamicAtoms(self):
+        return {self.atom}
+
     @classmethod
     def fromNode(cls, node: p.PositiveLiteralContext or p.NegativeLiteralContext) -> Literal:
         literal = cls()
@@ -90,7 +95,13 @@ class Literal(Predicate):
     def getLiterals(self) -> Set[Predicate]:
         return {self}
 
-    def ground(self, subs: Dict[str, str], delta=1) -> Literal:
+    def ground(self, subs: Dict[str, str], problem) -> Predicate:
+
+        if problem.isPredicateStatic[self.atom.name]:
+            from src.pddl.TruePredicate import TruePredicate
+            from src.pddl.FalsePredicate import FalsePredicate
+            sValue = self.getStaticValue(subs, problem)
+            return TruePredicate() if sValue else FalsePredicate()
 
         literal = Literal()
         literal.sign = self.sign
@@ -140,16 +151,27 @@ class Literal(Predicate):
             return Constant(subs[self.atom])
 
     def canHappen(self, subs: Dict[Atom, float or bool], default=None) -> bool:
-        return True if self.atom not in subs or subs[self.atom] else False
+        if self.sign == "+":
+            return True if self.atom not in subs or subs[self.atom] else False
+        if self.sign == "-":
+            return True if self.atom not in subs or not subs[self.atom] else False
 
     def isValid(self, subs: Dict[Atom, float or bool], default=None) -> bool:
         return False if self.atom not in subs or not subs[self.atom] else True
 
+    def getStaticValue(self, subs: Dict[str, str], problem) -> bool:
+        subStr = ",".join([subs[p] for p in self.atom.attributes])
+        atomStr = f"{self.atom.name}({subStr})"
+        if self.sign == "+":
+            return atomStr in problem.canHappenValue
+        if self.sign == "-":
+            return atomStr not in problem.canHappenValue
+
     def canHappenLifted(self, sub: Tuple, params: List[str], problem) -> bool:
         if not problem.isPredicateStatic[self.atom.name]:
             return True
-        attSet = set(self.atom.attributes)
-        subStr = ",".join([sub[i] for i, p in enumerate(params) if p in attSet])
+        subDict: dict = dict(zip(params, sub))
+        subStr = ",".join([subDict.get(p, p) for p in self.atom.attributes])
         atomStr = f"{self.atom.name}({subStr})"
         if self.sign == "+":
             return atomStr in problem.canHappenValue
@@ -209,3 +231,9 @@ class Literal(Predicate):
     def expressifyWithEquation(self, symbols: Dict[Atom, Expr]) -> Expr:
         # return Eq(self.expressify(symbols), 1) if self.sign == "+" else Eq(self.expressify(symbols), -1)
         return self.expressify(symbols) - 1 if self.sign == "+" else self.expressify(symbols) + 1
+
+    def toBDD(self, vars: Dict[Atom, BDDVariable]) -> BinaryDecisionDiagram:
+        if self.sign == "+":
+            return vars[self.atom]
+        if self.sign == "-":
+            return ~vars[self.atom]

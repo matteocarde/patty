@@ -186,13 +186,37 @@ COPY /benchmarks/planners/enhsp-socs /var/enhsp-socs
 ENV PATH /var/enhsp-socs/:${PATH}
 RUN chmod +x /var/enhsp-socs/enhsp-socs
 
-
 WORKDIR /project
 # Copying
-COPY . .
 
+#Install local pyeda
+WORKDIR /
+RUN pip uninstall pyeda -y
+COPY libs/pyeda libs/pyeda
+WORKDIR libs/pyeda
+RUN rm -rf dist
+RUN rm -rf build
+RUN rm -rf pyeda
+RUN mv pyeda_linux pyeda
+RUN python3.8 setup.py install
+RUN ls -la .
+RUN ls -la build
+RUN ls -la build/lib.linux-x86_64-cpython-38/pyeda/boolalg
+RUn rm -rf pyeda
+RUN mv build/lib.linux-x86_64-cpython-38/pyeda/ pyeda/
+RUN ls -la pyeda/boolalg
+
+WORKDIR /project
+COPY . .
 #Authorizations
 RUN chmod +x exes/*
+
+WORKDIR /
+RUN rm -rf project/libs/pyeda
+RUN mv libs/pyeda project/libs/pyeda
+
+WORKDIR /project
+
 
 #Execution
 ENTRYPOINT ["conda", "run", "--live-stream", "-n", "patty", "./exes/run.sh"]

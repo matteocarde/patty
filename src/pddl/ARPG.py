@@ -105,7 +105,7 @@ class ARPG:
 
         return order
 
-    def getConstantAtoms(self) -> Dict[Atom, float]:
+    def getConstantAtoms(self) -> Dict[Atom, float or bool]:
         if len(self.stateLevels) < 2:
             return dict()
         lastLevel: RelaxedIntervalState = self.stateLevels[-1]

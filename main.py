@@ -9,6 +9,7 @@ from src.pddl.Problem import Problem
 from src.plan.Pattern import Pattern
 from src.search.AStarSearchMax import AStarSearchMax
 from src.search.ChainSearch import ChainSearch
+from src.search.PASSearch import PASSearch
 from src.search.PlanImproverLess import PlanImproverLess
 from src.search.PlanImproverPattern import PlanImproverPattern
 from src.search.Search import Search
@@ -23,7 +24,6 @@ def main():
     if args.isHelp:
         exit(0)
 
-    solver: Search or None = None
     try:
         print(f"Using z3 version {z3.get_version_string()}")
         console: LogPrint = LogPrint(args.verboseLevel)
@@ -32,8 +32,12 @@ def main():
         domain: Domain = Domain.fromFile(args.domain)
         problem: Problem = Problem.fromFile(args.problem)
 
+        ts.start("Quantifier Elimination", console=console)
+        qeDomain: Domain = domain.eliminateQuantifiers(problem)
+        ts.end("Quantifier Elimination", console=console)
+
         ts.start("Grounding", console=console)
-        gDomain: GroundedDomain = domain.ground(problem, console=console)
+        gDomain: GroundedDomain = qeDomain.ground(problem, console=console)
         ts.end("Grounding", console=console)
 
         isTemporal = len(gDomain.durativeActions) > 0
@@ -41,7 +45,9 @@ def main():
         pattern: Pattern
         bound: int
 
-        if args.search == "astar":
+        if gDomain.hasConditionalEffects():
+            solver = PASSearch(gDomain, problem, args, liftedDomain=domain)
+        elif args.search == "astar":
             solver = AStarSearchMax(gDomain, problem, args)
         elif args.search == "step":
             solver = StepSearch(gDomain, problem, args)

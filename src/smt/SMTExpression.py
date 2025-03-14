@@ -2,14 +2,16 @@ from __future__ import annotations
 
 from typing import Set, Dict
 
-from pyeda.boolalg.expr import OrOp, AndOp, Variable, Complement, OrAndOp
+from libs.pyeda.pyeda.boolalg.expr import OrOp, AndOp, Variable, Complement, OrAndOp
 from pysmt.fnode import FNode
 
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.Constant import Constant
+from src.pddl.FalsePredicate import FalsePredicate
 from src.pddl.Formula import Formula
 from src.pddl.Literal import Literal
+from src.pddl.TruePredicate import TruePredicate
 from src.pddl.Predicate import Predicate
 
 NUMERIC = "N"
@@ -18,11 +20,9 @@ BOOLEAN = "B"
 
 class SMTExpression:
     type: str
+    size: int
     variables: set
     depth: int
-
-    def __init__(self):
-        pass
 
     def __str__(self):
         return str(self.getExpression().serialize())
@@ -55,7 +55,11 @@ class SMTExpression:
         from src.smt.expressions.ImpliesExpression import ImpliesExpression
         return ImpliesExpression(other, self)
 
-    def __eq__(self, other: SMTExpression or int):
+    # def __eq__(self, other: SMTExpression or int):
+    #     from src.smt.expressions.EqualExpression import EqualExpression
+    #     return EqualExpression.simplify(self, other)
+
+    def equal(self, other: SMTExpression or int):
         from src.smt.expressions.EqualExpression import EqualExpression
         return EqualExpression.simplify(self, other)
 
@@ -151,17 +155,35 @@ class SMTExpression:
             result = SMTExpression.opByString(predicate.operator, lhs, rhs)
             return result
         if isinstance(predicate, Literal):
+            atom = predicate.getAtom()
             if predicate.sign == "+":
-                return variables[predicate.getAtom()]
+                return variables[atom]
             else:
-                return ~variables[predicate.getAtom()]
+                return ~variables[atom]
         if isinstance(predicate, Constant):
             return predicate.value
+        from src.pddl.TruePredicate import TruePredicate
+        from src.smt.expressions.TrueExpression import TrueExpression
+        from src.pddl.FalsePredicate import FalsePredicate
+        from src.smt.expressions.FalseExpression import FalseExpression
+        if isinstance(predicate, TruePredicate):
+            return TrueExpression()
+        if isinstance(predicate, FalsePredicate):
+            return FalseExpression()
         raise Exception(f"Don't know how to convert {predicate} to Expression")
 
     @classmethod
     def fromFormula(cls, formula: Formula or Predicate,
                     variables: Dict[Atom, SMTExpression]) -> SMTExpression or float:
+
+        from src.smt.expressions.TrueExpression import TrueExpression
+        from src.smt.expressions.FalseExpression import FalseExpression
+
+        if isinstance(formula, TruePredicate):
+            return TrueExpression()
+        if isinstance(formula, FalsePredicate):
+            return FalseExpression()
+
         preRules = []
         if isinstance(formula, Predicate):
             return SMTExpression.fromPddl(formula, variables)
@@ -174,7 +196,7 @@ class SMTExpression:
         if formula.type == "AND":
             return SMTExpression.andOfExpressionsList(preRules)
         else:
-            return SMTExpression.andOfExpressionsList(preRules)
+            return SMTExpression.orOfExpressionsList(preRules)
 
     @classmethod
     def __connectiveOfExpressionList(cls, rules: [SMTExpression], connective):

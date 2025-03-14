@@ -1,0 +1,25 @@
+
+    (define (problem pb13)
+        (:domain tapes)
+        (:objects 
+            r - robot
+            t01 t02 t03 t04 t05 t06 t07 t08 t09 t10 t11 t12 t13 t14 t15 t16 t17 t18 - tape
+            a01 a02 a03 a04 a05 a06 a07 a08 a09 a10 a11 a12 a13 a14 a15 a16 a17 a18 - counter
+            c01 c02 c03 - cell
+        )
+        (:init
+            (onTape r t01)
+            (onCellRobot r c01)
+            (onCellCounter a01 t01 c02) (onCellCounter a02 t02 c02) (onCellCounter a03 t03 c02) (onCellCounter a04 t04 c02) (onCellCounter a05 t05 c02) (onCellCounter a06 t06 c02) (onCellCounter a07 t07 c02) (onCellCounter a08 t08 c02) (onCellCounter a09 t09 c02) (onCellCounter a10 t10 c02) (onCellCounter a11 t11 c02) (onCellCounter a12 t12 c02) (onCellCounter a13 t13 c02) (onCellCounter a14 t14 c02) (onCellCounter a15 t15 c02) (onCellCounter a16 t16 c02) (onCellCounter a17 t17 c02) (onCellCounter a18 t18 c02)
+            (startCell c01)
+            (isNextCell c01 c02) (isNextCell c02 c03) (isNextCell c03 c01)
+            (isNextTape t01 t02) (isNextTape t02 t03) (isNextTape t03 t04) (isNextTape t04 t05) (isNextTape t05 t06) (isNextTape t06 t07) (isNextTape t07 t08) (isNextTape t08 t09) (isNextTape t09 t10) (isNextTape t10 t11) (isNextTape t11 t12) (isNextTape t12 t13) (isNextTape t13 t14) (isNextTape t14 t15) (isNextTape t15 t16) (isNextTape t16 t17) (isNextTape t17 t18) (isNextTape t18 t01)
+            (x03 a01) (x03 a03) (x03 a05) (x03 a07) (x03 a09) (x03 a11) (x03 a13) (x03 a15) (x03 a17)
+        )
+        (:goal
+            (and  
+                (or (and (x01 a01) (x01 a02))(and (not (x01 a01)) (not (x01 a02)))) (or (and (x01 a02) (x01 a03))(and (not (x01 a02)) (not (x01 a03)))) (or (and (x01 a03) (x01 a04))(and (not (x01 a03)) (not (x01 a04)))) (or (and (x01 a04) (x01 a05))(and (not (x01 a04)) (not (x01 a05)))) (or (and (x01 a05) (x01 a06))(and (not (x01 a05)) (not (x01 a06)))) (or (and (x01 a06) (x01 a07))(and (not (x01 a06)) (not (x01 a07)))) (or (and (x01 a07) (x01 a08))(and (not (x01 a07)) (not (x01 a08)))) (or (and (x01 a08) (x01 a09))(and (not (x01 a08)) (not (x01 a09)))) (or (and (x01 a09) (x01 a10))(and (not (x01 a09)) (not (x01 a10)))) (or (and (x01 a10) (x01 a11))(and (not (x01 a10)) (not (x01 a11)))) (or (and (x01 a11) (x01 a12))(and (not (x01 a11)) (not (x01 a12)))) (or (and (x01 a12) (x01 a13))(and (not (x01 a12)) (not (x01 a13)))) (or (and (x01 a13) (x01 a14))(and (not (x01 a13)) (not (x01 a14)))) (or (and (x01 a14) (x01 a15))(and (not (x01 a14)) (not (x01 a15)))) (or (and (x01 a15) (x01 a16))(and (not (x01 a15)) (not (x01 a16)))) (or (and (x01 a16) (x01 a17))(and (not (x01 a16)) (not (x01 a17)))) (or (and (x01 a17) (x01 a18))(and (not (x01 a17)) (not (x01 a18)))) (or (and (x02 a01) (x02 a02))(and (not (x02 a01)) (not (x02 a02)))) (or (and (x02 a02) (x02 a03))(and (not (x02 a02)) (not (x02 a03)))) (or (and (x02 a03) (x02 a04))(and (not (x02 a03)) (not (x02 a04)))) (or (and (x02 a04) (x02 a05))(and (not (x02 a04)) (not (x02 a05)))) (or (and (x02 a05) (x02 a06))(and (not (x02 a05)) (not (x02 a06)))) (or (and (x02 a06) (x02 a07))(and (not (x02 a06)) (not (x02 a07)))) (or (and (x02 a07) (x02 a08))(and (not (x02 a07)) (not (x02 a08)))) (or (and (x02 a08) (x02 a09))(and (not (x02 a08)) (not (x02 a09)))) (or (and (x02 a09) (x02 a10))(and (not (x02 a09)) (not (x02 a10)))) (or (and (x02 a10) (x02 a11))(and (not (x02 a10)) (not (x02 a11)))) (or (and (x02 a11) (x02 a12))(and (not (x02 a11)) (not (x02 a12)))) (or (and (x02 a12) (x02 a13))(and (not (x02 a12)) (not (x02 a13)))) (or (and (x02 a13) (x02 a14))(and (not (x02 a13)) (not (x02 a14)))) (or (and (x02 a14) (x02 a15))(and (not (x02 a14)) (not (x02 a15)))) (or (and (x02 a15) (x02 a16))(and (not (x02 a15)) (not (x02 a16)))) (or (and (x02 a16) (x02 a17))(and (not (x02 a16)) (not (x02 a17)))) (or (and (x02 a17) (x02 a18))(and (not (x02 a17)) (not (x02 a18)))) (or (and (x03 a01) (x03 a02))(and (not (x03 a01)) (not (x03 a02)))) (or (and (x03 a02) (x03 a03))(and (not (x03 a02)) (not (x03 a03)))) (or (and (x03 a03) (x03 a04))(and (not (x03 a03)) (not (x03 a04)))) (or (and (x03 a04) (x03 a05))(and (not (x03 a04)) (not (x03 a05)))) (or (and (x03 a05) (x03 a06))(and (not (x03 a05)) (not (x03 a06)))) (or (and (x03 a06) (x03 a07))(and (not (x03 a06)) (not (x03 a07)))) (or (and (x03 a07) (x03 a08))(and (not (x03 a07)) (not (x03 a08)))) (or (and (x03 a08) (x03 a09))(and (not (x03 a08)) (not (x03 a09)))) (or (and (x03 a09) (x03 a10))(and (not (x03 a09)) (not (x03 a10)))) (or (and (x03 a10) (x03 a11))(and (not (x03 a10)) (not (x03 a11)))) (or (and (x03 a11) (x03 a12))(and (not (x03 a11)) (not (x03 a12)))) (or (and (x03 a12) (x03 a13))(and (not (x03 a12)) (not (x03 a13)))) (or (and (x03 a13) (x03 a14))(and (not (x03 a13)) (not (x03 a14)))) (or (and (x03 a14) (x03 a15))(and (not (x03 a14)) (not (x03 a15)))) (or (and (x03 a15) (x03 a16))(and (not (x03 a15)) (not (x03 a16)))) (or (and (x03 a16) (x03 a17))(and (not (x03 a16)) (not (x03 a17)))) (or (and (x03 a17) (x03 a18))(and (not (x03 a17)) (not (x03 a18))))
+            )
+        )
+        )
+     

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from libs.pyeda.pyeda.boolalg.bdd import BinaryDecisionDiagram, BDDVariable
 from sympy import Expr
 from typing import Dict, Set, Tuple, List
 
@@ -12,7 +13,7 @@ class Predicate:
     def __init__(self):
         pass
 
-    def ground(self, subs: Dict[str, str], delta=1) -> Predicate:
+    def ground(self, subs: Dict[str, str], problem) -> Predicate:
         raise NotImplemented()
 
     def getAtom(self) -> Atom:
@@ -99,6 +100,9 @@ class Predicate:
 
     def toPDDL(self, pw: PDDLWriter = PDDLWriter()):
         pw.write(str(self))
+
+    def toBDD(self, vars: Dict[Atom, BDDVariable]) -> BinaryDecisionDiagram:
+        raise NotImplementedError()
 
     def isAtomic(self):
         return True

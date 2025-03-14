@@ -43,6 +43,9 @@ PLANNERS: Dict[str, Planner] = {
     "PATTY-EH": Patty("PATTY-EH", search="astar", pattern="enhanced", noCompression=True),
     "PATTY-EF": Patty("PATTY-EF", search="astar", pattern="enhanced", noCompression=False),
     "PATTY-CES": Patty("PATTY-CES", search="chain", pattern="alpha", tcTime=40),
+    "PATTY-CES": Patty("PATTY-CES", tcTime=40),
+    "PATTY-CES-NO-TC": Patty("PATTY-CES-NO-TC", avoidClosure=True),
+    "PATTY-CES-NO-C": Patty("PATTY-CES-NO-C", avoidClosureRelaxation=True),
 
     "PATTY-R": Patty("PATTY-R", search="step", pattern="random", quality="none"),
     "PATTY-A": Patty("PATTY-A", search="step", pattern="arpg", quality="none"),
@@ -92,7 +95,7 @@ def main():
     if envs.isInsideAWS:
         time.sleep(envs.index / 4)
     else:
-        envs.file = "benchmarks/instances/aij.csv"
+        envs.file = "benchmarks/instances/ces.csv"
 
     logger = CloudLogger(envs.experiment)
 
@@ -118,6 +121,9 @@ def main():
         benchmark = el[1]
         domainFile = el[2]
         problemFile = el[3]
+
+        if hasattr(planner, "tcTime"):
+            planner.tcTime = envs.tcTime
 
         try:
             if envs.isInsideAWS:

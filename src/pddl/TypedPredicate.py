@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import itertools
 from typing import Dict, Tuple, List
 
@@ -27,6 +28,13 @@ class TypedPredicate(Predicate):
 
     def __repr__(self):
         return str(self)
+
+    def __deepcopy__(self, memodict={}):
+        tp = TypedPredicate()
+        tp.name = self.name
+        tp.parameters = copy.deepcopy(self.parameters, memodict)
+        tp.atom = copy.deepcopy(self.atom, memodict)
+        return tp
 
     @classmethod
     def fromNode(cls, node: pddlParser.TypedPositiveLiteralContext, types: Dict[str, Type]) -> TypedPredicate:

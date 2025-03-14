@@ -1,0 +1,103 @@
+#!/usr/bin/env python3
+
+"""\
+Minimize a PLA file
+"""
+
+import argparse
+import sys
+
+from pyeda.boolalg import espresso
+from pyeda.parsing import pla
+
+
+PARSER = argparse.ArgumentParser(description=__doc__)
+
+class EspressoConfigAction(argparse.Action):
+    def __call__(self, parser, namespace, value, option_string=None):
+        key, val = (value[1:], False) if value[0] == 'n' else (value, True)
+        setattr(namespace, key, val)
+
+PARSER.add_argument(
+    '-e', dest='ecfg', action=EspressoConfigAction,
+    choices=['fast', 'ness', 'nirr', 'nunwrap', 'onset', 'strong'],
+    help="set Espresso global configuration values (legacy)"
+)
+
+PARSER.add_argument(
+    '--fast', action='store_true',
+    help=("stop after the first EXPAND and IRREDUNDANT operations "
+          "(i.e., do not iterate over the solution)")
+)
+PARSER.add_argument(
+    '--no-ess', action='store_false', dest='ess',
+    help="essential primes will not be detected"
+)
+PARSER.add_argument(
+    '--no-irr', action='store_false', dest='irr',
+    help=("the result will not necessarily be made irredundant in the final "
+          "step which removes redundant literals")
+)
+PARSER.add_argument(
+    '--no-unwrap', action='store_false', dest='unwrap',
+    help="the ON-set will not be unwrapped before beginning the minimization"
+)
+PARSER.add_argument(
+    '--onset', action='store_true',
+    help=("recompute the ON-set before the minimization; "
+          "useful when the PLA has a large number of product terms "
+          "(e.g., an exhaustive list of minterms)")
+)
+PARSER.add_argument(
+    '--strong', action='store_true',
+    help=("uses the alternate strategy SUPER_GASP "
+          "(as a replacement for LAST_ GASP) which is more expensive, "
+          "but occasionally provides better results")
+)
+
+PARSER.add_argument('file', nargs='?', type=argparse.FileType('r'),
+                    default=sys.stdin, help="PLA file (default: stdin)")
+
+def main():
+    opts = PARSER.parse_args()
+
+    espresso.set_config(
+        single_expand=opts.fast,
+        remove_essential=opts.ess,
+        force_irredundant=opts.irr,
+        unwrap_onset=opts.unwrap,
+        recompute_onset=opts.onset,
+        use_super_gasp=opts.strong,
+    )
+
+    try:
+        d = pla.parse(opts.file.read())
+    except pla.Error as exc:
+        print("error parsing file:", opts.file.name)
+        print(exc)
+        return 1
+
+    try:
+        cover = espresso.espresso(d['ninputs'], d['noutputs'],
+                                  d['cover'], intype=d['intype'])
+    except espresso.Error as exc:
+        print("espresso failed:", exc)
+        return 1
+
+    print(".i", d['ninputs'])
+    print(".o", d['noutputs'])
+    if d['input_labels']:
+        print(".ilb", " ".join(d['input_labels']))
+    if d['output_labels']:
+        print(".ob", " ".join(d['output_labels']))
+    print(".p", len(cover))
+    for invec, outvec in cover:
+        print("".join({1: '0', 2: '1', 3: '-'}[n] for n in invec),
+              "".join({0: '0', 1: '1', 2: '-'}[n] for n in outvec))
+    print(".e")
+
+    return 0
+
+if __name__ == '__main__':
+    sys.exit(main())
+

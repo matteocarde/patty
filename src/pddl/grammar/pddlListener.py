@@ -359,6 +359,33 @@ class pddlListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by pddlParser#forallEffect.
+    def enterForallEffect(self, ctx:pddlParser.ForallEffectContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#forallEffect.
+    def exitForallEffect(self, ctx:pddlParser.ForallEffectContext):
+        pass
+
+
+    # Enter a parse tree produced by pddlParser#forall.
+    def enterForall(self, ctx:pddlParser.ForallContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#forall.
+    def exitForall(self, ctx:pddlParser.ForallContext):
+        pass
+
+
+    # Enter a parse tree produced by pddlParser#exists.
+    def enterExists(self, ctx:pddlParser.ExistsContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#exists.
+    def exitExists(self, ctx:pddlParser.ExistsContext):
+        pass
+
+
     # Enter a parse tree produced by pddlParser#effect.
     def enterEffect(self, ctx:pddlParser.EffectContext):
         pass
@@ -374,6 +401,15 @@ class pddlListener(ParseTreeListener):
 
     # Exit a parse tree produced by pddlParser#effectNoCes.
     def exitEffectNoCes(self, ctx:pddlParser.EffectNoCesContext):
+        pass
+
+
+    # Enter a parse tree produced by pddlParser#inequality.
+    def enterInequality(self, ctx:pddlParser.InequalityContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#inequality.
+    def exitInequality(self, ctx:pddlParser.InequalityContext):
         pass
 
 
@@ -644,6 +680,15 @@ class pddlListener(ParseTreeListener):
 
     # Exit a parse tree produced by pddlParser#process.
     def exitProcess(self, ctx:pddlParser.ProcessContext):
+        pass
+
+
+    # Enter a parse tree produced by pddlParser#constraints.
+    def enterConstraints(self, ctx:pddlParser.ConstraintsContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#constraints.
+    def exitConstraints(self, ctx:pddlParser.ConstraintsContext):
         pass
 
 

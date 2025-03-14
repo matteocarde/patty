@@ -1,6 +1,6 @@
 from typing import List, Tuple, Dict, Set
 
-from pyeda.boolalg.bdd import BDDVariable
+from libs.pyeda.pyeda.boolalg.bdd import BDDVariable
 from pysmt.fnode import FNode
 
 from src.smt.SMTBoolVariable import SMTBoolVariable
@@ -15,7 +15,8 @@ class NaryExpression(SMTExpression):
         super().__init__()
         self.children = list(xs)
         self.variables = set()
-        self.depth = max([c.depth for c in self.children]) + 1
+        self.depth = (max([c.depth for c in self.children]) if self.children else 0) + 1
+        self.size = sum([c.size for c in self.children]) if self.children else 0
         for c in self.children:
             self.variables |= c.getVariables()
 

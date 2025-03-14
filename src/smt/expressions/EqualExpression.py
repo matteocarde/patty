@@ -1,6 +1,6 @@
 from typing import Dict
 
-from pyeda.boolalg.bdd import BDDVariable
+from libs.pyeda.pyeda.boolalg.bdd import BDDVariable
 from pysmt.fnode import FNode
 from pysmt.shortcuts import Equals
 
@@ -26,7 +26,7 @@ class EqualExpression(BinaryExpression):
         if lhs.type != rhs.type:
             raise Exception()
         if lhs.type == BOOLEAN:
-            return IffExpression(lhs, rhs)
+            return IffExpression.simplify(lhs, rhs)
         if isinstance(lhs, ConstantExpression) and isinstance(rhs, ConstantExpression):
             return TrueExpression() if lhs.value == rhs.value else FalseExpression()
         return cls(lhs, rhs)

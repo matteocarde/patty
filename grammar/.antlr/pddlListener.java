@@ -397,6 +397,36 @@ public interface pddlListener extends ParseTreeListener {
 	 */
 	void exitCe(pddlParser.CeContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link pddlParser#forallEffect}.
+	 * @param ctx the parse tree
+	 */
+	void enterForallEffect(pddlParser.ForallEffectContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link pddlParser#forallEffect}.
+	 * @param ctx the parse tree
+	 */
+	void exitForallEffect(pddlParser.ForallEffectContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link pddlParser#forall}.
+	 * @param ctx the parse tree
+	 */
+	void enterForall(pddlParser.ForallContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link pddlParser#forall}.
+	 * @param ctx the parse tree
+	 */
+	void exitForall(pddlParser.ForallContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link pddlParser#exists}.
+	 * @param ctx the parse tree
+	 */
+	void enterExists(pddlParser.ExistsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link pddlParser#exists}.
+	 * @param ctx the parse tree
+	 */
+	void exitExists(pddlParser.ExistsContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link pddlParser#effect}.
 	 * @param ctx the parse tree
 	 */
@@ -416,6 +446,16 @@ public interface pddlListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitEffectNoCes(pddlParser.EffectNoCesContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link pddlParser#inequality}.
+	 * @param ctx the parse tree
+	 */
+	void enterInequality(pddlParser.InequalityContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link pddlParser#inequality}.
+	 * @param ctx the parse tree
+	 */
+	void exitInequality(pddlParser.InequalityContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link pddlParser#andClause}.
 	 * @param ctx the parse tree
@@ -716,6 +756,16 @@ public interface pddlListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitProcess(pddlParser.ProcessContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link pddlParser#constraints}.
+	 * @param ctx the parse tree
+	 */
+	void enterConstraints(pddlParser.ConstraintsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link pddlParser#constraints}.
+	 * @param ctx the parse tree
+	 */
+	void exitConstraints(pddlParser.ConstraintsContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link pddlParser#problem}.
 	 * @param ctx the parse tree

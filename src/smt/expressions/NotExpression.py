@@ -1,7 +1,7 @@
 from typing import Dict
 
-from pyeda.boolalg.bdd import BDDVariable
-from pyeda.boolalg.expr import Not as BDDNot
+from libs.pyeda.pyeda.boolalg.bdd import BDDVariable
+from libs.pyeda.pyeda.boolalg.expr import Not as BDDNot
 from pysmt.fnode import FNode
 from pysmt.shortcuts import Not as SMTNot
 

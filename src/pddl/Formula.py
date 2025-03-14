@@ -6,8 +6,12 @@ from typing import Dict, Set, Tuple, List
 
 from sympy import Expr
 
+from libs.pyeda.pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram, bdd2expr
+from libs.pyeda.pyeda.boolalg.expr import One, Zero, Complement, Variable, OrOp, AndOp
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
+from src.pddl.FalsePredicate import FalsePredicate
+from src.pddl.Inequality import Inequality
 from src.pddl.Literal import Literal
 from src.pddl.PDDLWriter import PDDLWriter
 from src.pddl.Predicate import Predicate
@@ -19,16 +23,19 @@ from src.pddl.grammar.pddlParser import pddlParser as p
 class Formula:
     type: str
     conditions: [Formula or Predicate]
+    atoms: Set[Atom]
 
     def __init__(self):
         self.type = "AND"
         self.conditions: [Formula or Predicate] = list()
+        self.atoms = set()
 
     def __deepcopy__(self, m=None) -> Formula:
         m = {} if m is None else m
         f = Formula()
         f.type = self.type
         f.conditions = copy.deepcopy(self.conditions, m)
+        f.atoms = copy.copy(self.atoms)
         return f
 
     def __iter__(self):
@@ -66,7 +73,8 @@ class Formula:
         formulaComponent = node.getChild(0) if type(node) in {p.PreconditionsContext,
                                                               p.DurativeConditionsContext} else node
         formula.type = "OR" if type(formulaComponent) == p.OrClauseContext else "AND"
-        if type(formulaComponent) in {p.BooleanLiteralContext, p.ComparationContext, p.NegatedComparationContext}:
+        if type(formulaComponent) in {p.BooleanLiteralContext, p.InequalityContext,
+                                      p.ComparationContext, p.NegatedComparationContext}:
             clauses.append(formulaComponent)
         elif type(formulaComponent) in {p.AndClauseContext, p.OrClauseContext, p.AndDurClauseContext}:
             clauses = formulaComponent.children
@@ -77,13 +85,21 @@ class Formula:
 
         for clause in clauses:
             if type(clause) in {p.AndClauseContext, p.OrClauseContext}:
-                formula.conditions.append(Formula.fromNode(clause))
+                sub = Formula.fromNode(clause)
+                formula.conditions.append(sub)
+                formula.atoms |= sub.atoms
             elif isinstance(clause, p.BooleanLiteralContext):
-                formula.conditions.append(Literal.fromNode(clause.getChild(0)))
+                l = Literal.fromNode(clause.getChild(0))
+                formula.conditions.append(l)
+                formula.atoms.add(l.getAtom())
             elif type(clause) in {p.ComparationContext, p.NegatedComparationContext}:
-                formula.conditions.append(BinaryPredicate.fromNode(clause))
+                bp = BinaryPredicate.fromNode(clause)
+                formula.conditions.append(bp)
+                formula.atoms |= bp.getPredicates()
             elif type(clause) in {p.AtStartPreContext, p.OverAllPreContext, p.AtEndPreContext}:
                 formula.conditions += TimePredicate.fromNode(clause)
+            elif isinstance(clause, p.InequalityContext):
+                formula.conditions.append(Inequality.fromNode(clause))
 
         return formula
 
@@ -91,11 +107,11 @@ class Formula:
     def fromString(cls, string: str) -> Formula:
         return Formula.fromNode(Utilities.getParseTree(string).preconditions())
 
-    def ground(self, subs: Dict[str, str], delta=1):
+    def ground(self, subs: Dict[str, str], problem):
         gFormula = Formula()
         gFormula.type = self.type
         for condition in self.conditions:
-            gFormula.conditions.append(condition.ground(subs, delta))
+            gFormula.addClause(condition.ground(subs, problem))
         return gFormula
 
     def getFunctions(self) -> Set[Atom]:
@@ -115,8 +131,12 @@ class Formula:
     def substitute(self, subs: Dict[Atom, float], default=None) -> Formula:
         x = Formula()
         x.type = self.type
-        x.conditions = [c.substitute(subs, default) for c in self.conditions]
-        x.conditions = [c for c in x.conditions if c]
+        x.conditions = []
+        x.atoms = self.atoms - set(subs.keys())
+        for c in self.conditions:
+            if isinstance(c, Literal) and c.getAtom() in subs and subs[c.getAtom()]:
+                continue
+            x.conditions.append(c.substitute(subs, default))
         return x
 
     def canHappen(self, subs: Dict[Atom, float or bool], default=None) -> bool:
@@ -125,15 +145,27 @@ class Formula:
                 return False
         return True
 
-    def isValid(self, subs: Dict[Atom, float or bool], default=None) -> bool:
+    def __canHappenLiftedAnd(self, sub: Tuple, params: List[str], problem):
         for c in self.conditions:
-            if not c.isValid(subs, default):
+            if not c.canHappenLifted(sub, params, problem):
                 return False
         return True
 
-    def canHappenLifted(self, sub: Tuple, params: List[str], problem):
+    def __canHappenLiftedOr(self, sub: Tuple, params: List[str], problem):
         for c in self.conditions:
-            if not c.canHappenLifted(sub, params, problem):
+            if c.canHappenLifted(sub, params, problem):
+                return True
+        return False
+
+    def canHappenLifted(self, sub: Tuple, params: List[str], problem):
+        if self.type == "AND":
+            return self.__canHappenLiftedAnd(sub, params, problem)
+        if self.type == "OR":
+            return self.__canHappenLiftedOr(sub, params, problem)
+
+    def isValid(self, subs: Dict[Atom, float or bool], default=None) -> bool:
+        for c in self.conditions:
+            if not c.isValid(subs, default):
                 return False
         return True
 
@@ -185,6 +217,10 @@ class Formula:
 
     def addClause(self, clause: Formula or Predicate):
         self.conditions.append(clause)
+        if isinstance(clause, Formula):
+            self.atoms |= clause.atoms
+        if isinstance(clause, Predicate):
+            self.atoms |= clause.getPredicates()
 
     @classmethod
     def join(cls, formulas: List[Formula]) -> Formula:
@@ -195,6 +231,7 @@ class Formula:
             if type != f.type:
                 raise Exception("Cannot join together preconditions of different types")
             joinedF.conditions += f.conditions
+            joinedF.atoms |= f.atoms
         joinedF.type = type
         return joinedF
 
@@ -207,6 +244,95 @@ class Formula:
         pw.decreaseTab()
         pw.write(")")
         pw.decreaseTab()
+
+    def toBDD(self, vars: Dict[Atom, BDDVariable]):
+        if self.type == "AND":
+            f = 1
+            for a in self.conditions:
+                f &= a.toBDD(vars)
+            return f
+        if self.type == "OR":
+            f = 0
+            for a in self.conditions:
+                f |= a.toBDD(vars)
+            return f
+
+    @classmethod
+    def fromNary(cls, fType: str, expr, var2atom: Dict[str, Atom]):
+        if expr == One:
+            from src.pddl.TruePredicate import TruePredicate
+            return TruePredicate()
+        if expr == Zero:
+            from src.pddl.TruePredicate import TruePredicate
+            return FalsePredicate()
+
+        assert type(expr) in {OrOp, AndOp}
+        f = cls()
+        f.type = fType
+        for subf in expr.xs:
+            f.addClause(Formula.fromExpr(subf, var2atom))
+        return f
+
+    @classmethod
+    def fromOrOp(cls, expr: OrOp, var2atom: Dict[str, Atom]):
+        return Formula.fromNary("OR", expr, var2atom)
+
+    @classmethod
+    def fromAndOp(cls, expr: AndOp, var2atom: Dict[str, Atom]):
+        return Formula.fromNary("AND", expr, var2atom)
+
+    @classmethod
+    def fromExpr(cls, expr, var2atom: Dict[str, Atom]):
+        if isinstance(expr, OrOp):
+            return Formula.fromOrOp(expr, var2atom)
+        if isinstance(expr, AndOp):
+            return Formula.fromAndOp(expr, var2atom)
+        if isinstance(expr, Complement):
+            return Literal.neg(var2atom[expr.top.name])
+        if isinstance(expr, Variable):
+            return Literal.pos(var2atom[expr.name])
+
+    @staticmethod
+    def fromBDD(bdd: BinaryDecisionDiagram, var2atom: Dict[str, Atom]):
+        expr = bdd2expr(bdd)
+        return Formula.fromOrOp(expr, var2atom)
+
+    def simplify(self) -> Formula or Predicate:
+        from src.pddl.FalsePredicate import FalsePredicate
+        from src.pddl.TruePredicate import TruePredicate
+        f = Formula()
+        f.type = self.type
+        f.conditions = []
+        for c in self.conditions:
+            if isinstance(c, Formula):
+                c = c.simplify()
+            if f.type == "AND":
+                if isinstance(c, FalsePredicate):
+                    return FalsePredicate()
+                if isinstance(c, TruePredicate):
+                    continue
+            if f.type == "OR":
+                if isinstance(c, TruePredicate):
+                    return TruePredicate()
+                if isinstance(c, FalsePredicate):
+                    continue
+            f.addClause(c)
+        if not f.conditions:
+            return TruePredicate() if self.type == "AND" else FalsePredicate()
+        return f
+
+    def pruneSubFormulasWithAllVariablesIn(self, nonInAction: Set[Atom]):
+        if self.type == "OR":
+            return self
+        f = Formula()
+        f.type = self.type
+        for c in self.conditions:
+            if isinstance(c, Formula) and not c.atoms.issubset(nonInAction):
+                f.addClause(c.pruneSubFormulasWithAllVariablesIn(nonInAction))
+            if isinstance(c, Predicate) and not c.getPredicates().issubset(nonInAction):
+                f.addClause(c)
+
+        return f
 
     def isAtomic(self):
         return len(self.conditions) == 1 and isinstance(self.conditions[0], Predicate)
