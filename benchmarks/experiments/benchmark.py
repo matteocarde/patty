@@ -42,7 +42,6 @@ PLANNERS: Dict[str, Planner] = {
     "PATTY-EG": Patty("PATTY-EG", search="static", pattern="enhanced"),
     "PATTY-EH": Patty("PATTY-EH", search="astar", pattern="enhanced", noCompression=True),
     "PATTY-EF": Patty("PATTY-EF", search="astar", pattern="enhanced", noCompression=False),
-    "PATTY-CES": Patty("PATTY-CES", search="chain", pattern="alpha", tcTime=40),
     "PATTY-CES": Patty("PATTY-CES", tcTime=40),
     "PATTY-CES-NO-TC": Patty("PATTY-CES-NO-TC", avoidClosure=True),
     "PATTY-CES-NO-C": Patty("PATTY-CES-NO-C", avoidClosureRelaxation=True),
@@ -55,6 +54,15 @@ PLANNERS: Dict[str, Planner] = {
     "PATTY-M": Patty("PATTY-M", search="step", pattern="enhanced", quality="shortest-step"),
     "PATTY-I": Patty("PATTY-I", search="step", pattern="enhanced", quality="improve-plan"),
     "PATTY-L": Patty("PATTY-L", search="step", pattern="enhanced", quality="improve-less"),
+
+    "PATTY-GAMMA-MAX": Patty("PATTY-GAMMA-MAX", search="jair", pattern="enhanced", goalFunction="GAMMA-MAX"),
+    "PATTY-GAMMA-GC": Patty("PATTY-GAMMA-GC", search="jair", pattern="enhanced", goalFunction="GAMMA-GC"),
+    "PATTY-GAMMA-PLUS": Patty("PATTY-GAMMA-PLUS", search="jair", pattern="enhanced", goalFunction="GAMMA-PLUS"),
+    "PATTY-GAMMA-XOR": Patty("PATTY-GAMMA-XOR", search="jair", pattern="enhanced", goalFunction="GAMMA-XOR"),
+    "PATTY-DELTA-MAX": Patty("PATTY-DELTA-MAX", search="jair", pattern="enhanced", goalFunction="DELTA-MAX"),
+    "PATTY-DELTA-PLUS": Patty("PATTY-DELTA-PLUS", search="jair", pattern="enhanced", goalFunction="DELTA-PLUS"),
+    "PATTY-DELTA-XOR": Patty("PATTY-DELTA-XOR", search="jair", pattern="enhanced", goalFunction="DELTA-XOR"),
+
     "RANTANPLAN": Patty("RANTANPLAN", search="static", pattern="arpg", hasEffectAxioms=True, rollBound=1),
     "SPRINGROLL": SpringRoll(),
 

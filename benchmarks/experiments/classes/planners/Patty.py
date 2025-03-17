@@ -20,7 +20,8 @@ class Patty(Planner):
                  rollBound=0,
                  temporalConstraints=None,
                  avoidClosure=False,
-                 avoidClosureRelaxation=False):
+                 avoidClosureRelaxation=False,
+                 goalFunction=False):
         self.search = search
         self.maximize = maximize
         self.name = name
@@ -34,6 +35,7 @@ class Patty(Planner):
         self.tcTime = tcTime
         self.avoidClosure = avoidClosure
         self.avoidClosureRelaxation = avoidClosureRelaxation
+        self.goalFunction = goalFunction
         super().__init__()
 
     @staticmethod
@@ -116,4 +118,6 @@ class Patty(Planner):
             cmd += ["--avoid-closure"]
         if self.avoidClosureRelaxation:
             cmd += ["--avoid-closure-relaxation"]
+        if self.goalFunction:
+            cmd += ["--goal-function", self.goalFunction]
         return cmd

@@ -32,17 +32,17 @@ class GoalFunction:
         from src.goalFunctions.GammaMax import GammaMax
         from src.goalFunctions.GammaPlus import GammaPlus
         from src.goalFunctions.GammaXOR import GammaXOR
-        if s == "DELTA_MAX":
+        if s == "DELTA-MAX":
             return DeltaMax
-        if s == "DELTA_PLUS":
+        if s == "DELTA-PLUS":
             return DeltaPlus
-        if s == "DELTA_XOR":
+        if s == "DELTA-XOR":
             return DeltaXOR
-        if s == "GAMMA_GC":
+        if s == "GAMMA-GC":
             return GammaGoalCount
-        if s == "GAMMA_MAX":
+        if s == "GAMMA-MAX":
             return GammaMax
-        if s == "GAMMA_PLUS":
+        if s == "GAMMA-PLUS":
             return GammaPlus
-        if s == "GAMMA_XOR":
+        if s == "GAMMA-XOR":
             return GammaXOR
