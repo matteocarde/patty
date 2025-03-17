@@ -180,7 +180,10 @@ class BinaryPredicate(Predicate):
             if x.type == BinaryPredicateType.OPERATION:
                 return x.toConstant()
             else:
-                return None
+                result = Utilities.compare(x.operator, x.lhs.value, x.rhs.value)
+                from src.pddl.TruePredicate import TruePredicate
+                from src.pddl.FalsePredicate import FalsePredicate
+                return TruePredicate() if result else FalsePredicate()
 
         return x
 
