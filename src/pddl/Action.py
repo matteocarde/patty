@@ -69,7 +69,7 @@ class Action(Operation):
 
         simpleIntervals: Dict[Atom, MooreInterval] = dict()
         for c in self.preconditions:
-            if not isinstance(c, BinaryPredicate) or len(c.getFunctions()) > 1:
+            if not isinstance(c, BinaryPredicate) or len(c.getFunctions()) != 1:
                 continue
             atom = c.getFunctions().pop()
             interval = c.getIntervalFromSimpleCondition()
