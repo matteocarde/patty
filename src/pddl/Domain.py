@@ -57,6 +57,7 @@ class Domain:
         domain.requirements = copy.deepcopy(self.requirements, m)
         domain.types = copy.deepcopy(self.requirements, m)
         domain.predicates = copy.deepcopy(self.predicates, m)
+        domain.functions = copy.deepcopy(self.functions, m)
         domain.actions = copy.deepcopy(self.actions, m)
         domain.events = copy.deepcopy(self.events, m)
         domain.processes = copy.deepcopy(self.processes, m)
