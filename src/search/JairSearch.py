@@ -82,7 +82,7 @@ class JairSearch(Search):
                 if s.satisfies(self.problem.goal):
                     return plan
                 c = GF.compute(s, self.problem.goal)
-                self.console.log(f"Found intermediate state {s}")
+                self.console.log(f"Found intermediate state {s}", LogPrintLevel.PLAN)
                 self.console.log(f"New Goal Function Value: {c}", LogPrintLevel.PLAN)
                 patH: Pattern = Pattern.fromState(s, self.problem.goal, self.domain, enhanced=self.enhanced)
 
