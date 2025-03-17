@@ -6,6 +6,8 @@ from natsort import natsort
 from benchmarks.tables.jair.domains import JAIR_DOMAINS
 
 PLANNERS = [
+    "PATTY-FE",
+    "PATTY-GAMMA-MAX",
     "PATTY-GAMMA-MAX",
     "PATTY-GAMMA-GC",
     "PATTY-GAMMA-PLUS",

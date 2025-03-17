@@ -56,3 +56,6 @@ class TruePredicate(Predicate):
 
     def toBDD(self, vars: Dict[Atom, BDDVariable]) -> BinaryDecisionDiagram:
         return 1
+    
+    def isValid(self, subs: Dict[Atom, float or bool], default=None) -> bool:
+        return True

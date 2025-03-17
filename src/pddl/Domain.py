@@ -125,8 +125,8 @@ class Domain:
                 # print(f"WARNING: {fun} was not initialized. Substituting it with 0")
                 constants[fun] = 0
 
-        # for v in gDomain.predicates - gDomain.getDynamicAtoms():
-        #     constants[v] = problem.init.getAssignment(v)
+        for v in gDomain.predicates - gDomain.getDynamicAtoms():
+            constants[v] = problem.init.getAssignment(v)
 
         gDomain.substitute(constants)
         problem.substitute(constants)

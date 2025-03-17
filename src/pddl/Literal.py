@@ -156,10 +156,10 @@ class Literal(Predicate):
             return Constant(subs[self.atom])
 
     def canHappen(self, subs: Dict[Atom, float or bool], default=None) -> bool:
-        if self.sign == "+":
-            return True if self.atom not in subs or subs[self.atom] else False
-        if self.sign == "-":
-            return True if self.atom not in subs or not subs[self.atom] else False
+        if self.atom not in subs:
+            return True
+
+        return subs[self.atom] if self.sign == "+" else not subs[self.atom]
 
     def isValid(self, subs: Dict[Atom, float or bool], default=None) -> bool:
         return False if self.atom not in subs or not subs[self.atom] else True
@@ -172,7 +172,8 @@ class Literal(Predicate):
             if self.sign == "-":
                 return atomStr not in problem.canHappenValue
         if atom.name in problem.numeric:
-            return problem.init.numericAssignments[atom]
+            nAss = problem.init.numericAssignments
+            return nAss[atom] if atom in nAss else 0.0
         raise Exception("Should not land here")
 
     def canHappenLifted(self, sub: Tuple, params: List[str], problem) -> bool:
