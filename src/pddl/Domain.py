@@ -90,6 +90,8 @@ class Domain:
     def ground(self, problem: Problem, avoidSimplification=False, console: LogPrint = None, delta=1) -> GroundedDomain:
 
         problem.computeWhatCanHappen(self)
+        problem.propositional = set([p.name for p in self.predicates])
+        problem.numeric = set([p.name for p in self.functions])
 
         gActions: Set[Action] = set([g for action in self.actions for g in action.ground(problem)])
         gEvents: Set[Event] = set([g for event in self.events for g in event.ground(problem)])
@@ -127,6 +129,7 @@ class Domain:
 
         gDomain.substitute(constants)
         problem.substitute(constants)
+
 
         actions = [a.substitute(constants) for a in gDomain.actions]  # if a in arpg.getUsefulActions()]
 

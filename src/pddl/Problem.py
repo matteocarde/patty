@@ -22,6 +22,8 @@ class Problem:
     init: InitialCondition
     metric: Predicate or None = None
     goal: Goal
+    propositional: Set[str]
+    numeric: Set[str]
 
     def __init__(self):
         self.allAtoms: Set[Atom] = set()
@@ -31,6 +33,8 @@ class Problem:
         self.isPredicateStatic: Dict[str, bool] = dict()
         self.canHappenValue: Set[str] = set()
         self.assignmentsTree: Dict = dict()
+        self.propositional = set()
+        self.numeric = set()
 
     def __deepcopy__(self, m):
         cp = Problem()
@@ -43,6 +47,8 @@ class Problem:
         cp.allAtoms = copy.deepcopy(self.allAtoms, m)
         cp.predicates = copy.deepcopy(self.predicates, m)
         cp.functions = copy.deepcopy(self.functions, m)
+        cp.propositional = copy.deepcopy(self.propositional, m)
+        cp.numeric = copy.deepcopy(self.numeric, m)
         cp.isPredicateStatic = copy.deepcopy(self.isPredicateStatic, m)
         return cp
 

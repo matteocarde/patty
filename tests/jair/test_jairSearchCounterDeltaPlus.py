@@ -9,17 +9,17 @@ from src.search.JairSearch import JairSearch
 from src.utils.Arguments import Arguments
 
 
-class TestDroneJairGammaXOR(TestCase):
+class TestJairCounterDeltaPlus(TestCase):
 
     def setUp(self) -> None:
-        domainFile = "../../files/numeric/ipc-2023/drone/domain.pddl"
-        problemFile = "../../files/numeric/ipc-2023/drone/instances/problem_1_1_2.pddl"
+        domainFile = "../../files/numeric/ipc-2023/fo_counters/domain.pddl"
+        problemFile = "../../files/numeric/ipc-2023/fo_counters/instances/instance_16.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.args = Arguments(keepRequired=False)
-        self.args.goalFunction = "GAMMA_XOR"
+        self.args.goalFunction = "DELTA-PLUS"
         pass
 
     def test_solve(self):

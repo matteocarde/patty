@@ -32,7 +32,8 @@ class Delta(GoalFunction):
         if not g.isAtomic():
             raise Exception(f"Goal {g} is not atomic")
         g = g if isinstance(g, Predicate) else g.conditions[0]
-        initValue = init.getRealization(g)
+        phi = g.lhs - g.rhs if isinstance(g, BinaryPredicate) else g
+        initValue = init.getValue(phi)
         gf = SMTExpression.fromFormula(g, vars)
         if isinstance(g, Literal) or isinstance(g, BinaryPredicate) and initValue >= 0:
             return ITEExpression(gf, 0, 1)

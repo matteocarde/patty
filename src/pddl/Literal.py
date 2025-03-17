@@ -166,14 +166,14 @@ class Literal(Predicate):
 
     def getStaticValue(self, atom: Atom, problem) -> bool or float:
         atomStr = atom.getFunctionName()
-        if atom in problem.predicates:
+        if atom.name in problem.propositional:
             if self.sign == "+":
                 return atomStr in problem.canHappenValue
             if self.sign == "-":
                 return atomStr not in problem.canHappenValue
-        if atom in problem.functions:
+        if atom.name in problem.numeric:
             return problem.init.numericAssignments[atom]
-        raise Exception("Not here")
+        raise Exception("Should not land here")
 
     def canHappenLifted(self, sub: Tuple, params: List[str], problem) -> bool:
         if not problem.isPredicateStatic[self.atom.name]:

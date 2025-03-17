@@ -192,11 +192,17 @@ class State:
             if p.operator == "decrease":
                 return value - lhs
 
+    def getValue(self, p: Literal or BinaryPredicate):
+        return self.substituteInto(p)
+
     def substituteInto(self, p: Predicate) -> bool or float:
         if isinstance(p, Constant):
             return p.value
         if isinstance(p, Literal):
-            return self.assignments[p.getAtom()] if p.getAtom() in self.assignments else 0
+            v = p.getAtom()
+            if v not in self.assignments:
+                return 0
+            return self.assignments[v] if p.sign == "+" else not self.assignments[v]
         if isinstance(p, BinaryPredicate):
             lhs = self.substituteInto(p.lhs)
             rhs = self.substituteInto(p.rhs)
