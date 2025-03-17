@@ -80,6 +80,8 @@ class JairSearch(Search):
             if isinstance(plan, Plan):
                 s = initialState.applyPlan(plan)
                 if s.satisfies(self.problem.goal):
+                    self.console.log(f"Calls to Solver: {callsToSolver}", LogPrintLevel.STATS)
+                    self.console.log(f"Bound: {bound}", LogPrintLevel.STATS)
                     return plan
                 c = GF.compute(s, self.problem.goal)
                 self.console.log(f"Found intermediate state {s}", LogPrintLevel.PLAN)

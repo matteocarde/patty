@@ -46,26 +46,15 @@ JAIR_TABLE1 = {
         # },
     },
     "planners": {
-        'PATTY-E': {
-            "name": AIJ_PLANNERS['PATTY-E']["name"],
-            "type": "scalar"
-        },
-        'PATTY-A': {
-            "name": AIJ_PLANNERS['PATTY-A']["name"],
-            "type": "scalar"
-        },
-        'PATTY-R-MIN': {
-            "name": AIJ_PLANNERS['PATTY-R-MIN']["name"],
-            "type": "scalar"
-        },
-        'PATTY-R-MED': {
-            "name": AIJ_PLANNERS['PATTY-R-MED']["name"],
-            "type": "scalar"
-        },
-        'PATTY-R-MAX': {
-            "name": AIJ_PLANNERS['PATTY-R-MAX']["name"],
-            "type": "scalar"
-        },
+        # "PATTY-FE": {},
+        # "PATTY-HE": {},
+        "PATTY-GAMMA-MAX": {"type": "scalar"},
+        "PATTY-GAMMA-GC": {"type": "scalar"},
+        "PATTY-GAMMA-PLUS": {"type": "scalar"},
+        "PATTY-GAMMA-XOR": {"type": "scalar"},
+        "PATTY-DELTA-MAX": {"type": "scalar"},
+        "PATTY-DELTA-PLUS": {"type": "scalar"},
+        "PATTY-DELTA-XOR": {"type": "scalar"},
     },
     "domains": AIJ_DOMAINS
 }

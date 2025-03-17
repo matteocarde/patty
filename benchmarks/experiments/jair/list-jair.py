@@ -8,14 +8,14 @@ from benchmarks.tables.jair.domains import JAIR_DOMAINS
 PLANNERS = [
     "PATTY-EH",
     "PATTY-EF",
-    # "PATTY-GAMMA-MAX",
-    # "PATTY-GAMMA-MAX",
-    # "PATTY-GAMMA-GC",
-    # "PATTY-GAMMA-PLUS",
-    # "PATTY-GAMMA-XOR",
-    # "PATTY-DELTA-MAX",
-    # "PATTY-DELTA-PLUS",
-    # "PATTY-DELTA-XOR"
+    "PATTY-H-GAMMA-MAX",
+    "PATTY-H-GAMMA-MAX",
+    "PATTY-H-GAMMA-GC",
+    "PATTY-H-GAMMA-PLUS",
+    "PATTY-H-GAMMA-XOR",
+    "PATTY-H-DELTA-MAX",
+    "PATTY-H-DELTA-PLUS",
+    "PATTY-H-DELTA-XOR"
 ]
 RANDOM = 5
 NAME = "jair.csv"

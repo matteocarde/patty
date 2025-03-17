@@ -7,6 +7,7 @@ import statistics
 import sys
 from typing import Dict, List, Set
 
+from benchmarks.tables.jair.planners import JAIR_PLANNERS
 from benchmarks.tables.jair.table1 import JAIR_TABLE1
 from classes.CloudLogger import CloudLogger
 from classes.Result import Result
@@ -36,7 +37,13 @@ def main():
     # Parsing the results
     exp = "2025-03-17-JAIR-v6"
     joinWith = [
-        (exp, ["PATTY-A", "PATTY-L", "PATTY-M", "PATTY-R", "PATTY-E"]),
+        (exp, ["PATTY-GAMMA-MAX",
+               "PATTY-GAMMA-GC",
+               "PATTY-GAMMA-PLUS",
+               "PATTY-GAMMA-XOR",
+               "PATTY-DELTA-MAX",
+               "PATTY-DELTA-PLUS",
+               "PATTY-DELTA-XOR", ]),
     ]
 
     file = f"benchmarks/results/csv/{exp}.csv"
@@ -55,6 +62,8 @@ def main():
     tables = [
         ("TAB1", JAIR_TABLE1),
     ]
+
+    PLANNERS = JAIR_PLANNERS
 
     joinWith = [file]
     # joinWith = [file]
@@ -266,9 +275,9 @@ def main():
                     continue
                 if plannerInfo["type"] in {"slashed"}:
                     otherPlannerInfo = table["planners"][plannerInfo['slashedWith']]
-                    plannersHeader.append(f"${plannerInfo['name']}/{otherPlannerInfo['name']}$")
+                    plannersHeader.append(f"{PLANNERS[planner]['name']}/{otherPlannerInfo['name']}")
                 else:
-                    plannersHeader.append(f"${plannerInfo['name']}$")
+                    plannersHeader.append(f"{PLANNERS[planner]['name']}")
                 nCells += 1
                 clString.append("c")
 
