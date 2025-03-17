@@ -6,15 +6,16 @@ from natsort import natsort
 from benchmarks.tables.jair.domains import JAIR_DOMAINS
 
 PLANNERS = [
-    "PATTY-FE",
-    "PATTY-GAMMA-MAX",
-    "PATTY-GAMMA-MAX",
-    "PATTY-GAMMA-GC",
-    "PATTY-GAMMA-PLUS",
-    "PATTY-GAMMA-XOR",
-    "PATTY-DELTA-MAX",
-    "PATTY-DELTA-PLUS",
-    "PATTY-DELTA-XOR"
+    "PATTY-EH",
+    "PATTY-EF",
+    # "PATTY-GAMMA-MAX",
+    # "PATTY-GAMMA-MAX",
+    # "PATTY-GAMMA-GC",
+    # "PATTY-GAMMA-PLUS",
+    # "PATTY-GAMMA-XOR",
+    # "PATTY-DELTA-MAX",
+    # "PATTY-DELTA-PLUS",
+    # "PATTY-DELTA-XOR"
 ]
 RANDOM = 5
 NAME = "jair.csv"
