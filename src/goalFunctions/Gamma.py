@@ -18,7 +18,7 @@ class Gamma(GoalFunction):
         super().__init__()
 
     @staticmethod
-    def compute(s: State, g: Formula) -> float:
+    def compute(s: State, g: Formula, init: State) -> float:
         if not g.isAtomic():
             raise Exception(f"Goal {g} is not atomic")
         return 0 if s.satisfies(g) else 1

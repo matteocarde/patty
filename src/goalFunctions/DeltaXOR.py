@@ -18,7 +18,7 @@ class DeltaXOR(GoalFunction):
         super().__init__()
 
     @staticmethod
-    def compute(s: State, g: Goal) -> float:
+    def compute(s: State, g: Goal, init: State) -> float:
         G = len(g) if g.type == "AND" else 1
         groups = [g]
         if g.type == "AND" and not g.isAtomic():
@@ -26,7 +26,7 @@ class DeltaXOR(GoalFunction):
 
         addends = []
         for subgoal in groups:
-            deltaPlus = DeltaPlus.compute(s, subgoal)
+            deltaPlus = DeltaPlus.compute(s, subgoal, init)
             expr = 0 if s.satisfies(subgoal) else (G - 1 + deltaPlus) / G
             addends.append(expr)
         return 0 if s.satisfies(g) else max(EPSILON, sum(addends))

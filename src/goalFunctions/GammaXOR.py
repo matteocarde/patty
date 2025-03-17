@@ -22,7 +22,7 @@ class GammaXOR(GoalFunction):
         super().__init__()
 
     @staticmethod
-    def compute(s: State, g: Goal) -> float:
+    def compute(s: State, g: Goal, init: State) -> float:
         G = len(g) if g.type == "AND" else 1
         groups = [g]
         if g.type == "AND" and not g.isAtomic():
@@ -30,7 +30,7 @@ class GammaXOR(GoalFunction):
 
         addends = []
         for subgoal in groups:
-            gammaPlus = GammaPlus.computeFromFormula(s, g)
+            gammaPlus = GammaPlus.computeFromFormula(s, g, init)
             e = (G - 1 + gammaPlus) / G
             expr = 0 if s.satisfies(subgoal) else e
             addends.append(expr)

@@ -21,10 +21,10 @@ class GammaGoalCount(GoalFunction):
         super().__init__()
 
     @staticmethod
-    def compute(s: State, g: Goal) -> float:
+    def compute(s: State, g: Goal, init: State) -> float:
         if g.type == "OR" or g.isAtomic():
-            return GammaMax.computeFromFormula(s, g)
-        gammas = [GammaMax.computeFromFormula(s, phi) for phi in g.conditions]
+            return GammaMax.computeFromFormula(s, g, init)
+        gammas = [GammaMax.computeFromFormula(s, phi, init) for phi in g.conditions]
         return sum(gammas)
 
     @staticmethod

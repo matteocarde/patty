@@ -13,7 +13,7 @@ class TestJairCounterDeltaPlus(TestCase):
 
     def setUp(self) -> None:
         domainFile = "../../files/numeric/ipc-2023/markettrader/domain.pddl"
-        problemFile = "../../files/numeric/ipc-2023/markettrader/instances/pfile12.pddl"
+        problemFile = "../../files/numeric/ipc-2023/markettrader/instances/pfile01.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)

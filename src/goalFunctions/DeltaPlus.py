@@ -20,10 +20,10 @@ class DeltaPlus(GoalFunction):
         super().__init__()
 
     @staticmethod
-    def computeFromFormula(s: State, f: Formula):
+    def computeFromFormula(s: State, f: Formula, init: State):
         if f.isAtomic():
-            return Gamma.compute(s, f)
-        deltas = [DeltaPlus.computeFromFormula(s, phi) for phi in f.conditions]
+            return Delta.compute(s, f, init)
+        deltas = [DeltaPlus.computeFromFormula(s, phi, init) for phi in f.conditions]
         if f.type == "OR":
             return min(*deltas)
         if f.type == "AND":
@@ -31,13 +31,13 @@ class DeltaPlus(GoalFunction):
             return 1 / n * sum(deltas)
 
     @staticmethod
-    def compute(s: State, g: Goal) -> float:
+    def compute(s: State, g: Goal, init: State) -> float:
         # G = len(g) if g.type == "AND" else 1
         groups = [g]
         if not g.isAtomic() and g.type == "AND":
             groups = g.conditions
 
-        deltas = [DeltaPlus.computeFromFormula(s, group) for group in groups]
+        deltas = [DeltaPlus.computeFromFormula(s, group, init) for group in groups]
         return 0 if s.satisfies(g) else max(EPSILON, sum(deltas))
 
     @staticmethod

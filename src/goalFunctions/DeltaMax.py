@@ -20,23 +20,23 @@ class DeltaMax(GoalFunction):
         super().__init__()
 
     @staticmethod
-    def computeFromFormula(s: State, f: Formula):
+    def computeFromFormula(s: State, f: Formula, init: State):
         if f.isAtomic():
-            return Gamma.compute(s, f)
-        deltas = [DeltaMax.computeFromFormula(s, phi) for phi in f.conditions]
+            return Delta.compute(s, f, init)
+        deltas = [DeltaMax.computeFromFormula(s, phi, init) for phi in f.conditions]
         if f.type == "OR":
             return min(*deltas)
         if f.type == "AND":
             return max(*deltas)
 
     @staticmethod
-    def compute(s: State, g: Goal) -> float:
+    def compute(s: State, g: Goal, init: State) -> float:
         # G = len(g) if g.type == "AND" else 1
         groups = [g]
         if g.type == "AND" and not g.isAtomic():
             groups = g.conditions
 
-        deltas = [DeltaMax.computeFromFormula(s, group) for group in groups]
+        deltas = [DeltaMax.computeFromFormula(s, group, init) for group in groups]
         return 0 if s.satisfies(g) else max(EPSILON, *deltas)
 
     @staticmethod

@@ -35,4 +35,32 @@ JAIR_PLANNERS = {
         "name": r"$\mathrm{P}_\mathrm{H}(\delta^{\oplus})$",
         "style": "-"
     },
+    "PATTY-H-OPT-GAMMA-MAX": {
+        "name": r"$\mathrm{P}_\mathrm{H}^{opt}(\gamma^{max})$",
+        "style": "-"
+    },
+    "PATTY-H-OPT-GAMMA-GC": {
+        "name": r"$\mathrm{P}_\mathrm{H}^{opt}(\gamma^{gc})$",
+        "style": "-"
+    },
+    "PATTY-H-OPT-GAMMA-PLUS": {
+        "name": r"$\mathrm{P}_\mathrm{H}^{opt}(\gamma^{+})$",
+        "style": "-"
+    },
+    "PATTY-H-OPT-GAMMA-XOR": {
+        "name": r"$\mathrm{P}_\mathrm{H}^{opt}(\gamma^{\oplus})$",
+        "style": "-"
+    },
+    "PATTY-H-OPT-DELTA-MAX": {
+        "name": r"$\mathrm{P}_\mathrm{H}^{opt}(\delta^{max})$",
+        "style": "-"
+    },
+    "PATTY-H-OPT-DELTA-PLUS": {
+        "name": r"$\mathrm{P}_\mathrm{H}^{opt}(\delta^{+})$",
+        "style": "-"
+    },
+    "PATTY-H-OPT-DELTA-XOR": {
+        "name": r"$\mathrm{P}_\mathrm{H}^{opt}(\delta^{\oplus})$",
+        "style": "-"
+    },
 }

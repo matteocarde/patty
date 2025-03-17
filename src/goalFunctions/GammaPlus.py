@@ -20,10 +20,10 @@ class GammaPlus(GoalFunction):
         super().__init__()
 
     @staticmethod
-    def computeFromFormula(s: State, f: Formula):
+    def computeFromFormula(s: State, f: Formula, init: State):
         if f.isAtomic():
-            return Gamma.compute(s, f)
-        gammas = [GammaPlus.computeFromFormula(s, phi) for phi in f.conditions]
+            return Gamma.compute(s, f, init)
+        gammas = [GammaPlus.computeFromFormula(s, phi, init) for phi in f.conditions]
         if f.type == "OR":
             return min(*gammas)
         if f.type == "AND":
@@ -31,10 +31,10 @@ class GammaPlus(GoalFunction):
             return 1 / n * sum(gammas)
 
     @staticmethod
-    def compute(s: State, g: Goal) -> float:
+    def compute(s: State, g: Goal, init: State) -> float:
         if g.type == "OR" or g.isAtomic():
-            return GammaPlus.computeFromFormula(s, g)
-        gammas = [GammaPlus.computeFromFormula(s, phi) for phi in g.conditions]
+            return GammaPlus.computeFromFormula(s, g, init)
+        gammas = [GammaPlus.computeFromFormula(s, phi, init) for phi in g.conditions]
         return sum(gammas)
 
     @staticmethod
