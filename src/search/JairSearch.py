@@ -49,6 +49,7 @@ class JairSearch(Search):
                 problem=self.problem,
                 pattern=pat,
                 goalFunction=GF,
+                minimizeGoalFunction=self.args.minimizeGoalFunction,
                 goalFunctionValue=c,
                 bound=1,
                 args=self.args,

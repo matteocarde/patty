@@ -28,9 +28,14 @@ class NumericEncoding(Encoding):
     problem: Problem
 
     def __init__(self, domain: GroundedDomain, problem: Problem, pattern: Pattern, bound: int,
-                 args: Arguments, relaxGoal=False, subgoalsAchieved=None, minimizeQuality=False,
+                 args: Arguments,
+                 relaxGoal=False,
+                 subgoalsAchieved=None,
+                 minimizeQuality=False,
                  maxActionsRolling: Dict[int, Dict[Action, int]] = None,
-                 goalFunction: Type[GoalFunction] = None, goalFunctionValue: float = 0.0):
+                 goalFunction: Type[GoalFunction] = None,
+                 goalFunctionValue: float = 0.0,
+                 minimizeGoalFunction: float = False):
 
         super().__init__(domain, problem, pattern, bound)
         self.domain = domain
@@ -47,6 +52,7 @@ class NumericEncoding(Encoding):
         self.maxActionsRolling = maxActionsRolling
         self.goalFunction = goalFunction
         self.goalFunctionValue = goalFunctionValue
+        self.minimizeGoalFunction = minimizeGoalFunction
 
         self.transitionVariables: [NumericTransitionVariables] = list()
 
@@ -78,6 +84,10 @@ class NumericEncoding(Encoding):
     def getMinimize(self):
         if self.minimizeQuality:
             return sum(self.actionVariables)
+        if self.minimizeGoalFunction:
+            vars = self.transitionVariables[-1].valueVariables
+            init = State.fromInitialCondition(self.problem.init)
+            return self.goalFunction.getExpression(vars, self.problem.goal, init)
         return None
 
     def getInitialExpression(self) -> List[SMTExpression]:

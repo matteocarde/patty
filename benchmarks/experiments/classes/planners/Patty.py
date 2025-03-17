@@ -21,7 +21,8 @@ class Patty(Planner):
                  temporalConstraints=None,
                  avoidClosure=False,
                  avoidClosureRelaxation=False,
-                 goalFunction=False):
+                 goalFunction=False,
+                 minimizeGoalFunction=False):
         self.search = search
         self.maximize = maximize
         self.name = name
@@ -36,6 +37,7 @@ class Patty(Planner):
         self.avoidClosure = avoidClosure
         self.avoidClosureRelaxation = avoidClosureRelaxation
         self.goalFunction = goalFunction
+        self.minimizeGoalFunction = minimizeGoalFunction
         super().__init__()
 
     @staticmethod
@@ -120,4 +122,6 @@ class Patty(Planner):
             cmd += ["--avoid-closure-relaxation"]
         if self.goalFunction:
             cmd += ["--goal-function", self.goalFunction]
+        if self.minimizeGoalFunction:
+            cmd += ["--minimize-goal-function"]
         return cmd

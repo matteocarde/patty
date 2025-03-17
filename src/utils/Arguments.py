@@ -52,6 +52,8 @@ class Arguments:
                             default='numerical')
         parser.add_argument('--goal-function', help="See JAIR",
                             default='DELTA_MAX')
+        parser.add_argument('--minimize-goal-function', help="See JAIR",
+                            action="store_true", default=False)
         parser.add_argument('--quality',
                             help='''The type of metric used for quality: none, shortest-step where:\n
                             none:               The quality of the plan is not optimized\n
@@ -98,3 +100,4 @@ class Arguments:
         self.avoidClosure = args.avoid_closure
         self.printTransitiveClosures = args.ptc
         self.goalFunction = args.goal_function
+        self.minimizeGoalFunction = args.minimize_goal_function

@@ -35,15 +35,16 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2025-03-17-JAIR-v6"
+    exp = "2025-03-17-JAIR-v8"
     joinWith = [
-        (exp, ["PATTY-GAMMA-MAX",
-               "PATTY-GAMMA-GC",
-               "PATTY-GAMMA-PLUS",
-               "PATTY-GAMMA-XOR",
-               "PATTY-DELTA-MAX",
-               "PATTY-DELTA-PLUS",
-               "PATTY-DELTA-XOR", ]),
+        (exp, ["PATTY-EH",
+               "PATTY-H-GAMMA-MAX",
+               "PATTY-H-GAMMA-GC",
+               "PATTY-H-GAMMA-PLUS",
+               "PATTY-H-GAMMA-XOR",
+               "PATTY-H-DELTA-MAX",
+               "PATTY-H-DELTA-PLUS",
+               "PATTY-H-DELTA-XOR", ]),
     ]
 
     file = f"benchmarks/results/csv/{exp}.csv"
