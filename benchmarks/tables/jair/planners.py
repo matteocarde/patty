@@ -63,4 +63,32 @@ JAIR_PLANNERS = {
         "name": r"$\mathrm{P}_\mathrm{H}^{opt}(\delta^{\oplus})$",
         "style": "-"
     },
+    "PATTY-F-OPT-GAMMA-MAX": {
+        "name": r"$\mathrm{P}_\mathrm{F}^{opt}(\gamma^{max})$",
+        "style": "-"
+    },
+    "PATTY-F-OPT-GAMMA-GC": {
+        "name": r"$\mathrm{P}_\mathrm{F}^{opt}(\gamma^{gc})$",
+        "style": "-"
+    },
+    "PATTY-F-OPT-GAMMA-PLUS": {
+        "name": r"$\mathrm{P}_\mathrm{F}^{opt}(\gamma^{+})$",
+        "style": "-"
+    },
+    "PATTY-F-OPT-GAMMA-XOR": {
+        "name": r"$\mathrm{P}_\mathrm{F}^{opt}(\gamma^{\oplus})$",
+        "style": "-"
+    },
+    "PATTY-F-OPT-DELTA-MAX": {
+        "name": r"$\mathrm{P}_\mathrm{F}^{opt}(\delta^{max})$",
+        "style": "-"
+    },
+    "PATTY-F-OPT-DELTA-PLUS": {
+        "name": r"$\mathrm{P}_\mathrm{F}^{opt}(\delta^{+})$",
+        "style": "-"
+    },
+    "PATTY-F-OPT-DELTA-XOR": {
+        "name": r"$\mathrm{P}_\mathrm{F}^{opt}(\delta^{\oplus})$",
+        "style": "-"
+    }
 }

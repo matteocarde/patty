@@ -10,6 +10,7 @@ from typing import Dict, List, Set
 from benchmarks.tables.jair.planners import JAIR_PLANNERS
 from benchmarks.tables.jair.table1 import JAIR_TABLE1
 from benchmarks.tables.jair.table2 import JAIR_TABLE2
+from benchmarks.tables.jair.table3 import JAIR_TABLE3
 from classes.CloudLogger import CloudLogger
 from classes.Result import Result
 
@@ -36,17 +37,17 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2025-03-17-JAIR-v10"
+    exp = "2025-03-18-JAIR-F-v1"
     joinWith = [
         (exp, [
-            "PATTY-H-OPT-GAMMA-MAX",
-            "PATTY-H-OPT-GAMMA-GC",
-            "PATTY-H-OPT-GAMMA-PLUS",
-            "PATTY-H-OPT-GAMMA-XOR",
-            "PATTY-H-OPT-DELTA-MAX",
-            "PATTY-H-OPT-DELTA-PLUS",
-            "PATTY-H-OPT-DELTA-XOR", ]),
-        ("2025-03-17-JAIR-v8", ["PATTY-EH"])
+            "PATTY-F-OPT-GAMMA-MAX",
+            "PATTY-F-OPT-GAMMA-GC",
+            "PATTY-F-OPT-GAMMA-PLUS",
+            "PATTY-F-OPT-GAMMA-XOR",
+            "PATTY-F-OPT-DELTA-MAX",
+            "PATTY-F-OPT-DELTA-PLUS",
+            "PATTY-F-OPT-DELTA-XOR", ]),
+        ("2025-03-17-JAIR-v8", ["PATTY-EH", "PATTY-EF"])
     ]
 
     file = f"benchmarks/results/csv/{exp}.csv"
@@ -63,7 +64,9 @@ def main():
         CloudLogger.appendLogs(exp2, file, keepSolvers)
 
     tables = [
-        ("TAB2", JAIR_TABLE2),
+        # ("TAB1", JAIR_TABLE1),
+        # ("TAB2", JAIR_TABLE2),
+        ("TAB3", JAIR_TABLE3),
     ]
 
     PLANNERS = JAIR_PLANNERS
