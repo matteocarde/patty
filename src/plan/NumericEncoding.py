@@ -1,6 +1,6 @@
 from typing import List, Dict, Set, Type
 
-from src.goalFunctions.GoalFunction import GoalFunction
+from src.goalFunctions.GoalFunction import GoalFunction, EPSILON
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
@@ -35,6 +35,7 @@ class NumericEncoding(Encoding):
                  maxActionsRolling: Dict[int, Dict[Action, int]] = None,
                  goalFunction: Type[GoalFunction] = None,
                  goalFunctionValue: float = 0.0,
+                 goalFunctionWithEpsilon: bool = False,
                  minimizeGoalFunction: float = False):
 
         super().__init__(domain, problem, pattern, bound)
@@ -53,6 +54,7 @@ class NumericEncoding(Encoding):
         self.goalFunction = goalFunction
         self.goalFunctionValue = goalFunctionValue
         self.minimizeGoalFunction = minimizeGoalFunction
+        self.goalFunctionWithEpsilon = goalFunctionWithEpsilon
 
         self.transitionVariables: [NumericTransitionVariables] = list()
 
@@ -165,7 +167,12 @@ class NumericEncoding(Encoding):
         if self.goalFunction:
             vars = self.transitionVariables[-1].valueVariables
             init = State.fromInitialCondition(self.problem.init)
-            return self.goalFunction.getExpression(vars, self.problem.goal, init) < self.goalFunctionValue
+            expr = self.goalFunction.getExpression(vars, self.problem.goal, init)
+            c = self.goalFunctionValue
+            if self.goalFunctionWithEpsilon:
+                return expr <= max(c - EPSILON, 0)
+            else:
+                return expr < EPSILON
 
         return self.getGoalRuleFromFormula(self.problem.goal, 0)
 

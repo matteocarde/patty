@@ -36,7 +36,7 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2025-03-17-JAIR-v9"
+    exp = "2025-03-17-JAIR-v10"
     joinWith = [
         (exp, [
             "PATTY-H-OPT-GAMMA-MAX",

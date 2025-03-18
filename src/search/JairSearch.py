@@ -1,7 +1,7 @@
 import copy
 from typing import Type
 
-from src.goalFunctions.GoalFunction import GoalFunction
+from src.goalFunctions.GoalFunction import GoalFunction, EPSILON
 from src.pddl.Domain import GroundedDomain
 from src.pddl.Plan import Plan
 from src.pddl.Problem import Problem
@@ -50,6 +50,7 @@ class JairSearch(Search):
                 pattern=pat,
                 goalFunction=GF,
                 minimizeGoalFunction=self.args.minimizeGoalFunction,
+                goalFunctionWithEpsilon=not self.args.noCompression,
                 goalFunctionValue=c,
                 bound=1,
                 args=self.args,
@@ -87,6 +88,7 @@ class JairSearch(Search):
                 c = GF.compute(s, self.problem.goal, initialState)
                 self.console.log(f"Found intermediate state {s}", LogPrintLevel.PLAN)
                 self.console.log(f"New Goal Function Value: {c}", LogPrintLevel.PLAN)
+                pat = Pattern.fromPlan(plan, addFake=not self.isTemporal) if not self.args.noCompression else pat
                 patH: Pattern = Pattern.fromState(s, self.problem.goal, self.domain, enhanced=self.enhanced)
 
             bound = bound + 1

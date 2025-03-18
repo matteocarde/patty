@@ -3,9 +3,9 @@
 (define (problem instance_8_400_1229_ladder)
 	(:domain farmland)
 	(:objects
-		farm0 farm1 farm2 farm3 farm4 farm5 farm6 farm7  - farm
+		farm0 farm1 farm2 farm3 farm4 farm5 farm6 farm7 - farm
 	)
-  (:init
+	(:init
 		(= (x farm0) 1)
 		(= (x farm1) 400)
 		(= (x farm2) 0)
@@ -14,7 +14,7 @@
 		(= (x farm5) 1)
 		(= (x farm6) 1)
 		(= (x farm7) 0)
-		
+
 		(adj farm0 farm1)
 		(adj farm0 farm4)
 		(adj farm1 farm0)
@@ -35,7 +35,7 @@
 		(adj farm6 farm7)
 		(adj farm7 farm3)
 		(adj farm7 farm6)
-		
+
 		(= (cost) 0)
 	)
 	(:goal
@@ -48,10 +48,15 @@
 			(>= (x farm5) 1)
 			(>= (x farm6) 1)
 			(>= (x farm7) 1)
-			
-			(>= (+ (* 1.7 (x farm0))(+ (* 1.0 (x farm1))(+ (* 1.3 (x farm2))(+ (* 1.1 (x farm3))(+ (* 1.4 (x farm4))(+ (* 1.9 (x farm5))(+ (* 1.3 (x farm6))(+ (* 1.4 (x farm7)) 0)))))))) 560.0)
+
+			(>= (+ (* 1.7 (x farm0))
+					(+ (* 1.0 (x farm1))
+						(+ (* 1.3 (x farm2))
+							(+ (* 1.1 (x farm3))
+								(+ (* 1.4 (x farm4))
+									(+ (* 1.9 (x farm5))
+										(+ (* 1.3 (x farm6))
+											(+ (* 1.4 (x farm7)) 0)))))))) 560.0)
 		)
 	)
 )
-
-
