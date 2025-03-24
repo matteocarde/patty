@@ -26,7 +26,7 @@ class DeltaMaxClauses(GoalFunction):
         for phi in g.conditions:
             if not isinstance(phi, BinaryPredicate):
                 continue
-            iValue = init.getValue(phi)
+            iValue = init.getValue(phi.lhs - phi.rhs)
             if iValue != 0:
                 hasNumeric = True
                 break
@@ -34,14 +34,14 @@ class DeltaMaxClauses(GoalFunction):
 
     @staticmethod
     def compute(s: State, g: Goal, init: State) -> float:
-        if DeltaMaxClauses.hasNumeric(g, init):
+        if not DeltaMaxClauses.hasNumeric(g, init):
             return GammaMaxClauses.compute(s, g, init)
         deltas = [DeltaClauses.compute(s, phi, init) for phi in g.conditions]
         return max(deltas)
 
     @staticmethod
     def getExpression(vars: Dict[Atom, SMTVariable], g: Formula, init: State) -> SMTExpression:
-        if DeltaMaxClauses.hasNumeric(g, init):
+        if not DeltaMaxClauses.hasNumeric(g, init):
             return GammaMaxClauses.getExpression(vars, g, init)
         deltas = [DeltaClauses.getExpression(vars, phi, init) for phi in g.conditions]
         return max(deltas)

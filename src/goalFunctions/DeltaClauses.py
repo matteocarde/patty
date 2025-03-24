@@ -23,31 +23,34 @@ class DeltaClauses(GoalFunction):
 
     @staticmethod
     def compute(s: State, g: Formula, init: State) -> float:
-        if not g.isAtomic() or not g.type == "OR":
-            raise Exception(f"Goal {g} is not atomic or an OR")
-
         if s.satisfies(g):
             return 0
 
+        groups = [g] if g.isAtomic() else g.conditions
+
         toMinimize: List[Tuple[float, float]] = []
-        for phi in g.conditions:
-            initValue = init.getValue(phi)
-            if isinstance(g, BinaryPredicate) and initValue < 0:
-                toMinimize.append((s.getValue(phi), initValue))
+        for phi in groups:
+            if isinstance(phi, BinaryPredicate):
+                initValue = init.getValue(phi.lhs - phi.rhs)
+                if initValue != 0:
+                    toMinimize.append((s.getValue(phi), initValue))
 
         return min([sPhi / iPhi + EPSILON for (sPhi, iPhi) in toMinimize] + [1])
 
     @staticmethod
     def getExpression(vars: Dict[Atom, SMTVariable], g: Formula, init: State) -> SMTExpression:
-        if not g.isAtomic() or not g.type == "OR":
-            raise Exception(f"Goal {g} is not atomic or an OR")
+
+        groups = [g] if g.isAtomic() else g.conditions
 
         toMinimize: List[Tuple[SMTExpression, float]] = []
-        for phi in g.conditions:
-            initValue = init.getValue(phi)
-            if isinstance(g, BinaryPredicate) and initValue < 0:
-                phiExpr = SMTExpression.fromFormula(phi, vars)
-                toMinimize.append((phiExpr, initValue))
+        for phi in groups:
+            if not isinstance(g, BinaryPredicate):
+                continue
+            initValue = init.getValue(phi.lhs - phi.rhs)
+            if initValue >= 0:
+                continue
+            phiExpr = SMTExpression.fromFormula(phi, vars)
+            toMinimize.append((phiExpr, initValue))
 
         minExpr = min([phi / iPhi + EPSILON for (phi, iPhi) in toMinimize] + [1])
         gExpr = SMTExpression.fromFormula(g, vars)
