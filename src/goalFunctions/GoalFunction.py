@@ -32,6 +32,14 @@ class GoalFunction:
         from src.goalFunctions.GammaMax import GammaMax
         from src.goalFunctions.GammaPlus import GammaPlus
         from src.goalFunctions.GammaXOR import GammaXOR
+
+        from src.goalFunctions.DeltaMaxClauses import DeltaMaxClauses
+        from src.goalFunctions.DeltaPlusClauses import DeltaPlusClauses
+        from src.goalFunctions.DeltaXORClauses import DeltaXORClauses
+        from src.goalFunctions.GammaGoalCountClauses import GammaGoalCountClauses
+        from src.goalFunctions.GammaMaxClauses import GammaMaxClauses
+        from src.goalFunctions.GammaPlusClauses import GammaPlusClauses
+
         if s == "DELTA-MAX":
             return DeltaMax
         if s == "DELTA-PLUS":
@@ -46,3 +54,16 @@ class GoalFunction:
             return GammaPlus
         if s == "GAMMA-XOR":
             return GammaXOR
+
+        if s == "DELTA-MAX-CLAUSES":
+            return DeltaMaxClauses
+        if s == "DELTA-PLUS-CLAUSES":
+            return DeltaPlusClauses
+        if s == "DELTA-XOR-CLAUSES":
+            return DeltaXORClauses
+        if s == "GAMMA-GC-CLAUSES":
+            return GammaGoalCountClauses
+        if s == "GAMMA-MAX-CLAUSES":
+            return GammaMaxClauses
+        if s == "GAMMA-PLUS-CLAUSES":
+            return GammaPlusClauses
