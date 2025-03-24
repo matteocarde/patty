@@ -31,6 +31,7 @@ class TestBlockGroupingDeltaXorClauses(TestCase):
     def test_solve(self):
         for gf in self.goalFunctions:
             args = Arguments(keepRequired=False)
+            args.minimizeGoalFunction = True
             args.goalFunction = gf
             print(gf)
 
