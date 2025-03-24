@@ -3,6 +3,7 @@ from typing import Dict
 from src.goalFunctions.DeltaClauses import DeltaClauses
 from src.goalFunctions.GammaMaxClauses import GammaMaxClauses
 from src.goalFunctions.GoalFunction import GoalFunction
+from src.goalFunctions.GoalFunctionClauses import GoalFunctionClauses
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.Formula import Formula
@@ -14,7 +15,7 @@ from src.smt.SMTVariable import SMTVariable
 from src.smt.expressions.MaxExpression import MaxExpression
 
 
-class DeltaMaxClauses(GoalFunction):
+class DeltaMaxClauses(GoalFunctionClauses):
 
     def __init__(self):
         super().__init__()

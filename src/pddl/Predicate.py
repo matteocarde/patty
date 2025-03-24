@@ -86,6 +86,12 @@ class Predicate:
     def __lt__(self, other):
         return self.__operation(other, "<")
 
+    def __ge__(self, other):
+        return self.__operation(other, ">=")
+
+    def __le__(self, other):
+        return self.__operation(other, "<=")
+
     def __deepcopy__(self, m=None):
         raise NotImplemented()
 

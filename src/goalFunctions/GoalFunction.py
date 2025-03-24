@@ -67,3 +67,7 @@ class GoalFunction:
             return GammaMaxClauses
         if s == "GAMMA-PLUS-CLAUSES":
             return GammaPlusClauses
+
+    @classmethod
+    def assertGoalIsRightForm(cls, normalizedGoal: Formula) -> bool:
+        return True

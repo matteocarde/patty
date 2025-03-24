@@ -3,6 +3,7 @@ from typing import Dict
 from src.goalFunctions.DeltaClauses import DeltaClauses
 from src.goalFunctions.DeltaPlus import DeltaPlus
 from src.goalFunctions.GoalFunction import GoalFunction, EPSILON
+from src.goalFunctions.GoalFunctionClauses import GoalFunctionClauses
 from src.pddl.Atom import Atom
 from src.pddl.Formula import Formula
 from src.pddl.Goal import Goal
@@ -13,7 +14,7 @@ from src.smt.expressions.ITEExpression import ITEExpression
 from src.smt.expressions.MaxExpression import MaxExpression
 
 
-class DeltaXORClauses(GoalFunction):
+class DeltaXORClauses(GoalFunctionClauses):
 
     def __init__(self):
         super().__init__()
@@ -29,8 +30,10 @@ class DeltaXORClauses(GoalFunction):
             groups = g.conditions
 
         addends = []
+        deltas = []
         for subgoal in groups:
             delta = DeltaClauses.compute(s, subgoal, init)
+            deltas.append(delta)
             expr = (G - 1 + delta) / G
             addends.append(expr)
         return sum(addends)

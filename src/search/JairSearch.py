@@ -31,7 +31,9 @@ class JairSearch(Search):
 
         pat: Pattern = Pattern.fromOrder([])
         GF: Type[GoalFunction] = GoalFunction.getGoalFunctionFromString(self.args.goalFunction)
-        c = GF.compute(s, self.problem.goal, initialState)
+        normalizedGoal = self.problem.goal.normalize()
+        GF.assertGoalIsRightForm(normalizedGoal)
+        c = GF.compute(s, normalizedGoal, initialState)
         patH: Pattern = Pattern.fromState(s, self.problem.goal, self.domain, enhanced=self.enhanced)
 
         self.console.log(f"Goal Function Value: {c}", LogPrintLevel.PLAN)
@@ -85,7 +87,7 @@ class JairSearch(Search):
                     self.console.log(f"Calls to Solver: {callsToSolver}", LogPrintLevel.STATS)
                     self.console.log(f"Bound: {bound}", LogPrintLevel.STATS)
                     return plan
-                c = GF.compute(s, self.problem.goal, initialState)
+                c = GF.compute(s, normalizedGoal, initialState)
                 self.console.log(f"Found intermediate state {s}", LogPrintLevel.PLAN)
                 self.console.log(f"New Goal Function Value: {c}", LogPrintLevel.PLAN)
                 pat = Pattern.fromPlan(plan, addFake=not self.isTemporal) if not self.args.noCompression else pat

@@ -336,3 +336,56 @@ class Formula:
 
     def isAtomic(self):
         return len(self.conditions) == 1 and isinstance(self.conditions[0], Predicate)
+
+    def normalize(self) -> Formula:
+        f = Formula()
+        f.type = self.type
+        for c in self.conditions:
+            if isinstance(c, Formula):
+                f.addClause(c.normalize())
+                continue
+            if isinstance(c, Literal):
+                f.addClause(c)
+                continue
+            if isinstance(c, BinaryPredicate):
+                if c.operator == "=":
+                    f.addClause(c.lhs >= c.rhs)
+                    f.addClause(c.rhs >= c.lhs)
+                elif c.operator == "<":
+                    f.addClause(c.rhs > c.lhs)
+                elif c.operator == "<=":
+                    f.addClause(c.rhs >= c.lhs)
+                elif c.operator == "!=":
+                    if f.type == "OR":
+                        f.addClause(c.rhs > c.lhs)
+                        f.addClause(c.lhs > c.rhs)
+                    else:
+                        subF = Formula()
+                        subF.type = "OR"
+                        subF.addClause(c.rhs > c.lhs)
+                        subF.addClause(c.lhs > c.rhs)
+                        f.addClause(subF)
+                else:
+                    f.addClause(c)
+
+        return f
+
+    def isCNF(self) -> bool:
+        if self.type != "AND":
+            return False
+        hasClausesOfPredicates = True
+        disjuncts = []
+        for c in self.conditions:
+            if not isinstance(c, Formula):
+                continue
+            if c.type != "OR":
+                hasClausesOfPredicates = False
+                break
+            disjuncts += c.conditions
+
+        for d in disjuncts:
+            if isinstance(d, Formula):
+                hasClausesOfPredicates = False
+                break
+
+        return hasClausesOfPredicates

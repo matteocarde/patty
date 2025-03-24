@@ -4,6 +4,7 @@ from src.goalFunctions.Gamma import Gamma
 from src.goalFunctions.GammaMax import GammaMax
 from src.goalFunctions.GammaPlusClauses import GammaPlusClauses
 from src.goalFunctions.GoalFunction import GoalFunction
+from src.goalFunctions.GoalFunctionClauses import GoalFunctionClauses
 from src.pddl.Atom import Atom
 from src.pddl.Domain import GroundedDomain
 from src.pddl.Formula import Formula
@@ -16,7 +17,7 @@ from src.smt.expressions.MaxExpression import MaxExpression
 from src.smt.expressions.MinExpression import MinExpression
 
 
-class GammaGoalCountClauses(GoalFunction):
+class GammaGoalCountClauses(GoalFunctionClauses):
 
     def __init__(self):
         super().__init__()

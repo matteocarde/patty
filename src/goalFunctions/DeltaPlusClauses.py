@@ -4,6 +4,7 @@ from src.goalFunctions.Delta import Delta
 from src.goalFunctions.DeltaClauses import DeltaClauses
 from src.goalFunctions.Gamma import Gamma
 from src.goalFunctions.GoalFunction import GoalFunction, EPSILON
+from src.goalFunctions.GoalFunctionClauses import GoalFunctionClauses
 from src.pddl.Atom import Atom
 from src.pddl.Formula import Formula
 from src.pddl.Goal import Goal
@@ -15,7 +16,7 @@ from src.smt.expressions.MaxExpression import MaxExpression
 from src.smt.expressions.MinExpression import MinExpression
 
 
-class DeltaPlusClauses(GoalFunction):
+class DeltaPlusClauses(GoalFunctionClauses):
 
     def __init__(self):
         super().__init__()

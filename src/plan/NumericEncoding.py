@@ -167,7 +167,7 @@ class NumericEncoding(Encoding):
         if self.goalFunction:
             vars = self.transitionVariables[-1].valueVariables
             init = State.fromInitialCondition(self.problem.init)
-            expr = self.goalFunction.getExpression(vars, self.problem.goal, init)
+            expr = self.goalFunction.getExpression(vars, self.problem.goal.normalize(), init)
             c = self.goalFunctionValue
             if self.goalFunctionWithEpsilon:
                 return expr <= max(c - EPSILON, 0)
