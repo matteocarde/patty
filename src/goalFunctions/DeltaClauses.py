@@ -33,7 +33,7 @@ class DeltaClauses(GoalFunction):
             if isinstance(phi, BinaryPredicate):
                 initValue = init.getValue(phi.lhs - phi.rhs)
                 if initValue != 0:
-                    toMinimize.append((s.getValue(phi), initValue))
+                    toMinimize.append((s.getValue(phi.lhs - phi.rhs), initValue))
 
         return min([sPhi / iPhi + EPSILON for (sPhi, iPhi) in toMinimize] + [1])
 
@@ -52,6 +52,6 @@ class DeltaClauses(GoalFunction):
             phiExpr = SMTExpression.fromFormula(phi, vars)
             toMinimize.append((phiExpr, initValue))
 
-        minExpr = min([phi / iPhi + EPSILON for (phi, iPhi) in toMinimize] + [1])
+        minExpr = MinExpression([phi / iPhi + EPSILON for (phi, iPhi) in toMinimize] + [1])
         gExpr = SMTExpression.fromFormula(g, vars)
         return ITEExpression(gExpr, 0, minExpr)

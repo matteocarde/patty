@@ -11,6 +11,7 @@ from src.pddl.Literal import Literal
 from src.pddl.State import State
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTVariable import SMTVariable
+from src.smt.expressions.MaxExpression import MaxExpression
 
 
 class DeltaMaxClauses(GoalFunction):
@@ -44,4 +45,4 @@ class DeltaMaxClauses(GoalFunction):
         if not DeltaMaxClauses.hasNumeric(g, init):
             return GammaMaxClauses.getExpression(vars, g, init)
         deltas = [DeltaClauses.getExpression(vars, phi, init) for phi in g.conditions]
-        return max(deltas)
+        return MaxExpression(*deltas)
