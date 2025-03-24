@@ -89,7 +89,7 @@ class NumericEncoding(Encoding):
         if self.minimizeGoalFunction:
             vars = self.transitionVariables[-1].valueVariables
             init = State.fromInitialCondition(self.problem.init)
-            return self.goalFunction.getExpression(vars, self.problem.goal, init)
+            return self.goalFunction.getExpression(vars, self.problem.goal.normalize(), init)
         return None
 
     def getInitialExpression(self) -> List[SMTExpression]:

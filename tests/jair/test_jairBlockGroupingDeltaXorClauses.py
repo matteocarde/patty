@@ -13,7 +13,7 @@ class TestBlockGroupingDeltaXorClauses(TestCase):
 
     def setUp(self) -> None:
         domainFile = "../../files/numeric/ipc-2023/block-grouping/domain.pddl"
-        problemFile = "../../files/numeric/ipc-2023/block-grouping/instances/instance_5_25_6_1.pddl"
+        problemFile = "../../files/numeric/ipc-2023/block-grouping/instances/instance_20_5_2_1.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)
