@@ -48,7 +48,7 @@ class DeltaClauses(GoalFunctionClauses):
 
         toMinimize: List[Tuple[SMTExpression, float]] = []
         for phi in groups:
-            if not isinstance(g, BinaryPredicate):
+            if not isinstance(phi, BinaryPredicate):
                 continue
             initValue = init.getValue(phi.lhs - phi.rhs)
             if initValue >= 0:

@@ -1,4 +1,8 @@
 JAIR_PLANNERS = {
+    "PATTY-EG": {
+        "name": r"$\mathrm{P}_\mathrm{G}$",
+        "style": "-"
+    },
     "PATTY-EF": {
         "name": r"$\mathrm{P}_\mathrm{F}$",
         "style": "-"
@@ -89,6 +93,34 @@ JAIR_PLANNERS = {
     },
     "PATTY-F-OPT-DELTA-XOR": {
         "name": r"$\mathrm{P}_\mathrm{F}^{opt}(\delta^{\oplus})$",
+        "style": "-"
+    },
+    "PATTY-F-OPT-GAMMA-MAX-CLAUSES": {
+        "name": r"$\mathrm{P}_\mathrm{F}^{opt}(\gamma^{max}_c)$",
+        "style": "-"
+    },
+    "PATTY-F-OPT-GAMMA-GC-CLAUSES": {
+        "name": r"$\mathrm{P}_\mathrm{F}^{opt}(\gamma^{gc}_c)$",
+        "style": "-"
+    },
+    "PATTY-F-OPT-GAMMA-PLUS-CLAUSES": {
+        "name": r"$\mathrm{P}_\mathrm{F}^{opt}(\gamma^{+}_c)$",
+        "style": "-"
+    },
+    "PATTY-F-OPT-GAMMA-XOR-CLAUSES": {
+        "name": r"$\mathrm{P}_\mathrm{F}^{opt}(\gamma^{\oplus}_c)$",
+        "style": "-"
+    },
+    "PATTY-F-OPT-DELTA-MAX-CLAUSES": {
+        "name": r"$\mathrm{P}_\mathrm{F}^{opt}(\delta^{max}_c)$",
+        "style": "-"
+    },
+    "PATTY-F-OPT-DELTA-PLUS-CLAUSES": {
+        "name": r"$\mathrm{P}_\mathrm{F}^{opt}(\delta^{+}_c)$",
+        "style": "-"
+    },
+    "PATTY-F-OPT-DELTA-XOR-CLAUSES": {
+        "name": r"$\mathrm{P}_\mathrm{F}^{opt}(\delta^{\oplus}_c)$",
         "style": "-"
     }
 }

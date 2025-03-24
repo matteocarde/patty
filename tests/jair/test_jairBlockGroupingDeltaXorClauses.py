@@ -13,15 +13,15 @@ class TestBlockGroupingDeltaXorClauses(TestCase):
 
     def setUp(self) -> None:
         domainFile = "../../files/numeric/ipc-2023/block-grouping/domain.pddl"
-        problemFile = "../../files/numeric/ipc-2023/block-grouping/instances/instance_15_25_6_3.pddl"
+        problemFile = "../../files/numeric/ipc-2023/block-grouping/instances/instance_5_25_6_1.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.goalFunctions = [
             # "DELTA-MAX-CLAUSES",
-            # "DELTA-PLUS-CLAUSES",
-            "DELTA-XOR-CLAUSES",
+            "DELTA-PLUS-CLAUSES",
+            # "DELTA-XOR-CLAUSES",
             # "GAMMA-GC-CLAUSES",
             # "GAMMA-MAX-CLAUSES",
             # "GAMMA-PLUS-CLAUSES",

@@ -11,6 +11,7 @@ from benchmarks.tables.jair.planners import JAIR_PLANNERS
 from benchmarks.tables.jair.table1 import JAIR_TABLE1
 from benchmarks.tables.jair.table2 import JAIR_TABLE2
 from benchmarks.tables.jair.table3 import JAIR_TABLE3
+from benchmarks.tables.jair.table4 import JAIR_TABLE4
 from classes.CloudLogger import CloudLogger
 from classes.Result import Result
 
@@ -37,17 +38,17 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2025-03-18-JAIR-F-v2"
+    exp = "2025-03-24-JAIR-CLAUSES-V4"
     joinWith = [
         (exp, [
-            "PATTY-F-OPT-GAMMA-MAX",
-            "PATTY-F-OPT-GAMMA-GC",
-            "PATTY-F-OPT-GAMMA-PLUS",
-            "PATTY-F-OPT-GAMMA-XOR",
-            "PATTY-F-OPT-DELTA-MAX",
-            "PATTY-F-OPT-DELTA-PLUS",
-            "PATTY-F-OPT-DELTA-XOR", ]),
-        ("2025-03-17-JAIR-v8", ["PATTY-EH", "PATTY-EF"])
+            "PATTY-EG", "PATTY-EH", "PATTY-EF",
+            "PATTY-F-OPT-GAMMA-MAX-CLAUSES",
+            "PATTY-F-OPT-GAMMA-GC-CLAUSES",
+            "PATTY-F-OPT-GAMMA-PLUS-CLAUSES",
+            "PATTY-F-OPT-GAMMA-XOR-CLAUSES",
+            "PATTY-F-OPT-DELTA-MAX-CLAUSES",
+            "PATTY-F-OPT-DELTA-PLUS-CLAUSES",
+            "PATTY-F-OPT-DELTA-XOR-CLAUSES", ])
     ]
 
     file = f"benchmarks/results/csv/{exp}.csv"
@@ -66,7 +67,8 @@ def main():
     tables = [
         # ("TAB1", JAIR_TABLE1),
         # ("TAB2", JAIR_TABLE2),
-        ("TAB3", JAIR_TABLE3),
+        # ("TAB3", JAIR_TABLE3),
+        ("TAB4", JAIR_TABLE4),
     ]
 
     PLANNERS = JAIR_PLANNERS
