@@ -27,7 +27,7 @@ class DeltaClauses(GoalFunctionClauses):
         if s.satisfies(g):
             return 0
 
-        groups = [g] if g.isAtomic() else g.conditions
+        groups = g.conditions if isinstance(g, Formula) else [g]
 
         toMinimize: List[Tuple[float, float]] = []
         for phi in groups:
@@ -44,7 +44,7 @@ class DeltaClauses(GoalFunctionClauses):
     @staticmethod
     def getExpression(vars: Dict[Atom, SMTVariable], g: Formula, init: State) -> SMTExpression:
 
-        groups = [g] if g.isAtomic() else g.conditions
+        groups = g.conditions if isinstance(g, Formula) else [g]
 
         toMinimize: List[Tuple[SMTExpression, float]] = []
         for phi in groups:

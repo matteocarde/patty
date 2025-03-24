@@ -22,8 +22,6 @@ class DeltaMaxClauses(GoalFunctionClauses):
 
     @staticmethod
     def hasNumeric(g: Goal or Formula, init: State):
-        if g.isAtomic():
-            return False
         hasNumeric = False
         for phi in g.conditions:
             if not isinstance(phi, BinaryPredicate):

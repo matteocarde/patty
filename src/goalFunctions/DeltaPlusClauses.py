@@ -25,22 +25,12 @@ class DeltaPlusClauses(GoalFunctionClauses):
     def compute(s: State, g: Goal, init: State) -> float:
         if g.type == "OR":
             raise Exception("This goal function works only when goals are clauses")
-
-        groups = [g]
-        if not g.isAtomic():
-            groups = g.conditions
-
-        addends = [DeltaClauses.compute(s, g, init) for g in groups]
+        addends = [DeltaClauses.compute(s, phi, init) for phi in g.conditions]
         return sum(addends)
 
     @staticmethod
     def getExpression(vars: Dict[Atom, SMTVariable], g: Formula, init: State) -> SMTExpression:
         if g.type == "OR":
             raise Exception("This goal function works only when goals are clauses")
-
-        groups = [g]
-        if not g.isAtomic():
-            groups = g.conditions
-
-        addends = [DeltaClauses.getExpression(vars, g, init) for g in groups]
+        addends = [DeltaClauses.getExpression(vars, phi, init) for phi in g.conditions]
         return sum(addends)
