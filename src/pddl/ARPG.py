@@ -1,3 +1,4 @@
+import copy
 import itertools
 from typing import Set, List, Dict
 
@@ -5,6 +6,7 @@ from src.pattern.PatternActionGraph import PatternActionGraph
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.Domain import GroundedDomain
+from src.pddl.Formula import Formula
 from src.pddl.Goal import Goal
 from src.pddl.PDDLException import PDDLException
 from src.pddl.RelaxedIntervalState import RelaxedIntervalState
@@ -125,3 +127,44 @@ class ARPG:
             string += f"A_{layer} = {actionLayer}\n"
 
         return string
+
+    def getConeOfInfluence(self, goal: Goal) -> List[Action]:
+
+        level = None
+        for i, l in enumerate(self.stateLevels):
+            if l.satisfies(goal):
+                level = i
+                break
+
+        actionLayers: List[List[Action]] = []
+        atoms = goal.getFunctions() | goal.getPredicates()
+        usedActions = set()
+        orState = copy.deepcopy(goal)
+        orState.type = "OR"
+
+        while level > 0:
+            level -= 1
+            prevAtoms = set()
+            actions = set()
+            state = self.stateLevels[level]
+            newOrState = Formula.disjunction()
+            for s in self.supporterLevels[level]:
+                if s.effect.atom not in atoms:
+                    continue
+                if not state.applySupporters({s}).satisfies(orState):
+                    continue
+                prevAtoms |= s.preconditions.getPredicates() | s.preconditions.getFunctions()
+                action = s.originatingAction
+                for f in action.preconditions:
+                    newOrState.addClause(f)
+                actions.add(s.originatingAction)
+            atoms |= prevAtoms
+            actions = actions - usedActions
+            usedActions |= actions
+            actionLayers = [list(actions)] + actionLayers
+            orState = newOrState
+
+        order = []
+        for layer in actionLayers:
+            order += layer
+        return order

@@ -54,6 +54,8 @@ class Arguments:
                             default='DELTA_MAX')
         parser.add_argument('--minimize-goal-function', help="See JAIR",
                             action="store_true", default=False)
+        parser.add_argument('--use-incomplete-pattern', help="See JAIR",
+                            action="store_true", default=False)
         parser.add_argument('--quality',
                             help='''The type of metric used for quality: none, shortest-step where:\n
                             none:               The quality of the plan is not optimized\n
@@ -101,3 +103,4 @@ class Arguments:
         self.printTransitiveClosures = args.ptc
         self.goalFunction = args.goal_function
         self.minimizeGoalFunction = args.minimize_goal_function
+        self.useIncompletePattern = args.use_incomplete_pattern

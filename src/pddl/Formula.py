@@ -29,6 +29,12 @@ class Formula:
         self.type = "AND"
         self.conditions: [Formula or Predicate] = list()
         self.atoms = set()
+        
+    @classmethod
+    def disjunction(cls):
+        f = cls()
+        f.type = "OR"
+        return f
 
     def __deepcopy__(self, m=None) -> Formula:
         m = {} if m is None else m

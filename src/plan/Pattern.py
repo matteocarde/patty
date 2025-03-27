@@ -107,6 +107,12 @@ class Pattern:
         order = arpg.getActionsOrder(enhanced)
         return order and Pattern.fromOrder(order)
 
+    @classmethod
+    def fromConeOfInfluence(cls, state: State, goal: Goal, domain: GroundedDomain):
+        arpg: ARPG = ARPG(domain, state, goal, avoidRaising=True)
+        order = arpg.getConeOfInfluence(goal)
+        return order and Pattern.fromOrder(order)
+
     def addPostfix(self, postfix: int or str):
         order = []
         for item in self.__order:
@@ -134,6 +140,7 @@ class Pattern:
     @classmethod
     def fromAlphabetical(cls, domain: GroundedDomain):
         return cls.fromOrder(sorted(domain.actions))
+
     def getLength(self):
         return len(self)
 

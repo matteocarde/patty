@@ -1,5 +1,5 @@
 import sys
-from typing import Set, List, Dict
+from typing import Set, List, Dict, Callable
 
 from pysmt.logics import QF_LRA, QF_NRA
 from pysmt.shortcuts import Portfolio, Solver
@@ -22,6 +22,7 @@ class SMTSolver:
         self.assertions: List[SMTExpression] = list()
         self.softAssertions: List[SMTExpression] = list()
         self.encoding: Encoding = encoding
+        self.onImprovedModel: Callable or None = None
 
         self.maximize = self.encoding and (bool(self.encoding.softRules) or bool(self.encoding.minimize))
         if self.maximize:
@@ -100,6 +101,18 @@ class SMTSolver:
         else:
             self.solver.exit()
 
+    def getSolutionFromModel(self, model) -> SMTSolution:
+        solution = SMTSolution()
+        variablesByName = dict()
+        for v in self.variables:
+            variablesByName[str(v).replace("'", "")] = v
+        for v in model:
+            varName = str(v)
+            if varName not in variablesByName:
+                continue
+            solution.addVariable(variablesByName[varName], model[v])
+        return solution
+
     def getSolution(self) -> SMTSolution or bool:
         if self.maximize:
             res = self.solver.check()
@@ -114,14 +127,7 @@ class SMTSolver:
         solution = SMTSolution()
         if self.maximize:
             model = self.solver.model()
-            variablesByName = dict()
-            for v in self.variables:
-                variablesByName[str(v).replace("'", "")] = v
-            for v in model:
-                varName = str(v)
-                if varName not in variablesByName:
-                    continue
-                solution.addVariable(variablesByName[varName], model[v])
+            solution = self.getSolutionFromModel(model)
         else:
             for variable in self.variables:
                 value = self.solver.get_value(variable.getSymbol())
@@ -129,7 +135,18 @@ class SMTSolver:
 
         return solution
 
+    def registerOnImprovedModel(self, onImprovedModel: Callable):
+        self.onImprovedModel = onImprovedModel
+
+    def __wrappedOnImprovedModel(self, model):
+        solution = self.getSolutionFromModel(model)
+        plan = self.encoding.getPlanFromSolution(solution)
+        self.onImprovedModel(plan)
+
     def solve(self) -> Plan or bool:
+
+        if self.onImprovedModel:
+            self.solver.set_on_model(self.__wrappedOnImprovedModel)
 
         solution = self.getSolution()
         if not solution:

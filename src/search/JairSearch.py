@@ -1,4 +1,5 @@
 import copy
+import datetime
 from typing import Type
 
 from src.goalFunctions.GoalFunction import GoalFunction, EPSILON
@@ -34,12 +35,17 @@ class JairSearch(Search):
         normalizedGoal = self.problem.goal.normalize()
         GF.assertGoalIsRightForm(normalizedGoal)
         c = GF.compute(s, normalizedGoal, initialState)
-        patH: Pattern = Pattern.fromState(s, self.problem.goal, self.domain, enhanced=self.enhanced)
+
+        useIncomplete = self.args.useIncompletePattern
 
         self.console.log(f"Goal Function Value: {c}", LogPrintLevel.PLAN)
 
         while bound <= self.maxBound:
 
+            if not useIncomplete:
+                patH: Pattern = Pattern.fromState(s, self.problem.goal, self.domain, enhanced=self.enhanced)
+            else:
+                patH: Pattern = Pattern.fromConeOfInfluence(s, self.problem.goal, self.domain)
             pat: Pattern = copy.deepcopy(pat + patH)
 
             if self.args.printPattern:
@@ -69,6 +75,13 @@ class JairSearch(Search):
             self.ts.start(f"Solving Bound {bound}", console=self.console)
             solver: SMTSolver = SMTSolver(encoding)
             callsToSolver += 1
+
+            def onImprovedModel(plan: Plan):
+                s = initialState.applyPlan(plan)
+                c = GF.compute(s, normalizedGoal, initialState)
+                print(f"[SMT] Intermediate improved plan found: c = {c} [{datetime.datetime.now()}]")
+
+            solver.registerOnImprovedModel(onImprovedModel)
             plan: Plan = solver.solve()
             solver.exit()
             self.ts.end(f"Solving Bound {bound}", console=self.console)
@@ -89,9 +102,11 @@ class JairSearch(Search):
                     return plan
                 c = GF.compute(s, normalizedGoal, initialState)
                 self.console.log(f"Found intermediate state {s}", LogPrintLevel.PLAN)
-                self.console.log(f"New Goal Function Value: {c}", LogPrintLevel.PLAN)
+                self.console.log(f"New Goal Function Value: {c} [{datetime.datetime.now()}]", LogPrintLevel.PLAN)
                 pat = Pattern.fromPlan(plan, addFake=not self.isTemporal) if not self.args.noCompression else pat
-                patH: Pattern = Pattern.fromState(s, self.problem.goal, self.domain, enhanced=self.enhanced)
+                useIncomplete = self.args.useIncompletePattern
+            else:
+                useIncomplete = False
 
             bound = bound + 1
             patH.addPostfix(bound)
