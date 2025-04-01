@@ -139,9 +139,13 @@ class SMTSolver:
         self.onImprovedModel = onImprovedModel
 
     def __wrappedOnImprovedModel(self, model):
-        solution = self.getSolutionFromModel(model)
-        plan = self.encoding.getPlanFromSolution(solution)
-        self.onImprovedModel(plan)
+        try:
+            solution = self.getSolutionFromModel(model)
+            if solution:
+                plan = self.encoding.getPlanFromSolution(solution)
+                self.onImprovedModel(plan)
+        except:
+            print("ERROR ON IMPROVED MODEL")
 
     def solve(self) -> Plan or bool:
 

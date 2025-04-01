@@ -36,16 +36,17 @@ class JairSearch(Search):
         GF.assertGoalIsRightForm(normalizedGoal)
         c = GF.compute(s, normalizedGoal, initialState)
 
-        useIncomplete = self.args.useIncompletePattern
+        minGreedyLevel = self.args.greedyLevel
+        greedyLevel = minGreedyLevel
 
         self.console.log(f"Goal Function Value: {c}", LogPrintLevel.PLAN)
 
         while bound <= self.maxBound:
 
-            if not useIncomplete:
-                patH: Pattern = Pattern.fromState(s, self.problem.goal, self.domain, enhanced=self.enhanced)
-            else:
-                patH: Pattern = Pattern.fromConeOfInfluence(s, self.problem.goal, self.domain)
+            patH: Pattern = Pattern.fromStateGreedy(s, self.problem.goal, self.domain, greedyLevel)
+            if minGreedyLevel == 0:
+                minGreedyLevel = 1
+            patH.addPostfix(bound)
             pat: Pattern = copy.deepcopy(pat + patH)
 
             if self.args.printPattern:
@@ -77,9 +78,11 @@ class JairSearch(Search):
             callsToSolver += 1
 
             def onImprovedModel(plan: Plan):
+                isValid = plan.validate(self.problem, avoidRaising=True)
                 s = initialState.applyPlan(plan)
                 c = GF.compute(s, normalizedGoal, initialState)
-                print(f"[SMT] Intermediate improved plan found: c = {c} [{datetime.datetime.now()}]")
+                print(
+                    f"[SMT] Intermediate {'valid' if isValid else 'invalid'} improved plan found: c = {c} [{datetime.datetime.now()}]")
 
             solver.registerOnImprovedModel(onImprovedModel)
             plan: Plan = solver.solve()
@@ -109,6 +112,5 @@ class JairSearch(Search):
                 useIncomplete = False
 
             bound = bound + 1
-            patH.addPostfix(bound)
 
         pass

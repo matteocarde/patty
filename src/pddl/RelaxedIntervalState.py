@@ -114,6 +114,47 @@ class RelaxedIntervalState:
 
         return state
 
+    def applyAction(self, action: Action) -> RelaxedIntervalState:
+        s_ = RelaxedIntervalState()
+        s_.__intervals = self.__intervals.copy()
+        s_.__boolean = self.__boolean.copy()
+
+        for eff in action.effects:
+            if isinstance(eff, Literal):
+                s_.__boolean.add(eff)
+            if isinstance(eff, BinaryPredicate):
+                x = eff.getAtom()
+                interval = None
+                psi = self.substituteInto(eff.rhs)
+                if eff.operator == "assign":
+                    interval = psi
+                elif not action.couldBeRepeated():
+                    interval = s_.__intervals[x] + psi
+                else:
+                    add = s_.__intervals[x] + psi
+                    lim = add
+                    if psi < 0:
+                        lim.lb = -float("inf")
+                    if psi > 0:
+                        lim.lb = +float("inf")
+                s_.__intervals[x] = s_.__intervals[x].convexUnion(interval)
+        return s_
+
+    def convexUnion(self, other: RelaxedIntervalState) -> RelaxedIntervalState:
+        s_ = RelaxedIntervalState()
+        s_.__boolean = self.__boolean.copy() | other.__boolean.copy()
+        for v in self.__intervals.keys():
+            s_.__intervals[v] = self.__intervals[v].convexUnion(other.__intervals[v])
+
+        return s_
+
+    def applyActions(self, actions: Set[Action]):
+
+        s = self
+        for action in actions:
+            s = self.applyAction(action).convexUnion(s)
+        return s
+
     def __satisfiesAnd(self, formula: Formula):
         satisfied = True
         for c in formula.conditions:

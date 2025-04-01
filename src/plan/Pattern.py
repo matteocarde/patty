@@ -107,6 +107,11 @@ class Pattern:
         order = arpg.getActionsOrder(enhanced)
         return order and Pattern.fromOrder(order)
 
+    def fromStateGreedy(cls, state: State, goal: Goal, domain: GroundedDomain, greedyLevel=int):
+        arpg: ARPG = ARPG(domain, state, goal, avoidRaising=True)
+        order = arpg.getActionsOrder()
+        return order and Pattern.fromOrder(order)
+
     @classmethod
     def fromConeOfInfluence(cls, state: State, goal: Goal, domain: GroundedDomain):
         arpg: ARPG = ARPG(domain, state, goal, avoidRaising=True)

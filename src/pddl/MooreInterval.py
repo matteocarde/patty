@@ -39,12 +39,27 @@ class MooreInterval:
         return MooreInterval(lb, ub)
 
     def __eq__(self, other):
-        if not isinstance(other, MooreInterval):
-            return False
-        return self.lb == other.lb and self.ub == other.ub
+        if isinstance(other, MooreInterval):
+            return self.lb == other.lb and self.ub == other.ub
+        if type(other) in {float, int}:
+            return self.lb <= other <= self.ub
+        return False
+
+    def __lt__(self, other):
+        if type(other) in {float, int}:
+            return self.lb < other
+        return False
+
+    def __gt__(self, other):
+        if type(other) in {float, int}:
+            return self.ub > other
+        return False
 
     def merge(self, other: MooreInterval):
         return MooreInterval(min(self.lb, other.lb), max(self.ub, other.ub))
+
+    def convexUnion(self, other: MooreInterval):
+        return self.merge(other)
 
     def intersecate(self, other: MooreInterval):
         return MooreInterval(max(self.lb, other.lb), min(self.ub, other.ub))
