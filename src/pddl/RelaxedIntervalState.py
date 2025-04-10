@@ -1,6 +1,9 @@
 from __future__ import annotations
+
+import math
 from typing import Dict, Set
 
+from src.goalFunctions.GoalFunction import EPSILON
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
@@ -126,22 +129,50 @@ class RelaxedIntervalState:
 
         return state
 
+    def getMaxRepetitions(self, action: Action):
+
+        rep = []
+        for x in action.getFunctions():
+            pre = action.getLinearPrecondition(x)
+            eff = action.getConstantIncrement(x)
+            if not pre or not eff:
+                rep.append(float("+inf"))
+                continue
+            x_hat = self.__intervals[x]
+            (m, q) = action.getLinearPreconditionCoefficients(x)
+            k = eff.getNormalizedRhs().getLinearIncrement()
+            e = EPSILON if pre.operator in {">", "<"} else 0
+            v_ub = (m * (k - x_hat.ub) - q + e) / (m * k)
+            v_lb = (m * (k - x_hat.lb) - q + e) / (m * k)
+            r_ub = max(v_ub, v_lb)
+            r = math.floor(r_ub) if r_ub > 0 else float("+inf")
+            rep.append(r)
+
+        return min(rep)
+
     def applyAction(self, action: Action) -> RelaxedIntervalState:
         s_ = RelaxedIntervalState()
         s_.__intervals = self.__intervals.copy()
         s_.__boolean = self.__boolean.copy()
+
+        r = self.getMaxRepetitions(action)
 
         for eff in action.effects:
             if isinstance(eff, Literal):
                 s_.__boolean.add(eff)
             if isinstance(eff, BinaryPredicate):
                 x = eff.getAtom()
-                interval = None
-                psi = self.substituteInto(eff.getNormalizedRhs())
+                nRHS = eff.getNormalizedRhs()
+                psi = self.substituteInto(nRHS)
+                x_hat = s_.__intervals[x]
                 if eff.operator == "assign":
                     interval = psi
                 elif not action.couldBeRepeated():
-                    interval = s_.__intervals[x] + psi
+                    interval = x_hat + psi
+                elif not eff.rhs.getFunctions():
+                    k = eff.getNormalizedRhs().getLinearIncrement()
+                    interval = x_hat + MooreInterval(0, r) * k
+                    print(action, x, interval)
                 else:
                     interval = s_.__intervals[x] + psi
                     if psi < 0:

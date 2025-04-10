@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
-from typing import List, Dict, Set
+from typing import List, Dict, Set, Tuple
+
+from sympy import Symbol
+from sympy.core import symbol
 
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
@@ -166,3 +169,29 @@ class Action(Operation):
         pw.decreaseTab()
         pw.write(")")
         pass
+
+    def getLinearPrecondition(self, x: Atom) -> bool or BinaryPredicate:
+        for p in self.preconditions:
+            if isinstance(p, BinaryPredicate) and p.getFunctions() == {x}:
+                return p
+        return False
+
+    def getLinearPreconditionCoefficients(self, x: Atom) -> Tuple[float, float] or None:
+        p: BinaryPredicate = self.getLinearPrecondition(x)
+        if not p:
+            return None
+        f = p.lhs - p.rhs if p.operator in {">=", ">", "="} else p.rhs - p.lhs
+        xSym = Symbol("x")
+
+        expr = f.expressify({x: xSym})
+        coeffs = expr.as_coefficients_dict()
+        m = coeffs[xSym]
+        q = coeffs[1]
+
+        return m, q
+
+    def getConstantIncrement(self, x: Atom):
+        for e in self.effects:
+            if isinstance(e, BinaryPredicate) and e.getFunctions() == {x} and e.operator in {"increase", "decrease"}:
+                return e
+        return False

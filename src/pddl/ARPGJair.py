@@ -46,10 +46,10 @@ class ARPGJair:
             if s.satisfies(goal):
                 break
 
-        if not s.satisfies(goal):
-            arpg.goalNotReachable = True
-            if not avoidRaising:
-                raise PDDLException.GoalNotReachable()
+        # if not s.satisfies(goal):
+        #     arpg.goalNotReachable = True
+        #     if not avoidRaising:
+        #         raise PDDLException.GoalNotReachable()
 
         return arpg
 
