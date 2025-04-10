@@ -29,7 +29,7 @@ class Formula:
         self.type = "AND"
         self.conditions: [Formula or Predicate] = list()
         self.atoms = set()
-        
+
     @classmethod
     def disjunction(cls):
         f = cls()
@@ -395,3 +395,8 @@ class Formula:
                 break
 
         return hasClausesOfPredicates
+
+    def getConditionsNotSatisfiedByRelaxedState(self, prevState):
+        f = copy.deepcopy(self)
+        f.conditions = [c for c in f.conditions if not prevState.satisfies(c)]
+        return f

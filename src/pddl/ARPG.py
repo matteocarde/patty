@@ -21,11 +21,13 @@ SEED = 0
 class ARPG:
     supporterLevels: List[Set[Supporter]]
     stateLevels: List[RelaxedIntervalState]
+    actionLevels: List[Set[Action]]
 
     def __init__(self, domain: GroundedDomain, state: State, goal: Goal, avoidRaising=False):
         self.goalNotReachable = False
         self.supporterLevels = list()
         self.stateLevels = list()
+        self.actionLevels = list()
         self.actions: List[Action] = list(domain.actions)
         # self.affectedGraph: AffectedGraph = domain.affectedGraph
 
@@ -40,6 +42,7 @@ class ARPG:
         activeSupporters = {s for s in supporters if s.isSatisfiedBy(state) and s.respectsTemporal(usedActions)}
         usedActions = usedActions | {s.originatingAction for s in activeSupporters}
         self.supporterLevels.append(activeSupporters)
+        self.actionLevels.append({s.originatingAction for s in activeSupporters})
         self.stateLevels.append(state)
 
         fullBooleanGoal = len(goal.getFunctions()) == 0
@@ -54,6 +57,7 @@ class ARPG:
 
             self.supporterLevels.append(activeSupporters)
             self.stateLevels.append(newState)
+            self.actionLevels.append({s.originatingAction for s in activeSupporters})
 
             isFixpoint = state.coincide(newState)
             state = newState

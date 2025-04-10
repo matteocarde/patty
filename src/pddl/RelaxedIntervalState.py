@@ -34,6 +34,18 @@ class RelaxedIntervalState:
             strSet.append(("¬" if item.sign == "-" else "") + str(item.getAtom()))
         return "{" + ",".join(strSet) + "}"
 
+    def __eq__(self, other):
+        if not isinstance(other, RelaxedIntervalState):
+            return False
+        if self.__boolean != other.boolean:
+            return False
+        if self.__intervals.keys() != other.__intervals.keys():
+            return False
+        for v in self.__intervals.keys():
+            if self.__intervals[v] != other.__intervals[v]:
+                return False
+        return True
+
     @property
     def intervals(self) -> Dict[Atom, MooreInterval]:
         return self.__intervals
@@ -125,18 +137,17 @@ class RelaxedIntervalState:
             if isinstance(eff, BinaryPredicate):
                 x = eff.getAtom()
                 interval = None
-                psi = self.substituteInto(eff.rhs)
+                psi = self.substituteInto(eff.getNormalizedRhs())
                 if eff.operator == "assign":
                     interval = psi
                 elif not action.couldBeRepeated():
                     interval = s_.__intervals[x] + psi
                 else:
-                    add = s_.__intervals[x] + psi
-                    lim = add
+                    interval = s_.__intervals[x] + psi
                     if psi < 0:
-                        lim.lb = -float("inf")
+                        interval.lb = -float("inf")
                     if psi > 0:
-                        lim.lb = +float("inf")
+                        interval.ub = +float("inf")
                 s_.__intervals[x] = s_.__intervals[x].convexUnion(interval)
         return s_
 
@@ -179,8 +190,17 @@ class RelaxedIntervalState:
 
         return satisfied
 
-    def satisfies(self, c: Formula) -> bool:
-        return self.__satisfiesAnd(c) if c.type == "AND" else self.__satisfiesOr(c)
+    def satisfies(self, c: Formula or Predicate) -> bool:
+        if isinstance(c, Formula):
+            return self.__satisfiesAnd(c) if c.type == "AND" else self.__satisfiesOr(c)
+        if isinstance(c, Predicate):
+            return self.satisfiesPredicate(c)
+
+    def satisfiesOne(self, c: Formula):
+        for cond in c.conditions:
+            if self.satisfies(cond):
+                return True
+        return False
 
     def satisfiesPredicate(self, p: Predicate):
 

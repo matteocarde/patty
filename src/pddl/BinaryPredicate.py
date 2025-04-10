@@ -319,3 +319,6 @@ class BinaryPredicate(Predicate):
     @classmethod
     def fromNegatedComparationString(cls, string: str):
         return cls.fromNode(Utilities.getParseTree(string).negatedComparation())
+
+    def getNormalizedRhs(self) -> BinaryPredicate:
+        return self.rhs if self.operator in {"assign", "increase"} else Constant(0) - self.rhs

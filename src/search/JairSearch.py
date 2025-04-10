@@ -44,8 +44,6 @@ class JairSearch(Search):
         while bound <= self.maxBound:
 
             patH: Pattern = Pattern.fromStateGreedy(s, self.problem.goal, self.domain, greedyLevel)
-            if minGreedyLevel == 0:
-                minGreedyLevel = 1
             patH.addPostfix(bound)
             pat: Pattern = copy.deepcopy(pat + patH)
 
@@ -107,9 +105,9 @@ class JairSearch(Search):
                 self.console.log(f"Found intermediate state {s}", LogPrintLevel.PLAN)
                 self.console.log(f"New Goal Function Value: {c} [{datetime.datetime.now()}]", LogPrintLevel.PLAN)
                 pat = Pattern.fromPlan(plan, addFake=not self.isTemporal) if not self.args.noCompression else pat
-                useIncomplete = self.args.useIncompletePattern
+                greedyLevel = minGreedyLevel
             else:
-                useIncomplete = False
+                greedyLevel += 1
 
             bound = bound + 1
 

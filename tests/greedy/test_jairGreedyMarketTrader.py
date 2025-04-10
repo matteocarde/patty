@@ -9,7 +9,7 @@ from src.search.JairSearch import JairSearch
 from src.utils.Arguments import Arguments
 
 
-class TestJairCounterDeltaPlus(TestCase):
+class TestJairGreedyMarketTrader(TestCase):
 
     def setUp(self) -> None:
         domainFile = "../../files/numeric/ipc-2023/markettrader/domain.pddl"
@@ -22,6 +22,7 @@ class TestJairCounterDeltaPlus(TestCase):
         self.args.goalFunction = "DELTA-MAX-CLAUSES"
         self.args.useIncompletePattern = True
         self.args.minimizeGoalFunction = True
+        self.args.printPattern = True
         self.args.greedyLevel = 0
         pass
 
