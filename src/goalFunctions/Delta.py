@@ -9,6 +9,7 @@ from src.pddl.Goal import Goal
 from src.pddl.Literal import Literal
 from src.pddl.Predicate import Predicate
 from src.pddl.Problem import Problem
+from src.pddl.RelaxedIntervalState import RelaxedIntervalState
 from src.pddl.State import State
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTVariable import SMTVariable
@@ -22,7 +23,7 @@ class Delta(GoalFunction):
         super().__init__()
 
     @staticmethod
-    def compute(s: State, g: Formula, init: State) -> float:
+    def compute(s: State or RelaxedIntervalState, g: Formula, init: State) -> float:
         if not g.isAtomic():
             raise Exception(f"Goal {g} is not atomic")
         g = g if isinstance(g, Predicate) else g.conditions[0]

@@ -1,6 +1,6 @@
 from typing import List, Dict, Set, Type
 
-from src.goalFunctions.GoalFunction import GoalFunction, EPSILON
+from src.goalFunctions.GoalFunction import GoalFunction
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
@@ -18,6 +18,7 @@ from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTNumericVariable import SMTNumericVariable
 from src.smt.SMTSolution import SMTSolution
 from src.utils.Arguments import Arguments
+from src.utils.Constants import EPSILON
 
 # BOUND = 1000
 EXPLICIT_DELTA = False

@@ -1,6 +1,6 @@
 from typing import Dict, List, Tuple
 
-from src.goalFunctions.GoalFunction import GoalFunction, EPSILON
+from src.goalFunctions.GoalFunction import GoalFunction
 from src.goalFunctions.GoalFunctionClauses import GoalFunctionClauses
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
@@ -15,6 +15,7 @@ from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTVariable import SMTVariable
 from src.smt.expressions.ITEExpression import ITEExpression
 from src.smt.expressions.MinExpression import MinExpression
+from src.utils.Constants import EPSILON
 
 
 class DeltaClauses(GoalFunctionClauses):

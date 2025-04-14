@@ -23,7 +23,7 @@ class ARPGJair:
         self.stateLevels = list()
 
     @classmethod
-    def compute(cls, domain: GroundedDomain, state: State, goal: Goal, avoidRaising=False) -> ARPGJair:
+    def compute(cls, domain: GroundedDomain, state: State, goal: Goal, conservative=True) -> ARPGJair:
         arpg = cls()
         actionsLeft: Set[Action] = domain.actions
         s: RelaxedIntervalState = RelaxedIntervalState.fromState(state, domain.predicates)
@@ -39,17 +39,17 @@ class ARPGJair:
                     rhs |= a.effRhs
             if not actions:
                 break
-            s = s.applyActions(actions)
+            s = s.applyActions(actions, conservative=conservative)
             actionsLeft = actionsLeft - actions
             arpg.actionLevels.append(actions)
             arpg.stateLevels.append(s)
             if s.satisfies(goal):
                 break
 
-        # if not s.satisfies(goal):
-        #     arpg.goalNotReachable = True
-        #     if not avoidRaising:
-        #         raise PDDLException.GoalNotReachable()
+        if not s.satisfies(goal):
+            arpg.goalNotReachable = True
+            # if not avoidRaising:
+            #     raise PDDLException.GoalNotReachable()
 
         return arpg
 

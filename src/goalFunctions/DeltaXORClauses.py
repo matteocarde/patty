@@ -1,8 +1,6 @@
 from typing import Dict
 
 from src.goalFunctions.DeltaClauses import DeltaClauses
-from src.goalFunctions.DeltaPlus import DeltaPlus
-from src.goalFunctions.GoalFunction import GoalFunction, EPSILON
 from src.goalFunctions.GoalFunctionClauses import GoalFunctionClauses
 from src.pddl.Atom import Atom
 from src.pddl.Formula import Formula
@@ -10,8 +8,6 @@ from src.pddl.Goal import Goal
 from src.pddl.State import State
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTVariable import SMTVariable
-from src.smt.expressions.ITEExpression import ITEExpression
-from src.smt.expressions.MaxExpression import MaxExpression
 
 
 class DeltaXORClauses(GoalFunctionClauses):

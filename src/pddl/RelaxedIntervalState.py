@@ -3,19 +3,18 @@ from __future__ import annotations
 import math
 from typing import Dict, Set
 
-from src.goalFunctions.GoalFunction import EPSILON
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
-from src.pddl.Formula import Formula
 from src.pddl.Constant import Constant
-from src.pddl.InitialCondition import InitialCondition
+from src.pddl.Formula import Formula
 from src.pddl.Literal import Literal
 from src.pddl.MooreInterval import MooreInterval
 from src.pddl.Predicate import Predicate
 from src.pddl.State import State
 from src.pddl.Supporter import Supporter
 from src.pddl.Utilities import Utilities
+from src.utils.Constants import EPSILON
 
 
 class RelaxedIntervalState:
@@ -82,30 +81,6 @@ class RelaxedIntervalState:
 
         return ris
 
-    # @classmethod
-    # def fromInitialCondition(cls, init: InitialCondition, atoms: Set[Atom]):
-    #     ris = cls()
-    #     for (atom, value) in init.numericAssignments.items():
-    #         ris.__intervals[atom] = MooreInterval(value, value)
-    #
-    #     posLit = set()
-    #     negLit = set()
-    #     for lit in init.assignments:
-    #         if not isinstance(lit, Literal):
-    #             continue
-    #         ris.__boolean.add(lit)
-    #         if lit.sign == "+":
-    #             posLit.add(lit.getAtom())
-    #         else:
-    #             negLit.add(lit.getAtom())
-    #
-    #     for a in atoms:
-    #         if a in posLit or a in negLit:
-    #             continue
-    #         ris.__boolean.add(Literal.fromAtom(a, "-"))
-    #
-    #     return ris
-
     def getAtom(self, atom: Atom) -> MooreInterval:
         if not atom in self.__intervals:
             return MooreInterval(0, 0)
@@ -150,7 +125,7 @@ class RelaxedIntervalState:
 
         return min(rep)
 
-    def applyAction(self, action: Action) -> RelaxedIntervalState:
+    def applyAction(self, action: Action, conservative=True) -> RelaxedIntervalState:
         s_ = RelaxedIntervalState()
         s_.__intervals = self.__intervals.copy()
         s_.__boolean = self.__boolean.copy()
@@ -169,7 +144,7 @@ class RelaxedIntervalState:
                     interval = psi
                 elif not action.couldBeRepeated():
                     interval = x_hat + psi
-                elif not eff.rhs.getFunctions():
+                elif not eff.rhs.getFunctions() and not conservative:
                     k = eff.getNormalizedRhs().getLinearIncrement()
                     interval = x_hat + MooreInterval(0, r) * k
                     print(action, x, interval)
@@ -190,11 +165,11 @@ class RelaxedIntervalState:
 
         return s_
 
-    def applyActions(self, actions: Set[Action]):
+    def applyActions(self, actions: Set[Action], conservative=True):
 
         s = self
         for action in actions:
-            s = self.applyAction(action).convexUnion(s)
+            s = self.applyAction(action, conservative=conservative).convexUnion(s)
         return s
 
     def __satisfiesAnd(self, formula: Formula):
@@ -271,3 +246,10 @@ class RelaxedIntervalState:
                 return False
 
         return len(newState.__boolean.difference(self.__boolean)) == 0
+
+    @classmethod
+    def applyARPGToState(cls, s0, arpg, conservative=True):
+        sk = s0
+        for actions in arpg.actionLevels:
+            sk = sk.applyActions(actions, conservative=conservative)
+        return sk

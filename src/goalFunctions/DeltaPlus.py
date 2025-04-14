@@ -2,7 +2,7 @@ from typing import Dict
 
 from src.goalFunctions.Delta import Delta
 from src.goalFunctions.Gamma import Gamma
-from src.goalFunctions.GoalFunction import GoalFunction, EPSILON
+from src.goalFunctions.GoalFunction import GoalFunction
 from src.pddl.Atom import Atom
 from src.pddl.Formula import Formula
 from src.pddl.Goal import Goal
@@ -12,6 +12,7 @@ from src.smt.SMTVariable import SMTVariable
 from src.smt.expressions.ITEExpression import ITEExpression
 from src.smt.expressions.MaxExpression import MaxExpression
 from src.smt.expressions.MinExpression import MinExpression
+from src.utils.Constants import EPSILON
 
 
 class DeltaPlus(GoalFunction):

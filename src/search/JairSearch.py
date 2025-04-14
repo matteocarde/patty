@@ -2,7 +2,7 @@ import copy
 import datetime
 from typing import Type
 
-from src.goalFunctions.GoalFunction import GoalFunction, EPSILON
+from src.goalFunctions.GoalFunction import GoalFunction
 from src.pddl.Domain import GroundedDomain
 from src.pddl.Plan import Plan
 from src.pddl.Problem import Problem
@@ -43,7 +43,7 @@ class JairSearch(Search):
 
         while bound <= self.maxBound:
 
-            patH: Pattern = Pattern.fromStateGreedy(s, self.problem.goal, self.domain, greedyLevel)
+            patH: Pattern = Pattern.fromStateGreedyGoalFunction(s, self.problem.goal, self.domain, greedyLevel, GF, c)
             patH.addPostfix(bound)
             pat: Pattern = copy.deepcopy(pat + patH)
 
