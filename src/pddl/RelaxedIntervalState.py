@@ -117,8 +117,8 @@ class RelaxedIntervalState:
             (m, q) = action.getLinearPreconditionCoefficients(x)
             k = eff.getNormalizedRhs().getLinearIncrement()
             e = EPSILON if pre.operator in {">", "<"} else 0
-            v_ub = (m * (k - x_hat.ub) - q + e) / (m * k)
-            v_lb = (m * (k - x_hat.lb) - q + e) / (m * k)
+            v_ub = (m * (k - x_hat.ub) - q + e) / (m * k) if m*k != 0 else -1
+            v_lb = (m * (k - x_hat.lb) - q + e) / (m * k) if m*k != 0 else -1
             r_ub = max(v_ub, v_lb)
             r = math.floor(r_ub) if r_ub > 0 else float("+inf")
             rep.append(r)
@@ -130,7 +130,7 @@ class RelaxedIntervalState:
         s_.__intervals = self.__intervals.copy()
         s_.__boolean = self.__boolean.copy()
 
-        r = self.getMaxRepetitions(action)
+        # r = self.getMaxRepetitions(action)
 
         for eff in action.effects:
             if isinstance(eff, Literal):

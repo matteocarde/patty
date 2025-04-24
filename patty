@@ -1,0 +1,3 @@
+#!/bin/bash
+      conda run --live-stream -n patty3.8 python /Users/carde/Documents/Workspace/patty/main.py $@
+

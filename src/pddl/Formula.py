@@ -400,3 +400,8 @@ class Formula:
         f = copy.deepcopy(self)
         f.conditions = [c for c in f.conditions if not prevState.satisfies(c)]
         return f
+
+    def getConditionsSatisfiedByRelaxedState(self, prevState):
+        f = copy.deepcopy(self)
+        f.conditions = [c for c in f.conditions if prevState.satisfies(c)]
+        return f

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Set, List, Tuple
 
+from src.pattern.PatternActionGraph import PatternActionGraph
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
@@ -54,10 +55,14 @@ class ARPGJair:
 
         return arpg
 
-    def getActionsOrder(self) -> List[Action]:
+    def getActionsOrder(self, enhanced=True) -> List[Action]:
         order = []
         for actionSet in self.actionLevels:
-            order += sorted(actionSet)
+            if enhanced:
+                sortedLayer = PatternActionGraph(actionSet).getSorted()
+                order += sortedLayer
+            else:
+                order += sorted(actionSet)
         return order
 
     def getSortedActionLevel(self, i: int, goal: Goal):

@@ -30,26 +30,30 @@ class JairSearch(Search):
         initialState: State = State.fromInitialCondition(self.problem.init)
         s: State = initialState
 
-        patG: Pattern = Pattern.fromOrder([])
-        pat: Pattern = Pattern.fromOrder([])
+        patG: Pattern = Pattern.empty()
+        pat: Pattern = Pattern.empty()
+        patH: Pattern = Pattern.empty()
+        patHprev: Pattern = Pattern.empty()
         GF: Type[GoalFunction] = GoalFunction.getGoalFunctionFromString(self.args.goalFunction)
         normalizedGoal = self.problem.goal.normalize()
         GF.assertGoalIsRightForm(normalizedGoal)
         c = GF.compute(s, normalizedGoal, initialState)
 
-        minGreedyLevel = 1
-        greedyLevel = minGreedyLevel
+        lvl = 1
 
         self.console.log(f"Goal Function Value: {c}", LogPrintLevel.PLAN)
 
         while bound <= self.maxBound:
 
-            patH: Pattern = Pattern.fromStateGreedy(s, self.problem.goal, self.domain, greedyLevel)
-            patH.addPostfix(bound)
+            patH: Pattern = Pattern.fromStateGreedy(s, self.problem.goal, self.domain, lvl).addPostfix(bound)
+            if len(patH) == len(patHprev):
+                patH = Pattern.fromState(s, self.problem.goal, self.domain).addPostfix(bound)
+                patG = copy.deepcopy(patG + patH)
+                lvl = 1
             pat: Pattern = copy.deepcopy(pat + patH)
 
             if self.args.printPattern:
-                self.console.log(f"Greedy Level {greedyLevel}", LogPrintLevel.PLAN)
+                self.console.log(f"Greedy Level {lvl}", LogPrintLevel.PLAN)
                 self.console.log("Pattern: " + str(pat), LogPrintLevel.PLAN)
 
             self.ts.start(f"Conversion to SMT at bound {bound}", console=self.console)
@@ -108,11 +112,11 @@ class JairSearch(Search):
                 self.console.log(f"New Goal Function Value: {c} [{datetime.datetime.now()}]", LogPrintLevel.PLAN)
                 patG = Pattern.fromPlan(plan, addFake=not self.isTemporal) if not self.args.noCompression else pat
                 patG.addPostfix("g")
-                greedyLevel = minGreedyLevel
+                lvl = 1
             else:
-                greedyLevel += greedyLevel
+                lvl += lvl
             pat = patG
-
+            patHprev = patH
             bound = bound + 1
 
         pass

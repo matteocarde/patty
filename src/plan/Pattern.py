@@ -116,7 +116,7 @@ class Pattern:
     def fromStateGreedyGoalFunction(cls, state: State, goal: Goal, domain: GroundedDomain, lvl: int,
                                     GF: Type[GoalFunction], c: float):
         Askip = set()
-        arpg = Pattern.fromStateGreedy(state, goal, domain, lvl, Askip)
+        arpg: ARPG = Pattern.fromStateGreedy(state, goal, domain, lvl, Askip)
         # foundArpg = None
         # while len(Askip) < len(domain.actions):
         #     arpg = Pattern.fromStateGreedy(state, goal, domain, lvl, Askip)
@@ -145,6 +145,7 @@ class Pattern:
             # random.shuffle(Ai)
             s_: RelaxedIntervalState = arpg.stateLevels[i]
             unsatGamma = gamma.getConditionsNotSatisfiedByRelaxedState(s)
+            satGamma = gamma.getConditionsSatisfiedByRelaxedState(s)
             if not unsatGamma.conditions:
                 i -= 1
                 continue
@@ -159,12 +160,16 @@ class Pattern:
                     if len(Ag) >= p:
                         break
                 Agamma |= Ag
-            gamma = Formula.join([a.preconditions for a in Agamma])
+            gamma = Formula.join([a.preconditions for a in Agamma] + [satGamma])
             newArpg.actionLevels = [Agamma] + newArpg.actionLevels
             i -= 1
 
         order = newArpg.getActionsOrder()
-        return order and Pattern.fromOrder(order)
+        if not order:
+            return None
+        # if len(oldPat) == len(order):
+        #     order = arpg.getActionsOrder()
+        return Pattern.fromOrder(order)
 
     @staticmethod
     def greedy0(s: RelaxedIntervalState, A: Set[Action], s_: RelaxedIntervalState, gamma: Formula) -> Set[Action]:
@@ -207,6 +212,7 @@ class Pattern:
             a.name = f"{a.name}_{postfix}"
             order.append(a)
         self.__order = order
+        return self
 
     @classmethod
     def fromPlan(cls, plan: Plan, addFake=False) -> Pattern:
@@ -233,3 +239,7 @@ class Pattern:
 
     def enumerate(self) -> List[Tuple[int, Action]]:
         return [(i + 1, a) for (i, a) in enumerate(self.__order)]
+
+    @classmethod
+    def empty(cls):
+        return Pattern.fromOrder([])
