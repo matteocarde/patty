@@ -165,10 +165,6 @@ class Pattern:
             i -= 1
 
         order = newArpg.getActionsOrder()
-        if not order:
-            return None
-        # if len(oldPat) == len(order):
-        #     order = arpg.getActionsOrder()
         return Pattern.fromOrder(order)
 
     @staticmethod

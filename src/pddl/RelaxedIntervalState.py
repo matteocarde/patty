@@ -117,8 +117,8 @@ class RelaxedIntervalState:
             (m, q) = action.getLinearPreconditionCoefficients(x)
             k = eff.getNormalizedRhs().getLinearIncrement()
             e = EPSILON if pre.operator in {">", "<"} else 0
-            v_ub = (m * (k - x_hat.ub) - q + e) / (m * k) if m*k != 0 else -1
-            v_lb = (m * (k - x_hat.lb) - q + e) / (m * k) if m*k != 0 else -1
+            v_ub = (m * (k - x_hat.ub) - q + e) / (m * k) if m * k != 0 else -1
+            v_lb = (m * (k - x_hat.lb) - q + e) / (m * k) if m * k != 0 else -1
             r_ub = max(v_ub, v_lb)
             r = math.floor(r_ub) if r_ub > 0 else float("+inf")
             rep.append(r)
@@ -139,25 +139,25 @@ class RelaxedIntervalState:
                 x = eff.getAtom()
                 nRHS = eff.getNormalizedRhs()
                 psi = self.substituteInto(nRHS)
-                x_hat = s_.__intervals[x]
                 if eff.operator == "assign":
                     interval = psi
                 elif not action.couldBeRepeated() or forceSingleRepetition:
+                    x_hat = s_.getAtom(x)
                     interval = x_hat + psi
                 else:
-                    interval = s_.__intervals[x] + psi
+                    interval = s_.getAtom(x) + psi
                     if psi < 0:
                         interval.lb = -float("inf")
                     if psi > 0:
                         interval.ub = +float("inf")
-                s_.__intervals[x] = s_.__intervals[x].convexUnion(interval)
+                s_.__intervals[x] = s_.getAtom(x).convexUnion(interval)
         return s_
 
     def convexUnion(self, other: RelaxedIntervalState) -> RelaxedIntervalState:
         s_ = RelaxedIntervalState()
         s_.__boolean = self.__boolean.copy() | other.__boolean.copy()
         for v in self.__intervals.keys():
-            s_.__intervals[v] = self.__intervals[v].convexUnion(other.__intervals[v])
+            s_.__intervals[v] = self.getAtom(v).convexUnion(other.getAtom(v))
 
         return s_
 
