@@ -30,24 +30,26 @@ class JairSearch(Search):
         initialState: State = State.fromInitialCondition(self.problem.init)
         s: State = initialState
 
+        patG: Pattern = Pattern.fromOrder([])
         pat: Pattern = Pattern.fromOrder([])
         GF: Type[GoalFunction] = GoalFunction.getGoalFunctionFromString(self.args.goalFunction)
         normalizedGoal = self.problem.goal.normalize()
         GF.assertGoalIsRightForm(normalizedGoal)
         c = GF.compute(s, normalizedGoal, initialState)
 
-        minGreedyLevel = self.args.greedyLevel
+        minGreedyLevel = 1
         greedyLevel = minGreedyLevel
 
         self.console.log(f"Goal Function Value: {c}", LogPrintLevel.PLAN)
 
         while bound <= self.maxBound:
 
-            patH: Pattern = Pattern.fromStateGreedyGoalFunction(s, self.problem.goal, self.domain, greedyLevel, GF, c)
+            patH: Pattern = Pattern.fromStateGreedy(s, self.problem.goal, self.domain, greedyLevel)
             patH.addPostfix(bound)
             pat: Pattern = copy.deepcopy(pat + patH)
 
             if self.args.printPattern:
+                self.console.log(f"Greedy Level {greedyLevel}", LogPrintLevel.PLAN)
                 self.console.log("Pattern: " + str(pat), LogPrintLevel.PLAN)
 
             self.ts.start(f"Conversion to SMT at bound {bound}", console=self.console)
@@ -104,10 +106,12 @@ class JairSearch(Search):
                 c = GF.compute(s, normalizedGoal, initialState)
                 self.console.log(f"Found intermediate state {s}", LogPrintLevel.PLAN)
                 self.console.log(f"New Goal Function Value: {c} [{datetime.datetime.now()}]", LogPrintLevel.PLAN)
-                pat = Pattern.fromPlan(plan, addFake=not self.isTemporal) if not self.args.noCompression else pat
+                patG = Pattern.fromPlan(plan, addFake=not self.isTemporal) if not self.args.noCompression else pat
+                patG.addPostfix("g")
                 greedyLevel = minGreedyLevel
             else:
-                greedyLevel += 1
+                greedyLevel += greedyLevel
+            pat = patG
 
             bound = bound + 1
 

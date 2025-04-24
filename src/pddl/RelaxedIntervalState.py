@@ -125,7 +125,7 @@ class RelaxedIntervalState:
 
         return min(rep)
 
-    def applyAction(self, action: Action, conservative=True) -> RelaxedIntervalState:
+    def applyAction(self, action: Action, forceSingleRepetition=False) -> RelaxedIntervalState:
         s_ = RelaxedIntervalState()
         s_.__intervals = self.__intervals.copy()
         s_.__boolean = self.__boolean.copy()
@@ -142,12 +142,8 @@ class RelaxedIntervalState:
                 x_hat = s_.__intervals[x]
                 if eff.operator == "assign":
                     interval = psi
-                elif not action.couldBeRepeated():
+                elif not action.couldBeRepeated() or forceSingleRepetition:
                     interval = x_hat + psi
-                elif not eff.rhs.getFunctions() and not conservative:
-                    k = eff.getNormalizedRhs().getLinearIncrement()
-                    interval = x_hat + MooreInterval(0, r) * k
-                    print(action, x, interval)
                 else:
                     interval = s_.__intervals[x] + psi
                     if psi < 0:
@@ -165,11 +161,11 @@ class RelaxedIntervalState:
 
         return s_
 
-    def applyActions(self, actions: Set[Action], conservative=True):
+    def applyActions(self, actions: Set[Action]):
 
         s = self
         for action in actions:
-            s = self.applyAction(action, conservative=conservative).convexUnion(s)
+            s = self.applyAction(action).convexUnion(s)
         return s
 
     def __satisfiesAnd(self, formula: Formula):

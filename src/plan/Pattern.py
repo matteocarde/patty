@@ -8,6 +8,7 @@ from src.goalFunctions.GoalFunction import GoalFunction
 from src.pddl.ARPG import ARPG
 from src.pddl.ARPGJair import ARPGJair
 from src.pddl.Action import Operation, Action
+from src.pddl.Constant import Constant
 from src.pddl.Domain import GroundedDomain
 from src.pddl.Formula import Formula
 from src.pddl.Goal import Goal
@@ -131,38 +132,39 @@ class Pattern:
         return order and Pattern.fromOrder(order)
 
     @classmethod
-    def fromStateGreedy(cls, state: State, goal: Goal, domain: GroundedDomain, lvl: int, Askip: Set[Action]):
+    def fromStateGreedy(cls, state: State, goal: Goal, domain: GroundedDomain, p: int):
         arpg: ARPGJair = ARPGJair.compute(domain, state, goal)
         i = len(arpg.actionLevels) - 1
-        if lvl >= 3:
-            return arpg.getActionsOrder()
 
         gamma: Formula = goal
         newArpg = ARPGJair()
+        # random.seed(20121996)
         while i > 0:
-            Ag: Set[Action] = set()
-            prevState: RelaxedIntervalState = arpg.stateLevels[i - 1]
-            Ai: Set[Action] = arpg.actionLevels[i] - Askip
-            nextState: RelaxedIntervalState = arpg.stateLevels[i]
-            unsatGamma = gamma.getConditionsNotSatisfiedByRelaxedState(prevState)
+            s: RelaxedIntervalState = arpg.stateLevels[i - 1]
+            Ai: List[Action] = arpg.getSortedActionLevel(i, goal)
+            # random.shuffle(Ai)
+            s_: RelaxedIntervalState = arpg.stateLevels[i]
+            unsatGamma = gamma.getConditionsNotSatisfiedByRelaxedState(s)
             if not unsatGamma.conditions:
                 i -= 1
                 continue
             gamma = unsatGamma
-            if lvl == 0:
-                Ag = Pattern.greedy0(prevState, Ai, nextState, gamma)
-                lvl = 1
-            elif lvl == 1:
-                Ag = Pattern.greedy1(prevState, Ai, nextState, gamma)
-            elif lvl == 2:
-                Ag = Pattern.greedy2(prevState, Ai, nextState, gamma)
-            gamma = Formula.join([a.preconditions for a in Ag])
-            newArpg.actionLevels = [Ag] + newArpg.actionLevels
+            Agamma = set()
+            for g in gamma:
+                Ag = set()
+                for a in Ai:
+                    s_a = s.applyAction(a)
+                    if s_a != s_ and s_a.satisfies(g):
+                        Ag.add(a)
+                    if len(Ag) >= p:
+                        break
+                Agamma |= Ag
+            gamma = Formula.join([a.preconditions for a in Agamma])
+            newArpg.actionLevels = [Agamma] + newArpg.actionLevels
             i -= 1
 
-        return newArpg
-        # order = newArpg.getActionsOrder()
-        # return order and Pattern.fromOrder(order)
+        order = newArpg.getActionsOrder()
+        return order and Pattern.fromOrder(order)
 
     @staticmethod
     def greedy0(s: RelaxedIntervalState, A: Set[Action], s_: RelaxedIntervalState, gamma: Formula) -> Set[Action]:

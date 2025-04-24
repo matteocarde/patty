@@ -9,11 +9,11 @@ from src.search.JairSearch import JairSearch
 from src.utils.Arguments import Arguments
 
 
-class TestJairGreedyMarketTrader(TestCase):
+class TestJairGreedyBlockGrouping(TestCase):
 
     def setUp(self) -> None:
-        domainFile = "../../files/numeric/ipc-2023/markettrader/domain.pddl"
-        problemFile = "../../files/numeric/ipc-2023/markettrader/instances/pfile02.pddl"
+        domainFile = "../../files/numeric/ipc-2023/block-grouping/domain.pddl"
+        problemFile = "../../files/numeric/ipc-2023/block-grouping/instances/instance_5_25_6_1.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)

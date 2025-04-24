@@ -50,6 +50,7 @@ class Operation:
         self.numEffList = set()
         self.influencedAtoms = set()
         self.increases = dict()
+        self.increasesString = dict()
         self.decreases = dict()
         self.assignments = dict()
         self.linearizationOf = self
@@ -83,6 +84,7 @@ class Operation:
         a.decrList = copy.deepcopy(self.decrList, m)
         a.influencedAtoms = copy.deepcopy(self.influencedAtoms, m)
         a.increases = copy.deepcopy(self.increases, m)
+        a.increasesString = copy.deepcopy(self.increasesString, m)
         a.decreases = copy.deepcopy(self.decreases, m)
         a.assignments = copy.deepcopy(self.assignments, m)
         a.linearizationOf = self.linearizationOf
@@ -295,6 +297,10 @@ class Operation:
     def __getIncreases(self) -> Dict[Atom, Predicate]:
         return self.__getModificationOperations("increase")
 
+    def __getIncreasesString(self):
+        incrDict = self.__getModificationOperations("increase")
+        return dict([(atom.name, incr) for (atom, incr) in incrDict.items()])
+
     def __getDecreases(self) -> Dict[Atom, Predicate]:
         return self.__getModificationOperations("decrease")
 
@@ -359,6 +365,7 @@ class Operation:
         self.effRhs = self.effN - self.numEffList
         self.influencedAtoms = self.__getInfluencedAtoms()
         self.increases = self.__getIncreases()
+        self.increasesString = self.__getIncreasesString()
         self.decreases = self.__getDecreases()
         self.assignments = self.__getAssignments()
         self.__couldBeRepeated = self.__checkIfCanBeRepeated()
