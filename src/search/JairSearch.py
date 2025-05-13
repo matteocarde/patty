@@ -10,6 +10,7 @@ from src.pddl.State import State
 from src.plan.NumericEncoding import NumericEncoding
 from src.plan.Pattern import Pattern
 from src.search.Search import Search
+from src.smt.SMTSolution import SMTSolution
 from src.smt.SMTSolver import SMTSolver
 from src.utils.Arguments import Arguments
 from src.utils.LogPrint import LogPrintLevel
@@ -39,7 +40,7 @@ class JairSearch(Search):
         GF.assertGoalIsRightForm(normalizedGoal)
         c = GF.compute(s, normalizedGoal, initialState)
 
-        lvl = 1
+        lvl = 100
 
         self.console.log(f"Goal Function Value: {c}", LogPrintLevel.PLAN)
 
@@ -81,12 +82,9 @@ class JairSearch(Search):
             solver: SMTSolver = SMTSolver(encoding)
             callsToSolver += 1
 
-            def onImprovedModel(plan: Plan):
-                isValid = plan.validate(self.problem, avoidRaising=True)
-                s = initialState.applyPlan(plan)
-                c = GF.compute(s, normalizedGoal, initialState)
-                print(
-                    f"[SMT] Intermediate {'valid' if isValid else 'invalid'} improved plan found: c = {c} [{datetime.datetime.now()}]")
+            def onImprovedModel(solution: SMTSolution):
+                c = solution.getVariable(encoding.c)
+                print(f"[SMT] Intermediate improved plan found: c = {c} [{datetime.datetime.now()}]")
 
             solver.registerOnImprovedModel(onImprovedModel)
             plan: Plan = solver.solve()

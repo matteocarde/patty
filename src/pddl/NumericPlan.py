@@ -6,12 +6,14 @@ from src.pddl.PDDLException import PDDLException
 from src.pddl.Plan import Plan
 from src.pddl.Problem import Problem
 from src.pddl.State import State
+from src.smt.SMTSolution import SMTSolution
 from src.utils.LogPrint import LogPrint, LogPrintLevel
 
 
 class NumericPlan(Plan):
     quality: float
     actionRolling: Dict[int, Dict[Action, int]]
+    solution: SMTSolution
 
     def __init__(self):
         super().__init__()

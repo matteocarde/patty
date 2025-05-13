@@ -14,11 +14,12 @@ from src.smt.SMTVariable import SMTVariable
 class NumericTransitionVariables:
 
     def __init__(self, predicates: Set[Atom], functions: Set[Atom], assList: Dict[Atom, Set[Operation]],
-                 pattern: Pattern, index: int, hasPlaceholders: bool):
+                 pattern: Pattern, index: int, hasPlaceholders: bool, realActionVariables=False):
         self.functions: Set[Atom] = functions
         self.predicates: Set[Atom] = predicates
         self.assList: Dict[Atom, Set[Operation]] = assList
         self.pattern: Pattern = pattern
+        self.realActionVariables = realActionVariables
         self.valueVariables: Dict[Atom, SMTVariable] = self.__computeValueVariables(index)
         self.sigmaVariables: Dict[int, Dict[Atom, SMTExpression]] = self.__computeSigmaVariables(index,
                                                                                                  hasPlaceholders)
@@ -41,7 +42,10 @@ class NumericTransitionVariables:
         variables: Dict[int, SMTVariable] = dict()
 
         for i, action in self.pattern.enumerate():
-            variables[i] = SMTIntVariable(f"{action.name}_{index}_n")
+            if not self.realActionVariables:
+                variables[i] = SMTIntVariable(f"{action.name}_{index}_int")
+            else:
+                variables[i] = SMTRealVariable(f"{action.name}_{index}_real")
 
         return variables
 

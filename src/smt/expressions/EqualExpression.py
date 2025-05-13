@@ -23,8 +23,6 @@ class EqualExpression(BinaryExpression):
     def simplify(cls, *xs):
         lhs = SMTExpression.numericConstant(xs[0])
         rhs = SMTExpression.numericConstant(xs[1])
-        if lhs.type != rhs.type:
-            raise Exception()
         if lhs.type == BOOLEAN:
             return IffExpression.simplify(lhs, rhs)
         if isinstance(lhs, ConstantExpression) and isinstance(rhs, ConstantExpression):

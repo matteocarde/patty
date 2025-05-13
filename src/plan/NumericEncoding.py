@@ -15,7 +15,7 @@ from src.plan.Encoding import Encoding
 from src.plan.NumericTransitionVariables import NumericTransitionVariables
 from src.plan.Pattern import Pattern
 from src.smt.SMTExpression import SMTExpression
-from src.smt.SMTNumericVariable import SMTNumericVariable
+from src.smt.SMTNumericVariable import SMTNumericVariable, SMTRealVariable
 from src.smt.SMTSolution import SMTSolution
 from src.utils.Arguments import Arguments
 from src.utils.Constants import EPSILON
@@ -33,6 +33,7 @@ class NumericEncoding(Encoding):
                  relaxGoal=False,
                  subgoalsAchieved=None,
                  minimizeQuality=False,
+                 realActionVariables=False,
                  maxActionsRolling: Dict[int, Dict[Action, int]] = None,
                  goalFunction: Type[GoalFunction] = None,
                  goalFunctionValue: float = 0.0,
@@ -55,6 +56,7 @@ class NumericEncoding(Encoding):
         self.goalFunction = goalFunction
         self.goalFunctionValue = goalFunctionValue
         self.minimizeGoalFunction = minimizeGoalFunction
+        self.realActionVariables = realActionVariables
         self.goalFunctionWithEpsilon = goalFunctionWithEpsilon
 
         self.transitionVariables: [NumericTransitionVariables] = list()
@@ -67,7 +69,7 @@ class NumericEncoding(Encoding):
 
         for index in range(0, bound + 1):
             var = NumericTransitionVariables(self.domain.predicates, self.domain.functions, self.domain.assList,
-                                             self.pattern, index, self.hasEffectAxioms)
+                                             self.pattern, index, self.hasEffectAxioms, self.realActionVariables)
             self.transitionVariables.append(var)
             if index > 0:
                 self.actionVariables.update(var.actionVariables.values())
@@ -75,6 +77,8 @@ class NumericEncoding(Encoding):
 
         self.softRules = []
         self.initial: [SMTExpression] = self.getInitialExpression()
+        self.c = SMTRealVariable("costFunctionPatty")
+        self.setMinimizeParameter = self.setMinimizeParameter()
         self.minimize: SMTExpression or None = self.getMinimize()
         self.goal: [SMTExpression] = self.getGoalExpression()
 
@@ -82,16 +86,22 @@ class NumericEncoding(Encoding):
             stepRules = self.getStepRules(index)
             self.transitions.extend(stepRules)
 
-        self.rules = self.initial + self.transitions + [self.goal]
+        self.rules = self.initial + self.transitions + [self.goal] + self.setMinimizeParameter
 
     def getMinimize(self):
+        if self.minimizeQuality or self.minimizeGoalFunction:
+            return self.c
+        return None
+
+    def setMinimizeParameter(self):
         if self.minimizeQuality:
-            return sum(self.actionVariables)
+            return [self.c.equal(sum(self.actionVariables))]
         if self.minimizeGoalFunction:
             vars = self.transitionVariables[-1].valueVariables
             init = State.fromInitialCondition(self.problem.init)
-            return self.goalFunction.getExpression(vars, self.problem.goal.normalize(), init)
-        return None
+            expr = self.goalFunction.getExpression(vars, self.problem.goal.normalize(), init)
+            return [self.c.equal(expr)]
+        return []
 
     def getInitialExpression(self) -> List[SMTExpression]:
         tVars = self.transitionVariables[0]
@@ -272,8 +282,12 @@ class NumericEncoding(Encoding):
 
         for i, a in self.pattern.enumerate():
 
-            lhs0 = stepVars.actionVariables[i] > 0
-            lhs1 = stepVars.actionVariables[i] > 1
+            if not self.realActionVariables:
+                lhs0 = stepVars.actionVariables[i] > 0
+                lhs1 = stepVars.actionVariables[i] > 1
+            else:
+                lhs0 = stepVars.actionVariables[i] >= 1
+                lhs1 = stepVars.actionVariables[i] >= 2
             preconditions0 = None
             preconditions1 = None
             isPre1Impossible = False
@@ -387,8 +401,9 @@ class NumericEncoding(Encoding):
 
         return rules
 
-    def getPlanFromSolution(self, solution: SMTSolution) -> NumericPlan:
+    def getPlanFromSolution(self, solution: SMTSolution, relaxed=False) -> NumericPlan:
         plan = NumericPlan()
+        plan.solution = solution
 
         if not solution:
             return plan
@@ -399,7 +414,10 @@ class NumericEncoding(Encoding):
             plan.actionRolling.setdefault(n, dict())
             stepVar = self.transitionVariables[n]
             for i, a in self.pattern.enumerate():
-                repetitions = int(str(solution.getVariable(stepVar.actionVariables[i]))) * a.linearizationTimes
+                if not relaxed:
+                    repetitions = int(str(solution.getVariable(stepVar.actionVariables[i]))) * a.linearizationTimes
+                else:
+                    repetitions = 1 if float(str(solution.getVariable(stepVar.actionVariables[i]))) > 0 else 0
                 plan.actionRolling[n][a] = repetitions
                 if repetitions > 0:
                     plan.addRepeatedAction(a.linearizationOf, repetitions)

@@ -1,10 +1,12 @@
 from typing import List
 
 from src.pddl.Problem import Problem
+from src.smt.SMTSolution import SMTSolution
 from src.utils.LogPrint import LogPrint
 
 
 class Plan:
+    solution: SMTSolution
 
     def __init__(self):
         self.__plan: List = list()
