@@ -40,6 +40,9 @@ class State:
 
         return state
 
+    def __iter__(self):
+        return iter(self.assignments.items())
+
     def getAtom(self, atom: Atom) -> bool or float:
         if atom not in self.assignments:
             return False

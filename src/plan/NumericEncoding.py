@@ -32,10 +32,12 @@ class NumericEncoding(Encoding):
                  args: Arguments,
                  relaxGoal=False,
                  subgoalsAchieved=None,
+                 state: State = None,
                  minimizeQuality=False,
                  realActionVariables=False,
                  maxActionsRolling: Dict[int, Dict[Action, int]] = None,
                  goalFunction: Type[GoalFunction] = None,
+                 goalAsSoftAssert: bool = False,
                  goalFunctionValue: float = 0.0,
                  goalFunctionWithEpsilon: bool = False,
                  minimizeGoalFunction: float = False):
@@ -58,6 +60,7 @@ class NumericEncoding(Encoding):
         self.minimizeGoalFunction = minimizeGoalFunction
         self.realActionVariables = realActionVariables
         self.goalFunctionWithEpsilon = goalFunctionWithEpsilon
+        self.state = state if state else State.fromInitialCondition(self.problem.init)
 
         self.transitionVariables: [NumericTransitionVariables] = list()
 
@@ -82,6 +85,9 @@ class NumericEncoding(Encoding):
         self.minimize: SMTExpression or None = self.getMinimize()
         self.goal: [SMTExpression] = self.getGoalExpression()
 
+        if goalAsSoftAssert:
+            self.softRules.append(self.getGoalRuleFromFormula(self.problem.goal, 0))
+
         for index in range(1, bound + 1):
             stepRules = self.getStepRules(index)
             self.transitions.extend(stepRules)
@@ -105,27 +111,27 @@ class NumericEncoding(Encoding):
 
     def getInitialExpression(self) -> List[SMTExpression]:
         tVars = self.transitionVariables[0]
-        rules: [SMTExpression] = list()
+        rules: [SMTExpression] = []
 
-        trueAtoms: Set[Atom] = set()
-        for assignment in self.problem.init:
-            atom = assignment.getAtom()
-            if atom not in tVars.valueVariables:
-                # print(f"Atom {atom} in initial condition doesn't concur in achieving the goal. Pruned.")
+        seenAtoms: Set[Atom] = set()
+        for (v, value) in self.state:
+
+            if v not in tVars.valueVariables:
                 continue
-            if isinstance(assignment, BinaryPredicate):
-                if assignment.getAtom() not in self.domain.allAtoms:
-                    # print(f"Atom {assignments.getAtom()} was pruned since it's a constant")
-                    continue
-                rules.append(tVars.valueVariables[assignment.getAtom()].equal(float(str(assignment.rhs))))
-            elif isinstance(assignment, Literal):
-                rules.append(tVars.valueVariables[assignment.getAtom()])
-                trueAtoms.add(assignment.getAtom())
-            else:
-                raise NotImplemented("Shouldn't go here")
 
-        for v in self.domain.predicates - trueAtoms:
+            if type(value) is bool:
+                seenAtoms.add(v)
+                if value:
+                    rules.append(tVars.valueVariables[v])
+                else:
+                    rules.append(~tVars.valueVariables[v])
+            else:
+                rules.append(tVars.valueVariables[v].equal(value))
+
+        for v in self.domain.predicates - seenAtoms:
             rules.append(~tVars.valueVariables[v])
+
+        print(rules)
 
         return rules
 

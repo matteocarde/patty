@@ -37,6 +37,14 @@ class NumericPlan(Plan):
     def unrolledPlan(self):
         return [a for (a, i) in self.__plan]
 
+    def __add__(self, other):
+        if not isinstance(other, NumericPlan):
+            raise Exception(f"Cannot concatenate NumericPlan with {type(other)}")
+        plan = NumericPlan()
+        plan.__rolledPlan = self.__rolledPlan + other.__rolledPlan
+        plan.__plan = self.__plan + other.__plan
+        return plan
+
     def addRepeatedAction(self, action: Action, repetitions: int):
         self.__plan.append((action, repetitions))
         for i in range(0, repetitions):
@@ -104,3 +112,7 @@ class NumericPlan(Plan):
             return len(self.__rolledPlan)
 
         raise Exception("Not yet implemented")
+
+    @classmethod
+    def empty(cls):
+        return cls()

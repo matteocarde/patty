@@ -5,15 +5,16 @@ from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
 from src.search.AStarSearchMax import AStarSearchMax
+from src.search.GDSearch import GDSearch
 from src.search.JairSearch import JairSearch
 from src.utils.Arguments import Arguments
 
 
-class TestJairCounterDeltaPlus(TestCase):
+class TestGreedyDynamicMarketTraderDeltaPlus(TestCase):
 
     def setUp(self) -> None:
         domainFile = "../../files/numeric/ipc-2023/markettrader/domain.pddl"
-        problemFile = "../../files/numeric/ipc-2023/markettrader/instances/pfile01.pddl"
+        problemFile = "../../files/numeric/ipc-2023/markettrader/instances/pfile16.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)
@@ -21,12 +22,11 @@ class TestJairCounterDeltaPlus(TestCase):
         self.args = Arguments(keepRequired=False)
         self.args.goalFunction = "DELTA-PLUS"
         self.args.minimizeGoalFunction = True
-        self.args.printPartialPlan = True
         self.args.printPattern = True
         pass
 
     def test_solve(self):
-        solver = JairSearch(self.gDomain, self.problem, self.args)
+        solver = GDSearch(self.gDomain, self.problem, self.args)
         plan: NumericPlan = solver.solve()
 
         self.assertIsInstance(plan, NumericPlan)

@@ -27,6 +27,8 @@ class SMTSolver:
         self.maximize = self.encoding and (bool(self.encoding.softRules) or bool(self.encoding.minimize))
         if self.maximize:
             self.solver = Optimize()
+            self.solver.set("optsmt_engine", "symba")
+
             self.z3: Solver = Solver("z3",
                                      logic=QF_LRA,
                                      incremental=True,
