@@ -50,13 +50,9 @@ JAIR_TABLE4 = {
         "PATTY-EG": {"type": "scalar"},
         "PATTY-EH": {"type": "scalar"},
         "PATTY-EF": {"type": "scalar"},
-        "PATTY-F-OPT-GAMMA-MAX-CLAUSES": {"type": "scalar"},
-        "PATTY-F-OPT-GAMMA-GC-CLAUSES": {"type": "scalar"},
-        "PATTY-F-OPT-GAMMA-PLUS-CLAUSES": {"type": "scalar"},
-        # "PATTY-F-OPT-GAMMA-XOR-CLAUSES": {"type": "scalar"},
-        "PATTY-F-OPT-DELTA-MAX-CLAUSES": {"type": "scalar"},
-        "PATTY-F-OPT-DELTA-PLUS-CLAUSES": {"type": "scalar"},
-        "PATTY-F-OPT-DELTA-XOR-CLAUSES": {"type": "scalar"},
+        "PATTY-GD-DELTA-MAX-CLAUSES": {"type": "scalar"},
+        "PATTY-GD-DELTA-PLUS-CLAUSES": {"type": "scalar"},
+        "PATTY-GD-DELTA-XOR-CLAUSES": {"type": "scalar"},
     },
     "domains": AIJ_DOMAINS
 }

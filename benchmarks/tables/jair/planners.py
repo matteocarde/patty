@@ -122,5 +122,17 @@ JAIR_PLANNERS = {
     "PATTY-F-OPT-DELTA-XOR-CLAUSES": {
         "name": r"$\mathrm{P}_\mathrm{F}^{opt}(\delta^{\oplus}_c)$",
         "style": "-"
+    },
+    "PATTY-GD-DELTA-MAX-CLAUSES": {
+        "name": r"$\mathrm{P}_\textsc{gd}(\delta^{max}_c)$",
+        "style": "-"
+    },
+    "PATTY-GD-DELTA-PLUS-CLAUSES": {
+        "name": r"$\mathrm{P}_\textsc{gd}(\delta^{+}_c)$",
+        "style": "-"
+    },
+    "PATTY-GD-DELTA-XOR-CLAUSES": {
+        "name": r"$\mathrm{P}_\textsc{gd}(\delta^{\oplus}_c)$",
+        "style": "-"
     }
 }

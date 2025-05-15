@@ -25,7 +25,7 @@ class GDSearch(Search):
 
     def solve(self) -> Plan:
 
-        bound = 0
+        bound = 1
         callsToSolver = 0
 
         initialState: State = State.fromInitialCondition(self.problem.init)
@@ -89,6 +89,8 @@ class GDSearch(Search):
                 self.saveSMT(bound, encoding, callsToSolver=callsToSolver)
 
             if not isinstance(partialPlan, Plan):
+                bound += 1
+                patS = patS.addPostfix(bound)
                 continue
 
             plan = plan + partialPlan

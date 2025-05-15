@@ -38,17 +38,13 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2025-04-24-GREEDY-v5"
+    exp = "2025-05-15-GD-v2"
     joinWith = [
         (exp, [
             "PATTY-EG", "PATTY-EH", "PATTY-EF",
-            "PATTY-F-OPT-GAMMA-MAX-CLAUSES",
-            "PATTY-F-OPT-GAMMA-GC-CLAUSES",
-            "PATTY-F-OPT-GAMMA-PLUS-CLAUSES",
-            "PATTY-F-OPT-GAMMA-XOR-CLAUSES",
-            "PATTY-F-OPT-DELTA-MAX-CLAUSES",
-            "PATTY-F-OPT-DELTA-PLUS-CLAUSES",
-            "PATTY-F-OPT-DELTA-XOR-CLAUSES", ])
+            "PATTY-GD-DELTA-MAX-CLAUSES",
+            "PATTY-GD-DELTA-PLUS-CLAUSES",
+            "PATTY-GD-DELTA-XOR-CLAUSES", ])
     ]
 
     file = f"benchmarks/results/csv/{exp}.csv"
