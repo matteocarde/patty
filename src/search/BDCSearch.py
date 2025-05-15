@@ -89,13 +89,13 @@ class BDCSearch(Search):
             if self.args.saveSMT:
                 self.saveSMT(bound, encoding, callsToSolver=callsToSolver)
 
-            bound += 1
             if not isinstance(partialPlan, Plan):
                 patH = patH + patS.addPostfix(bound)
                 if not plan.isEmpty():
                     s = initialState
                     patG = Pattern.fromPlan(plan, addFake=not self.isTemporal)
                     plan = NumericPlan.empty()
+                bound += 1
                 continue
 
             plan = plan + partialPlan
@@ -104,15 +104,16 @@ class BDCSearch(Search):
                 print(plan)
                 print("-----------------")
 
+            s = initialState.applyPlan(plan)
             c = GF.compute(s, normalizedGoal, initialState)
             if c == 0:
                 self.console.log(f"Calls to Solver: {callsToSolver}", LogPrintLevel.STATS)
                 self.console.log(f"Bound: {bound}", LogPrintLevel.STATS)
                 return plan
-            s = initialState.applyPlan(plan)
             self.console.log(f"Found intermediate state {s}", LogPrintLevel.PLAN)
             self.console.log(f"New Goal Function Value: {c} [{datetime.datetime.now()}]", LogPrintLevel.PLAN)
 
+            bound += 1
             patG = Pattern.empty()
             patS = Pattern.fromState(s, self.problem.goal, self.domain).addPostfix(bound)
             patH = copy.deepcopy(patH)
