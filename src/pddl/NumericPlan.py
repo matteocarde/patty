@@ -116,3 +116,6 @@ class NumericPlan(Plan):
     @classmethod
     def empty(cls):
         return cls()
+
+    def isEmpty(self):
+        return len(self.__plan) == 0

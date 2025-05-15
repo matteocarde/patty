@@ -53,6 +53,9 @@ JAIR_TABLE4 = {
         "PATTY-GD-DELTA-MAX-CLAUSES": {"type": "scalar"},
         "PATTY-GD-DELTA-PLUS-CLAUSES": {"type": "scalar"},
         "PATTY-GD-DELTA-XOR-CLAUSES": {"type": "scalar"},
+        "PATTY-BDC-DELTA-MAX-CLAUSES": {"type": "scalar"},
+        "PATTY-BDC-DELTA-PLUS-CLAUSES": {"type": "scalar"},
+        "PATTY-BDC-DELTA-XOR-CLAUSES": {"type": "scalar"},
     },
     "domains": AIJ_DOMAINS
 }
