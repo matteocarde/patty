@@ -14,13 +14,13 @@ class TestGreedyDynamicMarketTraderDeltaPlus(TestCase):
 
     def setUp(self) -> None:
         domainFile = "../../files/numeric/ipc-2023/markettrader/domain.pddl"
-        problemFile = "../../files/numeric/ipc-2023/markettrader/instances/pfile16.pddl"
+        problemFile = "../../files/numeric/ipc-2023/markettrader/instances/pfile01.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.args = Arguments(keepRequired=False)
-        self.args.goalFunction = "DELTA-PLUS"
+        self.args.goalFunction = "DELTA-PLUS-CLAUSES"
         self.args.minimizeGoalFunction = True
         self.args.printPattern = True
         pass

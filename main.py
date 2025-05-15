@@ -9,6 +9,7 @@ from src.pddl.Problem import Problem
 from src.plan.Pattern import Pattern
 from src.search.AStarSearchMax import AStarSearchMax
 from src.search.ChainSearch import ChainSearch
+from src.search.GDSearch import GDSearch
 from src.search.JairSearch import JairSearch
 from src.search.PASSearch import PASSearch
 from src.search.PlanImproverLess import PlanImproverLess
@@ -52,6 +53,8 @@ def main():
             solver = AStarSearchMax(gDomain, problem, args)
         elif args.search == "jair":
             solver = JairSearch(gDomain, problem, args)
+        elif args.search == "gd":
+            solver = GDSearch(gDomain, problem, args)
         elif args.search == "step":
             solver = StepSearch(gDomain, problem, args)
         else:

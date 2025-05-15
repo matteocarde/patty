@@ -111,6 +111,12 @@ PLANNERS: Dict[str, Planner] = {
     "PATTY-F-OPT-DELTA-XOR-CLAUSES": Patty("PATTY-F-OPT-DELTA-XOR-CLAUSES", search="jair",
                                            goalFunction="DELTA-XOR-CLAUSES",
                                            minimizeGoalFunction=True, noCompression=False),
+    "PATTY-GD-DELTA-MAX-CLAUSES": Patty("PATTY-GD-DELTA-MAX-CLAUSES", search="gd",
+                                        goalFunction="DELTA-MAX-CLAUSES"),
+    "PATTY-GD-DELTA-PLUS-CLAUSES": Patty("PATTY-GD-DELTA-PLUS-CLAUSES", search="gd",
+                                         goalFunction="DELTA-PLUS-CLAUSES"),
+    "PATTY-GD-DELTA-XOR-CLAUSES": Patty("PATTY-GD-DELTA-XOR-CLAUSES", search="gd",
+                                        goalFunction="DELTA-XOR-CLAUSES"),
 
     "RANTANPLAN": Patty("RANTANPLAN", search="static", pattern="arpg", hasEffectAxioms=True, rollBound=1),
     "SPRINGROLL": SpringRoll(),

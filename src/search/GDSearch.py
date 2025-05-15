@@ -58,7 +58,7 @@ class GDSearch(Search):
                 minimizeGoalFunction=self.args.minimizeGoalFunction,
                 goalFunctionWithEpsilon=not self.args.noCompression,
                 goalFunctionValue=c,
-                goalAsSoftAssert=False,
+                goalAsSoftAssert=True,
                 bound=1,
                 args=self.args,
                 relaxGoal=False

@@ -51,9 +51,9 @@ class Arguments:
         parser.add_argument('--temporal-constraints', help="'numerical' or 'logical' following IJCAI-24",
                             default='numerical')
         parser.add_argument('--goal-function', help="See JAIR",
-                            default='DELTA_MAX')
+                            default='DELTA-MAX-CLAUSES')
         parser.add_argument('--minimize-goal-function', help="See JAIR",
-                            action="store_true", default=False)
+                            action="store_true", default=True)
         parser.add_argument('--greedy-level', help="See JAIR",
                             type=int, default=4)
         parser.add_argument('--quality',

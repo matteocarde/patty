@@ -58,6 +58,6 @@ class DeltaClauses(GoalFunctionClauses):
             toMinimize.append((phiExpr, initValue))
 
         tom = [phi / iPhi + EPSILON for (phi, iPhi) in toMinimize] + [1]
-        minExpr = MinExpression(*tom)
+        minExpr = MinExpression(*tom) if len(tom) > 2 else tom[0]
         gExpr = SMTExpression.fromFormula(g, vars)
         return ITEExpression(gExpr, 0, minExpr)
