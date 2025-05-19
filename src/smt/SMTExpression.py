@@ -67,31 +67,36 @@ class SMTExpression:
         from src.smt.expressions.NotExpression import NotExpression
         return NotExpression.simplify(self)
 
-    def __ne__(self, other: SMTExpression or int):
+    def __ne__(self, other: SMTExpression or int) -> SMTExpression:
         from src.smt.expressions.NotEqualExpression import NotEqualExpression
         return NotEqualExpression.simplify(self, other)
 
-    def __le__(self, other: SMTExpression or float):
+    def __le__(self, other: SMTExpression or float) -> SMTExpression:
         from src.smt.expressions.LessEqualExpression import LessEqualExpression
         return LessEqualExpression.simplify(self, other)
 
-    def __lt__(self, other: SMTExpression or float):
+    def __lt__(self, other: SMTExpression or float) -> SMTExpression:
         from src.smt.expressions.LessExpression import LessExpression
         return LessExpression.simplify(self, other)
 
-    def __ge__(self, other: SMTExpression or float):
+    def __ge__(self, other: SMTExpression or float) -> SMTExpression:
         from src.smt.expressions.GreaterEqualExpression import GreaterEqualExpression
         return GreaterEqualExpression.simplify(self, other)
 
-    def __gt__(self, other: SMTExpression or float):
+    def __gt__(self, other: SMTExpression or float) -> SMTExpression:
         from src.smt.expressions.GreaterExpression import GreaterExpression
         return GreaterExpression.simplify(self, other)
 
-    def __sub__(self, other: SMTExpression or float):
+    def __sub__(self, other: SMTExpression or float) -> SMTExpression:
         from src.smt.expressions.SubtractExpression import SubtractExpression
         return SubtractExpression.simplify(self, other)
 
-    def __rsub__(self, other: SMTExpression or float):
+    def __neg__(self):
+        from src.smt.expressions.SubtractExpression import SubtractExpression
+        from src.smt.expressions.ConstantExpression import ConstantExpression
+        return SubtractExpression.simplify(ConstantExpression(0), self)
+
+    def __rsub__(self, other: SMTExpression or float) -> SMTExpression:
         from src.smt.expressions.SubtractExpression import SubtractExpression
         return SubtractExpression.simplify(other, self)
 

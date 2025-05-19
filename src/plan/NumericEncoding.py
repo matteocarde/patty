@@ -17,6 +17,8 @@ from src.plan.Pattern import Pattern
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTNumericVariable import SMTNumericVariable, SMTRealVariable
 from src.smt.SMTSolution import SMTSolution
+from src.smt.expressions.ConstantExpression import ConstantExpression
+from src.smt.expressions.MaxExpression import MaxExpression
 from src.utils.Arguments import Arguments
 from src.utils.Constants import EPSILON
 
@@ -37,7 +39,7 @@ class NumericEncoding(Encoding):
                  realActionVariables=False,
                  maxActionsRolling: Dict[int, Dict[Action, int]] = None,
                  goalFunction: Type[GoalFunction] = None,
-                 goalAsSoftAssert: bool = False,
+                 goalAsSoftAssertAndMinimize: bool = False,
                  goalFunctionValue: float = 0.0,
                  goalFunctionWithEpsilon: bool = False,
                  minimizeGoalFunction: float = False):
@@ -78,36 +80,23 @@ class NumericEncoding(Encoding):
                 self.actionVariables.update(var.actionVariables.values())
         self.k = len(self.pattern)
 
-        self.softRules = []
+        self.softRules: [SMTExpression] = []
+        self.minimize: [SMTExpression] = []
         self.initial: [SMTExpression] = self.getInitialExpression()
-        self.c = SMTRealVariable("costFunctionPatty")
-        self.setMinimizeParameter = self.setMinimizeParameter()
-        self.minimize: SMTExpression or None = self.getMinimize()
-        self.goal: [SMTExpression] = self.getGoalExpression()
-
-        if goalAsSoftAssert:
-            self.softRules.append(self.getGoalRuleFromFormula(self.problem.goal, 0))
 
         for index in range(1, bound + 1):
             stepRules = self.getStepRules(index)
             self.transitions.extend(stepRules)
 
+        self.goal: [SMTExpression] = self.getGoalExpression()
+
+        if goalAsSoftAssertAndMinimize:
+            self.addGoalAsSoftRulesAndMinimize()
+
+        self.c = SMTRealVariable("costFunctionPatty")
+        self.setMinimizeParameter = self.setMinimizeParameter()
+
         self.rules = self.initial + self.transitions + [self.goal] + self.setMinimizeParameter
-
-    def getMinimize(self):
-        if self.minimizeQuality or self.minimizeGoalFunction:
-            return self.c
-        return None
-
-    def setMinimizeParameter(self):
-        if self.minimizeQuality:
-            return [self.c.equal(sum(self.actionVariables))]
-        if self.minimizeGoalFunction:
-            vars = self.transitionVariables[-1].valueVariables
-            init = State.fromInitialCondition(self.problem.init)
-            expr = self.goalFunction.getExpression(vars, self.problem.goal.normalize(), init)
-            return [self.c.equal(expr)]
-        return []
 
     def getInitialExpression(self) -> List[SMTExpression]:
         tVars = self.transitionVariables[0]
@@ -134,6 +123,25 @@ class NumericEncoding(Encoding):
         print(rules)
 
         return rules
+
+    def setMinimizeParameter(self):
+        if self.minimizeQuality:
+            return [self.c.equal(sum(self.actionVariables))]
+        if self.goalFunction:
+            vars = self.transitionVariables[-1].sigmaVariables[self.k]
+            init = State.fromInitialCondition(self.problem.init)
+            expr = self.goalFunction.getExpression(vars, self.problem.goal.normalize(), init)
+            return [self.c.equal(expr)]
+        return []
+
+    def addGoalAsSoftRulesAndMinimize(self):
+        # vars = self.transitionVariables[-1].sigmaVariables[self.k]
+        vars = self.transitionVariables[-1].sigmaVariables[self.k]
+        for g in self.problem.goal.normalize():
+            self.softRules.append(SMTExpression.fromPddl(g, vars))
+            if isinstance(g, BinaryPredicate):
+                value = - SMTExpression.fromPddl(g.lhs - g.rhs, vars)
+                self.minimize.append(MaxExpression(*[value, ConstantExpression(0)]))
 
     def getGoalRuleFromFormula(self, f: Formula, level: int) -> SMTExpression:
         tVars = self.transitionVariables[-1]
@@ -182,14 +190,12 @@ class NumericEncoding(Encoding):
             raise Exception("At the moment I cannot relax the goal if it is not expressed as a conjunction of formulas")
 
         if self.goalFunction:
+            # vars = self.transitionVariables[-1].sigmaVariables[self.k]
             vars = self.transitionVariables[-1].valueVariables
             init = State.fromInitialCondition(self.problem.init)
             expr = self.goalFunction.getExpression(vars, self.problem.goal.normalize(), init)
             c = self.goalFunctionValue
-            if self.goalFunctionWithEpsilon:
-                return expr <= max(c - EPSILON, 0)
-            else:
-                return expr < EPSILON
+            return expr <= c
 
         return self.getGoalRuleFromFormula(self.problem.goal, 0)
 

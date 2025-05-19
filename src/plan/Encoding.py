@@ -17,7 +17,7 @@ from src.smt.SMTVariable import SMTVariable
 class Encoding:
     rules: List[SMTExpression]
     softRules: List[SMTExpression]
-    minimize: SMTExpression or None
+    minimize: [SMTExpression] or None
     actionVariables: Set[SMTVariable]
 
     def __init__(self, domain: GroundedDomain = None, problem: Problem = None, pattern: Pattern = None,

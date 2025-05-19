@@ -355,21 +355,21 @@ class Formula:
                 continue
             if isinstance(c, BinaryPredicate):
                 if c.operator == "=":
-                    f.addClause(c.lhs >= c.rhs)
-                    f.addClause(c.rhs >= c.lhs)
+                    f.addClause(c.lhs - c.rhs >= 0)
+                    f.addClause(c.rhs - c.lhs >= 0)
                 elif c.operator == "<":
-                    f.addClause(c.rhs > c.lhs)
+                    f.addClause(c.rhs - c.lhs > 0)
                 elif c.operator == "<=":
-                    f.addClause(c.rhs >= c.lhs)
+                    f.addClause(c.rhs - c.lhs >= 0)
                 elif c.operator == "!=":
                     if f.type == "OR":
-                        f.addClause(c.rhs > c.lhs)
-                        f.addClause(c.lhs > c.rhs)
+                        f.addClause(c.rhs - c.lhs > 0)
+                        f.addClause(c.lhs - c.rhs > 0)
                     else:
                         subF = Formula()
                         subF.type = "OR"
-                        subF.addClause(c.rhs > c.lhs)
-                        subF.addClause(c.lhs > c.rhs)
+                        subF.addClause(c.rhs - c.lhs > 0)
+                        subF.addClause(c.lhs - c.rhs > 0)
                         f.addClause(subF)
                 else:
                     f.addClause(c)

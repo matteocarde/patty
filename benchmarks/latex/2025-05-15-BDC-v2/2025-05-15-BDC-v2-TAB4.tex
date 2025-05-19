@@ -1,0 +1,47 @@
+
+               \documentclass[11pt,landscape]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in,landscape]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||ccccccc||ccccccc||ccccccc||}
+\hline
+ & \multicolumn{7}{c||}{Solved (out of $20$)}&\multicolumn{7}{c||}{Time (s)}&\multicolumn{7}{c||}{\textsc{smt} calls}\\
+Domain & $\mathrm{P}_\mathrm{G}$&$\mathrm{P}_\mathrm{H}$&$\mathrm{P}_\mathrm{F}$&$\mathrm{P}_\textsc{gd}(\delta^{max}_c)$&$\mathrm{P}_\textsc{gd}(\delta^{+}_c)$&$\mathrm{P}_\textsc{bdc}(\delta^{max}_c)$&$\mathrm{P}_\textsc{bdc}(\delta^{+}_c)$&$\mathrm{P}_\mathrm{G}$&$\mathrm{P}_\mathrm{H}$&$\mathrm{P}_\mathrm{F}$&$\mathrm{P}_\textsc{gd}(\delta^{max}_c)$&$\mathrm{P}_\textsc{gd}(\delta^{+}_c)$&$\mathrm{P}_\textsc{bdc}(\delta^{max}_c)$&$\mathrm{P}_\textsc{bdc}(\delta^{+}_c)$&$\mathrm{P}_\mathrm{G}$&$\mathrm{P}_\mathrm{H}$&$\mathrm{P}_\mathrm{F}$&$\mathrm{P}_\textsc{gd}(\delta^{max}_c)$&$\mathrm{P}_\textsc{gd}(\delta^{+}_c)$&$\mathrm{P}_\textsc{bdc}(\delta^{max}_c)$&$\mathrm{P}_\textsc{bdc}(\delta^{+}_c)$\\
+\hline
+\textsc{BlGrp} (S)&\textbf{20}&\textbf{20}&\textbf{20}&3&7&3&7&\textbf{1.6}&1.7&\textbf{1.6}&51.7&41.6&51.7&41.8&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}\\
+\textsc{Cnt} (S)&\textbf{20}&\textbf{20}&\textbf{20}&19&\textbf{20}&18&\textbf{20}&\textbf{0.8}&\textbf{0.8}&\textbf{0.8}&5.1&0.9&5.3&0.9&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}\\
+\textsc{Cnt} (L)&\textbf{20}&\textbf{20}&\textbf{20}&10&13&10&16&\textbf{0.9}&1.0&\textbf{0.9}&31.1&21.1&31.9&14.5&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}\\
+\textsc{Del} (S)&5&5&\textbf{6}&3&5&3&5&47.6&47.5&\textbf{44.1}&51.1&47.4&52.3&48.4&\textbf{1.7}&\textbf{1.7}&\textbf{1.7}&3.3&3.3&3.3&3.3\\
+\textsc{Drn} (S)&3&3&\textbf{9}&3&1&3&4&51.2&50.8&\textbf{36.7}&51.3&57.0&51.3&49.2&\textbf{3.0}&\textbf{3.0}&\textbf{3.0}&\textbf{3.0}&\textbf{3.0}&\textbf{3.0}&\textbf{3.0}\\
+\textsc{Exp} (S)&\textbf{3}&\textbf{3}&\textbf{3}&2&1&2&2&52.4&52.2&\textbf{51.8}&54.9&57.3&54.8&54.2&\textbf{3.0}&\textbf{3.0}&\textbf{3.0}&6.0&6.0&6.0&6.0\\
+\textsc{Farm} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&2.2&\textbf{0.8}&\textbf{0.8}&1.4&1.0&1.4&1.0&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}\\
+\textsc{Farm} (L)&\textbf{20}&\textbf{20}&19&11&17&11&18&\textbf{2.9}&3.1&3.3&32.2&12.8&32.8&11.4&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}\\
+\textsc{HPwr} (S)&15&18&\textbf{19}&17&15&17&16&20.4&\textbf{15.7}&15.9&24.1&27.9&23.5&24.7&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}\\
+\textsc{Mrkt} (L)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{MPrime} (S)&\textbf{10}&\textbf{10}&9&\textbf{10}&9&\textbf{10}&7&34.0&\textbf{32.4}&34.9&35.6&37.2&33.8&41.0&\textbf{1.2}&\textbf{1.2}&1.3&2.2&2.3&2.2&2.2\\
+\textsc{PathM} (S)&17&\textbf{20}&\textbf{20}&18&\textbf{20}&18&\textbf{20}&13.3&\textbf{3.9}&4.4&11.9&4.8&11.5&5.2&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}\\
+\textsc{PlWat} (S)&5&5&\textbf{20}&5&\textbf{20}&5&\textbf{20}&46.6&47.3&10.3&46.0&7.4&45.3&\textbf{7.0}&7.6&8.4&9.8&14.6&9.6&\textbf{6.0}&7.0\\
+\textsc{Rvr} (S)&8&9&\textbf{10}&7&6&8&8&37.6&35.2&\textbf{33.1}&40.0&44.3&38.5&39.1&\textbf{1.4}&\textbf{1.4}&\textbf{1.4}&2.0&2.8&2.0&2.4\\
+\textsc{Sail} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&1.3&1.4&0.9&1.4&\textbf{0.8}&1.3&0.9&\textbf{3.3}&\textbf{3.3}&\textbf{3.3}&\textbf{3.3}&\textbf{3.3}&\textbf{3.3}&\textbf{3.3}\\
+\textsc{Sail} (L)&18&18&19&19&\textbf{20}&19&\textbf{20}&8.4&7.4&1.0&5.0&0.9&4.6&\textbf{0.8}&\textbf{1.3}&\textbf{1.3}&\textbf{1.3}&\textbf{1.3}&\textbf{1.3}&\textbf{1.3}&\textbf{1.3}\\
+\textsc{Stlrs} (S)&3&\textbf{15}&13&11&12&13&12&52.5&\textbf{21.4}&25.7&31.0&28.4&25.8&28.2&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}\\
+\textsc{Sgr} (S)&19&18&\textbf{20}&18&15&19&\textbf{20}&10.7&9.7&\textbf{6.1}&13.2&19.2&10.5&6.8&\textbf{2.4}&2.7&3.4&3.5&4.3&3.1&3.3\\
+\textsc{Tpp} (L)&2&2&2&2&\textbf{4}&2&2&54.4&54.0&54.1&54.4&\textbf{49.1}&54.6&54.1&2.5&\textbf{2.0}&\textbf{2.0}&2.5&2.5&3.5&4.5\\
+\textsc{Zeno} (S)&\textbf{11}&10&\textbf{11}&10&\textbf{11}&10&\textbf{11}&28.7&31.6&\textbf{28.4}&31.9&\textbf{28.4}&32.1&29.5&\textbf{1.6}&\textbf{1.6}&\textbf{1.6}&\textbf{1.6}&\textbf{1.6}&\textbf{1.6}&1.9\\
+\textsc{Line} (L)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&18&\textbf{1.0}&\textbf{1.0}&1.3&2.7&3.0&3.1&3.8&\textbf{2.8}&\textbf{2.8}&5.2&6.4&7.6&5.0&5.2
+\\\hline
+\textit{Best}&\textbf{259}&\textbf{276}&\textbf{300}&\textbf{228}&\textbf{256}&\textbf{231}&\textbf{266}&\textbf{53}&\textbf{87}&\textbf{93}&\textbf{16}&\textbf{42}&\textbf{12}&\textbf{34}&\textbf{253}&\textbf{264}&\textbf{242}&\textbf{172}&\textbf{182}&\textbf{176}&\textbf{205}\\\hline
+
+        \end{tabular}}
+        \caption{}
+        \label{tab:all-patty}
+        \end{table*}
+        
+\end{document}

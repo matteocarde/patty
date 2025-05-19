@@ -55,10 +55,10 @@ class GDSearch(Search):
                 state=s,
                 pattern=pat,
                 goalFunction=GF,
-                minimizeGoalFunction=self.args.minimizeGoalFunction,
-                goalFunctionWithEpsilon=not self.args.noCompression,
+                minimizeGoalFunction=False,
+                goalFunctionWithEpsilon=False,
                 goalFunctionValue=c,
-                goalAsSoftAssert=True,
+                goalAsSoftAssertAndMinimize=True,
                 bound=1,
                 args=self.args,
                 relaxGoal=False

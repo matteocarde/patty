@@ -21,7 +21,7 @@ class GoalFunction:
         raise NotImplementedError()
 
     @staticmethod
-    def getExpression(vars: Dict[Atom, SMTVariable], f: Formula, I: State) -> SMTExpression:
+    def getExpression(vars: Dict[Atom, SMTExpression], f: Formula, I: State) -> SMTExpression:
         raise NotImplementedError()
 
     @staticmethod

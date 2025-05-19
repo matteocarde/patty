@@ -77,12 +77,13 @@ class SMTSolver:
         if push:
             self.solver.push()
 
-    def setMinimize(self, expr: SMTExpression):
+    def setMinimize(self, expr: [SMTExpression]):
         if not expr:
             return
 
-        z3Expr = self.z3.converter.convert(expr.getExpression())
-        self.solver.minimize(z3Expr)
+        for e in expr:
+            z3Expr = self.z3.converter.convert(e.getExpression())
+            self.solver.minimize(z3Expr)
 
     def addSoftAssertions(self, exprs: [SMTExpression], push=True):
 
