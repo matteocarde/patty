@@ -139,7 +139,6 @@ class NumericEncoding(Encoding):
             vars = self.transitionVariables[-1].sigmaVariables[self.k]
             expr = self.getGoalFunctionExpression()
             c = self.goalFunctionValue
-            otherGoal = [SMTExpression.fromPddl(f, vars) for f in self.problem.goal.conditions]
             return SMTExpression.bigor([expr < c])
 
         return self.getGoalRuleFromFormula(self.problem.goal, 0)
@@ -156,7 +155,7 @@ class NumericEncoding(Encoding):
         # vars = self.transitionVariables[-1].valueVariables
         vars = self.transitionVariables[-1].sigmaVariables[self.k]
 
-        for g in self.problem.goal:  # .normalize():
+        for g in self.problem.goal.normalize():
             self.softRules.append(SMTExpression.fromPddl(g, vars))
             if isinstance(g, BinaryPredicate):
                 value = - SMTExpression.fromPddl(g.lhs - g.rhs, vars)

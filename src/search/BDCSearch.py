@@ -105,7 +105,7 @@ class BDCSearch(Search):
                 print("-----------------")
 
             s = initialState.applyPlan(plan)
-            c = GF.compute(s, normalizedGoal, initialState)
+            c = partialPlan.solution.getVariable(encoding.c)
             if c == 0:
                 self.console.log(f"Calls to Solver: {callsToSolver}", LogPrintLevel.STATS)
                 self.console.log(f"Bound: {bound}", LogPrintLevel.STATS)
