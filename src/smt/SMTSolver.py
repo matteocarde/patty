@@ -24,6 +24,7 @@ class SMTSolver:
         self.encoding: Encoding = encoding
         self.onImprovedModel: Callable or None = None
         self.trySoftAsHard = trySoftAsHard
+        self.toMinimize: List[SMTExpression] = []
 
         self.maximize = self.encoding and (bool(self.encoding.softRules) or bool(self.encoding.minimize))
         if self.maximize:
@@ -84,7 +85,9 @@ class SMTSolver:
 
         for e in expr:
             z3Expr = self.z3.converter.convert(e.getExpression())
-            self.solver.minimize(z3Expr)
+            self.toMinimize.append(z3Expr)
+            if not self.trySoftAsHard:
+                self.solver.minimize(z3Expr)
 
     def addSoftAssertions(self, exprs: [SMTExpression], push=True):
 
@@ -121,7 +124,6 @@ class SMTSolver:
         self.solver.push()
         for expr in self.softAssertions:
             self.solver.add(expr)
-        self.solver.push()
         res = self.solver.check()
         if str(res) == "sat":
             return "sat"
@@ -129,6 +131,8 @@ class SMTSolver:
         self.solver.pop()
         for expr in self.softAssertions:
             self.solver.add_soft(expr)
+        for expr in self.toMinimize:
+            self.solver.minimize(expr)
         self.solver.push()
 
         return self.solver.check()
