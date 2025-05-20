@@ -72,7 +72,7 @@ class BDCSearch(Search):
             self.console.log(f"Bound {bound} - Pattern Length = {pat.getLength()}", LogPrintLevel.STATS)
 
             self.ts.start(f"Solving Bound {bound}", console=self.console)
-            solver: SMTSolver = SMTSolver(encoding)
+            solver: SMTSolver = SMTSolver(encoding, trySoftAsHard=True)
             callsToSolver += 1
 
             def onImprovedModel(solution: SMTSolution):

@@ -16,13 +16,14 @@ class SMTSolver:
     solver: Portfolio
     variables: Set[SMTVariable]
 
-    def __init__(self, encoding: Encoding = None):
+    def __init__(self, encoding: Encoding = None, trySoftAsHard=False):
         self.variables: Set[SMTVariable] = set()
         self.variablesByName: Dict[str, SMTVariable] = dict()
         self.assertions: List[SMTExpression] = list()
         self.softAssertions: List[SMTExpression] = list()
         self.encoding: Encoding = encoding
         self.onImprovedModel: Callable or None = None
+        self.trySoftAsHard = trySoftAsHard
 
         self.maximize = self.encoding and (bool(self.encoding.softRules) or bool(self.encoding.minimize))
         if self.maximize:
@@ -68,10 +69,11 @@ class SMTSolver:
 
     def addSoftAssertion(self, expr: SMTExpression, push=True):
 
-        self.softAssertions.append(expr)
         self.variables.update(expr.getVariables())
         z3Expr = self.z3.converter.convert(expr.getExpression())
-        self.solver.add_soft(z3Expr)
+        self.softAssertions.append(z3Expr)
+        if not self.trySoftAsHard:
+            self.solver.add_soft(z3Expr)
 
         if push:
             self.solver.push()
@@ -115,9 +117,29 @@ class SMTSolver:
             solution.addVariable(variablesByName[varName], model[v])
         return solution
 
+    def tryWithSoftAsHard(self):
+        self.solver.push()
+        for expr in self.softAssertions:
+            self.solver.add(expr)
+        self.solver.push()
+        res = self.solver.check()
+        if str(res) == "sat":
+            return "sat"
+
+        self.solver.pop()
+        for expr in self.softAssertions:
+            self.solver.add_soft(expr)
+        self.solver.push()
+
+        return self.solver.check()
+
     def getSolution(self) -> SMTSolution or bool:
         if self.maximize:
-            res = self.solver.check()
+
+            if not self.trySoftAsHard:
+                res = self.solver.check()
+            else:
+                res = self.tryWithSoftAsHard()
 
             if str(res) != "sat":
                 return False
