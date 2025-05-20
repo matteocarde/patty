@@ -116,6 +116,6 @@ class BDCSearch(Search):
             bound += 1
             patG = Pattern.empty()
             patS = Pattern.fromState(s, self.problem.goal, self.domain).addPostfix(bound)
-            patH = copy.deepcopy(patH)
+            patH = copy.deepcopy(patS)
 
         pass
