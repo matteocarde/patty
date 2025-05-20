@@ -88,13 +88,13 @@ class NumericEncoding(Encoding):
             stepRules = self.getStepRules(index)
             self.transitions.extend(stepRules)
 
-        self.goal: [SMTExpression] = self.getGoalExpression()
-
-        if goalAsSoftAssertAndMinimize:
-            self.addGoalAsSoftRulesAndMinimize()
+        self.goal: SMTExpression = self.getGoalExpression()
 
         self.c = SMTRealVariable("costFunctionPatty")
         self.setMinimizeParameter = self.setMinimizeParameter()
+
+        if goalAsSoftAssertAndMinimize:
+            self.addGoalAsSoftRulesAndMinimize()
 
         self.rules = self.initial + self.transitions + [self.goal] + self.setMinimizeParameter
 
@@ -123,6 +123,21 @@ class NumericEncoding(Encoding):
         print(rules)
 
         return rules
+
+    def getGoalExpression(self) -> SMTExpression:
+
+        if self.relaxGoal and self.problem.goal.type != "AND":
+            raise Exception("At the moment I cannot relax the goal if it is not expressed as a conjunction of formulas")
+
+        if self.goalFunction:
+            # vars = self.transitionVariables[-1].sigmaVariables[self.k]
+            vars = self.transitionVariables[-1].valueVariables
+            init = State.fromInitialCondition(self.problem.init)
+            expr = self.goalFunction.getExpression(vars, self.problem.goal.normalize(), init)
+            c = self.goalFunctionValue
+            return expr < c
+
+        return self.getGoalRuleFromFormula(self.problem.goal, 0)
 
     def setMinimizeParameter(self):
         if self.minimizeQuality:
@@ -183,21 +198,6 @@ class NumericEncoding(Encoding):
             rules.append(SMTExpression.bigor(orRules))
 
         return SMTExpression.bigand(rules)
-
-    def getGoalExpression(self) -> SMTExpression:
-
-        if self.relaxGoal and self.problem.goal.type != "AND":
-            raise Exception("At the moment I cannot relax the goal if it is not expressed as a conjunction of formulas")
-
-        if self.goalFunction:
-            # vars = self.transitionVariables[-1].sigmaVariables[self.k]
-            vars = self.transitionVariables[-1].valueVariables
-            init = State.fromInitialCondition(self.problem.init)
-            expr = self.goalFunction.getExpression(vars, self.problem.goal.normalize(), init)
-            c = self.goalFunctionValue
-            return expr <= c
-
-        return self.getGoalRuleFromFormula(self.problem.goal, 0)
 
     def getMetricExpression(self, metricBound: float) -> SMTExpression or None:
 

@@ -179,6 +179,8 @@ class SMTExpression:
             return TrueExpression()
         if isinstance(predicate, FalsePredicate):
             return FalseExpression()
+        if isinstance(predicate, Formula):
+            return SMTExpression.fromFormula(predicate, variables)
         raise Exception(f"Don't know how to convert {predicate} to Expression")
 
     @classmethod

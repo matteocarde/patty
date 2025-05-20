@@ -7,7 +7,7 @@ JAIR_TABLE4 = {
     "type": "table*",
     "width": r"\textwidth",
     "keepAll": True,
-    "time-limit": 60 * 1000,
+    "time-limit": 30 * 1000,
     "caption": r"",
     "columns": {
         # "coverage": {
@@ -50,10 +50,10 @@ JAIR_TABLE4 = {
         "PATTY-EG": {"type": "scalar"},
         "PATTY-EH": {"type": "scalar"},
         "PATTY-EF": {"type": "scalar"},
-        "PATTY-GD-DELTA-MAX-CLAUSES": {"type": "scalar"},
+        # "PATTY-GD-DELTA-MAX-CLAUSES": {"type": "scalar"},
         "PATTY-GD-DELTA-PLUS-CLAUSES": {"type": "scalar"},
         # "PATTY-GD-DELTA-XOR-CLAUSES": {"type": "scalar"},
-        "PATTY-BDC-DELTA-MAX-CLAUSES": {"type": "scalar"},
+        # "PATTY-BDC-DELTA-MAX-CLAUSES": {"type": "scalar"},
         "PATTY-BDC-DELTA-PLUS-CLAUSES": {"type": "scalar"},
         # "PATTY-BDC-DELTA-XOR-CLAUSES": {"type": "scalar"},
     },

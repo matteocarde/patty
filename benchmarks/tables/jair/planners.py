@@ -128,7 +128,7 @@ JAIR_PLANNERS = {
         "style": "-"
     },
     "PATTY-GD-DELTA-PLUS-CLAUSES": {
-        "name": r"$\mathrm{P}_\textsc{gd}(\delta^{+}_c)$",
+        "name": r"$\mathrm{P}_\textsc{gd}$",
         "style": "-"
     },
     "PATTY-GD-DELTA-XOR-CLAUSES": {
@@ -140,7 +140,7 @@ JAIR_PLANNERS = {
         "style": "-"
     },
     "PATTY-BDC-DELTA-PLUS-CLAUSES": {
-        "name": r"$\mathrm{P}_\textsc{bdc}(\delta^{+}_c)$",
+        "name": r"$\mathrm{P}_\textsc{bdc}$",
         "style": "-"
     },
     "PATTY-BDC-DELTA-XOR-CLAUSES": {
