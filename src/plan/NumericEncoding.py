@@ -88,15 +88,16 @@ class NumericEncoding(Encoding):
             stepRules = self.getStepRules(index)
             self.transitions.extend(stepRules)
 
-        self.goal: SMTExpression = self.getGoalExpression()
-
         self.c = SMTRealVariable("costFunctionPatty")
         self.setMinimizeParameter = self.setMinimizeParameter()
+        self.goal: SMTExpression = self.getGoalExpression()
 
         if goalAsSoftAssertAndMinimize:
             self.addGoalAsSoftRulesAndMinimize()
 
         self.rules = self.initial + self.transitions + [self.goal] + self.setMinimizeParameter
+
+        pass
 
     def getInitialExpression(self) -> List[SMTExpression]:
         tVars = self.transitionVariables[0]
@@ -136,10 +137,10 @@ class NumericEncoding(Encoding):
             raise Exception("At the moment I cannot relax the goal if it is not expressed as a conjunction of formulas")
 
         if self.goalFunction:
-            vars = self.transitionVariables[-1].sigmaVariables[self.k]
-            expr = self.getGoalFunctionExpression()
+            # vars = self.transitionVariables[-1].sigmaVariables[self.k]
+            # expr = self.getGoalFunctionExpression()
             c = self.goalFunctionValue
-            return SMTExpression.bigor([expr < c])
+            return self.c <= max(c - EPSILON, 0)
 
         return self.getGoalRuleFromFormula(self.problem.goal, 0)
 

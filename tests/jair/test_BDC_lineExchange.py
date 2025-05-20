@@ -15,7 +15,7 @@ class TestLineExchange(TestCase):
 
     def setUp(self) -> None:
         domainFile = "../../files/numeric/line-exchange/domain.pddl"
-        problemFile = "../../files/numeric/line-exchange/instances/3_15_25_100.pddl"
+        problemFile = "../../files/numeric/line-exchange/instances/3_15_90_10.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)
