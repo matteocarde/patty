@@ -124,18 +124,23 @@ class NumericEncoding(Encoding):
 
         return rules
 
+    def getGoalFunctionExpression(self):
+        vars = self.transitionVariables[-1].sigmaVariables[self.k]
+        init = State.fromInitialCondition(self.problem.init)
+        expr = self.goalFunction.getExpression(vars, self.problem.goal.normalize(), init)
+        return expr
+
     def getGoalExpression(self) -> SMTExpression:
 
         if self.relaxGoal and self.problem.goal.type != "AND":
             raise Exception("At the moment I cannot relax the goal if it is not expressed as a conjunction of formulas")
 
         if self.goalFunction:
-            # vars = self.transitionVariables[-1].sigmaVariables[self.k]
-            vars = self.transitionVariables[-1].valueVariables
-            init = State.fromInitialCondition(self.problem.init)
-            expr = self.goalFunction.getExpression(vars, self.problem.goal.normalize(), init)
+            vars = self.transitionVariables[-1].sigmaVariables[self.k]
+            expr = self.getGoalFunctionExpression()
             c = self.goalFunctionValue
-            return expr < c
+            otherGoal = [SMTExpression.fromPddl(f, vars) for f in self.problem.goal.conditions]
+            return SMTExpression.bigor([expr < c])
 
         return self.getGoalRuleFromFormula(self.problem.goal, 0)
 
@@ -143,16 +148,15 @@ class NumericEncoding(Encoding):
         if self.minimizeQuality:
             return [self.c.equal(sum(self.actionVariables))]
         if self.goalFunction:
-            vars = self.transitionVariables[-1].sigmaVariables[self.k]
-            init = State.fromInitialCondition(self.problem.init)
-            expr = self.goalFunction.getExpression(vars, self.problem.goal.normalize(), init)
+            expr = self.getGoalFunctionExpression()
             return [self.c.equal(expr)]
         return []
 
     def addGoalAsSoftRulesAndMinimize(self):
-        # vars = self.transitionVariables[-1].sigmaVariables[self.k]
+        # vars = self.transitionVariables[-1].valueVariables
         vars = self.transitionVariables[-1].sigmaVariables[self.k]
-        for g in self.problem.goal.normalize():
+
+        for g in self.problem.goal:  # .normalize():
             self.softRules.append(SMTExpression.fromPddl(g, vars))
             if isinstance(g, BinaryPredicate):
                 value = - SMTExpression.fromPddl(g.lhs - g.rhs, vars)
