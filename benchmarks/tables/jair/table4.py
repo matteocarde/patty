@@ -7,7 +7,6 @@ JAIR_TABLE4 = {
     "type": "table*",
     "width": r"\textwidth",
     "keepAll": True,
-    "time-limit": 30 * 1000,
     "caption": r"",
     "columns": {
         # "coverage": {

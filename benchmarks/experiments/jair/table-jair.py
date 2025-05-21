@@ -38,7 +38,7 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2025-05-21-UNSAT-CORE-v2"
+    exp = "2025-05-21-FINAL-v1"
     joinWith = [
         (exp, [
             "PATTY-EG", "PATTY-EH", "PATTY-EF",
@@ -100,6 +100,7 @@ def main():
 
     dOrig = dict()
     dView = dict()
+    time_limit = 0
     for r in results:
         dOrig[r.domain] = dOrig.setdefault(r.domain, dict())
         dOrig[r.domain][r.solver] = dOrig[r.domain].setdefault(r.solver, dict())
@@ -110,6 +111,7 @@ def main():
         dView[r.domain][r.problem] = dView[r.domain].setdefault(r.problem, dict())
         dView[r.domain][r.problem][r.solver] = dView[r.domain][r.problem].setdefault(r.solver, list())
         dView[r.domain][r.problem][r.solver].append(r)
+        time_limit = max(time_limit, r.time)
 
     with open(f"benchmarks/results/json/{exp}.json", "w") as f:
         f.write(json.dumps(dView, indent=2))
@@ -184,10 +186,7 @@ def main():
                 v = round(sum([r.solved for r in pResult]), 0)
                 t[domain]["quantity"][planner] = v if hasCoverage else symb
 
-                if table.get("time-limit"):
-                    v = [r.time / 1000 if r.solved else table["time-limit"] / 1000 for r in pResult]
-                else:
-                    v = [r.time / 1000 for r in pResult if r.solved and r.problem in commonlySolved]
+                v = [r.time / 1000 if r.solved else time_limit / 1000 for r in pResult]
                 t[domain]["time"][planner] = rVec(v, 1) if hasCoverage and v else symb
 
                 v = [r.bound for r in pResult if r.solved and r.problem in commonlySolved]
