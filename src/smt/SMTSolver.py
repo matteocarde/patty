@@ -3,7 +3,7 @@ from typing import Set, List, Dict, Callable
 
 from pysmt.logics import QF_LRA, QF_NRA
 from pysmt.shortcuts import Portfolio, Solver
-from z3 import Optimize
+from z3 import Optimize, Bool
 
 from src.pddl.Plan import Plan
 from src.plan.Encoding import Encoding
@@ -28,7 +28,7 @@ class SMTSolver:
 
         self.maximize = self.encoding and (bool(self.encoding.softRules) or bool(self.encoding.minimize))
         if self.maximize:
-            self.solver = Optimize()
+            self.solver: Optimize = Optimize()
 
             self.z3: Solver = Solver("z3",
                                      logic=QF_LRA,
@@ -122,15 +122,20 @@ class SMTSolver:
 
     def tryWithSoftAsHard(self):
         self.solver.push()
-        for expr in self.softAssertions:
-            self.solver.add(expr)
+        for i, expr in enumerate(self.softAssertions):
+            self.solver.assert_and_track(expr, f"r{i}")
         res = self.solver.check()
         if str(res) == "sat":
             return "sat"
 
+        core = self.solver.unsat_core()
+
         self.solver.pop()
-        for expr in self.softAssertions:
-            self.solver.add_soft(expr)
+        for i, expr in enumerate(self.softAssertions):
+            if Bool(f"r{i}") in core:
+                self.solver.add_soft(expr)
+            else:
+                self.solver.add(expr)
         for expr in self.toMinimize:
             self.solver.minimize(expr)
         self.solver.push()
