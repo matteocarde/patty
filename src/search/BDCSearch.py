@@ -37,7 +37,7 @@ class BDCSearch(Search):
         GF.assertGoalIsRightForm(normalizedGoal)
         c = GF.compute(s, normalizedGoal, initialState)
         patG: Pattern = Pattern.empty()
-        patS: Pattern = Pattern.fromState(s, self.problem.goal, self.domain).addPostfix("I")
+        patS: Pattern = Pattern.fromState(s, self.problem.goal, self.domain, enhanced=self.enhanced).addPostfix("I")
         patH: Pattern = copy.deepcopy(patS)
 
         self.console.log(f"Goal Function Value: {c}", LogPrintLevel.PLAN)
@@ -115,7 +115,7 @@ class BDCSearch(Search):
 
             bound += 1
             patG = Pattern.empty()
-            patS = Pattern.fromState(s, self.problem.goal, self.domain).addPostfix(bound)
+            patS = Pattern.fromState(s, self.problem.goal, self.domain, enhanced=self.enhanced).addPostfix(bound)
             patH = copy.deepcopy(patS)
 
         pass

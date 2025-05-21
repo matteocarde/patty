@@ -37,7 +37,7 @@ class GDSearch(Search):
         normalizedGoal = self.problem.goal.normalize()
         GF.assertGoalIsRightForm(normalizedGoal)
         c = GF.compute(s, normalizedGoal, initialState)
-        patS: Pattern = Pattern.fromState(s, self.problem.goal, self.domain).addPostfix("I")
+        patS: Pattern = Pattern.fromState(s, self.problem.goal, self.domain, enhanced=self.enhanced).addPostfix("I")
 
         self.console.log(f"Goal Function Value: {c}", LogPrintLevel.PLAN)
 
@@ -110,6 +110,6 @@ class GDSearch(Search):
             self.console.log(f"New Goal Function Value: {c} [{datetime.datetime.now()}]", LogPrintLevel.PLAN)
             bound = bound + 1
             pat = Pattern.empty()
-            patS = Pattern.fromState(s, self.problem.goal, self.domain).addPostfix(bound)
+            patS = Pattern.fromState(s, self.problem.goal, self.domain, enhanced=self.enhanced).addPostfix(bound)
 
         pass
