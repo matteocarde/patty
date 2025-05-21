@@ -1,0 +1,47 @@
+
+               \documentclass[11pt,landscape]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in,landscape]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||ccccc||ccccc||ccccc||}
+\hline
+ & \multicolumn{5}{c||}{Solved (out of $20$)}&\multicolumn{5}{c||}{Time (s)}&\multicolumn{5}{c||}{\textsc{smt} calls}\\
+Domain & $\mathrm{P}_\mathrm{G}$&$\mathrm{P}_\mathrm{H}$&$\mathrm{P}_\mathrm{F}$&$\mathrm{P}_\textsc{gd}$&$\mathrm{P}_\textsc{bdc}$&$\mathrm{P}_\mathrm{G}$&$\mathrm{P}_\mathrm{H}$&$\mathrm{P}_\mathrm{F}$&$\mathrm{P}_\textsc{gd}$&$\mathrm{P}_\textsc{bdc}$&$\mathrm{P}_\mathrm{G}$&$\mathrm{P}_\mathrm{H}$&$\mathrm{P}_\mathrm{F}$&$\mathrm{P}_\textsc{gd}$&$\mathrm{P}_\textsc{bdc}$\\
+\hline
+\textsc{BlGrp} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{1.8}&1.9&\textbf{1.8}&2.3&2.0&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}\\
+\textsc{Cnt} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&1.0&\textbf{0.9}&\textbf{0.9}&\textbf{0.9}&\textbf{0.9}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}\\
+\textsc{Cnt} (L)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&1.0&1.0&1.0&\textbf{0.9}&1.0&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}\\
+\textsc{Del} (S)&5&5&\textbf{6}&5&4&25.5&25.2&\textbf{23.1}&25.6&25.8&\textbf{2.0}&\textbf{2.0}&\textbf{2.0}&4.0&4.0\\
+\textsc{Drn} (S)&3&3&\textbf{8}&\textbf{8}&7&25.9&25.8&\textbf{21.0}&21.6&22.4&\textbf{5.7}&\textbf{5.7}&8.3&9.3&8.3\\
+\textsc{Exp} (S)&\textbf{3}&\textbf{3}&\textbf{3}&1&2&26.9&\textbf{26.3}&\textbf{26.3}&28.9&27.6&\textbf{3.0}&\textbf{3.0}&\textbf{3.0}&6.0&6.0\\
+\textsc{Farm} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&2.7&\textbf{0.9}&\textbf{0.9}&\textbf{0.9}&\textbf{0.9}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}\\
+\textsc{Farm} (L)&\textbf{20}&19&\textbf{20}&18&18&3.4&3.9&\textbf{2.7}&5.5&5.6&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}\\
+\textsc{HPwr} (S)&15&18&18&\textbf{19}&\textbf{19}&\textbf{13.2}&16.4&17.1&17.2&16.9&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}\\
+\textsc{Mrkt} (L)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{MPrime} (S)&9&\textbf{10}&\textbf{10}&8&8&19.4&18.0&\textbf{17.9}&20.9&21.5&\textbf{1.1}&\textbf{1.1}&1.3&2.4&2.4\\
+\textsc{PathM} (S)&18&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&9.0&4.4&4.4&\textbf{4.2}&\textbf{4.2}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}\\
+\textsc{PlWat} (S)&5&5&\textbf{20}&13&8&24.4&24.7&\textbf{11.3}&18.2&21.1&\textbf{7.6}&8.2&9.8&9.6&9.2\\
+\textsc{Rvr} (S)&8&\textbf{9}&\textbf{9}&8&8&19.7&19.5&\textbf{18.5}&21.9&21.1&\textbf{1.3}&\textbf{1.3}&\textbf{1.3}&3.1&3.0\\
+\textsc{Sail} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&1.4&1.5&1.1&\textbf{1.0}&\textbf{1.0}&\textbf{3.3}&\textbf{3.3}&\textbf{3.3}&\textbf{3.3}&\textbf{3.3}\\
+\textsc{Sail} (L)&18&18&19&\textbf{20}&\textbf{20}&4.9&4.5&2.4&\textbf{0.9}&\textbf{0.9}&\textbf{1.3}&\textbf{1.3}&\textbf{1.3}&\textbf{1.3}&\textbf{1.3}\\
+\textsc{Stlrs} (S)&3&14&13&14&\textbf{15}&27.5&15.2&15.7&\textbf{14.7}&\textbf{14.7}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}\\
+\textsc{Sgr} (S)&\textbf{20}&\textbf{20}&\textbf{20}&17&\textbf{20}&10.6&7.6&\textbf{6.9}&10.0&8.5&\textbf{2.5}&2.6&3.5&4.2&4.6\\
+\textsc{Tpp} (L)&2&1&2&\textbf{4}&\textbf{4}&27.6&28.6&27.2&\textbf{25.1}&25.4&\textbf{2.0}&\textbf{2.0}&\textbf{2.0}&\textbf{2.0}&\textbf{2.0}\\
+\textsc{Zeno} (S)&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{11}&15.4&16.2&\textbf{15.2}&15.7&15.6&\textbf{1.6}&\textbf{1.6}&\textbf{1.6}&1.7&1.7\\
+\textsc{Line} (L)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{1.1}&\textbf{1.1}&1.3&3.7&3.9&\textbf{2.9}&\textbf{2.9}&5.1&8.9&7.8
+\\\hline
+\textit{Best}&\textbf{260}&\textbf{276}&\textbf{299}&\textbf{286}&\textbf{284}&\textbf{37}&\textbf{70}&\textbf{99}&\textbf{70}&\textbf{42}&\textbf{259}&\textbf{270}&\textbf{251}&\textbf{214}&\textbf{219}\\\hline
+
+        \end{tabular}}
+        \caption{}
+        \label{tab:all-patty}
+        \end{table*}
+        
+\end{document}
