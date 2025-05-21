@@ -132,10 +132,11 @@ class SMTSolver:
 
         self.solver.pop()
         for i, expr in enumerate(self.softAssertions):
-            if Bool(f"r{i}") in core:
-                self.solver.add_soft(expr)
-            else:
-                self.solver.add(expr)
+            self.solver.add_soft(expr)
+            # if Bool(f"r{i}") in core:
+            #     self.solver.add_soft(expr)
+            # else:
+            #     self.solver.add(expr)
         for expr in self.toMinimize:
             self.solver.minimize(expr)
         self.solver.push()

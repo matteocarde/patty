@@ -1,5 +1,6 @@
 from typing import List, Dict, Set, Type
 
+from src.goalFunctions.Delta import Delta
 from src.goalFunctions.GoalFunction import GoalFunction
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
@@ -62,7 +63,8 @@ class NumericEncoding(Encoding):
         self.minimizeGoalFunction = minimizeGoalFunction
         self.realActionVariables = realActionVariables
         self.goalFunctionWithEpsilon = goalFunctionWithEpsilon
-        self.state = state if state else State.fromInitialCondition(self.problem.init)
+        self.initState = State.fromInitialCondition(self.problem.init)
+        self.state = state if state else self.initState
 
         self.transitionVariables: [NumericTransitionVariables] = list()
 
@@ -91,6 +93,9 @@ class NumericEncoding(Encoding):
         self.c = SMTRealVariable("costFunctionPatty")
         self.setMinimizeParameter = self.setMinimizeParameter()
         self.goal: SMTExpression = self.getGoalExpression()
+
+        if minimizeGoalFunction:
+            self.addGoalFunctionMinimization()
 
         if goalAsSoftAssertAndMinimize:
             self.addGoalAsSoftRulesAndMinimize()
@@ -154,13 +159,17 @@ class NumericEncoding(Encoding):
 
     def addGoalAsSoftRulesAndMinimize(self):
         # vars = self.transitionVariables[-1].valueVariables
-        vars = self.transitionVariables[-1].sigmaVariables[self.k]
+        v = self.transitionVariables[-1].sigmaVariables[self.k]
 
         for g in self.problem.goal.normalize():
-            self.softRules.append(SMTExpression.fromPddl(g, vars))
-            if isinstance(g, BinaryPredicate):
-                value = - SMTExpression.fromPddl(g.lhs - g.rhs, vars)
-                self.minimize.append(MaxExpression(*[value, ConstantExpression(0)]))
+            self.softRules.append(SMTExpression.fromPddl(g, v))
+            # if isinstance(g, BinaryPredicate):
+            #     value = Delta.getExpression(v, g, self.initState)
+            #     self.minimize.append(value)
+
+    def addGoalFunctionMinimization(self):
+        # vars = self.transitionVariables[-1].valueVariables
+        self.minimize.append(self.c)
 
     def getGoalRuleFromFormula(self, f: Formula, level: int) -> SMTExpression:
         tVars = self.transitionVariables[-1]

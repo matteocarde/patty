@@ -15,7 +15,7 @@ class TestBDCPlantWatering(TestCase):
 
     def setUp(self) -> None:
         domainFile = "../../files/numeric/ipc-2023/ext-plant-watering/domain.pddl"
-        problemFile = "../../files/numeric/ipc-2023/ext-plant-watering/instances/instance_15_19_2_1.pddl"
+        problemFile = "../../files/numeric/ipc-2023/ext-plant-watering/instances/instance_10_17_2_1.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)

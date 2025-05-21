@@ -55,7 +55,7 @@ class GDSearch(Search):
                 state=s,
                 pattern=pat,
                 goalFunction=GF,
-                minimizeGoalFunction=False,
+                minimizeGoalFunction=True,
                 goalFunctionWithEpsilon=False,
                 goalFunctionValue=c,
                 goalAsSoftAssertAndMinimize=True,
