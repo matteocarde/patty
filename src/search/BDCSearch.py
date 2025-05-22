@@ -28,6 +28,7 @@ class BDCSearch(Search):
         bound = 1
         callsToSolver = 0
 
+        subgoalsAchieved = set()
         initialState: State = State.fromInitialCondition(self.problem.init)
         s: State = initialState
 
@@ -62,7 +63,8 @@ class BDCSearch(Search):
                 goalAsSoftAssertAndMinimize=True,
                 bound=1,
                 args=self.args,
-                relaxGoal=False
+                relaxGoal=False,
+                subgoalsAchieved=subgoalsAchieved if not self.args.dontKeepSubgoals else set()
             )
 
             self.ts.end(f"Conversion to SMT at bound {bound}", console=self.console)
@@ -105,6 +107,7 @@ class BDCSearch(Search):
                 print("-----------------")
 
             s = initialState.applyPlan(plan)
+            subgoalsAchieved = {g for g in self.problem.goal if s.satisfies(g)}
             c = GF.compute(s, normalizedGoal, initialState)
             if c == 0:
                 self.console.log(f"Calls to Solver: {callsToSolver}", LogPrintLevel.STATS)
