@@ -38,16 +38,17 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2025-05-21-FINAL-v2"
+    exp = "2025-05-22-NO-ORDER-v2"
     joinWith = [
         (exp, [
-            "PATTY-EG", "PATTY-EH", "PATTY-EF",
-            "PATTY-GD-DELTA-MAX-CLAUSES",
-            "PATTY-GD-DELTA-PLUS-CLAUSES",
-            # "PATTY-GD-DELTA-XOR-CLAUSES",
-            "PATTY-BDC-DELTA-MAX-CLAUSES",
-            "PATTY-BDC-DELTA-PLUS-CLAUSES",
-            # "PATTY-BDC-DELTA-XOR-CLAUSES"
+            "PATTY-EG",
+            "PATTY-EH",
+            "PATTY-EF",
+            "PATTY-GD",
+            "PATTY-BDC",
+            "PATTY-EF-NO-ORDER",
+            "PATTY-GD-NO-ORDER",
+            "PATTY-BDC-NO-ORDER",
         ])
     ]
 

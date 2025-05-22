@@ -3,7 +3,7 @@ from benchmarks.tables.aij.planners import AIJ_PLANNERS
 
 JAIR_TABLE4 = {
     "name": "tab:all-patty",
-    "orientation": "landscape",
+    "orientation": "portrait",
     "type": "table*",
     "width": r"\textwidth",
     "keepAll": True,
@@ -45,16 +45,11 @@ JAIR_TABLE4 = {
         # },
     },
     "planners": {
-        # "PATTY-FE": {},
-        "PATTY-EG": {"type": "scalar"},
-        "PATTY-EH": {"type": "scalar"},
+        # "PATTY-EG": {"type": "scalar"},
+        # "PATTY-EH": {"type": "scalar"},
         "PATTY-EF": {"type": "scalar"},
-        # "PATTY-GD-DELTA-MAX-CLAUSES": {"type": "scalar"},
-        "PATTY-GD-DELTA-PLUS-CLAUSES": {"type": "scalar"},
-        # "PATTY-GD-DELTA-XOR-CLAUSES": {"type": "scalar"},
-        # "PATTY-BDC-DELTA-MAX-CLAUSES": {"type": "scalar"},
-        "PATTY-BDC-DELTA-PLUS-CLAUSES": {"type": "scalar"},
-        # "PATTY-BDC-DELTA-XOR-CLAUSES": {"type": "scalar"},
+        "PATTY-GD": {"type": "scalar"},
+        "PATTY-BDC": {"type": "scalar"},
     },
     "domains": AIJ_DOMAINS
 }

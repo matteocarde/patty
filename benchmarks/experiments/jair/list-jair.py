@@ -6,14 +6,11 @@ from natsort import natsort
 from benchmarks.tables.jair.domains import JAIR_DOMAINS
 
 PLANNERS = [
-    # "PATTY-EG",
-    # "PATTY-EH",
+    "PATTY-EG",
+    "PATTY-EH",
     "PATTY-EF",
     "PATTY-GD",
-    "PATTY-BDC",
-    "PATTY-EF-NO-ORDER",
-    "PATTY-GD-NO-ORDER",
-    "PATTY-BDC-NO-ORDER",
+    "PATTY-BDC"
 ]
 RANDOM = 5
 NAME = "jair.csv"

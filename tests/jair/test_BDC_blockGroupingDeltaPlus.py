@@ -15,7 +15,7 @@ class TestBDCBlockGroupingDeltaPlus(TestCase):
 
     def setUp(self) -> None:
         domainFile = "../../files/numeric/ipc-2023/block-grouping/domain.pddl"
-        problemFile = "../../files/numeric/ipc-2023/block-grouping/instances/instance_7_10_2_1.pddl"
+        problemFile = "../../files/numeric/ipc-2023/block-grouping/instances/instance_100_25_6_2.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)

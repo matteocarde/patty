@@ -142,11 +142,12 @@ class NumericEncoding(Encoding):
             raise Exception("At the moment I cannot relax the goal if it is not expressed as a conjunction of formulas")
 
         if self.goalFunction:
-            vars = self.transitionVariables[-1].valueVariables
+            v = self.transitionVariables[-1].sigmaVariables[self.k]
             # expr = self.getGoalFunctionExpression()
             c = self.goalFunctionValue
             expr: SMTExpression = self.c <= max(c - EPSILON, 0)
-            return [expr] + [SMTExpression.fromFormula(g, vars) for g in self.subgoalsAchieved]
+            goal = [expr] + [SMTExpression.fromFormula(g, v) for g in self.subgoalsAchieved]
+            return goal
 
         return [self.getGoalRuleFromFormula(self.problem.goal, 0)]
 
@@ -162,7 +163,7 @@ class NumericEncoding(Encoding):
         # vars = self.transitionVariables[-1].valueVariables
         v = self.transitionVariables[-1].sigmaVariables[self.k]
 
-        for g in self.problem.goal:
+        for g in self.problem.goal.normalize():
             if g not in self.subgoalsAchieved:
                 self.softRules.append(SMTExpression.fromPddl(g, v))
 
