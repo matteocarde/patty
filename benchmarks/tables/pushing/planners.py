@@ -4,15 +4,15 @@ PUSHING_PLANNERS = {
         "style": "-"
     },
     "PATTY-EG": {
-        "name": r"\mathrm{P}_\mathrm{G}",
+        "name": r"\mathrm{P}_\textsc{s}",
         "style": "-"
     },
     "PATTY-EH": {
-        "name": r"\mathrm{P}_\mathrm{H}",
+        "name": r"\mathrm{P}_\textsc{d}",
         "style": "-"
     },
     "PATTY-EF": {
-        "name": r"\mathrm{P}_\mathrm{F}",
+        "name": r"\mathrm{P}_\textsc{dc}",
         "style": "-"
     },
     "ENHSP": {

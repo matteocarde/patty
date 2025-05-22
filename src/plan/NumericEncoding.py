@@ -92,7 +92,7 @@ class NumericEncoding(Encoding):
 
         self.c = SMTRealVariable("costFunctionPatty")
         self.setMinimizeParameter = self.setMinimizeParameter()
-        self.goal: SMTExpression = self.getGoalExpression()
+        self.goal: [SMTExpression] = self.getGoalExpression()
 
         if minimizeGoalFunction:
             self.addGoalFunctionMinimization()
@@ -100,7 +100,7 @@ class NumericEncoding(Encoding):
         if goalAsSoftAssertAndMinimize:
             self.addGoalAsSoftRulesAndMinimize()
 
-        self.rules = self.initial + self.transitions + [self.goal] + self.setMinimizeParameter
+        self.rules = self.initial + self.transitions + self.goal + self.setMinimizeParameter
 
         pass
 
@@ -136,18 +136,19 @@ class NumericEncoding(Encoding):
         expr = self.goalFunction.getExpression(vars, self.problem.goal.normalize(), init)
         return expr
 
-    def getGoalExpression(self) -> SMTExpression:
+    def getGoalExpression(self) -> [SMTExpression]:
 
         if self.relaxGoal and self.problem.goal.type != "AND":
             raise Exception("At the moment I cannot relax the goal if it is not expressed as a conjunction of formulas")
 
         if self.goalFunction:
-            # vars = self.transitionVariables[-1].sigmaVariables[self.k]
+            vars = self.transitionVariables[-1].valueVariables
             # expr = self.getGoalFunctionExpression()
             c = self.goalFunctionValue
-            return self.c <= max(c - EPSILON, 0)
+            expr: SMTExpression = self.c <= max(c - EPSILON, 0)
+            return [expr] + [SMTExpression.fromFormula(g, vars) for g in self.subgoalsAchieved]
 
-        return self.getGoalRuleFromFormula(self.problem.goal, 0)
+        return [self.getGoalRuleFromFormula(self.problem.goal, 0)]
 
     def setMinimizeParameter(self):
         if self.minimizeQuality:
@@ -161,11 +162,9 @@ class NumericEncoding(Encoding):
         # vars = self.transitionVariables[-1].valueVariables
         v = self.transitionVariables[-1].sigmaVariables[self.k]
 
-        for g in self.problem.goal.normalize():
-            self.softRules.append(SMTExpression.fromPddl(g, v))
-            # if isinstance(g, BinaryPredicate):
-            #     value = Delta.getExpression(v, g, self.initState)
-            #     self.minimize.append(value)
+        for g in self.problem.goal:
+            if g not in self.subgoalsAchieved:
+                self.softRules.append(SMTExpression.fromPddl(g, v))
 
     def addGoalFunctionMinimization(self):
         # vars = self.transitionVariables[-1].valueVariables

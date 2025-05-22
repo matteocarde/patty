@@ -69,7 +69,7 @@ class JairSearch(Search):
                 bound=1,
                 args=self.args,
                 relaxGoal=False,
-                subgoalsAchieved=subgoalsAchieved
+                subgoalsAchieved=subgoalsAchieved if not self.args.dontKeepSubgoals else set()
             )
 
             self.ts.end(f"Conversion to SMT at bound {bound}", console=self.console)
@@ -105,6 +105,7 @@ class JairSearch(Search):
                     self.console.log(f"Calls to Solver: {callsToSolver}", LogPrintLevel.STATS)
                     self.console.log(f"Bound: {bound}", LogPrintLevel.STATS)
                     return plan
+                subgoalsAchieved = {g for g in self.problem.goal if s.satisfies(g)}
                 c = GF.compute(s, normalizedGoal, initialState)
                 self.console.log(f"Found intermediate state {s}", LogPrintLevel.PLAN)
                 self.console.log(f"New Goal Function Value: {c} [{datetime.datetime.now()}]", LogPrintLevel.PLAN)

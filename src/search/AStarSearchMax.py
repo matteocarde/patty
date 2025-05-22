@@ -47,7 +47,7 @@ class AStarSearchMax(Search):
                     problem=self.problem,
                     pattern=patF,
                     relaxGoal=True,
-                    subgoalsAchieved=subgoalsAchieved,
+                    subgoalsAchieved=subgoalsAchieved if not self.args.dontKeepSubgoals else set(),
                     constraints=self.args.temporalConstraints,
                     bound=1)
             else:
@@ -58,7 +58,7 @@ class AStarSearchMax(Search):
                     bound=1,
                     args=self.args,
                     relaxGoal=True,
-                    subgoalsAchieved=subgoalsAchieved
+                    subgoalsAchieved=subgoalsAchieved if not self.args.dontKeepSubgoals else set()
                 )
             self.ts.end(f"Conversion to SMT at bound {bound}", console=self.console)
             self.console.log(f"Bound {bound} - Vars = {encoding.getNVars()}", LogPrintLevel.STATS)

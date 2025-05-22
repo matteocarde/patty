@@ -42,6 +42,10 @@ class Arguments:
                             action="store_true", default=False)
         parser.add_argument('--no-compression', help="Avoid using compression when is doing A*",
                             action="store_true", default=False)
+        parser.add_argument('--dont-keep-subgoals',
+                            help="When a subgoal is found when using dynamic patterns, do not force it to be always "
+                                 "satisfied but only insure the total number of subgoals is increased",
+                            action="store_true", default=False)
         parser.add_argument('--avoid-closure-relaxation', help="Avoid using the relaxation when computing the closure",
                             action="store_true", default=False)
         parser.add_argument('--avoid-closure', help="Avoid using the transitive closure for CEs",
@@ -51,7 +55,7 @@ class Arguments:
         parser.add_argument('--temporal-constraints', help="'numerical' or 'logical' following IJCAI-24",
                             default='numerical')
         parser.add_argument('--goal-function', help="See JAIR",
-                            default='DELTA-MAX-CLAUSES')
+                            default='DELTA-PLUS-CLAUSES')
         parser.add_argument('--minimize-goal-function', help="See JAIR",
                             action="store_true", default=True)
         parser.add_argument('--greedy-level', help="See JAIR",
@@ -95,6 +99,7 @@ class Arguments:
         self.rollBound = args.roll_bound
         self.maximize = args.maximize
         self.useSCCs = args.use_sccs
+        self.dontKeepSubgoals = args.dont_keep_subgoals
         self.noCompression = args.no_compression
         self.quality = args.quality
         self.temporalConstraints = args.temporal_constraints
