@@ -48,7 +48,8 @@ PLANNERS: Dict[str, Planner] = {
     "PATTY-M": Patty("PATTY-M", search="step", pattern="enhanced", quality="shortest-step"),
     "PATTY-I": Patty("PATTY-I", search="step", pattern="enhanced", quality="improve-plan"),
     "PATTY-L": Patty("PATTY-L", search="step", pattern="enhanced", quality="improve-less"),
-    "RANTANPLAN": Patty("RANTANPLAN", search="static", pattern="arpg", hasEffectAxioms=True, rollBound=1),
+    "RANTANPLAN": Patty("RANTANPLAN", search="step", pattern="enhanced", hasEffectAxioms=True, rollBound=1),
+    "R2E+ROLL": Patty("R2E+ROLL", search="step", pattern="enhanced", hasEffectAxioms=True, rollBound=1000),
     "SPRINGROLL": SpringRoll(),
 
     "ENHSP-SOCS": ENHSP_SOCS(),

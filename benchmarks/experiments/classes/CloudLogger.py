@@ -48,7 +48,7 @@ class CloudLogger:
     def read(name):
         events = list()
         client = boto3.client('logs')
-        startTime = round(time.time() * 1000) - 1000 * 60 * 60 * 24 * 30 * 2
+        startTime = round(time.time() * 1000) - 1000 * 60 * 60 * 24 * 30 * 12
         endTime = round(time.time() * 1000)
         nextToken = None
         while True:

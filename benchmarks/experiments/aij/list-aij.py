@@ -6,14 +6,14 @@ from benchmarks.tables.aij.domains_left import AIJ_DOMAINS_LEFT
 
 # PLANNERS = ["PATTY", "PATTY-R-YICES", "PATTY-R-Z3-NL", "PATTY-NL", "PATTY-Z3", "SPRINGROLL"]
 PLANNERS = [
-    "PATTY-R",
-    "PATTY-A",
-    "PATTY-G",
-    "PATTY-H",
-    "PATTY-F",
-    "PATTY-E",
-    "PATTY-M",
-    "PATTY-L",
+    # "PATTY-R",
+    # "PATTY-A",
+    # "PATTY-G",
+    # "PATTY-H",
+    # "PATTY-F",
+    # "PATTY-E",
+    # "PATTY-M",
+    # "PATTY-L",
     # "SPRINGROLL",
     # "ENHSP-SOCS",
     # "ENHSP-SAT-HADD",
@@ -22,7 +22,8 @@ PLANNERS = [
     # "METRIC-FF",
     # "NFD",
     # "OMT",
-    # "RANTANPLAN"
+    "RANTANPLAN",
+    "R2E+ROLL"
 ]
 RANDOM = 5
 NAME = "aij.csv"
