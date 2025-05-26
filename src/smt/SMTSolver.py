@@ -123,8 +123,9 @@ class SMTSolver:
 
     def tryWithSoftAsHard(self):
         self.solver.push()
-        for i, expr in enumerate(self.softAssertions):
-            self.solver.add(expr)
+        for i, expr in enumerate(self.encoding.fullGoal):
+            z3_expr = self.z3.converter.convert(expr.getExpression())
+            self.solver.add(z3_expr)
         print(f"Starting checking without contraints [{datetime.datetime.now()}]")
         res = self.solver.check()
         print(f"Ended checking without contraints [{datetime.datetime.now()}]")

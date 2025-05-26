@@ -17,6 +17,7 @@ from src.smt.SMTVariable import SMTVariable
 class Encoding:
     rules: List[SMTExpression]
     softRules: List[SMTExpression]
+    fullGoal: List[SMTExpression]
     minimize: [SMTExpression] or None
     actionVariables: Set[SMTVariable]
 
@@ -29,8 +30,8 @@ class Encoding:
         self.minimize = None
         self.rules = []
         self.softRules = []
+        self.fullGoal = []
         self.actionVariables = set()
-        pass
 
     def __str__(self):
         string = ""

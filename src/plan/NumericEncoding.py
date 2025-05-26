@@ -93,6 +93,7 @@ class NumericEncoding(Encoding):
         self.c = SMTRealVariable("costFunctionPatty")
         self.setMinimizeParameter = self.setMinimizeParameter()
         self.goal: [SMTExpression] = self.getGoalExpression()
+        self.fullGoal: [SMTExpression] = self.getFullGoalExpressions()
 
         if minimizeGoalFunction:
             self.addGoalFunctionMinimization()
@@ -135,6 +136,10 @@ class NumericEncoding(Encoding):
         init = State.fromInitialCondition(self.problem.init)
         expr = self.goalFunction.getExpression(vars, self.problem.goal.normalize(), init)
         return expr
+
+    def getFullGoalExpressions(self):
+        v = self.transitionVariables[-1].sigmaVariables[self.k]
+        return [SMTExpression.fromFormula(g, v) for g in self.problem.goal]
 
     def getGoalExpression(self) -> [SMTExpression]:
 
