@@ -241,6 +241,9 @@ class NumericEncoding(Encoding):
             -> List[SMTExpression]:
         rules: List[SMTExpression] = []
 
+        if self.hasEffectAxioms:
+            return rules
+
         for v in self.domain.allAtoms:
             stepVars.sigmaVariables[0][v] = prevVars.valueVariables[v]
 

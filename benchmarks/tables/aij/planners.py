@@ -54,5 +54,9 @@ AIJ_PLANNERS = {
     "RANTANPLAN": {
         "name": r"$\mathrm{R}^2\exists$",
         "style": "--"
+    },
+    "R2E+ROLL": {
+        "name": r"$\mathrm{R}^3\exists$",
+        "style": "--"
     }
 }

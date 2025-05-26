@@ -62,7 +62,8 @@ PLANNERS: Dict[str, Planner] = {
     "PATTY-GD-NO-ORDER": Patty("PATTY-GD-NO-ORDER", search="gd", dontKeepSubgoals=True),
     "PATTY-BDC-NO-ORDER": Patty("PATTY-BDC-NO-ORDER", search="bdc", dontKeepSubgoals=True),
 
-    "RANTANPLAN": Patty("RANTANPLAN", search="static", pattern="arpg", hasEffectAxioms=True, rollBound=1),
+    "RANTANPLAN": Patty("RANTANPLAN", search="step", pattern="enhanced", hasEffectAxioms=True, rollBound=1),
+    "R2E+ROLL": Patty("R2E+ROLL", search="step", pattern="enhanced", hasEffectAxioms=True, rollBound=1000),
     "SPRINGROLL": SpringRoll(),
 
     "ENHSP-SOCS": ENHSP_SOCS(),
