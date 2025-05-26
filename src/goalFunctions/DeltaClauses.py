@@ -43,7 +43,7 @@ class DeltaClauses(GoalFunctionClauses):
         return v
 
     @staticmethod
-    def getExpression(vars: Dict[Atom, SMTVariable], g: Formula, init: State) -> SMTExpression:
+    def getExpression(vars: Dict[Atom, SMTVariable], g: Formula or Predicate, init: State) -> SMTExpression:
 
         groups = g.conditions if isinstance(g, Formula) else [g]
 
@@ -61,3 +61,8 @@ class DeltaClauses(GoalFunctionClauses):
         minExpr = MinExpression(*tom) if len(tom) > 2 else tom[0]
         gExpr = SMTExpression.fromFormula(g, vars)
         return ITEExpression(gExpr, 0, minExpr)
+
+    def getExpressionForSingle(vars: Dict[Atom, SMTVariable], phi: BinaryPredicate, init: State) -> SMTExpression:
+        initValue = init.getValue(phi.lhs - phi.rhs)
+        phiExpr = SMTExpression.fromFormula(phi.lhs - phi.rhs, vars)
+        return phiExpr / initValue + EPSILON

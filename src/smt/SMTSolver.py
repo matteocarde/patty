@@ -1,3 +1,4 @@
+import datetime
 import sys
 from typing import Set, List, Dict, Callable
 
@@ -124,7 +125,9 @@ class SMTSolver:
         self.solver.push()
         for i, expr in enumerate(self.softAssertions):
             self.solver.add(expr)
+        print(f"Starting checking without contraints [{datetime.datetime.now()}]")
         res = self.solver.check()
+        print(f"Ended checking without contraints [{datetime.datetime.now()}]")
         if str(res) == "sat":
             return "sat"
 

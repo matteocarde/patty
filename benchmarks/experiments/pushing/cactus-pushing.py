@@ -58,8 +58,8 @@ def main():
     planners = [
         "PATTY-EF",
         "PATTY-EH",
-        "PATTY-EG",
         "PATTY-EO",
+        "PATTY-EG",
         "ENHSP-SOCS",
         "ENHSP",
         "METRIC-FF",
