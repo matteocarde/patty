@@ -104,7 +104,7 @@ class GDSearch(Search):
             s = initialState.applyPlan(plan)
             subgoalsAchieved = {g for g in self.problem.goal if s.satisfies(g)}
             c = GF.compute(s, normalizedGoal, initialState)
-            if c == 0:
+            if s.satisfies(self.problem.goal):
                 self.console.log(f"Calls to Solver: {callsToSolver}", LogPrintLevel.STATS)
                 self.console.log(f"Bound: {bound}", LogPrintLevel.STATS)
                 return plan

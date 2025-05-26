@@ -166,9 +166,11 @@ class NumericEncoding(Encoding):
         # vars = self.transitionVariables[-1].valueVariables
         v = self.transitionVariables[-1].sigmaVariables[self.k]
 
-        for g in self.problem.goal.normalize():
-            if g not in self.subgoalsAchieved:
+        for g in self.problem.goal:
+            if not isinstance(g, BinaryPredicate) and g not in self.subgoalsAchieved:
                 self.softRules.append(SMTExpression.fromPddl(g, v))
+
+        pass
 
     def addGoalFunctionMinimization(self):
         # vars = self.transitionVariables[-1].valueVariables
