@@ -23,7 +23,7 @@ PLANNERS = [
     # "METRIC-FF",
     # "NFD",
     # "OMT",
-    "RANTANPLAN",
+    # "RANTANPLAN",
     "R2E+ROLL"
 ]
 RANDOM = 5
