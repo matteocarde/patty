@@ -1,0 +1,47 @@
+
+               \documentclass[11pt,landscape]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in,landscape]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||ccccc||ccccc||ccccc||ccccc||ccccc||ccccc||}
+\hline
+ & \multicolumn{5}{c||}{Solved (out of $20$)}&\multicolumn{5}{c||}{Time (s)}&\multicolumn{5}{c||}{\textsc{smt} calls}&\multicolumn{5}{c||}{Plan length}&\multicolumn{5}{c||}{Variables}&\multicolumn{5}{c||}{Assertions}\\
+Domain & $\mathrm{P}_\mathrm{E}$&$$\mathrm{R}^2\exists$$&$$\mathrm{R}^3\exists$$&$$\mathrm{OMT}$$&$$\mathrm{SR}$$&$\mathrm{P}_\mathrm{E}$&$$\mathrm{R}^2\exists$$&$$\mathrm{R}^3\exists$$&$$\mathrm{OMT}$$&$$\mathrm{SR}$$&$\mathrm{P}_\mathrm{E}$&$$\mathrm{R}^2\exists$$&$$\mathrm{R}^3\exists$$&$$\mathrm{OMT}$$&$$\mathrm{SR}$$&$\mathrm{P}_\mathrm{E}$&$$\mathrm{R}^2\exists$$&$$\mathrm{R}^3\exists$$&$$\mathrm{OMT}$$&$$\mathrm{SR}$$&$\mathrm{P}_\mathrm{E}$&$$\mathrm{R}^2\exists$$&$$\mathrm{R}^3\exists$$&$$\mathrm{OMT}$$&$$\mathrm{SR}$$&$\mathrm{P}_\mathrm{E}$&$$\mathrm{R}^2\exists$$&$$\mathrm{R}^3\exists$$&$$\mathrm{OMT}$$&$$\mathrm{SR}$$\\
+\hline
+\textsc{BlGrp} (S)&\textbf{20}&17&\textbf{20}&2&\textbf{20}&1.8&83.4&1.9&270.2&\textbf{1.6}&\textbf{1.0}&6.0&\textbf{1.0}&8.5&\textbf{1.0}&124&\textbf{22}&156&60&74&\textbf{40}&1.4k&\textbf{40}&265&\textbf{40}&\textbf{101}&1.7k&121&776&122\\
+\textsc{Cnt} (S)&\textbf{20}&11&\textbf{20}&18&\textbf{20}&\textbf{0.9}&169.2&\textbf{0.9}&92.7&\textbf{0.9}&\textbf{1.0}&13.3&\textbf{1.0}&13.3&\textbf{1.0}&164&125&164&163&\textbf{112}&\textbf{45}&7.6k&\textbf{45}&619&\textbf{45}&\textbf{114}&8.9k&136&1.8k&137\\
+\textsc{Cnt} (L)&\textbf{20}&4&\textbf{20}&3&6&1.1&240.3&\textbf{0.9}&255.3&227.6&\textbf{1.0}&1.7&\textbf{1.0}&5.3&2.7&10&8&22&\textbf{5}&7&\textbf{26}&208&\textbf{26}&122&60&\textbf{58}&276&70&1.5k&297\\
+\textsc{Del} (S)&\textbf{5}&1&-&1&-&\textbf{226.4}&285.7&-&295.6&-&\textbf{1.0}&2.0&-&10.0&-&\textbf{10}&\textbf{10}&-&\textbf{10}&-&\textbf{250}&15.9k&-&1.9k&-&\textbf{662}&16.7k&-&246.0k&-\\
+\textsc{Drn} (S)&\textbf{3}&\textbf{3}&\textbf{3}&\textbf{3}&\textbf{3}&\textbf{255.3}&259.0&\textbf{255.3}&256.3&256.3&\textbf{5.7}&8.3&\textbf{5.7}&12.3&9.7&25&14&691&\textbf{12}&15&\textbf{142}&1.3k&\textbf{142}&299&232&\textbf{344}&1.6k&411&5.1k&2.4k\\
+\textsc{Exp} (S)&\textbf{2}&-&\textbf{2}&\textbf{2}&-&\textbf{270.2}&-&270.3&276.2&-&\textbf{3.0}&-&\textbf{3.0}&16.0&-&38&-&38&\textbf{28}&-&\textbf{254}&-&\textbf{254}&1.1k&-&\textbf{612}&-&684&35.2k&-\\
+\textsc{Farm} (S)&\textbf{20}&-&\textbf{20}&-&\textbf{20}&2.4&-&4.6&-&\textbf{1.3}&\textbf{1.0}&-&\textbf{1.0}&-&2.2&786&-&1.0k&-&\textbf{334}&\textbf{63}&-&\textbf{63}&-&134&\textbf{120}&-&146&-&1.3k\\
+\textsc{Farm} (L)&\textbf{20}&2&\textbf{20}&1&-&2.7&270.2&\textbf{2.5}&286.2&-&\textbf{1.0}&8.0&\textbf{1.0}&12.0&-&145&\textbf{14}&222&19&-&\textbf{19}&338&\textbf{19}&112&-&\textbf{32}&460&37&545&-\\
+\textsc{HPwr} (S)&\textbf{20}&-&2&-&-&\textbf{9.4}&-&270.8&-&-&\textbf{1.0}&-&\textbf{1.0}&-&-&\textbf{96}&-&126&-&-&\textbf{444}&-&\textbf{444}&-&-&\textbf{788}&-&886&-&-\\
+\textsc{Mrkt} (L)&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{MPrime} (S)&\textbf{12}&5&-&6&10&\textbf{137.7}&233.2&-&229.6&174.2&\textbf{1.2}&2.2&-&4.2&5.2&54&\textbf{7}&-&8&34&\textbf{364}&36.3k&-&1.1k&1.4k&\textbf{918}&37.4k&-&86.0k&59.5k\\
+\textsc{PathM} (S)&\textbf{18}&1&1&3&1&\textbf{42.3}&286.1&285.5&262.4&286.0&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*\\
+\textsc{PlWat} (S)&\textbf{6}&-&5&-&-&\textbf{215.3}&-&226.9&-&-&\textbf{7.6}&-&\textbf{7.6}&-&-&318&-&\textbf{299}&-&-&\textbf{363}&-&\textbf{363}&-&-&\textbf{997}&-&1.2k&-&-\\
+\textsc{Rvr} (S)&\textbf{15}&8&-&7&11&\textbf{101.4}&202.6&-&232.6&181.8&\textbf{1.4}&2.0&-&7.7&7.7&70&\textbf{16}&-&17&19&\textbf{481}&39.3k&-&1.5k&2.0k&\textbf{1.1k}&40.1k&-&151.2k&79.1k\\
+\textsc{Sail} (S)&\textbf{20}&-&\textbf{20}&-&\textbf{20}&3.6&-&\textbf{1.5}&-&5.5&\textbf{3.3}&-&\textbf{3.3}&-&7.3&6.1k&-&18.7k&-&\textbf{1.2k}&\textbf{135}&-&\textbf{135}&-&286&\textbf{266}&-&311&-&2.1k\\
+\textsc{Sail} (L)&19&-&\textbf{20}&1&-&16.3&-&\textbf{2.4}&285.8&-&\textbf{1.0}&-&\textbf{1.0}&13.0&-&161&-&6.1k&\textbf{59}&-&\textbf{84}&-&\textbf{84}&874&-&\textbf{200}&-&245&5.8k&-\\
+\textsc{Stlrs} (S)&\textbf{8}&-&-&-&-&\textbf{210.5}&-&-&-&-&\textbf{1.0}&-&-&-&-&\textbf{38.3k}&-&-&-&-&\textbf{1.4k}&-&-&-&-&\textbf{2.9k}&-&-&-&-\\
+\textsc{Sgr} (S)&\textbf{20}&1&-&18&-&\textbf{10.3}&288.2&-&113.7&-&\textbf{2.0}&\textbf{2.0}&-&5.0&-&32&29&-&\textbf{18}&-&\textbf{814}&55.5k&-&1.7k&-&\textbf{2.0k}&56.9k&-&92.4k&-\\
+\textsc{Tpp} (L)&\textbf{2}&\textbf{2}&-&-&-&\textbf{270.2}&271.9&-&-&-&\textbf{2.5}&\textbf{2.5}&-&-&-&13&\textbf{10}&-&-&-&\textbf{237}&2.6k&-&-&-&\textbf{604}&3.0k&-&-&-\\
+\textsc{Zeno} (S)&\textbf{11}&9&1&7&-&\textbf{136.4}&174.6&285.2&209.6&-&*&*&*&*&-&*&*&*&*&-&*&*&*&*&-&*&*&*&*&-\\
+\textsc{Line} (L)&\textbf{20}&-&-&-&5&\textbf{1.2}&-&-&-&262.4&\textbf{3.0}&-&-&-&26.0&\textbf{110}&-&-&-&158&\textbf{161}&-&-&-&1.1k&\textbf{381}&-&-&-&4.2k
+\\\hline
+\textit{Best}&\textbf{281}&\textbf{64}&\textbf{154}&\textbf{72}&\textbf{116}&\textbf{197}&\textbf{0}&\textbf{48}&\textbf{5}&\textbf{34}&\textbf{281}&\textbf{17}&\textbf{154}&\textbf{0}&\textbf{43}&\textbf{126}&\textbf{43}&\textbf{21}&\textbf{36}&\textbf{63}&\textbf{280}&\textbf{0}&\textbf{153}&\textbf{0}&\textbf{43}&\textbf{281}&\textbf{0}&\textbf{2}&\textbf{0}&\textbf{0}\\\hline
+
+        \end{tabular}}
+        \caption{Comparative analysis between \pattye and other symbolic planners. In the table, names have been abbreviated to save space. See \cite{ipc2023} for more details. A ``-'' indicates that no problem in the domain has been solved with the given resources.  Best results are in bold.}
+        \label{tab:symbolic}
+        \end{table*}
+        
+\end{document}

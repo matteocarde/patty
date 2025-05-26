@@ -57,6 +57,10 @@ AIJ_TABLE3 = {
             "name": AIJ_PLANNERS["RANTANPLAN"]["name"],
             "type": "scalar",
         },
+        'R2E+ROLL': {
+            "name": AIJ_PLANNERS["R2E+ROLL"]["name"],
+            "type": "scalar",
+        },
         'OMT': {
             "name": AIJ_PLANNERS["OMT"]["name"],
             "type": "scalar",
