@@ -237,22 +237,26 @@ class NumericEncoding(Encoding):
                     sumOfActions += stepVar.actionVariables[action] * action.linearizationTimes
             return sumOfActions < metricBound
 
+    def assignOrGetRule(self, stepVars, i, v, rhs, rules):
+        if not self.hasEffectAxioms:
+            stepVars.sigmaVariables[i][v] = rhs
+        else:
+            rules.append(stepVars.sigmaVariables[i][v].equal(rhs))
+
     def getDeltaStepRules(self, prevVars: NumericTransitionVariables, stepVars: NumericTransitionVariables) \
             -> List[SMTExpression]:
+
         rules: List[SMTExpression] = []
 
-        if self.hasEffectAxioms:
-            return rules
-
         for v in self.domain.allAtoms:
-            stepVars.sigmaVariables[0][v] = prevVars.valueVariables[v]
+            self.assignOrGetRule(stepVars, 0, v, prevVars.valueVariables[v], rules)
 
         for i, action in self.pattern.enumerate():
 
             # Case a) Not influenced
             notInfluenced = self.domain.allAtoms - (action.getInfluencedAtoms())
             for v in notInfluenced:
-                stepVars.sigmaVariables[i][v] = stepVars.sigmaVariables[i - 1][v]
+                self.assignOrGetRule(stepVars, i, v, stepVars.sigmaVariables[i - 1][v], rules)
 
             # Case b) Boolean
             for v in action.getAddList() | action.getDelList():
@@ -260,10 +264,10 @@ class NumericEncoding(Encoding):
                 b_n = stepVars.actionVariables[i]
 
                 if v in action.getAddList():
-                    stepVars.sigmaVariables[i][v] = (d_bv | (b_n > 0))
+                    self.assignOrGetRule(stepVars, i, v, (d_bv | (b_n > 0)), rules)
 
                 if v in action.getDelList():
-                    stepVars.sigmaVariables[i][v] = (d_bv & (b_n.equal(0)))
+                    self.assignOrGetRule(stepVars, i, v, (d_bv & (b_n.equal(0))), rules)
 
             # Case c) Numeric increases or decreases
             if not action.hasNonSimpleLinearIncrement(self.encoding):
@@ -273,18 +277,19 @@ class NumericEncoding(Encoding):
                         d_bv = stepVars.sigmaVariables[i - 1][v]
                         k = SMTNumericVariable.fromPddl(funct, stepVars.sigmaVariables[i - 1])
                         b_n = stepVars.actionVariables[i]
-                        stepVars.sigmaVariables[i][v] = (d_bv + (k * b_n)) if sign > 0 else (d_bv - (k * b_n))
+                        rhs = (d_bv + (k * b_n)) if sign > 0 else (d_bv - (k * b_n))
+                        self.assignOrGetRule(stepVars, i, v, rhs, rules)
 
             # Case d) Numeric assignments
             for v in action.getAssList():
-                stepVars.sigmaVariables[i][v] = stepVars.auxVariables[i][v]
+                self.assignOrGetRule(stepVars, i, v, stepVars.auxVariables[i][v], rules)
 
             if action.hasNonSimpleLinearIncrement(self.encoding):
                 for eff in action.effects:
                     if not eff.isLinearIncrement():
                         continue
                     v = eff.getAtom()
-                    stepVars.sigmaVariables[i][v] = stepVars.auxVariables[i][v]
+                    self.assignOrGetRule(stepVars, i, v, stepVars.auxVariables[i][v], rules)
 
         return rules
 
@@ -294,14 +299,14 @@ class NumericEncoding(Encoding):
         for i, a in self.pattern.enumerate():
             a_n = stepVars.actionVariables[i]
             rules.append(a_n >= 0)
-            if self.rollBound:
-                rules.append(a_n <= self.rollBound)
+            if not a.couldBeRepeated() or (a.hasNonSimpleLinearIncrement(self.encoding)):
+                rules.append(a_n <= 1)
                 continue
             if self.maxActionsRolling:
                 rules.append(a_n <= self.maxActionsRolling[n][a])
                 continue
-            if not a.couldBeRepeated() or (a.hasNonSimpleLinearIncrement(self.encoding)):
-                rules.append(a_n <= 1)
+            if self.rollBound:
+                rules.append(a_n <= self.rollBound)
                 continue
 
         if len(self.domain.arpg.stateLevels) > 2:
@@ -320,12 +325,8 @@ class NumericEncoding(Encoding):
 
         for i, a in self.pattern.enumerate():
 
-            if not self.realActionVariables:
-                lhs0 = stepVars.actionVariables[i] > 0
-                lhs1 = stepVars.actionVariables[i] > 1
-            else:
-                lhs0 = stepVars.actionVariables[i] >= 1
-                lhs1 = stepVars.actionVariables[i] >= 2
+            lhs0 = stepVars.actionVariables[i] > 0
+            lhs1 = stepVars.actionVariables[i] > 1
             preconditions0 = None
             preconditions1 = None
             isPre1Impossible = False
