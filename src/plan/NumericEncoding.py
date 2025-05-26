@@ -145,7 +145,7 @@ class NumericEncoding(Encoding):
             v = self.transitionVariables[-1].sigmaVariables[self.k]
             # expr = self.getGoalFunctionExpression()
             c = self.goalFunctionValue
-            expr: SMTExpression = self.c <= max(c - EPSILON, 0)
+            expr: SMTExpression = self.c < max(c - EPSILON, 0)
             P = self.subgoalsAchieved
             GmP = [g for g in self.problem.goal if g not in self.subgoalsAchieved]
             andGoal = [SMTExpression.fromFormula(g, v) for g in P]

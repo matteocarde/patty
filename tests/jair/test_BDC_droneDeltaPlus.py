@@ -21,7 +21,7 @@ class TestBDCDroneDeltaPlus(TestCase):
         self.problem: Problem = Problem.fromFile(problemFile)
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.args = Arguments(keepRequired=False)
-        self.args.goalFunction = "DELTA-PLUS"
+        self.args.goalFunction = "DELTA-PLUS-CLAUSES"
         self.args.minimizeGoalFunction = True
         self.args.printPattern = True
         pass

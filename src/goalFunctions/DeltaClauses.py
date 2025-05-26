@@ -24,7 +24,7 @@ class DeltaClauses(GoalFunctionClauses):
         super().__init__()
 
     @staticmethod
-    def compute(s: State, g: Formula, init: State) -> float:
+    def compute(s: State, g: Formula or Predicate, init: State) -> float:
         if s.satisfies(g):
             return 0
 

@@ -109,11 +109,13 @@ class BDCSearch(Search):
             s = initialState.applyPlan(plan)
             subgoalsAchieved = {g for g in self.problem.goal if s.satisfies(g)}
             c = GF.compute(s, normalizedGoal, initialState)
-            if c == 0:
+            if s.satisfies(self.problem.goal):
                 self.console.log(f"Calls to Solver: {callsToSolver}", LogPrintLevel.STATS)
                 self.console.log(f"Bound: {bound}", LogPrintLevel.STATS)
                 return plan
             self.console.log(f"Found intermediate state {s}", LogPrintLevel.PLAN)
+            self.console.log(f"Subgoals achieved: {len(subgoalsAchieved)}/{len(self.problem.goal)}: {subgoalsAchieved}",
+                             LogPrintLevel.STATS)
             self.console.log(f"New Goal Function Value: {c} [{datetime.datetime.now()}]", LogPrintLevel.PLAN)
 
             bound += 1
