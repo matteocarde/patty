@@ -95,7 +95,7 @@ class BDCSearch(Search):
                 patH = patH + patS.addPostfix(bound)
                 if not plan.isEmpty():
                     s = initialState
-                    patG = Pattern.fromPlan(plan, addFake=not self.isTemporal)
+                    patG = Pattern.fromPlan(plan, addFake=not self.isTemporal).addPostfix("g")
                     plan = NumericPlan.empty()
                 bound += 1
                 continue

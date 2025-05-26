@@ -1,0 +1,47 @@
+
+               \documentclass[11pt]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||ccc||ccc||ccc||}
+\hline
+ & \multicolumn{3}{c||}{Solved (out of $20$)}&\multicolumn{3}{c||}{Time (s)}&\multicolumn{3}{c||}{\textsc{smt} calls}\\
+Domain & $\mathrm{P}_\textsc{dc}$&$\mathrm{P}_\textsc{gd}$&$\mathrm{P}_\textsc{bdc}$&$\mathrm{P}_\textsc{dc}$&$\mathrm{P}_\textsc{gd}$&$\mathrm{P}_\textsc{bdc}$&$\mathrm{P}_\textsc{dc}$&$\mathrm{P}_\textsc{gd}$&$\mathrm{P}_\textsc{bdc}$\\
+\hline
+\textsc{BlGrp} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{1.8}&1.9&\textbf{1.8}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}\\
+\textsc{Cnt} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{0.9}&\textbf{0.9}&\textbf{0.9}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}\\
+\textsc{Cnt} (L)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{0.9}&\textbf{0.9}&\textbf{0.9}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}\\
+\textsc{Del} (S)&5&\textbf{6}&\textbf{6}&\textbf{23.5}&23.6&23.7&\textbf{2.2}&\textbf{2.2}&\textbf{2.2}\\
+\textsc{Drn} (S)&\textbf{11}&\textbf{11}&8&20.5&\textbf{19.4}&21.0&31.0&34.2&\textbf{30.8}\\
+\textsc{Exp} (S)&\textbf{3}&2&\textbf{3}&\textbf{26.4}&27.8&\textbf{26.4}&\textbf{4.5}&\textbf{4.5}&\textbf{4.5}\\
+\textsc{Farm} (S)&\textbf{20}&\textbf{20}&\textbf{20}&0.9&0.9&\textbf{0.8}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}\\
+\textsc{Farm} (L)&\textbf{20}&18&18&\textbf{3.6}&5.4&5.2&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}\\
+\textsc{HPwr} (S)&18&\textbf{20}&19&\textbf{14.7}&15.2&15.5&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}\\
+\textsc{Mrkt} (L)&-&-&-&-&-&-&-&-&-\\
+\textsc{MPrime} (S)&\textbf{10}&\textbf{10}&\textbf{10}&\textbf{17.5}&17.9&17.8&\textbf{1.2}&\textbf{1.2}&\textbf{1.2}\\
+\textsc{PathM} (S)&\textbf{20}&\textbf{20}&\textbf{20}&4.3&\textbf{3.9}&4.2&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}\\
+\textsc{PlWat} (S)&\textbf{20}&\textbf{20}&15&10.3&\textbf{7.2}&17.0&\textbf{16.5}&18.3&17.3\\
+\textsc{Rvr} (S)&\textbf{9}&\textbf{9}&\textbf{9}&\textbf{18.3}&\textbf{18.3}&18.6&\textbf{1.4}&\textbf{1.4}&\textbf{1.4}\\
+\textsc{Sail} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}&\textbf{3.3}&\textbf{3.3}&\textbf{3.3}\\
+\textsc{Sail} (L)&\textbf{20}&\textbf{20}&\textbf{20}&1.8&\textbf{0.9}&\textbf{0.9}&\textbf{1.4}&\textbf{1.4}&\textbf{1.4}\\
+\textsc{Stlrs} (S)&\textbf{14}&13&12&\textbf{14.9}&15.4&16.3&\textbf{1.0}&\textbf{1.0}&\textbf{1.0}\\
+\textsc{Sgr} (S)&\textbf{20}&10&17&\textbf{5.0}&17.9&10.6&\textbf{3.0}&3.8&3.4\\
+\textsc{Tpp} (L)&2&\textbf{4}&\textbf{4}&27.2&25.4&\textbf{25.0}&\textbf{2.5}&\textbf{2.5}&\textbf{2.5}\\
+\textsc{Zeno} (S)&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{15.0}&15.3&15.1&\textbf{1.6}&\textbf{1.6}&\textbf{1.6}\\
+\textsc{Line} (L)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{1.2}&1.4&1.4&5.1&5.2&\textbf{5.0}
+\\\hline
+\textit{Best}&\textbf{303}&\textbf{294}&\textbf{292}&\textbf{126}&\textbf{98}&\textbf{91}&\textbf{288}&\textbf{257}&\textbf{273}\\\hline
+
+        \end{tabular}}
+        \caption{}
+        \label{tab:all-patty}
+        \end{table*}
+        
+\end{document}
