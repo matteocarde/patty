@@ -34,19 +34,17 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2025-05-26-AIJ-REBUTTAL-v2"
+    exp = "2025-05-26-AIJ-REBUTTAL-v3"
     joinWith = [
         (exp, ["RANTANPLAN", "R2E+ROLL"]),
         ("2024-11-12-DOMAINS-v7", ["PATTY-A", "PATTY-L", "PATTY-M", "PATTY-R", "PATTY-E"]),
-        # ("2024-11-12-DOMAINS-v1", ["ENHSP-SAT-AIBR", "RANTANPLAN", "SPRINGROLL", "ENHSP-SAT-HADD",
-        #                            "ENHSP-SAT-HMRP", "METRIC-FF", "NFD", "OMT", "ENHSP-SOCS"]),
         ("2024-11-12-DOMAINS-v1", ["ENHSP-SAT-AIBR", "RANTANPLAN", "SPRINGROLL", "ENHSP-SAT-HADD",
                                    "ENHSP-SAT-HMRP", "METRIC-FF", "NFD", "OMT", "ENHSP-SOCS"]),
         ("2024-11-11-SOCS-v1", ["ENHSP-SOCS"]),
         ("2024-10-24-AIJ-v1", ["PATTY-R"]),
         ("2024-10-07-AIJ-FINAL-v10", ["PATTY-A"]),
         ("2024-10-07-AIJ-FINAL-v9", ["PATTY-E", "PATTY-L", "PATTY-M"]),
-        # ("2024-10-07-AIJ-FINAL-v7", ["RANTANPLAN"]),
+        ("2024-10-07-AIJ-FINAL-v7", ["RANTANPLAN"]),
         ("2024-10-07-AIJ-FINAL-v6", ["SPRINGROLL"]),
         ("2024-10-07-AIJ-FINAL-v5", ["OMT"]),
         ("2024-10-07-AIJ-FINAL-v2",
