@@ -15,10 +15,11 @@ from classes.Result import Result
 
 def main():
     # Parsing the results
-    exp = "2025-05-26-AIJ-REBUTTAL-v3"
+    exp = "2025-06-19-CHRPA-v4"
     joinWith = [
-        (exp, ["R2E+ROLL"]),
-        (exp, ["PATTY-A", "PATTY-L", "PATTY-M", "PATTY-R", "PATTY-E"]),
+        (exp, ["PATTY-C"]),
+        ("2025-05-26-AIJ-REBUTTAL-v3", ["R2E+ROLL"]),
+        ("2024-11-12-DOMAINS-v7", ["PATTY-A", "PATTY-L", "PATTY-M", "PATTY-R", "PATTY-E"]),
         ("2024-11-12-DOMAINS-v1", ["ENHSP-SAT-AIBR", "RANTANPLAN", "SPRINGROLL", "ENHSP-SAT-HADD",
                                    "ENHSP-SAT-HMRP", "METRIC-FF", "NFD", "OMT", "ENHSP-SOCS"]),
         ("2024-11-11-SOCS-v1", ["ENHSP-SOCS"]),
@@ -60,8 +61,9 @@ def main():
     dOrig = dict()
     planners = [
         "PATTY-E",
-        "ENHSP-SOCS",
         "PATTY-A",
+        "ENHSP-SOCS",
+        "PATTY-C",
         "PATTY-R-MIN",
         "PATTY-R-MED",
         "PATTY-L",
