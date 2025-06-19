@@ -12,7 +12,7 @@ PLANNERS = [
     # "PATTY-G",
     # "PATTY-H",
     # "PATTY-F",
-    # "PATTY-E",
+    "PATTY-E",
     # "PATTY-M",
     "PATTY-C",
     # "PATTY-L",

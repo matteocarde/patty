@@ -27,6 +27,10 @@ AIJ_PLANNERS = {
         "name": r"\mathrm{P}_\mathrm{M}",
         "style": "-"
     },
+    "PATTY-C": {
+        "name": r"\mathrm{P}_\mathrm{C}",
+        "style": "-"
+    },
     "ENHSP": {
         "name": r"\mathrm{EN}",
         "style": "--"

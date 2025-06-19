@@ -1,0 +1,47 @@
+
+               \documentclass[11pt]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||cccc||cccc||cccc||}
+\hline
+ & \multicolumn{4}{c||}{Solved (out of $20$)}&\multicolumn{4}{c||}{Time (s)}&\multicolumn{4}{c||}{Plan length}\\
+Domain & $\mathrm{P}_\mathrm{E}$&$\mathrm{P}_\mathrm{M}$&$\mathrm{P}_\mathrm{I}$&$\mathrm{P}_\mathrm{C}$&$\mathrm{P}_\mathrm{E}$&$\mathrm{P}_\mathrm{M}$&$\mathrm{P}_\mathrm{I}$&$\mathrm{P}_\mathrm{C}$&$\mathrm{P}_\mathrm{E}$&$\mathrm{P}_\mathrm{M}$&$\mathrm{P}_\mathrm{I}$&$\mathrm{P}_\mathrm{C}$\\
+\hline
+\textsc{BlGrp} (S)&\textbf{20}&\textbf{20}&19&\textbf{20}&\textbf{1.8}&32.1&2.5&8.8&626&\textbf{226}&279&609\\
+\textsc{Cnt} (S)&\textbf{20}&19&\textbf{20}&\textbf{20}&\textbf{0.9}&34.4&1.3&5.1&533&\textbf{352}&408&496\\
+\textsc{Cnt} (L)&\textbf{20}&11&14&\textbf{20}&\textbf{1.1}&144.6&140.1&\textbf{1.1}&52&\textbf{26}&31&34\\
+\textsc{Del} (S)&\textbf{5}&3&\textbf{5}&\textbf{5}&226.4&255.4&\textbf{214.4}&226.5&19&\textbf{16}&17&\textbf{16}\\
+\textsc{Drn} (S)&\textbf{3}&\textbf{3}&\textbf{3}&\textbf{3}&\textbf{255.3}&256.5&\textbf{255.3}&\textbf{255.3}&25&\textbf{12}&\textbf{12}&14\\
+\textsc{Exp} (S)&2&\textbf{3}&2&2&270.2&\textbf{253.4}&270.2&270.3&38&\textbf{28}&\textbf{28}&\textbf{28}\\
+\textsc{Farm} (S)&\textbf{20}&12&19&\textbf{20}&\textbf{2.4}&154.8&49.5&7.7&740&\textbf{275}&339&382\\
+\textsc{Farm} (L)&\textbf{20}&4&15&\textbf{20}&\textbf{2.7}&265.0&108.0&15.8&412&\textbf{16}&178&386\\
+\textsc{HPwr} (S)&\textbf{20}&4&18&\textbf{20}&\textbf{9.4}&269.8&54.5&15.5&56&\textbf{32}&38&40\\
+\textsc{Mrkt} (L)&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{MPrime} (S)&\textbf{12}&8&10&\textbf{12}&137.7&194.5&151.7&\textbf{136.9}&53&\textbf{8}&\textbf{8}&12\\
+\textsc{PathM} (S)&\textbf{18}&6&6&16&\textbf{42.3}&237.8&211.0&109.4&684&\textbf{124}&166&290\\
+\textsc{PlWat} (S)&\textbf{6}&4&\textbf{6}&\textbf{6}&215.3&255.2&217.4&\textbf{214.8}&301&\textbf{151}&196&302\\
+\textsc{Rvr} (S)&15&6&15&\textbf{16}&101.4&207.5&\textbf{95.6}&98.0&65&\textbf{16}&\textbf{16}&18\\
+\textsc{Sail} (S)&\textbf{20}&8&13&\textbf{20}&\textbf{3.6}&203.1&149.3&29.9&932&\textbf{435}&760&1.6k\\
+\textsc{Sail} (L)&\textbf{19}&8&\textbf{19}&\textbf{19}&\textbf{16.3}&221.7&44.5&22.4&355&\textbf{59}&194&208\\
+\textsc{Stlrs} (S)&\textbf{8}&1&-&4&\textbf{210.5}&295.5&-&247.0&7.0k&\textbf{26}&-&135\\
+\textsc{Sgr} (S)&\textbf{20}&10&19&\textbf{20}&10.3&170.5&\textbf{10.2}&10.6&47&\textbf{20}&26&27\\
+\textsc{Tpp} (L)&\textbf{2}&\textbf{2}&\textbf{2}&\textbf{2}&270.2&272.3&270.2&\textbf{270.1}&13&\textbf{8}&10&12\\
+\textsc{Zeno} (S)&\textbf{11}&10&10&\textbf{11}&\textbf{136.4}&147.7&143.7&136.5&22&\textbf{15}&18&18\\
+\textsc{Line} (L)&\textbf{20}&19&\textbf{20}&\textbf{20}&\textbf{1.2}&6.3&1.7&3.0&399&\textbf{329}&\textbf{329}&337
+\\\hline
+\textit{Best}&\textbf{281}&\textbf{161}&\textbf{235}&\textbf{276}&\textbf{180}&\textbf{9}&\textbf{17}&\textbf{83}&\textbf{24}&\textbf{161}&\textbf{124}&\textbf{69}\\\hline
+
+        \end{tabular}}
+        \caption{Comparative analysis between  \pattye, \pattym and \pattyi. Each domain is labeled with S (for simple) if every numeric effect of each action either increases or decreases by a constant the assigned variable, and with L (for linear), otherwise. In the table, names have been abbreviated to save space.  See \cite{ipc2023} for more details. Best results are in bold.}
+        \label{tab:qual-plans}
+        \end{table*}
+        
+\end{document}

@@ -54,6 +54,10 @@ AIJ_TABLE2 = {
             "name": r"\mathrm{P}_\mathrm{I}",
             "type": "scalar"
         },
+        'PATTY-C': {
+            "name": r"\mathrm{P}_\mathrm{C}",
+            "type": "scalar"
+        },
     },
     "domains": AIJ_DOMAINS
 }

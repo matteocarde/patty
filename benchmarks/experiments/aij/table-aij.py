@@ -7,6 +7,7 @@ import statistics
 import sys
 from typing import Dict, List, Set
 
+from benchmarks.tables.aij.table2 import AIJ_TABLE2
 from benchmarks.tables.aij.table3 import AIJ_TABLE3
 from classes.CloudLogger import CloudLogger
 from classes.Result import Result
@@ -34,9 +35,10 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2025-05-26-AIJ-REBUTTAL-v3"
+    exp = "2025-06-19-CHRPA-v4"
     joinWith = [
-        (exp, ["R2E+ROLL"]),
+        (exp, ["PATTY-C"]),
+        ("2025-05-26-AIJ-REBUTTAL-v3", ["R2E+ROLL"]),
         ("2024-11-12-DOMAINS-v7", ["PATTY-A", "PATTY-L", "PATTY-M", "PATTY-R", "PATTY-E"]),
         ("2024-11-12-DOMAINS-v1", ["ENHSP-SAT-AIBR", "RANTANPLAN", "SPRINGROLL", "ENHSP-SAT-HADD",
                                    "ENHSP-SAT-HMRP", "METRIC-FF", "NFD", "OMT", "ENHSP-SOCS"]),
@@ -66,8 +68,8 @@ def main():
 
     tables = [
         # ("TAB1", AIJ_TABLE1),
-        # ("TAB2", AIJ_TABLE2),
-        ("TAB3", AIJ_TABLE3),
+        ("TAB2", AIJ_TABLE2),
+        # ("TAB3", AIJ_TABLE3),
         # ("TAB4", AIJ_TABLE4),
     ]
 
