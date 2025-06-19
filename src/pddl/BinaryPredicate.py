@@ -301,6 +301,15 @@ class BinaryPredicate(Predicate):
         return bp
 
     @classmethod
+    def equality(cls, lhs: Predicate, rhs: Predicate or float):
+        bp = cls()
+        bp.operator = "="
+        bp.lhs = lhs
+        bp.rhs = rhs if isinstance(rhs, Predicate) else Constant.fromValue(rhs)
+        bp.type = BinaryPredicateType.COMPARATION
+        return bp
+
+    @classmethod
     def fromOperationString(cls, string: str):
         return cls.fromNode(Utilities.getParseTree(string).operation())
 

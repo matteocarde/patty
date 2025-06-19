@@ -75,8 +75,12 @@ class Arguments:
                                                 to another call of encoding in which we ask that every action rolling
                                                 is less than the previous iteration and the plan with minimum length
                                                 is searched.
+                            improve-chrpa:      The quality of the first satisficing plan is improved by using a 
+                                                polynomial algorithm like the one developed by Lukas Chrpa in his paper 
+                                                "On Different Strategies for Eliminating Redundant Actions from Plans"
                             ''',
-                            default="none")
+                            default="none",
+                            choices={"none", "shortest-step", "improve-plan", "improve-less", "improve-chrpa"})
 
         args = parser.parse_args()
         self.isHelp = "help" in args

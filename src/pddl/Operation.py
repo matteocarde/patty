@@ -349,6 +349,20 @@ class Operation:
     def substitute(self, sub: Dict[Atom, float], default=None) -> Operation:
         raise NotImplemented()
 
+    def getNormalizedNumericAssignments(self) -> List[BinaryPredicate]:
+        predicates = []
+        for eff in self.effects:
+            if not isinstance(eff, BinaryPredicate):
+                continue
+            if eff.operator == "assign":
+                predicates.append(eff.rhs)
+            elif eff.operator == "increase":
+                predicates.append(eff.lhs + eff.rhs)
+            elif eff.operator == "decrease":
+                predicates.append(eff.lhs - eff.rhs)
+
+        return predicates
+
     def cacheLists(self):
         self.__hash = hash(self.name)
         self.functions = self.__getFunctions()

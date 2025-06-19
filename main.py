@@ -10,6 +10,7 @@ from src.plan.Pattern import Pattern
 from src.search.AStarSearchMax import AStarSearchMax
 from src.search.BDCSearch import BDCSearch
 from src.search.ChainSearch import ChainSearch
+from src.search.ChrpaImprover import ChrpaImprover
 from src.search.GDSearch import GDSearch
 from src.search.JairSearch import JairSearch
 from src.search.PASSearch import PASSearch
@@ -64,14 +65,18 @@ def main():
             solver = ChainSearch(gDomain, problem, args, liftedDomain=domain)
         plan: Plan = solver.solve()
 
-        if isinstance(plan, NumericPlan) and args.quality in {"improve-plan", "improve-less"}:
+        if isinstance(plan, NumericPlan) and "improve" in args.quality:
             ts.start("Improving Plan", console=console)
             improver: Search
             if args.quality == "improve-plan":
                 improver = PlanImproverPattern(gDomain, problem, args, plan)
-            else:
+            elif args.quality == "improve-chrpa":
+                improver = ChrpaImprover(gDomain, problem, args, plan)
+            elif args.quality == "improve-less":
                 assert solver.finalPattern and solver.finalBound
                 improver = PlanImproverLess(gDomain, problem, args, plan, solver.finalPattern, solver.finalBound)
+            else:
+                raise Exception("Unknown quality improver " + args.quality)
             improvedPlan = improver.solve()
             ts.end("Improving Plan", console=console)
             if improvedPlan:

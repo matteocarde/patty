@@ -54,6 +54,7 @@ PLANNERS: Dict[str, Planner] = {
     "PATTY-M": Patty("PATTY-M", search="step", pattern="enhanced", quality="shortest-step"),
     "PATTY-I": Patty("PATTY-I", search="step", pattern="enhanced", quality="improve-plan"),
     "PATTY-L": Patty("PATTY-L", search="step", pattern="enhanced", quality="improve-less"),
+    "PATTY-C": Patty("PATTY-C", search="step", pattern="enhanced", quality="chrpa"),
 
     "PATTY-GD": Patty("PATTY-GD", search="gd"),
     "PATTY-BDC": Patty("PATTY-BDC", search="bdc"),

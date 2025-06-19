@@ -26,6 +26,9 @@ class NumericPlan(Plan):
     def __len__(self):
         return len(self.__rolledPlan)
 
+    def __getitem__(self, item):
+        return self.__rolledPlan[item]
+
     def getActionsList(self):
         return self.unrolledPlan
 
@@ -49,6 +52,9 @@ class NumericPlan(Plan):
         self.__plan.append((action, repetitions))
         for i in range(0, repetitions):
             self.__rolledPlan.append(action)
+
+    def addAction(self, action: Action):
+        self.addRepeatedAction(action, 1)
 
     def validate(self, problem: Problem, avoidRaising=False, logger: LogPrint = None) -> bool:
 

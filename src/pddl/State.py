@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 from typing import Dict, Set
 
+from pyeda_linux.parsing.lex import action
 from src.ices.ParallelIntermediateEffects import ParallelIntermediateEffects
 from src.ices.PlanIntermediateEffect import PlanIntermediateEffect
 from src.pddl.Action import Action
@@ -26,7 +27,7 @@ class State:
     def __deepcopy__(self, m=None) -> State:
         m = {} if m is None else m
         s = State()
-        s.__assignments = copy.deepcopy(self.assignments, m)
+        s.assignments = copy.deepcopy(self.assignments, m)
         return s
 
     @classmethod
@@ -70,6 +71,9 @@ class State:
 
     def asBooleanSet(self):
         return sorted({v for (v, a) in self.assignments.items() if a})
+
+    def satisfiesPreconditions(self, a: Action):
+        return self.satisfies(a.preconditions)
 
     def applyAction(self, action: Action):
         state = State()
