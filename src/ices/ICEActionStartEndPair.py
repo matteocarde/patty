@@ -22,6 +22,6 @@ class ICEActionStartEndPair:
     def getPlaceholderBij(self, vars: Dict[Happening, SMTExpression], pattern) -> SMTExpression:
         h_i = vars[self.h_i]
         h_j = vars[self.h_j]
-        andList: List[SMTExpression] = [vars[h] == 0 for h in pattern[self.i + 1:self.j]
+        andList: List[SMTExpression] = [vars[h].equal(0) for h in pattern[self.i + 1:self.j]
                                         if isinstance(h, HappeningAction) and h.action == self.action]
         return SMTExpression.bigand([h_i > 0, h_j > 0] + andList)

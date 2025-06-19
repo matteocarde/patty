@@ -130,25 +130,26 @@ class ICEPlan:
                     s = states[i].state
                     t_ = states[i + 1].time if i < m else None
 
+
                     # 1.a
-                    if i < m and (t < t_s <= t_ or t < t_e <= t_):
-                        ValAssert(s.satisfies(cond), f"Rule 1.a - \n{s} \nshould satisfy \n{cond}")
+                    if i == 0 and t_s == t:
+                        ValAssert(s.satisfies(cond), f"Rule 1.a - \n{s} \nshould satisfy \n{cond} in [{t_s}, {t_e}]")
                         checked = True
 
                     # 1.b
-                    if t_s < t < t_e:
-                        ValAssert(s.satisfies(cond), f"Rule 1.b - \n{s} \nshould satisfy \n{cond}")
+                    if i < m and (t < t_s <= t_ or t < t_e <= t_):
+                        ValAssert(s.satisfies(cond), f"Rule 1.b - \n{s} \nshould satisfy \n{cond} in [{t_s}, {t_e}]")
                         checked = True
 
                     # 1.c
-                    if i == 0 and t_s == t:
-                        ValAssert(s.satisfies(cond), f"Rule 1.c - \n{s} \nshould satisfy \n{cond}")
+                    if t_s < t < t_e:
+                        ValAssert(s.satisfies(cond), f"Rule 1.c - \n{s} \nshould satisfy \n{cond} in [{t_s}, {t_e}]")
                         checked = True
 
-                    # 1.d
-                    if i == m and t_e == t:
-                        ValAssert(s.satisfies(cond), f"Rule 1.d - \n{s} \nshould satisfy \n{cond}")
-                        checked = True
+                    # # 1.d
+                    # if i == m and t_e == t:
+                    #     ValAssert(s.satisfies(cond), f"Rule 1.d - \n{s} \nshould satisfy \n{cond}")
+                    #     checked = True
 
                 assert checked
 

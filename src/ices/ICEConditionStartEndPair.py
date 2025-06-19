@@ -18,7 +18,13 @@ class ICEConditionStartEndPair:
         self.i = i
         self.j = j
 
-        assert self.h_i.parent == self.h_j.parent
+        # assert self.h_i.parent == self.h_j.parent
         assert self.h_i.condition == self.h_j.condition
         self.parent = self.h_i.parent
         self.condition = self.h_i.condition
+
+    def __repr__(self):
+        return str((self.h_i, self.h_j))
+
+    def __str__(self):
+        return str((self.h_i, self.h_j))

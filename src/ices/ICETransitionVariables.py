@@ -98,7 +98,7 @@ class ICETransitionVariables:
                 if v in h.effect.atomsAdded:
                     sigmas[i][v] = sigmas[i - 1][v] | (h_i > 0)
                 elif v in h.effect.atomsDeleted:
-                    sigmas[i][v] = sigmas[i - 1][v] & (h_i == 0)
+                    sigmas[i][v] = sigmas[i - 1][v] & (h_i.equal(0))
                 else:
                     sigmas[i][v] = sigmas[i - 1][v]
 

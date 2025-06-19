@@ -1,3 +1,5 @@
+import copy
+
 from src.ices.ICEAction import ICEAction
 from src.ices.TimedConditions import TimedConditions
 from src.ices.TimedEffects import TimedEffects
@@ -13,12 +15,16 @@ IEFF = r"e"
 
 class Happening:
     type: str
+    name: str
 
     def __init__(self):
         pass
 
     def __repr__(self):
-        return str(self)
+        return self.name
+
+    def __str__(self):
+        return self.name
 
 
 class HappeningAction(Happening):
@@ -34,12 +40,10 @@ class HappeningActionStart(HappeningAction):
     def __init__(self, action: ICEAction):
         super().__init__(action)
         self.type = ACTION_START
+        self.name = f"{self.action.name}-START"
 
-    def __str__(self):
-        return f"{self.action.name}-START"
-
-    def __repr__(self):
-        return str(self)
+    def __deepcopy__(self, memodict={}):
+        return HappeningActionStart(copy.deepcopy(self.action))
 
 
 class HappeningActionEnd(HappeningAction):
@@ -47,9 +51,10 @@ class HappeningActionEnd(HappeningAction):
     def __init__(self, action: ICEAction):
         super().__init__(action)
         self.type = ACTION_END
+        self.name = f"{self.action.name}-END"
 
-    def __str__(self):
-        return f"{self.action.name}-END"
+    def __deepcopy__(self, memodict={}):
+        return HappeningActionEnd(copy.deepcopy(self.action))
 
 
 class HappeningCondition(Happening):
@@ -72,10 +77,11 @@ class HappeningConditionStart(HappeningCondition):
     def __init__(self, condition: IntermediateCondition, parent: ICEAction or TimedConditions, index: int):
         super().__init__(condition, parent, index)
         self.type = ICOND_START
-
-    def __str__(self):
         parentName = self.parent.name if isinstance(self.parent, ICEAction) else "goal"
-        return f"{parentName}-C{self.index}-START"
+        self.name = f"{parentName}-C{self.index}-START"
+
+    def __deepcopy__(self, memodict={}):
+        return HappeningConditionStart(self.condition, copy.deepcopy(self.parent), self.index)
 
 
 class HappeningConditionEnd(HappeningCondition):
@@ -83,10 +89,11 @@ class HappeningConditionEnd(HappeningCondition):
     def __init__(self, condition: IntermediateCondition, parent: ICEAction or TimedConditions, index: int):
         super().__init__(condition, parent, index)
         self.type = ICOND_END
-
-    def __str__(self):
         parentName = self.parent.name if isinstance(self.parent, ICEAction) else "goal"
-        return f"{parentName}-C{self.index}-END"
+        self.name = f"{parentName}-C{self.index}-END"
+
+    def __deepcopy__(self, memodict={}):
+        return HappeningConditionEnd(self.condition, copy.deepcopy(self.parent), self.index)
 
 
 class HappeningEffect(Happening):
@@ -99,10 +106,8 @@ class HappeningEffect(Happening):
         self.parent = parent
         self.index = index
         self.type = IEFF
-
-    def __str__(self):
         parentName = self.parent.name if isinstance(self.parent, ICEAction) else "init"
-        return f"{parentName}-E-{self.index}"
+        self.name = f"{parentName}-E-{self.index}"
 
     def inMutexWith(self, h: Happening) -> bool:
         if isinstance(h, HappeningCondition):
@@ -110,3 +115,6 @@ class HappeningEffect(Happening):
 
         if isinstance(h, HappeningEffect):
             return self.effect.inMutexWith(h.effect)
+
+    def __deepcopy__(self, memodict={}):
+        return HappeningEffect(self.effect, copy.deepcopy(self.parent), self.index)

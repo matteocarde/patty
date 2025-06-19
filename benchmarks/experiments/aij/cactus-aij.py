@@ -15,8 +15,9 @@ from classes.Result import Result
 
 def main():
     # Parsing the results
-    exp = "2024-11-12-DOMAINS-v7"
+    exp = "2025-05-26-AIJ-REBUTTAL-v3"
     joinWith = [
+        (exp, ["R2E+ROLL"]),
         (exp, ["PATTY-A", "PATTY-L", "PATTY-M", "PATTY-R", "PATTY-E"]),
         ("2024-11-12-DOMAINS-v1", ["ENHSP-SAT-AIBR", "RANTANPLAN", "SPRINGROLL", "ENHSP-SAT-HADD",
                                    "ENHSP-SAT-HMRP", "METRIC-FF", "NFD", "OMT", "ENHSP-SOCS"]),
@@ -66,6 +67,7 @@ def main():
         "PATTY-L",
         "PATTY-R-MAX",
         "ENHSP",
+        "R2E+ROLL",
         "PATTY-M",
         "METRIC-FF",
         "NFD",
@@ -102,16 +104,18 @@ def main():
         "scalingFactor": 1000,
         "yScale": "linear",
         "yLim": 300
-    }, {
-        "key": "planLength",
-        "yLabel": "Plan Length",
-        "xLabel": "Solved Instances",
-        "steps": 1000,
-        "yLim": 2500,
-        "min": 1,
-        "scalingFactor": 1,
-        "yScale": "linear"
-    }]
+    },
+    #     {
+    #     "key": "planLength",
+    #     "yLabel": "Plan Length",
+    #     "xLabel": "Solved Instances",
+    #     "steps": 1000,
+    #     "yLim": 2500,
+    #     "min": 1,
+    #     "scalingFactor": 1,
+    #     "yScale": "linear"
+    # }
+    ]
 
     folder = f"benchmarks/figures/CACTUS-{exp}"
     if os.path.exists(folder):
@@ -121,7 +125,7 @@ def main():
     for i, p in enumerate(plots):
         plt.rcParams.update({
             "text.usetex": True,
-            "figure.figsize": [12.50, 4.5],
+            "figure.figsize": [12.50, 6],
             "figure.autolayout": True,
             'font.size': 22
         })
@@ -153,7 +157,7 @@ def main():
 
         for planner in planners:
             pInfo = AIJ_PLANNERS[planner]
-            ax.plot(cactusByPlanner[planner], Y / p["scalingFactor"], label=pInfo["name"],
+            ax.plot(cactusByPlanner[planner], Y / p["scalingFactor"], label=f'${pInfo["name"]}$',
                     linestyle=pInfo["style"], linewidth=2)
 
         ax.legend(loc="upper left", fontsize="10")

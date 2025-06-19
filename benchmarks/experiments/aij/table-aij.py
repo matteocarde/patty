@@ -36,7 +36,7 @@ def main():
     # Parsing the results
     exp = "2025-05-26-AIJ-REBUTTAL-v3"
     joinWith = [
-        (exp, ["RANTANPLAN", "R2E+ROLL"]),
+        (exp, ["R2E+ROLL"]),
         ("2024-11-12-DOMAINS-v7", ["PATTY-A", "PATTY-L", "PATTY-M", "PATTY-R", "PATTY-E"]),
         ("2024-11-12-DOMAINS-v1", ["ENHSP-SAT-AIBR", "RANTANPLAN", "SPRINGROLL", "ENHSP-SAT-HADD",
                                    "ENHSP-SAT-HMRP", "METRIC-FF", "NFD", "OMT", "ENHSP-SOCS"]),

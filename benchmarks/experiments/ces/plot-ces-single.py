@@ -77,11 +77,11 @@ if __name__ == '__main__':
             "showClosureTime": True,
             "scalingFactor": 1000
         },
-        "transitiveClosureSize": {
-            "yAxis": "TC Size",
-            "showClosureTime": False,
-            "scalingFactor": 1
-        }
+        # "transitiveClosureSize": {
+        #     "yAxis": "TC Size",
+        #     "showClosureTime": False,
+        #     "scalingFactor": 1
+        # }
     }
 
     SOLVERS = {
@@ -90,11 +90,11 @@ if __name__ == '__main__':
             "label": r"$\Pi^+$",
             "hasClosure": True
         },
-        "PATTY-CES-NO-C": {
-            "color": "blue",
-            "label": r"$\Pi^+_\top$",
-            "hasClosure": True
-        },
+        # "PATTY-CES-NO-C": {
+        #     "color": "blue",
+        #     "label": r"$\Pi^+_\top$",
+        #     "hasClosure": True
+        # },
         "PATTY-CES-NO-TC": {
             "color": "red",
             "label": r"$\Pi^0$",
@@ -136,7 +136,7 @@ if __name__ == '__main__':
             "text.usetex": True,
             "figure.figsize": [7.50, 4.0],
             "figure.autolayout": True,
-            'font.size': 12
+            'font.size': 16
         })
 
         figs, axs = plt.subplots(len(PROPERTIES), 1)
@@ -162,7 +162,7 @@ if __name__ == '__main__':
                     y = [p[1] / pDict["scalingFactor"] for p in ps]
                     ax.plot(x, y, linestyle="dashed", color=sDict["color"], label=f"TC {sDict['label']}")
 
-            ax.legend(loc="upper right", fontsize="10")
+            ax.legend(loc="upper center", fontsize="13", ncol=3)
 
             ax.set_xlim(dDict["xLimit"])
             ax.set_xticks(range(dDict["xLimit"][0], dDict["xLimit"][1] + 1))

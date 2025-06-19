@@ -129,7 +129,7 @@ if __name__ == '__main__':
         "text.usetex": True,
         "figure.figsize": [7.50, 2.0 * nOfGraphs],
         "figure.autolayout": True,
-        'font.size': 12
+        'font.size': 16
     })
 
     figs, axs = plt.subplots(nOfGraphs, 1)
@@ -163,7 +163,7 @@ if __name__ == '__main__':
             ticks = numpy.linspace(pDict["yLimit"][0], pDict["yLimit"][1], 5)
             ax.set_yticks(ticks)
 
-            ax.legend(loc="upper left", fontsize="8")
+            ax.legend(loc="upper left", fontsize="14")
 
             ax.spines['top'].set_visible(False)
             ax.spines['right'].set_visible(False)
