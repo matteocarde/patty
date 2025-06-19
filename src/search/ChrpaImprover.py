@@ -1,20 +1,13 @@
 import copy
-from typing import Tuple, Set
+from typing import Set
 
-from src.pddl import Constant
 from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.Domain import GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
-from src.pddl.Plan import Plan
 from src.pddl.Problem import Problem
 from src.pddl.State import State
-from src.plan.NumericEncoding import NumericEncoding
-from src.plan.Pattern import Pattern
 from src.search.Search import Search
-from src.smt.SMTSolution import SMTSolution
-from src.smt.SMTSolver import SMTSolver
 from src.utils.Arguments import Arguments
-from src.utils.LogPrint import LogPrintLevel
 
 
 class ChrpaImprover(Search):
