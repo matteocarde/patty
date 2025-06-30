@@ -139,7 +139,7 @@ class Patty(Planner):
             cmd += ["--dont-keep-subgoals"]
         if self.search == "jair":
             cmd += [
-                "-jair-pattern-change", self.jairPatternChange,
+                "--jair-pattern-change", self.jairPatternChange,
                 "--jair-search-strategy", self.jairSearchStrategy,
                 "--jair-pattern-h", self.jairPatternH,
                 "--jair-refinement", self.jairRefinement
