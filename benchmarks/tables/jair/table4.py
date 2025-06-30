@@ -29,20 +29,20 @@ JAIR_TABLE4 = {
             "winner": -1,
             "avg": True
         },
-        "length": {
+        "planLength": {
             "name": r"$|\pi|$",
             "winner": -1
         },
-        "nOfVars": {
-            "name": "$|\mathcal{X} \cup \mathcal{A}^\prec \cup \mathcal{X}'|$",
-            "winner": -1,
-            "stdev": False
-        },
-        "nOfRules": {
-            "name": "$|\mathcal{T}^\prec(\mathcal{X},\mathcal{A}^\prec,\mathcal{X}')|$",
-            "winner": -1,
-            "stdev": False
-        },
+        # "nOfVars": {
+        #     "name": "$|\mathcal{X} \cup \mathcal{A}^\prec \cup \mathcal{X}'|$",
+        #     "winner": -1,
+        #     "stdev": False
+        # },
+        # "nOfRules": {
+        #     "name": "$|\mathcal{T}^\prec(\mathcal{X},\mathcal{A}^\prec,\mathcal{X}')|$",
+        #     "winner": -1,
+        #     "stdev": False
+        # },
     },
     "planners": {
         "PATTY-S": {"type": "scalar"},

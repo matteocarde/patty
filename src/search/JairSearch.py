@@ -112,6 +112,7 @@ class JairSearch(Search):
                 unsatN += 1
                 patG = self.unsatPatG(patS, plan, unsatN).addPostfix(f"{bound}_g")
                 patH = self.unsatPatH(I, P, unsatN).addPostfix(bound)
+                self.console.log(f"Bound {bound} - No improvement", LogPrintLevel.STATS)
                 continue
 
             unsatN = 0
@@ -120,6 +121,8 @@ class JairSearch(Search):
             P = S.applyPlan(partialPlan)
 
             if P.satisfies(self.problem.goal):
+                self.console.log(f"Calls to Solver: {callsToSolver}", LogPrintLevel.STATS)
+                self.console.log(f"Bound: {bound}", LogPrintLevel.STATS)
                 return plan
 
             subgoalsAchieved = {g for g in self.problem.goal if P.satisfies(g)}
