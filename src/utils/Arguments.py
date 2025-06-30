@@ -17,7 +17,7 @@ class Arguments:
         parser.add_argument('--solver', default="z3",
                             help="The solver used to compute a solution: yices, z3")
         parser.add_argument('-s', '--search', default="step",
-                            help="The search strategy used to compute the solution: static, step, astar")
+                            help="The search strategy used to compute the solution: static, step, astar, jair")
         parser.add_argument('--encoding', default="non-linear",
                             help="The way linear numeric effect are dealt with: binary, non-linear")
         parser.add_argument('-pp', help="Print pattern", action="store_true")

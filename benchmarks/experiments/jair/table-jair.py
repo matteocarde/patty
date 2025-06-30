@@ -41,11 +41,18 @@ def main():
     exp = "2025-05-26-GF-NO-BOOL-v5"
     joinWith = [
         (exp, [
-            "PATTY-EG",
-            "PATTY-EH",
-            "PATTY-EF",
-            "PATTY-GD",
-            "PATTY-BDC",
+            "PATTY-S",
+            "PATTY-S",
+            "PATTY-D",
+            "PATTY-DR",
+            "PATTY-DI",
+            "PATTY-DIR",
+            "PATTY-DB",
+            "PATTY-DBR",
+            "PATTY-DBI",
+            "PATTY-DBIR",
+            "PATTY-DG",
+            "PATTY-DGI",
         ])
     ]
 

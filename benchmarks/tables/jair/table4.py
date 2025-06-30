@@ -29,27 +29,33 @@ JAIR_TABLE4 = {
             "winner": -1,
             "avg": True
         },
-        # "length": {
-        #     "name": r"$|\pi|$",
-        #     "winner": -1
-        # },
-        # "nOfVars": {
-        #     "name": "$|\mathcal{X} \cup \mathcal{A}^\prec \cup \mathcal{X}'|$",
-        #     "winner": -1,
-        #     "stdev": False
-        # },
-        # "nOfRules": {
-        #     "name": "$|\mathcal{T}^\prec(\mathcal{X},\mathcal{A}^\prec,\mathcal{X}')|$",
-        #     "winner": -1,
-        #     "stdev": False
-        # },
+        "length": {
+            "name": r"$|\pi|$",
+            "winner": -1
+        },
+        "nOfVars": {
+            "name": "$|\mathcal{X} \cup \mathcal{A}^\prec \cup \mathcal{X}'|$",
+            "winner": -1,
+            "stdev": False
+        },
+        "nOfRules": {
+            "name": "$|\mathcal{T}^\prec(\mathcal{X},\mathcal{A}^\prec,\mathcal{X}')|$",
+            "winner": -1,
+            "stdev": False
+        },
     },
     "planners": {
-        # "PATTY-EG": {"type": "scalar"},
-        # "PATTY-EH": {"type": "scalar"},
-        "PATTY-EF": {"type": "scalar"},
-        "PATTY-GD": {"type": "scalar"},
-        "PATTY-BDC": {"type": "scalar"},
+        "PATTY-S": {"type": "scalar"},
+        "PATTY-D": {"type": "scalar"},
+        "PATTY-DR": {"type": "scalar"},
+        "PATTY-DI": {"type": "scalar"},
+        "PATTY-DIR": {"type": "scalar"},
+        "PATTY-DB": {"type": "scalar"},
+        "PATTY-DBR": {"type": "scalar"},
+        "PATTY-DBI": {"type": "scalar"},
+        "PATTY-DBIR": {"type": "scalar"},
+        "PATTY-DG": {"type": "scalar"},
+        "PATTY-DGI": {"type": "scalar"},
     },
     "domains": AIJ_DOMAINS
 }

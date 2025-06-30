@@ -23,7 +23,12 @@ class Patty(Planner):
                  avoidClosureRelaxation=False,
                  goalFunction=False,
                  dontKeepSubgoals=False,
-                 minimizeGoalFunction=False):
+                 minimizeGoalFunction=False,
+                 jairSearchStrategy="brave",
+                 jairPatternChange="dynamic",
+                 jairPatternH="complete",
+                 jairRefinement="yes"
+                 ):
         self.search = search
         self.maximize = maximize
         self.name = name
@@ -40,6 +45,10 @@ class Patty(Planner):
         self.goalFunction = goalFunction
         self.minimizeGoalFunction = minimizeGoalFunction
         self.dontKeepSubgoals = dontKeepSubgoals
+        self.jairSearchStrategy = jairSearchStrategy
+        self.jairPatternChange = jairPatternChange
+        self.jairPatternH = jairPatternH
+        self.jairRefinement = jairRefinement
         super().__init__()
 
     @staticmethod
@@ -128,4 +137,11 @@ class Patty(Planner):
             cmd += ["--minimize-goal-function"]
         if self.dontKeepSubgoals:
             cmd += ["--dont-keep-subgoals"]
+        if self.search == "jair":
+            cmd += [
+                "-jair-pattern-change", self.jairPatternChange,
+                "--jair-search-strategy", self.jairSearchStrategy,
+                "--jair-pattern-h", self.jairPatternH,
+                "--jair-refinement", self.jairRefinement
+            ]
         return cmd

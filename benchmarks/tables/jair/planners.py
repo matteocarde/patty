@@ -31,4 +31,37 @@ JAIR_PLANNERS = {
         "name": r"$\mathrm{P}_\textsc{bdc}^\emptyset$",
         "style": "-"
     },
+    "PATTY-S": {
+        "name": r"$\mathrm{P}_\textsc{s}$"
+    },
+    "PATTY-D": {
+        "name": r"$\mathrm{P}_\textsc{d}$"
+    },
+    "PATTY-DR": {
+        "name": r"$\mathrm{P}_\textsc{dr}$"
+    },
+    "PATTY-DI": {
+        "name": r"$\mathrm{P}_\textsc{di}$"
+    },
+    "PATTY-DIR": {
+        "name": r"$\mathrm{P}_\textsc{dir}$"
+    },
+    "PATTY-DB": {
+        "name": r"$\mathrm{P}_\textsc{db}$"
+    },
+    "PATTY-DBR": {
+        "name": r"$\mathrm{P}_\textsc{dbr}$"
+    },
+    "PATTY-DBI": {
+        "name": r"$\mathrm{P}_\textsc{dbi}$"
+    },
+    "PATTY-DBIR": {
+        "name": r"$\mathrm{P}_\textsc{dbir}$"
+    },
+    "PATTY-DG": {
+        "name": r"$\mathrm{P}_\textsc{dg}$"
+    },
+    "PATTY-DGI": {
+        "name": r"$\mathrm{P}_\textsc{dgi}$"
+    },
 }
