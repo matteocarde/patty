@@ -207,8 +207,9 @@ class Pattern:
             a = copy.deepcopy(item)
             a.name = f"{a.name}_{postfix}"
             order.append(a)
-        self.__order = order
-        return self
+        p = Pattern()
+        p.__order = order
+        return p
 
     @classmethod
     def fromPlan(cls, plan: Plan, addFake=False) -> Pattern:

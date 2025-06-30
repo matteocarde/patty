@@ -28,6 +28,16 @@ class State:
         s.assignments = copy.deepcopy(self.assignments, m)
         return s
 
+    def __eq__(self, other):
+        if not isinstance(other, State):
+            return False
+        if self.assignments.keys() != other.assignments.keys():
+            return False
+        for (k, v) in self.assignments.items():
+            if self.assignments[k] != other.assignments[k]:
+                return False
+        return True
+
     @classmethod
     def fromInitialCondition(cls, init: InitialCondition):
         state = cls()

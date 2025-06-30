@@ -54,8 +54,22 @@ class Arguments:
                             action="store_true", default=False)
         parser.add_argument('--temporal-constraints', help="'numerical' or 'logical' following IJCAI-24",
                             default='numerical')
-        parser.add_argument('--goal-function', help="See JAIR",
-                            default='DELTA-PLUS-CLAUSES')
+        parser.add_argument('--jair-pattern-change',
+                            help="See JAIR",
+                            choices={"static", "dynamic"},
+                            default='dynamic')
+        parser.add_argument('--jair-search-strategy',
+                            help="See JAIR",
+                            choices={"cautious", "brave", "greedy"},
+                            default='brave')
+        parser.add_argument('--jair-pattern-h',
+                            help="See JAIR",
+                            choices={"complete", "incomplete"},
+                            default='complete')
+        parser.add_argument('--jair-refinement',
+                            help="See JAIR",
+                            choices={"yes", "no"},
+                            default='yes')
         parser.add_argument('--minimize-goal-function', help="See JAIR",
                             action="store_true", default=True)
         parser.add_argument('--greedy-level', help="See JAIR",
@@ -110,6 +124,11 @@ class Arguments:
         self.avoidClosureRelaxation = args.avoid_closure_relaxation
         self.avoidClosure = args.avoid_closure
         self.printTransitiveClosures = args.ptc
-        self.goalFunction = args.goal_function
+        # self.goalFunction = args.goal_function
         self.minimizeGoalFunction = args.minimize_goal_function
         self.greedyLevel = args.greedy_level
+
+        self.jairPatternChange = args.jair_pattern_change
+        self.jairSearchStrategy = args.jair_search_strategy
+        self.jairPatternH = args.jair_pattern_h
+        self.jairRefinement = args.jair_refinement
