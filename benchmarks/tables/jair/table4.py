@@ -3,7 +3,7 @@ from benchmarks.tables.aij.planners import AIJ_PLANNERS
 
 JAIR_TABLE4 = {
     "name": "tab:all-patty",
-    "orientation": "portrait",
+    "orientation": "landscape",
     "type": "table*",
     "width": r"\textwidth",
     "keepAll": True,
@@ -29,10 +29,10 @@ JAIR_TABLE4 = {
             "winner": -1,
             "avg": True
         },
-        "planLength": {
-            "name": r"$|\pi|$",
-            "winner": -1
-        },
+        # "planLength": {
+        #     "name": r"$|\pi|$",
+        #     "winner": -1
+        # },
         # "nOfVars": {
         #     "name": "$|\mathcal{X} \cup \mathcal{A}^\prec \cup \mathcal{X}'|$",
         #     "winner": -1,

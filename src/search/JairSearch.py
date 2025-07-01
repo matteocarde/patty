@@ -32,7 +32,7 @@ class JairSearch(Search):
 
         subgoalsAchieved = set()
 
-        bound = self.startBound
+        bound = 0
         I: State = State.fromInitialCondition(self.problem.init)
         P: State = I
 
@@ -40,7 +40,7 @@ class JairSearch(Search):
 
         patS: Pattern = Pattern.empty()
         patG: Pattern = Pattern.empty()
-        patH: Pattern = Pattern.fromState(P, self.problem.goal, self.domain, self.enhanced)
+        patH: Pattern = self.satPatH(I, P)
 
         self.staticPattern = patH
 

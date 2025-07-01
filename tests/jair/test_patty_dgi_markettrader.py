@@ -11,11 +11,11 @@ from src.search.JairSearch import JairSearch
 from src.utils.Arguments import Arguments
 
 
-class TestPattyDGI(TestCase):
+class TestPattyDGIMarketTrader(TestCase):
 
     def setUp(self) -> None:
-        domainFile = "../../files/numeric/ipc-2023/ext-plant-watering/domain.pddl"
-        problemFile = "../../files/numeric/ipc-2023/ext-plant-watering/instances/instance_10_5_2_1.pddl"
+        domainFile = "../../files/numeric/ipc-2023/markettrader/domain.pddl"
+        problemFile = "../../files/numeric/ipc-2023/markettrader/instances/pfile01.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)
