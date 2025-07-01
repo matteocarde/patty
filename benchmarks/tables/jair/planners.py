@@ -43,8 +43,14 @@ JAIR_PLANNERS = {
     "PATTY-DI": {
         "name": r"$\mathrm{P}_\textsc{di}$"
     },
+    "PATTY-DP": {
+        "name": r"$\mathrm{P}_\textsc{dp}$"
+    },
     "PATTY-DIR": {
         "name": r"$\mathrm{P}_\textsc{dir}$"
+    },
+    "PATTY-DPR": {
+        "name": r"$\mathrm{P}_\textsc{dpr}$"
     },
     "PATTY-DB": {
         "name": r"$\mathrm{P}_\textsc{db}$"
@@ -55,13 +61,22 @@ JAIR_PLANNERS = {
     "PATTY-DBI": {
         "name": r"$\mathrm{P}_\textsc{dbi}$"
     },
+    "PATTY-DBP": {
+        "name": r"$\mathrm{P}_\textsc{dbp}$"
+    },
     "PATTY-DBIR": {
         "name": r"$\mathrm{P}_\textsc{dbir}$"
+    },
+    "PATTY-DBPR": {
+        "name": r"$\mathrm{P}_\textsc{dbpr}$"
     },
     "PATTY-DG": {
         "name": r"$\mathrm{P}_\textsc{dg}$"
     },
     "PATTY-DGI": {
         "name": r"$\mathrm{P}_\textsc{dgi}$"
+    },
+    "PATTY-DGP": {
+        "name": r"$\mathrm{P}_\textsc{dgp}$"
     },
 }

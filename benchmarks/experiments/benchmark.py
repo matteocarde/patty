@@ -89,6 +89,18 @@ PLANNERS: Dict[str, Planner] = {
                        jairPatternH="incomplete",
                        jairRefinement="yes"),
 
+    "PATTY-DP": Patty("PATTY-DP", search="jair",
+                      jairPatternChange="dynamic",
+                      jairSearchStrategy="cautious",
+                      jairPatternH="incomplete-probe",
+                      jairRefinement="no"),
+
+    "PATTY-DPR": Patty("PATTY-DPR", search="jair",
+                       jairPatternChange="dynamic",
+                       jairSearchStrategy="cautious",
+                       jairPatternH="incomplete-probe",
+                       jairRefinement="yes"),
+
     "PATTY-DB": Patty("PATTY-DB", search="jair",
                       jairPatternChange="dynamic",
                       jairSearchStrategy="brave",
@@ -113,6 +125,18 @@ PLANNERS: Dict[str, Planner] = {
                         jairPatternH="incomplete",
                         jairRefinement="yes"),
 
+    "PATTY-DBP": Patty("PATTY-DBP", search="jair",
+                       jairPatternChange="dynamic",
+                       jairSearchStrategy="brave",
+                       jairPatternH="incomplete-probe",
+                       jairRefinement="no"),
+
+    "PATTY-DBPR": Patty("PATTY-DBPR", search="jair",
+                        jairPatternChange="dynamic",
+                        jairSearchStrategy="brave",
+                        jairPatternH="incomplete-probe",
+                        jairRefinement="yes"),
+
     "PATTY-DG": Patty("PATTY-DG", search="jair",
                       jairPatternChange="dynamic",
                       jairSearchStrategy="greedy",
@@ -124,6 +148,12 @@ PLANNERS: Dict[str, Planner] = {
                        jairSearchStrategy="greedy",
                        jairPatternH="incomplete",
                        jairRefinement="no"),
+
+    "PATTY-DGP": Patty("PATTY-DGP", search="jair",
+                           jairPatternChange="dynamic",
+                           jairSearchStrategy="greedy",
+                           jairPatternH="incomplete-probe",
+                           jairRefinement="no"),
 
     "PATTY-EF-NO-ORDER": Patty("PATTY-EF-NO-ORDER", search="astar", noCompression=False, dontKeepSubgoals=True),
     "PATTY-GD-NO-ORDER": Patty("PATTY-GD-NO-ORDER", search="gd", dontKeepSubgoals=True),

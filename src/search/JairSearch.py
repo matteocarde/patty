@@ -26,6 +26,8 @@ class JairSearch(Search):
         super().__init__(domain, problem, args)
         self.enhanced = (self.args.pattern == "enhanced")
         self.incompleteSaturationLevel = 1
+        self.allowIntermediateStates = True
+        self.hasCheckedComplete = False
 
     def solve(self) -> Plan:
         callsToSolver = 0
@@ -69,11 +71,11 @@ class JairSearch(Search):
                 problem=self.problem,
                 state=S,
                 pattern=pat,
-                goalFunction=DeltaPlusClauses,
-                minimizeGoalFunction=True,
+                goalFunction=DeltaPlusClauses if self.allowIntermediateStates else None,
+                minimizeGoalFunction=self.allowIntermediateStates,
                 goalFunctionWithEpsilon=False,
                 goalFunctionValue=c,
-                goalAsSoftAssertAndMinimize=True,
+                goalAsSoftAssertAndMinimize=self.allowIntermediateStates,
                 bound=1,
                 args=self.args,
                 relaxGoal=False,
@@ -94,7 +96,8 @@ class JairSearch(Search):
                 c = solution.getVariable(encoding.c)
                 print(f"[SMT] Intermediate improved plan found: c = {c} [{datetime.datetime.now()}]")
 
-            solver.registerOnImprovedModel(onImprovedModel)
+            if self.allowIntermediateStates:
+                solver.registerOnImprovedModel(onImprovedModel)
 
             partialPlan: Plan = solver.solve()
             solver.exit()
@@ -147,9 +150,17 @@ class JairSearch(Search):
         if self.args.jairPatternChange == "dynamic":
             if self.args.jairPatternH == "complete":
                 return Pattern.fromState(P, self.problem.goal, self.domain, self.enhanced)
-            else:
+            if self.args.jairPatternH == "incomplete":
                 self.incompleteSaturationLevel = 1
                 return Pattern.fromStateGreedy(P, self.problem.goal, self.domain, 1)
+            if self.args.jairPatternH == "incomplete-probe":
+                self.incompleteSaturationLevel = 1
+                self.allowIntermediateStates = False
+                if not self.hasCheckedComplete:
+                    self.hasCheckedComplete = True
+                    return Pattern.fromState(P, self.problem.goal, self.domain, self.enhanced)
+                else:
+                    return Pattern.fromStateGreedy(P, self.problem.goal, self.domain, 1)
 
     def unsatPatG(self, patS, plan, unsatN):
         if self.args.jairSearchStrategy == "greedy":
@@ -165,7 +176,9 @@ class JairSearch(Search):
         if self.args.jairPatternChange == "dynamic":
             if self.args.jairPatternH == "complete":
                 return Pattern.fromState(P, self.problem.goal, self.domain, self.enhanced).multiply(n)
-            if self.args.jairPatternH == "incomplete":
+            if self.args.jairPatternH == "incomplete" or self.args.jairPatternH == "incomplete-probe":
+                if self.args.jairPatternH == "incomplete-probe":
+                    self.allowIntermediateStates = True
                 if self.incompleteSaturationLevel > 1:
                     self.incompleteSaturationLevel += 1
                     n = self.incompleteSaturationLevel

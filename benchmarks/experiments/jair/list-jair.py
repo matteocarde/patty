@@ -7,17 +7,16 @@ from benchmarks.tables.jair.domains import JAIR_DOMAINS
 
 PLANNERS = [
     "PATTY-S",
-    "PATTY-S",
     "PATTY-D",
     "PATTY-DR",
-    "PATTY-DI",
-    "PATTY-DIR",
+    "PATTY-DI", "PATTY-DP",
+    "PATTY-DIR", "PATTY-DPR",
     "PATTY-DB",
     "PATTY-DBR",
-    "PATTY-DBI",
-    "PATTY-DBIR",
+    "PATTY-DBI", "PATTY-DBP",
+    "PATTY-DBIR", "PATTY-DBPR",
     "PATTY-DG",
-    "PATTY-DGI",
+    "PATTY-DGI", "PATTY-DGP",
 ]
 RANDOM = 5
 NAME = "jair.csv"

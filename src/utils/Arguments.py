@@ -64,7 +64,7 @@ class Arguments:
                             default='brave')
         parser.add_argument('--jair-pattern-h',
                             help="See JAIR",
-                            choices={"complete", "incomplete"},
+                            choices={"complete", "incomplete", "incomplete-probe"},
                             default='complete')
         parser.add_argument('--jair-refinement',
                             help="See JAIR",
