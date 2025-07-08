@@ -18,6 +18,10 @@ class NaryExpression(SMTExpression):
         for x in xs:
             if type(x) in {float, int}:
                 self.children.append(ConstantExpression(x))
+            if type(x) in {bool}:
+                from src.smt.expressions.TrueExpression import TrueExpression
+                from src.smt.expressions.FalseExpression import FalseExpression
+                self.children.append(TrueExpression() if x else FalseExpression())
             else:
                 self.children.append(x)
 

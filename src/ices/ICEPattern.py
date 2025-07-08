@@ -1,6 +1,6 @@
 from __future__ import annotations
 import copy
-from typing import List, Iterable
+from typing import List, Iterable, Dict
 
 from src.ices.Happening import Happening, HappeningActionStart, HappeningActionEnd, HappeningConditionStart, \
     HappeningConditionEnd, HappeningEffect
@@ -8,6 +8,9 @@ from src.ices.ICEAction import BEGIN, ICEAction
 from src.ices.ICEActionStartEndPair import ICEActionStartEndPair
 from src.ices.ICEConditionStartEndPair import ICEConditionStartEndPair
 from src.ices.PlanIntermediateEffect import PlanIntermediateEffect
+from src.pddl.Atom import Atom
+from src.pddl.BinaryPredicate import BinaryPredicate
+from src.pddl.Literal import Literal
 
 
 class ICEPattern:
@@ -96,3 +99,15 @@ class ICEPattern:
 
         fakeEff = PlanIntermediateEffect.fromProperties(BEGIN + 0)
         return HappeningEffect(fakeEff, None, "FAKE")
+
+    def getTouchedAtomsIndexes(self) -> Dict[Atom, List[int]]:
+        d: Dict[Atom, List[int]] = dict()
+        for i, h_i in enumerate(self.pattern):
+            if not isinstance(h_i, HappeningEffect):
+                continue
+            for e in h_i.effect.effects:
+                v = e.getAtom()
+                d.setdefault(v, [])
+                d[v].append(i)
+
+        return d

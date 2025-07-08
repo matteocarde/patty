@@ -19,6 +19,7 @@ from src.pddl.Literal import Literal
 from src.plan.Encoding import Encoding
 from src.smt.SMTConjunction import SMTConjunction
 from src.smt.SMTExpression import SMTExpression
+from src.smt.expressions.FalseExpression import FalseExpression
 from src.utils.TimeStat import TimeStat
 
 
@@ -35,21 +36,33 @@ class ICEEncoding(Encoding):
         super().__init__()
         self.task: ICETask = task
         self.pattern: ICEPattern = pattern
+        t = TimeStat.startHolder("Getting actions start and end pairs ")
         self.actionsStartEndPairs = self.pattern.getActionsStartEndPairs()
+        t.endHolder()
+        t = TimeStat.startHolder("Getting condition start and end pairs ")
         self.conditionsStartEndPairs = self.pattern.getConditionsStartEndPairs()
+        t.endHolder()
+        t = TimeStat.startHolder("Getting ICE transition variables")
         self.transVars = ICETransitionVariables(task, pattern)
+        t.endHolder()
+        t = TimeStat.startHolder("Computing Pattern Precedence Graph")
         self.ppg = ICEPatternPrecedenceGraph(pattern, self.transVars)
+        t.endHolder()
         self.k = len(pattern) - 1
         self.rulesBySet = dict()
 
-        print(len(self.conditionsStartEndPairs))
+        t = TimeStat.startHolder("Getting touched atoms")
+        self.touchedAtomsIndexes: Dict[Atom, List[int]] = self.pattern.getTouchedAtomsIndexes()
+        t.endHolder()
 
         # self.ppg.printDot()
         # exit()
 
+        t = TimeStat.startHolder("Getting placeholders bij")
         self.b_ij = dict()
         for pair in self.actionsStartEndPairs:
             self.b_ij[pair] = pair.getPlaceholderBij(self.transVars.happeningVariables, self.pattern)
+        t.endHolder()
 
         # self.rulesBySet["init"] = self.__getInitialRules()
         # self.rulesBySet["frame"] = self.__getFrameRules()
@@ -101,8 +114,7 @@ class ICEEncoding(Encoding):
         for h in self.pattern:
             h_i = hVar[h]
             t_i = tVar[h]
-            rules.append(h_i >= 0)
-            rules.append(h_i <= 1)
+            rules.append(h_i.equal(0) | h_i.equal(1))
             rules.append(t_i >= 0)
 
         return rules
@@ -248,10 +260,10 @@ class ICEEncoding(Encoding):
             if not isinstance(h, HappeningAction) and isinstance(h.parent, ICEAction):
                 p = i
                 h_p = hVars[h]
-                startBeforeP = []
-                endBeforeP = []
-                startAfterP = []
-                endAfterP = []
+                startBeforeP: List[SMTExpression] = []
+                endBeforeP: List[SMTExpression] = []
+                startAfterP: List[SMTExpression] = []
+                endAfterP: List[SMTExpression] = []
                 for q, ha_q in enumerate(self.pattern):
                     if not isinstance(ha_q, HappeningAction) or ha_q.action != h.parent:
                         continue
@@ -264,10 +276,11 @@ class ICEEncoding(Encoding):
                         startAfterP.append(h_q)
                     if q > p and isinstance(ha_q, HappeningActionEnd):
                         endAfterP.append(h_q)
-
-                rules.append((h_p > 0)
-                             .implies((sum(startBeforeP) - sum(endBeforeP) > 0)
-                                      & (sum(endAfterP) - sum(startAfterP) > 0)))
+                # print(sum(startBeforeP) - sum(endBeforeP), sum(endAfterP) - sum(startAfterP))
+                implicand = FalseExpression()
+                if (sum(startBeforeP) - sum(endBeforeP) > 0) and (sum(endAfterP) - sum(startAfterP) > 0):
+                    implicand = (sum(startBeforeP) - sum(endBeforeP) > 0) & (sum(endAfterP) - sum(startAfterP) > 0)
+                rules.append((h_p > 0).implies(implicand))
 
         return rules
 
@@ -324,6 +337,8 @@ class ICEEncoding(Encoding):
         hVars = self.transVars.happeningVariables
         sigma = self.transVars.sigmaExpressions
 
+        print("len(self.conditionsStartEndPairs):", len(self.conditionsStartEndPairs))
+
         for pair in self.conditionsStartEndPairs:
             # 8.a
             h_i = hVars[pair.h_i]
@@ -335,11 +350,15 @@ class ICEEncoding(Encoding):
             # print((h_i > 0), sigma[i])
             rules.append((h_i > 0).implies(cond_i))
 
-            conditions: Dict[str, SMTExpression] = dict()
-            for p in range(i + 1, j):
-                f = SMTExpression.fromFormula(cond, sigma[p])
-                conditions[str(f)] = f
-            cond_p = SMTExpression.bigand(list(conditions.values()))
+            ps = set()
+            for atom in cond.atoms:
+                if atom not in self.touchedAtomsIndexes:
+                    continue
+                for p in self.touchedAtomsIndexes[atom]:
+                    if i < p < j:
+                        ps.add(p)
+
+            cond_p = SMTExpression.bigand([SMTExpression.fromFormula(cond, sigma[p]) for p in ps])
             rules.append(((h_i > 0) & (h_j > 0)).implies(cond_p))
 
         return rules

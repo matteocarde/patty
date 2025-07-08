@@ -5,6 +5,16 @@ import time
 from src.utils.LogPrint import LogPrint, LogPrintLevel
 
 
+class TimeHolder:
+
+    def __init__(self, message: str):
+        self.__start = time.time()
+        self.__message = message
+
+    def endHolder(self):
+        print(f"{self.__message}: {round(time.time() - self.__start, 2)}s")
+
+
 class TimeStat:
 
     def __init__(self):
@@ -23,6 +33,11 @@ class TimeStat:
         b = time.time()
         print(f"{call.__name__} = {b - a}s")
         return x
+
+    @staticmethod
+    def startHolder(message: str):
+        print("Starting", message)
+        return TimeHolder(message)
 
     def start(self, name: str, console: LogPrint or None = None):
         self.__timings[name] = TimeStat.now()

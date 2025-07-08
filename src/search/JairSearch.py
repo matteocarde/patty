@@ -153,14 +153,6 @@ class JairSearch(Search):
             if self.args.jairPatternH == "incomplete":
                 self.incompleteSaturationLevel = 1
                 return Pattern.fromStateGreedy(P, self.problem.goal, self.domain, 1)
-            if self.args.jairPatternH == "incomplete-probe":
-                self.incompleteSaturationLevel = 1
-                self.allowIntermediateStates = False
-                if not self.hasCheckedComplete:
-                    self.hasCheckedComplete = True
-                    return Pattern.fromState(P, self.problem.goal, self.domain, self.enhanced)
-                else:
-                    return Pattern.fromStateGreedy(P, self.problem.goal, self.domain, 1)
 
     def unsatPatG(self, patS, plan, unsatN):
         if self.args.jairSearchStrategy == "greedy":
@@ -176,9 +168,7 @@ class JairSearch(Search):
         if self.args.jairPatternChange == "dynamic":
             if self.args.jairPatternH == "complete":
                 return Pattern.fromState(P, self.problem.goal, self.domain, self.enhanced).multiply(n)
-            if self.args.jairPatternH == "incomplete" or self.args.jairPatternH == "incomplete-probe":
-                if self.args.jairPatternH == "incomplete-probe":
-                    self.allowIntermediateStates = True
+            if self.args.jairPatternH == "incomplete":
                 if self.incompleteSaturationLevel > 1:
                     self.incompleteSaturationLevel += 1
                     n = self.incompleteSaturationLevel

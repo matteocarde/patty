@@ -13,6 +13,7 @@ from src.smt.SMTVariable import SMTVariable
 from src.smt.expressions.FalseExpression import FalseExpression
 from src.smt.expressions.ITEExpression import ITEExpression
 from src.smt.expressions.TrueExpression import TrueExpression
+from src.utils.TimeStat import TimeStat
 
 
 class ICETransitionVariables:
@@ -28,66 +29,52 @@ class ICETransitionVariables:
     def __init__(self, task: ICETask, pattern: ICEPattern):
         self.task = task
         self.pattern = pattern
-        self.stateVariables = self.__computeStateVariables()
-        self.nextVariables = self.__computeNextVariables()
+
+        t = TimeStat.startHolder("Get happening variables")
         self.happeningVariables = self.__computeHappeningVariables()
+        t.endHolder()
+        t = TimeStat.startHolder("Get time variables")
         self.timeVariables = self.__computeTimeVariables()
+        t.endHolder()
+        t = TimeStat.startHolder("Get dur variables")
         self.durVariables = self.__computeDurationVariables()
+        t.endHolder()
+        t = TimeStat.startHolder("Get sigma expressions")
         self.sigmaExpressions = self.__computeSigmaExpressions()
+        t.endHolder()
 
         self.makespan = SMTRealVariable(f"__makespan__")
 
         pass
 
-    def __computeStateVariables(self) -> Dict[Atom, SMTVariable]:
-        variables: Dict[Atom, SMTVariable] = dict()
-
-        for atom in self.task.numVariables:
-            variables[atom] = SMTRealVariable(f"{atom}_0")
-        for atom in self.task.propVariables:
-            variables[atom] = SMTBoolVariable(f"{atom}_0")
-
-        return variables
-
-    def __computeNextVariables(self) -> Dict[Atom, SMTVariable]:
-        variables: Dict[Atom, SMTVariable] = dict()
-
-        for atom in self.task.numVariables:
-            variables[atom] = SMTRealVariable(f"{atom}_1")
-        for atom in self.task.propVariables:
-            variables[atom] = SMTBoolVariable(f"{atom}_1")
-
-        return variables
-
     def __computeSigmaExpressions(self) -> Dict[int, Dict[Atom, SMTExpression or float]]:
         sigmas: Dict[int, Dict[Atom, SMTExpression or float]] = dict()
-        values = self.stateVariables
+
+        sigmas[0] = dict()
+        trueAtoms: Set[Atom] = set()
+        for assignment in self.task.init:
+            atom = assignment.getAtom()
+            if isinstance(assignment, BinaryPredicate):
+                if assignment.getAtom() not in self.task.propVariables | self.task.numVariables:
+                    continue
+                v = assignment.getAtom()
+                k = float(str(assignment.rhs))
+                sigmas[0][v] = k
+            elif isinstance(assignment, Literal):
+                sigmas[0][assignment.getAtom()] = TrueExpression()
+                trueAtoms.add(assignment.getAtom())
+            else:
+                raise NotImplemented("Shouldn't go here")
+
+        for v in self.task.propVariables - trueAtoms:
+            sigmas[0][v] = FalseExpression()
+            continue
 
         for i, h in enumerate(self.pattern):
-            sigmas[i] = dict()
-
             if i == 0:
-                trueAtoms: Set[Atom] = set()
-                for assignment in self.task.init:
-                    atom = assignment.getAtom()
-                    if atom not in values:
-                        # print(f"Atom {atom} in initial condition doesn't concur in achieving the goal. Pruned.")
-                        continue
-                    if isinstance(assignment, BinaryPredicate):
-                        if assignment.getAtom() not in self.task.propVariables | self.task.numVariables:
-                            continue
-                        v = assignment.getAtom()
-                        k = float(str(assignment.rhs))
-                        sigmas[i][v] = k
-                    elif isinstance(assignment, Literal):
-                        sigmas[i][assignment.getAtom()] = TrueExpression()
-                        trueAtoms.add(assignment.getAtom())
-                    else:
-                        raise NotImplemented("Shouldn't go here")
-
-                for v in self.task.propVariables - trueAtoms:
-                    sigmas[i][v] = FalseExpression()
                 continue
+
+            sigmas[i] = dict()
 
             if not isinstance(h, HappeningEffect):
                 sigmas[i] = sigmas[i - 1]
