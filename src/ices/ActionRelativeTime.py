@@ -13,6 +13,11 @@ class ActionRelativeTime(RelativeTime):
     def __init__(self):
         super().__init__()
 
+    def __str__(self):
+        return f"{self.anchor} {'+' if self.k > 0 else '-'} {abs(self.k)}"
+
+    def __repr__(self):
+        return str(self)
 
 
 class ActionRelativeTimeAnchor(RelativeTimeAnchor, Enum):

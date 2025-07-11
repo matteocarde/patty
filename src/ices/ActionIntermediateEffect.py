@@ -14,6 +14,12 @@ class ActionIntermediateEffect(IntermediateEffect):
     def __init__(self):
         super().__init__()
 
+    def __repr__(self):
+        return str(self)
+
+    def __str__(self):
+        return f"{self.time}: {self.effects}"
+
     @classmethod
     def fromProperties(cls, time: ActionRelativeTime) -> ActionIntermediateEffect:
         ie = cls()

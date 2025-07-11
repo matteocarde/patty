@@ -31,7 +31,7 @@ class TimeStat:
         print(f"Start {call.__name__}")
         x = call()
         b = time.time()
-        print(f"{call.__name__} = {b - a}s")
+        print(f"{call.__name__} = {b - a}s - {len(x)} rules")
         return x
 
     @staticmethod

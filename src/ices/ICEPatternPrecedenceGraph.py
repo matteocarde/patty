@@ -16,11 +16,15 @@ class ICEPatternPrecedenceGraph:
 
         self.nodes = set()
         self.edges = dict()
+        self.predecessors = dict()
         self.delta = dict()
 
         for i, h_i in enumerate(pattern):
             self.nodes.add(h_i)
             self.edges[h_i] = set()
+            self.predecessors[h_i] = set()
+
+        for i, h_i in enumerate(pattern):
 
             for h_j in pattern[i + 1:]:
 
@@ -46,7 +50,14 @@ class ICEPatternPrecedenceGraph:
     def setDelta(self, h_i: Happening, h_j: Happening, value: SMTExpression or float):
         assert (h_i, h_j) not in self.delta
         self.edges[h_i].add(h_j)
+        self.predecessors[h_j].add(h_i)
         self.delta[h_i, h_j] = value
+
+        # for p in self.predecessors[h_i]:
+        #     if (p, h_j) in self.delta and self.delta[p, h_j] < self.delta[p, h_i] + self.delta[h_i, h_j]:
+        #         del self.delta[p, h_j]
+        #         self.edges[p].remove(h_j)
+        #         self.predecessors[h_j].remove(p)
 
     def printDot(self):
         print("digraph {")
