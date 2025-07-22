@@ -40,7 +40,7 @@ class ICEPlan:
                 continue
             mu_h_i: int = solution.getVariable(hVars[h_i])
             mu_t_i: float = solution.getVariable(tVars[h_i])
-            mu_d_i: float = solution.getVariable(dVars[h_i])
+            mu_d_i: float = h_i.action.duration#solution.getVariable(dVars[h_i])
             if mu_h_i > 0:
                 th = TimedICEAction(mu_t_i, h_i.action, mu_d_i)
                 plan.timedActions.append(th)

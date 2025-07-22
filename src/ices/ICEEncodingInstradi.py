@@ -6,6 +6,7 @@ from src.ices.Happening import HappeningActionStart, HappeningActionEnd, Happeni
 from src.ices.ICEAction import ICEAction
 from src.ices.ICEActionStartEndPair import ICEActionStartEndPair
 from src.ices.ICEConditionStartEndPair import ICEConditionStartEndPair
+from src.ices.ICEPatternPrecedenceGraphInstradi import ICEPatternPrecedenceGraphInstradi
 from src.ices.ICETransitionVariablesInstradi import ICETransitionVariablesInstradi
 from src.ices.TimedConditions import TimedConditions
 from src.ices.TimedEffects import TimedEffects
@@ -18,6 +19,7 @@ from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.Formula import Formula
 from src.pddl.Literal import Literal
 from src.plan.Encoding import Encoding
+from src.retrieve.InitialConditionRetriever import EPSILON
 from src.smt.SMTConjunction import SMTConjunction
 from src.smt.SMTExpression import SMTExpression
 from src.smt.expressions.FalseExpression import FalseExpression
@@ -27,7 +29,7 @@ from src.utils.TimeStat import TimeStat
 class ICEEncodingInstradi(Encoding):
     task: ICETask
     pattern: ICEPattern
-    ppg: ICEPatternPrecedenceGraph
+    ppg: ICEPatternPrecedenceGraphInstradi
     rulesBySet: Dict[str, List[SMTExpression]]
     rules: SMTConjunction
     actionsStartEndPairs: List[ICEActionStartEndPair]
@@ -47,7 +49,7 @@ class ICEEncodingInstradi(Encoding):
         self.transVars = ICETransitionVariablesInstradi(task, pattern)
         t.endHolder()
         t = TimeStat.startHolder("Computing Pattern Precedence Graph")
-        self.ppg = ICEPatternPrecedenceGraph(pattern, self.transVars)
+        self.ppg = ICEPatternPrecedenceGraphInstradi(pattern, self.transVars)
         t.endHolder()
         self.k = len(pattern) - 1
         self.rulesBySet = dict()
@@ -112,11 +114,17 @@ class ICEEncodingInstradi(Encoding):
         hVar = self.transVars.happeningVariables
         tVar = self.transVars.timeVariables
 
+        used = set()
+
         for h in self.pattern:
             h_i = hVar[h]
+            if h_i not in used:
+                rules.append(h_i.equal(0) | h_i.equal(1))
             t_i = tVar[h]
-            rules.append(h_i.equal(0) | h_i.equal(1))
-            rules.append(t_i >= 0)
+            if t_i not in used:
+                rules.append(t_i >= 0)
+            used.add(h_i)
+            used.add(t_i)
 
         return rules
 
@@ -143,8 +151,8 @@ class ICEEncodingInstradi(Encoding):
             d_i = tVars.durVariables[h]
             t_i = tVars.timeVariables[h]
 
-            rules.append((h_i.equal(0)).implies((d_i.equal(0)) & (t_i.equal(0))))
-            rules.append((h_i > 0).implies(d_i.equal(b.duration)))
+            rules.append((h_i.equal(0)).implies((t_i.equal(0))))
+            # rules.append((h_i > 0).implies(d_i.equal(b.duration)))
 
         return rules
 
@@ -169,6 +177,7 @@ class ICEEncodingInstradi(Encoding):
             h_j = hVars[happening_j]
             t_i = tVars[happening_i]
             t_j = tVars[happening_j]
+
             rules.append(((h_i > 0) & (h_j > 0)).implies(t_j >= t_i + delta))
 
         return rules
@@ -258,30 +267,30 @@ class ICEEncodingInstradi(Encoding):
                 rules.append((h_j > 0).implies(SMTExpression.bigor(orSubFormulas)))
 
             # 6.c
-            if not isinstance(h, HappeningAction) and isinstance(h.parent, ICEAction):
-                p = i
-                h_p = hVars[h]
-                startBeforeP: List[SMTExpression] = []
-                endBeforeP: List[SMTExpression] = []
-                startAfterP: List[SMTExpression] = []
-                endAfterP: List[SMTExpression] = []
-                for q, ha_q in enumerate(self.pattern):
-                    if not isinstance(ha_q, HappeningAction) or ha_q.action != h.parent:
-                        continue
-                    h_q = hVars[ha_q]
-                    if q < p and isinstance(ha_q, HappeningActionStart):
-                        startBeforeP.append(h_q)
-                    if q < p and isinstance(ha_q, HappeningActionEnd):
-                        endBeforeP.append(h_q)
-                    if q > p and isinstance(ha_q, HappeningActionStart):
-                        startAfterP.append(h_q)
-                    if q > p and isinstance(ha_q, HappeningActionEnd):
-                        endAfterP.append(h_q)
-                # print(sum(startBeforeP) - sum(endBeforeP), sum(endAfterP) - sum(startAfterP))
-                implicand = FalseExpression()
-                if (sum(startBeforeP) - sum(endBeforeP) > 0) and (sum(endAfterP) - sum(startAfterP) > 0):
-                    implicand = (sum(startBeforeP) - sum(endBeforeP) > 0) & (sum(endAfterP) - sum(startAfterP) > 0)
-                rules.append((h_p > 0).implies(implicand))
+            # if not isinstance(h, HappeningAction) and isinstance(h.parent, ICEAction):
+            #     p = i
+            #     h_p = hVars[h]
+            #     startBeforeP: List[SMTExpression] = []
+            #     endBeforeP: List[SMTExpression] = []
+            #     startAfterP: List[SMTExpression] = []
+            #     endAfterP: List[SMTExpression] = []
+            #     for q, ha_q in enumerate(self.pattern):
+            #         if not isinstance(ha_q, HappeningAction) or ha_q.action != h.parent:
+            #             continue
+            #         h_q = hVars[ha_q]
+            #         if q < p and isinstance(ha_q, HappeningActionStart):
+            #             startBeforeP.append(h_q)
+            #         if q < p and isinstance(ha_q, HappeningActionEnd):
+            #             endBeforeP.append(h_q)
+            #         if q > p and isinstance(ha_q, HappeningActionStart):
+            #             startAfterP.append(h_q)
+            #         if q > p and isinstance(ha_q, HappeningActionEnd):
+            #             endAfterP.append(h_q)
+            #     # print(sum(startBeforeP) - sum(endBeforeP), sum(endAfterP) - sum(startAfterP))
+            #     implicand = FalseExpression()
+            #     if (sum(startBeforeP) - sum(endBeforeP) > 0) and (sum(endAfterP) - sum(startAfterP) > 0):
+            #         implicand = (sum(startBeforeP) - sum(endBeforeP) > 0) & (sum(endAfterP) - sum(startAfterP) > 0)
+            #     rules.append((h_p > 0).implies(implicand))
 
         return rules
 
@@ -290,46 +299,46 @@ class ICEEncodingInstradi(Encoding):
         hVars = self.transVars.happeningVariables
         tVars = self.transVars.timeVariables
 
-        for pair in self.actionsStartEndPairs:
-            b_ij: SMTExpression = self.b_ij[pair]
-            h_i = hVars[pair.h_i]
-            t_i = tVars[pair.h_i]
-            t_j = tVars[pair.h_j]
-            b = pair.action
-
-            ## 7.a
-            ieffs: List[HappeningEffect] = [h_p for h_p in self.pattern[pair.i + 1:pair.j]
-                                            if isinstance(h_p, HappeningEffect) and h_p.parent == pair.action]
-
-            effectsSum = sum([hVars[h_p] for h_p in ieffs]).equal(len(b.ieff))
-            effectsAnd = SMTExpression.bigand([hVars[h_p] <= 1 for h_p in ieffs])
-            rules.append(b_ij.implies(effectsSum & effectsAnd))
-
-            ## 7.b
-            for ha_p in ieffs:
-                h_p = hVars[ha_p]
-                t_p = tVars[ha_p]
-                rules.append((b_ij & (h_p > 0)).implies(t_p.equal(ha_p.effect.time.absolute(t_i, t_j))))
-
-            ## 7.c
-            icondsStart = [h_p for h_p in self.pattern[pair.i:pair.j]
-                           if isinstance(h_p, HappeningConditionStart) and h_p.parent == pair.action]
-            icondsEnd = [h_p for h_p in self.pattern[pair.i:pair.j]
-                         if isinstance(h_p, HappeningConditionEnd) and h_p.parent == pair.action]
-
-            condStartSum = sum([hVars[h_p] for h_p in icondsStart]).equal(len(b.icond))
-            condEndSum = sum([hVars[h_p] for h_p in icondsEnd]).equal(len(b.icond))
-            condAnd = SMTExpression.bigand([hVars[h_p] <= 1 for h_p in icondsStart + icondsEnd])
-            rules.append(b_ij.implies(condStartSum & condEndSum & condAnd))
-
-            ## 7.d
-            for ha_p in icondsStart + icondsEnd:
-                h_p = hVars[ha_p]
-                t_p = tVars[ha_p]
-                if isinstance(ha_p, HappeningConditionStart):
-                    rules.append((b_ij & (h_p > 0)).implies(t_p.equal(ha_p.condition.fromTime.absolute(t_i, t_j))))
-                if isinstance(ha_p, HappeningConditionEnd):
-                    rules.append((b_ij & (h_p > 0)).implies(t_p.equal(ha_p.condition.toTime.absolute(t_i, t_j))))
+        # for pair in self.actionsStartEndPairs:
+        #     b_ij: SMTExpression = self.b_ij[pair]
+        #     h_i = hVars[pair.h_i]
+        #     t_i = tVars[pair.h_i]
+        #     t_j = tVars[pair.h_j]
+        #     b = pair.action
+        #
+        #     ## 7.a
+        #     ieffs: List[HappeningEffect] = [h_p for h_p in self.pattern[pair.i + 1:pair.j]
+        #                                     if isinstance(h_p, HappeningEffect) and h_p.parent == pair.action]
+        #
+        #     effectsSum = sum([hVars[h_p] for h_p in ieffs]).equal(len(b.ieff))
+        #     effectsAnd = SMTExpression.bigand([hVars[h_p] <= 1 for h_p in ieffs])
+        #     rules.append(b_ij.implies(effectsSum & effectsAnd))
+        #
+        #     ## 7.b
+        #     for ha_p in ieffs:
+        #         h_p = hVars[ha_p]
+        #         t_p = tVars[ha_p]
+        #         rules.append((b_ij & (h_p > 0)).implies(t_p.equal(ha_p.effect.time.absolute(t_i, t_j))))
+        #
+        #     ## 7.c
+        #     icondsStart = [h_p for h_p in self.pattern[pair.i:pair.j]
+        #                    if isinstance(h_p, HappeningConditionStart) and h_p.parent == pair.action]
+        #     icondsEnd = [h_p for h_p in self.pattern[pair.i:pair.j]
+        #                  if isinstance(h_p, HappeningConditionEnd) and h_p.parent == pair.action]
+        #
+        #     condStartSum = sum([hVars[h_p] for h_p in icondsStart]).equal(len(b.icond))
+        #     condEndSum = sum([hVars[h_p] for h_p in icondsEnd]).equal(len(b.icond))
+        #     condAnd = SMTExpression.bigand([hVars[h_p] <= 1 for h_p in icondsStart + icondsEnd])
+        #     rules.append(b_ij.implies(condStartSum & condEndSum & condAnd))
+        #
+        #     ## 7.d
+        #     for ha_p in icondsStart + icondsEnd:
+        #         h_p = hVars[ha_p]
+        #         t_p = tVars[ha_p]
+        #         if isinstance(ha_p, HappeningConditionStart):
+        #             rules.append((b_ij & (h_p > 0)).implies(t_p.equal(ha_p.condition.fromTime.absolute(t_i, t_j))))
+        #         if isinstance(ha_p, HappeningConditionEnd):
+        #             rules.append((b_ij & (h_p > 0)).implies(t_p.equal(ha_p.condition.toTime.absolute(t_i, t_j))))
 
         return rules
 

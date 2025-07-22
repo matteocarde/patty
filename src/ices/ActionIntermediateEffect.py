@@ -20,6 +20,21 @@ class ActionIntermediateEffect(IntermediateEffect):
     def __str__(self):
         return f"{self.time}: {self.effects}"
 
+    def __lt__(self, other):
+        if not isinstance(other, ActionIntermediateEffect):
+            return False
+        return self.time < other.time
+
+    def __le__(self, other):
+        if not isinstance(other, ActionIntermediateEffect):
+            return False
+        return self.time <= other.time
+
+    def __sub__(self, other):
+        if not isinstance(other, ActionIntermediateEffect):
+            return False
+        return self.time.k - other.time.k
+
     @classmethod
     def fromProperties(cls, time: ActionRelativeTime) -> ActionIntermediateEffect:
         ie = cls()

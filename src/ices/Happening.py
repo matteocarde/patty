@@ -1,5 +1,8 @@
 import copy
 
+from src.ices.ActionIntermediateCondition import ActionIntermediateCondition
+from src.ices.ActionIntermediateEffect import ActionIntermediateEffect
+from src.ices.ActionRelativeTime import ActionRelativeTimeAnchor
 from src.ices.ICEAction import ICEAction
 from src.ices.TimedConditions import TimedConditions
 from src.ices.TimedEffects import TimedEffects
@@ -25,6 +28,22 @@ class Happening:
 
     def __str__(self):
         return self.name
+
+    @staticmethod
+    def computeTime(h):
+        if isinstance(h, HappeningCondition) and isinstance(h.condition, ActionIntermediateCondition):
+            assert isinstance(h.parent, ICEAction)
+            cond = h.condition
+            anchor = cond.fromTime.anchor if isinstance(h, HappeningConditionStart) else cond.toTime.anchor
+            time = 0 if anchor == ActionRelativeTimeAnchor.START else h.parent.duration
+            k = h.condition.fromTime.k
+            return time + k
+        elif isinstance(h, HappeningEffect) and isinstance(h.effect, ActionIntermediateEffect):
+            assert isinstance(h.parent, ICEAction)
+            time = 0 if h.effect.time.anchor == ActionRelativeTimeAnchor.START else h.parent.duration
+            k = h.effect.time.k
+            return time + k
+        return None
 
 
 class HappeningAction(Happening):

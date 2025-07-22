@@ -137,18 +137,8 @@ class ICETransitionVariablesInstradi:
             if isinstance(h, HappeningActionStart):
                 variables[h] = SMTRealVariable(f"t_{str(h)}")
                 relativeTimes[h.action] = variables[h]
-            elif isinstance(h, HappeningCondition) and isinstance(h.condition, ActionIntermediateCondition):
-                assert isinstance(h.parent, ICEAction)
-                cond = h.condition
-                anchor = cond.fromTime.anchor if isinstance(h, HappeningConditionStart) else cond.toTime.anchor
-                time = 0 if anchor == ActionRelativeTimeAnchor.START else h.parent.duration
-                k = h.condition.fromTime.k
-                variables[h] = relativeTimes[h.parent] + time + k
-            elif isinstance(h, HappeningEffect) and isinstance(h.effect, ActionIntermediateEffect):
-                assert isinstance(h.parent, ICEAction)
-                time = 0 if h.effect.time.anchor == ActionRelativeTimeAnchor.START else h.parent.duration
-                k = h.effect.time.k
-                variables[h] = relativeTimes[h.parent] + time + k
+            elif Happening.computeTime(h) is not None:
+                variables[h] = relativeTimes[h.parent] + Happening.computeTime(h)
             else:
                 variables[h] = SMTRealVariable(f"t_{str(h)}")
 
@@ -159,6 +149,6 @@ class ICETransitionVariablesInstradi:
 
         for h in self.pattern:
             if isinstance(h, HappeningActionStart):
-                variables[h] = SMTRealVariable(f"d_{str(h)}")
+                variables[h] = h.action.duration  # SMTRealVariable(f"d_{str(h)}")
 
         return variables

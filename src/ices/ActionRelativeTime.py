@@ -19,6 +19,20 @@ class ActionRelativeTime(RelativeTime):
     def __repr__(self):
         return str(self)
 
+    def __le__(self, other):
+        if not isinstance(other, ActionRelativeTime):
+            return False
+        if self.anchor != other.anchor:
+            return False
+        return self.k <= other.k
+
+    def __lt__(self, other):
+        if not isinstance(other, ActionRelativeTime):
+            return False
+        if self.anchor != other.anchor:
+            return False
+        return self.k < other.k
+
 
 class ActionRelativeTimeAnchor(RelativeTimeAnchor, Enum):
     START = "START"
