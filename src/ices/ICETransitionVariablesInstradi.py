@@ -88,9 +88,9 @@ class ICETransitionVariablesInstradi:
             h_i = self.happeningVariables[h]
             for v in self.task.propVariables:
                 if v in h.effect.atomsAdded:
-                    sigmas[i][v] = sigmas[i - 1][v] | (h_i > 0)
+                    sigmas[i][v] = sigmas[i - 1][v] | h_i
                 elif v in h.effect.atomsDeleted:
-                    sigmas[i][v] = sigmas[i - 1][v] & (h_i.equal(0))
+                    sigmas[i][v] = sigmas[i - 1][v] & (~h_i)
                 else:
                     sigmas[i][v] = sigmas[i - 1][v]
 
@@ -115,7 +115,7 @@ class ICETransitionVariablesInstradi:
 
         for h in self.pattern:
             if isinstance(h, HappeningActionStart):
-                variables[h] = SMTIntVariable(str(h))
+                variables[h] = SMTBoolVariable(str(h))
                 startingHappening[h.action] = variables[h]
             elif (isinstance(h, HappeningCondition) or isinstance(h, HappeningEffect)) and isinstance(h.parent,
                                                                                                       ICEAction):
@@ -124,7 +124,7 @@ class ICETransitionVariablesInstradi:
                 variables[h] = startingHappening[h.action]
                 # del startingHappening[h.action]
             else:
-                variables[h] = SMTIntVariable(str(h))
+                variables[h] = SMTBoolVariable(str(h))
 
         return variables
 
