@@ -11,7 +11,7 @@ from src.search.JairSearch import JairSearch
 from src.utils.Arguments import Arguments
 
 
-class TestPattyCautious(TestCase):
+class TestPatty_C_npc(TestCase):
 
     def setUp(self) -> None:
         domainFile = "../../files/numeric/ipc-2023/ext-plant-watering/domain.pddl"
@@ -21,10 +21,10 @@ class TestPattyCautious(TestCase):
         self.problem: Problem = Problem.fromFile(problemFile)
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.args = Arguments(keepRequired=False)
-        self.args.jairSearchStrategy = "cautious"
-        self.args.jairPatternChange = "dynamic"
-        self.args.jairPatternH = "complete"
-        self.args.jairRefinement = "chrpa"
+        self.args.jairSearchStrategy = "C"
+        self.args.jairGoalFunction = "n"
+        self.args.jairRefinement = "p"
+        self.args.jairPatternH = "c"
         self.args.printPattern = True
         pass
 

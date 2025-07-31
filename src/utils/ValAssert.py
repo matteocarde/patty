@@ -14,5 +14,5 @@ class ValAssert:
     def __init__(self, assertion: bool, messageIfNotAsserted: str):
         if assertion:
             return
-        traceback.print_exc()
+        print(traceback.print_stack(limit=3))
         raise ValidationError(messageIfNotAsserted)

@@ -54,22 +54,22 @@ class Arguments:
                             action="store_true", default=False)
         parser.add_argument('--temporal-constraints', help="'numerical' or 'logical' following IJCAI-24",
                             default='numerical')
-        parser.add_argument('--jair-pattern-change',
-                            help="See JAIR",
-                            choices={"static", "dynamic"},
-                            default='dynamic')
         parser.add_argument('--jair-search-strategy',
                             help="See JAIR",
-                            choices={"cautious", "brave", "greedy"},
-                            default='brave')
+                            choices={"C", "B", "R", "G"},
+                            default='B')
+        parser.add_argument('--jair-goal-function',
+                            help="See JAIR",
+                            choices={"n", "g", "a"},
+                            default='n')
         parser.add_argument('--jair-pattern-h',
                             help="See JAIR",
-                            choices={"complete", "incomplete", "incomplete-probe"},
-                            default='complete')
-        parser.add_argument('--jair-refinement',
+                            choices={"c", "i", "s"},
+                            default='c')
+        parser.add_argument('--jair-pattern-g',
                             help="See JAIR",
-                            choices={"yes", "no"},
-                            default='yes')
+                            choices={"r", "p", "o", "e"},
+                            default='p')
         parser.add_argument('--minimize-goal-function', help="See JAIR",
                             action="store_true", default=True)
         parser.add_argument('--greedy-level', help="See JAIR",
@@ -128,7 +128,7 @@ class Arguments:
         self.minimizeGoalFunction = args.minimize_goal_function
         self.greedyLevel = args.greedy_level
 
-        self.jairPatternChange = args.jair_pattern_change
         self.jairSearchStrategy = args.jair_search_strategy
+        self.jairPatternG = args.jair_pattern_g
         self.jairPatternH = args.jair_pattern_h
-        self.jairRefinement = args.jair_refinement
+        self.jairGoalFunction = args.jair_goal_function

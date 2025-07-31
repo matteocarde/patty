@@ -1,6 +1,7 @@
 from typing import List, Dict, Set, Type
 
 from src.goalFunctions.Delta import Delta
+from src.goalFunctions.DeltaPlusClauses import DeltaPlusClauses
 from src.goalFunctions.GoalFunction import GoalFunction
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
@@ -33,36 +34,23 @@ class NumericEncoding(Encoding):
 
     def __init__(self, domain: GroundedDomain, problem: Problem, pattern: Pattern, bound: int,
                  args: Arguments,
-                 relaxGoal=False,
                  subgoalsAchieved=None,
                  state: State = None,
-                 minimizeQuality=False,
-                 realActionVariables=False,
-                 maxActionsRolling: Dict[int, Dict[Action, int]] = None,
-                 goalFunction: Type[GoalFunction] = None,
-                 goalAsSoftAssertAndMinimize: bool = False,
-                 goalFunctionValue: float = 0.0,
-                 goalFunctionWithEpsilon: bool = False,
-                 minimizeGoalFunction: float = False):
+                 goalFunctionValue: float = 10000):
 
         super().__init__(domain, problem, pattern, bound)
         self.domain = domain
         self.problem = problem
         self.bound = bound
 
-        self.relaxGoal = relaxGoal
         self.subgoalsAchieved = subgoalsAchieved
-        self.encoding = args.encoding
         self.rollBound = args.rollBound
-        self.minimizeQuality = minimizeQuality or args.quality == "shortest-step"
         self.binaryActions: int = args.binaryActions
         self.hasEffectAxioms = args.hasEffectAxioms
-        self.maxActionsRolling = maxActionsRolling
-        self.goalFunction = goalFunction
+        self.goalFunction = DeltaPlusClauses
         self.goalFunctionValue = goalFunctionValue
-        self.minimizeGoalFunction = minimizeGoalFunction
-        self.realActionVariables = realActionVariables
-        self.goalFunctionWithEpsilon = goalFunctionWithEpsilon
+        self.minimizeGoalFunction = (args.jairGoalFunction == "n")
+        self.goalAsSoftAsserts = (args.jairGoalFunction in {"n", "g"})
         self.initState = State.fromInitialCondition(self.problem.init)
         self.state = state if state else self.initState
 
@@ -71,12 +59,10 @@ class NumericEncoding(Encoding):
         self.transitions: [SMTExpression] = []
 
         self.pattern = pattern
-        if self.encoding == "binary":
-            self.pattern.extendNonLinearities(self.binaryActions)
 
         for index in range(0, bound + 1):
             var = NumericTransitionVariables(self.domain.predicates, self.domain.functions, self.domain.assList,
-                                             self.pattern, index, self.hasEffectAxioms, self.realActionVariables)
+                                             self.pattern, index, self.hasEffectAxioms)
             self.transitionVariables.append(var)
             if index > 0:
                 self.actionVariables.update(var.actionVariables.values())
@@ -95,11 +81,11 @@ class NumericEncoding(Encoding):
         self.goal: [SMTExpression] = self.getGoalExpression()
         self.fullGoal: [SMTExpression] = self.getFullGoalExpressions()
 
-        if minimizeGoalFunction:
+        if self.minimizeGoalFunction:
             self.addGoalFunctionMinimization()
 
-        if goalAsSoftAssertAndMinimize:
-            self.addGoalAsSoftRulesAndMinimize()
+        if self.goalAsSoftAsserts:
+            self.addGoalAsSoftRules()
 
         self.rules = self.initial + self.transitions + self.goal + self.setMinimizeParameter
 
@@ -142,12 +128,8 @@ class NumericEncoding(Encoding):
         return [SMTExpression.fromFormula(g, v) for g in self.problem.goal]
 
     def getGoalExpression(self) -> [SMTExpression]:
-
-        if self.relaxGoal and self.problem.goal.type != "AND":
-            raise Exception("At the moment I cannot relax the goal if it is not expressed as a conjunction of formulas")
-
-        if self.goalFunction:
-            v = self.transitionVariables[-1].sigmaVariables[self.k]
+        v = self.transitionVariables[-1].sigmaVariables[self.k]
+        if self.goalAsSoftAsserts:
             # expr = self.getGoalFunctionExpression()
             c = self.goalFunctionValue
             expr: SMTExpression = self.c < max(c - EPSILON, 0)
@@ -157,17 +139,15 @@ class NumericEncoding(Encoding):
             orGoal = [SMTExpression.fromFormula(g, v) for g in GmP] + [expr]
             return [SMTExpression.bigand(andGoal), SMTExpression.bigor(orGoal)]
 
-        return [self.getGoalRuleFromFormula(self.problem.goal, 0)]
+        return [SMTExpression.fromFormula(self.problem.goal, v)]
 
     def setMinimizeParameter(self):
-        if self.minimizeQuality:
-            return [self.c.equal(sum(self.actionVariables))]
         if self.goalFunction:
             expr = self.getGoalFunctionExpression()
             return [self.c.equal(expr)]
         return []
 
-    def addGoalAsSoftRulesAndMinimize(self):
+    def addGoalAsSoftRules(self):
         # vars = self.transitionVariables[-1].valueVariables
         v = self.transitionVariables[-1].sigmaVariables[self.k]
 
@@ -180,62 +160,6 @@ class NumericEncoding(Encoding):
     def addGoalFunctionMinimization(self):
         # vars = self.transitionVariables[-1].valueVariables
         self.minimize.append(self.c)
-
-    def getGoalRuleFromFormula(self, f: Formula, level: int) -> SMTExpression:
-        tVars = self.transitionVariables[-1]
-
-        andRules: [SMTExpression] = []
-        orRules: [SMTExpression] = []
-
-        for condition in f.conditions:
-            rule: SMTExpression
-
-            if isinstance(condition, BinaryPredicate):
-                rule = SMTExpression.fromPddl(condition, tVars.valueVariables)
-            elif isinstance(condition, Literal):
-                if condition.sign == "+":
-                    rule = tVars.valueVariables[condition.getAtom()]
-                else:
-                    rule = ~tVars.valueVariables[condition.getAtom()]
-            elif isinstance(condition, Formula):
-                rule = self.getGoalRuleFromFormula(condition, level + 1)
-            else:
-                raise NotImplemented("Shouldn't go here")
-
-            if level == 0 and self.relaxGoal:
-                if condition in self.subgoalsAchieved:
-                    andRules.append(rule)
-                else:
-                    self.softRules.append(rule)
-                    orRules.append(rule)
-            else:
-                if f.type == "AND":
-                    andRules.append(rule)
-                elif f.type == "OR":
-                    orRules.append(rule)
-
-        rules = []
-        if andRules:
-            rules.append(SMTExpression.bigand(andRules))
-        if orRules:
-            rules.append(SMTExpression.bigor(orRules))
-
-        return SMTExpression.bigand(rules)
-
-    def getMetricExpression(self, metricBound: float) -> SMTExpression or None:
-
-        if self.problem.metric:
-            return SMTNumericVariable.fromPddl(self.problem.metric,
-                                               self.transitionVariables[-1].valueVariables) < metricBound
-
-        if not self.problem.metric:
-            sumOfActions = 0
-            for stepVar in self.transitionVariables[1:]:
-                for action in self.pattern:
-                    if action.isFake:
-                        continue
-                    sumOfActions += stepVar.actionVariables[action] * action.linearizationTimes
-            return sumOfActions < metricBound
 
     def assignOrGetRule(self, stepVars, i, v, rhs, rules):
         if not self.hasEffectAxioms:
@@ -270,26 +194,18 @@ class NumericEncoding(Encoding):
                     self.assignOrGetRule(stepVars, i, v, (d_bv & (b_n.equal(0))), rules)
 
             # Case c) Numeric increases or decreases
-            if not action.hasNonSimpleLinearIncrement(self.encoding):
-                modifications = [(+1, action.getIncreases()), (-1, action.getDecreases())]
-                for sign, modificationDict in modifications:
-                    for v, funct in modificationDict.items():
-                        d_bv = stepVars.sigmaVariables[i - 1][v]
-                        k = SMTNumericVariable.fromPddl(funct, stepVars.sigmaVariables[i - 1])
-                        b_n = stepVars.actionVariables[i]
-                        rhs = (d_bv + (k * b_n)) if sign > 0 else (d_bv - (k * b_n))
-                        self.assignOrGetRule(stepVars, i, v, rhs, rules)
+            modifications = [(+1, action.getIncreases()), (-1, action.getDecreases())]
+            for sign, modificationDict in modifications:
+                for v, funct in modificationDict.items():
+                    d_bv = stepVars.sigmaVariables[i - 1][v]
+                    k = SMTNumericVariable.fromPddl(funct, stepVars.sigmaVariables[i - 1])
+                    b_n = stepVars.actionVariables[i]
+                    rhs = (d_bv + (k * b_n)) if sign > 0 else (d_bv - (k * b_n))
+                    self.assignOrGetRule(stepVars, i, v, rhs, rules)
 
             # Case d) Numeric assignments
             for v in action.getAssList():
                 self.assignOrGetRule(stepVars, i, v, stepVars.auxVariables[i][v], rules)
-
-            if action.hasNonSimpleLinearIncrement(self.encoding):
-                for eff in action.effects:
-                    if not eff.isLinearIncrement():
-                        continue
-                    v = eff.getAtom()
-                    self.assignOrGetRule(stepVars, i, v, stepVars.auxVariables[i][v], rules)
 
         return rules
 
@@ -299,11 +215,8 @@ class NumericEncoding(Encoding):
         for i, a in self.pattern.enumerate():
             a_n = stepVars.actionVariables[i]
             rules.append(a_n >= 0)
-            if not a.couldBeRepeated() or (a.hasNonSimpleLinearIncrement(self.encoding)):
+            if not a.couldBeRepeated():
                 rules.append(a_n <= 1)
-                continue
-            if self.maxActionsRolling:
-                rules.append(a_n <= self.maxActionsRolling[n][a])
                 continue
             if self.rollBound:
                 rules.append(a_n <= self.rollBound)
@@ -392,9 +305,6 @@ class NumericEncoding(Encoding):
 
                 rules.append((a_n > 0).implies(v_a.equal(d_psi)))
                 rules.append((a_n.equal(0)).implies(v_a.equal(d_a_v)))
-
-            if not a.hasNonSimpleLinearIncrement(self.encoding):
-                continue
 
             for eff in a.effects:
                 if not eff.isLinearIncrement():

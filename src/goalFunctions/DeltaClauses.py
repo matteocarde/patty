@@ -43,7 +43,7 @@ class DeltaClauses(GoalFunctionClauses):
         return v
 
     @staticmethod
-    def getExpression(vars: Dict[Atom, SMTVariable], g: Formula or Predicate, init: State) -> SMTExpression:
+    def getExpression(vars: Dict[Atom, SMTExpression], g: Formula or Predicate, init: State) -> SMTExpression:
 
         groups = g.conditions if isinstance(g, Formula) else [g]
 

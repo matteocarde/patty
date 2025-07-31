@@ -3,6 +3,8 @@ from typing import Set
 
 from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.Domain import GroundedDomain
+from src.pddl.Goal import Goal
+from src.pddl.InitialCondition import InitialCondition
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
 from src.pddl.State import State
@@ -18,24 +20,24 @@ class ChrpaImprover(Search):
         super().__init__(domain, problem, args)
         self.satPlan = satPlan
 
-    def solve(self) -> NumericPlan or None:
-
+    @staticmethod
+    def improve(plan: NumericPlan, problem: Problem, P: State = None):
         hatPlan = NumericPlan()
-        n = len(self.satPlan)
+        n = len(plan)
 
-        s = State.fromInitialCondition(self.problem.init)
-        for action in self.satPlan:
+        s = State.fromInitialCondition(problem.init)
+        for action in plan:
             hatAction = copy.deepcopy(action)
             for bp in action.getNormalizedNumericAssignments():
                 hatAction.preconditions.addClause(BinaryPredicate.equality(bp, s.getValue(bp)))
             s = s.applyAction(action)
-            hatPlan.addAction(action)
+            hatPlan.addAction(hatAction)
 
         removed: Set[int] = set()
 
-        s = State.fromInitialCondition(self.problem.init)
+        s = State.fromInitialCondition(problem.init)
         for i in range(n):
-            a_i = self.satPlan[i]
+            a_i = plan[i]
 
             marks: Set[int] = set()
 
@@ -54,7 +56,9 @@ class ChrpaImprover(Search):
                 else:
                     marks.add(j)
 
-            if s_.satisfies(self.problem.goal):
+            if not P and s_.satisfies(problem.goal):
+                removed = removed | marks
+            elif P and s_ == P:
                 removed = removed | marks
             else:
                 s = s.applyAction(a_i)
@@ -63,6 +67,9 @@ class ChrpaImprover(Search):
         for i in range(0, n):
             if i in removed:
                 continue
-            improvedPlan.addAction(self.satPlan[i])
+            improvedPlan.addAction(plan[i])
 
         return improvedPlan
+
+    def solve(self) -> NumericPlan or None:
+        return ChrpaImprover.improve(self.satPlan, self.problem)

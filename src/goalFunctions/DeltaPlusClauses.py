@@ -28,7 +28,7 @@ class DeltaPlusClauses(GoalFunctionClauses):
         return 0
 
     @staticmethod
-    def getExpression(vars: Dict[Atom, SMTVariable], g: Formula, init: State) -> SMTExpression:
+    def getExpression(vars: Dict[Atom, SMTExpression], g: Formula, init: State) -> SMTExpression:
         if g.type == "OR":
             raise Exception("This goal function works only when goals are clauses")
         addends = [DeltaClauses.getExpression(vars, phi, init) for phi in g.conditions if

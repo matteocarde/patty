@@ -11,6 +11,7 @@ from src.pddl.Problem import Problem
 from src.pddl.State import State
 from src.plan.NumericEncoding import NumericEncoding
 from src.plan.Pattern import Pattern
+from src.search.ChrpaImprover import ChrpaImprover
 from src.search.Search import Search
 from src.smt.SMTSolution import SMTSolution
 from src.smt.SMTSolver import SMTSolver
@@ -26,7 +27,6 @@ class JairSearch(Search):
         super().__init__(domain, problem, args)
         self.enhanced = (self.args.pattern == "enhanced")
         self.incompleteSaturationLevel = 1
-        self.allowIntermediateStates = True
         self.hasCheckedComplete = False
 
     def solve(self) -> Plan:
@@ -42,7 +42,7 @@ class JairSearch(Search):
 
         patS: Pattern = Pattern.empty()
         patG: Pattern = Pattern.empty()
-        patH: Pattern = self.satPatH(I, P)
+        patH: Pattern = self.computeP2G(I, P)
 
         self.staticPattern = patH
 
@@ -71,14 +71,9 @@ class JairSearch(Search):
                 problem=self.problem,
                 state=S,
                 pattern=pat,
-                goalFunction=DeltaPlusClauses if self.allowIntermediateStates else None,
-                minimizeGoalFunction=self.allowIntermediateStates,
-                goalFunctionWithEpsilon=False,
                 goalFunctionValue=c,
-                goalAsSoftAssertAndMinimize=self.allowIntermediateStates,
                 bound=1,
                 args=self.args,
-                relaxGoal=False,
                 subgoalsAchieved=subgoalsAchieved
             )
 
@@ -96,7 +91,7 @@ class JairSearch(Search):
                 c = solution.getVariable(encoding.c)
                 print(f"[SMT] Intermediate improved plan found: c = {c} [{datetime.datetime.now()}]")
 
-            if self.allowIntermediateStates:
+            if self.args.jairSearchStrategy in {"n", "g"}:
                 solver.registerOnImprovedModel(onImprovedModel)
 
             partialPlan: Plan = solver.solve()
@@ -113,8 +108,8 @@ class JairSearch(Search):
 
             if not isinstance(partialPlan, Plan):
                 unsatN += 1
-                patG = self.unsatPatG(patS, plan, unsatN).addPostfix(f"{bound}_g")
-                patH = self.unsatPatH(I, P, unsatN).addPostfix(bound)
+                patG = self.computeS2Pn(patS, plan, unsatN, P).addPostfix(f"{bound}_g")
+                patH = self.computeP2Gn(I, P, unsatN).addPostfix(bound)
                 self.console.log(f"Bound {bound} - No improvement", LogPrintLevel.STATS)
                 continue
 
@@ -130,54 +125,67 @@ class JairSearch(Search):
 
             subgoalsAchieved = {g for g in self.problem.goal if P.satisfies(g)}
 
-            patG = self.satPatG(patS, plan).addPostfix(f"{bound}_g")
-            patH = self.satPatH(I, P).addPostfix(bound)
+            patG = self.computeS2P(patS, plan, P).addPostfix(f"{bound}_g")
+            patH = self.computeP2G(I, P).addPostfix(bound)
             c = DeltaPlusClauses.compute(P, normalizedGoal, I)
 
         pass
 
-    def satPatG(self, patS, plan):
-        if self.args.jairSearchStrategy in {"brave", "greedy"}:
+    def getPattern(self, patS, plan, P):
+        if self.args.jairPatternG == "e":
             return Pattern.empty()
-        if self.args.jairRefinement == "yes":
+        if self.args.jairPatternG == "o":
+            chrpaPlan = ChrpaImprover.improve(plan, self.problem, P)
+            return Pattern.fromPlan(chrpaPlan)
+        if self.args.jairPatternG == "p":
             return Pattern.fromPlan(plan)
-        if self.args.jairRefinement == "no":
+        if self.args.jairPatternG == "r":
             return patS
 
-    def satPatH(self, I, P):
-        if self.args.jairPatternChange == "static":
+    def computeS2P(self, patS, plan, P):
+        if self.args.jairSearchStrategy in "C":
+            return self.getPattern(patS, plan, P)
+        if self.args.jairSearchStrategy in "B":
+            return Pattern.empty()
+        if self.args.jairSearchStrategy in "R":
+            return Pattern.empty()
+        if self.args.jairSearchStrategy in "G":
+            return Pattern.empty()
+
+    def computeP2G(self, I, P):
+        if self.args.jairPatternH == "s":
             return Pattern.fromState(I, self.problem.goal, self.domain, self.enhanced)
-        if self.args.jairPatternChange == "dynamic":
-            if self.args.jairPatternH == "complete":
-                return Pattern.fromState(P, self.problem.goal, self.domain, self.enhanced)
-            if self.args.jairPatternH == "incomplete":
-                self.incompleteSaturationLevel = 1
-                return Pattern.fromStateGreedy(P, self.problem.goal, self.domain, 1)
+        elif self.args.jairPatternH == "c":
+            return Pattern.fromState(P, self.problem.goal, self.domain, self.enhanced)
+        elif self.args.jairPatternH == "i":
+            self.incompleteSaturationLevel = 1
+            return Pattern.fromStateGreedy(P, self.problem.goal, self.domain, 1)
 
-    def unsatPatG(self, patS, plan, unsatN):
-        if self.args.jairSearchStrategy == "greedy":
+    def computeS2Pn(self, patS, plan, unsatN, P):
+        if self.args.jairSearchStrategy in "C":
+            return self.getPattern(patS, plan, P)
+        if self.args.jairSearchStrategy in "B":
+            return self.getPattern(patS, plan, P)
+        if self.args.jairSearchStrategy in "R":
             return Pattern.empty()
-        if self.args.jairRefinement == "yes":
-            return Pattern.fromPlan(plan)
-        if self.args.jairRefinement == "no":
-            return patS
+        if self.args.jairSearchStrategy in "G":
+            return Pattern.empty()
 
-    def unsatPatH(self, I, P, n):
-        if self.args.jairPatternChange == "static":
+    def computeP2Gn(self, I, P, n):
+        if self.args.jairPatternH == "s":
             return Pattern.fromState(I, self.problem.goal, self.domain, self.enhanced).multiply(n)
-        if self.args.jairPatternChange == "dynamic":
-            if self.args.jairPatternH == "complete":
+        elif self.args.jairPatternH == "c":
+            return Pattern.fromState(P, self.problem.goal, self.domain, self.enhanced).multiply(n)
+        elif self.args.jairPatternH == "i":
+            if self.incompleteSaturationLevel > 1:
+                self.incompleteSaturationLevel += 1
+                n = self.incompleteSaturationLevel
                 return Pattern.fromState(P, self.problem.goal, self.domain, self.enhanced).multiply(n)
-            if self.args.jairPatternH == "incomplete":
-                if self.incompleteSaturationLevel > 1:
+            else:
+                p = Pattern.fromStateGreedy(P, self.problem.goal, self.domain, 2 ** n)
+                p_ = Pattern.fromStateGreedy(P, self.problem.goal, self.domain, 2 ** (n - 1))
+                if len(p) == len(p_):
                     self.incompleteSaturationLevel += 1
-                    n = self.incompleteSaturationLevel
-                    return Pattern.fromState(P, self.problem.goal, self.domain, self.enhanced).multiply(n)
+                    return Pattern.fromState(P, self.problem.goal, self.domain, self.enhanced).multiply(2)
                 else:
-                    p = Pattern.fromStateGreedy(P, self.problem.goal, self.domain, 2 ** n)
-                    p_ = Pattern.fromStateGreedy(P, self.problem.goal, self.domain, 2 ** (n - 1))
-                    if len(p) == len(p_):
-                        self.incompleteSaturationLevel += 1
-                        return Pattern.fromState(P, self.problem.goal, self.domain, self.enhanced).multiply(2)
-                    else:
-                        return p
+                    return p
