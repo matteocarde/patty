@@ -43,6 +43,8 @@ RUN mkdir /root/.conda
 RUN bash Miniconda3-latest-Linux-x86_64.sh -b
 RUN rm -f Miniconda3-latest-Linux-x86_64.sh
 RUN conda --version
+RUN conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main
+RUN conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r
 
 WORKDIR /project
 
