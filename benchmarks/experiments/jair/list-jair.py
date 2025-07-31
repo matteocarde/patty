@@ -47,7 +47,7 @@ def main():
             problemFiles.add(problem)
 
             for planner in PLANNERS:
-                n = 1 if "PATTY-R" not in planner else RANDOM
+                n = 1  # if "PATTY-R" not in planner else RANDOM
                 for i in range(0, n):
                     instances.append([planner, domain, domainFile, problemFile])
         assert len(problemFiles) == 20

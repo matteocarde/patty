@@ -42,7 +42,7 @@ class TestPatty_Jair(TestCase):
             "Cnpc",
             "Bnpc",
             "Rnec",
-            "Gnec",
+            "Gnei",
             "Cnps",
             "Bnps",
             "Rnes",

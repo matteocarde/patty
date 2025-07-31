@@ -1,0 +1,47 @@
+
+               \documentclass[11pt,landscape]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in,landscape]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||cccccc||cccccc||}
+\hline
+ & \multicolumn{6}{c||}{Solved (out of $20$)}&\multicolumn{6}{c||}{Time (s)}\\
+Domain & $\mathrm{P}_\textsc{c}^{npc}$&$\mathrm{P}_\textsc{c}^{nrc}$&$\mathrm{P}_\textsc{c}^{noc}$&$\mathrm{P}_\textsc{b}^{npc}$&$\mathrm{P}_\textsc{b}^{nrc}$&$\mathrm{P}_\textsc{b}^{noc}$&$\mathrm{P}_\textsc{c}^{npc}$&$\mathrm{P}_\textsc{c}^{nrc}$&$\mathrm{P}_\textsc{c}^{noc}$&$\mathrm{P}_\textsc{b}^{npc}$&$\mathrm{P}_\textsc{b}^{nrc}$&$\mathrm{P}_\textsc{b}^{noc}$\\
+\hline
+\textsc{BlGrp} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&1.5&\textbf{1.4}&1.5&1.5&\textbf{1.4}&\textbf{1.4}\\
+\textsc{Cnt} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{0.7}&\textbf{0.7}&\textbf{0.7}&\textbf{0.7}&\textbf{0.7}&\textbf{0.7}\\
+\textsc{Cnt} (L)&\textbf{20}&19&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&3.0&3.8&2.5&3.0&\textbf{2.1}&2.8\\
+\textsc{Del} (S)&5&4&5&\textbf{6}&\textbf{6}&5&23.6&25.3&23.6&\textbf{23.2}&\textbf{23.2}&23.6\\
+\textsc{Drn} (S)&7&3&5&\textbf{8}&3&6&22.4&25.8&24.7&\textbf{21.9}&25.8&23.7\\
+\textsc{Exp} (S)&\textbf{3}&\textbf{3}&\textbf{3}&\textbf{3}&\textbf{3}&\textbf{3}&26.3&26.3&26.3&26.4&\textbf{26.2}&\textbf{26.2}\\
+\textsc{Farm} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{0.7}&\textbf{0.7}&\textbf{0.7}&\textbf{0.7}&\textbf{0.7}&\textbf{0.7}\\
+\textsc{Farm} (L)&\textbf{14}&\textbf{14}&\textbf{14}&\textbf{14}&\textbf{14}&\textbf{14}&\textbf{13.1}&\textbf{13.1}&\textbf{13.1}&\textbf{13.1}&\textbf{13.1}&\textbf{13.1}\\
+\textsc{HPwr} (S)&\textbf{20}&\textbf{20}&\textbf{20}&19&\textbf{20}&\textbf{20}&\textbf{13.0}&\textbf{13.0}&\textbf{13.0}&13.2&\textbf{13.0}&13.1\\
+\textsc{Mrkt} (L)&-&-&-&-&-&-&-&-&-&-&-&-\\
+\textsc{MPrime} (S)&\textbf{10}&\textbf{10}&\textbf{10}&\textbf{10}&\textbf{10}&\textbf{10}&17.4&17.2&17.5&17.4&\textbf{16.7}&17.4\\
+\textsc{PathM} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&3.7&\textbf{3.6}&\textbf{3.6}&\textbf{3.6}&\textbf{3.6}&\textbf{3.6}\\
+\textsc{PlWat} (S)&\textbf{18}&4&5&17&4&7&16.4&26.8&25.6&\textbf{15.8}&26.1&24.3\\
+\textsc{Rvr} (S)&\textbf{9}&\textbf{9}&\textbf{9}&\textbf{9}&\textbf{9}&\textbf{9}&18.1&18.7&18.1&\textbf{18.0}&18.1&\textbf{18.0}\\
+\textsc{Sail} (S)&\textbf{20}&\textbf{20}&14&\textbf{20}&\textbf{20}&\textbf{20}&0.9&1.5&12.6&\textbf{0.8}&\textbf{0.8}&\textbf{0.8}\\
+\textsc{Sail} (L)&19&17&16&\textbf{20}&\textbf{20}&\textbf{20}&4.9&5.9&9.4&\textbf{2.4}&\textbf{2.4}&\textbf{2.4}\\
+\textsc{Stlrs} (S)&12&\textbf{15}&\textbf{15}&14&\textbf{15}&14&15.0&14.2&13.9&14.7&\textbf{13.6}&14.5\\
+\textsc{Sgr} (S)&\textbf{19}&18&16&17&\textbf{19}&16&9.6&10.7&10.7&10.3&\textbf{8.8}&12.9\\
+\textsc{Tpp} (L)&\textbf{2}&\textbf{2}&\textbf{2}&\textbf{2}&\textbf{2}&\textbf{2}&\textbf{27.1}&27.8&\textbf{27.1}&\textbf{27.1}&\textbf{27.1}&\textbf{27.1}\\
+\textsc{Zeno} (S)&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{14.9}&15.9&15.2&\textbf{14.9}&15.1&15.0\\
+\textsc{Line} (L)&\textbf{20}&\textbf{20}&18&\textbf{20}&\textbf{20}&19&1.5&\textbf{1.1}&7.7&1.5&\textbf{1.1}&5.6
+\\\hline
+\textit{Best}&\textbf{289}&\textbf{269}&\textbf{263}&\textbf{290}&\textbf{276}&\textbf{276}&\textbf{51}&\textbf{48}&\textbf{51}&\textbf{78}&\textbf{76}&\textbf{54}\\\hline
+
+        \end{tabular}}
+        \caption{}
+        \label{tab:table-3}
+        \end{table*}
+        
+\end{document}

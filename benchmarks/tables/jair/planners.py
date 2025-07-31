@@ -3,80 +3,64 @@ JAIR_PLANNERS = {
         "name": r"$\mathrm{P}_\textsc{s}$",
         "style": "-"
     },
-    "PATTY-EH": {
-        "name": r"$\mathrm{P}_\textsc{d}$",
-        "style": "-"
+    "PATTY-C-npi": {
+        "name": r"$\mathrm{P}_\textsc{c}^{npi}$"
     },
-    "PATTY-EF": {
-        "name": r"$\mathrm{P}_\textsc{dc}$",
-        "style": "-"
+    "PATTY-C-npc": {
+        "name": r"$\mathrm{P}_\textsc{c}^{npc}$"
     },
-    "PATTY-GD": {
-        "name": r"$\mathrm{P}_\textsc{gd}$",
-        "style": "-"
+    "PATTY-R-gec": {
+        "name": r"$\mathrm{P}_\textsc{r}^{gec}$"
     },
-    "PATTY-BDC": {
-        "name": r"$\mathrm{P}_\textsc{bdc}$",
-        "style": "-"
+    "PATTY-C-aes": {
+        "name": r"$\mathrm{P}_\textsc{c}^{aes}$"
     },
-    "PATTY-EF-NO-ORDER": {
-        "name": r"$\mathrm{P}_\textsc{dc}^\emptyset$",
-        "style": "-"
+    "PATTY-B-gpc": {
+        "name": r"$\mathrm{P}_\textsc{b}^{gpc}$"
     },
-    "PATTY-GD-NO-ORDER": {
-        "name": r"$\mathrm{P}_\textsc{gd}^\emptyset$",
-        "style": "-"
+    "PATTY-B-nrc": {
+        "name": r"$\mathrm{P}_\textsc{b}^{nrc}$"
     },
-    "PATTY-BDC-NO-ORDER": {
-        "name": r"$\mathrm{P}_\textsc{bdc}^\emptyset$",
-        "style": "-"
+    "PATTY-G-gei": {
+        "name": r"$\mathrm{P}_\textsc{g}^{gei}$"
     },
-    "PATTY-S": {
-        "name": r"$\mathrm{P}_\textsc{s}$"
+    "PATTY-C-nrc": {
+        "name": r"$\mathrm{P}_\textsc{c}^{nrc}$"
     },
-    "PATTY-D": {
-        "name": r"$\mathrm{P}_\textsc{d}$"
+    "PATTY-B-noc": {
+        "name": r"$\mathrm{P}_\textsc{b}^{noc}$"
     },
-    "PATTY-DR": {
-        "name": r"$\mathrm{P}_\textsc{dr}$"
+    "PATTY-G-nei": {
+        "name": r"$\mathrm{P}_\textsc{g}^{nei}$"
     },
-    "PATTY-DI": {
-        "name": r"$\mathrm{P}_\textsc{di}$"
+    "PATTY-R-nes": {
+        "name": r"$\mathrm{P}_\textsc{r}^{nes}$"
     },
-    "PATTY-DP": {
-        "name": r"$\mathrm{P}_\textsc{dp}$"
+    "PATTY-B-nps": {
+        "name": r"$\mathrm{P}_\textsc{b}^{nps}$"
     },
-    "PATTY-DIR": {
-        "name": r"$\mathrm{P}_\textsc{dir}$"
+    "PATTY-C-noc": {
+        "name": r"$\mathrm{P}_\textsc{c}^{noc}$"
     },
-    "PATTY-DPR": {
-        "name": r"$\mathrm{P}_\textsc{dpr}$"
+    "PATTY-B-npc": {
+        "name": r"$\mathrm{P}_\textsc{b}^{npc}$"
     },
-    "PATTY-DB": {
-        "name": r"$\mathrm{P}_\textsc{db}$"
+    "PATTY-B-npi": {
+        "name": r"$\mathrm{P}_\textsc{b}^{npi}$"
     },
-    "PATTY-DBR": {
-        "name": r"$\mathrm{P}_\textsc{dbr}$"
+    "PATTY-C-gpc": {
+        "name": r"$\mathrm{P}_\textsc{c}^{gpc}$"
     },
-    "PATTY-DBI": {
-        "name": r"$\mathrm{P}_\textsc{dbi}$"
+    "PATTY-R-nec": {
+        "name": r"$\mathrm{P}_\textsc{r}^{nec}$"
     },
-    "PATTY-DBP": {
-        "name": r"$\mathrm{P}_\textsc{dbp}$"
+    "PATTY-G-nec": {
+        "name": r"$\mathrm{P}_\textsc{g}^{nec}$"
     },
-    "PATTY-DBIR": {
-        "name": r"$\mathrm{P}_\textsc{dbir}$"
+    "PATTY-C-nps": {
+        "name": r"$\mathrm{P}_\textsc{c}^{nps}$"
     },
-    "PATTY-DBPR": {
-        "name": r"$\mathrm{P}_\textsc{dbpr}$"
-    },
-    "PATTY-DG": {
-        "name": r"$\mathrm{P}_\textsc{dg}$"
-    },
-    "PATTY-DGI": {
-        "name": r"$\mathrm{P}_\textsc{dgi}$"
-    },
-    "PATTY-DGP": {
-        "name": r"$\mathrm{P}_\textsc{dgp}$"
+    "PATTY-G-nes": {
+        "name": r"$\mathrm{P}_\textsc{g}^{nes}$"
     },
 }

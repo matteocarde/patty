@@ -42,7 +42,6 @@ class SMTSolver:
                                                incremental=True,
                                                generate_models=True)
 
-        print(self.maximize)
         if self.encoding:
             t = TimeStat.startHolder("Adding assertions")
             self.addAssertions(self.encoding.rules)

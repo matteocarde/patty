@@ -2,12 +2,11 @@ from benchmarks.tables.aij.domains import AIJ_DOMAINS
 from benchmarks.tables.aij.planners import AIJ_PLANNERS
 
 JAIR_TABLE1 = {
-    "name": "tab:all-patty",
+    "name": "tab:table-1",
     "orientation": "landscape",
     "type": "table*",
     "width": r"\textwidth",
     "keepAll": True,
-    "time-limit": 30 * 1000,
     "caption": r"",
     "columns": {
         # "coverage": {
@@ -47,14 +46,11 @@ JAIR_TABLE1 = {
     },
     "planners": {
         # "PATTY-FE": {},
-        "PATTY-EH": {"type": "scalar"},
-        "PATTY-H-GAMMA-MAX": {"type": "scalar"},
-        "PATTY-H-GAMMA-GC": {"type": "scalar"},
-        "PATTY-H-GAMMA-PLUS": {"type": "scalar"},
-        "PATTY-H-GAMMA-XOR": {"type": "scalar"},
-        "PATTY-H-DELTA-MAX": {"type": "scalar"},
-        "PATTY-H-DELTA-PLUS": {"type": "scalar"},
-        "PATTY-H-DELTA-XOR": {"type": "scalar"},
+        "PATTY-C-aes": {"type": "scalar"},
+        "PATTY-C-npc": {"type": "scalar"},
+        "PATTY-B-npc": {"type": "scalar"},
+        "PATTY-R-nec": {"type": "scalar"},
+        "PATTY-G-nei": {"type": "scalar"},
     },
     "domains": AIJ_DOMAINS
 }

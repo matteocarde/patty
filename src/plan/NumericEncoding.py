@@ -20,6 +20,7 @@ from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTNumericVariable import SMTNumericVariable, SMTRealVariable
 from src.smt.SMTSolution import SMTSolution
 from src.smt.expressions.ConstantExpression import ConstantExpression
+from src.smt.expressions.FalseExpression import FalseExpression
 from src.smt.expressions.MaxExpression import MaxExpression
 from src.utils.Arguments import Arguments
 from src.utils.Constants import EPSILON
@@ -76,18 +77,20 @@ class NumericEncoding(Encoding):
             stepRules = self.getStepRules(index)
             self.transitions.extend(stepRules)
 
-        self.c = SMTRealVariable("costFunctionPatty")
-        self.setMinimizeParameter = self.setMinimizeParameter()
+        if self.minimizeGoalFunction:
+            self.c = SMTRealVariable("costFunctionPatty")
+            self.addGoalFunctionMinimization()
+
         self.goal: [SMTExpression] = self.getGoalExpression()
         self.fullGoal: [SMTExpression] = self.getFullGoalExpressions()
 
+        self.rules = self.initial + self.transitions + self.goal
+
         if self.minimizeGoalFunction:
-            self.addGoalFunctionMinimization()
+            self.rules += self.setMinimizeParameter()
 
         if self.goalAsSoftAsserts:
             self.addGoalAsSoftRules()
-
-        self.rules = self.initial + self.transitions + self.goal + self.setMinimizeParameter
 
         pass
 
@@ -132,7 +135,7 @@ class NumericEncoding(Encoding):
         if self.goalAsSoftAsserts:
             # expr = self.getGoalFunctionExpression()
             c = self.goalFunctionValue
-            expr: SMTExpression = self.c < max(c - EPSILON, 0)
+            expr: SMTExpression = self.c < max(c - EPSILON, 0) if self.minimizeGoalFunction else FalseExpression()
             P = self.subgoalsAchieved
             GmP = [g for g in self.problem.goal if g not in self.subgoalsAchieved]
             andGoal = [SMTExpression.fromFormula(g, v) for g in P]

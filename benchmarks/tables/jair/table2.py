@@ -2,12 +2,11 @@ from benchmarks.tables.aij.domains import AIJ_DOMAINS
 from benchmarks.tables.aij.planners import AIJ_PLANNERS
 
 JAIR_TABLE2 = {
-    "name": "tab:all-patty",
+    "name": "tab:table-2",
     "orientation": "landscape",
     "type": "table*",
     "width": r"\textwidth",
     "keepAll": True,
-    "time-limit": 30 * 1000,
     "caption": r"",
     "columns": {
         # "coverage": {
@@ -25,11 +24,11 @@ JAIR_TABLE2 = {
             "winner": -1,
             "avg": True
         },
-        "bound": {
-            "name": r"\textsc{smt} calls",
-            "winner": -1,
-            "avg": True
-        },
+        # "bound": {
+        #     "name": r"\textsc{smt} calls",
+        #     "winner": -1,
+        #     "avg": True
+        # },
         # "length": {
         #     "name": r"$|\pi|$",
         #     "winner": -1
@@ -47,14 +46,15 @@ JAIR_TABLE2 = {
     },
     "planners": {
         # "PATTY-FE": {},
-        "PATTY-EH": {"type": "scalar"},
-        "PATTY-H-OPT-GAMMA-MAX": {"type": "scalar"},
-        "PATTY-H-OPT-GAMMA-GC": {"type": "scalar"},
-        "PATTY-H-OPT-GAMMA-PLUS": {"type": "scalar"},
-        "PATTY-H-OPT-GAMMA-XOR": {"type": "scalar"},
-        "PATTY-H-OPT-DELTA-MAX": {"type": "scalar"},
-        "PATTY-H-OPT-DELTA-PLUS": {"type": "scalar"},
-        "PATTY-H-OPT-DELTA-XOR": {"type": "scalar"},
+        "PATTY-C-npc": {"type": "scalar"},
+        "PATTY-B-npc": {"type": "scalar"},
+        "PATTY-R-nec": {"type": "scalar"},
+        "PATTY-G-nei": {"type": "scalar"},
+        "PATTY-C-gpc": {"type": "scalar"},
+        "PATTY-B-gpc": {"type": "scalar"},
+        "PATTY-R-gec": {"type": "scalar"},
+        "PATTY-G-gei": {"type": "scalar"},
+        "PATTY-C-aes": {"type": "scalar"},
     },
     "domains": AIJ_DOMAINS
 }

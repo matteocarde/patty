@@ -2,19 +2,13 @@ from benchmarks.tables.aij.domains import AIJ_DOMAINS
 from benchmarks.tables.aij.planners import AIJ_PLANNERS
 
 JAIR_TABLE3 = {
-    "name": "tab:all-patty",
+    "name": "tab:table-3",
     "orientation": "landscape",
     "type": "table*",
     "width": r"\textwidth",
     "keepAll": True,
-    "time-limit": 30 * 1000,
     "caption": r"",
     "columns": {
-        # "coverage": {
-        #     "name": "Coverage (\%)",
-        #     "winner": +1,
-        #     "stdev": False
-        # },
         "quantity": {
             "name": "Solved (out of $20$)",
             "winner": +1,
@@ -24,38 +18,15 @@ JAIR_TABLE3 = {
             "name": "Time (s)",
             "winner": -1,
             "avg": True
-        },
-        "bound": {
-            "name": r"\textsc{smt} calls",
-            "winner": -1,
-            "avg": True
-        },
-        # "length": {
-        #     "name": r"$|\pi|$",
-        #     "winner": -1
-        # },
-        # "nOfVars": {
-        #     "name": "$|\mathcal{X} \cup \mathcal{A}^\prec \cup \mathcal{X}'|$",
-        #     "winner": -1,
-        #     "stdev": False
-        # },
-        # "nOfRules": {
-        #     "name": "$|\mathcal{T}^\prec(\mathcal{X},\mathcal{A}^\prec,\mathcal{X}')|$",
-        #     "winner": -1,
-        #     "stdev": False
-        # },
+        }
     },
     "planners": {
-        # "PATTY-FE": {},
-        "PATTY-EH": {"type": "scalar"},
-        "PATTY-EF": {"type": "scalar"},
-        "PATTY-F-OPT-GAMMA-MAX": {"type": "scalar"},
-        "PATTY-F-OPT-GAMMA-GC": {"type": "scalar"},
-        "PATTY-F-OPT-GAMMA-PLUS": {"type": "scalar"},
-        "PATTY-F-OPT-GAMMA-XOR": {"type": "scalar"},
-        "PATTY-F-OPT-DELTA-MAX": {"type": "scalar"},
-        "PATTY-F-OPT-DELTA-PLUS": {"type": "scalar"},
-        "PATTY-F-OPT-DELTA-XOR": {"type": "scalar"},
+        "PATTY-C-npc": {"type": "scalar"},
+        "PATTY-C-nrc": {"type": "scalar"},
+        "PATTY-C-noc": {"type": "scalar"},
+        "PATTY-B-npc": {"type": "scalar"},
+        "PATTY-B-nrc": {"type": "scalar"},
+        "PATTY-B-noc": {"type": "scalar"},
     },
     "domains": AIJ_DOMAINS
 }

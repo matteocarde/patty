@@ -38,20 +38,29 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2025-06-30-JAIR-v6"
+    exp = "2025-07-31-JAIR-MAYBE-LAST-v2"
     joinWith = [
         (exp, [
-            "PATTY-S",
-            "PATTY-D",
-            "PATTY-DR",
-            "PATTY-DI",
-            "PATTY-DIR",
-            "PATTY-DB",
-            "PATTY-DBR",
-            "PATTY-DBI",
-            "PATTY-DBIR",
-            "PATTY-DG",
-            "PATTY-DGI",
+            "PATTY-C-npi",
+            "PATTY-C-npc",
+            "PATTY-R-gec",
+            "PATTY-C-aes",
+            "PATTY-B-gpc",
+            "PATTY-B-nrc",
+            "PATTY-G-gei",
+            "PATTY-C-nrc",
+            "PATTY-B-noc",
+            "PATTY-G-nei",
+            "PATTY-R-nes",
+            "PATTY-B-nps",
+            "PATTY-C-noc",
+            "PATTY-B-npc",
+            "PATTY-B-npi",
+            "PATTY-C-gpc",
+            "PATTY-R-nec",
+            "PATTY-G-nec",
+            "PATTY-C-nps",
+            "PATTY-G-nes",
         ])
     ]
 
@@ -69,9 +78,9 @@ def main():
         CloudLogger.appendLogs(exp2, file, keepSolvers)
 
     tables = [
-        # ("TAB1", JAIR_TABLE1),
-        # ("TAB2", JAIR_TABLE2),
-        # ("TAB3", JAIR_TABLE3),
+        ("TAB1", JAIR_TABLE1),
+        ("TAB2", JAIR_TABLE2),
+        ("TAB3", JAIR_TABLE3),
         ("TAB4", JAIR_TABLE4),
     ]
 
