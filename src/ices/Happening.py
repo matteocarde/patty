@@ -19,8 +19,10 @@ IEFF = r"e"
 class Happening:
     type: str
     name: str
+    cluster: str
 
     def __init__(self):
+        self.cluster = ""
         pass
 
     def __repr__(self):

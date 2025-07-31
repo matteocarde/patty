@@ -11,6 +11,7 @@ from src.plan.Encoding import Encoding
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTSolution import SMTSolution
 from src.smt.SMTVariable import SMTVariable
+from src.utils.TimeStat import TimeStat
 
 
 class SMTSolver:
@@ -41,8 +42,11 @@ class SMTSolver:
                                                incremental=True,
                                                generate_models=True)
 
+        print(self.maximize)
         if self.encoding:
+            t = TimeStat.startHolder("Adding assertions")
             self.addAssertions(self.encoding.rules)
+            t.endHolder()
             self.addSoftAssertions(self.encoding.softRules)
             self.setMinimize(self.encoding.minimize)
 
@@ -52,7 +56,8 @@ class SMTSolver:
     def addAssertion(self, expr: SMTExpression, push=True):
         self.assertions.append(expr)
         self.variables |= expr.getVariables()
-        z3Expr = self.z3.converter.convert(expr.getExpression()) if self.maximize else expr.getExpression()
+        expr = expr.getExpression()
+        z3Expr = self.z3.converter.convert(expr) if self.maximize else expr
 
         if self.maximize:
             self.solver.add(z3Expr)

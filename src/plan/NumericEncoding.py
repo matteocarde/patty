@@ -172,7 +172,7 @@ class NumericEncoding(Encoding):
         v = self.transitionVariables[-1].sigmaVariables[self.k]
 
         for g in self.problem.goal:
-            if not isinstance(g, BinaryPredicate) and g not in self.subgoalsAchieved:
+            if g not in self.subgoalsAchieved:
                 self.softRules.append(SMTExpression.fromPddl(g, v))
 
         pass

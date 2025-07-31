@@ -204,6 +204,7 @@ class SMTExpression:
                 preRules += [SMTExpression.fromFormula(pre, variables)]
             else:
                 preRules += [SMTExpression.fromPddl(pre, variables)]
+
         if formula.type == "AND":
             return SMTExpression.andOfExpressionsList(preRules)
         else:
@@ -227,7 +228,7 @@ class SMTExpression:
             if isinstance(r, TrueExpression):
                 continue
             sRules.append(r)
-        if not rules:
+        if not sRules:
             return TrueExpression()
         return SMTExpression.__connectiveOfExpressionList(sRules, AndExpression)
 

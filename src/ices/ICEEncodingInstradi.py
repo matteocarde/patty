@@ -1,8 +1,16 @@
-from typing import List, Dict, Set
+from typing import List, Dict, Set, Tuple
 import time
 
+from classes.instradi.Instradi import Instradi
+from classes.instradi.station.Route import Route
+from classes.planning.actions.DepartAction import DepartAction
+from classes.planning.actions.EnterAction import EnterAction
+from classes.planning.actions.ExitAction import ExitAction
+from classes.planning.actions.MoveAction import MoveAction
+from classes.planning.actions.OverlapAction import OverlapAction
+from classes.planning.actions.ReleaseAction import ReleaseAction
 from src.ices.Happening import HappeningActionStart, HappeningActionEnd, HappeningEffect, HappeningConditionStart, \
-    HappeningConditionEnd, HappeningAction
+    HappeningConditionEnd, HappeningAction, Happening
 from src.ices.ICEAction import ICEAction
 from src.ices.ICEActionStartEndPair import ICEActionStartEndPair
 from src.ices.ICEConditionStartEndPair import ICEConditionStartEndPair
@@ -36,10 +44,11 @@ class ICEEncodingInstradi(Encoding):
     actionsStartEndPairs: List[ICEActionStartEndPair]
     conditionsStartEndPairs: List[ICEConditionStartEndPair]
 
-    def __init__(self, task: ICETask, pattern: ICEPattern):
+    def __init__(self, task: ICETask, pattern: ICEPattern, instradi: Instradi):
         super().__init__()
         self.task: ICETask = task
         self.pattern: ICEPattern = pattern
+        self.instradi: Instradi = instradi
         t = TimeStat.startHolder("Getting actions start and end pairs ")
         self.actionsStartEndPairs = self.pattern.getActionsStartEndPairs()
         t.endHolder()
@@ -50,7 +59,7 @@ class ICEEncodingInstradi(Encoding):
         self.transVars = ICETransitionVariablesInstradi(task, pattern)
         t.endHolder()
         t = TimeStat.startHolder("Computing Pattern Precedence Graph")
-        self.ppg = ICEPatternPrecedenceGraphInstradi(pattern, self.transVars)
+        self.ppg = ICEPatternPrecedenceGraphInstradi(pattern, self.transVars, instradi)
         t.endHolder()
         self.k = len(pattern) - 1
         self.rulesBySet = dict()
@@ -74,6 +83,7 @@ class ICEEncodingInstradi(Encoding):
         self.rulesBySet["dur"] = TimeStat.timeCall(self.__getDurRules)
         self.rulesBySet["make-span"] = TimeStat.timeCall(self.__getMakeSpanRules)
         self.rulesBySet["precedence"] = TimeStat.timeCall(self.__getPrecedenceRules)
+        self.rulesBySet["mutex"] = TimeStat.timeCall(self.__getMutexRules)
         self.rulesBySet["plan-intermediate"] = TimeStat.timeCall(self.__getPlanIntermediateRules)
         self.rulesBySet["start-end"] = TimeStat.timeCall(self.__getStartEndRules)
         self.rulesBySet["action-intermediate"] = TimeStat.timeCall(self.__getActionIntermediateRules)
@@ -159,12 +169,12 @@ class ICEEncodingInstradi(Encoding):
 
     def __getMakeSpanRules(self) -> SMTConjunction:
         rules: SMTConjunction = SMTConjunction()
-        tVars = self.transVars
-
-        endingTimes = [tVars.timeVariables[h] for h in self.pattern if isinstance(h, HappeningActionEnd)]
-        M = self.transVars.makespan
-        rules.append(SMTExpression.bigand([M >= t_i for t_i in endingTimes]))
-        rules.append(SMTExpression.bigor([M.equal(t_i) for t_i in endingTimes]))
+        # tVars = self.transVars
+        #
+        # endingTimes = [tVars.timeVariables[h] for h in self.pattern if isinstance(h, HappeningActionEnd)]
+        # M = self.transVars.makespan
+        # rules.append(SMTExpression.bigand([M >= t_i for t_i in endingTimes]))
+        # rules.append(SMTExpression.bigor([M.equal(t_i) for t_i in endingTimes]))
 
         return rules
 
@@ -187,7 +197,6 @@ class ICEEncodingInstradi(Encoding):
         rules: SMTConjunction = SMTConjunction()
         hVars = self.transVars.happeningVariables
         tVars = self.transVars.timeVariables
-        M = self.transVars.makespan
 
         piEff = []
         piCondStart = []
@@ -215,6 +224,7 @@ class ICEEncodingInstradi(Encoding):
         for h in piEff:
             h_i = hVars[h]
             t_i = tVars[h]
+            M = self.transVars.makespan
             rules.append(h_i.implies(t_i.equal(h.effect.time.absolute(0, M))))
 
         # 5.c
@@ -347,23 +357,75 @@ class ICEEncodingInstradi(Encoding):
 
         return rules
 
+    def __getMutexes(self) -> List[Tuple[Happening, Happening]]:
+        mutexes = []
+        for i, h_i in enumerate(self.pattern):
+            for h_j in self.pattern[i + 1:]:
+
+                if not (hasattr(h_i, "parent") and hasattr(h_j, "parent")):
+                    continue
+
+                if not isinstance(h_i.parent, ICEAction) or not isinstance(h_j.parent, ICEAction):
+                    continue
+
+                a_i: ICEAction = h_i.parent
+                a_j: ICEAction = h_j.parent
+
+                if a_i.originalName == a_j.originalName:
+                    continue
+
+                if type(a_i) == type(a_j):
+                    continue
+
+                if hasattr(a_i, "train") and hasattr(a_j, "train"):
+                    t_i = a_i.train
+                    t_j = a_j.train
+
+                    if t_i != t_j:
+                        continue
+
+                    if hasattr(a_i, "route") and hasattr(a_j, "route"):
+                        r_i: Route = a_i.route
+                        r_j: Route = a_j.route
+
+                        if r_i == r_j:
+                            continue
+
+                        if not self.instradi.stationGraph.areConnected(r_i, r_j):
+                            # print("Is useless to constrain", h_i, h_j)
+                            mutexes.append((h_i, h_j))
+
+        return mutexes
+
+    def __getMutexRules(self) -> SMTConjunction:
+        rules: SMTConjunction = SMTConjunction()
+        hVars = self.transVars.happeningVariables
+
+        for happening_i, happening_j in self.ppg.useless:
+            h_i = hVars[happening_i]
+            h_j = hVars[happening_j]
+            rules.append(~(h_i & h_j))
+
+        return rules
+
     def __getConditionsRules(self) -> SMTConjunction:
         rules: SMTConjunction = SMTConjunction()
         hVars = self.transVars.happeningVariables
         sigma = self.transVars.sigmaExpressions
 
-        print("len(self.conditionsStartEndPairs):", len(self.conditionsStartEndPairs))
-
         for pair in self.conditionsStartEndPairs:
             # 8.a
+            if pair.h_i.parent != pair.h_j.parent:
+                continue
+
             h_i = hVars[pair.h_i]
-            h_j = hVars[pair.h_j]
+            # h_j = hVars[pair.h_j]
             i = pair.i
             j = pair.j
             cond = pair.condition.conditions
-            cond_i = SMTExpression.fromFormula(cond, sigma[i])
-            # print((h_i > 0), sigma[i])
-            rules.append((h_i).implies(cond_i))
+            cond_i = SMTExpression.fromFormula(cond, sigma[i - 1])
+            rule = (h_i).implies(cond_i)
+            rules.append(rule)
 
             ps = set()
             for atom in cond.atoms:
@@ -371,9 +433,11 @@ class ICEEncodingInstradi(Encoding):
                     continue
                 for p in self.touchedAtomsIndexes[atom]:
                     if i < p < j:
-                        ps.add(p)
+                        ps.add(p - 1)
 
             cond_p = SMTExpression.bigand([SMTExpression.fromFormula(cond, sigma[p]) for p in ps])
-            rules.append(((h_i) & (h_j)).implies(cond_p))
+
+            rule = (h_i).implies(cond_p)
+            rules.append(rule)
 
         return rules

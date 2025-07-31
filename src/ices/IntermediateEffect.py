@@ -14,9 +14,11 @@ class IntermediateEffect(Tuplable):
     time: RelativeTime or float
     effects: List[Literal or BinaryPredicate]
 
+    atoms: Set[Atom]
     atomsAdded: Set[Atom]
     atomsDeleted: Set[Atom]
     atomsAssigned: Set[Atom]
+    atomsNumeric: Set[Atom]
     atomToConstant: Dict[Atom, float]
     atomToEffect: Dict[Atom, BinaryPredicate]
 
@@ -25,6 +27,7 @@ class IntermediateEffect(Tuplable):
         self.atomToEffect = dict()
         self.atomToConstant = dict()
         self.effects = list()
+        self.atoms = set()
         self.atomsAdded = set()
         self.atomsDeleted = set()
         self.atomsAssigned = set()
@@ -35,7 +38,6 @@ class IntermediateEffect(Tuplable):
 
     def __str__(self):
         return f"<{self.time}, {self.effects}>"
-
 
     def toTuple(self) -> Tuple:
         return self.time, self.effects
@@ -48,12 +50,16 @@ class IntermediateEffect(Tuplable):
         self.effects.append(eff)
         if isinstance(eff, Literal) and eff.sign == "+":
             self.atomsAdded.add(eff.getAtom())
+            self.atoms.add(eff.getAtom())
         if isinstance(eff, Literal) and eff.sign == "-":
             self.atomsDeleted.add(eff.getAtom())
+            self.atoms.add(eff.getAtom())
         if isinstance(eff, BinaryPredicate):
             self.atomsAssigned.add(eff.getAtom())
+            self.atoms.add(eff.getAtom())
             self.atomToEffect[eff.getAtom()] = eff
-            self.atomsNumeric.add(eff.getFunctions())
+            self.atomsNumeric.update(eff.getFunctions())
+            self.atoms.update(eff.getFunctions())
             if eff.type == BinaryPredicateType.MODIFICATION and isinstance(eff.rhs, Constant):
                 self.atomToConstant[eff.getAtom()] = eff.rhs.value
 

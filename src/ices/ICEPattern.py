@@ -1,16 +1,15 @@
 from __future__ import annotations
+
 import copy
 from typing import List, Iterable, Dict
 
 from src.ices.Happening import Happening, HappeningActionStart, HappeningActionEnd, HappeningConditionStart, \
-    HappeningConditionEnd, HappeningEffect
+    HappeningConditionEnd, HappeningEffect, HappeningCondition
 from src.ices.ICEAction import BEGIN, ICEAction
 from src.ices.ICEActionStartEndPair import ICEActionStartEndPair
 from src.ices.ICEConditionStartEndPair import ICEConditionStartEndPair
 from src.ices.PlanIntermediateEffect import PlanIntermediateEffect
 from src.pddl.Atom import Atom
-from src.pddl.BinaryPredicate import BinaryPredicate
-from src.pddl.Literal import Literal
 
 
 class ICEPattern:
@@ -59,10 +58,12 @@ class ICEPattern:
         order = []
         for i in range(0, times):
             for item in self.pattern:
-                a = copy.deepcopy(item)
+                a = copy.copy(item)
                 if hasattr(a, "action") and isinstance(a.action, ICEAction):
+                    a.action = copy.copy(a.action)
                     a.action.name = f"{a.action.name}_{i}"
                 if hasattr(a, "parent") and isinstance(a.parent, ICEAction):
+                    a.parent = copy.copy(a.parent)
                     a.parent.name = f"{a.parent.name}_{i}"
                 a.name = f"{a.name}_{i}" if times > 1 else f"{a.name}"
                 order.append(a)
@@ -88,10 +89,10 @@ class ICEPattern:
         for i, h_i in enumerate(self.pattern):
             if not isinstance(h_i, HappeningConditionStart):
                 continue
-            for j, h_j in enumerate(self.pattern):
-                if j < i or not isinstance(h_j, HappeningConditionEnd) or h_i.condition != h_j.condition:
+            for j, h_j in enumerate(self.pattern[i + 1:]):
+                if not isinstance(h_j, HappeningConditionEnd) or h_i.condition != h_j.condition:
                     continue
-                pairs.append(ICEConditionStartEndPair(h_i, i, h_j, j))
+                pairs.append(ICEConditionStartEndPair(h_i, i, h_j, i + 1 + j))
 
         return pairs
 
@@ -107,6 +108,18 @@ class ICEPattern:
                 continue
             for e in h_i.effect.effects:
                 v = e.getAtom()
+                d.setdefault(v, [])
+                d[v].append(i)
+
+        return d
+
+    def getTouchedByConditionStart(self) -> Dict[Atom, List[int]]:
+        d: Dict[Atom, List[int]] = dict()
+        for i, h_i in enumerate(self.pattern):
+            if not isinstance(h_i, HappeningConditionStart):
+                continue
+            for c in h_i.condition.conditions:
+                v = c.getAtom()
                 d.setdefault(v, [])
                 d[v].append(i)
 

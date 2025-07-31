@@ -15,6 +15,7 @@ FINISH = PlanRelativeTimeAnchor.FINISH
 
 class ICEAction:
     name: str
+    originalName: str
     icond: List[ActionIntermediateCondition]
     ieff: List[ActionIntermediateEffect]
     duration: float
@@ -41,5 +42,6 @@ class ICEAction:
     def fromProperties(cls, name: str, duration: int) -> ICEAction:
         a = cls()
         a.name = name
+        a.originalName = name
         a.duration = duration
         return a
