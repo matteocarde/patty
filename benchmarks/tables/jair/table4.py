@@ -24,7 +24,7 @@ JAIR_TABLE4 = {
         "PATTY-C-npc": {"type": "scalar"},
         "PATTY-B-npc": {"type": "scalar"},
         "PATTY-R-nec": {"type": "scalar"},
-        "PATTY-G-nec": {"type": "scalar"},
+        "PATTY-G-nei": {"type": "scalar"},
         "PATTY-C-nps": {"type": "scalar"},
         "PATTY-B-nps": {"type": "scalar"},
         "PATTY-R-nes": {"type": "scalar"},

@@ -116,8 +116,6 @@ class NumericEncoding(Encoding):
         for v in self.domain.predicates - seenAtoms:
             rules.append(~tVars.valueVariables[v])
 
-        print(rules)
-
         return rules
 
     def getGoalFunctionExpression(self):
@@ -136,11 +134,11 @@ class NumericEncoding(Encoding):
             # expr = self.getGoalFunctionExpression()
             c = self.goalFunctionValue
             expr: SMTExpression = self.c < max(c - EPSILON, 0) if self.minimizeGoalFunction else FalseExpression()
-            P = self.subgoalsAchieved
+            P = [g for g in self.problem.goal if g in self.subgoalsAchieved]
             GmP = [g for g in self.problem.goal if g not in self.subgoalsAchieved]
             andGoal = [SMTExpression.fromFormula(g, v) for g in P]
             orGoal = [SMTExpression.fromFormula(g, v) for g in GmP] + [expr]
-            return [SMTExpression.bigand(andGoal), SMTExpression.bigor(orGoal)]
+            return andGoal + [SMTExpression.bigor(orGoal)]
 
         return [SMTExpression.fromFormula(self.problem.goal, v)]
 
@@ -328,12 +326,12 @@ class NumericEncoding(Encoding):
     def getFrameStepRules(self, stepVars: NumericTransitionVariables) -> List[SMTExpression]:
         rules: List[SMTExpression] = []
 
-        for v in self.domain.functions:
+        for v in sorted(self.domain.functions):
             v_first = stepVars.valueVariables[v]
             delta_g_v = stepVars.sigmaVariables[self.k][v]
             rules.append(v_first.equal(delta_g_v))
 
-        for v in self.domain.predicates:
+        for v in sorted(self.domain.predicates):
             v_first = stepVars.valueVariables[v]
             delta_g_v = stepVars.sigmaVariables[self.k][v]
             rules.append(v_first.equal(delta_g_v))

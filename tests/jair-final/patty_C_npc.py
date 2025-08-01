@@ -14,8 +14,8 @@ from src.utils.Arguments import Arguments
 class TestPatty_C_npc(TestCase):
 
     def setUp(self) -> None:
-        domainFile = "../../files/numeric/ipc-2023/ext-plant-watering/domain.pddl"
-        problemFile = "../../files/numeric/ipc-2023/ext-plant-watering/instances/instance_10_5_2_1.pddl"
+        domainFile = "../../files/numeric/ipc-2023/fo_counters/domain.pddl"
+        problemFile = "../../files/numeric/ipc-2023/fo_counters/instances/instance_8.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)
