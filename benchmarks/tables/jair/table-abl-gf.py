@@ -1,13 +1,13 @@
 from benchmarks.tables.aij.domains import AIJ_DOMAINS
 from benchmarks.tables.aij.planners import AIJ_PLANNERS
 
-JAIR_TABLE2 = {
-    "name": "tab:table-2",
+JAIR_ABL_GF = {
+    "name": "tab:abl-gf",
     "orientation": "landscape",
     "type": "table*",
     "width": r"\textwidth",
     "keepAll": True,
-    "caption": r"",
+    "caption": r"Impact of the goal function on Cautious, Brave, Reckless and Greedy \pattyd. Planner names are abbreviated.",
     "columns": {
         # "coverage": {
         #     "name": "Coverage (\%)",

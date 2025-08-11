@@ -8,13 +8,10 @@ import sys
 from typing import Dict, List, Set
 
 from benchmarks.tables.jair.planners import JAIR_PLANNERS
-from benchmarks.tables.jair.table1 import JAIR_TABLE1
-from benchmarks.tables.jair.table2 import JAIR_TABLE2
-from benchmarks.tables.jair.table3 import JAIR_TABLE3
-from benchmarks.tables.jair.table4 import JAIR_TABLE4
-from benchmarks.tables.jair.table5 import JAIR_TABLE5
 from classes.CloudLogger import CloudLogger
 from classes.Result import Result
+
+from benchmarks.tables.jair.table_cbrg import JAIR_CBRG
 
 
 def round(fValue, n):
@@ -39,7 +36,7 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2025-07-31-JAIR-MAYBE-LAST-v5"
+    exp = "2025-08-11-JAIR-5MIN-v1"
     joinWith = [
         (exp, [
             "PATTY-C-npi",
@@ -79,11 +76,11 @@ def main():
         CloudLogger.appendLogs(exp2, file, keepSolvers)
 
     tables = [
-        # ("TAB1", JAIR_TABLE1),
-        # ("TAB2", JAIR_TABLE2),
+        ("cbrg", JAIR_CBRG),
+        # ("abl-gf", JAIR_TABLE2),
         # ("TAB3", JAIR_TABLE3),
         # ("TAB4", JAIR_TABLE4),
-        ("TAB5", JAIR_TABLE5),
+        # ("TAB5", JAIR_TABLE5),
     ]
 
     PLANNERS = JAIR_PLANNERS
@@ -166,6 +163,7 @@ def main():
                 "planLength": dict(),
                 "nOfVars": dict(),
                 "nOfRules": dict(),
+                "patternLength": dict(),
                 "lastCallsToSolver": dict(),
             }
             commonlySolved = None
@@ -209,6 +207,9 @@ def main():
 
                 v = [r.planLength for r in pResult if r.solved and r.problem in commonlySolved]
                 t[domain]["planLength"][planner] = rVec(v, 0) if hasCoverage and v else symb
+
+                v = [r.patternLength for r in pResult if r.solved and r.problem in commonlySolved]
+                t[domain]["patternLength"][planner] = rVec(v, 0) if hasCoverage and v else symb
 
                 v = [r.nOfVars for r in pResult if r.nOfVars > 0 and r.problem in commonlySolved]
                 t[domain]["nOfVars"][planner] = rVec(v, 0) if hasCoverage and v else symb
@@ -280,8 +281,8 @@ def main():
                             better |= {planner}
                     for planner in planners:
                         winning[domain][column][planner] += 1 if planner in better else 0
-
-        latex.append(r"""
+        latexTable = list()
+        latexTable.append(r"""
             \begin{""" + table["type"] + r"""}[tb]
             \centering
             \resizebox{""" + table["width"] + r"""}{!}{""")
@@ -308,11 +309,11 @@ def main():
 
         columns = f"|l|{cString}" + "|"
 
-        latex.append(r"\begin{tabular}{" + columns + "}")
-        latex.append(r"\hline")
-        latex.append(fr" & " + "&".join(mString) + r"\\")
-        latex.append(fr"Domain & " + "&".join(plannersHeader) + r"\\")
-        latex.append(fr"\hline")
+        latexTable.append(r"\begin{tabular}{" + columns + "}")
+        latexTable.append(r"\hline")
+        latexTable.append(fr" & " + "&".join(mString) + r"\\")
+        latexTable.append(fr"Domain & " + "&".join(plannersHeader) + r"\\")
+        latexTable.append(fr"\hline")
 
         rows = list()
         for domain, domainInfo in table["domains"].items():
@@ -346,8 +347,8 @@ def main():
                     row.append(value + subvalue)
             rows.append("&".join(row))
 
-        latex.append("\\\\\n".join(rows))
-        latex.append(fr"\\\hline")
+        latexTable.append("\\\\\n".join(rows))
+        latexTable.append(fr"\\\hline")
         row = [r"\textit{Best}"]
 
         for column, columnInfo in table["columns"].items():
@@ -358,9 +359,9 @@ def main():
                 for domain, domainInfo in table["domains"].items():
                     nOfWinning += winning[domain][column][planner]
                 row.append(r"\textbf{" + str(nOfWinning) + "}")
-        latex.append("&".join(row) + r"\\\hline")
+        latexTable.append("&".join(row) + r"\\\hline")
 
-        latex.append(r"""
+        latexTable.append(r"""
         \end{tabular}}
         \caption{""" + table["caption"] + """}
         \label{""" + table["name"] + """}
@@ -368,14 +369,20 @@ def main():
         """)
 
         pass
-
+        latex += latexTable
         latex.append("\end{document}")
 
         latexStr = "\n".join(latex)
         file = f"{exp}-{tableName}"
         with open(f"{folder}/{file}.tex", "w") as f:
             f.write(latexStr)
-        os.system(f"pdflatex -interaction=nonstopmode --output-directory='{folder}' {folder}/{file}.tex ")
+
+        latexTableStr = "\n".join(latexTable)
+        fileTable = f"{exp}-{tableName}-only-table"
+        with open(f"{folder}/{fileTable}.tex", "w") as f:
+            f.write(latexTableStr)
+        os.system(
+            f"/Library/TeX/texbin/pdflatex -interaction=nonstopmode --output-directory='{folder}' {folder}/{file}.tex ")
 
         os.remove(f"{folder}/{file}.aux")
         os.remove(f"{folder}/{file}.log")

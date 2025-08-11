@@ -89,6 +89,7 @@ class Result(dict):
         self["lastCallsToSolver"] = self.lastCallsToSolver
         self["quantity"] = 1 if self.solved else 0
         self["transitiveClosureSize"] = self.transitiveClosureSize
+        self["patternLength"] = self.patternLength
 
     @classmethod
     def parseTime(cls, stdout):

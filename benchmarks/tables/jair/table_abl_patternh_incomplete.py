@@ -1,13 +1,13 @@
 from benchmarks.tables.aij.domains import AIJ_DOMAINS
 from benchmarks.tables.aij.planners import AIJ_PLANNERS
 
-JAIR_TABLE5 = {
-    "name": "tab:table-5",
+JAIR_ABL_PATTERNH_INCOMPLETE = {
+    "name": "tab:abl-patternh-incomplete",
     "orientation": "landscape",
     "type": "table*",
     "width": r"\textwidth",
     "keepAll": True,
-    "caption": r"",
+    "caption": r"Impact of incomplete pattern $\pattern_h$ computation on function on Cautious and Brave \pattyd. Planner names are abbreviated.",
     "columns": {
         "quantity": {
             "name": "Solved (out of $20$)",
@@ -18,12 +18,7 @@ JAIR_TABLE5 = {
             "name": "Time (s)",
             "winner": -1,
             "avg": True
-        },
-        "bound": {
-            "name": r"\textsc{smt} calls",
-            "winner": -1,
-            "avg": True
-        },
+        }
     },
     "planners": {
         "PATTY-C-npc": {"type": "scalar"},
@@ -33,6 +28,9 @@ JAIR_TABLE5 = {
         "PATTY-C-nps": {"type": "scalar"},
         "PATTY-B-nps": {"type": "scalar"},
         "PATTY-R-nes": {"type": "scalar"},
+        "PATTY-G-nes": {"type": "scalar"},
+        "PATTY-C-npi": {"type": "scalar"},
+        "PATTY-B-npi": {"type": "scalar"},
     },
     "domains": AIJ_DOMAINS
 }

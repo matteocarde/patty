@@ -1,13 +1,13 @@
 from benchmarks.tables.aij.domains import AIJ_DOMAINS
 from benchmarks.tables.aij.planners import AIJ_PLANNERS
 
-JAIR_TABLE3 = {
-    "name": "tab:table-3",
+JAIR_ABL_PATTERNG = {
+    "name": "tab:abl-patterng",
     "orientation": "landscape",
     "type": "table*",
     "width": r"\textwidth",
     "keepAll": True,
-    "caption": r"",
+    "caption": r"Impact of the $\pattern_g$ refinement on Cautious and Brave \pattyd. Planner names are abbreviated.",
     "columns": {
         "quantity": {
             "name": "Solved (out of $20$)",

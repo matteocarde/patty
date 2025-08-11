@@ -1,13 +1,12 @@
-from benchmarks.tables.aij.domains import AIJ_DOMAINS
-from benchmarks.tables.aij.planners import AIJ_PLANNERS
+from benchmarks.tables.jair.domains import JAIR_DOMAINS
 
-JAIR_TABLE1 = {
-    "name": "tab:table-1",
+JAIR_CBRG = {
+    "name": "tab:cbrg",
     "orientation": "landscape",
     "type": "table*",
     "width": r"\textwidth",
     "keepAll": True,
-    "caption": r"",
+    "caption": r"Cautious, Brave, Reckless and Greedy \pattyd vs \pattyo. Planner names are abbreviated.",
     "columns": {
         # "coverage": {
         #     "name": "Coverage (\%)",
@@ -29,10 +28,10 @@ JAIR_TABLE1 = {
             "winner": -1,
             "avg": True
         },
-        # "length": {
-        #     "name": r"$|\pi|$",
-        #     "winner": -1
-        # },
+        "patternLength": {
+            "name": r"$|\prec|$",
+            "winner": -1
+        },
         # "nOfVars": {
         #     "name": "$|\mathcal{X} \cup \mathcal{A}^\prec \cup \mathcal{X}'|$",
         #     "winner": -1,
@@ -52,5 +51,5 @@ JAIR_TABLE1 = {
         "PATTY-R-nec": {"type": "scalar"},
         "PATTY-G-nei": {"type": "scalar"},
     },
-    "domains": AIJ_DOMAINS
+    "domains": JAIR_DOMAINS
 }
