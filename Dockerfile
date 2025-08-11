@@ -131,10 +131,6 @@ COPY /benchmarks/planners/enhsp /var/enhsp
 ENV PATH /var/enhsp/:${PATH}
 RUN chmod +x /var/enhsp/enhsp
 
-# Create conda env
-COPY environment.yml environment.yml
-RUN conda env update --file environment.yml
-
 #RUN pysmt-install --check
 #RUN pysmt-install --yices --confirm-agreement
 #RUN pysmt-install --check
@@ -158,16 +154,6 @@ RUN which python2.7
 #ENV PATH /var/omtplan/:${PATH}
 #RUN chmod +x /var/omtplan/omtplan
 
-# Install patty
-COPY /benchmarks/planners/patty /var/patty
-ENV PATH /var/patty/:${PATH}
-RUN chmod +x /var/patty/patty
-RUN apt-get install -y time
-RUN conda env export
-
-RUN pip install numpy networkx tarjan prettytable graphlib-backport pyeda
-RUN pip install boto3
-
 # Install Madagascar
 COPY /benchmarks/planners/madagascar /var/madagascar
 ENV PATH /var/madagascar/:${PATH}
@@ -187,6 +173,21 @@ RUN chmod +x /var/lama/lama-planner/bin/lama
 COPY /benchmarks/planners/enhsp-socs /var/enhsp-socs
 ENV PATH /var/enhsp-socs/:${PATH}
 RUN chmod +x /var/enhsp-socs/enhsp-socs
+
+
+# Create conda env
+COPY environment.yml environment.yml
+RUN conda env update --file environment.yml
+
+# Install patty
+COPY /benchmarks/planners/patty /var/patty
+ENV PATH /var/patty/:${PATH}
+RUN chmod +x /var/patty/patty
+RUN apt-get install -y time
+RUN conda env export
+
+RUN pip install numpy networkx tarjan prettytable graphlib-backport pyeda
+RUN pip install boto3
 
 WORKDIR /project
 # Copying
