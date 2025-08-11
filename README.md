@@ -20,4 +20,7 @@ patty -o domain.pddl -f problem.pddl
 
 ## Questions ?
 
-Please contact me at me@matteocardellini.it
+Since we are continuously working on Pattern Planning, this repository is not always aligned with the papers and can be either behind or ahead of what is published. Please contact me at me@matteocardellini.it for the last possible version
+
+## Disclaimer
+Due to the authors moral standing, we strictly forbid the use of Patty for any military related applications or research. 
