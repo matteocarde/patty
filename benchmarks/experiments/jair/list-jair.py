@@ -5,7 +5,7 @@ from natsort import natsort
 
 from benchmarks.tables.jair.domains import JAIR_DOMAINS
 
-PLANNERS = [
+PLANNERS = {
     "PATTY-C-npc",
     "PATTY-B-npc",
     "PATTY-R-nec",
@@ -13,27 +13,27 @@ PLANNERS = [
     "PATTY-C-nps",
     "PATTY-B-nps",
     "PATTY-R-nes",
-    # "PATTY-C-npi",
-    # "PATTY-C-npc",
-    # "PATTY-R-gec",
-    # "PATTY-C-aes",
-    # "PATTY-B-gpc",
-    # "PATTY-B-nrc",
-    # "PATTY-G-gei",
-    # "PATTY-C-nrc",
-    # "PATTY-B-noc",
-    # "PATTY-G-nei",
-    # "PATTY-R-nes",
-    # "PATTY-B-nps",
-    # "PATTY-C-noc",
-    # "PATTY-B-npc",
-    # "PATTY-B-npi",
-    # "PATTY-C-gpc",
-    # "PATTY-R-nec",
-    # "PATTY-G-nec",
-    # "PATTY-C-nps",
-    # "PATTY-G-nes",
-]
+    "PATTY-C-npi",
+    "PATTY-C-npc",
+    "PATTY-R-gec",
+    "PATTY-C-aes",
+    "PATTY-B-gpc",
+    "PATTY-B-nrc",
+    "PATTY-G-gei",
+    "PATTY-C-nrc",
+    "PATTY-B-noc",
+    "PATTY-G-nei",
+    "PATTY-R-nes",
+    "PATTY-B-nps",
+    "PATTY-C-noc",
+    "PATTY-B-npc",
+    "PATTY-B-npi",
+    "PATTY-C-gpc",
+    "PATTY-R-nec",
+    "PATTY-G-nec",
+    "PATTY-C-nps",
+    "PATTY-G-nes",
+}
 RANDOM = 5
 NAME = "jair.csv"
 

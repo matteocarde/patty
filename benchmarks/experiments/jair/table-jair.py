@@ -12,6 +12,7 @@ from benchmarks.tables.jair.table1 import JAIR_TABLE1
 from benchmarks.tables.jair.table2 import JAIR_TABLE2
 from benchmarks.tables.jair.table3 import JAIR_TABLE3
 from benchmarks.tables.jair.table4 import JAIR_TABLE4
+from benchmarks.tables.jair.table5 import JAIR_TABLE5
 from classes.CloudLogger import CloudLogger
 from classes.Result import Result
 
@@ -38,7 +39,7 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2025-07-31-JAIR-MAYBE-LAST-v3"
+    exp = "2025-07-31-JAIR-MAYBE-LAST-v5"
     joinWith = [
         (exp, [
             "PATTY-C-npi",
@@ -78,10 +79,11 @@ def main():
         CloudLogger.appendLogs(exp2, file, keepSolvers)
 
     tables = [
-        ("TAB1", JAIR_TABLE1),
-        ("TAB2", JAIR_TABLE2),
-        ("TAB3", JAIR_TABLE3),
-        ("TAB4", JAIR_TABLE4),
+        # ("TAB1", JAIR_TABLE1),
+        # ("TAB2", JAIR_TABLE2),
+        # ("TAB3", JAIR_TABLE3),
+        # ("TAB4", JAIR_TABLE4),
+        ("TAB5", JAIR_TABLE5),
     ]
 
     PLANNERS = JAIR_PLANNERS

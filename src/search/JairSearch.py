@@ -124,6 +124,8 @@ class JairSearch(Search):
                 return plan
 
             subgoalsAchieved = {g for g in self.problem.goal if P.satisfies(g)}
+            self.console.log(f"Bound {bound} - Improvement - {len(subgoalsAchieved)}/{len(self.problem.goal)} subgoals",
+                             LogPrintLevel.STATS)
 
             patG = self.computeS2P(patS, plan, P).addPostfix(f"{bound}_g")
             patH = self.computeP2G(I, P).addPostfix(bound)
