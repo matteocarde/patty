@@ -1,0 +1,47 @@
+
+               \documentclass[11pt,landscape]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in,landscape]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||cccccc||cccccc||}
+\hline
+ & \multicolumn{6}{c||}{Solved (out of $20$)}&\multicolumn{6}{c||}{Time (s)}\\
+Domain & $\mathrm{P}_\textsc{c}^{npc}$&$\mathrm{P}_\textsc{c}^{nrc}$&$\mathrm{P}_\textsc{c}^{noc}$&$\mathrm{P}_\textsc{b}^{npc}$&$\mathrm{P}_\textsc{b}^{nrc}$&$\mathrm{P}_\textsc{b}^{noc}$&$\mathrm{P}_\textsc{c}^{npc}$&$\mathrm{P}_\textsc{c}^{nrc}$&$\mathrm{P}_\textsc{c}^{noc}$&$\mathrm{P}_\textsc{b}^{npc}$&$\mathrm{P}_\textsc{b}^{nrc}$&$\mathrm{P}_\textsc{b}^{noc}$\\
+\hline
+\textsc{BlGrp} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&1.9&\textbf{1.8}&1.9&1.9&1.9&1.9\\
+\textsc{Cnt} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{0.8}&\textbf{0.8}&0.9&\textbf{0.8}&\textbf{0.8}&\textbf{0.8}\\
+\textsc{Cnt} (L)&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{139.3}&139.8&\textbf{139.3}&139.9&139.4&139.7\\
+\textsc{Del} (S)&\textbf{8}&5&\textbf{8}&\textbf{8}&7&\textbf{8}&190.5&228.3&190.4&\textbf{188.3}&200.9&190.1\\
+\textsc{Drn} (S)&\textbf{16}&3&12&\textbf{16}&3&13&124.8&255.4&180.2&\textbf{113.7}&255.6&162.7\\
+\textsc{Exp} (S)&\textbf{3}&\textbf{3}&\textbf{3}&\textbf{3}&\textbf{3}&\textbf{3}&256.6&256.4&256.6&256.5&256.6&\textbf{256.2}\\
+\textsc{Farm} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{0.8}&0.9&0.9&\textbf{0.8}&\textbf{0.8}&0.9\\
+\textsc{Farm} (L)&\textbf{19}&\textbf{19}&\textbf{19}&\textbf{19}&\textbf{19}&\textbf{19}&23.6&24.5&\textbf{22.6}&23.2&24.0&24.1\\
+\textsc{HPwr} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&18.7&19.1&\textbf{18.1}&18.5&\textbf{18.1}&18.2\\
+\textsc{Mrkt} (L)&3&-&-&\textbf{5}&4&3&292.3&-&-&281.5&283.4&\textbf{280.8}\\
+\textsc{MPrime} (S)&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{147.5}&147.9&150.5&152.8&148.4&150.9\\
+\textsc{PathM} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&4.3&4.5&4.5&\textbf{4.1}&4.3&4.4\\
+\textsc{PlWat} (S)&\textbf{20}&5&15&\textbf{20}&4&17&30.2&242.4&175.6&\textbf{27.0}&248.8&121.8\\
+\textsc{Rvr} (S)&10&9&11&11&10&\textbf{12}&156.8&167.7&149.6&147.6&153.9&\textbf{140.0}\\
+\textsc{Sail} (S)&\textbf{20}&\textbf{20}&19&\textbf{20}&\textbf{20}&\textbf{20}&1.0&1.6&38.1&1.0&\textbf{0.9}&1.0\\
+\textsc{Sail} (L)&\textbf{20}&\textbf{20}&17&\textbf{20}&\textbf{20}&\textbf{20}&1.1&1.4&46.7&1.0&\textbf{0.9}&1.0\\
+\textsc{Stlrs} (S)&\textbf{15}&\textbf{15}&\textbf{15}&\textbf{15}&\textbf{15}&\textbf{15}&86.3&\textbf{85.6}&86.4&86.0&86.0&86.4\\
+\textsc{Sgr} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&18.8&33.5&23.3&\textbf{18.2}&33.1&37.5\\
+\textsc{Tpp} (L)&\textbf{4}&2&\textbf{4}&\textbf{4}&\textbf{4}&\textbf{4}&247.9&270.2&248.2&241.8&241.9&\textbf{241.7}\\
+\textsc{Zeno} (S)&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{11}&137.1&139.1&\textbf{136.9}&137.0&137.4&137.1\\
+\textsc{Line} (L)&\textbf{20}&\textbf{20}&19&\textbf{20}&\textbf{20}&\textbf{20}&1.7&\textbf{1.3}&20.3&1.7&1.4&12.4
+\\\hline
+\textit{Best}&\textbf{311}&\textbf{274}&\textbf{295}&\textbf{314}&\textbf{282}&\textbf{307}&\textbf{50}&\textbf{44}&\textbf{47}&\textbf{83}&\textbf{61}&\textbf{50}\\\hline
+
+        \end{tabular}}
+        \caption{Impact of the $\pattern_g$ refinement on Cautious and Brave \pattyd. Planner names are abbreviated.}
+        \label{tab:abl-patterng}
+        \end{table*}
+        
+\end{document}

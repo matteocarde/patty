@@ -1,0 +1,47 @@
+
+               \documentclass[11pt,landscape]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in,landscape]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||ccccccccc||ccccccccc||}
+\hline
+ & \multicolumn{9}{c||}{Solved (out of $20$)}&\multicolumn{9}{c||}{Time (s)}\\
+Domain & $\mathrm{P}_\textsc{c}^{npc}$&$\mathrm{P}_\textsc{b}^{npc}$&$\mathrm{P}_\textsc{r}^{nec}$&$\mathrm{P}_\textsc{g}^{nei}$&$\mathrm{P}_\textsc{c}^{gpc}$&$\mathrm{P}_\textsc{b}^{gpc}$&$\mathrm{P}_\textsc{r}^{gec}$&$\mathrm{P}_\textsc{g}^{gei}$&$\mathrm{P}_\textsc{c}^{aes}$&$\mathrm{P}_\textsc{c}^{npc}$&$\mathrm{P}_\textsc{b}^{npc}$&$\mathrm{P}_\textsc{r}^{nec}$&$\mathrm{P}_\textsc{g}^{nei}$&$\mathrm{P}_\textsc{c}^{gpc}$&$\mathrm{P}_\textsc{b}^{gpc}$&$\mathrm{P}_\textsc{r}^{gec}$&$\mathrm{P}_\textsc{g}^{gei}$&$\mathrm{P}_\textsc{c}^{aes}$\\
+\hline
+\textsc{BlGrp} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&1.9&1.9&1.9&5.0&\textbf{1.8}&\textbf{1.8}&\textbf{1.8}&2.6&2.1\\
+\textsc{Cnt} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{0.8}&\textbf{0.8}&\textbf{0.8}&1.8&\textbf{0.8}&\textbf{0.8}&\textbf{0.8}&1.1&0.9\\
+\textsc{Cnt} (L)&11&11&11&7&10&10&10&7&\textbf{20}&139.3&139.9&139.7&204.9&153.2&154.1&154.7&216.2&\textbf{1.1}\\
+\textsc{Del} (S)&8&8&8&8&8&8&8&\textbf{9}&5&190.5&188.3&188.3&186.7&188.3&190.8&191.2&\textbf{175.3}&235.4\\
+\textsc{Drn} (S)&\textbf{16}&\textbf{16}&\textbf{16}&\textbf{16}&\textbf{16}&\textbf{16}&\textbf{16}&15&3&124.8&113.7&109.3&\textbf{106.2}&115.6&112.3&109.8&118.8&255.4\\
+\textsc{Exp} (S)&\textbf{3}&\textbf{3}&\textbf{3}&2&\textbf{3}&\textbf{3}&2&2&\textbf{3}&256.6&256.5&256.6&270.9&256.2&\textbf{256.1}&270.9&271.0&259.6\\
+\textsc{Farm} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&8&\textbf{20}&\textbf{0.8}&\textbf{0.8}&\textbf{0.8}&1.8&0.9&0.9&0.9&180.4&3.5\\
+\textsc{Farm} (L)&19&19&19&19&\textbf{20}&\textbf{20}&\textbf{20}&12&\textbf{20}&23.6&23.2&23.9&15.9&9.6&10.1&10.1&142.0&\textbf{5.6}\\
+\textsc{HPwr} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&19&14&18.7&18.5&\textbf{17.8}&84.2&21.0&19.7&19.5&128.0&247.3\\
+\textsc{Mrkt} (L)&3&5&4&\textbf{17}&-&-&-&-&-&292.3&281.5&282.8&\textbf{49.0}&-&-&-&-&-\\
+\textsc{MPrime} (S)&11&11&\textbf{12}&10&\textbf{12}&\textbf{12}&\textbf{12}&10&9&147.5&152.8&148.0&166.2&149.7&147.6&\textbf{146.0}&160.1&181.3\\
+\textsc{PathM} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&4.3&\textbf{4.1}&4.6&5.2&4.3&4.3&4.5&5.0&17.7\\
+\textsc{PlWat} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&19&5&30.2&27.0&17.0&17.0&24.5&21.2&\textbf{12.5}&28.2&229.8\\
+\textsc{Rvr} (S)&10&11&9&5&\textbf{13}&\textbf{13}&10&3&11&156.8&147.6&168.7&226.6&\textbf{119.0}&131.8&158.4&253.4&159.1\\
+\textsc{Sail} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&1.0&1.0&1.0&1.0&1.0&\textbf{0.9}&1.0&1.0&1.5\\
+\textsc{Sail} (L)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&1.1&1.0&1.0&\textbf{0.8}&1.1&1.0&1.1&\textbf{0.8}&1.0\\
+\textsc{Stlrs} (S)&\textbf{15}&\textbf{15}&\textbf{15}&\textbf{15}&\textbf{15}&\textbf{15}&\textbf{15}&\textbf{15}&13&86.3&86.0&86.6&\textbf{79.0}&83.5&83.1&84.0&80.2&155.0\\
+\textsc{Sgr} (S)&\textbf{20}&\textbf{20}&14&18&\textbf{20}&\textbf{20}&17&18&\textbf{20}&18.8&\textbf{18.2}&95.4&37.5&19.1&20.1&53.3&45.7&32.4\\
+\textsc{Tpp} (L)&\textbf{4}&\textbf{4}&\textbf{4}&2&2&2&2&2&2&247.9&241.8&\textbf{241.7}&270.2&270.1&270.1&270.1&270.2&270.3\\
+\textsc{Zeno} (S)&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{11}&137.1&137.0&137.0&138.2&\textbf{136.9}&137.0&137.0&139.7&138.7\\
+\textsc{Line} (L)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&1.7&1.7&1.5&1.4&1.5&1.5&1.4&1.3&\textbf{1.1}
+\\\hline
+\textit{Best}&\textbf{311}&\textbf{314}&\textbf{306}&\textbf{310}&\textbf{310}&\textbf{310}&\textbf{303}&\textbf{270}&\textbf{276}&\textbf{25}&\textbf{34}&\textbf{37}&\textbf{69}&\textbf{26}&\textbf{27}&\textbf{39}&\textbf{65}&\textbf{31}\\\hline
+
+        \end{tabular}}
+        \caption{Impact of the goal function on Cautious, Brave, Reckless and Greedy \pattyd. Planner names are abbreviated.}
+        \label{tab:abl-gf}
+        \end{table*}
+        
+\end{document}

@@ -22,8 +22,8 @@ class TestPatty_C_aec(TestCase):
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.args = Arguments(keepRequired=False)
         self.args.jairSearchStrategy = "C"
-        self.args.jairGoalFunction = "n"
-        self.args.jairRefinement = "p"
+        self.args.jairGoalFunction = "a"
+        self.args.jairRefinement = "e"
         self.args.jairPatternH = "c"
         self.args.printPattern = True
         pass

@@ -8,6 +8,10 @@ import sys
 from typing import Dict, List, Set
 
 from benchmarks.tables.jair.planners import JAIR_PLANNERS
+from benchmarks.tables.jair.table_abl_gf import JAIR_ABL_GF
+from benchmarks.tables.jair.table_abl_patterng import JAIR_ABL_PATTERNG
+from benchmarks.tables.jair.table_abl_patternh_incomplete import JAIR_ABL_PATTERNH_INCOMPLETE
+from benchmarks.tables.jair.table_abl_patternh_static import JAIR_ABL_PATTERNH_STATIC
 from classes.CloudLogger import CloudLogger
 from classes.Result import Result
 
@@ -77,9 +81,10 @@ def main():
 
     tables = [
         ("cbrg", JAIR_CBRG),
-        # ("abl-gf", JAIR_TABLE2),
-        # ("TAB3", JAIR_TABLE3),
-        # ("TAB4", JAIR_TABLE4),
+        ("abl_gf", JAIR_ABL_GF),
+        ("abl_patterng", JAIR_ABL_PATTERNG),
+        ("abl_patternh_incomplete", JAIR_ABL_PATTERNH_INCOMPLETE),
+        ("abl_patternh_static", JAIR_ABL_PATTERNH_STATIC),
         # ("TAB5", JAIR_TABLE5),
     ]
 

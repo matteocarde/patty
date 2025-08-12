@@ -12,6 +12,7 @@ from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTSolution import SMTSolution
 from src.smt.SMTVariable import SMTVariable
 from src.utils.TimeStat import TimeStat
+from src.z3.Z3SolverAndOptimizer import Z3SolverAndOptimizer
 
 
 class SMTSolver:
@@ -28,19 +29,8 @@ class SMTSolver:
         self.trySoftAsHard = trySoftAsHard
         self.toMinimize: List[SMTExpression] = []
 
+        self.solver = Z3SolverAndOptimizer()
         self.maximize = self.encoding and (bool(self.encoding.softRules) or bool(self.encoding.minimize))
-        if self.maximize:
-            self.solver: Optimize = Optimize()
-
-            self.z3: Solver = Solver("z3",
-                                     logic=QF_LRA,
-                                     incremental=True,
-                                     generate_models=True)
-        else:
-            self.solver: Portfolio = Portfolio(["z3"],
-                                               logic=QF_LRA,
-                                               incremental=True,
-                                               generate_models=True)
 
         if self.encoding:
             t = TimeStat.startHolder("Adding assertions")
@@ -56,12 +46,7 @@ class SMTSolver:
         self.assertions.append(expr)
         self.variables |= expr.getVariables()
         expr = expr.getExpression()
-        z3Expr = self.z3.converter.convert(expr) if self.maximize else expr
-
-        if self.maximize:
-            self.solver.add(z3Expr)
-        else:
-            self.solver.add_assertion(z3Expr)
+        self.solver.add(expr)
 
         if push:
             self.solver.push()
@@ -76,25 +61,17 @@ class SMTSolver:
     def addSoftAssertion(self, expr: SMTExpression, push=True):
 
         self.variables.update(expr.getVariables())
-        z3Expr = self.z3.converter.convert(expr.getExpression())
-        self.softAssertions.append(z3Expr)
+        self.solver.add_soft(expr.getExpression())
 
-        if not self.trySoftAsHard:
-            self.solver.add_soft(z3Expr)
-
-            if push:
-                self.solver.push()
+        if push:
+            self.solver.push()
 
     def setMinimize(self, expr: [SMTExpression]):
         if not expr:
             return
 
         for e in expr:
-            z3Expr = self.z3.converter.convert(e.getExpression())
-            self.toMinimize.append(z3Expr)
-            if not self.trySoftAsHard:
-                print("Setting minimize")
-                self.solver.minimize(z3Expr)
+            self.solver.minimize(e.getExpression())
 
     def addSoftAssertions(self, exprs: [SMTExpression], push=True):
 
@@ -110,10 +87,7 @@ class SMTSolver:
         self.solver.push()  # I repush to keep the stack with the last actions
 
     def exit(self):
-        if self.maximize:
-            self.z3.exit()
-        else:
-            self.solver.exit()
+        self.solver.exit()
 
     def getSolutionFromModel(self, model) -> SMTSolution:
         solution = SMTSolution()
@@ -128,50 +102,23 @@ class SMTSolver:
         return solution
 
     def tryWithSoftAsHard(self):
-        self.solver.push()
-        for i, expr in enumerate(self.encoding.fullGoal):
-            z3_expr = self.z3.converter.convert(expr.getExpression())
-            self.solver.add(z3_expr)
         print(f"Starting checking without contraints [{datetime.datetime.now()}]")
-        res = self.solver.check()
+        solveRes = self.solver.solve(self.variables)
         print(f"Ended checking without contraints [{datetime.datetime.now()}]")
-        if str(res) == "sat":
-            return "sat"
+        if solveRes:
+            return solveRes
 
-        self.solver.pop()
-        for i, expr in enumerate(self.softAssertions):
-            self.solver.add_soft(expr)
-        for expr in self.toMinimize:
-            self.solver.minimize(expr)
-        self.solver.push()
-
-        return self.solver.check()
+        return self.solver.optimize(self.variables)
 
     def getSolution(self) -> SMTSolution or bool:
         if self.maximize:
 
             if not self.trySoftAsHard:
-                res = self.solver.check()
+                return self.solver.optimize(self.variables)
             else:
-                res = self.tryWithSoftAsHard()
-
-            if str(res) != "sat":
-                return False
+                return self.tryWithSoftAsHard()
         else:
-            found = self.solver.solve()
-            if not found:
-                return False
-
-        solution = SMTSolution()
-        if self.maximize:
-            model = self.solver.model()
-            solution = self.getSolutionFromModel(model)
-        else:
-            for variable in self.variables:
-                value = self.solver.get_value(variable.getSymbol())
-                solution.addVariable(variable, value)
-
-        return solution
+            return self.solver.solve(self.variables)
 
     def registerOnImprovedModel(self, onImprovedModel: Callable):
         self.onImprovedModel = onImprovedModel
@@ -186,7 +133,7 @@ class SMTSolver:
     def solve(self, relaxed=False) -> Plan or bool:
 
         if self.onImprovedModel:
-            self.solver.set_on_model(self.__wrappedOnImprovedModel)
+            self.solver.setOnModel(self.__wrappedOnImprovedModel)
 
         solution = self.getSolution()
         if not solution:
