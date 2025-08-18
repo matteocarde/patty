@@ -12,6 +12,7 @@ from benchmarks.tables.jair.table_abl_gf import JAIR_ABL_GF
 from benchmarks.tables.jair.table_abl_patterng import JAIR_ABL_PATTERNG
 from benchmarks.tables.jair.table_abl_patternh_incomplete import JAIR_ABL_PATTERNH_INCOMPLETE
 from benchmarks.tables.jair.table_abl_patternh_static import JAIR_ABL_PATTERNH_STATIC
+from benchmarks.tables.jair.table_search import JAIR_SEARCH
 from classes.CloudLogger import CloudLogger
 from classes.Result import Result
 
@@ -40,7 +41,7 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2025-08-11-JAIR-5MIN-v1"
+    exp = "2025-08-11-JAIR-5MIN-v5"
     joinWith = [
         (exp, [
             "PATTY-C-npi",
@@ -63,7 +64,18 @@ def main():
             "PATTY-G-nec",
             "PATTY-C-nps",
             "PATTY-G-nes",
-        ])
+        ]),
+
+        ("2024-11-12-DOMAINS-v7", ["PATTY-A"]),
+        ("2024-11-12-DOMAINS-v1", ["ENHSP-SAT-AIBR", "RANTANPLAN", "SPRINGROLL", "ENHSP-SAT-HADD",
+                                   "ENHSP-SAT-HMRP", "METRIC-FF", "NFD", "OMT", "ENHSP-SOCS"]),
+        ("2024-11-11-SOCS-v1", ["ENHSP-SOCS"]),
+        ("2024-10-07-AIJ-FINAL-v10", ["PATTY-A"]),
+        ("2024-10-07-AIJ-FINAL-v7", ["RANTANPLAN"]),
+        ("2024-10-07-AIJ-FINAL-v6", ["SPRINGROLL"]),
+        ("2024-10-07-AIJ-FINAL-v5", ["OMT"]),
+        ("2024-10-07-AIJ-FINAL-v2",
+         ["ENHSP-SAT-AIBR", "PATTY-A", "ENHSP-SAT-HADD", "ENHSP-SAT-HMRP", "METRIC-FF", "NFD"])
     ]
 
     file = f"benchmarks/results/csv/{exp}.csv"
@@ -85,7 +97,7 @@ def main():
         ("abl_patterng", JAIR_ABL_PATTERNG),
         ("abl_patternh_incomplete", JAIR_ABL_PATTERNH_INCOMPLETE),
         ("abl_patternh_static", JAIR_ABL_PATTERNH_STATIC),
-        # ("TAB5", JAIR_TABLE5),
+        ("search", JAIR_SEARCH)
     ]
 
     PLANNERS = JAIR_PLANNERS

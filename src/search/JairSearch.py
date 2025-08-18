@@ -84,7 +84,7 @@ class JairSearch(Search):
             self.console.log(f"Bound {bound} - Pattern Length = {pat.getLength()}", LogPrintLevel.STATS)
 
             self.ts.start(f"Solving Bound {bound}", console=self.console)
-            solver: SMTSolver = SMTSolver(encoding, trySoftAsHard=True)
+            solver: SMTSolver = SMTSolver(encoding, trySoftAsHard=False)
             callsToSolver += 1
 
             def onImprovedModel(solution: SMTSolution):

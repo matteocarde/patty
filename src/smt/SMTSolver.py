@@ -67,14 +67,20 @@ class SMTSolver:
             self.solver.push()
 
     def setMinimize(self, expr: [SMTExpression]):
+
         if not expr:
             return
+
+        print(f"Adding minimize")
 
         for e in expr:
             self.solver.minimize(e.getExpression())
 
     def addSoftAssertions(self, exprs: [SMTExpression], push=True):
+        if not exprs:
+            return
 
+        print(f"Adding {len(exprs)} soft-assert")
         for expr in exprs:
             self.addSoftAssertion(expr, push=False)
 

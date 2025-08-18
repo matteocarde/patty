@@ -11,11 +11,11 @@ from src.search.JairSearch import JairSearch
 from src.utils.Arguments import Arguments
 
 
-class TestPatty_C_aec(TestCase):
+class TestPatty_C_npc(TestCase):
 
     def setUp(self) -> None:
-        domainFile = "../../files/numeric/ipc-2023/block-grouping/domain.pddl"
-        problemFile = "../../files/numeric/ipc-2023/block-grouping/instances/instance_100_20_5_1.pddl"
+        domainFile = "../../files/numeric/ipc-2023/fo_counters/domain.pddl"
+        problemFile = "../../files/numeric/ipc-2023/fo_counters/instances/instance_11.pddl"
 
         self.domain: Domain = Domain.fromFile(domainFile)
         self.problem: Problem = Problem.fromFile(problemFile)

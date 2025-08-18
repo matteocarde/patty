@@ -77,9 +77,7 @@ class NumericEncoding(Encoding):
             stepRules = self.getStepRules(index)
             self.transitions.extend(stepRules)
 
-        if self.minimizeGoalFunction:
-            self.c = SMTRealVariable("costFunctionPatty")
-            self.addGoalFunctionMinimization()
+        self.c = SMTRealVariable("costFunctionPatty")
 
         self.goal: [SMTExpression] = self.getGoalExpression()
         self.fullGoal: [SMTExpression] = self.getFullGoalExpressions()
@@ -88,6 +86,7 @@ class NumericEncoding(Encoding):
 
         if self.minimizeGoalFunction:
             self.rules += self.setMinimizeParameter()
+            self.addGoalFunctionMinimization()
 
         if self.goalAsSoftAsserts:
             self.addGoalAsSoftRules()
@@ -145,7 +144,9 @@ class NumericEncoding(Encoding):
     def setMinimizeParameter(self):
         if self.goalFunction:
             expr = self.getGoalFunctionExpression()
-            return [self.c.equal(expr)]
+            assignment = self.c.equal(expr)
+            zero = (self.c >= 0)
+            return [assignment, zero]
         return []
 
     def addGoalAsSoftRules(self):
@@ -159,8 +160,8 @@ class NumericEncoding(Encoding):
         pass
 
     def addGoalFunctionMinimization(self):
-        # vars = self.transitionVariables[-1].valueVariables
         self.minimize.append(self.c)
+        pass
 
     def assignOrGetRule(self, stepVars, i, v, rhs, rules):
         if not self.hasEffectAxioms:
