@@ -1,3 +1,5 @@
+import uuid
+
 from pysmt.logics import QF_LRA
 from pysmt.shortcuts import Portfolio, Solver
 from z3 import Optimize, Bool
@@ -64,7 +66,9 @@ class Z3SolverAndOptimizer:
         return solution
 
     def optimize(self, variables):
+        print("Objectives:", self.optimizer.objectives())
         res = self.optimizer.check()
+
 
         if str(res) != "sat":
             return False

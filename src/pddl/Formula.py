@@ -405,3 +405,7 @@ class Formula:
         f = copy.deepcopy(self)
         f.conditions = [c for c in f.conditions if prevState.satisfies(c)]
         return f
+
+
+    def hasOnlyOneNumericConditions(self):
+        return len(self.conditions) == 1 and isinstance(self.conditions[0], BinaryPredicate)

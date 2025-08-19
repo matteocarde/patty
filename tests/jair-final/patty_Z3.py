@@ -18,21 +18,25 @@ class TestZ3(TestCase):
         pass
 
     def test_solve(self):
-
         print(z3.get_full_version())
         x, y, z = Reals('x y z')
 
         s = Optimize()
         s.set("opt.priority", "lex")
-        s.add(x > y)
-        s.add(y > z)
-        s.add(z > 0)
-        s.add_soft(x > y + 1)
-        h = s.minimize(x)
+        s.add_soft(x < 30)
+        s.add_soft(y > 60)
+        s.add_soft(z < 100)
+        h = s.minimize(x+y+z)
+
+        def onImprovedModel(model):
+            print("Improved:", model)
+
+        s.set_on_model(onImprovedModel)
+
         print(s.check())
         print(s.model())
+        print(s.objectives())
         print(h.value())
-
 
 
 if __name__ == '__main__':

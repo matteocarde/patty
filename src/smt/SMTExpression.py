@@ -250,7 +250,7 @@ class SMTExpression:
             sRules.append(r)
         if not rules:
             return FalseExpression()
-        return SMTExpression.__connectiveOfExpressionList(rules, OrExpression)
+        return SMTExpression.__connectiveOfExpressionList(sRules, OrExpression)
 
     @classmethod
     def bigor(cls, rules: [SMTExpression]):

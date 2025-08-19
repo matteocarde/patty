@@ -1,10 +1,7 @@
 import datetime
-import sys
 from typing import Set, List, Dict, Callable
 
-from pysmt.logics import QF_LRA, QF_NRA
-from pysmt.shortcuts import Portfolio, Solver
-from z3 import Optimize, Bool
+from pysmt.shortcuts import Portfolio
 
 from src.pddl.Plan import Plan
 from src.plan.Encoding import Encoding
@@ -38,6 +35,7 @@ class SMTSolver:
             t.endHolder()
             self.addSoftAssertions(self.encoding.softRules)
             self.setMinimize(self.encoding.minimize)
+            pass
 
         # signal.signal(signal.SIGTERM, self.z3.exit)
         # signal.signal(signal.SIGINT, self.z3.exit)
@@ -118,7 +116,6 @@ class SMTSolver:
 
     def getSolution(self) -> SMTSolution or bool:
         if self.maximize:
-
             if not self.trySoftAsHard:
                 return self.solver.optimize(self.variables)
             else:

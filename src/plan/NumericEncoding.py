@@ -2,6 +2,7 @@ from typing import List, Dict, Set, Type
 
 from src.goalFunctions.Delta import Delta
 from src.goalFunctions.DeltaPlusClauses import DeltaPlusClauses
+from src.goalFunctions.DeltaSingle import DeltaSingle
 from src.goalFunctions.GoalFunction import GoalFunction
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
@@ -48,9 +49,9 @@ class NumericEncoding(Encoding):
         self.rollBound = args.rollBound
         self.binaryActions: int = args.binaryActions
         self.hasEffectAxioms = args.hasEffectAxioms
-        self.goalFunction = DeltaPlusClauses
+        self.goalFunction = DeltaSingle
         self.goalFunctionValue = goalFunctionValue
-        self.minimizeGoalFunction = (args.jairGoalFunction == "n")
+        self.minimizeGoalFunction = self.problem.goal.hasOnlyOneNumericConditions()
         self.goalAsSoftAsserts = (args.jairGoalFunction in {"n", "g"})
         self.initState = State.fromInitialCondition(self.problem.init)
         self.state = state if state else self.initState
@@ -85,7 +86,7 @@ class NumericEncoding(Encoding):
         self.rules = self.initial + self.transitions + self.goal
 
         if self.minimizeGoalFunction:
-            self.rules += self.setMinimizeParameter()
+            self.rules += self.getMinimizeParameter()
             self.addGoalFunctionMinimization()
 
         if self.goalAsSoftAsserts:
@@ -118,40 +119,38 @@ class NumericEncoding(Encoding):
         return rules
 
     def getGoalFunctionExpression(self):
-        vars = self.transitionVariables[-1].sigmaVariables[self.k]
+        vars = self.transitionVariables[-1].valueVariables
         init = State.fromInitialCondition(self.problem.init)
         expr = self.goalFunction.getExpression(vars, self.problem.goal.normalize(), init)
         return expr
 
     def getFullGoalExpressions(self):
-        v = self.transitionVariables[-1].sigmaVariables[self.k]
+        v = self.transitionVariables[-1].valueVariables
         return [SMTExpression.fromFormula(g, v) for g in self.problem.goal]
 
     def getGoalExpression(self) -> [SMTExpression]:
-        v = self.transitionVariables[-1].sigmaVariables[self.k]
+        v = self.transitionVariables[-1].valueVariables
         if self.goalAsSoftAsserts:
-            # expr = self.getGoalFunctionExpression()
             c = self.goalFunctionValue
             expr: SMTExpression = self.c < max(c - EPSILON, 0) if self.minimizeGoalFunction else FalseExpression()
             P = [g for g in self.problem.goal if g in self.subgoalsAchieved]
             GmP = [g for g in self.problem.goal if g not in self.subgoalsAchieved]
             andGoal = [SMTExpression.fromFormula(g, v) for g in P]
-            orGoal = [SMTExpression.fromFormula(g, v) for g in GmP] + [expr]
+            orGoal = [SMTExpression.fromFormula(g, v) for g in GmP] #+ [expr]
             return andGoal + [SMTExpression.bigor(orGoal)]
 
         return [SMTExpression.fromFormula(self.problem.goal, v)]
 
-    def setMinimizeParameter(self):
+    def getMinimizeParameter(self):
         if self.goalFunction:
             expr = self.getGoalFunctionExpression()
             assignment = self.c.equal(expr)
-            zero = (self.c >= 0)
-            return [assignment, zero]
+            return [assignment]
         return []
 
     def addGoalAsSoftRules(self):
         # vars = self.transitionVariables[-1].valueVariables
-        v = self.transitionVariables[-1].sigmaVariables[self.k]
+        v = self.transitionVariables[-1].valueVariables
 
         for g in self.problem.goal:
             if g not in self.subgoalsAchieved:
@@ -160,7 +159,7 @@ class NumericEncoding(Encoding):
         pass
 
     def addGoalFunctionMinimization(self):
-        self.minimize.append(self.c)
+        self.minimize.append(self.getGoalFunctionExpression())
         pass
 
     def assignOrGetRule(self, stepVars, i, v, rhs, rules):
