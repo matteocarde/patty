@@ -3,6 +3,7 @@ import datetime
 from typing import Type
 
 from src.goalFunctions.DeltaPlusClauses import DeltaPlusClauses
+from src.goalFunctions.DeltaSingle import DeltaSingle
 from src.goalFunctions.GoalFunction import GoalFunction
 from src.pddl.Domain import GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
@@ -47,7 +48,7 @@ class JairSearch(Search):
         self.staticPattern = patH
 
         normalizedGoal = self.problem.goal.normalize()
-        c = DeltaPlusClauses.compute(I, normalizedGoal, I)
+        c = DeltaSingle.compute(I, normalizedGoal, I)
 
         plan = NumericPlan.empty()
 

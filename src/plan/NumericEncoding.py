@@ -136,7 +136,7 @@ class NumericEncoding(Encoding):
             P = [g for g in self.problem.goal if g in self.subgoalsAchieved]
             GmP = [g for g in self.problem.goal if g not in self.subgoalsAchieved]
             andGoal = [SMTExpression.fromFormula(g, v) for g in P]
-            orGoal = [SMTExpression.fromFormula(g, v) for g in GmP] #+ [expr]
+            orGoal = [SMTExpression.fromFormula(g, v) for g in GmP] + [expr]
             return andGoal + [SMTExpression.bigor(orGoal)]
 
         return [SMTExpression.fromFormula(self.problem.goal, v)]
