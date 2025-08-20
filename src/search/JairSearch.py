@@ -66,6 +66,8 @@ class JairSearch(Search):
             if self.args.printPattern:
                 self.console.log("Pattern: " + str(pat), LogPrintLevel.PLAN)
 
+            hasMinimize = self.problem.goal.hasOnlyOneNumericConditions() and self.args.jairGoalFunction == "n"
+
             self.ts.start(f"Conversion to SMT at bound {bound}", console=self.console)
             encoding: NumericEncoding = NumericEncoding(
                 domain=self.domain,
@@ -85,7 +87,7 @@ class JairSearch(Search):
             self.console.log(f"Bound {bound} - Pattern Length = {pat.getLength()}", LogPrintLevel.STATS)
 
             self.ts.start(f"Solving Bound {bound}", console=self.console)
-            solver: SMTSolver = SMTSolver(encoding, trySoftAsHard=False)
+            solver: SMTSolver = SMTSolver(encoding, trySoftAsHard=hasMinimize)
             callsToSolver += 1
 
             def onImprovedModel(solution: SMTSolution):
@@ -161,8 +163,12 @@ class JairSearch(Search):
         elif self.args.jairPatternH == "c":
             return Pattern.fromState(P, self.problem.goal, self.domain, self.enhanced)
         elif self.args.jairPatternH == "i":
+            p = Pattern.fromStateGreedy(P, self.problem.goal, self.domain, 1)
+            if not p:
+                self.incompleteSaturationLevel = 0
+                return Pattern.fromState(P, self.problem.goal, self.domain, self.enhanced)
             self.incompleteSaturationLevel = 1
-            return Pattern.fromStateGreedy(P, self.problem.goal, self.domain, 1)
+            return p
 
     def computeS2Pn(self, patS, plan, unsatN, P):
         if self.args.jairSearchStrategy in "C":
@@ -189,6 +195,6 @@ class JairSearch(Search):
                 p_ = Pattern.fromStateGreedy(P, self.problem.goal, self.domain, 2 ** (n - 1))
                 if len(p) == len(p_):
                     self.incompleteSaturationLevel += 1
-                    return Pattern.fromState(P, self.problem.goal, self.domain, self.enhanced).multiply(2)
+                    return Pattern.fromState(P, self.problem.goal, self.domain, self.enhanced).multiply(self.incompleteSaturationLevel)
                 else:
                     return p

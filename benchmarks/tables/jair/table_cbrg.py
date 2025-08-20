@@ -45,7 +45,7 @@ JAIR_CBRG = {
     },
     "planners": {
         # "PATTY-FE": {},
-        "PATTY-A": {"type": "scalar"},
+        "PATTY-EG": {"type": "scalar"},
         "PATTY-C-npc": {"type": "scalar"},
         "PATTY-B-npc": {"type": "scalar"},
         "PATTY-R-nec": {"type": "scalar"},

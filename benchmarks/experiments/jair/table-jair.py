@@ -41,7 +41,7 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2025-08-19-SINGLE-GF-v5"
+    exp = "2025-08-19-SINGLE-GF-v6"
     joinWith = [
         (exp, [
             "PATTY-C-npi",
@@ -65,17 +65,15 @@ def main():
             "PATTY-C-nps",
             "PATTY-G-nes",
         ]),
-
-        ("2024-11-12-DOMAINS-v7", ["PATTY-A"]),
+        ("2024-12-20-IJCAI-v2", ["PATTY-EG"]),
         ("2024-11-12-DOMAINS-v1", ["ENHSP-SAT-AIBR", "RANTANPLAN", "SPRINGROLL", "ENHSP-SAT-HADD",
                                    "ENHSP-SAT-HMRP", "METRIC-FF", "NFD", "OMT", "ENHSP-SOCS"]),
         ("2024-11-11-SOCS-v1", ["ENHSP-SOCS"]),
-        ("2024-10-07-AIJ-FINAL-v10", ["PATTY-A"]),
         ("2024-10-07-AIJ-FINAL-v7", ["RANTANPLAN"]),
         ("2024-10-07-AIJ-FINAL-v6", ["SPRINGROLL"]),
         ("2024-10-07-AIJ-FINAL-v5", ["OMT"]),
         ("2024-10-07-AIJ-FINAL-v2",
-         ["ENHSP-SAT-AIBR", "PATTY-A", "ENHSP-SAT-HADD", "ENHSP-SAT-HMRP", "METRIC-FF", "NFD"])
+         ["ENHSP-SAT-AIBR", "ENHSP-SAT-HADD", "ENHSP-SAT-HMRP", "METRIC-FF", "NFD"])
     ]
 
     file = f"benchmarks/results/csv/{exp}.csv"

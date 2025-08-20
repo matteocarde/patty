@@ -138,11 +138,10 @@ class Pattern:
 
         gamma: Formula = goal
         newArpg = ARPGJair()
-        # random.seed(20121996)
         while i > 0:
             s: RelaxedIntervalState = arpg.stateLevels[i - 1]
             Ai: List[Action] = arpg.getSortedActionLevel(i, goal)
-            # random.shuffle(Ai)
+
             s_: RelaxedIntervalState = arpg.stateLevels[i]
             unsatGamma = gamma.getConditionsNotSatisfiedByRelaxedState(s)
             satGamma = gamma.getConditionsSatisfiedByRelaxedState(s)
@@ -160,6 +159,9 @@ class Pattern:
                     if len(Ag) >= p:
                         break
                 Agamma |= Ag
+            if not Agamma:
+                i -= 1
+                continue
             gamma = Formula.join([a.preconditions for a in Agamma] + [satGamma])
             newArpg.actionLevels = [Agamma] + newArpg.actionLevels
             i -= 1

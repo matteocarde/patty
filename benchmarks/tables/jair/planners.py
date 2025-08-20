@@ -1,9 +1,5 @@
 JAIR_PLANNERS = {
     "PATTY-EG": {
-        "name": r"$\mathrm{P}_\textsc{s}$",
-        "style": "-"
-    },
-    "PATTY-A": {
         "name": r"$\mathrm{P}_\textsc{o}$",
         "style": "-"
     },
