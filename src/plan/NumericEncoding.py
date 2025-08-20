@@ -1,15 +1,10 @@
-from typing import List, Dict, Set, Type
+from typing import List, Dict, Set
 
-from src.goalFunctions.Delta import Delta
-from src.goalFunctions.DeltaPlusClauses import DeltaPlusClauses
 from src.goalFunctions.DeltaSingle import DeltaSingle
-from src.goalFunctions.GoalFunction import GoalFunction
-from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.Constant import Constant
 from src.pddl.Domain import GroundedDomain
-from src.pddl.Formula import Formula
 from src.pddl.Literal import Literal
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Problem import Problem
@@ -20,9 +15,7 @@ from src.plan.Pattern import Pattern
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTNumericVariable import SMTNumericVariable, SMTRealVariable
 from src.smt.SMTSolution import SMTSolution
-from src.smt.expressions.ConstantExpression import ConstantExpression
 from src.smt.expressions.FalseExpression import FalseExpression
-from src.smt.expressions.MaxExpression import MaxExpression
 from src.utils.Arguments import Arguments
 from src.utils.Constants import EPSILON
 
@@ -83,10 +76,9 @@ class NumericEncoding(Encoding):
         self.goal: [SMTExpression] = self.getGoalExpression()
         self.fullGoal: [SMTExpression] = self.getFullGoalExpressions()
 
-        self.rules = self.initial + self.transitions + self.goal
+        self.rules = self.initial + self.transitions + self.goal + self.getMinimizeParameter()
 
         if self.minimizeGoalFunction:
-            self.rules += self.getMinimizeParameter()
             self.addGoalFunctionMinimization()
 
         if self.goalAsSoftAsserts:
@@ -119,17 +111,17 @@ class NumericEncoding(Encoding):
         return rules
 
     def getGoalFunctionExpression(self):
-        vars = self.transitionVariables[-1].valueVariables
+        vars = self.transitionVariables[-1].sigmaVariables[self.k]
         init = State.fromInitialCondition(self.problem.init)
         expr = self.goalFunction.getExpression(vars, self.problem.goal.normalize(), init)
         return expr
 
     def getFullGoalExpressions(self):
-        v = self.transitionVariables[-1].valueVariables
+        v = self.transitionVariables[-1].sigmaVariables[self.k]
         return [SMTExpression.fromFormula(g, v) for g in self.problem.goal]
 
     def getGoalExpression(self) -> [SMTExpression]:
-        v = self.transitionVariables[-1].valueVariables
+        v = self.transitionVariables[-1].sigmaVariables[self.k]
         if self.goalAsSoftAsserts:
             c = self.goalFunctionValue
             expr: SMTExpression = self.c < max(c - EPSILON, 0) if self.minimizeGoalFunction else FalseExpression()
@@ -137,7 +129,7 @@ class NumericEncoding(Encoding):
             GmP = [g for g in self.problem.goal if g not in self.subgoalsAchieved]
             andGoal = [SMTExpression.fromFormula(g, v) for g in P]
             orGoal = [SMTExpression.fromFormula(g, v) for g in GmP] + [expr]
-            return andGoal + [SMTExpression.bigor(orGoal)]
+            return [SMTExpression.bigand(andGoal), SMTExpression.bigor(orGoal)]
 
         return [SMTExpression.fromFormula(self.problem.goal, v)]
 
@@ -149,8 +141,8 @@ class NumericEncoding(Encoding):
         return []
 
     def addGoalAsSoftRules(self):
-        # vars = self.transitionVariables[-1].valueVariables
-        v = self.transitionVariables[-1].valueVariables
+        # vars = self.transitionVariables[-1].sigmaVariables[self.k
+        v = self.transitionVariables[-1].sigmaVariables[self.k]
 
         for g in self.problem.goal:
             if g not in self.subgoalsAchieved:
@@ -305,20 +297,6 @@ class NumericEncoding(Encoding):
                     SMTNumericVariable.fromPddl(rhs, stepVars.sigmaVariables[i - 1])
 
                 rules.append((a_n > 0).implies(v_a.equal(d_psi)))
-                rules.append((a_n.equal(0)).implies(v_a.equal(d_a_v)))
-
-            for eff in a.effects:
-                if not eff.isLinearIncrement():
-                    continue
-                var = eff.getAtom()
-                v_a = stepVars.auxVariables[i][var]
-                a_n = stepVars.actionVariables[i]
-                d_a_v = stepVars.sigmaVariables[i - 1][var]
-                d_a_phi = SMTNumericVariable.fromPddl(eff.rhs, stepVars.sigmaVariables[i - 1])
-                if eff.operator == "increase":
-                    rules.append((a_n > 0).implies(v_a.equal(d_a_v + d_a_phi)))
-                else:
-                    rules.append((a_n > 0).implies(v_a.equal(d_a_v - d_a_phi)))
                 rules.append((a_n.equal(0)).implies(v_a.equal(d_a_v)))
 
         return rules

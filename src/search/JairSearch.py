@@ -92,7 +92,7 @@ class JairSearch(Search):
                 c = solution.getVariable(encoding.c)
                 print(f"[SMT] Intermediate improved plan found: c = {c} [{datetime.datetime.now()}]")
 
-            if self.args.jairGoalFunction in {"n", "g"}:
+            if self.args.jairGoalFunction in {"n"}:
                 solver.registerOnImprovedModel(onImprovedModel)
 
             partialPlan: Plan = solver.solve()

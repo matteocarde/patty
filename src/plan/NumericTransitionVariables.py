@@ -82,13 +82,5 @@ class NumericTransitionVariables:
             variables.setdefault(i, dict())
             for var in a.assList:
                 variables[i][var] = SMTRealVariable(f"{var}_{a}_{index}")
-            if not a.hasNonSimpleLinearIncrement():
-                continue
-            for eff in a.effects:
-                if not eff.isLinearIncrement():
-                    continue
-                var = eff.getAtom()
-                variables.setdefault(i, dict())
-                variables[i][var] = SMTRealVariable(f"{var}_{a}_{index}")
 
         return variables

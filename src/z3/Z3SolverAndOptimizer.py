@@ -66,7 +66,7 @@ class Z3SolverAndOptimizer:
         return solution
 
     def optimize(self, variables):
-        print("Objectives:", self.optimizer.objectives())
+        # print("Objectives:", self.optimizer.objectives())
         res = self.optimizer.check()
 
 
