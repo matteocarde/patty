@@ -11,7 +11,7 @@ from src.search.JairSearch import JairSearch
 from src.utils.Arguments import Arguments
 
 
-class TestPatty_G_gei(TestCase):
+class TestPatty_G_nei(TestCase):
 
     def setUp(self) -> None:
         domainFile = "../../files/numeric/ipc-2023/markettrader/domain.pddl"
@@ -22,7 +22,7 @@ class TestPatty_G_gei(TestCase):
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.args = Arguments(keepRequired=False)
         self.args.jairSearchStrategy = "G"
-        self.args.jairGoalFunction = "g"
+        self.args.jairGoalFunction = "n"
         self.args.jairPatternG = "e"
         self.args.jairPatternH = "i"
         self.args.printPattern = True

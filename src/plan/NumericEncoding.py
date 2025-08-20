@@ -51,7 +51,7 @@ class NumericEncoding(Encoding):
         self.hasEffectAxioms = args.hasEffectAxioms
         self.goalFunction = DeltaSingle
         self.goalFunctionValue = goalFunctionValue
-        self.minimizeGoalFunction = self.problem.goal.hasOnlyOneNumericConditions()
+        self.minimizeGoalFunction = self.problem.goal.hasOnlyOneNumericConditions() and args.jairGoalFunction == "n"
         self.goalAsSoftAsserts = (args.jairGoalFunction in {"n", "g"})
         self.initState = State.fromInitialCondition(self.problem.init)
         self.state = state if state else self.initState

@@ -115,13 +115,10 @@ class SMTSolver:
         return self.solver.optimize(self.variables)
 
     def getSolution(self) -> SMTSolution or bool:
-        if self.maximize:
-            if not self.trySoftAsHard:
-                return self.solver.optimize(self.variables)
-            else:
-                return self.tryWithSoftAsHard()
+        if not self.trySoftAsHard:
+            return self.solver.optimize(self.variables)
         else:
-            return self.solver.solve(self.variables)
+            return self.tryWithSoftAsHard()
 
     def registerOnImprovedModel(self, onImprovedModel: Callable):
         self.onImprovedModel = onImprovedModel
