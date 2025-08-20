@@ -22,7 +22,7 @@ class DeltaSingle(GoalFunctionClauses):
         if g.type == "OR":
             raise Exception("This goal function works only when goals are clauses")
         if not g.hasOnlyOneNumericConditions():
-            raise Exception("This goal value function works only when there in only one numeric condition")
+            return 0
         phiPredicate: BinaryPredicate = g.conditions[0]
         iPhi = init.getValue(phiPredicate.lhs - phiPredicate.rhs)
         if iPhi >= 0:
@@ -35,7 +35,7 @@ class DeltaSingle(GoalFunctionClauses):
         if g.type == "OR":
             raise Exception("This goal function works only when goals are clauses")
         if not g.hasOnlyOneNumericConditions():
-            raise Exception("This goal value function works only when there in only one numeric condition")
+            return ConstantExpression(0)
         phiPredicate: BinaryPredicate = g.conditions[0]
         iPhi = init.getValue(phiPredicate.lhs - phiPredicate.rhs)
         if iPhi >= 0:
