@@ -34,13 +34,15 @@ class Z3SolverAndOptimizer:
     def convert(self, expr):
         return self.solver.converter.convert(expr)
 
-    def add(self, expr):
-        self.optimizer.add(self.convert(expr))
-        self.solver.add_assertion(expr)
+    def add(self, expr, solver=True, optimizer=True):
+        if optimizer:
+            self.optimizer.add(self.convert(expr))
+        if solver:
+            self.solver.add_assertion(expr)
 
     def add_soft(self, expr):
-        self.solver.add_assertion(expr)
         self.optimizer.add_soft(self.convert(expr))
+        self.solver.add_assertion(expr)
 
     def minimize(self, expr):
         self.optimizer.minimize(self.convert(expr))
@@ -68,7 +70,6 @@ class Z3SolverAndOptimizer:
     def optimize(self, variables):
         # print("Objectives:", self.optimizer.objectives())
         res = self.optimizer.check()
-
 
         if str(res) != "sat":
             return False

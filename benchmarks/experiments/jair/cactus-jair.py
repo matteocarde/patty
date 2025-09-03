@@ -17,7 +17,7 @@ from classes.Result import Result
 
 def main():
     # Parsing the results
-    exp = "2025-08-11-JAIR-5MIN-v5"
+    exp = "2025-08-20-HOPEFULLY-LAST-AIJ-v1"
     joinWith = [
         (exp, [
             "PATTY-C-npi",
@@ -84,13 +84,13 @@ def main():
         {
             "name": "cbrg-search",
             "planners": [
+                "PATTY-B-npc",
+                "PATTY-C-npc",
                 "PATTY-G-nei",
                 # "PATTY-C-npi",
-                "PATTY-C-npc",
                 # "PATTY-R-gec",
-                "PATTY-B-npc",
                 "PATTY-R-nec",
-                "PATTY-A",
+                "PATTY-EG",
                 # "PATTY-B-gpc",
                 # "PATTY-B-nrc",
                 # "PATTY-G-gei",
@@ -217,7 +217,7 @@ def main():
 
             ax.grid()
             ax.set_xlabel(p["xLabel"])
-            ax.set_xlim([-10, 330])
+            ax.set_xlim([-10, 340])
             ax.set_ylim([0, p["yLim"]])
             ax.set_ylabel(p["yLabel"])
             ax.set_yscale(p["yScale"])

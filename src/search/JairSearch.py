@@ -77,7 +77,9 @@ class JairSearch(Search):
                 goalFunctionValue=c,
                 bound=1,
                 args=self.args,
-                subgoalsAchieved=subgoalsAchieved
+                subgoalsAchieved=subgoalsAchieved,
+                minimizeGoalFunction=self.problem.goal.hasOnlyOneNumericConditions() and self.args.jairGoalFunction == "n",
+                goalAsSoftAsserts=(self.args.jairGoalFunction in {"n", "g"})
             )
 
             self.ts.end(f"Conversion to SMT at bound {bound}", console=self.console)
@@ -195,6 +197,7 @@ class JairSearch(Search):
                 p_ = Pattern.fromStateGreedy(P, self.problem.goal, self.domain, 2 ** (n - 1))
                 if len(p) == len(p_):
                     self.incompleteSaturationLevel += 1
-                    return Pattern.fromState(P, self.problem.goal, self.domain, self.enhanced).multiply(self.incompleteSaturationLevel)
+                    return Pattern.fromState(P, self.problem.goal, self.domain, self.enhanced).multiply(
+                        self.incompleteSaturationLevel)
                 else:
                     return p

@@ -32,6 +32,7 @@ class SMTSolver:
         if self.encoding:
             t = TimeStat.startHolder("Adding assertions")
             self.addAssertions(self.encoding.rules)
+            self.addAssertions(self.encoding.rules, solver=True, optimizer=False)
             t.endHolder()
             self.addSoftAssertions(self.encoding.softRules)
             self.setMinimize(self.encoding.minimize)
@@ -40,18 +41,18 @@ class SMTSolver:
         # signal.signal(signal.SIGTERM, self.z3.exit)
         # signal.signal(signal.SIGINT, self.z3.exit)
 
-    def addAssertion(self, expr: SMTExpression, push=True):
+    def addAssertion(self, expr: SMTExpression, push=True, solver=True, optimizer=True):
         self.assertions.append(expr)
         self.variables |= expr.getVariables()
         expr = expr.getExpression()
-        self.solver.add(expr)
+        self.solver.add(expr, solver=solver, optimizer=optimizer)
 
         if push:
             self.solver.push()
 
-    def addAssertions(self, exprs: [SMTExpression], push=True):
+    def addAssertions(self, exprs: [SMTExpression], push=True, solver=True, optimizer=True):
         for expr in exprs:
-            self.addAssertion(expr, push=False)
+            self.addAssertion(expr, push=False, solver=solver, optimizer=optimizer)
 
         if push:
             self.solver.push()
@@ -106,9 +107,9 @@ class SMTSolver:
         return solution
 
     def tryWithSoftAsHard(self):
-        print(f"Starting checking without contraints [{datetime.datetime.now()}]")
+        print(f"Starting checking without constraints [{datetime.datetime.now()}]")
         solveRes = self.solver.solve(self.variables)
-        print(f"Ended checking without contraints [{datetime.datetime.now()}]")
+        print(f"Ended checking without constraints [{datetime.datetime.now()}]")
         if solveRes:
             return solveRes
 

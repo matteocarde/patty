@@ -6,6 +6,7 @@ from natsort import natsort
 from benchmarks.tables.jair.domains import JAIR_DOMAINS
 
 PLANNERS = {
+    "PATTY-EO",
     "PATTY-C-npc",
     "PATTY-B-npc",
     "PATTY-R-nec",
