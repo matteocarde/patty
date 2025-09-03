@@ -1,5 +1,5 @@
 JAIR_PLANNERS = {
-    "PATTY-EG": {
+    "PATTY-EO": {
         "name": r"$\mathrm{P}_\textsc{o}$",
         "style": "-"
     },

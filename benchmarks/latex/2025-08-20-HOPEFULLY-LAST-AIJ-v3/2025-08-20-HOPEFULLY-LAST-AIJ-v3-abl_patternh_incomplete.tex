@@ -1,0 +1,47 @@
+
+               \documentclass[11pt,landscape]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in,landscape]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||cccccccccc||cccccccccc||}
+\hline
+ & \multicolumn{10}{c||}{Solved (out of $20$)}&\multicolumn{10}{c||}{Time (s)}\\
+Domain & $\mathrm{P}_\textsc{c}^{npc}$&$\mathrm{P}_\textsc{b}^{npc}$&$\mathrm{P}_\textsc{r}^{nec}$&$\mathrm{P}_\textsc{g}^{nei}$&$\mathrm{P}_\textsc{c}^{nps}$&$\mathrm{P}_\textsc{b}^{nps}$&$\mathrm{P}_\textsc{r}^{nes}$&$\mathrm{P}_\textsc{g}^{nes}$&$\mathrm{P}_\textsc{c}^{npi}$&$\mathrm{P}_\textsc{b}^{npi}$&$\mathrm{P}_\textsc{c}^{npc}$&$\mathrm{P}_\textsc{b}^{npc}$&$\mathrm{P}_\textsc{r}^{nec}$&$\mathrm{P}_\textsc{g}^{nei}$&$\mathrm{P}_\textsc{c}^{nps}$&$\mathrm{P}_\textsc{b}^{nps}$&$\mathrm{P}_\textsc{r}^{nes}$&$\mathrm{P}_\textsc{g}^{nes}$&$\mathrm{P}_\textsc{c}^{npi}$&$\mathrm{P}_\textsc{b}^{npi}$\\
+\hline
+\textsc{BlGrp} (S)&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X\\
+\textsc{Cnt} (S)&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X\\
+\textsc{Cnt} (L)&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X\\
+\textsc{Del} (S)&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X\\
+\textsc{Drn} (S)&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X\\
+\textsc{Exp} (S)&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X\\
+\textsc{Farm} (S)&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X\\
+\textsc{Farm} (L)&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X\\
+\textsc{HPwr} (S)&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X\\
+\textsc{Mrkt} (L)&-&-&-&\textbf{19}&-&-&-&-&4&4&-&-&-&\textbf{20.2}&-&-&-&-&242.2&240.6\\
+\textsc{MPrime} (S)&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X\\
+\textsc{PathM} (S)&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X\\
+\textsc{PlWat} (S)&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X\\
+\textsc{Rvr} (S)&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X\\
+\textsc{Sail} (S)&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X\\
+\textsc{Sail} (L)&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X\\
+\textsc{Stlrs} (S)&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X\\
+\textsc{Sgr} (S)&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X\\
+\textsc{Tpp} (L)&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X\\
+\textsc{Zeno} (S)&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X\\
+\textsc{Line} (L)&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X&X
+\\\hline
+\textit{Best}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{19}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{4}&\textbf{4}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{18}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{1}\\\hline
+
+        \end{tabular}}
+        \caption{Impact of incomplete pattern $\pattern_h$ computation on function on Cautious and Brave \pattyd. Planner names are abbreviated.}
+        \label{tab:abl-patternh-incomplete}
+        \end{table*}
+        
+\end{document}

@@ -1,0 +1,47 @@
+
+               \documentclass[11pt]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||cccccccc||cccccccc||}
+\hline
+ & \multicolumn{8}{c||}{Solved (out of $20$)}&\multicolumn{8}{c||}{Time (s)}\\
+Domain & $\mathrm{P}_\textsc{c}^{npc}$&$\mathrm{P}_\textsc{b}^{npc}$&$\mathrm{P}_\textsc{r}^{nec}$&$\mathrm{P}_\textsc{g}^{nei}$&$\mathrm{EN}_\mathrm{CT}$&$\mathrm{EN}$&$\mathrm{NFD}$&$\mathrm{FF}$&$\mathrm{P}_\textsc{c}^{npc}$&$\mathrm{P}_\textsc{b}^{npc}$&$\mathrm{P}_\textsc{r}^{nec}$&$\mathrm{P}_\textsc{g}^{nei}$&$\mathrm{EN}_\mathrm{CT}$&$\mathrm{EN}$&$\mathrm{NFD}$&$\mathrm{FF}$\\
+\hline
+\textsc{BlGrp} (S)&X&X&X&X&14&\textbf{16}&-&2&X&X&X&X&117.2&\textbf{81.5}&-&270.2\\
+\textsc{Cnt} (S)&X&X&X&X&10&12&11&\textbf{15}&X&X&X&X&163.8&133.8&149.8&\textbf{95.7}\\
+\textsc{Cnt} (L)&X&X&X&X&\textbf{12}&10&6&8&X&X&X&X&\textbf{142.3}&170.9&214.0&180.0\\
+\textsc{Del} (S)&X&X&X&X&14&13&9&\textbf{18}&X&X&X&X&117.1&121.7&165.2&\textbf{41.2}\\
+\textsc{Drn} (S)&X&X&X&X&\textbf{18}&16&16&2&X&X&X&X&\textbf{55.4}&62.9&66.0&268.4\\
+\textsc{Exp} (S)&X&X&X&X&\textbf{6}&\textbf{6}&3&-&X&X&X&X&224.0&\textbf{212.3}&253.7&-\\
+\textsc{Farm} (S)&X&X&X&X&\textbf{20}&\textbf{20}&15&9&X&X&X&X&1.8&\textbf{0.9}&85.3&188.1\\
+\textsc{Farm} (L)&X&X&X&X&\textbf{20}&18&11&15&X&X&X&X&\textbf{2.5}&48.6&151.2&80.5\\
+\textsc{HPwr} (S)&X&X&X&X&\textbf{20}&2&1&1&X&X&X&X&\textbf{4.6}&270.3&285.1&285.0\\
+\textsc{Mrkt} (L)&-&-&-&19&\textbf{20}&4&-&-&-&-&-&\textbf{20.2}&35.0&259.3&-&-\\
+\textsc{MPrime} (S)&X&X&X&X&\textbf{17}&\textbf{17}&14&\textbf{17}&X&X&X&X&74.6&68.1&127.2&\textbf{45.1}\\
+\textsc{PathM} (S)&X&X&X&X&3&2&1&\textbf{10}&X&X&X&X&262.8&272.2&284.2&\textbf{154.9}\\
+\textsc{PlWat} (S)&X&X&X&X&\textbf{20}&16&14&3&X&X&X&X&\textbf{41.1}&101.3&167.2&268.3\\
+\textsc{Rvr} (S)&X&X&X&X&\textbf{12}&8&4&10&X&X&X&X&143.7&197.4&240.8&\textbf{133.3}\\
+\textsc{Sail} (S)&X&X&X&X&\textbf{20}&\textbf{20}&10&1&X&X&X&X&5.0&\textbf{2.0}&150.3&285.0\\
+\textsc{Sail} (L)&X&X&X&X&2&2&\textbf{15}&8&X&X&X&X&270.8&270.6&\textbf{96.8}&182.8\\
+\textsc{Stlrs} (S)&X&X&X&X&2&1&-&\textbf{4}&X&X&X&X&279.0&288.6&-&\textbf{243.8}\\
+\textsc{Sgr} (S)&X&X&X&X&11&8&4&\textbf{13}&X&X&X&X&144.5&182.5&245.7&\textbf{122.5}\\
+\textsc{Tpp} (L)&X&X&X&X&\textbf{7}&3&2&2&X&X&X&X&\textbf{212.3}&255.2&270.0&266.7\\
+\textsc{Zeno} (S)&X&X&X&X&17&\textbf{19}&9&11&X&X&X&X&89.5&\textbf{28.1}&172.5&135.0\\
+\textsc{Line} (L)&X&X&X&X&\textbf{11}&9&6&6&X&X&X&X&\textbf{149.5}&175.4&235.0&211.6
+\\\hline
+\textit{Best}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{19}&\textbf{276}&\textbf{222}&\textbf{151}&\textbf{155}&\textbf{0}&\textbf{0}&\textbf{0}&\textbf{18}&\textbf{72}&\textbf{75}&\textbf{46}&\textbf{114}\\\hline
+
+        \end{tabular}}
+        \caption{Comparative analysis between ... and other publicly available search-based planners.}
+        \label{tab:search}
+        \end{table*}
+        
+\end{document}
