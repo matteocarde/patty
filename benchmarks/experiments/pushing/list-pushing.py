@@ -2,7 +2,7 @@ import random
 import os
 from natsort import natsort
 
-from benchmarks.tables.pushing.domains_table2 import PUSHING_DOMAINS_TABLE2
+from benchmarks import PUSHING_DOMAINS_TABLE2
 
 PLANNERS = [
     "PATTY-EO",

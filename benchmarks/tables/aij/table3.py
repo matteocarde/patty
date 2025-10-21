@@ -1,5 +1,5 @@
-from benchmarks.tables.aij.domains import AIJ_DOMAINS
-from benchmarks.tables.aij.planners import AIJ_PLANNERS
+from benchmarks import AIJ_DOMAINS
+from benchmarks import AIJ_PLANNERS
 
 AIJ_TABLE3 = {
     "name": "tab:symbolic",

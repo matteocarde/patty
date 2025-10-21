@@ -8,7 +8,7 @@ JAIR_PLANNERS = {
         "style": "-"
     },
     "PATTY-C-npc": {
-        "name": r"$\mathrm{P}_\textsc{c}^{npc}$",
+        "name": r"$\mathrm{P}_\textsc{c}$",
         "style": "-"
     },
     "PATTY-R-gec": {
@@ -40,7 +40,7 @@ JAIR_PLANNERS = {
         "style": "-"
     },
     "PATTY-G-nei": {
-        "name": r"$\mathrm{P}_\textsc{g}^{nei}$",
+        "name": r"$\mathrm{P}_\textsc{g}$",
         "style": "-"
     },
     "PATTY-R-nes": {
@@ -56,7 +56,7 @@ JAIR_PLANNERS = {
         "style": "-"
     },
     "PATTY-B-npc": {
-        "name": r"$\mathrm{P}_\textsc{b}^{npc}$",
+        "name": r"$\mathrm{P}_\textsc{b}$",
         "style": "-"
     },
     "PATTY-B-npi": {
@@ -68,7 +68,7 @@ JAIR_PLANNERS = {
         "style": "-"
     },
     "PATTY-R-nec": {
-        "name": r"$\mathrm{P}_\textsc{r}^{nec}$",
+        "name": r"$\mathrm{P}_\textsc{r}$",
         "style": "-"
     },
     "PATTY-G-nec": {

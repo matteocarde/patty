@@ -1,16 +1,16 @@
 import csv
 import os
 import shutil
-from typing import Dict, List, Tuple
+from typing import Dict, List
 
 import numpy as np
 from matplotlib import pyplot as plt
 from numpy import ndarray
 
-from benchmarks.tables.aij.domains import AIJ_DOMAINS
-from benchmarks.tables.aij.planners import AIJ_PLANNERS
-from benchmarks.tables.pushing.domains_table2 import PUSHING_DOMAINS_TABLE2
-from benchmarks.tables.pushing.planners import PUSHING_PLANNERS
+from benchmarks import AIJ_DOMAINS
+from benchmarks import AIJ_PLANNERS
+from benchmarks import PUSHING_DOMAINS_TABLE2
+from benchmarks import PUSHING_PLANNERS
 from classes.CloudLogger import CloudLogger
 from classes.Result import Result
 

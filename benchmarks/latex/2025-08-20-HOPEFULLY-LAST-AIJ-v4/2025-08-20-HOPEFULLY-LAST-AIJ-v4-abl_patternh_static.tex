@@ -1,0 +1,47 @@
+
+               \documentclass[11pt,landscape]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in,landscape]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||ccccccc||ccccccc||}
+\hline
+ & \multicolumn{7}{c||}{Solved (out of $20$)}&\multicolumn{7}{c||}{Time (s)}\\
+Domain & $\mathrm{P}_\textsc{c}^{npc}$&$\mathrm{P}_\textsc{b}^{npc}$&$\mathrm{P}_\textsc{r}^{nec}$&$\mathrm{P}_\textsc{g}^{nei}$&$\mathrm{P}_\textsc{c}^{nps}$&$\mathrm{P}_\textsc{b}^{nps}$&$\mathrm{P}_\textsc{r}^{nes}$&$\mathrm{P}_\textsc{c}^{npc}$&$\mathrm{P}_\textsc{b}^{npc}$&$\mathrm{P}_\textsc{r}^{nec}$&$\mathrm{P}_\textsc{g}^{nei}$&$\mathrm{P}_\textsc{c}^{nps}$&$\mathrm{P}_\textsc{b}^{nps}$&$\mathrm{P}_\textsc{r}^{nes}$\\
+\hline
+\textsc{BlGrp} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&1.9&2.0&2.0&\textbf{1.7}&1.9&1.8&1.8\\
+\textsc{Cnt} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{0.8}&0.9&0.9&1.1&0.9&\textbf{0.8}&1.0\\
+\textsc{Cnt} (L)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{0.9}&\textbf{0.9}&\textbf{0.9}&1.0&\textbf{0.9}&\textbf{0.9}&\textbf{0.9}\\
+\textsc{Del} (S)&8&8&8&\textbf{9}&6&6&7&187.0&189.5&189.0&\textbf{171.8}&227.4&226.2&209.6\\
+\textsc{Drn} (S)&\textbf{16}&\textbf{16}&13&\textbf{16}&\textbf{16}&\textbf{16}&13&110.8&99.9&110.8&\textbf{98.2}&107.6&103.6&125.2\\
+\textsc{Exp} (S)&\textbf{4}&\textbf{4}&2&2&\textbf{4}&\textbf{4}&2&\textbf{246.1}&249.2&270.8&270.8&247.7&250.4&270.9\\
+\textsc{Farm} (S)&\textbf{20}&\textbf{20}&\textbf{20}&17&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{0.8}&0.9&\textbf{0.8}&45.7&0.9&\textbf{0.8}&0.9\\
+\textsc{Farm} (L)&\textbf{20}&\textbf{20}&\textbf{20}&17&\textbf{20}&\textbf{20}&\textbf{20}&3.3&3.6&\textbf{3.2}&48.0&\textbf{3.2}&3.4&3.4\\
+\textsc{HPwr} (S)&\textbf{20}&\textbf{20}&\textbf{20}&14&\textbf{20}&\textbf{20}&\textbf{20}&97.1&\textbf{90.1}&93.4&230.2&103.5&97.1&95.7\\
+\textsc{Mrkt} (L)&2&5&5&\textbf{19}&-&3&4&294.8&279.2&279.8&\textbf{19.5}&-&281.1&277.8\\
+\textsc{MPrime} (S)&\textbf{14}&\textbf{14}&\textbf{14}&10&\textbf{14}&\textbf{14}&\textbf{14}&\textbf{119.0}&128.7&124.3&154.9&126.5&125.7&123.8\\
+\textsc{PathM} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&4.4&\textbf{4.0}&4.7&4.8&4.5&4.2&\textbf{4.0}\\
+\textsc{PlWat} (S)&\textbf{20}&\textbf{20}&19&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&20.8&16.9&23.9&\textbf{10.7}&24.4&21.1&12.1\\
+\textsc{Rvr} (S)&13&14&10&7&\textbf{15}&14&9&114.9&113.6&158.8&200.7&\textbf{106.9}&136.4&177.0\\
+\textsc{Sail} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&1.1&\textbf{0.9}&1.0&\textbf{0.9}&1.0&1.0&1.0\\
+\textsc{Sail} (L)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&1.4&\textbf{0.8}&0.9&0.9&1.0&\textbf{0.8}&0.9\\
+\textsc{Stlrs} (S)&\textbf{15}&\textbf{15}&\textbf{15}&\textbf{15}&\textbf{15}&\textbf{15}&\textbf{15}&83.5&83.7&82.8&\textbf{79.1}&82.2&84.1&82.8\\
+\textsc{Sgr} (S)&\textbf{20}&\textbf{20}&15&15&\textbf{20}&\textbf{20}&15&12.2&14.9&81.3&78.4&\textbf{9.9}&10.3&83.0\\
+\textsc{Tpp} (L)&3&3&\textbf{4}&3&2&2&3&259.3&255.6&\textbf{252.5}&264.6&270.1&270.1&264.1\\
+\textsc{Zeno} (S)&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{11}&\textbf{11}&136.8&\textbf{136.7}&137.1&137.8&137.8&138.3&137.6\\
+\textsc{Line} (L)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&1.6&1.5&\textbf{1.4}&\textbf{1.4}&1.6&1.5&1.6
+\\\hline
+\textit{Best}&\textbf{326}&\textbf{330}&\textbf{316}&\textbf{315}&\textbf{323}&\textbf{325}&\textbf{313}&\textbf{36}&\textbf{40}&\textbf{46}&\textbf{133}&\textbf{34}&\textbf{44}&\textbf{35}\\\hline
+
+        \end{tabular}}
+        \caption{Impact of a static pattern $\pattern_h$ computation on function on Cautious, Brave and Reckless \pattyd. Planner names are abbreviated.}
+        \label{tab:abl-patternh-static}
+        \end{table*}
+        
+\end{document}

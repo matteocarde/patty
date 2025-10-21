@@ -7,8 +7,8 @@ import statistics
 import sys
 from typing import Dict, List, Set
 
-from benchmarks.tables.aij.table2 import AIJ_TABLE2
-from benchmarks.tables.aij.table3 import AIJ_TABLE3
+from benchmarks import AIJ_TABLE2
+from benchmarks import AIJ_TABLE3
 from classes.CloudLogger import CloudLogger
 from classes.Result import Result
 

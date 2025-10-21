@@ -7,16 +7,16 @@ import statistics
 import sys
 from typing import Dict, List, Set
 
-from benchmarks.tables.jair.planners import JAIR_PLANNERS
-from benchmarks.tables.jair.table_abl_gf import JAIR_ABL_GF
-from benchmarks.tables.jair.table_abl_patterng import JAIR_ABL_PATTERNG
-from benchmarks.tables.jair.table_abl_patternh_incomplete import JAIR_ABL_PATTERNH_INCOMPLETE
-from benchmarks.tables.jair.table_abl_patternh_static import JAIR_ABL_PATTERNH_STATIC
-from benchmarks.tables.jair.table_search import JAIR_SEARCH
+from benchmarks import JAIR_PLANNERS
+from benchmarks import JAIR_ABL_GF
+from benchmarks import JAIR_ABL_PATTERNG
+from benchmarks import JAIR_ABL_PATTERNH_INCOMPLETE
+from benchmarks import JAIR_ABL_PATTERNH_STATIC
+from benchmarks import JAIR_SEARCH
 from classes.CloudLogger import CloudLogger
 from classes.Result import Result
 
-from benchmarks.tables.jair.table_cbrg import JAIR_CBRG
+from benchmarks import JAIR_CBRG
 
 
 def round(fValue, n):
@@ -41,10 +41,12 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2025-08-20-HOPEFULLY-LAST-AIJ-v3"
+    exp = "2025-08-20-HOPEFULLY-LAST-AIJ-v4"
     joinWith = [
         (exp, [
-            "PATTY-EO",
+            "PATTY-EO"
+        ]),
+        ("2025-08-20-HOPEFULLY-LAST-AIJ-v1", [
             "PATTY-C-npi",
             "PATTY-C-npc",
             "PATTY-R-gec",
@@ -161,9 +163,9 @@ def main():
                 for problem in dOrig[domain][planner].keys():
                     if problem not in table["domains"][domain]["instances"]:
                         continue
-                    # if len(d[domain][planner][problem]) > 1:
-                    #     print(f"There are multiple problems {problem} for {domain} with {planner}. "
-                    #           f"Please aggregate it in some way", file=sys.stderr)
+                    if len(d[domain][planner][problem]) > 1:
+                        print(f"There are multiple problems {problem} for {domain} with {planner}. "
+                              f"Please aggregate it in some way", file=sys.stderr)
                     problems.append(d[domain][planner][problem][0])
                     p[domain][planner][problem] = d[domain][planner][problem][0]
                 d[domain][planner] = problems

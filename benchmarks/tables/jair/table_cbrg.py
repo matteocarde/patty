@@ -1,4 +1,4 @@
-from benchmarks.tables.jair.domains import JAIR_DOMAINS
+from benchmarks import JAIR_DOMAINS
 
 JAIR_CBRG = {
     "name": "tab:cbrg",
@@ -29,7 +29,7 @@ JAIR_CBRG = {
             "avg": True
         },
         "patternLength": {
-            "name": r"$|\prec|$",
+            "name": r"$|\mathcal{A}^\prec|$",
             "winner": -1
         },
         # "nOfVars": {

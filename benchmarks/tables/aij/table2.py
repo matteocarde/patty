@@ -1,4 +1,4 @@
-from benchmarks.tables.aij.domains import AIJ_DOMAINS
+from benchmarks import AIJ_DOMAINS
 
 AIJ_TABLE2 = {
     "name": "tab:qual-plans",

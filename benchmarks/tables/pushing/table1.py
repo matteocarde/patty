@@ -1,5 +1,5 @@
-from benchmarks.tables.pushing.domains_table1 import PUSHING_DOMAINS_TABLE1
-from benchmarks.tables.pushing.planners import PUSHING_PLANNERS
+from benchmarks import PUSHING_DOMAINS_TABLE1
+from benchmarks import PUSHING_PLANNERS
 
 PUSHING_TABLE1 = {
     "name": "tab:experiments",

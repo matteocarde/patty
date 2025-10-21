@@ -2,8 +2,8 @@ import random
 import os
 from natsort import natsort
 
-from benchmarks.tables.aij.domains import AIJ_DOMAINS
-from benchmarks.tables.aij.domains_left import AIJ_DOMAINS_LEFT
+from benchmarks import AIJ_DOMAINS
+from benchmarks import AIJ_DOMAINS_LEFT
 
 # PLANNERS = ["PATTY", "PATTY-R-YICES", "PATTY-R-Z3-NL", "PATTY-NL", "PATTY-Z3", "SPRINGROLL"]
 PLANNERS = [

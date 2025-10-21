@@ -3,7 +3,7 @@ import random
 
 from natsort import natsort
 
-from benchmarks.tables.jair.domains import JAIR_DOMAINS
+from benchmarks import JAIR_DOMAINS
 
 PLANNERS = {
     "PATTY-EO",

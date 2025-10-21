@@ -1,25 +1,28 @@
 import csv
 import os
 import shutil
-from typing import Dict, List, Tuple
+from typing import Dict, List
 
 import numpy as np
 from matplotlib import pyplot as plt
 from numpy import ndarray
 
-from benchmarks.tables.aij.domains import AIJ_DOMAINS
-from benchmarks.tables.aij.planners import AIJ_PLANNERS
-from benchmarks.tables.jair.domains import JAIR_DOMAINS
-from benchmarks.tables.jair.planners import JAIR_PLANNERS
+from benchmarks import AIJ_DOMAINS
+from benchmarks import AIJ_PLANNERS
+from benchmarks import JAIR_DOMAINS
+from benchmarks import JAIR_PLANNERS
 from classes.CloudLogger import CloudLogger
 from classes.Result import Result
 
 
 def main():
     # Parsing the results
-    exp = "2025-08-20-HOPEFULLY-LAST-AIJ-v1"
+    exp = "2025-08-20-HOPEFULLY-LAST-AIJ-v4"
     joinWith = [
         (exp, [
+            "PATTY-EO"
+        ]),
+        ("2025-08-20-HOPEFULLY-LAST-AIJ-v1", [
             "PATTY-C-npi",
             "PATTY-C-npc",
             "PATTY-R-gec",
@@ -41,17 +44,14 @@ def main():
             "PATTY-C-nps",
             "PATTY-G-nes",
         ]),
-
-        ("2024-11-12-DOMAINS-v7", ["PATTY-A"]),
         ("2024-11-12-DOMAINS-v1", ["ENHSP-SAT-AIBR", "RANTANPLAN", "SPRINGROLL", "ENHSP-SAT-HADD",
                                    "ENHSP-SAT-HMRP", "METRIC-FF", "NFD", "OMT", "ENHSP-SOCS"]),
         ("2024-11-11-SOCS-v1", ["ENHSP-SOCS"]),
-        ("2024-10-07-AIJ-FINAL-v10", ["PATTY-A"]),
         ("2024-10-07-AIJ-FINAL-v7", ["RANTANPLAN"]),
         ("2024-10-07-AIJ-FINAL-v6", ["SPRINGROLL"]),
         ("2024-10-07-AIJ-FINAL-v5", ["OMT"]),
         ("2024-10-07-AIJ-FINAL-v2",
-         ["ENHSP-SAT-AIBR", "PATTY-A", "ENHSP-SAT-HADD", "ENHSP-SAT-HMRP", "METRIC-FF", "NFD"])
+         ["ENHSP-SAT-AIBR", "ENHSP-SAT-HADD", "ENHSP-SAT-HMRP", "METRIC-FF", "NFD"])
     ]
     file = f"benchmarks/results/csv/{exp}.csv"
 
@@ -90,7 +90,7 @@ def main():
                 # "PATTY-C-npi",
                 # "PATTY-R-gec",
                 "PATTY-R-nec",
-                "PATTY-EG",
+                "PATTY-EO",
                 # "PATTY-B-gpc",
                 # "PATTY-B-nrc",
                 # "PATTY-G-gei",

@@ -7,9 +7,9 @@ import statistics
 import sys
 from typing import Dict, List, Set
 
-from benchmarks.tables.pushing.table1 import PUSHING_TABLE1
-from benchmarks.tables.pushing.table2 import PUSHING_TABLE2
-from benchmarks.tables.pushing.table1full import PUSHING_TABLE1_FULL
+from benchmarks import PUSHING_TABLE1
+from benchmarks import PUSHING_TABLE2
+from benchmarks import PUSHING_TABLE1_FULL
 from classes.CloudLogger import CloudLogger
 from classes.Result import Result
 

@@ -1,5 +1,5 @@
-from benchmarks.tables.pushing.domains_table2 import PUSHING_DOMAINS_TABLE2
-from benchmarks.tables.pushing.planners import PUSHING_PLANNERS
+from benchmarks import PUSHING_DOMAINS_TABLE2
+from benchmarks import PUSHING_PLANNERS
 
 PUSHING_TABLE2 = {
     "name": "tab:exp-search",
