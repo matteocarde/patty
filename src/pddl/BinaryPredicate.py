@@ -310,6 +310,15 @@ class BinaryPredicate(Predicate):
         return bp
 
     @classmethod
+    def increase(cls, lhs: Predicate, rhs: Predicate or float):
+        bp = cls()
+        bp.operator = "increase"
+        bp.lhs = lhs
+        bp.rhs = rhs if isinstance(rhs, Predicate) else Constant.fromValue(rhs)
+        bp.type = BinaryPredicateType.MODIFICATION
+        return bp
+
+    @classmethod
     def fromOperationString(cls, string: str):
         return cls.fromNode(Utilities.getParseTree(string).operation())
 

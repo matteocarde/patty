@@ -211,6 +211,20 @@ class SMTExpression:
             return SMTExpression.orOfExpressionsList(preRules)
 
     @classmethod
+    def fromState(cls, s, current: Dict[Atom, SMTExpression]) -> SMTExpression:
+        rules = []
+
+        for v, k in s.assignments.items():
+            if type(k) is bool and k:
+                rules.append(current[v])
+            elif type(k) is bool and not k:
+                rules.append(~current[v])
+            else:
+                rules.append(current[v].equal(k))
+
+        return SMTExpression.bigand(rules)
+
+    @classmethod
     def __connectiveOfExpressionList(cls, rules: [SMTExpression], connective):
         if len(rules) == 1:
             return rules[0]

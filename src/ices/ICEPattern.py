@@ -8,7 +8,13 @@ from src.ices.Happening import Happening, HappeningActionStart, HappeningActionE
 from src.ices.ICEAction import BEGIN, ICEAction
 from src.ices.ICEActionStartEndPair import ICEActionStartEndPair
 from src.ices.ICEConditionStartEndPair import ICEConditionStartEndPair
+from src.ices.ICETask import ICETask
 from src.ices.PlanIntermediateEffect import PlanIntermediateEffect
+from src.ices.SnapHappeningAction import SnapHappeningAction
+
+from src.ices.SnapTask import SnapTask
+from src.pddl.ARPG import ARPG
+from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 
 
@@ -59,12 +65,6 @@ class ICEPattern:
         for i in range(0, times):
             for item in self.pattern:
                 a = copy.copy(item)
-                if hasattr(a, "action") and isinstance(a.action, ICEAction):
-                    a.action = copy.copy(a.action)
-                    a.action.name = f"{a.action.name}_{i}"
-                if hasattr(a, "parent") and isinstance(a.parent, ICEAction):
-                    a.parent = copy.copy(a.parent)
-                    a.parent.name = f"{a.parent.name}_{i}"
                 a.name = f"{a.name}_{i}" if times > 1 else f"{a.name}"
                 order.append(a)
 
@@ -74,10 +74,10 @@ class ICEPattern:
         pairs: List[ICEActionStartEndPair] = list()
 
         for i, h_i in enumerate(self.pattern):
-            if not isinstance(h_i, HappeningActionStart):
+            if not h_i.starting:
                 continue
             for j, h_j in enumerate(self.pattern):
-                if j < i or not isinstance(h_j, HappeningActionEnd) or h_i.action != h_j.action:
+                if j < i or h_i.starting != h_j.ending:
                     continue
                 pairs.append(ICEActionStartEndPair(h_i, i, h_j, j))
 
@@ -124,3 +124,12 @@ class ICEPattern:
                 d[v].append(i)
 
         return d
+
+    @classmethod
+    def fromSnap(cls, task: ICETask):
+
+        snapDomain = SnapTask(task)
+        arpg: ARPG = ARPG(snapDomain, snapDomain.init, snapDomain.goal)
+        snapOrder: List[SnapHappeningAction] = arpg.getActionsOrder(enhanced=True)
+
+        return ICEPattern.fromOrder([a.originatingHappening for a in snapOrder])

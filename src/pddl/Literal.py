@@ -47,6 +47,11 @@ class Literal(Predicate):
         return cls.fromAtom(atom, "+")
 
     @classmethod
+    def freshSimple(cls, name: str):
+        atom = Atom.simple(name)
+        return Literal.pos(atom)
+
+    @classmethod
     def neg(cls, atom: Atom):
         return cls.fromAtom(atom, "-")
 

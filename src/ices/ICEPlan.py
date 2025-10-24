@@ -36,13 +36,14 @@ class ICEPlan:
         dVars = encoding.transVars.durVariables
 
         for h_i in encoding.pattern:
-            if not isinstance(h_i, HappeningActionStart):
-                continue
             mu_h_i: int = solution.getVariable(hVars[h_i])
             mu_t_i: float = solution.getVariable(tVars[h_i])
-            mu_d_i: float = h_i.action.duration#solution.getVariable(dVars[h_i])
+            print(h_i, f"x{mu_h_i}", mu_t_i)
+            if not h_i.starting:
+                continue
+            mu_d_i: float = h_i.starting.duration#solution.getVariable(dVars[h_i])
             if mu_h_i > 0:
-                th = TimedICEAction(mu_t_i, h_i.action, mu_d_i)
+                th = TimedICEAction(mu_t_i, h_i.starting, mu_d_i)
                 plan.timedActions.append(th)
 
         plan.task: ICETask = encoding.task

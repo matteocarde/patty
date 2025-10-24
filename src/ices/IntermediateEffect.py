@@ -6,13 +6,14 @@ from src.ices.RelativeTime import RelativeTime
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate, BinaryPredicateType
 from src.pddl.Constant import Constant
+from src.pddl.Effects import Effects
 from src.pddl.Literal import Literal
 from src.utils.Tuplable import Tuplable
 
 
 class IntermediateEffect(Tuplable):
     time: RelativeTime or float
-    effects: List[Literal or BinaryPredicate]
+    effects: Effects
 
     atoms: Set[Atom]
     atomsAdded: Set[Atom]
@@ -26,7 +27,7 @@ class IntermediateEffect(Tuplable):
         super().__init__()
         self.atomToEffect = dict()
         self.atomToConstant = dict()
-        self.effects = list()
+        self.effects = Effects()
         self.atoms = set()
         self.atomsAdded = set()
         self.atomsDeleted = set()
@@ -47,7 +48,7 @@ class IntermediateEffect(Tuplable):
         raise NotImplementedError()
 
     def addEffect(self, eff: Literal or BinaryPredicate):
-        self.effects.append(eff)
+        self.effects.addEffect(eff)
         if isinstance(eff, Literal) and eff.sign == "+":
             self.atomsAdded.add(eff.getAtom())
             self.atoms.add(eff.getAtom())
@@ -92,5 +93,8 @@ class IntermediateEffect(Tuplable):
             return True
         return False
 
-    def inMutexWith(self, effect: IntermediateEffect):
-        return self.interfere(effect) or effect.interfere(self)
+    def inMutexWith(self, other):
+        from src.ices.IntermediateCondition import IntermediateCondition
+        if isinstance(other, IntermediateCondition):
+            return other.inMutexWith(self)
+        return self.interfere(other) or other.interfere(self)

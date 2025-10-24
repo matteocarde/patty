@@ -8,6 +8,7 @@ from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate, BinaryPredicateType
 from src.pddl.Literal import Literal
 from src.pddl.PDDLWriter import PDDLWriter
+from src.pddl.Predicate import Predicate
 from src.pddl.Problem import Problem
 from src.pddl.TimePredicate import TimePredicate, TimePredicateType
 from src.pddl.Type import Type
@@ -91,6 +92,30 @@ class Effects:
 
     def getFunctions(self):
         return set(chain.from_iterable([c.getFunctions() for c in self.assignments if isinstance(c, BinaryPredicate)]))
+
+    def getIncreases(self) -> Dict[Atom, Predicate]:
+        incrs: Dict[Atom, Predicate] = dict()
+        for eff in self.assignments:
+            if not isinstance(eff, BinaryPredicate) or eff.operator not in {"increase"}:
+                continue
+            incrs[eff.lhs] = eff.rhs
+        return incrs
+
+    def getDecreases(self) -> Dict[Atom, Predicate]:
+        decrs: Dict[Atom, Predicate] = dict()
+        for eff in self.assignments:
+            if not isinstance(eff, BinaryPredicate) or eff.operator not in {"decrease"}:
+                continue
+            decrs[eff.lhs] = eff.rhs
+        return decrs
+
+    def getAssignments(self) -> Dict[Atom, Predicate]:
+        ass: Dict[Atom, Predicate] = dict()
+        for eff in self.assignments:
+            if not isinstance(eff, BinaryPredicate) or eff.operator not in {"="}:
+                continue
+            ass[eff.lhs] = eff.rhs
+        return ass
 
     def getPredicates(self):
         return set(chain.from_iterable([c.getPredicates() for c in self.assignments]))

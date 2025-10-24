@@ -292,6 +292,7 @@ class GroundedDomain(Domain):
         self.processes = process
         self.durativeActions = durativeActions
         self.actions = actions
+        self.constraints = Formula()
 
         if self.durativeActions:
             types = [TimePredicateType.AT_START, TimePredicateType.OVER_ALL, TimePredicateType.AT_END]

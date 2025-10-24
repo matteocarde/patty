@@ -5,26 +5,26 @@ from src.ices.IntermediateCondition import IntermediateCondition
 
 
 class ICEConditionStartEndPair:
-    h_i: HappeningConditionStart
-    h_j: HappeningConditionEnd
-    i: int
-    j: int
+    start: HappeningConditionStart
+    end: HappeningConditionEnd
+    startIndex: int
+    endIndex: int
     parent: ICEAction or TimedConditions
     condition: IntermediateCondition
 
-    def __init__(self, h_i: HappeningConditionStart, i: int, h_j: HappeningConditionEnd, j: int):
-        self.h_i = h_i
-        self.h_j = h_j
-        self.i = i
-        self.j = j
+    def __init__(self, start: HappeningConditionStart, i: int, end: HappeningConditionEnd, j: int):
+        self.start = start
+        self.end = end
+        self.startIndex = i
+        self.endIndex = j
 
         # assert self.h_i.parent == self.h_j.parent
-        assert self.h_i.condition == self.h_j.condition
-        self.parent = self.h_i.parent
-        self.condition = self.h_i.condition
+        assert self.start.condition == self.end.condition
+        self.parent = self.start.parent
+        self.condition = self.start.condition
 
     def __repr__(self):
-        return str((self.h_i, self.h_j))
+        return str((self.start, self.end))
 
     def __str__(self):
-        return str((self.h_i, self.h_j))
+        return str((self.start, self.end))

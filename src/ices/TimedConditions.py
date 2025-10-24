@@ -1,13 +1,13 @@
-from typing import List
+from typing import List, Set
 
 from src.ices.PlanIntermediateCondition import PlanIntermediateCondition
 
 
 class TimedConditions:
-    icond: List[PlanIntermediateCondition]
+    icond: Set[PlanIntermediateCondition]
 
     def __init__(self):
-        self.icond = list()
+        self.icond = set()
         pass
 
     def __len__(self):
@@ -17,4 +17,4 @@ class TimedConditions:
         return iter(self.icond)
 
     def addPlanIntermediateCondition(self, ic: PlanIntermediateCondition):
-        self.icond.append(ic)
+        self.icond.add(ic)

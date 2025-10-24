@@ -1,13 +1,13 @@
-from typing import List
+from typing import List, Set
 
 from src.ices.PlanIntermediateEffect import PlanIntermediateEffect
 
 
 class TimedEffects:
-    ieff: List[PlanIntermediateEffect]
+    ieff: Set[PlanIntermediateEffect]
 
     def __init__(self):
-        self.ieff = list()
+        self.ieff = set()
         pass
 
     def __len__(self):
@@ -20,4 +20,4 @@ class TimedEffects:
         return iter(self.ieff)
 
     def addPlanIntermediateEffect(self, ie: PlanIntermediateEffect):
-        self.ieff.append(ie)
+        self.ieff.add(ie)

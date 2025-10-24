@@ -18,6 +18,9 @@ class Goal(Preconditions):
     def fromNode(cls, node: pddlParser.GoalContext) -> Goal:
         return cast(Goal, super().fromNode(node.getChild(2)))
 
+    def addGoal(self, f):
+        self.addClause(f)
+
     def toPDDL(self, pw: PDDLWriter = PDDLWriter()):
         pw.write(f":goal ")
         # pw.increaseTab()

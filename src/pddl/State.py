@@ -45,6 +45,7 @@ class State:
         assignment: Predicate
         for assignment in init.assignments:
             atom = assignment.getAtom()
+            assert atom not in state.assignments
             state.assignments[atom] = state.getRealization(assignment)
 
         return state

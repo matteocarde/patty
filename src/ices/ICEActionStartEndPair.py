@@ -5,23 +5,23 @@ from src.smt.SMTExpression import SMTExpression
 
 
 class ICEActionStartEndPair:
-    h_i: HappeningActionStart
-    h_j: HappeningActionEnd
-    i: int
-    j: int
+    start: Happening
+    end: Happening
+    startIndex: int
+    endIndex: int
 
-    def __init__(self, h_i: HappeningActionStart, i: int, h_j: HappeningActionEnd, j: int):
-        self.h_i = h_i
-        self.h_j = h_j
-        self.i = i
-        self.j = j
+    def __init__(self, start: Happening, i: int, end: Happening, j: int):
+        self.start = start
+        self.end = end
+        self.startIndex = i
+        self.endIndex = j
 
-        assert self.h_i.action == self.h_j.action
-        self.action = self.h_i.action
+        assert self.start.starting == self.end.ending
+        self.action = self.start.starting
 
     def getPlaceholderBij(self, vars: Dict[Happening, SMTExpression], pattern) -> SMTExpression:
-        h_i = vars[self.h_i]
-        h_j = vars[self.h_j]
+        h_i = vars[self.start]
+        h_j = vars[self.end]
         andList: List[SMTExpression] = [vars[h].equal(0) for h in pattern[self.i + 1:self.j]
                                         if isinstance(h, HappeningAction) and h.action == self.action]
         return SMTExpression.bigand([h_i > 0, h_j > 0] + andList)

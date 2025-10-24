@@ -45,8 +45,10 @@ class IntermediateCondition(Tuplable):
         self.conditions.addClause(clause)
         self.atomsInConditions.update(clause.getPredicates() | clause.getFunctions())
 
-    def inMutexWith(self, effect: IntermediateEffect):
-        return True if self.atomsInConditions.intersection(effect.atomsTouched) else False
+    def inMutexWith(self, other: IntermediateCondition or IntermediateEffect):
+        if isinstance(other, IntermediateCondition):
+            return False
+        return True if self.atomsInConditions.intersection(other.atomsTouched) else False
 
     def toTuple(self) -> Tuple[RelativeTime or float, RelativeTime or float, Formula]:
         return self.fromTime, self.toTime, self.conditions

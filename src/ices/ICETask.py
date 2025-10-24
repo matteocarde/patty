@@ -14,8 +14,8 @@ class ICETask:
     actions: Set[ICEAction]
     init: InitialCondition
     goal: Goal
-    conditions: TimedEffects
-    effects: TimedConditions
+    conditions: TimedConditions
+    effects: TimedEffects
 
     def __init__(self):
         self.propVariables = set()
@@ -23,8 +23,8 @@ class ICETask:
         self.actions = set()
         self.init = InitialCondition()
         self.goal = Goal()
-        self.conditions = TimedEffects()
-        self.effects = TimedConditions()
+        self.conditions = TimedConditions()
+        self.effects = TimedEffects()
         pass
 
     def addPropVariables(self, atoms: Set[Atom]):

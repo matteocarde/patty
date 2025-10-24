@@ -1,6 +1,7 @@
 from typing import Dict, List, Set
 
-from src.ices.Happening import Happening, HappeningActionStart, HappeningEffect
+from src.ices.Happening import Happening, HappeningActionStart, HappeningEffect, HappeningCondition
+from src.ices.ICEAction import ICEAction
 from src.ices.ICEPattern import ICEPattern
 from src.ices.ICETask import ICETask
 from src.pddl.Atom import Atom
@@ -19,28 +20,39 @@ from src.utils.TimeStat import TimeStat
 class ICETransitionVariables:
     task: ICETask
     pattern: ICEPattern
-    stateVariables: Dict[Atom, SMTVariable]
+    currentVariables: Dict[Atom, SMTVariable]
     nextVariables: Dict[Atom, SMTVariable]
     happeningVariables: Dict[Happening, SMTVariable]
     clockVariables: Dict[Happening, SMTVariable]
     sigmaExpressions: Dict[int, Dict[Atom, SMTExpression or float]]
+    deltaExpressions: Dict[int, Dict[ICEAction, SMTExpression or float]]
     makespan: SMTVariable
 
     def __init__(self, task: ICETask, pattern: ICEPattern):
         self.task = task
         self.pattern = pattern
 
+        t = TimeStat.startHolder("Get current and next variables")
+        self.currentVariables = self.__computeCurrentVariables()
+        self.nextVariables = self.__computeNextVariables()
+        t.endHolder()
         t = TimeStat.startHolder("Get happening variables")
         self.happeningVariables = self.__computeHappeningVariables()
         t.endHolder()
         t = TimeStat.startHolder("Get time variables")
         self.timeVariables = self.__computeTimeVariables()
         t.endHolder()
+        t = TimeStat.startHolder("Get time end variables")
+        self.timeEndVariables = self.__computeTimeEndVariables()
+        t.endHolder()
         t = TimeStat.startHolder("Get dur variables")
         self.durVariables = self.__computeDurationVariables()
         t.endHolder()
         t = TimeStat.startHolder("Get sigma expressions")
         self.sigmaExpressions = self.__computeSigmaExpressions()
+        t.endHolder()
+        t = TimeStat.startHolder("Get delta expressions")
+        self.deltaExpressions = self.__computeDeltaExpressions()
         t.endHolder()
 
         self.makespan = SMTRealVariable(f"__makespan__")
@@ -52,27 +64,11 @@ class ICETransitionVariables:
 
         sigmas[0] = dict()
         trueAtoms: Set[Atom] = set()
-        for assignment in self.task.init:
-            atom = assignment.getAtom()
-            if isinstance(assignment, BinaryPredicate):
-                if assignment.getAtom() not in self.task.propVariables | self.task.numVariables:
-                    continue
-                v = assignment.getAtom()
-                k = float(str(assignment.rhs))
-                sigmas[0][v] = k
-            elif isinstance(assignment, Literal):
-                sigmas[0][assignment.getAtom()] = TrueExpression()
-                trueAtoms.add(assignment.getAtom())
-            else:
-                raise NotImplemented("Shouldn't go here")
+        for v in self.task.propVariables | self.task.numVariables:
+            sigmas[0][v] = self.currentVariables[v]
 
-        for v in self.task.propVariables - trueAtoms:
-            sigmas[0][v] = FalseExpression()
-            continue
-
-        for i, h in enumerate(self.pattern):
-            if i == 0:
-                continue
+        for j, h in enumerate(self.pattern):
+            i = j + 1
 
             sigmas[i] = dict()
 
@@ -103,6 +99,54 @@ class ICETransitionVariables:
 
         return sigmas
 
+    def __computeDeltaExpressions(self) -> Dict[int, Dict[ICEAction, SMTExpression or float]]:
+        deltas: Dict[int, Dict[ICEAction, SMTExpression or float]] = dict()
+
+        deltas[0] = dict()
+        trueAtoms: Set[Atom] = set()
+        for b in self.task.actions:
+            deltas[0][b] = 0
+
+        h: Happening
+        for i, h in enumerate(self.pattern):
+            if i == 0:
+                continue
+
+            deltas[i] = dict()
+
+            h_i = self.happeningVariables[h]
+
+            for b in self.task.actions:
+                if b == h.starting:
+                    d_i = self.durVariables[h]
+                    deltas[i][b] = ITEExpression.simplify(h_i > 0, d_i, deltas[i - 1][b])
+                else:
+                    deltas[i][b] = deltas[i - 1][b]
+
+        return deltas
+
+    def __computeCurrentVariables(self) -> Dict[Atom, SMTVariable]:
+        variables: Dict[Atom, SMTVariable] = dict()
+
+        for v in self.task.propVariables:
+            variables[v] = SMTBoolVariable(str(v))
+
+        for x in self.task.numVariables:
+            variables[x] = SMTRealVariable(str(x))
+
+        return variables
+
+    def __computeNextVariables(self) -> Dict[Atom, SMTVariable]:
+        variables: Dict[Atom, SMTVariable] = dict()
+
+        for v in self.task.propVariables:
+            variables[v] = SMTBoolVariable(f"{str(v)}'")
+
+        for x in self.task.numVariables:
+            variables[x] = SMTRealVariable(f"{str(x)}'")
+
+        return variables
+
     def __computeHappeningVariables(self) -> Dict[Happening, SMTVariable]:
         variables: Dict[Happening, SMTVariable] = dict()
 
@@ -119,11 +163,20 @@ class ICETransitionVariables:
 
         return variables
 
+    def __computeTimeEndVariables(self) -> Dict[Happening, SMTVariable]:
+        variables: Dict[Happening, SMTVariable] = dict()
+
+        for h in self.pattern:
+            if isinstance(h, HappeningCondition):
+                variables[h] = SMTRealVariable(f"t_{str(h)}_end")
+
+        return variables
+
     def __computeDurationVariables(self) -> Dict[Happening, SMTVariable]:
         variables: Dict[Happening, SMTVariable] = dict()
 
         for h in self.pattern:
-            if isinstance(h, HappeningActionStart):
+            if h.starting:
                 variables[h] = SMTRealVariable(f"d_{str(h)}")
 
         return variables

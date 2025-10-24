@@ -119,12 +119,20 @@ class InitialCondition:
             return False
 
     def addPredicate(self, l: Literal):
+        self.allAtoms.add(l.getAtom())
         self.assignments.append(l)
 
     def addNumericAssignment(self, atom: Atom, value: float):
         self.numericAssignments[atom] = value
         self.assignments.append(BinaryPredicate.fromAssignment(atom, value))
+        self.allAtoms.add(atom)
 
     @classmethod
     def fromString(cls, string: str):
         return InitialCondition.fromNode(Utilities.getParseTree(string).init())
+
+    def setNotSpecifiedAsFalse(self, propVariables: Set[Atom]):
+        for v in propVariables:
+            if v not in self.allAtoms:
+                self.assignments.append(Literal.neg(v))
+        pass

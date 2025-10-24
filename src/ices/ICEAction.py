@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List
+from typing import List, Set, Tuple
 
 from src.ices.ActionIntermediateCondition import ActionIntermediateCondition
 from src.ices.ActionIntermediateEffect import ActionIntermediateEffect
@@ -11,6 +11,8 @@ START = ActionRelativeTimeAnchor.START
 END = ActionRelativeTimeAnchor.END
 BEGIN = PlanRelativeTimeAnchor.BEGIN
 FINISH = PlanRelativeTimeAnchor.FINISH
+ALPHA = PlanRelativeTimeAnchor.BEGIN
+OMEGA = PlanRelativeTimeAnchor.FINISH
 
 
 class ICEAction:
@@ -45,3 +47,9 @@ class ICEAction:
         a.originalName = name
         a.duration = duration
         return a
+
+    def isEligibleForRolling(self):
+        return True  # TODO
+
+    def isWellOrderable(self):
+        return True  # TODO
