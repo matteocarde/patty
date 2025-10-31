@@ -117,6 +117,9 @@ class BinaryPredicate(Predicate):
     def isLinearIncrement(self):
         return self.operator in {"increase", "decrease"} and self.rhs.getFunctions()
 
+    def isLinearIncrementNew(self):
+        return self.operator in {"increase", "decrease"}
+
     def getAtom(self) -> Atom:
         if not isinstance(self.lhs, Literal):
             raise Exception("Cannot get atom from Binary Predicate", self)

@@ -8,6 +8,7 @@ from src.pddl.Constant import Constant
 from src.pddl.Effects import Effects
 from src.pddl.Literal import Literal
 from src.pddl.Operation import Operation
+from src.pddl.Parameters import Parameters
 from src.pddl.Preconditions import Preconditions
 from src.pddl.Predicate import Predicate
 from src.pddl.SnapAction import SnapAction
@@ -46,13 +47,13 @@ class DurativeAction(Operation):
             if isinstance(child, p.OpNameContext):
                 da.name = child.getText()
             elif isinstance(child, p.OpParametersContext):
-                da.setParameters(child.getChild(1), types)
+                da.parameters = Parameters.fromNode(child.getChild(1), types)
             elif isinstance(child, p.OpDurationContext):
                 da.__setDuration(child.getChild(1))
             elif isinstance(child, p.OpDurativeConditionContext):
                 da.addPreconditions(child)
             elif isinstance(child, p.OpDurativeEffectContext):
-                da.addEffects(child)
+                da.addEffects(child, types)
 
         da.cacheLists()
         return da
@@ -98,9 +99,9 @@ class DurativeAction(Operation):
         elif isinstance(op, p.ConstantContext):
             self.duration = Constant.fromNode(op)
 
-    def ground(self, problem, delta=1) -> List[DurativeAction]:
+    def ground(self, problem) -> List[DurativeAction]:
         groundOps: List = []
-        toGroundOps = self.getGroundedOperations(problem, delta=delta)
+        toGroundOps = self.getGroundedOperations(problem)
         for op in toGroundOps:
             op.__class__ = DurativeAction
             op.snapActions = dict()

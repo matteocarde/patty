@@ -34,6 +34,9 @@ class Predicate:
     def isDynamicLifted(self, problem) -> bool:
         raise NotImplemented
 
+    def getDynamicAtoms(self):
+        raise NotImplementedError()
+
     def toTimePredicate(self, t):
         from src.pddl.TimePredicate import TimePredicate
         tp = TimePredicate()

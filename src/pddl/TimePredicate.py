@@ -107,8 +107,19 @@ class TimePredicate(Predicate):
     def canHappenLiftedPartial(self, item: Tuple, params: List[str], problem) -> bool:
         return self.subPredicate.canHappenLiftedPartial(item, params, problem)
 
+    def getDynamicAtoms(self):
+        return self.subPredicate.getDynamicAtoms()
+
     def __str__(self):
         return f"({self.type} {self.subPredicate})"
 
     def __repr__(self):
         return str(self)
+
+    @staticmethod
+    def group(predicates: List[TimePredicate]) -> List[Tuple[TimePredicateType, Set[TimePredicate]]]:
+        groups: Dict[TimePredicateType, Set[TimePredicate]] = dict()
+        for p in predicates:
+            groups.setdefault(p.type, set())
+            groups[p.type].add(p)
+        return list(groups.items())

@@ -1,11 +1,14 @@
+from __future__ import annotations
 from typing import Set
 
 from src.ices.ICEAction import ICEAction
 from src.ices.TimedConditions import TimedConditions
 from src.ices.TimedEffects import TimedEffects
 from src.pddl.Atom import Atom
+from src.pddl.Domain import GroundedDomain
 from src.pddl.Goal import Goal
 from src.pddl.InitialCondition import InitialCondition
+from src.pddl.Problem import Problem
 
 
 class ICETask:
@@ -50,3 +53,18 @@ class ICETask:
 
     def addActions(self, actions: Set[ICEAction]):
         self.actions.update(actions)
+
+    @classmethod
+    def fromTemporalNoICEs(cls, domain: GroundedDomain, problem: Problem) -> ICETask:
+        task = cls()
+
+        task.propVariables = domain.predicates
+        task.numVariables = domain.functions
+        task.init = problem.init
+        task.goal = problem.goal
+
+        action: ICEAction
+        for action in domain.durativeActions:
+            task.addAction(ICEAction.fromDurativeActionNOICEs(action))
+
+        return task

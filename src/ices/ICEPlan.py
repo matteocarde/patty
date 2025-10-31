@@ -3,8 +3,8 @@ from __future__ import annotations
 from typing import List, Set, Dict
 
 from classes.utils.Constants import EPSILON
-from src.ices.Happening import HappeningActionStart
-from src.ices.ICEAction import BEGIN
+from src.ices.Happening import HappeningActionStart, HappeningCondition
+from src.ices.ICEAction import BEGIN, ICEAction
 from src.ices.ICEEncoding import ICEEncoding
 from src.ices.ICETask import ICETask
 from src.ices.IntermediateCondition import IntermediateCondition
@@ -32,19 +32,32 @@ class ICEPlan:
         plan = cls()
         plan.encoding = encoding
         tVars = encoding.transVars.timeVariables
+        tEndVars = encoding.transVars.timeEndVariables
         hVars = encoding.transVars.happeningVariables
         dVars = encoding.transVars.durVariables
 
         for h_i in encoding.pattern:
             mu_h_i: int = solution.getVariable(hVars[h_i])
             mu_t_i: float = solution.getVariable(tVars[h_i])
-            print(h_i, f"x{mu_h_i}", mu_t_i)
+            mu_t_i_end: float = solution.getVariable(tEndVars[h_i]) if isinstance(h_i, HappeningCondition) else None
+
             if not h_i.starting:
+                print(h_i, f"x{mu_h_i}", mu_t_i,
+                      ("starts " + str(h_i.starting)) if h_i.starting else "",
+                      ("ends " + str(h_i.ending)) if h_i.ending else "")
                 continue
-            mu_d_i: float = h_i.starting.duration#solution.getVariable(dVars[h_i])
+            mu_d_i: float = solution.getVariable(dVars[h_i])
+            b: ICEAction = h_i.starting
+            assert (mu_h_i == 0 and mu_d_i == 0) or (mu_h_i > 0)
+            print(h_i, f"x{mu_h_i}", f"t={mu_t_i}",
+                  ("starts " + str(h_i.starting)) if h_i.starting else "",
+                  ("ends " + str(h_i.ending)) if h_i.ending else "",
+                  f"d={mu_d_i}", f"t_end={mu_t_i_end}")
+            e_b = b.getEpsilonB()
             if mu_h_i > 0:
-                th = TimedICEAction(mu_t_i, h_i.starting, mu_d_i)
-                plan.timedActions.append(th)
+                for r in range(1, mu_h_i + 1):
+                    th = TimedICEAction(mu_t_i + (r - 1) * (mu_d_i + e_b), h_i.starting, mu_d_i)
+                    plan.timedActions.append(th)
 
         plan.task: ICETask = encoding.task
         plan.iconds = set()
@@ -131,7 +144,6 @@ class ICEPlan:
                     s = states[i].state
                     t_ = states[i + 1].time if i < m else None
 
-
                     # 2.a
                     if i == 0 and t_s == t:
                         ValAssert(s.satisfies(cond), f"Rule 2.a - \n{s} \nshould satisfy \n{cond} in [{t_s}, {t_e}]")
@@ -193,6 +205,7 @@ class ICEPlan:
 
     def isValid(self) -> bool:
 
-        return self.__checkIntermediateConditions() \
+        return self.__checkGoal() \
+            and self.__checkIntermediateConditions() \
             and self.__checkSelfOverlapping() \
             and self.__checkEpsilonSeparation()

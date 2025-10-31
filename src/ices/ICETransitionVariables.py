@@ -91,8 +91,8 @@ class ICETransitionVariables:
                     continue
 
                 eff = h.effect.atomToEffect[v]
-                psi = SMTExpression.fromPddl(eff.rhs, sigmas[i - 1])
-                if eff.isLinearIncrement():
+                psi = SMTExpression.fromPddl(eff.getNormalizedRhs(), sigmas[i - 1])
+                if eff.isLinearIncrementNew():
                     sigmas[i][v] = sigmas[i - 1][v] + h_i * psi
                 else:
                     sigmas[i][v] = ITEExpression.simplify(h_i > 0, psi, sigmas[i - 1][v])
@@ -108,9 +108,8 @@ class ICETransitionVariables:
             deltas[0][b] = 0
 
         h: Happening
-        for i, h in enumerate(self.pattern):
-            if i == 0:
-                continue
+        for j, h in enumerate(self.pattern):
+            i = j + 1
 
             deltas[i] = dict()
 

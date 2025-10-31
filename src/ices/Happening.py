@@ -43,6 +43,9 @@ class Happening:
     def __str__(self):
         return self.name
 
+    def __lt__(self, other):
+        return True
+
     def getPre(self) -> Formula:
         raise NotImplementedError()
 

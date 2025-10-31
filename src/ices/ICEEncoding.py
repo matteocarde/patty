@@ -41,6 +41,7 @@ class ICEEncoding(Encoding):
         super().__init__()
         self.task: ICETask = task
         self.pattern: ICEPattern = pattern
+        # self.pattern.pattern = self.pattern.pattern[3:11]
         t = TimeStat.startHolder("Getting actions start and end pairs ")
         self.actionsStartEndPairs = self.pattern.getActionsStartEndPairs()
         t.endHolder()
@@ -48,7 +49,7 @@ class ICEEncoding(Encoding):
         self.transVars = ICETransitionVariables(task, pattern)
         t.endHolder()
 
-        self.k = len(pattern) - 1
+        self.k = len(pattern)
         self.rulesBySet = dict()
 
         t = TimeStat.startHolder("Getting touched atoms")
@@ -74,6 +75,14 @@ class ICEEncoding(Encoding):
         self.rules = SMTConjunction()
         for (key, rules) in self.rulesBySet.items():
             self.rules += rules
+
+        for rule in self.rules:
+            print(rule)
+
+        for h in self.pattern:
+            print(h)
+
+        pass
 
     def __len__(self):
         return len(self.rules)
@@ -101,6 +110,7 @@ class ICEEncoding(Encoding):
         rules: SMTConjunction = SMTConjunction()
         hVar = self.transVars.happeningVariables
         tVar = self.transVars.timeVariables
+        tEndVar = self.transVars.timeEndVariables
         dVar = self.transVars.durVariables
 
         for h in self.pattern:
@@ -112,6 +122,10 @@ class ICEEncoding(Encoding):
             if h.starting:
                 d_i = dVar[h]
                 rules.append(d_i >= 0)
+
+            if isinstance(h, HappeningCondition):
+                t_i_end = tEndVar[h]
+                rules.append(t_i_end >= 0)
 
         return rules
 
@@ -205,6 +219,26 @@ class ICEEncoding(Encoding):
                 )
             )
 
+        for i, h_a in enumerate(self.pattern):
+            h_i = hVars[h_a]
+            bigor = []
+            if h_a.starting:
+                for j, h_b in enumerate(self.pattern[i + 1:]):
+                    if h_b.ending != h_a.starting:
+                        continue
+                    h_j = hVars[h_b]
+                    bigor.append(h_j > 0)
+
+            if h_a.ending:
+                for j, h_b in enumerate(self.pattern[:i]):
+                    if h_b.starting != h_a.ending:
+                        continue
+                    h_j = hVars[h_b]
+                    bigor.append(h_j > 0)
+
+            if bigor:
+                rules.append((h_i > 0).implies(SMTExpression.bigor(bigor)))
+
         return rules
 
     def __getAMORules(self) -> SMTConjunction:
@@ -213,6 +247,7 @@ class ICEEncoding(Encoding):
 
         for h in self.pattern:
             h_i = hVars[h]
+            rules.append(h_i <= 1)
             if isinstance(h.starting, ICEAction) and (
                     not h.starting.isEligibleForRolling() or not h.starting.isWellOrderable()):
                 rules.append(h_i <= 1)
@@ -300,33 +335,34 @@ class ICEEncoding(Encoding):
             h_p = hVars[pair.start]
             t_p = tVars[pair.start]
             h_q = hVars[pair.end]
-            t_q = hVars[pair.end]
+            t_q = tVars[pair.end]
             p = pair.startIndex
             q = pair.endIndex
 
             ors = dict([(h, set()) for h in b.icond + b.ieff])
-            for h in self.pattern[p + 1:q]:
+            orsEnd = dict([(h, set()) for h in b.icond + b.ieff])
+            for h in self.pattern[p:q + 1]:
                 if h.parent != b:
                     continue
                 t_i = tVars[h]
-                if isinstance(h, HappeningCondition) and not h.starting and not h.ending:
+                if isinstance(h, HappeningCondition):
                     assert isinstance(h.original.fromTime, RelativeTime)
                     assert isinstance(h.original.toTime, RelativeTime)
 
                     t_i_end = tEndVars[h]
-                    ors[h.original].add(
-                        t_i.equal(h.original.fromTime.absolute(t_p, t_q)) &
-                        t_i_end.equal(h.original.toTime.absolute(t_p, t_q))
-                    )
-                if isinstance(h, HappeningEffect) and not h.starting and not h.ending:
+                    ors[h.original].add(t_i.equal(h.original.fromTime.absolute(t_p, t_q)))
+                    orsEnd[h.original].add(t_i_end.equal(h.original.toTime.absolute(t_p, t_q)))
+                if isinstance(h, HappeningEffect):
                     assert isinstance(h.original.time, RelativeTime)
                     ors[h.original].add(t_i.equal(h.original.time.absolute(t_p, t_q)))
 
             ices = []
             for ice in b.icond + b.ieff:
                 if ors[ice]:
-                    ices.append(SMTExpression.bigor(ors[ice]))
-
+                    if isinstance(ice, HappeningCondition):
+                        ices.append(SMTExpression.bigor(ors[ice]) & SMTExpression.bigor(orsEnd[ice]))
+                    else:
+                        ices.append(SMTExpression.bigor(ors[ice]))
             rules.append(((h_p > 0) & (h_q > 0)).implies(SMTExpression.bigand(ices)))
 
         return rules
@@ -334,6 +370,7 @@ class ICEEncoding(Encoding):
     def __getDurRules(self) -> SMTConjunction:
         rules: SMTConjunction = SMTConjunction()
         tVars = self.transVars.timeVariables
+        tEndVars = self.transVars.timeEndVariables
         hVars = self.transVars.happeningVariables
         dVars = self.transVars.durVariables
 
@@ -342,6 +379,9 @@ class ICEEncoding(Encoding):
             t_i = tVars[h]
 
             rules.append((t_i > 0).implies(h_i > 0) & (h_i > 0).implies(t_i > 0))
+            if isinstance(h, HappeningCondition):
+                t_i_end = tEndVars[h]
+                rules.append((t_i_end > 0).implies(h_i > 0) & (h_i > 0).implies(t_i_end > 0))
 
             if not h.starting:
                 continue
@@ -365,31 +405,39 @@ class ICEEncoding(Encoding):
         sigmas = self.transVars.sigmaExpressions
 
         for i, h_a in enumerate(self.pattern):
-            for j, h_b in enumerate(self.pattern[i + 1:]):
+            i = i + 1
+            for j, h_b in enumerate(self.pattern[i:]):
                 if not h_a.original.inMutexWith(h_b.original):
                     continue
 
                 h_i = hVars[h_a]
                 h_j = hVars[h_b]
-                sigmas_im1 = sigmas[i]
+                sigmas_im1 = sigmas[i - 1]
                 t_i = tVars[h_a]
                 t_j = tVars[h_b]
 
                 if isinstance(h_a, HappeningCondition):
                     t_i_end = tEndVars[h_a]
-                    rules.append(((h_i > 0) & (h_j > 0)).implies(t_j >= t_i_end + EPSILON))
+                    rules.append(((h_i > 0) & (h_j > 0)).implies(t_j >= t_i_end))
+                    pass
                 if isinstance(h_a, HappeningEffect) and isinstance(h_b, HappeningEffect):
                     rules.append(((h_i > 0) & (h_j > 0)).implies(t_j >= t_i + EPSILON))
+                    pass
                 if isinstance(h_a, HappeningEffect) and isinstance(h_b, HappeningCondition):
                     cond = h_b.condition.conditions
-                    print(SMTExpression.fromFormula(cond, sigmas_im1), t_j >= t_i + EPSILON)
                     rules.append(((h_i > 0) & (h_j > 0) & ~SMTExpression.fromFormula(cond, sigmas_im1))
                                  .implies(t_j >= t_i + EPSILON))
 
-                if isinstance(h_a.parent, ICEAction):
+                if isinstance(h_a.parent, ICEAction) and h_a.parent != h_b.parent:
                     b = h_a.parent
                     d_i_b = deltas[i][b]
-                    rules.append(((h_i > 1) & (h_j > 0)).implies(t_j >= t_i + d_i_b * (h_i - 1) + EPSILON))
+                    assert d_i_b is not 0
+                    if isinstance(h_a, HappeningCondition):
+                        t_i_end = tEndVars[h_a]
+                        rules.append(((h_i > 1) & (h_j > 0)).implies(t_j >= t_i_end + d_i_b * (h_i - 1)))
+                    else:
+                        rules.append(((h_i > 1) & (h_j > 0)).implies(t_j >= t_i + d_i_b * (h_i - 1) + EPSILON))
+                        pass
 
         return rules
 
@@ -399,13 +447,16 @@ class ICEEncoding(Encoding):
         tVars = self.transVars.timeVariables
         dVars = self.transVars.durVariables
 
-        for pair in self.actionsStartEndPairs:
-            h_i = hVars[pair.start]
-            t_i = tVars[pair.start]
-            d_i = dVars[pair.start]
-            h_j = hVars[pair.end]
-            t_j = tVars[pair.end]
-            rules.append(((h_i > 0) & (h_j > 0)).implies(t_j >= t_i + d_i))
+        for i, a in enumerate(self.pattern):
+            for b in self.pattern[i + 1:]:
+                if isinstance(a.starting, ICEAction) and a != b and a.starting == b.starting:
+                    h_i = hVars[a]
+                    t_i = tVars[a]
+                    d_i = dVars[a]
+                    h_j = hVars[b]
+                    t_j = tVars[b]
+                    e_b = a.starting.getEpsilonB()
+                    rules.append(((h_i > 0) & (h_j > 0)).implies(t_j >= t_i + (d_i + e_b) * h_i))
 
         return rules
 

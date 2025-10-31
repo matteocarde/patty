@@ -110,6 +110,13 @@ class Formula:
         return formula
 
     @classmethod
+    def bigAnd(cls, ps: List[Predicate]) -> Formula:
+        f = cls()
+        for p in ps:
+            f.addClause(p)
+        return f
+
+    @classmethod
     def fromString(cls, string: str) -> Formula:
         return Formula.fromNode(Utilities.getParseTree(string).preconditions())
 
@@ -405,7 +412,6 @@ class Formula:
         f = copy.deepcopy(self)
         f.conditions = [c for c in f.conditions if prevState.satisfies(c)]
         return f
-
 
     def hasOnlyOneNumericConditions(self):
         return len(self.conditions) == 1 and isinstance(self.conditions[0], BinaryPredicate)

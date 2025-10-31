@@ -19,6 +19,12 @@ class ICEActionStartEndPair:
         assert self.start.starting == self.end.ending
         self.action = self.start.starting
 
+    def __repr__(self):
+        return str(self)
+
+    def __str__(self):
+        return f"<{self.start}@{self.startIndex}, {self.end}@{self.endIndex}>"
+
     def getPlaceholderBij(self, vars: Dict[Happening, SMTExpression], pattern) -> SMTExpression:
         h_i = vars[self.start]
         h_j = vars[self.end]

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Set, Dict, Tuple
+from typing import Set, Dict, Tuple
 
 from src.ices.RelativeTime import RelativeTime
 from src.pddl.Atom import Atom
@@ -8,6 +8,7 @@ from src.pddl.BinaryPredicate import BinaryPredicate, BinaryPredicateType
 from src.pddl.Constant import Constant
 from src.pddl.Effects import Effects
 from src.pddl.Literal import Literal
+from src.pddl.TimePredicate import TimePredicateType, TimePredicate
 from src.utils.Tuplable import Tuplable
 
 
@@ -98,3 +99,12 @@ class IntermediateEffect(Tuplable):
         if isinstance(other, IntermediateCondition):
             return other.inMutexWith(self)
         return self.interfere(other) or other.interfere(self)
+
+    @classmethod
+    def fromTimePredicateSet(cls, type: TimePredicateType, tps: Set[TimePredicate]):
+        from src.ices.ICEAction import START, END
+        ie = cls()
+        ie.time = START + 0 if type == TimePredicateType.AT_START else END - 0
+        for tp in tps:
+            ie.addEffect(tp.subPredicate)
+        return ie
