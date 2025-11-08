@@ -13,12 +13,6 @@ class ActionRelativeTime(RelativeTime):
     def __init__(self):
         super().__init__()
 
-    def __str__(self):
-        return f"{self.anchor} {'+' if self.k > 0 else '-'} {abs(self.k)}"
-
-    def __repr__(self):
-        return str(self)
-
     def __le__(self, other):
         if not isinstance(other, ActionRelativeTime):
             return False
@@ -34,9 +28,9 @@ class ActionRelativeTime(RelativeTime):
         return self.k < other.k
 
 
-class ActionRelativeTimeAnchor(RelativeTimeAnchor, Enum):
-    START = "START"
-    END = "END"
+class ActionRelativeTimeAnchor(RelativeTimeAnchor):
+    START = "S"
+    END = "E"
 
     def __add__(self, other) -> ActionRelativeTime:
         if not isinstance(other, int) and not isinstance(other, float):

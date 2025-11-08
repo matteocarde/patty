@@ -145,8 +145,8 @@ class HappeningCondition(Happening):
         self.original = condition
         self.parent = parent
         self.index = index
-        parentName = self.parent.name if isinstance(self.parent, ICEAction) else "PIC"
-        self.name = f"{parentName}-C{self.index}"
+        parentName = self.parent.name if isinstance(self.parent, ICEAction) else "C"
+        self.name = f"{parentName}[{condition.fromTime}, {condition.toTime}]"
 
     def getPre(self):
         return self.condition.conditions
@@ -194,8 +194,8 @@ class HappeningEffect(Happening):
         self.parent = parent
         self.index = index
         self.type = IEFF
-        parentName = self.parent.name if isinstance(self.parent, ICEAction) else "PIE"
-        self.name = f"{parentName}-E{self.index}"
+        parentName = self.parent.name if isinstance(self.parent, ICEAction) else "E"
+        self.name = f"{parentName}[{effect.time}]"
 
     def getPre(self):
         return Formula()

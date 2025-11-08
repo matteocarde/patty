@@ -1,3 +1,4 @@
+
 from src.ices.RelativeTimeAnchor import RelativeTimeAnchor
 from src.smt.SMTExpression import SMTExpression
 
@@ -8,6 +9,21 @@ class RelativeTime:
 
     def __init__(self):
         pass
+
+    def __repr__(self):
+        return str(self)
+
+    def __str__(self):
+        from src.ices.ActionRelativeTime import ActionRelativeTimeAnchor
+        from src.ices.PlanRelativeTime import PlanRelativeTimeAnchor
+        if self.anchor in {ActionRelativeTimeAnchor.START, PlanRelativeTimeAnchor.BEGIN}:
+            sign = "+"
+        else:
+            sign = "-"
+        if self.k > 0:
+            return f"{self.anchor.value} {sign} {self.k}"
+        else:
+            return f"{self.anchor.value}"
 
     def __eq__(self, other):
         if not isinstance(other, RelativeTime):

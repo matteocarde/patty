@@ -9,8 +9,11 @@ from src.ices.ActionRelativeTime import ActionRelativeTimeAnchor
 from src.ices.IntermediateCondition import IntermediateCondition
 from src.ices.IntermediateEffect import IntermediateEffect
 from src.ices.PlanRelativeTime import PlanRelativeTimeAnchor
+from src.pddl.Atom import Atom
+from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.Constant import Constant
 from src.pddl.DurativeAction import DurativeAction
+from src.pddl.Literal import Literal
 from src.pddl.TimePredicate import TimePredicate
 
 START = ActionRelativeTimeAnchor.START
@@ -55,10 +58,37 @@ class ICEAction:
         return a
 
     def isEligibleForRolling(self):
-        return "uncap-cap" not in self.name  # TODO
+        added: Set[Atom] = set()
+        deleted: Set[Atom] = set()
+        lhs: Set[Atom] = set()
+        rhs: Set[Atom] = set()
+        hasLinearIncrements = False
+        for eff in [eff for e in self.ieff for eff in e.effects]:
+            if isinstance(eff, Literal):
+                v = eff.getAtom()
+                if eff.sign == "+":
+                    added.add(v)
+                if eff.sign == "-":
+                    deleted.add(v)
+            if isinstance(eff, BinaryPredicate):
+                hasLinearIncrements = eff.isLinearIncrementNew()
+                lhs.add(eff.getAtom())
+                rhs.update(eff.getRHSAtoms())
+                if lhs & rhs:
+                    return False
+
+        for cond in [cond for c in self.icond for cond in c.conditions]:
+            if isinstance(cond, Literal):
+                v = cond.getAtom()
+                if cond.sign == "+" and v in deleted:
+                    return False
+                if cond.sign == "-" and v in added:
+                    return False
+
+        return hasLinearIncrements
 
     def isWellOrderable(self):
-        return True  # TODO
+        return True
 
     @classmethod
     def fromDurativeActionNOICEs(cls, action: DurativeAction):

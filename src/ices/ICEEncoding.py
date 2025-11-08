@@ -6,6 +6,7 @@ from src.ices.Happening import HappeningActionStart, HappeningActionEnd, Happeni
 from src.ices.ICEAction import ICEAction
 from src.ices.ICEActionStartEndPair import ICEActionStartEndPair
 from src.ices.ICEConditionStartEndPair import ICEConditionStartEndPair
+from src.ices.IntermediateCondition import IntermediateCondition
 from src.ices.PlanIntermediateCondition import PlanIntermediateCondition
 from src.ices.PlanIntermediateEffect import PlanIntermediateEffect
 from src.ices.RelativeTime import RelativeTime
@@ -75,12 +76,6 @@ class ICEEncoding(Encoding):
         self.rules = SMTConjunction()
         for (key, rules) in self.rulesBySet.items():
             self.rules += rules
-
-        for rule in self.rules:
-            print(rule)
-
-        for h in self.pattern:
-            print(h)
 
         pass
 
@@ -247,7 +242,6 @@ class ICEEncoding(Encoding):
 
         for h in self.pattern:
             h_i = hVars[h]
-            rules.append(h_i <= 1)
             if isinstance(h.starting, ICEAction) and (
                     not h.starting.isEligibleForRolling() or not h.starting.isWellOrderable()):
                 rules.append(h_i <= 1)
@@ -359,7 +353,7 @@ class ICEEncoding(Encoding):
             ices = []
             for ice in b.icond + b.ieff:
                 if ors[ice]:
-                    if isinstance(ice, HappeningCondition):
+                    if isinstance(ice, IntermediateCondition):
                         ices.append(SMTExpression.bigor(ors[ice]) & SMTExpression.bigor(orsEnd[ice]))
                     else:
                         ices.append(SMTExpression.bigor(ors[ice]))
@@ -378,10 +372,10 @@ class ICEEncoding(Encoding):
             h_i = hVars[h]
             t_i = tVars[h]
 
-            rules.append((t_i > 0).implies(h_i > 0) & (h_i > 0).implies(t_i > 0))
+            rules.append((t_i > 0).iff(h_i > 0))
             if isinstance(h, HappeningCondition):
                 t_i_end = tEndVars[h]
-                rules.append((t_i_end > 0).implies(h_i > 0) & (h_i > 0).implies(t_i_end > 0))
+                rules.append((t_i_end > 0).iff(h_i > 0))
 
             if not h.starting:
                 continue
@@ -422,7 +416,6 @@ class ICEEncoding(Encoding):
                     pass
                 if isinstance(h_a, HappeningEffect) and isinstance(h_b, HappeningEffect):
                     rules.append(((h_i > 0) & (h_j > 0)).implies(t_j >= t_i + EPSILON))
-                    pass
                 if isinstance(h_a, HappeningEffect) and isinstance(h_b, HappeningCondition):
                     cond = h_b.condition.conditions
                     rules.append(((h_i > 0) & (h_j > 0) & ~SMTExpression.fromFormula(cond, sigmas_im1))
@@ -431,13 +424,14 @@ class ICEEncoding(Encoding):
                 if isinstance(h_a.parent, ICEAction) and h_a.parent != h_b.parent:
                     b = h_a.parent
                     d_i_b = deltas[i][b]
-                    assert d_i_b is not 0
+                    e_b = b.getEpsilonB()
                     if isinstance(h_a, HappeningCondition):
                         t_i_end = tEndVars[h_a]
-                        rules.append(((h_i > 1) & (h_j > 0)).implies(t_j >= t_i_end + d_i_b * (h_i - 1)))
-                    else:
-                        rules.append(((h_i > 1) & (h_j > 0)).implies(t_j >= t_i + d_i_b * (h_i - 1) + EPSILON))
-                        pass
+                        rules.append(((h_i > 1) & (h_j > 0)).implies(t_j >= t_i_end + (d_i_b + e_b) * (h_i - 1)))
+                    if isinstance(h_a, HappeningEffect) and isinstance(h_b, HappeningEffect):
+                        rules.append(((h_i > 1) & (h_j > 0)).implies(t_j >= t_i + (d_i_b + e_b) * (h_i - 1) + EPSILON))
+                    if isinstance(h_a, HappeningEffect) and isinstance(h_b, HappeningCondition):
+                        rules.append(((h_i > 0) & (h_j > 1)).implies(t_j >= t_i + EPSILON))
 
         return rules
 

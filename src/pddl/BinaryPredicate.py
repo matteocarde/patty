@@ -343,3 +343,10 @@ class BinaryPredicate(Predicate):
 
     def getNormalizedRhs(self) -> BinaryPredicate:
         return self.rhs if self.operator in {"assign", "increase"} else Constant(0) - self.rhs
+
+    def getRHSAtoms(self) -> Set[Atom]:
+        if isinstance(self.rhs, BinaryPredicate):
+            return self.rhs.getFunctions()
+        if isinstance(self.rhs, Literal):
+            return {self.rhs.getAtom()}
+        return set()

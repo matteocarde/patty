@@ -14,9 +14,7 @@
 	)
 	(:goal
 		(and
-			(= (litres r1) 2)
-			(= (x r1) 2)
-			(= (x l1) 2)
+			(= (litres r1) 6)
 		)
 	)
 )

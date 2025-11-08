@@ -14,9 +14,9 @@ class PlanRelativeTime(RelativeTime):
         super().__init__()
 
 
-class PlanRelativeTimeAnchor(RelativeTimeAnchor, Enum):
-    BEGIN = "BEGIN"
-    FINISH = "FINISH"
+class PlanRelativeTimeAnchor(RelativeTimeAnchor):
+    BEGIN = "A"
+    FINISH = "O"
 
     def __add__(self, other) -> PlanRelativeTime:
         if not isinstance(other, int) and not isinstance(other, float):

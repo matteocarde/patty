@@ -39,20 +39,20 @@ class ICEPlan:
         for h_i in encoding.pattern:
             mu_h_i: int = solution.getVariable(hVars[h_i])
             mu_t_i: float = solution.getVariable(tVars[h_i])
-            mu_t_i_end: float = solution.getVariable(tEndVars[h_i]) if isinstance(h_i, HappeningCondition) else None
+            mu_t_i_end: float = solution.getVariable(tEndVars[h_i]) if isinstance(h_i, HappeningCondition) else "NA"
+            mu_d_i: float = solution.getVariable(dVars[h_i]) if h_i.starting else "NA"
 
-            if not h_i.starting:
-                print(h_i, f"x{mu_h_i}", mu_t_i,
-                      ("starts " + str(h_i.starting)) if h_i.starting else "",
-                      ("ends " + str(h_i.ending)) if h_i.ending else "")
-                continue
-            mu_d_i: float = solution.getVariable(dVars[h_i])
-            b: ICEAction = h_i.starting
-            assert (mu_h_i == 0 and mu_d_i == 0) or (mu_h_i > 0)
             print(h_i, f"x{mu_h_i}", f"t={mu_t_i}",
                   ("starts " + str(h_i.starting)) if h_i.starting else "",
                   ("ends " + str(h_i.ending)) if h_i.ending else "",
                   f"d={mu_d_i}", f"t_end={mu_t_i_end}")
+
+            if not h_i.starting:
+                continue
+
+            b: ICEAction = h_i.starting
+            assert (mu_h_i == 0 and mu_d_i == 0) or (mu_h_i > 0)
+
             e_b = b.getEpsilonB()
             if mu_h_i > 0:
                 for r in range(1, mu_h_i + 1):

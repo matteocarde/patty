@@ -22,6 +22,7 @@ class ARPG:
     supporterLevels: List[Set[Supporter]]
     stateLevels: List[RelaxedIntervalState]
     actionLevels: List[Set[Action]]
+    layers: List[Set[Action]]
 
     def __init__(self, domain: GroundedDomain, state: State, goal: Goal, avoidRaising=False):
         self.goalNotReachable = False
@@ -67,6 +68,17 @@ class ARPG:
             if not avoidRaising:
                 raise PDDLException.GoalNotReachable()
 
+        self.layers: List[Set[Action]] = list()
+        self.usedActions = set()
+
+        for supporters in self.supporterLevels:
+            partialOrder = set()
+            for supporter in supporters:
+                if supporter.originatingAction not in self.usedActions:
+                    partialOrder.add(supporter.originatingAction)
+                self.usedActions.add(supporter.originatingAction)
+            self.layers.append(partialOrder)
+
     def __getPurelyBoolean(self) -> List[Action]:
         order: List[Action] = list()
         for action in self.actions:
@@ -83,19 +95,8 @@ class ARPG:
 
     def getActionsOrder(self, enhanced=False) -> List[Action] or bool:
 
-        usedActions: Set[Action] = set()
-
-        layers: List[Set[Action]] = list()
-
-        for supporters in self.supporterLevels:
-            partialOrder = set()
-            for supporter in supporters:
-                if supporter.originatingAction not in usedActions:
-                    partialOrder.add(supporter.originatingAction)
-                usedActions.add(supporter.originatingAction)
-            layers.append(partialOrder)
-
-        leftActions = set(self.actions) - usedActions
+        layers = copy.copy(self.layers)
+        leftActions = set(self.actions) - self.usedActions
         layerInstant = {a for a in leftActions if not isinstance(a, SnapAction)}
         layerSnap = {a for a in leftActions if isinstance(a, SnapAction) and a.timeType != TimePredicateType.OVER_ALL}
         layers.append(layerInstant)
@@ -172,3 +173,32 @@ class ARPG:
         for layer in actionLayers:
             order += layer
         return order
+
+    def printLayers(self, columns: int):
+        cs = f"|{'|'.join('c' for i in range(columns))}|"
+        print(r"\begin{tabular}{" + cs + "}")
+
+        printed = 0
+        rows = []
+        while printed < len(self.layers):
+            headers = []
+            cells = []
+            for i in range(columns):
+                if printed + i < len(self.layers) and self.layers[printed + i]:
+                    headers.append(r"$\mathbf{A_{" + str(printed + i + 1) + "}}$")
+                    sortedLayers = PatternActionGraph(self.layers[printed + i]).getSorted()
+                    string = "\makecell{" + " \\\\ ".join([str(h) for h in sortedLayers]) + "}"
+                    cells.append(string.replace("blue", "b")
+                                 .replace("red", "r")
+                                 .replace(" ", "")
+                                 .replace("0.02", "$2\epsilon$"))
+                else:
+                    headers.append("")
+                    cells.append("")
+            printed += columns
+            print(r"\hline")
+            print("&".join(headers) + r"\\")
+            print("&".join(cells) + r"\\\hline")
+            print(r"\multicolumn{" + str(columns) + r"}{l}{} \\")
+
+        print(r"\end{tabular}")

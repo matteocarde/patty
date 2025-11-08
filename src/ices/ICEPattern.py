@@ -125,11 +125,21 @@ class ICEPattern:
 
         return d
 
+    @staticmethod
+    def getARPG(task: ICETask):
+        snapDomain = SnapTask(task)
+        return ARPG(snapDomain, snapDomain.init, snapDomain.goal)
+
     @classmethod
     def fromSnap(cls, task: ICETask):
 
-        snapDomain = SnapTask(task)
-        arpg: ARPG = ARPG(snapDomain, snapDomain.init, snapDomain.goal)
+        arpg: ARPG = ICEPattern.getARPG(task)
+        arpg.printLayers(4)
         snapOrder: List[SnapHappeningAction] = arpg.getActionsOrder(enhanced=True)
 
         return ICEPattern.fromOrder([a.originatingHappening for a in snapOrder])
+
+    def print(self):
+        print("----- Pattern -----")
+        for a in self.pattern:
+            print(a)

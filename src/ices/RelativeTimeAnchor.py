@@ -1,4 +1,7 @@
-class RelativeTimeAnchor:
+from enum import Enum
+
+
+class RelativeTimeAnchor(Enum):
 
     def __add__(self, other):
         raise NotImplementedError

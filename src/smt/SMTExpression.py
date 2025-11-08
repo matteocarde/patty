@@ -51,6 +51,10 @@ class SMTExpression:
         from src.smt.expressions.ImpliesExpression import ImpliesExpression
         return ImpliesExpression.simplify(self, other)
 
+    def iff(self, other: SMTExpression):
+        from src.smt.expressions.IffExpression import IffExpression
+        return IffExpression.simplify(self, other)
+
     def impliedBy(self, other: SMTExpression):
         from src.smt.expressions.ImpliesExpression import ImpliesExpression
         return ImpliesExpression(other, self)
