@@ -1,3 +1,4 @@
+from unified_planning.model import Timing, TimepointKind
 
 from src.ices.RelativeTimeAnchor import RelativeTimeAnchor
 from src.smt.SMTExpression import SMTExpression
@@ -39,3 +40,19 @@ class RelativeTime:
         if self.anchor in {ActionRelativeTimeAnchor.END, PlanRelativeTimeAnchor.FINISH}:
             return b - self.k
         raise Exception
+
+    @classmethod
+    def fromUnifiedPlanning(cls, time: Timing):
+        t = cls()
+        from src.ices.ActionRelativeTime import ActionRelativeTimeAnchor
+        from src.ices.PlanRelativeTime import PlanRelativeTimeAnchor
+        UP2TIME = {
+            TimepointKind.START: ActionRelativeTimeAnchor.START,
+            TimepointKind.END: ActionRelativeTimeAnchor.END,
+            TimepointKind.GLOBAL_START: PlanRelativeTimeAnchor.BEGIN,
+            TimepointKind.GLOBAL_END: PlanRelativeTimeAnchor.FINISH,
+        }
+        t.anchor = UP2TIME[time.timepoint.kind]
+        t.k = time.delay
+
+        return t

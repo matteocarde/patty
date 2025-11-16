@@ -6,6 +6,7 @@ import random
 from typing import List, Dict, Set
 
 import numpy as np
+import unified_planning.model
 
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
@@ -14,6 +15,7 @@ from src.pddl.Literal import Literal
 from src.pddl.Predicate import Predicate
 from src.pddl.Utilities import Utilities
 from src.pddl.grammar.pddlParser import pddlParser
+import unified_planning.model as up
 
 
 class InitialCondition:
@@ -136,3 +138,18 @@ class InitialCondition:
             if v not in self.allAtoms:
                 self.assignments.append(Literal.neg(v))
         pass
+
+    @classmethod
+    def fromUnifiedPlanning(cls, groundAnml: up.Problem, atomDict: Dict[str, Atom]):
+        init = cls()
+        for variable, value in groundAnml.initial_values.items():
+            v = atomDict[str(variable)]
+            value = value.constant_value()
+            if type(value) in {int, float}:
+                init.addNumericAssignment(v, value)
+            elif type(value) in {bool} and value:
+                init.addPredicate(Literal.pos(v))
+            elif type(value) in {bool} and not value:
+                init.addPredicate(Literal.neg(v))
+
+        return init

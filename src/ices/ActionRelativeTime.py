@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from enum import Enum
 
+from unified_planning.model import Timing, TimepointKind
+
 from src.ices.RelativeTime import RelativeTime
 from src.ices.RelativeTimeAnchor import RelativeTimeAnchor
 
@@ -26,6 +28,7 @@ class ActionRelativeTime(RelativeTime):
         if self.anchor != other.anchor:
             return False
         return self.k < other.k
+
 
 
 class ActionRelativeTimeAnchor(RelativeTimeAnchor):

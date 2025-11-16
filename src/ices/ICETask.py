@@ -1,5 +1,8 @@
 from __future__ import annotations
-from typing import Set
+
+from typing import Set, Dict
+
+import unified_planning.model as up
 
 from src.ices.ICEAction import ICEAction
 from src.ices.TimedConditions import TimedConditions
@@ -8,6 +11,7 @@ from src.pddl.Atom import Atom
 from src.pddl.Domain import GroundedDomain
 from src.pddl.Goal import Goal
 from src.pddl.InitialCondition import InitialCondition
+from src.pddl.Literal import Literal
 from src.pddl.Problem import Problem
 
 
@@ -66,5 +70,32 @@ class ICETask:
         action: ICEAction
         for action in domain.durativeActions:
             task.addAction(ICEAction.fromDurativeActionNOICEs(action))
+
+        return task
+
+    @classmethod
+    def fromUnifiedPlanning(cls, groundAnml: up.Problem):
+
+        atomDict: Dict[str, Atom] = dict()
+
+        task = cls()
+        for variable, value in groundAnml.initial_values.items():
+            v = Atom.simple(str(variable))
+            atomDict[str(variable)] = v
+            if type(value.constant_value()) in {int, float}:
+                task.numVariables.add(v)
+            else:
+                task.propVariables.add(v)
+
+        task.init = InitialCondition.fromUnifiedPlanning(groundAnml, atomDict)
+
+        task.goal = Goal.fromUnifiedPlanning(groundAnml.goals, atomDict)
+
+        for a in groundAnml.actions:
+            iceAction = ICEAction.fromUnifiedPlanning(a, atomDict)
+            task.addAction(iceAction)
+
+        task.conditions = TimedConditions.fromUnifiedPlanning(groundAnml.timed_goals, atomDict)
+        task.effects = TimedEffects.fromUnifiedPlanning(groundAnml.timed_effects, atomDict)
 
         return task

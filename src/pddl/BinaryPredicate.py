@@ -5,6 +5,7 @@ from enum import Enum
 from typing import Dict, Set
 
 from sympy import Expr, diff
+from unified_planning.model import FNode, OperatorKind, EffectKind, Effect
 
 from src.pddl.Atom import Atom
 from src.pddl.Constant import Constant
@@ -19,6 +20,21 @@ class BinaryPredicateType(Enum):
     MODIFICATION = "modification"
     OPERATION = "operation"
     COMPARATION = "comparation"
+
+
+UP2OPERATOR = {
+    OperatorKind.EQUALS: "=",
+    OperatorKind.NOT: "!=",
+    OperatorKind.LT: "<",
+    OperatorKind.LE: "<=",
+    OperatorKind.PLUS: "+",
+    OperatorKind.MINUS: "-",
+    OperatorKind.DIV: "/",
+    OperatorKind.TIMES: "*",
+    EffectKind.ASSIGN: "assign",
+    EffectKind.INCREASE: "increase",
+    EffectKind.DECREASE: "decrease",
+}
 
 
 class BinaryPredicate(Predicate):
@@ -350,3 +366,36 @@ class BinaryPredicate(Predicate):
         if isinstance(self.rhs, Literal):
             return {self.rhs.getAtom()}
         return set()
+
+    @classmethod
+    def fromUnifiedPlanning(cls, n: FNode or Effect, atomDict: Dict[str, Atom]):
+
+        bp = cls()
+
+        isNot = False
+
+        type = n.node_type if isinstance(n, FNode) else n.kind
+        if type == OperatorKind.NOT:
+            if n.args[0].node_type == OperatorKind.FLUENT_EXP:
+                return Literal.fromUnifiedPlanning(n, atomDict)
+            else:
+                n = n.args[0]
+                isNot = True
+        elif type in {OperatorKind.EQUALS, OperatorKind.LE, OperatorKind.LT}:
+            bp.type = BinaryPredicateType.COMPARATION
+        elif type in {EffectKind.ASSIGN}:
+            bp.type = BinaryPredicateType.MODIFICATION
+        else:
+            bp.type = BinaryPredicateType.OPERATION
+        bp.operator = UP2OPERATOR[type] if not isNot else UP2OPERATOR[OperatorKind.NOT]
+
+        if isinstance(n, FNode):
+            assert len(n.args) == 2
+            bp.lhs = Predicate.fromUnifiedPlanning(n.args[0], atomDict)
+            bp.rhs = Predicate.fromUnifiedPlanning(n.args[1], atomDict)
+
+        if isinstance(n, Effect):
+            bp.lhs = Predicate.fromUnifiedPlanning(n.fluent, atomDict)
+            bp.rhs = Predicate.fromUnifiedPlanning(n.value, atomDict)
+
+        return bp

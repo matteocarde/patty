@@ -3,6 +3,8 @@ from __future__ import annotations
 import copy
 from typing import Dict, Set, Tuple, List
 
+from unified_planning.model import FNode, OperatorKind, Effect, EffectKind
+
 from libs.pyeda.pyeda.boolalg.bdd import BinaryDecisionDiagram, BDDVariable
 from sympy import Expr
 
@@ -251,3 +253,18 @@ class Literal(Predicate):
             return vars[self.atom]
         if self.sign == "-":
             return ~vars[self.atom]
+
+    @classmethod
+    def fromUnifiedPlanning(cls, n: FNode or Effect, atomDict: Dict[str, Atom]):
+        type = n.node_type if isinstance(n, FNode) else n.kind
+        if type == OperatorKind.FLUENT_EXP:
+            return Literal.pos(atomDict[str(n)])
+        if type == OperatorKind.NOT:
+            return Literal.neg(atomDict[str(n.args[0])])
+        if type == EffectKind.ASSIGN:
+            if n.value.is_true():
+                return Literal.pos(atomDict[str(n.fluent)])
+            if n.value.is_false():
+                return Literal.neg(atomDict[str(n.fluent)])
+
+        raise NotImplementedError("Cannot transform into literal fnode of type", type)

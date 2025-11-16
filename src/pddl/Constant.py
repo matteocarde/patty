@@ -4,6 +4,8 @@ import copy
 from sympy import Expr, symbols, S
 from typing import Dict, Set, Tuple
 
+from unified_planning.model import FNode
+
 from src.pddl.Atom import Atom
 from src.pddl.Predicate import Predicate
 from src.pddl.grammar.pddlParser import pddlParser
@@ -90,3 +92,9 @@ class Constant(Predicate):
 
     def toLatex(self) -> str:
         return r"\delta_e" if self.isDelta else str(self.value)
+
+    @classmethod
+    def fromUnifiedPlanning(cls, n: FNode, atomDict: Dict[str, Atom]):
+        c = cls()
+        c.value = n.int_constant_value()
+        return c

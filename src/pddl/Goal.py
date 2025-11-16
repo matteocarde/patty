@@ -27,3 +27,5 @@ class Goal(Preconditions):
         super().toPDDL(pw)
         # pw.decreaseTab()
 
+
+

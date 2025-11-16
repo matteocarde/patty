@@ -4,6 +4,7 @@ import copy
 from itertools import chain
 from typing import Dict, List, cast, Iterable, Tuple
 
+from unified_planning.model import Effect as UPEffect, Timing
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate, BinaryPredicateType
 from src.pddl.Literal import Literal
@@ -218,3 +219,10 @@ class Effects:
             if isinstance(e, ConditionalEffect):
                 return True
         return False
+
+    @classmethod
+    def fromUnifiedPlanning(cls, upeffs: List[UPEffect], atomDict: Dict[str, Atom]):
+        effs = cls()
+        for e in upeffs:
+            effs.addEffect(Predicate.fromUnifiedPlanning(e, atomDict))
+        return effs

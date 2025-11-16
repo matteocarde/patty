@@ -1,5 +1,8 @@
-from typing import List, Set
+from typing import List, Set, Dict
 
+from unified_planning.model import Timing, Effect
+
+from pyeda_linux.boolalg.expr import Atom
 from src.ices.PlanIntermediateEffect import PlanIntermediateEffect
 
 
@@ -21,3 +24,10 @@ class TimedEffects:
 
     def addPlanIntermediateEffect(self, ie: PlanIntermediateEffect):
         self.ieff.add(ie)
+
+    @classmethod
+    def fromUnifiedPlanning(cls, teffects: Dict[Timing, List[Effect]], atomDict: Dict[str, Atom]):
+        te = cls()
+        for (time, eff) in teffects.items():
+            te.addPlanIntermediateEffect(PlanIntermediateEffect.fromUnifiedPlanning(time, eff, atomDict))
+        return te

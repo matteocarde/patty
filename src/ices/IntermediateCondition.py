@@ -2,6 +2,12 @@ from __future__ import annotations
 
 from typing import Set, List, Tuple
 
+from typing import List, Dict
+
+from pysmt.fnode import FNode
+from unified_planning.model import TimeInterval
+
+from pyeda_linux.boolalg.expr import Atom
 from src.ices.IntermediateEffect import IntermediateEffect
 from src.ices.RelativeTime import RelativeTime
 from src.pddl.Atom import Atom
@@ -62,4 +68,12 @@ class IntermediateCondition(Tuplable):
         ic.toTime = END - 0 if type in {TimePredicateType.AT_END, TimePredicateType.OVER_ALL} else START + 0
         for tp in tps:
             ic.addCondition(tp.subPredicate)
+        return ic
+
+    @classmethod
+    def fromUnifiedPlanning(cls, time: TimeInterval, cond: List[FNode], atomDict: Dict[str, Atom]):
+        ic = cls()
+        ic.fromTime = RelativeTime.fromUnifiedPlanning(time.lower)
+        ic.toTime = RelativeTime.fromUnifiedPlanning(time.upper)
+        ic.conditions = Formula.fromUnifiedPlanning(cond, atomDict)
         return ic

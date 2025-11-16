@@ -1,6 +1,9 @@
-from typing import List, Set
+from typing import List, Set, Dict
+
+from unified_planning.model import TimeInterval, FNode
 
 from src.ices.PlanIntermediateCondition import PlanIntermediateCondition
+from src.pddl.Atom import Atom
 
 
 class TimedConditions:
@@ -18,3 +21,10 @@ class TimedConditions:
 
     def addPlanIntermediateCondition(self, ic: PlanIntermediateCondition):
         self.icond.add(ic)
+
+    @classmethod
+    def fromUnifiedPlanning(cls, tgoals: Dict[TimeInterval, List[FNode]], atomDict: Dict[str, Atom]):
+        tc = cls()
+        for (time, cond) in tgoals.items():
+            tc.addPlanIntermediateCondition(PlanIntermediateCondition.fromUnifiedPlanning(time, cond, atomDict))
+        return tc

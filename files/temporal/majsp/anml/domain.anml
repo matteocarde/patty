@@ -77,4 +77,3 @@ action load(Robot r, Pallet b, Position p, Treatment t) {
    [start] position_free(p) := true;
 };
 
-::("metric", "minimize-makespan");

@@ -5,6 +5,7 @@ from itertools import chain
 from typing import Dict, Set, Tuple, List
 
 from sympy import Expr
+from unified_planning.model import FNode, OperatorKind
 
 from libs.pyeda.pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram, bdd2expr
 from libs.pyeda.pyeda.boolalg.expr import One, Zero, Complement, Variable, OrOp, AndOp
@@ -18,6 +19,8 @@ from src.pddl.Predicate import Predicate
 from src.pddl.TimePredicate import TimePredicate, TimePredicateType
 from src.pddl.Utilities import Utilities
 from src.pddl.grammar.pddlParser import pddlParser as p
+
+import unified_planning.model as up
 
 
 class Formula:
@@ -415,3 +418,10 @@ class Formula:
 
     def hasOnlyOneNumericConditions(self):
         return len(self.conditions) == 1 and isinstance(self.conditions[0], BinaryPredicate)
+
+    @classmethod
+    def fromUnifiedPlanning(cls, nodes: List[FNode], atomDict: Dict[str, Atom]):
+        f = cls()
+        for n in nodes:
+            f.addClause(Predicate.fromUnifiedPlanning(n, atomDict))
+        return f

@@ -1,9 +1,11 @@
 from __future__ import annotations
 
-from libs.pyeda.pyeda.boolalg.bdd import BinaryDecisionDiagram, BDDVariable
-from sympy import Expr
 from typing import Dict, Set, Tuple, List
 
+from sympy import Expr
+from unified_planning.model import OperatorKind, Effect, EffectKind, FNode
+
+from libs.pyeda.pyeda.boolalg.bdd import BinaryDecisionDiagram, BDDVariable
 from src.pddl.Atom import Atom
 from src.pddl.PDDLWriter import PDDLWriter
 
@@ -115,3 +117,19 @@ class Predicate:
 
     def isAtomic(self):
         return True
+
+    @classmethod
+    def fromUnifiedPlanning(cls, n: FNode or Effect, atomDict: Dict[str, Atom]):
+        from src.pddl.Literal import Literal
+        from src.pddl.BinaryPredicate import BinaryPredicate
+        from src.pddl.Constant import Constant
+
+        type = n.node_type if isinstance(n, FNode) else n.kind
+        if isinstance(n, Effect) and type == EffectKind.ASSIGN and (n.value.is_true() or n.value.is_false()):
+            return Literal.fromUnifiedPlanning(n, atomDict)
+        elif type in {OperatorKind.FLUENT_EXP}:
+            return Literal.fromUnifiedPlanning(n, atomDict)
+        elif type in {OperatorKind.INT_CONSTANT, OperatorKind.BOOL_CONSTANT}:
+            return Constant.fromUnifiedPlanning(n, atomDict)
+        else:
+            return BinaryPredicate.fromUnifiedPlanning(n, atomDict)

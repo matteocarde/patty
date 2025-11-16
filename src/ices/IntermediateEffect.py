@@ -1,6 +1,8 @@
 from __future__ import annotations
 
-from typing import Set, Dict, Tuple
+from typing import Set, Dict, Tuple, List
+
+from unified_planning.model import Effect as UPEffect, Timing
 
 from src.ices.RelativeTime import RelativeTime
 from src.pddl.Atom import Atom
@@ -8,6 +10,7 @@ from src.pddl.BinaryPredicate import BinaryPredicate, BinaryPredicateType
 from src.pddl.Constant import Constant
 from src.pddl.Effects import Effects
 from src.pddl.Literal import Literal
+from src.pddl.Predicate import Predicate
 from src.pddl.TimePredicate import TimePredicateType, TimePredicate
 from src.utils.Tuplable import Tuplable
 
@@ -107,4 +110,12 @@ class IntermediateEffect(Tuplable):
         ie.time = START + 0 if type == TimePredicateType.AT_START else END - 0
         for tp in tps:
             ie.addEffect(tp.subPredicate)
+        return ie
+
+    @classmethod
+    def fromUnifiedPlanning(cls, time: Timing, effs: List[UPEffect], atomDict: Dict[str, Atom]):
+        ie = cls()
+        ie.time = RelativeTime.fromUnifiedPlanning(time)
+        for eff in effs:
+            ie.addEffect(Predicate.fromUnifiedPlanning(eff, atomDict))
         return ie

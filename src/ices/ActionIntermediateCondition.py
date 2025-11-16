@@ -19,3 +19,4 @@ class ActionIntermediateCondition(IntermediateCondition):
         ic.fromTime = fromTime
         ic.toTime = toTime
         return ic
+

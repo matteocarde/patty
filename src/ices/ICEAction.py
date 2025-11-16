@@ -1,8 +1,10 @@
 from __future__ import annotations
 
-from typing import List, Set, Tuple
+from typing import List, Set, Tuple, Dict
 
-from classes.utils.Constants import EPSILON
+from unified_planning.model.action import DurativeAction as UPDurativeAction
+
+from src.utils.Constants import EPSILON
 from src.ices.ActionIntermediateCondition import ActionIntermediateCondition
 from src.ices.ActionIntermediateEffect import ActionIntermediateEffect
 from src.ices.ActionRelativeTime import ActionRelativeTimeAnchor
@@ -117,3 +119,20 @@ class ICEAction:
                 if s.inMutexWith(e):
                     return EPSILON
         return 0
+
+    @classmethod
+    def fromUnifiedPlanning(cls, a: UPDurativeAction, atomDict: Dict[str, Atom]) -> ICEAction:
+        iceAction = cls()
+        iceAction.name = a.name
+        iceAction.originalName = a.name
+        if a.duration.lower != a.duration.upper:
+            raise NotImplementedError("I have yet to implement actions with not fixed durations")
+        iceAction.duration = a.duration.lower
+
+        for time, cond in a.conditions.items():
+            iceAction.icond.append(ActionIntermediateCondition.fromUnifiedPlanning(time, cond, atomDict))
+
+        for time, eff in a.effects.items():
+            iceAction.icond.append(ActionIntermediateEffect.fromUnifiedPlanning(time, eff, atomDict))
+
+        return iceAction
