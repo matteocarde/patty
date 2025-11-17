@@ -76,6 +76,7 @@ class IntermediateCondition(Tuplable):
         ic.fromTime = RelativeTime.fromUnifiedPlanning(time.lower)
         ic.toTime = RelativeTime.fromUnifiedPlanning(time.upper)
         ic.conditions = Formula.fromUnifiedPlanning(cond, atomDict)
+        ic.atomsInConditions.update(ic.conditions.getPredicates() | ic.conditions.getFunctions())
         return ic
 
     def toANML(self) -> List[str]:

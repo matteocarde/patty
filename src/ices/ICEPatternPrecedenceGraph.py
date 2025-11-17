@@ -1,10 +1,10 @@
 from typing import Set, Dict, Tuple
 
-from classes.utils.Constants import EPSILON
 from src.ices.Happening import Happening, ACTION_START, ACTION_END, IEFF, ICOND_START, ICOND_END
 from src.ices.ICEPattern import ICEPattern
 from src.ices.ICETransitionVariables import ICETransitionVariables
 from src.smt.SMTExpression import SMTExpression
+from src.utils.Constants import EPSILON
 
 
 class ICEPatternPrecedenceGraph:

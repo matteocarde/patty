@@ -1,8 +1,8 @@
 from __future__ import annotations
 
+import traceback
 from typing import List, Set, Dict
 
-from classes.utils.Constants import EPSILON
 from src.ices.Happening import HappeningActionStart, HappeningCondition
 from src.ices.ICEAction import BEGIN, ICEAction
 from src.ices.ICEEncoding import ICEEncoding
@@ -14,6 +14,7 @@ from src.ices.TimedICEAction import TimedICEAction, TimedICEActionList
 from src.pddl.State import State
 from src.pddl.TimedState import TimedState
 from src.smt.SMTSolution import SMTSolution
+from src.utils.Constants import EPSILON
 from src.utils.ValAssert import ValAssert, ValidationError
 
 
@@ -154,19 +155,20 @@ class ICEPlan:
                         ValAssert(s.satisfies(cond), f"Rule 2.b - \n{s} \nshould satisfy \n{cond} in [{t_s}, {t_e}]")
                         checked = True
 
-                    # 1.c
+                    # 2.c
                     if t_s < t < t_e:
                         ValAssert(s.satisfies(cond), f"Rule 1.c - \n{s} \nshould satisfy \n{cond} in [{t_s}, {t_e}]")
                         checked = True
 
-                    # # 1.d
-                    # if i == m and t_e == t:
-                    #     ValAssert(s.satisfies(cond), f"Rule 1.d - \n{s} \nshould satisfy \n{cond}")
-                    #     checked = True
+                    # 2.d
+                    if i == m and t < t_s:
+                        ValAssert(s.satisfies(cond), f"Rule 1.d - \n{s} \nshould satisfy \n{cond}")
+                        checked = True
 
                 assert checked
 
-        except AssertionError:
+        except AssertionError as e:
+            print(traceback.format_exc())
             return False
 
         return True

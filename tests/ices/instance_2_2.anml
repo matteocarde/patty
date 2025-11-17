@@ -35,19 +35,8 @@ consecutive(t2, t2) := false;
 [start] counter(t0) := 0;
 [start] counter(t1) := 0;
 [start] counter(t2) := 0;
-[start + 10] counter(t2) := 0;
-[end - 10] counter(t2) := 0;
-
-[start + 10, end] treated(i0, t1) == false;
 
 [end] treated(i0, t0) == true;
 [end] treated(i0, t1) == true;
 [end] treated(i1, t0) == true;
 [end] treated(i1, t1) == true;
-[end] treated(i1, t1) == false;
-[end] counter(t2) == 5;
-[end] counter(t2) > 10 + counter(t1);
-[end] counter(t2) < 10 + counter(t1);
-[end] counter(t2) == 10 + counter(t1);
-[end] counter(t2) == (10 + counter(t1))*5;
-[end] counter(t2) != (10 + counter(t1))*5;

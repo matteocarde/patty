@@ -127,13 +127,13 @@ class ICEAction:
         iceAction.originalName = a.name
         if a.duration.lower != a.duration.upper:
             raise NotImplementedError("I have yet to implement actions with not fixed durations")
-        iceAction.duration = a.duration.lower
+        iceAction.duration = a.duration.lower.constant_value()
 
         for time, cond in a.conditions.items():
             iceAction.icond.append(ActionIntermediateCondition.fromUnifiedPlanning(time, cond, atomDict))
 
         for time, eff in a.effects.items():
-            iceAction.icond.append(ActionIntermediateEffect.fromUnifiedPlanning(time, eff, atomDict))
+            iceAction.ieff.append(ActionIntermediateEffect.fromUnifiedPlanning(time, eff, atomDict))
 
         return iceAction
 

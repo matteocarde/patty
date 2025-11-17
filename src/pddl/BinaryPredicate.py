@@ -388,6 +388,7 @@ class BinaryPredicate(Predicate):
             else:
                 n = n.args[0]
                 isNot = True
+                bp.type = BinaryPredicateType.COMPARATION
         elif type in {OperatorKind.EQUALS, OperatorKind.LE, OperatorKind.LT}:
             bp.type = BinaryPredicateType.COMPARATION
         elif type in {EffectKind.ASSIGN}:
