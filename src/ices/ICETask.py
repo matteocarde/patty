@@ -3,6 +3,9 @@ from __future__ import annotations
 from typing import Set, Dict
 
 import unified_planning.model as up
+from unified_planning.engines import CompilationKind
+from unified_planning.io import ANMLReader
+from unified_planning.shortcuts import Compiler
 
 from src.ices.ICEAction import ICEAction
 from src.ices.TimedConditions import TimedConditions
@@ -25,13 +28,13 @@ class ICETask:
     effects: TimedEffects
 
     def __init__(self):
-        self.propVariables = set()
-        self.numVariables = set()
-        self.actions = set()
-        self.init = InitialCondition()
-        self.goal = Goal()
-        self.conditions = TimedConditions()
-        self.effects = TimedEffects()
+        self.propVariables: Set[Atom] = set()
+        self.numVariables: Set[Atom] = set()
+        self.actions: Set[ICEAction] = set()
+        self.init: InitialCondition = InitialCondition()
+        self.goal: Goal = Goal()
+        self.conditions: TimedConditions = TimedConditions()
+        self.effects: TimedEffects = TimedEffects()
         pass
 
     def addPropVariables(self, atoms: Set[Atom]):
@@ -73,6 +76,17 @@ class ICETask:
 
         return task
 
+
+    @classmethod
+    def fromANML(cls, domainFile, problemFile):
+        reader = ANMLReader()
+
+        anml = reader.parse_problem([domainFile, problemFile])
+        with Compiler(problem_kind=anml.kind, compilation_kind=CompilationKind.GROUNDING) as grounder:
+            grounding_result = grounder.compile(anml, CompilationKind.GROUNDING)
+            groundAnml = grounding_result.problem
+        return ICETask.fromUnifiedPlanning(groundAnml)
+
     @classmethod
     def fromUnifiedPlanning(cls, groundAnml: up.Problem):
 
@@ -99,3 +113,44 @@ class ICETask:
         task.effects = TimedEffects.fromUnifiedPlanning(groundAnml.timed_effects, atomDict)
 
         return task
+
+    def getANMLDomain(self) -> str:
+
+        lines = []
+        for v in sorted(self.propVariables):
+            lines.append(f"fluent boolean {v.getSafeName()};")
+        lines.append("")
+        for x in sorted(self.numVariables):
+            # TODO: For now integer, but they could be reals
+            lines.append(f"fluent integer {x.getSafeName()};")
+
+        lines.append("")
+        for a in self.actions:
+            lines.append(a.toANML())
+            lines.append("")
+
+        return "\n".join(lines)
+
+    def getANMLProblem(self) -> str:
+
+        lines = list()
+        lines.append(self.init.toANML())
+        lines.append("")
+        for eff in self.effects.toANML():
+            lines.append(eff)
+
+        lines.append("")
+        for eff in self.conditions.toANML():
+            lines.append(eff)
+
+        lines.append("")
+        lines.append(self.goal.toANML())
+
+        return "\n".join(lines)
+
+    def saveANML(self, domainFile: str, problemFile: str):
+        with open(domainFile, "w") as df:
+            df.write(self.getANMLDomain())
+        with open(problemFile, "w") as pf:
+            pf.write(self.getANMLProblem())
+

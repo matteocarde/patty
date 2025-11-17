@@ -31,3 +31,10 @@ class TimedEffects:
         for (time, eff) in teffects.items():
             te.addPlanIntermediateEffect(PlanIntermediateEffect.fromUnifiedPlanning(time, eff, atomDict))
         return te
+
+    def toANML(self):
+        lines = []
+        for eff in self.ieff:
+            for s in eff.toANML():
+                lines.append(s)
+        return lines

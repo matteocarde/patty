@@ -77,3 +77,12 @@ class IntermediateCondition(Tuplable):
         ic.toTime = RelativeTime.fromUnifiedPlanning(time.upper)
         ic.conditions = Formula.fromUnifiedPlanning(cond, atomDict)
         return ic
+
+    def toANML(self) -> List[str]:
+        lines = list()
+        if self.conditions.type != "AND":
+            raise NotImplementedError("I cannot deal with disjunctions when converting to ANML")
+        c: Predicate
+        for c in self.conditions:
+            lines.append(f"[{self.fromTime.toANML()}, {self.toTime.toANML()}] {c.toANML('c')};")
+        return lines

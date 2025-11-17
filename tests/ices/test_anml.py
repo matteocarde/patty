@@ -30,14 +30,7 @@ class TestAnml(TestCase):
     pass
 
     def test_translate_into_icetask(self):
-        reader = ANMLReader()
-
-        anml = reader.parse_problem([self.domainFile, self.problemFile])
-        with Compiler(problem_kind=anml.kind, compilation_kind=CompilationKind.GROUNDING) as grounder:
-            grounding_result = grounder.compile(anml, CompilationKind.GROUNDING)
-            groundAnml = grounding_result.problem
-
-        icetask: ICETask = ICETask.fromUnifiedPlanning(groundAnml)
+        icetask: ICETask = ICETask.fromANML(self.domainFile, self.problemFile)
         self.assertIsInstance(icetask, ICETask)
 
     pass

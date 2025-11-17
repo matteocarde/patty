@@ -27,5 +27,10 @@ class Goal(Preconditions):
         super().toPDDL(pw)
         # pw.decreaseTab()
 
+    def toANML(self):
+        lines = list()
+        cond: Predicate
+        for cond in self.conditions:
+            lines.append(f"[end] {cond.toANML('c')};")
 
-
+        return "\n".join(lines)

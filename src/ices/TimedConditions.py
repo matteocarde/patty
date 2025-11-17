@@ -28,3 +28,10 @@ class TimedConditions:
         for (time, cond) in tgoals.items():
             tc.addPlanIntermediateCondition(PlanIntermediateCondition.fromUnifiedPlanning(time, cond, atomDict))
         return tc
+
+    def toANML(self):
+        lines = []
+        for cond in self.icond:
+            for s in cond.toANML():
+                lines.append(s)
+        return lines

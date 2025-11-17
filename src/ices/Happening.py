@@ -67,7 +67,6 @@ class Happening:
             relativeHappenings.add((t, 1, h))
 
         sortedRelativeHappenings = sorted(relativeHappenings)
-        print(sortedRelativeHappenings)
         return [h for (t, o, h) in sortedRelativeHappenings]
 
     @classmethod

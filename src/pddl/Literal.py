@@ -268,3 +268,10 @@ class Literal(Predicate):
                 return Literal.neg(atomDict[str(n.fluent)])
 
         raise NotImplementedError("Cannot transform into literal fnode of type", type)
+
+    def toANML(self, t: str = None):
+        if not t:
+            return self.atom.getSafeName()
+        op = "==" if t == "c" else ":="
+        e = "true" if self.sign == "+" else "false"
+        return f"{self.atom.getSafeName()} {op} {e}"

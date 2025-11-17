@@ -1,8 +1,11 @@
 from __future__ import annotations
 
+from typing import List
+
 from src.ices.ActionRelativeTime import ActionRelativeTime
 from src.ices.IntermediateCondition import IntermediateCondition
 from src.pddl.Formula import Formula
+from src.pddl.Predicate import Predicate
 
 
 class ActionIntermediateCondition(IntermediateCondition):

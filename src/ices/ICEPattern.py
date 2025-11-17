@@ -134,7 +134,6 @@ class ICEPattern:
     def fromSnap(cls, task: ICETask):
 
         arpg: ARPG = ICEPattern.getARPG(task)
-        arpg.printLayers(4)
         snapOrder: List[SnapHappeningAction] = arpg.getActionsOrder(enhanced=True)
 
         return ICEPattern.fromOrder([a.originatingHappening for a in snapOrder])

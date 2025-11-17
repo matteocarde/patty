@@ -133,3 +133,6 @@ class Predicate:
             return Constant.fromUnifiedPlanning(n, atomDict)
         else:
             return BinaryPredicate.fromUnifiedPlanning(n, atomDict)
+
+    def toANML(self, t: str = None):
+        raise NotImplementedError()

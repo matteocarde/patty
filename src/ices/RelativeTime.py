@@ -56,3 +56,17 @@ class RelativeTime:
         t.k = time.delay
 
         return t
+
+    def toANML(self):
+        from src.ices.ActionRelativeTime import ActionRelativeTimeAnchor
+        from src.ices.PlanRelativeTime import PlanRelativeTimeAnchor
+        if self.anchor in {ActionRelativeTimeAnchor.START, PlanRelativeTimeAnchor.BEGIN}:
+            anchor = "start"
+            sign = "+"
+        elif self.anchor in {ActionRelativeTimeAnchor.END, PlanRelativeTimeAnchor.FINISH}:
+            anchor = "end"
+            sign = "-"
+        else:
+            raise Exception()
+
+        return f"{anchor} {sign} {self.k}" if self.k else f"{anchor}"

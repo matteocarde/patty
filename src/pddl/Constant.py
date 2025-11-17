@@ -98,3 +98,6 @@ class Constant(Predicate):
         c = cls()
         c.value = n.int_constant_value()
         return c
+
+    def toANML(self, t: str = None):
+        return str(self.value)

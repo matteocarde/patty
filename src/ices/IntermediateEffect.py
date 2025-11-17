@@ -119,3 +119,9 @@ class IntermediateEffect(Tuplable):
         for eff in effs:
             ie.addEffect(Predicate.fromUnifiedPlanning(eff, atomDict))
         return ie
+
+    def toANML(self):
+        lines = list()
+        for e in self.effects:
+            lines.append(f"[{self.time.toANML()}] {e.toANML('e')};")
+        return lines

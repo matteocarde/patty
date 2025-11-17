@@ -136,3 +136,27 @@ class ICEAction:
             iceAction.icond.append(ActionIntermediateEffect.fromUnifiedPlanning(time, eff, atomDict))
 
         return iceAction
+
+    def toANML(self):
+        lines = list()
+
+        lines.append(f"action {self.getSafeName()}() {{")
+        lines.append(f"\tduration := {self.duration};")
+        for c in self.icond:
+            for s in c.toANML():
+                lines.append("\t" + s)
+        lines.append("")
+        for e in self.ieff:
+            for s in e.toANML():
+                lines.append("\t" + s)
+        lines.append("};")
+
+        return "\n".join(lines)
+
+    def getSafeName(self):
+        if "(" not in self.name:
+            return self.name
+        splitted = self.name.split("(")
+        name = splitted[0]
+        params = "_".join([x.strip().replace("-", "_") for x in splitted[1][:-1].split(",")])
+        return f"{name}_{params}"

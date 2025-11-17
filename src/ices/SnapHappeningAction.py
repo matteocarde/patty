@@ -26,5 +26,4 @@ class SnapHappeningAction(Action):
         a = Action.fromProperties(h.name, [], pre, post)
         a.__class__ = SnapHappeningAction
         a.originatingHappening = h
-        print(f"{a.name} = <{pre}, {post}>")
         return a

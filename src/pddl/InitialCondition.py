@@ -22,6 +22,7 @@ class InitialCondition:
     assignments: List[Predicate]
     assignmentsByPropertyTree: Dict[str, Dict]
     numericAssignments: Dict[Atom, float]
+    booleanAssignments: Dict[Atom, bool]
 
     def __init__(self):
         self.allAtoms: Set[Atom] = set()
@@ -29,6 +30,7 @@ class InitialCondition:
         self.functions: Set[Atom] = set()
         self.assignments = []
         self.numericAssignments = dict()
+        self.booleanAssignments = dict()
 
     @classmethod
     def partialize(cls, init: InitialCondition, ratio: float) -> InitialCondition:
@@ -71,6 +73,7 @@ class InitialCondition:
         cp.functions = copy.deepcopy(self.functions, m)
         cp.assignments = copy.deepcopy(self.assignments, m)
         cp.numericAssignments = copy.deepcopy(self.numericAssignments, m)
+        cp.booleanAssignments = copy.deepcopy(self.booleanAssignments, m)
         return cp
 
     @classmethod
@@ -83,6 +86,7 @@ class InitialCondition:
                 ic.allAtoms.add(lit.getAtom())
                 ic.predicates.add(lit.getAtom())
                 ic.assignments.append(lit)
+                ic.booleanAssignments[lit.getAtom()] = True
             if isinstance(child, pddlParser.AssignmentContext):
                 assignment = BinaryPredicate.fromNode(child)
                 ic.assignments.append(assignment)
@@ -121,8 +125,12 @@ class InitialCondition:
             return False
 
     def addPredicate(self, l: Literal):
-        self.allAtoms.add(l.getAtom())
+        v = l.getAtom()
+        self.allAtoms.add(v)
         self.assignments.append(l)
+        if l.sign == "+":
+            self.predicates.add(v)
+        self.booleanAssignments[v] = (l.sign == "+")
 
     def addNumericAssignment(self, atom: Atom, value: float):
         self.numericAssignments[atom] = value
@@ -136,7 +144,9 @@ class InitialCondition:
     def setNotSpecifiedAsFalse(self, propVariables: Set[Atom]):
         for v in propVariables:
             if v not in self.allAtoms:
+                self.allAtoms.add(v)
                 self.assignments.append(Literal.neg(v))
+                self.booleanAssignments[v] = False
         pass
 
     @classmethod
@@ -153,3 +163,14 @@ class InitialCondition:
                 init.addPredicate(Literal.neg(v))
 
         return init
+
+    def toANML(self):
+        lines = list()
+        for v in sorted(self.allAtoms):
+            if v in self.numericAssignments:
+                lines.append(f"[start] {v.getSafeName()} := {self.numericAssignments[v]};")
+            if v in self.booleanAssignments:
+                e = "true" if self.booleanAssignments[v] else "false"
+                lines.append(f"[start] {v.getSafeName()} := {e};")
+
+        return "\n".join(lines)

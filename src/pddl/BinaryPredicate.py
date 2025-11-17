@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 from enum import Enum
-from typing import Dict, Set
+from typing import Dict, Set, Union
 
 from sympy import Expr, diff
 from unified_planning.model import FNode, OperatorKind, EffectKind, Effect
@@ -36,11 +36,18 @@ UP2OPERATOR = {
     EffectKind.DECREASE: "decrease",
 }
 
+ANMLOPERATORS = {
+    "increase": "+=",
+    "decrease": "-=",
+    "assign": ":=",
+    "=": "=="
+}
+
 
 class BinaryPredicate(Predicate):
     operator: str
-    lhs: BinaryPredicate or Literal or Constant
-    rhs: BinaryPredicate or Literal or Constant
+    lhs: Predicate
+    rhs: Predicate
     type: BinaryPredicateType
 
     def __init__(self):
@@ -399,3 +406,11 @@ class BinaryPredicate(Predicate):
             bp.rhs = Predicate.fromUnifiedPlanning(n.value, atomDict)
 
         return bp
+
+    def toANML(self, t: str = None):
+        if self.operator == "increase":
+            return f"{self.lhs.toANML()} := {self.lhs.toANML()} + {self.rhs.toANML()}"
+        if self.operator == "decrease":
+            return f"{self.lhs.toANML()} := {self.lhs.toANML()} - {self.rhs.toANML()}"
+        op = self.operator if self.operator not in ANMLOPERATORS else ANMLOPERATORS[self.operator]
+        return f"{self.lhs.toANML()} {op} {self.rhs.toANML()}"

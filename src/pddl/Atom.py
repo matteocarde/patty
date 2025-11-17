@@ -120,3 +120,11 @@ class Atom:
 
     def toLatex(self):
         return f"\\operatorname{{{self.__functionName}}}"
+
+    def getSafeName(self):
+        if "(" not in self.name:
+            return self.name
+        splitted = self.name.split("(")
+        name = splitted[0]
+        params = "_".join([x.strip().replace("-", "_") for x in splitted[1][:-1].split(",")])
+        return f"{name}_{params}"

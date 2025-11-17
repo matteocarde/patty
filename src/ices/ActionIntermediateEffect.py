@@ -35,6 +35,9 @@ class ActionIntermediateEffect(IntermediateEffect):
             return False
         return self.time.k - other.time.k
 
+    def __iter__(self):
+        return iter(self.effects)
+
     @classmethod
     def fromProperties(cls, time: ActionRelativeTime) -> ActionIntermediateEffect:
         ie = cls()
