@@ -27,7 +27,8 @@ class Patty(Planner):
                  jairSearchStrategy=False,
                  jairGoalFunction=False,
                  jairPatternG=False,
-                 jairPatternH=False
+                 jairPatternH=False,
+                 ices=False
                  ):
         self.search = search
         self.maximize = maximize
@@ -49,6 +50,7 @@ class Patty(Planner):
         self.jairGoalFunction = jairGoalFunction
         self.jairPatternG = jairPatternG
         self.jairPatternH = jairPatternH
+        self.ices = ices
         super().__init__()
 
     @staticmethod
@@ -137,6 +139,8 @@ class Patty(Planner):
             cmd += ["--minimize-goal-function"]
         if self.dontKeepSubgoals:
             cmd += ["--dont-keep-subgoals"]
+        if self.ices:
+            cmd += ["--ices"]
         if self.search == "jair":
             cmd += [
                 "--jair-search-strategy", self.jairSearchStrategy,

@@ -209,6 +209,8 @@ RUn rm -rf pyeda
 RUN mv build/lib.linux-x86_64-cpython-38/pyeda/ pyeda/
 RUN ls -la pyeda/boolalg
 
+RUN pip install --pre unified-planning
+
 WORKDIR /project
 COPY . .
 #Authorizations

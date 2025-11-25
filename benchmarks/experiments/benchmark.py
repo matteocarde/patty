@@ -93,6 +93,7 @@ PLANNERS: Dict[str, Planner] = {
     "OPTIC": Optic(),
     "ITSAT": ITSAT(),
     "ANMLSMT": AnmlSMT(),
+    "PATTY-ICES": Patty("PATTY-ICES", ices=True),
 }
 
 JAIR_VERSIONS = {
