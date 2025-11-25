@@ -16,6 +16,7 @@ from src.ices.SnapTask import SnapTask
 from src.pddl.ARPG import ARPG
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
+from src.pddl.State import State
 
 
 class ICEPattern:
@@ -37,7 +38,12 @@ class ICEPattern:
         if not isinstance(other, ICEPattern):
             return self
         pt = ICEPattern()
-        pt.pattern = self.pattern + other.pattern
+        for item in self.pattern:
+            a = copy.copy(item)
+            pt.pattern.append(a)
+        for item in other.pattern:
+            a = copy.copy(item)
+            pt.pattern.append(a)
         return pt
 
     def __str__(self):
@@ -53,8 +59,7 @@ class ICEPattern:
     def addPostfix(self, postfix: int or str):
         order = []
         for item in self.pattern:
-            a = copy.deepcopy(item)
-
+            a = copy.copy(item)
             a.name = f"{a.name}_{postfix}"
             order.append(a)
         self.pattern = order
@@ -126,14 +131,21 @@ class ICEPattern:
         return d
 
     @staticmethod
-    def getARPG(task: ICETask):
+    def getARPG(task: ICETask, state: State):
         snapDomain = SnapTask(task)
-        return ARPG(snapDomain, snapDomain.init, snapDomain.goal)
+        return ARPG(snapDomain, state, snapDomain.goal)
 
     @classmethod
     def fromSnap(cls, task: ICETask):
 
-        arpg: ARPG = ICEPattern.getARPG(task)
+        arpg: ARPG = ICEPattern.getARPG(task, State.fromInitialCondition(task.init))
+        snapOrder: List[SnapHappeningAction] = arpg.getActionsOrder(enhanced=True)
+
+        return ICEPattern.fromOrder([a.originatingHappening for a in snapOrder])
+
+    @classmethod
+    def fromState(cls, s: State, task: ICETask) -> ICEPattern:
+        arpg: ARPG = ICEPattern.getARPG(task, s)
         snapOrder: List[SnapHappeningAction] = arpg.getActionsOrder(enhanced=True)
 
         return ICEPattern.fromOrder([a.originatingHappening for a in snapOrder])
@@ -142,3 +154,10 @@ class ICEPattern:
         print("----- Pattern -----")
         for a in self.pattern:
             print(a)
+
+    @classmethod
+    def empty(cls):
+        return ICEPattern.fromOrder([])
+
+    def getLength(self):
+        return len(self)

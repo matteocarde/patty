@@ -13,11 +13,11 @@ from src.ices.ICETask import ICETask
 from src.smt.SMTSolver import SMTSolver
 
 
-class TestAnml(TestCase):
+class TestAnmlPainter(TestCase):
 
     def setUp(self) -> None:
-        self.domainFile = "./domain.anml"
-        self.problemFile = "./instance_2_2.anml"
+        self.domainFile = "../../files/temporal/painter/anml/domain.anml"
+        self.problemFile = "../../files/temporal/painter/anml/instances/instance_2_2.anml"
         pass
 
     def test_read_with_unified_planning(self):

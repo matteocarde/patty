@@ -20,6 +20,7 @@ from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.Formula import Formula
 from src.pddl.Literal import Literal
+from src.pddl.Predicate import Predicate
 from src.pddl.State import State
 from src.plan.Encoding import Encoding
 from src.smt.SMTConjunction import SMTConjunction
@@ -38,10 +39,12 @@ class ICEEncoding(Encoding):
     rules: SMTConjunction
     actionsStartEndPairs: List[ICEActionStartEndPair]
 
-    def __init__(self, task: ICETask, pattern: ICEPattern):
+    def __init__(self, task: ICETask, pattern: ICEPattern, subgoalsAchieved: Set[Formula or Predicate] = None):
         super().__init__()
         self.task: ICETask = task
         self.pattern: ICEPattern = pattern
+        self.subgoalsAchieved: Set[
+            Formula or Predicate] = subgoalsAchieved if subgoalsAchieved else set(self.task.goal.conditions)
         # self.pattern.pattern = self.pattern.pattern[3:11]
         t = TimeStat.startHolder("Getting actions start and end pairs ")
         self.actionsStartEndPairs = self.pattern.getActionsStartEndPairs()
@@ -97,7 +100,12 @@ class ICEEncoding(Encoding):
         rules = SMTConjunction()
         next = tVars.nextVariables
 
-        rules.append(SMTExpression.fromFormula(self.task.goal, next))
+        for goal in self.subgoalsAchieved:
+            rules.append(SMTExpression.fromFormula(goal, next))
+
+        orGoals = [g for g in self.task.goal if g not in self.subgoalsAchieved]
+        if orGoals:
+            rules.append(SMTExpression.bigor(orGoals))
 
         return rules
 
@@ -333,8 +341,8 @@ class ICEEncoding(Encoding):
             p = pair.startIndex
             q = pair.endIndex
 
-            ors = dict([(h, set()) for h in b.icond + b.ieff])
-            orsEnd = dict([(h, set()) for h in b.icond + b.ieff])
+            ors = dict([(str(h), set()) for h in b.icond + b.ieff])
+            orsEnd = dict([(str(h), set()) for h in b.icond + b.ieff])
             for h in self.pattern[p:q + 1]:
                 if h.parent != b:
                     continue
@@ -344,19 +352,19 @@ class ICEEncoding(Encoding):
                     assert isinstance(h.original.toTime, RelativeTime)
 
                     t_i_end = tEndVars[h]
-                    ors[h.original].add(t_i.equal(h.original.fromTime.absolute(t_p, t_q)))
-                    orsEnd[h.original].add(t_i_end.equal(h.original.toTime.absolute(t_p, t_q)))
+                    ors[str(h.original)].add(t_i.equal(h.original.fromTime.absolute(t_p, t_q)))
+                    orsEnd[str(h.original)].add(t_i_end.equal(h.original.toTime.absolute(t_p, t_q)))
                 if isinstance(h, HappeningEffect):
                     assert isinstance(h.original.time, RelativeTime)
-                    ors[h.original].add(t_i.equal(h.original.time.absolute(t_p, t_q)))
+                    ors[str(h.original)].add(t_i.equal(h.original.time.absolute(t_p, t_q)))
 
             ices = []
             for ice in b.icond + b.ieff:
-                if ors[ice]:
+                if ors[str(ice)]:
                     if isinstance(ice, IntermediateCondition):
-                        ices.append(SMTExpression.bigor(ors[ice]) & SMTExpression.bigor(orsEnd[ice]))
+                        ices.append(SMTExpression.bigor(ors[str(ice)]) & SMTExpression.bigor(orsEnd[str(ice)]))
                     else:
-                        ices.append(SMTExpression.bigor(ors[ice]))
+                        ices.append(SMTExpression.bigor(ors[str(ice)]))
             rules.append(((h_p > 0) & (h_q > 0)).implies(SMTExpression.bigand(ices)))
 
         return rules

@@ -423,5 +423,9 @@ class Formula:
     def fromUnifiedPlanning(cls, nodes: List[FNode], atomDict: Dict[str, Atom]):
         f = cls()
         for n in nodes:
-            f.addClause(Predicate.fromUnifiedPlanning(n, atomDict))
+            if n.node_type == OperatorKind.AND:
+                for c in n.args:
+                    f.addClause(Predicate.fromUnifiedPlanning(c, atomDict))
+            else:
+                f.addClause(Predicate.fromUnifiedPlanning(n, atomDict))
         return f

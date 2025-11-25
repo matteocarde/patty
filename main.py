@@ -2,6 +2,7 @@ import traceback
 
 from z3 import z3
 
+from main_ices import main_ices
 from src.pddl.Domain import Domain, GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Plan import Plan
@@ -27,6 +28,10 @@ def main():
     args = Arguments()
     if args.isHelp:
         exit(0)
+
+    if args.ices:
+        main_ices(args)
+        return
 
     try:
         print(f"Using z3 version {z3.get_version_string()}")

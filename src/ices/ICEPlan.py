@@ -42,11 +42,11 @@ class ICEPlan:
             mu_t_i: float = solution.getVariable(tVars[h_i])
             mu_t_i_end: float = solution.getVariable(tEndVars[h_i]) if isinstance(h_i, HappeningCondition) else "NA"
             mu_d_i: float = solution.getVariable(dVars[h_i]) if h_i.starting else "NA"
-
-            print(h_i, f"x{mu_h_i}", f"t={mu_t_i}",
-                  ("starts " + str(h_i.starting)) if h_i.starting else "",
-                  ("ends " + str(h_i.ending)) if h_i.ending else "",
-                  f"d={mu_d_i}", f"t_end={mu_t_i_end}")
+            #
+            # print(h_i, f"x{mu_h_i}", f"t={mu_t_i}",
+            #       ("starts " + str(h_i.starting)) if h_i.starting else "",
+            #       ("ends " + str(h_i.ending)) if h_i.ending else "",
+            #       f"d={mu_d_i}", f"t_end={mu_t_i_end}")
 
             if not h_i.starting:
                 continue
@@ -116,8 +116,7 @@ class ICEPlan:
         return states
 
     def __checkGoal(self) -> bool:
-        states: List[TimedState] = self.getTimedStates()
-        finalState: State = states[-1].state
+        finalState = self.getFinalState()
 
         try:
             ValAssert(finalState.satisfies(self.task.goal),
@@ -128,6 +127,11 @@ class ICEPlan:
             return False
 
         return True
+
+    def getFinalState(self):
+        states: List[TimedState] = self.getTimedStates()
+        finalState: State = states[-1].state
+        return finalState
 
     def __checkIntermediateConditions(self) -> bool:
         states: List[TimedState] = self.getTimedStates()

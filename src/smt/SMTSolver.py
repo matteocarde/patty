@@ -32,7 +32,7 @@ class SMTSolver:
         if self.encoding:
             t = TimeStat.startHolder("Adding assertions")
             self.addAssertions(self.encoding.rules)
-            self.addAssertions(self.encoding.rules, solver=True, optimizer=False)
+            # self.addAssertions(self.encoding.rules, solver=True, optimizer=False)
             t.endHolder()
             self.addSoftAssertions(self.encoding.softRules)
             self.setMinimize(self.encoding.minimize)

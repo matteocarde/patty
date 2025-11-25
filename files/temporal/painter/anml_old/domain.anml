@@ -26,3 +26,5 @@ action make_treatment(Item i, Treatment t, Treatment next) {
    [start + 10] ready(i, next) := true;
    [end] started(i, next) == true;
 };
+
+::("metric", "minimize-makespan");

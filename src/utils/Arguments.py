@@ -31,6 +31,9 @@ class Arguments:
         parser.add_argument('--effect-axioms',
                             help="If the encoding has effect axioms for each action (quadratic, RanTanPlan's Like)",
                             action="store_true", default=False)
+        parser.add_argument('--ices',
+                            help="The ICEs Encoding will be used",
+                            action="store_true", default=False)
         parser.add_argument('--roll-bound', help="The maximum amount of time an action can be rolled at each step",
                             type=int, default=0)
         parser.add_argument('--max-closure-time',
@@ -127,6 +130,7 @@ class Arguments:
         # self.goalFunction = args.goal_function
         self.minimizeGoalFunction = args.minimize_goal_function
         self.greedyLevel = args.greedy_level
+        self.ices = args.ices
 
         self.jairSearchStrategy = args.jair_search_strategy
         self.jairPatternG = args.jair_pattern_g
