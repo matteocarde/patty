@@ -44,3 +44,4 @@ class ActionIntermediateEffect(IntermediateEffect):
         ie.time = time
 
         return ie
+

@@ -44,7 +44,7 @@ class ICEEncoding(Encoding):
         self.task: ICETask = task
         self.pattern: ICEPattern = pattern
         self.subgoalsAchieved: Set[
-            Formula or Predicate] = subgoalsAchieved if subgoalsAchieved else set(self.task.goal.conditions)
+            Formula or Predicate] = subgoalsAchieved if subgoalsAchieved is not None else set(self.task.goal.conditions)
         # self.pattern.pattern = self.pattern.pattern[3:11]
         t = TimeStat.startHolder("Getting actions start and end pairs ")
         self.actionsStartEndPairs = self.pattern.getActionsStartEndPairs()
@@ -103,7 +103,7 @@ class ICEEncoding(Encoding):
         for goal in self.subgoalsAchieved:
             rules.append(SMTExpression.fromFormula(goal, next))
 
-        orGoals = [g for g in self.task.goal if g not in self.subgoalsAchieved]
+        orGoals = [SMTExpression.fromFormula(g, next) for g in self.task.goal if g not in self.subgoalsAchieved]
         if orGoals:
             rules.append(SMTExpression.bigor(orGoals))
 

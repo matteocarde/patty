@@ -107,6 +107,6 @@ class PatternAction(Action):
         if not self.interferes(a_):
             return False
         for pre in a_.preconditions:
-            if not pre.isValid(self.constantAssignments):
-                return False
-        return True
+            if pre.isValid(self.constantAssignments):
+                return True
+        return False

@@ -47,6 +47,14 @@ class IntermediateEffect(Tuplable):
     def toTuple(self) -> Tuple:
         return self.time, self.effects
 
+    def __lt__(self, other):
+        from src.ices.IntermediateCondition import IntermediateCondition
+        if isinstance(other, IntermediateCondition):
+            return self.time < other.fromTime
+        if isinstance(other, IntermediateEffect):
+            return self.time < other.time
+        return False
+
     @classmethod
     def fromProperties(cls, time: RelativeTime) -> IntermediateEffect:
         raise NotImplementedError()

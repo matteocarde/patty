@@ -327,10 +327,10 @@ class BinaryPredicate(Predicate):
         return bp
 
     @classmethod
-    def equality(cls, lhs: Predicate, rhs: Predicate or float):
+    def equality(cls, lhs: Predicate or float, rhs: Predicate or float):
         bp = cls()
         bp.operator = "="
-        bp.lhs = lhs
+        bp.lhs = lhs if isinstance(lhs, Predicate) else Constant.fromValue(lhs)
         bp.rhs = rhs if isinstance(rhs, Predicate) else Constant.fromValue(rhs)
         bp.type = BinaryPredicateType.COMPARATION
         return bp

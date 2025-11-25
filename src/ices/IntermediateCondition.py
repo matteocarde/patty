@@ -8,7 +8,6 @@ from pysmt.fnode import FNode
 from unified_planning.model import TimeInterval
 
 from pyeda_linux.boolalg.expr import Atom
-from src.ices.IntermediateEffect import IntermediateEffect
 from src.ices.RelativeTime import RelativeTime
 from src.pddl.Atom import Atom
 from src.pddl.Formula import Formula
@@ -34,6 +33,14 @@ class IntermediateCondition(Tuplable):
 
     def __str__(self):
         return f"<{self.fromTime}, {self.toTime}, {self.conditions}>"
+
+    def __lt__(self, other):
+        from src.ices.IntermediateEffect import IntermediateEffect
+        if isinstance(other, IntermediateCondition):
+            return self.fromTime < other.fromTime
+        if isinstance(other, IntermediateEffect):
+            return self.fromTime < other.time
+        return False
 
     def toAbsolute(self, a: float, b: float) -> IntermediateCondition:
         ic = self.__class__()

@@ -16,8 +16,8 @@ from src.smt.SMTSolver import SMTSolver
 class TestAnmlMajsp(TestCase):
 
     def setUp(self) -> None:
-        self.domainFile = "../../files/temporal/majsp/anml/domain.anml"
-        self.problemFile = "../../files/temporal/majsp/anml/instances/instance_1_1_2_4.anml"
+        self.domainFile = "./majsp/domain.anml"
+        self.problemFile = "./majsp/instance_1_1_2_4.anml"
         pass
 
     def test_read_with_unified_planning(self):

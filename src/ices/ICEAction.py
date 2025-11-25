@@ -129,11 +129,32 @@ class ICEAction:
             raise NotImplementedError("I have yet to implement actions with not fixed durations")
         iceAction.duration = float(a.duration.lower.constant_value())
 
+        hasStart = False
+        hasEnd = False
+
         for time, cond in a.conditions.items():
-            iceAction.icond.append(ActionIntermediateCondition.fromUnifiedPlanning(time, cond, atomDict))
+            ic = ActionIntermediateCondition.fromUnifiedPlanning(time, cond, atomDict)
+            if ic.fromTime == START + 0:
+                hasStart = True
+            if ic.fromTime == END - 0:
+                hasEnd = True
+            iceAction.icond.append(ic)
 
         for time, eff in a.effects.items():
-            iceAction.ieff.append(ActionIntermediateEffect.fromUnifiedPlanning(time, eff, atomDict))
+            ie = ActionIntermediateEffect.fromUnifiedPlanning(time, eff, atomDict)
+            if ie.time == START + 0:
+                hasStart = True
+            if ie.time == END - 0:
+                hasEnd = True
+            iceAction.ieff.append(ie)
+
+        if not hasStart:
+            ic = ActionIntermediateCondition.fake(START + 0, START + 0)
+            iceAction.icond.append(ic)
+
+        if not hasEnd:
+            ic = ActionIntermediateCondition.fake(END - 0, END - 0)
+            iceAction.icond.append(ic)
 
         return iceAction
 

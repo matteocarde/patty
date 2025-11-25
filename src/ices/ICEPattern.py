@@ -161,3 +161,7 @@ class ICEPattern:
 
     def getLength(self):
         return len(self)
+
+    @classmethod
+    def fromPlan(cls, plan) -> ICEPattern:
+        return ICEPattern.fromOrder([copy.copy(h) for (t, o, h) in sorted(plan.timedHappenings)])

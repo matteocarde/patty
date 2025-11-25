@@ -1,9 +1,10 @@
 from __future__ import annotations
 
+import decimal
 import traceback
-from typing import List, Set, Dict
+from typing import List, Set, Dict, Tuple
 
-from src.ices.Happening import HappeningActionStart, HappeningCondition
+from src.ices.Happening import HappeningActionStart, HappeningCondition, Happening
 from src.ices.ICEAction import BEGIN, ICEAction
 from src.ices.ICEEncoding import ICEEncoding
 from src.ices.ICETask import ICETask
@@ -14,7 +15,7 @@ from src.ices.TimedICEAction import TimedICEAction, TimedICEActionList
 from src.pddl.State import State
 from src.pddl.TimedState import TimedState
 from src.smt.SMTSolution import SMTSolution
-from src.utils.Constants import EPSILON
+from src.utils.Constants import EPSILON, EPSILON_DECIMALS
 from src.utils.ValAssert import ValAssert, ValidationError
 
 
@@ -24,13 +25,15 @@ class ICEPlan:
     task: ICETask
     iconds: Set[IntermediateCondition]
     ieffs: Set[IntermediateEffect]
+    timedHappenings: List[Tuple[float, int, Happening]]
 
     def __init__(self):
+        self.timedHappenings: List[Tuple[float, int, Happening]] = list()
         self.timedActions = TimedICEActionList()
 
     @classmethod
     def fromSMTSolution(cls, encoding: ICEEncoding, solution: SMTSolution) -> ICEPlan:
-        plan = cls()
+        plan: ICEPlan = cls()
         plan.encoding = encoding
         tVars = encoding.transVars.timeVariables
         tEndVars = encoding.transVars.timeEndVariables
@@ -39,7 +42,7 @@ class ICEPlan:
 
         for h_i in encoding.pattern:
             mu_h_i: int = solution.getVariable(hVars[h_i])
-            mu_t_i: float = solution.getVariable(tVars[h_i])
+            mu_t_i: float = round(solution.getVariable(tVars[h_i]), EPSILON_DECIMALS)
             mu_t_i_end: float = solution.getVariable(tEndVars[h_i]) if isinstance(h_i, HappeningCondition) else "NA"
             mu_d_i: float = solution.getVariable(dVars[h_i]) if h_i.starting else "NA"
             #
@@ -47,6 +50,10 @@ class ICEPlan:
             #       ("starts " + str(h_i.starting)) if h_i.starting else "",
             #       ("ends " + str(h_i.ending)) if h_i.ending else "",
             #       f"d={mu_d_i}", f"t_end={mu_t_i_end}")
+
+            if mu_h_i:
+                order = 0 if isinstance(h_i, HappeningCondition) else 1
+                plan.timedHappenings.append((mu_t_i, order, h_i))
 
             if not h_i.starting:
                 continue
@@ -57,7 +64,8 @@ class ICEPlan:
             e_b = b.getEpsilonB()
             if mu_h_i > 0:
                 for r in range(1, mu_h_i + 1):
-                    th = TimedICEAction(mu_t_i + (r - 1) * (mu_d_i + e_b), h_i.starting, mu_d_i)
+                    time = round(mu_t_i + (r - 1) * (mu_d_i + e_b), EPSILON_DECIMALS)
+                    th = TimedICEAction(time, h_i.starting, mu_d_i)
                     plan.timedActions.append(th)
 
         plan.task: ICETask = encoding.task

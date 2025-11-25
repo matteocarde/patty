@@ -51,9 +51,6 @@ class ICECautiousGPCSearch:
 
             patF: ICEPattern = patG + patH
 
-            if self.args.printPattern:
-                self.console.log("Pattern: " + str(patF), LogPrintLevel.PLAN)
-
             self.ts.start(f"Conversion to SMT at bound {bound}", console=self.console)
             encoding: ICEEncoding = ICEEncoding(
                 task=self.task,
@@ -68,6 +65,8 @@ class ICECautiousGPCSearch:
             self.console.log(f"Bound {bound} - Pattern Length = {patF.getLength()}", LogPrintLevel.STATS)
 
             self.ts.start(f"Solving Bound {bound}", console=self.console)
+            if self.args.printPattern:
+                patF.print()
             solver: SMTSolver = SMTSolver(encoding)
             callsToSolver += 1
             solution = solver.getSolution()
@@ -75,12 +74,11 @@ class ICECautiousGPCSearch:
             self.ts.end(f"Solving Bound {bound}", console=self.console)
 
             subgoalsAchievedNow = set()
-            state = None
             plan: ICEPlan = None
             if solution:
                 plan: ICEPlan = ICEPlan.fromSMTSolution(encoding, solution)
-                state = plan.getFinalState()
-                subgoalsAchievedNow = {g for g in self.task.goal.conditions if state.satisfies(g)}
+                s = plan.getFinalState()
+                subgoalsAchievedNow = {g for g in self.task.goal.conditions if s.satisfies(g)}
 
             if plan and len(subgoalsAchievedNow) == len(totalSubgoals):
                 self.console.log(f"Calls to Solver: {callsToSolver}", LogPrintLevel.STATS)
@@ -93,9 +91,9 @@ class ICECautiousGPCSearch:
                                  LogPrintLevel.STATS)
                 patG = ICEPattern.fromPlan(plan)
                 patG.addPostfix("G")
-                patH = ICEPattern.fromState(state, self.task)
+                patH = ICEPattern.fromState(s, self.task)
+                pass
             else:
-                patG.addPostfix("G")
                 patF.addPostfix(bound)
                 patG = patF
 
