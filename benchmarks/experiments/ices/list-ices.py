@@ -12,7 +12,7 @@ PLANNERS = [
 def main():
     domains = [
         "temporal/cushing",
-        "temporal/majsp",
+        "temporal/majsp/anml",
         "temporal/bottles-all",
         "temporal/bottles-pack",
         "temporal/bottles-pour",
@@ -20,30 +20,32 @@ def main():
         "temporal/match-ac",
         "temporal/match-ms",
         "temporal/oversub",
-        "temporal/painter"
+        "temporal/painter/anml"
     ]
 
     instances = list()
 
     for domain in domains:
+        ext = "anml" if "/anml" in domain else "pddl"
         for planner in PLANNERS:
 
             problemList: List[Tuple[str, str]] = list()
 
-            if not os.path.exists(f"files/{domain}/anml"):
-                raise Exception(f"We require anml files for {domain}")
-            if os.path.exists(f"files/{domain}/anml/instances"):
-                for problem in natsort.natsorted(os.listdir(f"files/{domain}/anml/instances")):
-                    if problem[-5:] != ".anml":
+            if os.path.exists(f"files/{domain}/instances"):
+                problems = natsort.natsorted(os.listdir(f"files/{domain}/instances"))
+                for problem in problems:
+                    if problem[-4:] != ext:
                         continue
-                    problemList.append(
-                        (f"files/{domain}/anml/domain.anml", f"files/{domain}/anml/instances/{problem}"))
+                    problemList.append((f"files/{domain}/domain.{ext}", f"files/{domain}/instances/{problem}"))
             else:
-                for problem in natsort.natsorted(os.listdir(f"files/{domain}/anml")):
-                    if problem[-5:] != ".anml":
+                folders = natsort.natsorted(os.listdir(f"files/{domain}/domains"))
+                for folder in folders:
+                    domainFile = f"files/{domain}/domains/{folder}/domain.{ext}"
+                    problemFile = f"files/{domain}/domains/{folder}/problem.{ext}"
+                    if not os.path.exists(domainFile):
                         continue
-                    problemList.append(("", f"files/{domain}/anml/{problem}"))
-            instances += [[planner, domain, domainFile, problemFile] for (domainFile, problemFile) in problemList]
+                    problemList.append((domainFile, problemFile))
+        instances += [[planner, domain, domainFile, problemFile] for (domainFile, problemFile) in problemList]
 
     random.shuffle(instances)
     print(f"Listing {len(instances)} instances")
