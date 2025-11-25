@@ -2,8 +2,8 @@ from typing import List, Set, Dict
 
 from unified_planning.model import Timing, Effect
 
-from pyeda_linux.boolalg.expr import Atom
 from src.ices.PlanIntermediateEffect import PlanIntermediateEffect
+from src.pddl.Atom import Atom
 
 
 class TimedEffects:

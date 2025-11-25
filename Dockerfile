@@ -194,7 +194,8 @@ WORKDIR /project
 
 #Install local pyeda
 WORKDIR /
-RUN pip uninstall pyeda -y
+RUN ls -la .
+#COPY src/ src/
 COPY libs/pyeda libs/pyeda
 WORKDIR libs/pyeda
 RUN rm -rf dist

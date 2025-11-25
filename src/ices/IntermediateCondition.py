@@ -7,7 +7,7 @@ from typing import List, Dict
 from pysmt.fnode import FNode
 from unified_planning.model import TimeInterval
 
-from pyeda_linux.boolalg.expr import Atom
+from src.ices.IntermediateEffect import IntermediateEffect
 from src.ices.RelativeTime import RelativeTime
 from src.pddl.Atom import Atom
 from src.pddl.Formula import Formula
