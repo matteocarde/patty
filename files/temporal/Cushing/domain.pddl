@@ -12,7 +12,7 @@
 		(target3 ?var - variable)
 	)
 
-	(:durative-action action_type1
+	(:durative-action alpha
 		:parameters (?var - variable)
 		:duration (= ?duration 5)
 		:condition (and
@@ -26,7 +26,7 @@
 			(at end (not (target2 ?var)))
 		)
 	)
-	(:durative-action action_type2
+	(:durative-action beta
 		:parameters (?var - variable)
 		:duration (= ?duration 4)
 		:condition (and
@@ -38,7 +38,7 @@
 			(at end (target2 ?var))
 		)
 	)
-	(:durative-action action_type3
+	(:durative-action gamma
 		:parameters (?var - variable)
 		:duration (= ?duration 1)
 		:condition (and

@@ -68,6 +68,7 @@ class ICETask:
         task.propVariables = domain.predicates
         task.numVariables = domain.functions
         task.init = problem.init
+        task.init.setNotSpecifiedAsFalse(task.propVariables)
         task.goal = problem.goal
 
         action: ICEAction

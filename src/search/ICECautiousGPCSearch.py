@@ -41,8 +41,7 @@ class ICECautiousGPCSearch:
         subgoalsAchieved: Set[Formula or Predicate] = set()
 
         bound = self.startBound
-        initialState: State = State.fromInitialCondition(self.task.init)
-        s: State = initialState
+        s: State = State.fromInitialCondition(self.task.init)
 
         patG: ICEPattern = ICEPattern.empty()
         patH: ICEPattern = ICEPattern.fromState(s, self.task)
@@ -52,6 +51,9 @@ class ICECautiousGPCSearch:
             patF: ICEPattern = patG + patH
 
             self.ts.start(f"Conversion to SMT at bound {bound}", console=self.console)
+            if self.args.printPattern:
+                patF.print()
+
             encoding: ICEEncoding = ICEEncoding(
                 task=self.task,
                 pattern=patF,
@@ -65,8 +67,6 @@ class ICECautiousGPCSearch:
             self.console.log(f"Bound {bound} - Pattern Length = {patF.getLength()}", LogPrintLevel.STATS)
 
             self.ts.start(f"Solving Bound {bound}", console=self.console)
-            if self.args.printPattern:
-                patF.print()
             solver: SMTSolver = SMTSolver(encoding)
             callsToSolver += 1
             solution = solver.getSolution()

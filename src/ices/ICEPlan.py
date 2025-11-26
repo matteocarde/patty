@@ -42,7 +42,7 @@ class ICEPlan:
 
         for h_i in encoding.pattern:
             mu_h_i: int = solution.getVariable(hVars[h_i])
-            mu_t_i: float = round(solution.getVariable(tVars[h_i]), EPSILON_DECIMALS)
+            mu_t_i: float = solution.getVariable(tVars[h_i])
             mu_t_i_end: float = solution.getVariable(tEndVars[h_i]) if isinstance(h_i, HappeningCondition) else "NA"
             mu_d_i: float = solution.getVariable(dVars[h_i]) if h_i.starting else "NA"
             #
@@ -64,7 +64,7 @@ class ICEPlan:
             e_b = b.getEpsilonB()
             if mu_h_i > 0:
                 for r in range(1, mu_h_i + 1):
-                    time = round(mu_t_i + (r - 1) * (mu_d_i + e_b), EPSILON_DECIMALS)
+                    time = mu_t_i + (r - 1) * (mu_d_i + e_b)
                     th = TimedICEAction(time, h_i.starting, mu_d_i)
                     plan.timedActions.append(th)
 

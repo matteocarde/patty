@@ -131,9 +131,9 @@ class ICEPattern:
         return d
 
     @staticmethod
-    def getARPG(task: ICETask, state: State):
+    def getARPG(task: ICETask, state: State, avoidRaising=False):
         snapDomain = SnapTask(task)
-        return ARPG(snapDomain, state, snapDomain.goal)
+        return ARPG(snapDomain, state, snapDomain.goal, avoidRaising=avoidRaising)
 
     @classmethod
     def fromSnap(cls, task: ICETask):
@@ -145,7 +145,7 @@ class ICEPattern:
 
     @classmethod
     def fromState(cls, s: State, task: ICETask) -> ICEPattern:
-        arpg: ARPG = ICEPattern.getARPG(task, s)
+        arpg: ARPG = ICEPattern.getARPG(task, s, avoidRaising=True)
         snapOrder: List[SnapHappeningAction] = arpg.getActionsOrder(enhanced=True)
 
         return ICEPattern.fromOrder([a.originatingHappening for a in snapOrder])
