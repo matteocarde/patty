@@ -55,19 +55,20 @@ class Happening:
     @staticmethod
     def AICEs(b: ICEAction) -> List[Happening]:
 
-        relativeHappenings: Set[Tuple[int, int, Happening]] = set()
+        relativeHappenings: Set[Tuple[float, int, float, Happening]] = set()
         for i, c in enumerate(b.icond):
             t = c.fromTime.absolute(0, b.duration)
+            t_end = c.toTime.absolute(0, b.duration)
             h = HappeningCondition(c, b, i)
-            relativeHappenings.add((t, 0, h))
+            relativeHappenings.add((t, 0, t_end, h))
 
         for i, e in enumerate(b.ieff):
             t = e.time.absolute(0, b.duration)
             h = HappeningEffect(e, b, i)
-            relativeHappenings.add((t, 1, h))
+            relativeHappenings.add((t, 1, 0, h))
 
         sortedRelativeHappenings = sorted(relativeHappenings)
-        return [h for (t, o, h) in sortedRelativeHappenings]
+        return [h for (t, o, t_, h) in sortedRelativeHappenings]
 
     @classmethod
     def PICEs(cls, conditions: TimedConditions, effects: TimedEffects):

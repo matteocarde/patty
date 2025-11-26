@@ -99,7 +99,7 @@ class Effects:
         for eff in self.assignments:
             if not isinstance(eff, BinaryPredicate) or eff.operator not in {"increase"}:
                 continue
-            incrs[eff.lhs] = eff.rhs
+            incrs[eff.lhs.getAtom()] = eff.rhs
         return incrs
 
     def getDecreases(self) -> Dict[Atom, Predicate]:
@@ -107,7 +107,7 @@ class Effects:
         for eff in self.assignments:
             if not isinstance(eff, BinaryPredicate) or eff.operator not in {"decrease"}:
                 continue
-            decrs[eff.lhs] = eff.rhs
+            decrs[eff.lhs.getAtom()] = eff.rhs
         return decrs
 
     def getAssignments(self) -> Dict[Atom, Predicate]:
@@ -115,7 +115,7 @@ class Effects:
         for eff in self.assignments:
             if not isinstance(eff, BinaryPredicate) or eff.operator not in {"="}:
                 continue
-            ass[eff.lhs] = eff.rhs
+            ass[eff.lhs.getAtom()] = eff.rhs
         return ass
 
     def getPredicates(self):

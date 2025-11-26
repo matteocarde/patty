@@ -18,7 +18,7 @@
 		(mend_duration ?f - Fuse)
 	)
 
-	(:durative-action zlight_match
+	(:durative-action light_match
 		:parameters (?m - Match)
 		:duration (= ?duration (light_duration ?m))
 		:condition (and

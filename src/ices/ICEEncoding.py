@@ -288,7 +288,9 @@ class ICEEncoding(Encoding):
                     continue
                 rollingPsi.append(ICEEncoding.getSigmaPsi(sigma_im1, pre, h_i, h))
 
-            rules.append((h_i > 1).implies(SMTExpression.bigand(rollingPsi)))
+            if rollingPsi:
+                print((h_i > 1).implies(SMTExpression.bigand(rollingPsi)))
+                rules.append((h_i > 1).implies(SMTExpression.bigand(rollingPsi)))
 
         return rules
 
