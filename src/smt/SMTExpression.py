@@ -219,6 +219,8 @@ class SMTExpression:
         rules = []
 
         for v, k in s.assignments.items():
+            if v not in current:
+                continue
             if type(k) is bool and k:
                 rules.append(current[v])
             elif type(k) is bool and not k:
