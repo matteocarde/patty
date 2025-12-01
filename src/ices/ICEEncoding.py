@@ -238,14 +238,14 @@ class ICEEncoding(Encoding):
                     if h_b.ending != h_a.starting:
                         continue
                     h_j = hVars[h_b]
-                    bigor.append(h_j > 0)
+                    bigor.append(h_j.equal(h_i))
 
             if h_a.ending:
                 for j, h_b in enumerate(self.pattern[:i]):
                     if h_b.starting != h_a.ending:
                         continue
                     h_j = hVars[h_b]
-                    bigor.append(h_j > 0)
+                    bigor.append(h_j.equal(h_i))
 
             if bigor:
                 rules.append((h_i > 0).implies(SMTExpression.bigor(bigor)))
@@ -289,7 +289,6 @@ class ICEEncoding(Encoding):
                 rollingPsi.append(ICEEncoding.getSigmaPsi(sigma_im1, pre, h_i, h))
 
             if rollingPsi:
-                print((h_i > 1).implies(SMTExpression.bigand(rollingPsi)))
                 rules.append((h_i > 1).implies(SMTExpression.bigand(rollingPsi)))
 
         return rules

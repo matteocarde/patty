@@ -51,6 +51,11 @@ class ICEAction:
     def __str__(self):
         return self.name
 
+    def __lt__(self, other):
+        if not isinstance(other, ICEAction):
+            return False
+        return self.name < other.name
+
     @classmethod
     def fromProperties(cls, name: str, duration: int) -> ICEAction:
         a = cls()
