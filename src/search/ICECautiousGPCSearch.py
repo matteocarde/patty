@@ -89,6 +89,8 @@ class ICECautiousGPCSearch:
                 subgoalsAchieved = subgoalsAchievedNow
                 self.console.log(f"Subgoals achieved: {len(subgoalsAchieved)}/{len(totalSubgoals)}: {subgoalsAchieved}",
                                  LogPrintLevel.STATS)
+                # patF.addPostfix(bound)
+                # patG = patF
                 patG = ICEPattern.fromPlan(plan)
                 patG.addPostfix("G")
                 patH = ICEPattern.fromState(s, self.task)

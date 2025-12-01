@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import copy
-from typing import List, Iterable, Dict
+from typing import List, Iterable, Dict, Set, Tuple
 
 from src.ices.Happening import Happening, HappeningActionStart, HappeningActionEnd, HappeningConditionStart, \
     HappeningConditionEnd, HappeningEffect, HappeningCondition
@@ -140,15 +140,59 @@ class ICEPattern:
 
         arpg: ARPG = ICEPattern.getARPG(task, State.fromInitialCondition(task.init))
         snapOrder: List[SnapHappeningAction] = arpg.getActionsOrder(enhanced=True)
+        pattern = ICEPattern.fromOrder([a.originatingHappening for a in snapOrder])
 
-        return ICEPattern.fromOrder([a.originatingHappening for a in snapOrder])
+        ICEPattern.__setStartingAndEnding(pattern)
+        return pattern
+
+    @staticmethod
+    def __setStartingAndEnding(pattern):
+        starting: Dict[ICEAction, Happening] = dict()
+        ending: Dict[ICEAction, Happening] = dict()
+
+        h: Happening
+        for h in pattern:
+            if not isinstance(h.parent, ICEAction):
+                continue
+            b = h.parent
+            h.starting = None
+            h.ending = None
+            ending[b] = h
+            if b not in starting:
+                starting[b] = h
+                h.starting = b
+
+        for (b, h) in ending.items():
+            h.ending = b
+
+        return
 
     @classmethod
     def fromState(cls, s: State, task: ICETask) -> ICEPattern:
         arpg: ARPG = ICEPattern.getARPG(task, s, avoidRaising=True)
-        snapOrder: List[SnapHappeningAction] = arpg.getActionsOrder(enhanced=True)
 
-        return ICEPattern.fromOrder([a.originatingHappening for a in snapOrder])
+        snapOrder: List[SnapHappeningAction] = arpg.getActionsOrderWithoutUnused(enhanced=True)
+        left: Set[SnapHappeningAction] = arpg.getUnusedActions()
+
+        leftHappenings = dict([(aLeft.originatingHappening, aLeft) for aLeft in left])
+        actions = {aLeft.originatingHappening.parent for aLeft in left}
+        added: Set[Happening] = set()
+
+        for b in actions:
+            if not isinstance(b, ICEAction):
+                continue
+            for H in Happening.AICEs(b):
+                for h in H:
+                    if h in leftHappenings:
+                        snapOrder.append(leftHappenings[h])
+                        del leftHappenings[h]
+
+        snapOrder += [h for h in leftHappenings.keys()]
+        pattern: ICEPattern = ICEPattern.fromOrder([aLeft.originatingHappening for aLeft in snapOrder])
+
+        ICEPattern.__setStartingAndEnding(pattern)
+
+        return pattern
 
     def print(self):
         print("----- Pattern -----")
@@ -164,4 +208,6 @@ class ICEPattern:
 
     @classmethod
     def fromPlan(cls, plan) -> ICEPattern:
-        return ICEPattern.fromOrder([copy.copy(h) for (t, o, h) in sorted(plan.timedHappenings)])
+        pattern = ICEPattern.fromOrder([copy.copy(h) for (t, o, t_e, h) in sorted(plan.timedHappenings)])
+        ICEPattern.__setStartingAndEnding(pattern)
+        return pattern

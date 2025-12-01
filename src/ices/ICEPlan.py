@@ -25,7 +25,7 @@ class ICEPlan:
     task: ICETask
     iconds: Set[IntermediateCondition]
     ieffs: Set[IntermediateEffect]
-    timedHappenings: List[Tuple[float, int, Happening]]
+    timedHappenings: List[Tuple[float, int, float, Happening]]
 
     def __init__(self):
         self.timedHappenings: List[Tuple[float, int, Happening]] = list()
@@ -45,15 +45,16 @@ class ICEPlan:
             mu_t_i: float = solution.getVariable(tVars[h_i])
             mu_t_i_end: float = solution.getVariable(tEndVars[h_i]) if isinstance(h_i, HappeningCondition) else "NA"
             mu_d_i: float = solution.getVariable(dVars[h_i]) if h_i.starting else "NA"
-            #
-            # print(h_i, f"x{mu_h_i}", f"t={mu_t_i}",
-            #       ("starts " + str(h_i.starting)) if h_i.starting else "",
-            #       ("ends " + str(h_i.ending)) if h_i.ending else "",
-            #       f"d={mu_d_i}", f"t_end={mu_t_i_end}")
+
+            if mu_h_i > 0:
+                print(h_i, f"x{mu_h_i}", f"t={mu_t_i}",
+                      ("starts " + str(h_i.starting)) if h_i.starting else "",
+                      ("ends " + str(h_i.ending)) if h_i.ending else "",
+                      f"d={mu_d_i}", f"t_end={mu_t_i_end}")
 
             if mu_h_i:
                 order = 0 if isinstance(h_i, HappeningCondition) else 1
-                plan.timedHappenings.append((mu_t_i, order, h_i))
+                plan.timedHappenings.append((mu_t_i, order, mu_t_i_end, h_i))
 
             if not h_i.starting:
                 continue

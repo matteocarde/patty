@@ -1,6 +1,6 @@
 from __future__ import annotations
 import copy
-from typing import List, Set, Tuple
+from typing import List, Set, Tuple, Dict
 
 from src.ices.ActionIntermediateCondition import ActionIntermediateCondition
 from src.ices.ActionIntermediateEffect import ActionIntermediateEffect
@@ -14,6 +14,7 @@ from src.ices.IntermediateCondition import IntermediateCondition
 from src.ices.IntermediateEffect import IntermediateEffect
 from src.pddl.Effects import Effects
 from src.pddl.Formula import Formula
+from src.utils.Constants import EPSILON
 
 ACTION_START = r"b^\vdash"
 ACTION_END = r"b^\dashv"
@@ -46,6 +47,14 @@ class Happening:
     def __lt__(self, other):
         return True
 
+    def __eq__(self, other):
+        if not isinstance(other, Happening):
+            return False
+        return self.name == other.name
+
+    def __hash__(self):
+        return hash(self.name)
+
     def getPre(self) -> Formula:
         raise NotImplementedError()
 
@@ -53,40 +62,45 @@ class Happening:
         raise NotImplementedError()
 
     @staticmethod
-    def AICEs(b: ICEAction) -> List[Happening]:
+    def AICEs(b: ICEAction) -> List[List[Happening]]:
 
-        relativeHappenings: Set[Tuple[float, int, float, Happening]] = set()
+        timedHappenings: Dict[float, List[Happening]] = dict()
+
         for i, c in enumerate(b.icond):
             t = c.fromTime.absolute(0, b.duration)
-            t_end = c.toTime.absolute(0, b.duration)
             h = HappeningCondition(c, b, i)
-            relativeHappenings.add((t, 0, t_end, h))
+            timedHappenings.setdefault(t, list())
+            timedHappenings[t].append(h)
 
         for i, e in enumerate(b.ieff):
-            t = e.time.absolute(0, b.duration)
+            t = e.time.absolute(0, b.duration) + EPSILON / 2
             h = HappeningEffect(e, b, i)
-            relativeHappenings.add((t, 1, 0, h))
+            timedHappenings.setdefault(t, list())
+            timedHappenings[t].append(h)
 
-        sortedRelativeHappenings = sorted(relativeHappenings)
-        return [h for (t, o, t_, h) in sortedRelativeHappenings]
+        AICEs = [H for (t, H) in sorted(timedHappenings.items())]
+        return AICEs
 
     @classmethod
-    def PICEs(cls, conditions: TimedConditions, effects: TimedEffects):
-        relativeHappenings: Set[Tuple[int, int, Happening]] = set()
+    def PICEs(cls, conditions: TimedConditions, effects: TimedEffects) -> List[List[Happening]]:
+
+        timedHappenings: Dict[float, List[Happening]] = dict()
         c: PlanIntermediateCondition
         for i, c in enumerate(conditions):
             t = c.fromTime.absolute(0, 1000000000)
             h = HappeningCondition(c, c, i)
-            relativeHappenings.add((t, 0, h))
+            timedHappenings.setdefault(t, list())
+            timedHappenings[t].append(h)
 
         e: PlanIntermediateEffect
         for i, e in enumerate(effects):
-            t = e.time.absolute(0, 1000000000)
+            t = e.time.absolute(0, 1000000000) + EPSILON / 2
             h = HappeningEffect(e, e, i)
-            relativeHappenings.add((t, 1, h))
+            timedHappenings.setdefault(t, list())
+            timedHappenings[t].append(h)
 
-        sortedRelativeHappenings = sorted(relativeHappenings)
-        return [h for (t, o, h) in sortedRelativeHappenings]
+        PICEs = [H for (t, H) in sorted(timedHappenings.items())]
+        return PICEs
 
     @staticmethod
     def computeTime(h):

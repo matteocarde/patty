@@ -33,7 +33,7 @@ class ActionRelativeTime(RelativeTime):
 
 class ActionRelativeTimeAnchor(RelativeTimeAnchor):
     START = "S"
-    END = "E"
+    END = "ZE"
 
     def __add__(self, other) -> ActionRelativeTime:
         if not isinstance(other, int) and not isinstance(other, float):

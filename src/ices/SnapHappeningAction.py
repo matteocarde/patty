@@ -1,5 +1,5 @@
 import copy
-from typing import List
+from typing import List, Dict
 
 from src.ices.Happening import Happening
 from src.pddl.Action import Action
@@ -16,12 +16,12 @@ class SnapHappeningAction(Action):
         return f"{self.name} = <{self.preconditions}, {self.effects}>"
 
     @classmethod
-    def fromHappening(cls, h: Happening, execs: List[Literal], i: int):
+    def fromHappening(cls, h: Happening, prev: List[Happening], execs: Dict[Happening, Literal]):
         pre = copy.deepcopy(h.getPre())
-        if i > 0:
-            pre.addClause(execs[i - 1])
+        for p in prev:
+            pre.addClause(execs[p])
         post = copy.deepcopy(h.getPost())
-        post.addEffect(execs[i])
+        post.addEffect(execs[h])
 
         a = Action.fromProperties(h.name, [], pre, post)
         a.__class__ = SnapHappeningAction

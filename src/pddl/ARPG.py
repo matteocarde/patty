@@ -102,6 +102,8 @@ class ARPG:
         layers.append(layerInstant)
         layers.append(layerSnap)
 
+        # print("Left actions", {a.name for a in leftActions})
+
         order = list()
         for i, layer in enumerate(layers):
             if enhanced:
@@ -111,6 +113,36 @@ class ARPG:
                 order += sorted(layer)
 
         return order
+
+    def getActionsOrderAndLeft(self, enhanced):
+        layers = copy.copy(self.layers)
+        leftActions = set(self.actions) - self.usedActions
+
+        order = list()
+        for i, layer in enumerate(layers):
+            if enhanced:
+                sortedLayer = PatternActionGraph(layer).getSorted()
+                order += sortedLayer
+            else:
+                order += sorted(layer)
+
+        return order, leftActions
+
+    def getActionsOrderWithoutUnused(self, enhanced):
+        layers = copy.copy(self.layers)
+
+        order = list()
+        for i, layer in enumerate(layers):
+            if enhanced:
+                sortedLayer = PatternActionGraph(layer).getSorted()
+                order += sortedLayer
+            else:
+                order += sorted(layer)
+
+        return order
+
+    def getUnusedActions(self):
+        return set(self.actions) - self.usedActions
 
     def getConstantAtoms(self) -> Dict[Atom, float or bool]:
         if len(self.stateLevels) < 2:

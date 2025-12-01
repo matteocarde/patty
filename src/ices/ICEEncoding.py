@@ -443,6 +443,7 @@ class ICEEncoding(Encoding):
                     pass
                 if isinstance(h_a, HappeningEffect) and isinstance(h_b, HappeningEffect):
                     rules.append(((h_i > 0) & (h_j > 0)).implies(t_j >= t_i + EPSILON))
+                    pass
                 if isinstance(h_a, HappeningEffect) and isinstance(h_b, HappeningCondition):
                     cond = h_b.condition.conditions
                     rules.append(((h_i > 0) & (h_j > 0) & ~SMTExpression.fromFormula(cond, sigmas_im1))
@@ -498,17 +499,18 @@ class ICEEncoding(Encoding):
 
             asgnx = None
             deltax = []
-            for h in AICEs:
-                incrs = h.getPost().getIncreases()
-                decrs = h.getPost().getDecreases()
-                asgns = h.getPost().getAssignments()
-                if x in incrs:
-                    deltax.append(SMTExpression.fromPddl(incrs[x], sigmas))
-                if x in decrs:
-                    deltax.append(-SMTExpression.fromPddl(decrs[x], sigmas))
-                deltax.append(0)
-                if x in asgns:
-                    asgnx = SMTExpression.fromPddl(asgns[x], sigmas)
+            for H in AICEs:
+                for h in H:
+                    incrs = h.getPost().getIncreases()
+                    decrs = h.getPost().getDecreases()
+                    asgns = h.getPost().getAssignments()
+                    if x in incrs:
+                        deltax.append(SMTExpression.fromPddl(incrs[x], sigmas))
+                    if x in decrs:
+                        deltax.append(-SMTExpression.fromPddl(decrs[x], sigmas))
+                    deltax.append(0)
+                    if x in asgns:
+                        asgnx = SMTExpression.fromPddl(asgns[x], sigmas)
 
             if asgnx:
                 replacements[x] = asgnx
