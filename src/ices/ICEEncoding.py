@@ -115,6 +115,9 @@ class ICEEncoding(Encoding):
         if orGoals:
             rules.append(SMTExpression.bigor(orGoals))
 
+        for r in rules:
+            print(r)
+
         return rules
 
     def __getDomainRules(self) -> SMTConjunction:
@@ -148,6 +151,9 @@ class ICEEncoding(Encoding):
 
         for x in self.task.numVariables:
             rules.append(self.transVars.nextVariables[x].equal(self.transVars.sigmaExpressions[self.k][x]))
+
+        for r in rules:
+            print(r)
 
         return rules
 

@@ -87,8 +87,9 @@ class ICECautiousGPCSearch:
 
             if plan and len(subgoalsAchievedNow) > len(subgoalsAchieved):
                 subgoalsAchieved = subgoalsAchievedNow
-                self.console.log(f"Subgoals achieved: {len(subgoalsAchieved)}/{len(totalSubgoals)}: {subgoalsAchieved}",
-                                 LogPrintLevel.STATS)
+                self.console.log(
+                    f"Subgoals achieved at bound {bound}: {len(subgoalsAchieved)}/{len(totalSubgoals)}: {subgoalsAchieved}",
+                    LogPrintLevel.STATS)
                 # patF.addPostfix(bound)
                 # patG = patF
                 patG = ICEPattern.fromPlan(plan)

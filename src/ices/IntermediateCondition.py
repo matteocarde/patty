@@ -13,6 +13,7 @@ from src.pddl.Atom import Atom
 from src.pddl.Formula import Formula
 from src.pddl.Predicate import Predicate
 from src.pddl.TimePredicate import TimePredicate, TimePredicateType
+from src.utils.Constants import EPSILON
 from src.utils.Tuplable import Tuplable
 
 
@@ -72,7 +73,13 @@ class IntermediateCondition(Tuplable):
         from src.ices.ICEAction import START, END
         ic = cls()
         ic.fromTime = START + 0 if type in {TimePredicateType.AT_START, TimePredicateType.OVER_ALL} else END - 0
-        ic.toTime = END - 0 if type in {TimePredicateType.AT_END, TimePredicateType.OVER_ALL} else START + 0
+        if type == TimePredicateType.AT_END:
+            ic.toTime = END - 0
+        elif type == TimePredicateType.OVER_ALL:
+            ic.toTime = END - EPSILON
+        else:
+            ic.toTime = START + 0
+        # ic.toTime = END - 0 if type in {TimePredicateType.AT_END, TimePredicateType.OVER_ALL} else START + 0
         for tp in tps:
             ic.addCondition(tp.subPredicate)
         return ic

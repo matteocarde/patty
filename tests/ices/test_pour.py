@@ -21,9 +21,9 @@ class TestPourToICEs(TestCase):
 
     def setUp(self) -> None:
         folder = "../../files/temporal/bottles-pour"
-        problem = "problem_4_3_1"
-        self.domain: Domain = Domain.fromFile(f"./domain.pddl")
-        self.problem: Problem = Problem.fromFile(f"./{problem}.pddl")
+        problem = "problem_2_1_1"
+        self.domain: Domain = Domain.fromFile(f"{folder}/domain.pddl")
+        self.problem: Problem = Problem.fromFile(f"{folder}/instances/{problem}.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.args = Arguments(keepRequired=False)
         self.args.printPattern = True
@@ -34,7 +34,7 @@ class TestPourToICEs(TestCase):
 
         pattern = ICEPattern.fromSnap(task)
         print(pattern)
-        bound = 2
+        bound = 3
 
         if bound > 1:
             pattern = pattern.multiply(bound)

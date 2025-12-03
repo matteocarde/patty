@@ -13,8 +13,6 @@
 	(:goal
 		(and
 			(= (litres r1) 6)
-			(not (capped l1))
-			(not (capped r1))
 		)
 	)
 )

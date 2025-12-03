@@ -13,7 +13,7 @@ class Z3SolverAndOptimizer:
 
     def __init__(self):
         self.optimizer: Optimize = Optimize()
-        self.optimizer.set("opt.priority", "lex")
+        # self.optimizer.set("opt.priority", "lex")
 
         self.solver: Solver = Solver("z3",
                                      logic=QF_LRA,

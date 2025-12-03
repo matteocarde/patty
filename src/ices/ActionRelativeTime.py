@@ -50,5 +50,5 @@ class ActionRelativeTimeAnchor(RelativeTimeAnchor):
 
         rt = ActionRelativeTime()
         rt.anchor = self
-        rt.k = - other
+        rt.k = other
         return rt
