@@ -17,10 +17,10 @@ class SnapHappeningAction(Action):
 
     @classmethod
     def fromHappening(cls, h: Happening, prev: List[Happening], execs: Dict[Happening, Literal]):
-        pre = copy.deepcopy(h.getPre())
+        pre = copy.deepcopy(h.conditions)
         for p in prev:
             pre.addClause(execs[p])
-        post = copy.deepcopy(h.getPost())
+        post = copy.deepcopy(h.effects)
         post.addEffect(execs[h])
 
         a = Action.fromProperties(h.name, [], pre, post)

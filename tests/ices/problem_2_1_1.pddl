@@ -2,11 +2,9 @@
 (:domain bottles)
 	(:objects
 		 l1 - bottleleft
-		 r1 - bottleright
+		 r1 r2 - bottleright
 	)
 	(:init
-		(= (x l1) 0)
-		(= (x r1) 0)
 		(= (litres l1) 6)
 		(= (litres r1) 0)
 		(capped l1)

@@ -20,10 +20,10 @@ from src.utils.Arguments import Arguments
 class TestPourToICEs(TestCase):
 
     def setUp(self) -> None:
-        folder = "../../files/temporal/bottles-pour"
-        problem = "problem_2_1_1"
+        folder = "./pour"
+        problem = "problem_7_1_6"
         self.domain: Domain = Domain.fromFile(f"{folder}/domain.pddl")
-        self.problem: Problem = Problem.fromFile(f"{folder}/instances/{problem}.pddl")
+        self.problem: Problem = Problem.fromFile(f"{folder}/{problem}.pddl")
         self.gDomain: GroundedDomain = self.domain.ground(self.problem)
         self.args = Arguments(keepRequired=False)
         self.args.printPattern = True
@@ -33,8 +33,8 @@ class TestPourToICEs(TestCase):
         task: ICETask = ICETask.fromTemporalNoICEs(self.gDomain, self.problem)
 
         pattern = ICEPattern.fromSnap(task)
-        print(pattern)
-        bound = 3
+        pattern.print()
+        bound = 1
 
         if bound > 1:
             pattern = pattern.multiply(bound)

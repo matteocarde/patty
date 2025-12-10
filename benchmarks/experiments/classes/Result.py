@@ -64,7 +64,7 @@ class Result(dict):
             r.boolVariables = int(csvLine[12])
             r.numVariables = int(csvLine[13])
             r.actions = int(csvLine[14])
-        if len(csvLine) > 14:
+        if len(csvLine) > 16:
             r.patternLength = int(csvLine[15])
             r.maxRolling = int(csvLine[16])
             r.distinctActionsInPlan = int(csvLine[17])

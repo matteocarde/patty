@@ -14,6 +14,7 @@ from src.ices.IntermediateCondition import IntermediateCondition
 from src.ices.IntermediateEffect import IntermediateEffect
 from src.pddl.Effects import Effects
 from src.pddl.Formula import Formula
+from src.pddl.Preconditions import Preconditions
 from src.utils.Constants import EPSILON
 
 ACTION_START = r"b^\vdash"
@@ -31,11 +32,15 @@ class Happening:
     ending: ICEAction or None
     parent: ICEAction or PlanIntermediateCondition or PlanIntermediateEffect
     original: IntermediateCondition or IntermediateEffect
+    conditions: Formula
+    effects: Effects
 
-    def __init__(self):
+    def __init__(self, conditions: Formula, effects: Effects):
         self.cluster = ""
         self.starting = None
         self.ending = None
+        self.conditions = conditions
+        self.effects = effects
         pass
 
     def __repr__(self):
@@ -45,7 +50,9 @@ class Happening:
         return self.name
 
     def __lt__(self, other):
-        return True
+        if not isinstance(other, Happening):
+            return False
+        return self.name < other.name
 
     def __eq__(self, other):
         if not isinstance(other, Happening):
@@ -62,24 +69,43 @@ class Happening:
         raise NotImplementedError()
 
     @staticmethod
+    def __ICEs(conditions, effects, parent, duration):
+        TH: Dict[float, List[Happening]] = dict()
+
+        toJoin: Dict[float, Happening] = dict()
+
+        c: ActionIntermediateCondition
+        for i, c in enumerate(conditions):
+            t_start = c.fromTime.absolute(0, duration)
+            t_end = c.toTime.absolute(0, duration)
+            p = parent if parent else c
+            h = HappeningCondition(c, p, i)
+            # TH.add(th)
+            if t_start == t_end:
+                assert t_start not in toJoin
+                toJoin[t_start] = h
+            TH.setdefault(t_start, list())
+            TH[t_start].append(h)
+
+        e: ActionIntermediateEffect
+        for i, e in enumerate(effects):
+            t = e.time.absolute(0, duration)
+            p = parent if parent else e
+            h = HappeningEffect(e, p, i, toJoin[t].conditions) if t in toJoin else HappeningEffect(e, p, i, Formula())
+            # h = HappeningEffect(toJoin[t].conditions, e.effects) if t in toJoin else Happening(Formula(), e.effects)
+            TH.setdefault(t, list())
+            TH[t].append(h)
+
+        ICEs = [H for (t, H) in sorted(TH.items())]
+        return ICEs
+
+    @staticmethod
     def AICEs(b: ICEAction) -> List[List[Happening]]:
+        return Happening.__ICEs(b.icond, b.ieff, b, b.duration)
 
-        timedHappenings: Dict[float, List[Happening]] = dict()
-
-        for i, c in enumerate(b.icond):
-            t = c.fromTime.absolute(0, b.duration)
-            h = HappeningCondition(c, b, i)
-            timedHappenings.setdefault(t, list())
-            timedHappenings[t].append(h)
-
-        for i, e in enumerate(b.ieff):
-            t = e.time.absolute(0, b.duration) + EPSILON / 2
-            h = HappeningEffect(e, b, i)
-            timedHappenings.setdefault(t, list())
-            timedHappenings[t].append(h)
-
-        AICEs = [H for (t, H) in sorted(timedHappenings.items())]
-        return AICEs
+    @staticmethod
+    def PICEs(cls, conditions: TimedConditions, effects: TimedEffects) -> List[List[Happening]]:
+        return Happening.__ICEs(conditions, effects, None, 10000000)
 
     @classmethod
     def PICEs(cls, conditions: TimedConditions, effects: TimedEffects) -> List[List[Happening]]:
@@ -104,14 +130,14 @@ class Happening:
 
     @staticmethod
     def computeTime(h):
-        if isinstance(h, HappeningCondition) and isinstance(h.condition, ActionIntermediateCondition):
+        if isinstance(h.condition, ActionIntermediateCondition):
             assert isinstance(h.parent, ICEAction)
             cond = h.condition
             anchor = cond.fromTime.anchor if isinstance(h, HappeningConditionStart) else cond.toTime.anchor
             time = 0 if anchor == ActionRelativeTimeAnchor.START else h.parent.duration
             k = h.condition.fromTime.k
             return time + k
-        elif isinstance(h, HappeningEffect) and isinstance(h.effect, ActionIntermediateEffect):
+        elif isinstance(h.effect, ActionIntermediateEffect):
             assert isinstance(h.parent, ICEAction)
             time = 0 if h.effect.time.anchor == ActionRelativeTimeAnchor.START else h.parent.duration
             k = h.effect.time.k
@@ -154,7 +180,7 @@ class HappeningCondition(Happening):
     parent: ICEAction or TimedConditions
 
     def __init__(self, condition: IntermediateCondition, parent: ICEAction or PlanIntermediateCondition, index: int):
-        super().__init__()
+        super().__init__(condition.conditions, Effects())
         self.condition = condition
         self.original = condition
         self.parent = parent
@@ -201,8 +227,12 @@ class HappeningEffect(Happening):
     effect: IntermediateEffect
     parent: ICEAction or TimedEffects
 
-    def __init__(self, effect: IntermediateEffect, parent: ICEAction or TimedEffects, index: int):
-        super().__init__()
+    def __init__(self,
+                 effect: IntermediateEffect,
+                 parent: ICEAction or TimedEffects,
+                 index: int,
+                 condition: Formula):
+        super().__init__(condition, effect.effects)
         self.effect = effect
         self.original = effect
         self.parent = parent

@@ -1,8 +1,7 @@
 from typing import List, Dict, Set
 import time
 
-from src.ices.Happening import HappeningActionStart, HappeningActionEnd, HappeningEffect, HappeningConditionStart, \
-    HappeningConditionEnd, HappeningAction, HappeningCondition, Happening
+from src.ices.Happening import HappeningEffect, HappeningCondition, Happening
 from src.ices.ICEAction import ICEAction
 from src.ices.ICEActionStartEndPair import ICEActionStartEndPair
 from src.ices.ICEConditionStartEndPair import ICEConditionStartEndPair
@@ -115,9 +114,6 @@ class ICEEncoding(Encoding):
         if orGoals:
             rules.append(SMTExpression.bigor(orGoals))
 
-        for r in rules:
-            print(r)
-
         return rules
 
     def __getDomainRules(self) -> SMTConjunction:
@@ -152,8 +148,6 @@ class ICEEncoding(Encoding):
         for x in self.task.numVariables:
             rules.append(self.transVars.nextVariables[x].equal(self.transVars.sigmaExpressions[self.k][x]))
 
-        for r in rules:
-            print(r)
 
         return rules
 
@@ -435,6 +429,8 @@ class ICEEncoding(Encoding):
 
                 if h_a.parent == h_b.parent:
                     continue
+
+                print(f"{h_a} in mutex with {h_b}")
 
                 h_i = hVars[h_a]
                 h_j = hVars[h_b]

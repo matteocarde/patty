@@ -1,21 +1,12 @@
-import copy
 from typing import Set
 
 from src.ices.ICEEncoding import ICEEncoding
 from src.ices.ICEPattern import ICEPattern
 from src.ices.ICEPlan import ICEPlan
 from src.ices.ICETask import ICETask
-from src.pddl.Domain import GroundedDomain
 from src.pddl.Formula import Formula
-from src.pddl.NumericPlan import NumericPlan
-from src.pddl.Plan import Plan
 from src.pddl.Predicate import Predicate
-from src.pddl.Problem import Problem
 from src.pddl.State import State
-from src.plan.NumericEncoding import NumericEncoding
-from src.plan.Pattern import Pattern
-from src.plan.TemporalEncoding import TemporalEncoding
-from src.search.Search import Search
 from src.smt.SMTSolver import SMTSolver
 from src.utils.Arguments import Arguments
 from src.utils.LogPrint import LogPrintLevel, LogPrint
@@ -90,8 +81,6 @@ class ICECautiousGPCSearch:
                 self.console.log(
                     f"Subgoals achieved at bound {bound}: {len(subgoalsAchieved)}/{len(totalSubgoals)}: {subgoalsAchieved}",
                     LogPrintLevel.STATS)
-                # patF.addPostfix(bound)
-                # patG = patF
                 patG = ICEPattern.fromPlan(plan)
                 patG.addPostfix("G")
                 patH = ICEPattern.fromState(s, self.task)
