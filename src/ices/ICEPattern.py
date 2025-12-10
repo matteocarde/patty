@@ -171,7 +171,7 @@ class ICEPattern:
     def fromState(cls, s: State, task: ICETask) -> ICEPattern:
         arpg: ARPG = ICEPattern.getARPG(task, s, avoidRaising=True)
 
-        snapOrder: List[SnapHappeningAction] = arpg.getActionsOrderWithoutUnused(enhanced=True)
+        snapOrder: List[SnapHappeningAction] = arpg.getActionsOrderWithoutUnused(enhanced=False)
         left: Set[SnapHappeningAction] = arpg.getUnusedActions()
 
         leftHappenings = dict([(aLeft.originatingHappening, aLeft) for aLeft in left])
@@ -209,6 +209,6 @@ class ICEPattern:
     @classmethod
     def fromPlan(cls, plan) -> ICEPattern:
         # print(plan.timedHappenings)
-        pattern = ICEPattern.fromOrder([copy.copy(h) for (t, o, t_e, h) in sorted(plan.timedHappenings)])
+        pattern = ICEPattern.fromOrder([copy.copy(h) for (t, h, o, t_e) in sorted(plan.timedHappenings)])
         ICEPattern.__setStartingAndEnding(pattern)
         return pattern

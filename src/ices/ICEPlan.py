@@ -25,10 +25,10 @@ class ICEPlan:
     task: ICETask
     iconds: Set[IntermediateCondition]
     ieffs: Set[IntermediateEffect]
-    timedHappenings: List[Tuple[float, int, float, Happening]]
+    timedHappenings: List[Tuple[float, Happening, int, float]]
 
     def __init__(self):
-        self.timedHappenings: List[Tuple[float, int, Happening]] = list()
+        self.timedHappenings: List[Tuple[float, Happening, int, float]] = list()
         self.timedActions = TimedICEActionList()
 
     @classmethod
@@ -54,7 +54,7 @@ class ICEPlan:
 
             if mu_h_i:
                 order = 0 if isinstance(h_i, HappeningCondition) else 1
-                plan.timedHappenings.append((mu_t_i, order, mu_t_i_end, h_i))
+                plan.timedHappenings.append((mu_t_i, h_i, order, mu_t_i_end))
 
             if not h_i.starting:
                 continue

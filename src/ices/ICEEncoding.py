@@ -430,8 +430,6 @@ class ICEEncoding(Encoding):
                 if h_a.parent == h_b.parent:
                     continue
 
-                print(f"{h_a} in mutex with {h_b}")
-
                 h_i = hVars[h_a]
                 h_j = hVars[h_b]
                 sigmas_im1 = sigmas[i - 1]
