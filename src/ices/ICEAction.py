@@ -4,6 +4,7 @@ from typing import List, Set, Tuple, Dict
 
 from unified_planning.model.action import DurativeAction as UPDurativeAction
 
+from src.pddl.Action import Action
 from src.utils.Constants import EPSILON
 from src.ices.ActionIntermediateCondition import ActionIntermediateCondition
 from src.ices.ActionIntermediateEffect import ActionIntermediateEffect
@@ -97,6 +98,21 @@ class ICEAction:
     def isWellOrderable(self):
         return True
 
+
+    @classmethod
+    def fromSnapActionNOICEs(cls, action: Action):
+        iceAction = cls()
+        iceAction.name = action.name
+        iceAction.originalName = action.originalName
+        iceAction.duration = 0
+        ic = ActionIntermediateCondition.fromProperties(START + 0, START + 0)
+        ic.conditions = action.preconditions
+        iceAction.icond.append(ic)
+        ie = ActionIntermediateEffect.fromProperties(START + 0)
+        ie.effects = action.effects
+        iceAction.ieff.append(ie)
+        return iceAction
+
     @classmethod
     def fromDurativeActionNOICEs(cls, action: DurativeAction):
         iceAction = cls()
@@ -186,3 +202,4 @@ class ICEAction:
         name = splitted[0]
         params = "_".join([x.strip().replace("-", "_") for x in splitted[1][:-1].split(",")])
         return f"{name}_{params}"
+

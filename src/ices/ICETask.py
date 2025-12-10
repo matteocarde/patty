@@ -10,12 +10,15 @@ from unified_planning.shortcuts import Compiler
 from src.ices.ICEAction import ICEAction
 from src.ices.TimedConditions import TimedConditions
 from src.ices.TimedEffects import TimedEffects
+from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.Domain import GroundedDomain
+from src.pddl.DurativeAction import DurativeAction
 from src.pddl.Goal import Goal
 from src.pddl.InitialCondition import InitialCondition
 from src.pddl.Literal import Literal
 from src.pddl.Problem import Problem
+from src.pddl.SnapAction import SnapAction
 
 
 class ICETask:
@@ -71,12 +74,16 @@ class ICETask:
         task.init.setNotSpecifiedAsFalse(task.propVariables)
         task.goal = problem.goal
 
-        action: ICEAction
+        action: DurativeAction
         for action in domain.durativeActions:
             task.addAction(ICEAction.fromDurativeActionNOICEs(action))
+        action: Action
+        for action in domain.actions:
+            if isinstance(action, SnapAction):
+                continue
+            task.addAction(ICEAction.fromSnapActionNOICEs(action))
 
         return task
-
 
     @classmethod
     def fromANML(cls, domainFile, problemFile):
@@ -154,4 +161,3 @@ class ICETask:
             df.write(self.getANMLDomain())
         with open(problemFile, "w") as pf:
             pf.write(self.getANMLProblem())
-
