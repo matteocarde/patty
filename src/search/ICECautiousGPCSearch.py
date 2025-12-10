@@ -77,6 +77,9 @@ class ICECautiousGPCSearch:
                 return plan
 
             if plan and len(subgoalsAchievedNow) > len(subgoalsAchieved):
+                print("---- Partial Plan ----")
+                plan.print()
+
                 subgoalsAchieved = subgoalsAchievedNow
                 self.console.log(
                     f"Subgoals achieved at bound {bound}: {len(subgoalsAchieved)}/{len(totalSubgoals)}: {subgoalsAchieved}",
