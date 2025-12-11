@@ -31,7 +31,7 @@ class SMTSolver:
 
         if self.encoding:
             t = TimeStat.startHolder("Adding assertions")
-            self.addAssertions(self.encoding.rules)
+            self.addAssertions(self.encoding.rules, solver=False, optimizer=True)
             # self.addAssertions(self.encoding.rules, solver=True, optimizer=False)
             t.endHolder()
             self.addSoftAssertions(self.encoding.softRules)
@@ -51,7 +51,7 @@ class SMTSolver:
             self.solver.push()
 
     def addAssertions(self, exprs: [SMTExpression], push=True, solver=True, optimizer=True):
-        for expr in exprs:
+        for i, expr in enumerate(exprs):
             self.addAssertion(expr, push=False, solver=solver, optimizer=optimizer)
 
         if push:

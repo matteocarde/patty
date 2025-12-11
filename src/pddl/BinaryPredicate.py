@@ -395,6 +395,7 @@ class BinaryPredicate(Predicate):
             bp.type = BinaryPredicateType.MODIFICATION
         else:
             bp.type = BinaryPredicateType.OPERATION
+
         bp.operator = UP2OPERATOR[type] if not isNot else UP2OPERATOR[OperatorKind.NOT]
 
         if isinstance(n, FNode):
@@ -403,8 +404,17 @@ class BinaryPredicate(Predicate):
             bp.rhs = Predicate.fromUnifiedPlanning(n.args[1], atomDict)
 
         if isinstance(n, Effect):
-            bp.lhs = Predicate.fromUnifiedPlanning(n.fluent, atomDict)
-            bp.rhs = Predicate.fromUnifiedPlanning(n.value, atomDict)
+
+            lhs = n.fluent
+            rhs = n.value
+            t = n.value.node_type
+
+            if (t == OperatorKind.PLUS or t == OperatorKind.MINUS) and n.value.args[0] == n.fluent:
+                rhs = n.value.args[1]
+                bp.operator = "increase" if t == OperatorKind.PLUS else "decrease"
+
+            bp.lhs = Predicate.fromUnifiedPlanning(lhs, atomDict)
+            bp.rhs = Predicate.fromUnifiedPlanning(rhs, atomDict)
 
         return bp
 

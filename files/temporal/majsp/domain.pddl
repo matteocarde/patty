@@ -93,9 +93,9 @@
 			(at start (not (position-free ?p)))
 			(at start (not (robot-has ?r ?b)))
 			(at end (pallet-at ?b ?p))
+			(at end (robot-free ?r))
 			(at start (unload_started ?b ?p ?t))
 			(at end (unload_ended ?b ?p ?t))
-			(at end (robot-free ?r))
 		)
 	)
 
