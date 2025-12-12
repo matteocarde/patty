@@ -64,7 +64,10 @@ class Formula:
 
     def __add__(self, other):
         c = Formula()
-        c.conditions = self.conditions + other
+        if isinstance(other, Formula):
+            c.conditions = self.conditions + other.conditions
+        else:
+            c.conditions = self.conditions + other
         return c
 
     def __len__(self):

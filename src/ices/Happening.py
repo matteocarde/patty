@@ -39,8 +39,8 @@ class Happening:
         self.cluster = ""
         self.starting = None
         self.ending = None
-        self.conditions = conditions
-        self.effects = effects
+        self.snapConditions = conditions
+        self.snapEffects = effects
         pass
 
     def __repr__(self):
@@ -84,6 +84,8 @@ class Happening:
             if t_start == t_end:
                 assert t_start not in toJoin
                 toJoin[t_start] = h
+            elif t_start in toJoin:
+                h.snapConditions += toJoin[t_start].snapConditions
             TH.setdefault(t_start, list())
             TH[t_start].append(h)
 
@@ -91,7 +93,8 @@ class Happening:
         for i, e in enumerate(effects):
             t = e.time.absolute(0, duration)
             p = parent if parent else e
-            h = HappeningEffect(e, p, i, toJoin[t].conditions) if t in toJoin else HappeningEffect(e, p, i, Formula())
+            h = HappeningEffect(e, p, i, toJoin[t].snapConditions) if t in toJoin else HappeningEffect(e, p, i,
+                                                                                                       Formula())
             # h = HappeningEffect(toJoin[t].conditions, e.effects) if t in toJoin else Happening(Formula(), e.effects)
             TH.setdefault(t, list())
             TH[t].append(h)
@@ -189,7 +192,7 @@ class HappeningCondition(Happening):
         self.name = f"{parentName}[{condition.fromTime}, {condition.toTime}]"
 
     def getPre(self):
-        return self.condition.conditions
+        return self.snapConditions
 
     def getPost(self):
         return Effects()
@@ -242,10 +245,10 @@ class HappeningEffect(Happening):
         self.name = f"{parentName}[{effect.time}]"
 
     def getPre(self):
-        return Formula()
+        return self.snapConditions
 
     def getPost(self):
-        return self.effect.effects
+        return self.snapEffects
 
     def inMutexWith(self, h: Happening) -> bool:
         if isinstance(h, HappeningCondition):

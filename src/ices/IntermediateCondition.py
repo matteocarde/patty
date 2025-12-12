@@ -72,7 +72,14 @@ class IntermediateCondition(Tuplable):
     def fromTimePredicateSet(cls, type: TimePredicateType, tps: Set[TimePredicate]):
         from src.ices.ICEAction import START, END
         ic = cls()
-        ic.fromTime = START + 0 if type in {TimePredicateType.AT_START, TimePredicateType.OVER_ALL} else END - 0
+
+        if type == TimePredicateType.AT_START:
+            ic.fromTime = START + 0
+        elif type == TimePredicateType.OVER_ALL:
+            ic.fromTime = START + EPSILON
+        else:
+            ic.fromTime = END - 0
+
         if type == TimePredicateType.AT_END:
             ic.toTime = END - 0
         elif type == TimePredicateType.OVER_ALL:

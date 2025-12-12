@@ -32,8 +32,6 @@ class SnapTask(GroundedDomain):
         for b in task.actions:
             self.execsAction[b] = dict()
             AICEs = Happening.AICEs(b)
-            # AICEs[0][0].starting = b
-            # AICEs[-1][-1].ending = b
             for i, H in enumerate(AICEs):
                 prev = AICEs[i-1] if i > 0 else list()
                 for h in H:

@@ -161,22 +161,22 @@ class ICEPlan:
 
                     # 2.a
                     if i == 0 and t_s == t:
-                        ValAssert(s.satisfies(cond), f"Rule 2.a - \n{s} \nshould satisfy \n{cond} in [{t_s}, {t_e}]")
+                        ValAssert(s.satisfies(cond), f"Rule 2.a - \n{s} [{t}] \nshould satisfy \n{cond} in [{t_s}, {t_e}]")
                         checked = True
 
                     # 2.b
                     if i < m and (t < t_s <= t_ or t < t_e <= t_):
-                        ValAssert(s.satisfies(cond), f"Rule 2.b - \n{s} \nshould satisfy \n{cond} in [{t_s}, {t_e}]")
+                        ValAssert(s.satisfies(cond), f"Rule 2.b - \n{s} [{t}] \nshould satisfy \n{cond} in [{t_s}, {t_e}]")
                         checked = True
 
                     # 2.c
                     if t_s < t < t_e:
-                        ValAssert(s.satisfies(cond), f"Rule 1.c - \n{s} \nshould satisfy \n{cond} in [{t_s}, {t_e}]")
+                        ValAssert(s.satisfies(cond), f"Rule 2.c - \n{s} [{t}] \nshould satisfy \n{cond} in [{t_s}, {t_e}]")
                         checked = True
 
                     # 2.d
                     if i == m and t < t_s:
-                        ValAssert(s.satisfies(cond), f"Rule 1.d - \n{s} \nshould satisfy \n{cond}")
+                        ValAssert(s.satisfies(cond), f"Rule 2.d - \n{s} [{t}] \nshould satisfy \n{cond}")
                         checked = True
 
                 assert checked

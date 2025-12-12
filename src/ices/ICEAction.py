@@ -105,13 +105,19 @@ class ICEAction:
         iceAction = cls()
         iceAction.name = action.name
         iceAction.originalName = action.originalName
-        iceAction.duration = 0
+        iceAction.duration = 1
         ic = ActionIntermediateCondition.fromProperties(START + 0, START + 0)
-        ic.conditions = action.preconditions
+        iceAction.icond.append(ActionIntermediateCondition.fromProperties(END - 0, END - 0))
+        # ic.conditions = action.preconditions
+        for c in action.preconditions:
+            ic.addCondition(c)
         iceAction.icond.append(ic)
         ie = ActionIntermediateEffect.fromProperties(START + 0)
-        ie.effects = action.effects
+        for e in action.effects:
+            ie.addEffect(e)
         iceAction.ieff.append(ie)
+        iceAction.ieff.append(ActionIntermediateEffect.fromProperties(END - 0))
+        iceAction.isSnap = True
         return iceAction
 
     @classmethod

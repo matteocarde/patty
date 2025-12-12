@@ -10,6 +10,7 @@
 		(and
 			(packed b1)
 			(packed b2)
+		; (= (on-platform) 0)
 			(packed b3)
 			(packed b4)
 		)

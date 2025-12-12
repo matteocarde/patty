@@ -37,7 +37,7 @@ class ICEEncoding(Encoding):
         self.pattern: ICEPattern = pattern
         self.subgoalsAchieved: Set[
             Formula or Predicate] = subgoalsAchieved if subgoalsAchieved is not None else set(self.task.goal.conditions)
-        # self.pattern.pattern = self.pattern.pattern[3:11]
+
         t = TimeStat.startHolder("Getting actions start and end pairs ")
         self.actionsStartEndPairs = self.pattern.getActionsStartEndPairs()
         t.endHolder()
@@ -140,7 +140,6 @@ class ICEEncoding(Encoding):
 
         for x in self.task.numVariables:
             rules.append(self.transVars.nextVariables[x].equal(self.transVars.sigmaExpressions[self.k][x]))
-
 
         return rules
 
@@ -283,6 +282,9 @@ class ICEEncoding(Encoding):
 
             if rollingPsi:
                 rules.append((h_i > 1).implies(SMTExpression.bigand(rollingPsi)))
+
+        for r in rules:
+            print(r)
 
         return rules
 
@@ -438,8 +440,9 @@ class ICEEncoding(Encoding):
                     pass
                 if isinstance(h_a, HappeningEffect) and isinstance(h_b, HappeningCondition):
                     cond = h_b.condition.conditions
-                    rules.append(((h_i > 0) & (h_j > 0) & ~SMTExpression.fromFormula(cond, sigmas_im1))
-                                 .implies(t_j >= t_i + EPSILON))
+                    r = ((h_i > 0) & (h_j > 0) & ~SMTExpression.fromFormula(cond, sigmas_im1)).implies(
+                        t_j >= t_i + EPSILON)
+                    rules.append(r)
 
                 if isinstance(h_a.parent, ICEAction) and h_a.parent != h_b.parent:
                     b = h_a.parent
