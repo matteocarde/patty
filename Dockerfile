@@ -38,10 +38,10 @@ ARG PATH="/root/miniconda3/bin:${PATH}"
 
 RUN apt-get install -y wget && rm -rf /var/lib/apt/lists/*
 
-RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+RUN wget https://repo.anaconda.com/miniconda/Miniconda3-py311_25.7.0-2-Linux-x86_64.sh
 RUN mkdir /root/.conda
-RUN bash Miniconda3-latest-Linux-x86_64.sh -b
-RUN rm -f Miniconda3-latest-Linux-x86_64.sh
+RUN bash Miniconda3-py311_25.7.0-2-Linux-x86_64.sh -b
+RUN rm -f Miniconda3-py311_25.7.0-2-Linux-x86_64.sh
 RUN conda --version
 RUN conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main
 RUN conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r
