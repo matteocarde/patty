@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import decimal
+import math
 import traceback
 from typing import List, Set, Dict, Tuple
 
@@ -148,15 +149,15 @@ class ICEPlan:
 
         try:
             for icond in self.iconds:
-                t_s = round(icond.fromTime / EPSILON)
-                t_e = round(icond.toTime / EPSILON)
+                t_s = math.ceil(icond.fromTime / EPSILON)
+                t_e = math.ceil(icond.toTime / EPSILON)
                 cond = icond.conditions
 
                 checked = False
                 for i in range(0, len(states)):
-                    t = round(states[i].time / EPSILON)
+                    t = math.ceil(states[i].time / EPSILON)
                     s = states[i].state
-                    t_ = round(states[i + 1].time / EPSILON) if i < m else None
+                    t_ = math.ceil(states[i + 1].time / EPSILON) if i < m else None
 
                     # 2.a
                     if i == 0 and t_s == t:
