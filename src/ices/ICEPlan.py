@@ -149,15 +149,15 @@ class ICEPlan:
 
         try:
             for icond in self.iconds:
-                t_s = math.ceil(icond.fromTime / EPSILON)
-                t_e = math.ceil(icond.toTime / EPSILON)
+                t_s = round(icond.fromTime / (EPSILON * 0.1))
+                t_e = round(icond.toTime / (EPSILON * 0.1))
                 cond = icond.conditions
 
                 checked = False
                 for i in range(0, len(states)):
-                    t = math.ceil(states[i].time / EPSILON)
+                    t = round(states[i].time / (EPSILON * 0.1))
                     s = states[i].state
-                    t_ = math.ceil(states[i + 1].time / EPSILON) if i < m else None
+                    t_ = round(states[i + 1].time / (EPSILON * 0.1)) if i < m else None
 
                     # 2.a
                     if i == 0 and t_s == t:
