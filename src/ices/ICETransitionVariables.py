@@ -146,10 +146,46 @@ class ICETransitionVariables:
 
         return variables
 
+    @staticmethod
+    def __isSameAsPrevious(h: Happening, p: Happening) -> bool:
+        if h.parent != p.parent:
+            return False
+        if isinstance(h, HappeningCondition) and isinstance(p, HappeningCondition):
+            return h.condition.fromTime == p.condition.fromTime
+        if isinstance(h, HappeningCondition) and isinstance(p, HappeningEffect):
+            return h.condition.fromTime == p.effect.time
+        if isinstance(h, HappeningEffect) and isinstance(p, HappeningCondition):
+            return h.effect.time == p.condition.fromTime
+        return False
+
+    def __isSameAsPreviousEnd(h: Happening, p: Happening) -> bool:
+        if h.parent != p.parent:
+            return False
+        if isinstance(h, HappeningCondition) and isinstance(p, HappeningCondition):
+            return h.condition.toTime == p.condition.toTime
+        return False
+
     def __computeHappeningVariables(self) -> Dict[Happening, SMTVariable]:
         variables: Dict[Happening, SMTVariable] = dict()
 
-        for h in self.pattern:
+        snapVariables: Dict[ICEAction, SMTVariable] = dict()
+
+        h: Happening
+        for i, h in enumerate(self.pattern):
+            if isinstance(h.parent, ICEAction) and h.parent.isSnap:
+                b = h.parent
+                if h.starting:
+                    snapVariables[b] = SMTIntVariable(str(h))
+                variables[h] = snapVariables[b]
+                continue
+
+            if i > 0:
+                p = self.pattern[i - 1]
+                isSameAsPrevious = self.__isSameAsPrevious(h, p)
+                if isSameAsPrevious:
+                    variables[h] = variables[p]
+                    continue
+
             variables[h] = SMTIntVariable(str(h))
 
         return variables
@@ -157,7 +193,15 @@ class ICETransitionVariables:
     def __computeTimeVariables(self) -> Dict[Happening, SMTVariable]:
         variables: Dict[Happening, SMTVariable] = dict()
 
-        for h in self.pattern:
+        for i, h in enumerate(self.pattern):
+
+            if i > 0:
+                p = self.pattern[i - 1]
+                isSameAsPrevious = ICETransitionVariables.__isSameAsPrevious(h, p)
+                if isSameAsPrevious:
+                    variables[h] = variables[p]
+                    continue
+
             variables[h] = SMTRealVariable(f"t_{str(h)}")
 
         return variables
@@ -165,8 +209,20 @@ class ICETransitionVariables:
     def __computeTimeEndVariables(self) -> Dict[Happening, SMTVariable]:
         variables: Dict[Happening, SMTVariable] = dict()
 
-        for h in self.pattern:
+        for i, h in enumerate(self.pattern):
             if isinstance(h, HappeningCondition):
+
+                if h.condition.fromTime == h.condition.toTime:
+                    variables[h] = self.timeVariables[h]
+                    continue
+
+                if i > 0:
+                    p = self.pattern[i - 1]
+                    isSameAsPrevious = ICETransitionVariables.__isSameAsPreviousEnd(h, p)
+                    if isSameAsPrevious:
+                        variables[h] = variables[p]
+                        continue
+
                 variables[h] = SMTRealVariable(f"t_{str(h)}_end")
 
         return variables

@@ -33,10 +33,12 @@ class ICEAction:
     icond: List[ActionIntermediateCondition]
     ieff: List[ActionIntermediateEffect]
     duration: float
+    isSnap: bool
 
     def __init__(self):
         self.icond = list()
         self.ieff = list()
+        self.isSnap = False
 
     def __hash__(self):
         return hash(self.name)
@@ -98,7 +100,6 @@ class ICEAction:
     def isWellOrderable(self):
         return True
 
-
     @classmethod
     def fromSnapActionNOICEs(cls, action: Action):
         iceAction = cls()
@@ -152,22 +153,29 @@ class ICEAction:
 
         hasStart = False
         hasEnd = False
+        hasIntermediate = False
 
         for time, cond in a.conditions.items():
             ic = ActionIntermediateCondition.fromUnifiedPlanning(time, cond, atomDict)
             if ic.fromTime == START + 0:
                 hasStart = True
-            if ic.fromTime == END - 0:
+            elif ic.fromTime == END - 0:
                 hasEnd = True
+            else:
+                hasIntermediate = True
             iceAction.icond.append(ic)
 
         for time, eff in a.effects.items():
             ie = ActionIntermediateEffect.fromUnifiedPlanning(time, eff, atomDict)
             if ie.time == START + 0:
                 hasStart = True
-            if ie.time == END - 0:
+            elif ie.time == END - 0:
                 hasEnd = True
+            else:
+                hasIntermediate = True
             iceAction.ieff.append(ie)
+
+        iceAction.isSnap = not hasEnd and not hasIntermediate
 
         if not hasStart:
             ic = ActionIntermediateCondition.fake(START + 0, START + 0)
@@ -202,4 +210,3 @@ class ICEAction:
         name = splitted[0]
         params = "_".join([x.strip().replace("-", "_") for x in splitted[1][:-1].split(",")])
         return f"{name}_{params}"
-

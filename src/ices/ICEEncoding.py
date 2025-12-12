@@ -1,31 +1,24 @@
 from typing import List, Dict, Set
-import time
 
 from src.ices.Happening import HappeningEffect, HappeningCondition, Happening
 from src.ices.ICEAction import ICEAction
 from src.ices.ICEActionStartEndPair import ICEActionStartEndPair
-from src.ices.ICEConditionStartEndPair import ICEConditionStartEndPair
+from src.ices.ICEPattern import ICEPattern
+from src.ices.ICETask import ICETask
+from src.ices.ICETransitionVariables import ICETransitionVariables
 from src.ices.IntermediateCondition import IntermediateCondition
 from src.ices.PlanIntermediateCondition import PlanIntermediateCondition
 from src.ices.PlanIntermediateEffect import PlanIntermediateEffect
 from src.ices.RelativeTime import RelativeTime
-from src.ices.TimedConditions import TimedConditions
-from src.ices.TimedEffects import TimedEffects
-from src.ices.ICEPattern import ICEPattern
-from src.ices.ICEPatternPrecedenceGraph import ICEPatternPrecedenceGraph
-from src.ices.ICETask import ICETask
-from src.ices.ICETransitionVariables import ICETransitionVariables
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.Formula import Formula
-from src.pddl.Literal import Literal
 from src.pddl.Predicate import Predicate
 from src.pddl.State import State
 from src.plan.Encoding import Encoding
 from src.smt.SMTConjunction import SMTConjunction
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTVariable import SMTVariable
-from src.smt.expressions.FalseExpression import FalseExpression
 from src.utils.Constants import EPSILON
 from src.utils.TimeStat import TimeStat
 
