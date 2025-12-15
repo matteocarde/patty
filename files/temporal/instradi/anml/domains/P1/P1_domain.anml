@@ -63,6 +63,28 @@ fluent integer exitCounter_03;
 fluent integer exitCounter_04;
 fluent integer order_T1;
 
+action stop_T1_43_III() {
+	duration := 20;
+	[start, start] inFront_T1_43 == true;
+	[start, start] stopped_T1 == false;
+	[start, start] stopping_T1_III == false;
+
+	[start] stopping_T1_III := true;
+	[end] stopping_T1_III := false;
+	[end] stopped_T1 := true;
+};
+
+action exit_T1_43_04() {
+	duration := 0.1;
+	[start, start] inFront_T1_04 == true;
+	[start, start] exitCounter_04 == order_T1;
+
+	[start] left_T1_04 := true;
+	[start] inFront_T1_04 := false;
+	[start] occupied_120 := false;
+	[start] exitCounter_04 := exitCounter_04 + 1;
+};
+
 action move_T1_01_41() {
 	duration := 40;
 	[start, start] inFront_T1_01 == true;
@@ -97,42 +119,6 @@ action move_T1_01_41() {
 	[end] inFront_T1_41 := true;
 };
 
-action move_T1_41_04() {
-	duration := 25;
-	[start, start] inFront_T1_41 == true;
-	[start, start] green_41 == true;
-	[start, start] occupied_107 == false;
-	[start, start] occupied_117 == false;
-	[start, start] occupied_118 == false;
-	[start, start] occupied_119 == false;
-	[start, start] occupied_120 == false;
-
-	[start] green_41 := false;
-	[start] inFront_T1_41 := false;
-	[start] moved_T1_41_04 := true;
-	[start] occupied_107 := true;
-	[start] occupied_117 := true;
-	[start] occupied_118 := true;
-	[start] occupied_119 := true;
-	[start] occupied_120 := true;
-	[start + 5] occupied_107 := false;
-	[start + 10] occupied_117 := false;
-	[start + 15] occupied_118 := false;
-	[start + 20] occupied_119 := false;
-	[end] inFront_T1_04 := true;
-};
-
-action exit_T1_42_04() {
-	duration := 0.1;
-	[start, start] inFront_T1_04 == true;
-	[start, start] exitCounter_04 == order_T1;
-
-	[start] left_T1_04 := true;
-	[start] inFront_T1_04 := false;
-	[start] occupied_120 := false;
-	[start] exitCounter_04 := exitCounter_04 + 1;
-};
-
 action move_T1_43_04() {
 	duration := 20;
 	[start, start] inFront_T1_43 == true;
@@ -153,145 +139,6 @@ action move_T1_43_04() {
 	[start + 10] occupied_118 := false;
 	[start + 15] occupied_119 := false;
 	[end] inFront_T1_04 := true;
-};
-
-action stop_T1_21_I() {
-	duration := 20;
-	[start, start] inFront_T1_21 == true;
-	[start, start] stopped_T1 == false;
-	[start, start] stopping_T1_I == false;
-
-	[start] stopping_T1_I := true;
-	[end] stopping_T1_I := false;
-	[end] stopped_T1 := true;
-};
-
-action move_T1_42_04() {
-	duration := 20;
-	[start, start] inFront_T1_42 == true;
-	[start, start] green_42 == true;
-	[start, start] occupied_117 == false;
-	[start, start] occupied_118 == false;
-	[start, start] occupied_119 == false;
-	[start, start] occupied_120 == false;
-
-	[start] green_42 := false;
-	[start] inFront_T1_42 := false;
-	[start] moved_T1_42_04 := true;
-	[start] occupied_117 := true;
-	[start] occupied_118 := true;
-	[start] occupied_119 := true;
-	[start] occupied_120 := true;
-	[start + 5] occupied_117 := false;
-	[start + 10] occupied_118 := false;
-	[start + 15] occupied_119 := false;
-	[end] inFront_T1_04 := true;
-};
-
-action depart_T1_III_43_04() {
-	duration := 10;
-	[start, start] inFront_T1_43 == true;
-	[start, start] stopped_T1 == true;
-	[start, start] timetable_T1 == true;
-	[start + 0.02, start + 0.02] moved_T1_43_04 == true;
-
-	[start] green_43 := true;
-	[end] occupied_123 := false;
-};
-
-action stop_T1_22_II() {
-	duration := 20;
-	[start, start] inFront_T1_22 == true;
-	[start, start] stopped_T1 == false;
-	[start, start] stopping_T1_II == false;
-
-	[start] stopping_T1_II := true;
-	[end] stopping_T1_II := false;
-	[end] stopped_T1 := true;
-};
-
-action depart_T1_II_42_04() {
-	duration := 10;
-	[start, start] inFront_T1_42 == true;
-	[start, start] stopped_T1 == true;
-	[start, start] timetable_T1 == true;
-	[start + 0.02, start + 0.02] moved_T1_42_04 == true;
-
-	[start] green_42 := true;
-	[end] occupied_114 := false;
-	[end] occupied_115 := false;
-	[end] occupied_116 := false;
-};
-
-action exit_T1_41_04() {
-	duration := 0.1;
-	[start, start] inFront_T1_04 == true;
-	[start, start] exitCounter_04 == order_T1;
-
-	[start] left_T1_04 := true;
-	[start] inFront_T1_04 := false;
-	[start] occupied_120 := false;
-	[start] exitCounter_04 := exitCounter_04 + 1;
-};
-
-action stop_T1_41_I() {
-	duration := 20;
-	[start, start] inFront_T1_41 == true;
-	[start, start] stopped_T1 == false;
-	[start, start] stopping_T1_I == false;
-
-	[start] stopping_T1_I := true;
-	[end] stopping_T1_I := false;
-	[end] stopped_T1 := true;
-};
-
-action depart_T1_I_41_04() {
-	duration := 10;
-	[start, start] inFront_T1_41 == true;
-	[start, start] stopped_T1 == true;
-	[start, start] timetable_T1 == true;
-	[start + 0.02, start + 0.02] moved_T1_41_04 == true;
-
-	[start] green_41 := true;
-	[end] occupied_104 := false;
-	[end] occupied_105 := false;
-	[end] occupied_106 := false;
-};
-
-action exit_T1_43_04() {
-	duration := 0.1;
-	[start, start] inFront_T1_04 == true;
-	[start, start] exitCounter_04 == order_T1;
-
-	[start] left_T1_04 := true;
-	[start] inFront_T1_04 := false;
-	[start] occupied_120 := false;
-	[start] exitCounter_04 := exitCounter_04 + 1;
-};
-
-action move_T1_01_43() {
-	duration := 25;
-	[start, start] inFront_T1_01 == true;
-	[start, start] green_01 == true;
-	[start, start] occupied_110 == false;
-	[start, start] occupied_111 == false;
-	[start, start] occupied_112 == false;
-	[start, start] occupied_122 == false;
-	[start, start] occupied_123 == false;
-
-	[start] green_01 := false;
-	[start] inFront_T1_01 := false;
-	[start] moved_T1_01_43 := true;
-	[start] occupied_110 := true;
-	[start] occupied_111 := true;
-	[start] occupied_112 := true;
-	[start] occupied_122 := true;
-	[start] occupied_123 := true;
-	[start + 5] occupied_110 := false;
-	[start + 10] occupied_111 := false;
-	[start + 15] occupied_112 := false;
-	[start + 20] occupied_122 := false;
-	[end] inFront_T1_43 := true;
 };
 
 action move_T1_01_42() {
@@ -325,6 +172,43 @@ action move_T1_01_42() {
 	[end] inFront_T1_42 := true;
 };
 
+action depart_T1_II_42_04() {
+	duration := 10;
+	[start, start] inFront_T1_42 == true;
+	[start, start] stopped_T1 == true;
+	[start, start] timetable_T1 == true;
+	[start + 0.02, start + 0.02] moved_T1_42_04 == true;
+
+	[start] green_42 := true;
+	[end] occupied_114 := false;
+	[end] occupied_115 := false;
+	[end] occupied_116 := false;
+};
+
+action stop_T1_41_I() {
+	duration := 20;
+	[start, start] inFront_T1_41 == true;
+	[start, start] stopped_T1 == false;
+	[start, start] stopping_T1_I == false;
+
+	[start] stopping_T1_I := true;
+	[end] stopping_T1_I := false;
+	[end] stopped_T1 := true;
+};
+
+action depart_T1_I_41_04() {
+	duration := 10;
+	[start, start] inFront_T1_41 == true;
+	[start, start] stopped_T1 == true;
+	[start, start] timetable_T1 == true;
+	[start + 0.02, start + 0.02] moved_T1_41_04 == true;
+
+	[start] green_41 := true;
+	[end] occupied_104 := false;
+	[end] occupied_105 := false;
+	[end] occupied_106 := false;
+};
+
 action stop_T1_42_II() {
 	duration := 20;
 	[start, start] inFront_T1_42 == true;
@@ -334,6 +218,108 @@ action stop_T1_42_II() {
 	[start] stopping_T1_II := true;
 	[end] stopping_T1_II := false;
 	[end] stopped_T1 := true;
+};
+
+action stop_T1_22_II() {
+	duration := 20;
+	[start, start] inFront_T1_22 == true;
+	[start, start] stopped_T1 == false;
+	[start, start] stopping_T1_II == false;
+
+	[start] stopping_T1_II := true;
+	[end] stopping_T1_II := false;
+	[end] stopped_T1 := true;
+};
+
+action exit_T1_41_04() {
+	duration := 0.1;
+	[start, start] inFront_T1_04 == true;
+	[start, start] exitCounter_04 == order_T1;
+
+	[start] left_T1_04 := true;
+	[start] inFront_T1_04 := false;
+	[start] occupied_120 := false;
+	[start] exitCounter_04 := exitCounter_04 + 1;
+};
+
+action depart_T1_III_43_04() {
+	duration := 10;
+	[start, start] inFront_T1_43 == true;
+	[start, start] stopped_T1 == true;
+	[start, start] timetable_T1 == true;
+	[start + 0.02, start + 0.02] moved_T1_43_04 == true;
+
+	[start] green_43 := true;
+	[end] occupied_123 := false;
+};
+
+action move_T1_41_04() {
+	duration := 25;
+	[start, start] inFront_T1_41 == true;
+	[start, start] green_41 == true;
+	[start, start] occupied_107 == false;
+	[start, start] occupied_117 == false;
+	[start, start] occupied_118 == false;
+	[start, start] occupied_119 == false;
+	[start, start] occupied_120 == false;
+
+	[start] green_41 := false;
+	[start] inFront_T1_41 := false;
+	[start] moved_T1_41_04 := true;
+	[start] occupied_107 := true;
+	[start] occupied_117 := true;
+	[start] occupied_118 := true;
+	[start] occupied_119 := true;
+	[start] occupied_120 := true;
+	[start + 5] occupied_107 := false;
+	[start + 10] occupied_117 := false;
+	[start + 15] occupied_118 := false;
+	[start + 20] occupied_119 := false;
+	[end] inFront_T1_04 := true;
+};
+
+action move_T1_42_04() {
+	duration := 20;
+	[start, start] inFront_T1_42 == true;
+	[start, start] green_42 == true;
+	[start, start] occupied_117 == false;
+	[start, start] occupied_118 == false;
+	[start, start] occupied_119 == false;
+	[start, start] occupied_120 == false;
+
+	[start] green_42 := false;
+	[start] inFront_T1_42 := false;
+	[start] moved_T1_42_04 := true;
+	[start] occupied_117 := true;
+	[start] occupied_118 := true;
+	[start] occupied_119 := true;
+	[start] occupied_120 := true;
+	[start + 5] occupied_117 := false;
+	[start + 10] occupied_118 := false;
+	[start + 15] occupied_119 := false;
+	[end] inFront_T1_04 := true;
+};
+
+action stop_T1_21_I() {
+	duration := 20;
+	[start, start] inFront_T1_21 == true;
+	[start, start] stopped_T1 == false;
+	[start, start] stopping_T1_I == false;
+
+	[start] stopping_T1_I := true;
+	[end] stopping_T1_I := false;
+	[end] stopped_T1 := true;
+};
+
+action exit_T1_42_04() {
+	duration := 0.1;
+	[start, start] inFront_T1_04 == true;
+	[start, start] exitCounter_04 == order_T1;
+
+	[start] left_T1_04 := true;
+	[start] inFront_T1_04 := false;
+	[start] occupied_120 := false;
+	[start] exitCounter_04 := exitCounter_04 + 1;
 };
 
 action stop_T1_23_III() {
@@ -347,13 +333,27 @@ action stop_T1_23_III() {
 	[end] stopped_T1 := true;
 };
 
-action stop_T1_43_III() {
-	duration := 20;
-	[start, start] inFront_T1_43 == true;
-	[start, start] stopped_T1 == false;
-	[start, start] stopping_T1_III == false;
+action move_T1_01_43() {
+	duration := 25;
+	[start, start] inFront_T1_01 == true;
+	[start, start] green_01 == true;
+	[start, start] occupied_110 == false;
+	[start, start] occupied_111 == false;
+	[start, start] occupied_112 == false;
+	[start, start] occupied_122 == false;
+	[start, start] occupied_123 == false;
 
-	[start] stopping_T1_III := true;
-	[end] stopping_T1_III := false;
-	[end] stopped_T1 := true;
+	[start] green_01 := false;
+	[start] inFront_T1_01 := false;
+	[start] moved_T1_01_43 := true;
+	[start] occupied_110 := true;
+	[start] occupied_111 := true;
+	[start] occupied_112 := true;
+	[start] occupied_122 := true;
+	[start] occupied_123 := true;
+	[start + 5] occupied_110 := false;
+	[start + 10] occupied_111 := false;
+	[start + 15] occupied_112 := false;
+	[start + 20] occupied_122 := false;
+	[end] inFront_T1_43 := true;
 };

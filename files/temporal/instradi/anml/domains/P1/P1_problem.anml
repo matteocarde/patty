@@ -62,7 +62,9 @@
 [start] stopping_T1_III := false;
 [start] timetable_T1 := false;
 
-[start + 160] timetable_T1 := true;
+[start + 103] inFront_T1_01 := true;
+[start + 103] green_01 := true;
+[start + 176] timetable_T1 := true;
 
 [start + 50, start + 65] occupied_102 == false;
 
