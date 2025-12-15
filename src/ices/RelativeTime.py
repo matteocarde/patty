@@ -2,6 +2,7 @@ from unified_planning.model import Timing, TimepointKind
 
 from src.ices.RelativeTimeAnchor import RelativeTimeAnchor
 from src.smt.SMTExpression import SMTExpression
+from src.utils.Constants import EPSILON_DECIMALS
 
 
 class RelativeTime:
@@ -24,7 +25,7 @@ class RelativeTime:
         if self.k > 0:
             return f"{self.anchor.value} {sign} {self.k}"
         else:
-            return "AS" if self.anchor == ActionRelativeTimeAnchor.START else "ZE"
+            return f"{self.anchor.value} {sign} 0.{'0' * EPSILON_DECIMALS}"
 
     def __eq__(self, other):
         if not isinstance(other, RelativeTime):
