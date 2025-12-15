@@ -26,12 +26,12 @@
 [start] left_T1_02 := false;
 [start] left_T1_03 := false;
 [start] left_T1_04 := false;
-[start] moved_T1_01_41 := false;
-[start] moved_T1_01_42 := false;
-[start] moved_T1_01_43 := false;
-[start] moved_T1_41_04 := false;
-[start] moved_T1_42_04 := false;
-[start] moved_T1_43_04 := false;
+[start] moved_T1_03_21 := false;
+[start] moved_T1_03_22 := false;
+[start] moved_T1_03_23 := false;
+[start] moved_T1_21_02 := false;
+[start] moved_T1_22_02 := false;
+[start] moved_T1_23_02 := false;
 [start] occupied_101 := false;
 [start] occupied_102 := false;
 [start] occupied_103 := false;
@@ -62,11 +62,11 @@
 [start] stopping_T1_III := false;
 [start] timetable_T1 := false;
 
-[start + 103] inFront_T1_01 := true;
-[start + 103] green_01 := true;
-[start + 176] timetable_T1 := true;
+[start + 73] inFront_T1_03 := true;
+[start + 73] green_03 := true;
+[start + 161] timetable_T1 := true;
 
 [start + 50, start + 65] occupied_102 == false;
 
 [end] stopped_T1 == true;
-[end] left_T1_04 == true;
+[end] left_T1_02 == true;
