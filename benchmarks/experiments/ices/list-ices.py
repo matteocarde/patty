@@ -20,6 +20,7 @@ def main():
         "temporal/match-ac",
         "temporal/match-ms",
         "temporal/oversub",
+        "temporal/instradi/anml",
         "temporal/painter/anml"
     ]
 
@@ -40,8 +41,12 @@ def main():
             else:
                 folders = natsort.natsorted(os.listdir(f"files/{domain}/domains"))
                 for folder in folders:
-                    domainFile = f"files/{domain}/domains/{folder}/domain.{ext}"
-                    problemFile = f"files/{domain}/domains/{folder}/problem.{ext}"
+                    if folder in {".DS_Store"}:
+                        continue
+                    domainFile = f"files/{domain}/domains/{folder}/{folder}_domain.{ext}"
+                    problemFile = f"files/{domain}/domains/{folder}/{folder}_problem.{ext}"
+                    assert os.path.exists(domainFile), domainFile
+                    assert os.path.exists(problemFile), problemFile
                     if not os.path.exists(domainFile):
                         continue
                     problemList.append((domainFile, problemFile))

@@ -1,3 +1,5 @@
+from fractions import Fraction
+
 from unified_planning.model import Timing, TimepointKind
 
 from src.ices.RelativeTimeAnchor import RelativeTimeAnchor
@@ -54,7 +56,10 @@ class RelativeTime:
             TimepointKind.GLOBAL_END: PlanRelativeTimeAnchor.FINISH,
         }
         t.anchor = UP2TIME[time.timepoint.kind]
-        t.k = time.delay
+        if isinstance(time.delay, Fraction):
+            t.k = time.delay.numerator / time.delay.denominator
+        else:
+            t.k = time.delay
 
         return t
 

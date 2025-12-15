@@ -108,29 +108,29 @@ class Happening:
         return Happening.__ICEs(b.icond, b.ieff, b, b.duration)
 
     @staticmethod
-    def PICEs(cls, conditions: TimedConditions, effects: TimedEffects) -> List[List[Happening]]:
+    def PICEs(conditions: TimedConditions, effects: TimedEffects) -> List[List[Happening]]:
         return Happening.__ICEs(conditions, effects, None, 10000000)
-
-    @classmethod
-    def PICEs(cls, conditions: TimedConditions, effects: TimedEffects) -> List[List[Happening]]:
-
-        timedHappenings: Dict[float, List[Happening]] = dict()
-        c: PlanIntermediateCondition
-        for i, c in enumerate(conditions):
-            t = c.fromTime.absolute(0, 1000000000)
-            h = HappeningCondition(c, c, i)
-            timedHappenings.setdefault(t, list())
-            timedHappenings[t].append(h)
-
-        e: PlanIntermediateEffect
-        for i, e in enumerate(effects):
-            t = e.time.absolute(0, 1000000000) + EPSILON / 2
-            h = HappeningEffect(e, e, i)
-            timedHappenings.setdefault(t, list())
-            timedHappenings[t].append(h)
-
-        PICEs = [H for (t, H) in sorted(timedHappenings.items())]
-        return PICEs
+    #
+    # @classmethod
+    # def PICEs(cls, conditions: TimedConditions, effects: TimedEffects) -> List[List[Happening]]:
+    #
+    #     timedHappenings: Dict[float, List[Happening]] = dict()
+    #     c: PlanIntermediateCondition
+    #     for i, c in enumerate(conditions):
+    #         t = c.fromTime.absolute(0, 1000000000)
+    #         h = HappeningCondition(c, c, i)
+    #         timedHappenings.setdefault(t, list())
+    #         timedHappenings[t].append(h)
+    #
+    #     e: PlanIntermediateEffect
+    #     for i, e in enumerate(effects):
+    #         t = e.time.absolute(0, 1000000000) + EPSILON / 2
+    #         h = HappeningEffect(e, e, i)
+    #         timedHappenings.setdefault(t, list())
+    #         timedHappenings[t].append(h)
+    #
+    #     PICEs = [H for (t, H) in sorted(timedHappenings.items())]
+    #     return PICEs
 
     @staticmethod
     def computeTime(h):

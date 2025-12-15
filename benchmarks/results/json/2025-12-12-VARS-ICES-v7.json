@@ -1,0 +1,7132 @@
+{
+  "temporal/bottles-all": {
+    "problem_10.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 2798,
+          "nOfRules": 123752,
+          "lastSearchedBound": 7,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 1572
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_12.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 2578,
+          "nOfRules": 86583,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 1402
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_14.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 3213,
+          "nOfRules": 114949,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 1730
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_16.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 3071,
+          "nOfRules": 91244,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 1618
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_18.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 2613,
+          "nOfRules": 59313,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 1348
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_2.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 849,
+          "nOfRules": 48794,
+          "lastSearchedBound": 16,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 569
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 7610.0,
+          "bound": 7,
+          "planLength": 0.0,
+          "nOfVars": 287,
+          "nOfRules": 2017,
+          "lastSearchedBound": 7,
+          "lastCallsToSolver": 7,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_20.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 1377,
+          "nOfRules": 17368,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 694
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_22.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 1602,
+          "nOfRules": 21114,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 807
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_24.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 1843,
+          "nOfRules": 25322,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 928
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_26.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 2100,
+          "nOfRules": 30016,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 1057
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_28.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 2373,
+          "nOfRules": 35220,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 1194
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_30.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 2662,
+          "nOfRules": 40958,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 1339
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_32.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 2967,
+          "nOfRules": 47254,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 1492
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_34.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 3288,
+          "nOfRules": 54132,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 1653
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_36.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 3625,
+          "nOfRules": 61616,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 1822
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_38.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 3978,
+          "nOfRules": 69730,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 1999
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_4.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 578,
+          "nOfRules": 12768,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 338
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 278050.0,
+          "bound": 13,
+          "planLength": 0.0,
+          "nOfVars": 642,
+          "nOfRules": 6991,
+          "lastSearchedBound": 13,
+          "lastCallsToSolver": 13,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_40.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 4347,
+          "nOfRules": 78498,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 2184
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_6.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 772,
+          "nOfRules": 15474,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 427
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_8.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 1125,
+          "nOfRules": 24946,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 614
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    }
+  },
+  "temporal/bottles-pack": {
+    "problem_10.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 814,
+          "nOfRules": 92309,
+          "lastSearchedBound": 10,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 500
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 5090.0,
+          "bound": 5,
+          "planLength": 0.0,
+          "nOfVars": 135,
+          "nOfRules": 958,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": 5,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_12.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 867,
+          "nOfRules": 103849,
+          "lastSearchedBound": 9,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 526
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 9740.0,
+          "bound": 6,
+          "planLength": 0.0,
+          "nOfVars": 164,
+          "nOfRules": 1368,
+          "lastSearchedBound": 6,
+          "lastCallsToSolver": 6,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_14.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 888,
+          "nOfRules": 107608,
+          "lastSearchedBound": 8,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 532
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 20710.0,
+          "bound": 7,
+          "planLength": 0.0,
+          "nOfVars": 193,
+          "nOfRules": 1850,
+          "lastSearchedBound": 7,
+          "lastCallsToSolver": 7,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_16.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 1005,
+          "nOfRules": 137226,
+          "lastSearchedBound": 8,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 598
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 38790.0,
+          "bound": 8,
+          "planLength": 0.0,
+          "nOfVars": 222,
+          "nOfRules": 2404,
+          "lastSearchedBound": 8,
+          "lastCallsToSolver": 8,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_18.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 981,
+          "nOfRules": 128970,
+          "lastSearchedBound": 7,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 578
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 72260.0,
+          "bound": 9,
+          "planLength": 0.0,
+          "nOfVars": 251,
+          "nOfRules": 3030,
+          "lastSearchedBound": 9,
+          "lastCallsToSolver": 9,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_2.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1310.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 33,
+          "nOfRules": 167,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 14
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 830.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 22,
+          "nOfRules": 46,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_20.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 1085,
+          "nOfRules": 157672,
+          "lastSearchedBound": 7,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 638
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 110840.0,
+          "bound": 10,
+          "planLength": 0.0,
+          "nOfVars": 280,
+          "nOfRules": 3728,
+          "lastSearchedBound": 10,
+          "lastCallsToSolver": 10,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_22.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 1010,
+          "nOfRules": 133159,
+          "lastSearchedBound": 6,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 584
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 162850.0,
+          "bound": 11,
+          "planLength": 0.0,
+          "nOfVars": 309,
+          "nOfRules": 4498,
+          "lastSearchedBound": 11,
+          "lastCallsToSolver": 11,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_24.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 1098,
+          "nOfRules": 157243,
+          "lastSearchedBound": 6,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 634
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 268850.0,
+          "bound": 12,
+          "planLength": 0.0,
+          "nOfVars": 338,
+          "nOfRules": 5340,
+          "lastSearchedBound": 12,
+          "lastCallsToSolver": 12,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_26.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 1183,
+          "nOfRules": 181717,
+          "lastSearchedBound": 6,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 680
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_28.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 1047,
+          "nOfRules": 137419,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 590
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_30.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 1119,
+          "nOfRules": 156819,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 630
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_32.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 1191,
+          "nOfRules": 177499,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 670
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_34.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 1263,
+          "nOfRules": 199459,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 710
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_36.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 1335,
+          "nOfRules": 222699,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 750
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_38.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 1097,
+          "nOfRules": 140338,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 592
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_4.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 673,
+          "nOfRules": 63434,
+          "lastSearchedBound": 19,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 446
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 980.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 48,
+          "nOfRules": 160,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_40.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 1153,
+          "nOfRules": 154916,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 622
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_6.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 762,
+          "nOfRules": 81647,
+          "lastSearchedBound": 15,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 486
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1230.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 77,
+          "nOfRules": 354,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_8.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 793,
+          "nOfRules": 88048,
+          "lastSearchedBound": 12,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 494
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2240.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 106,
+          "nOfRules": 620,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    }
+  },
+  "temporal/bottles-pour": {
+    "problem_2_1_1.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1430.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 44,
+          "nOfRules": 272,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 24
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 790.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 35,
+          "nOfRules": 102,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_3_1_2.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1870.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 100,
+          "nOfRules": 709,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 52
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 810.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 73,
+          "nOfRules": 279,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_4_1_3.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2200.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 104,
+          "nOfRules": 681,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 52
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1410.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 116,
+          "nOfRules": 521,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_4_3_1.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 5800.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 148,
+          "nOfRules": 1199,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 84
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1730.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 114,
+          "nOfRules": 448,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_5_1_4.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 7670.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 193,
+          "nOfRules": 1817,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 108
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2880.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 194,
+          "nOfRules": 1291,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_5_3_2.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 14110.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 241,
+          "nOfRules": 2040,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 124
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1460.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 147,
+          "nOfRules": 644,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_6_1_5.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 27760.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 274,
+          "nOfRules": 2632,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 140
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 10870.0,
+          "bound": 5,
+          "planLength": 0.0,
+          "nOfVars": 267,
+          "nOfRules": 2142,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": 5,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_6_3_3.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 63940.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 309,
+          "nOfRules": 2753,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 156
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2170.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 155,
+          "nOfRules": 668,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_6_5_1.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 31030.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 234,
+          "nOfRules": 2013,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 132
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 3270.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 178,
+          "nOfRules": 722,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_7_1_6.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 109330.0,
+          "bound": 5,
+          "planLength": 0.0,
+          "nOfVars": 384,
+          "nOfRules": 4807,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": 5,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 208
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 6720.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 255,
+          "nOfRules": 1879,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_7_3_4.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 56970.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 401,
+          "nOfRules": 3986,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 204
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 123420.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 373,
+          "nOfRules": 2953,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_7_5_2.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 37170.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 365,
+          "nOfRules": 3189,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 184
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2520.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 221,
+          "nOfRules": 993,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_8_1_7.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 141520.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 446,
+          "nOfRules": 5927,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 240
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 32479.999999999996,
+          "bound": 6,
+          "planLength": 0.0,
+          "nOfVars": 393,
+          "nOfRules": 4196,
+          "lastSearchedBound": 6,
+          "lastCallsToSolver": 6,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_8_3_5.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 86320.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 488,
+          "nOfRules": 5109,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 244
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 139390.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 341,
+          "nOfRules": 2430,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_8_5_3.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 623,
+          "nOfRules": 7945,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 332
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 197610.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 424,
+          "nOfRules": 2933,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_8_7_1.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 130960.00000000001,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 320,
+          "nOfRules": 2899,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 180
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 4830.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 242,
+          "nOfRules": 996,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_9_1_8.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 578,
+          "nOfRules": 8693,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 308
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 54420.0,
+          "bound": 6,
+          "planLength": 0.0,
+          "nOfVars": 386,
+          "nOfRules": 3918,
+          "lastSearchedBound": 6,
+          "lastCallsToSolver": 6,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_9_3_6.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 748,
+          "nOfRules": 11229,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 396
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 37540.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 389,
+          "nOfRules": 2982,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_9_5_4.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 267540.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 617,
+          "nOfRules": 6904,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 316
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 5950.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 292,
+          "nOfRules": 1497,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_9_7_2.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 350,
+          "nOfRules": 2901,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 184
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    }
+  },
+  "temporal/bottles-shake": {
+    "problem_1.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1380.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 24,
+          "nOfRules": 167,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 14
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 790.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 25,
+          "nOfRules": 52,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_10.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2009.9999999999998,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 240,
+          "nOfRules": 1535,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 140
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1180.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 250,
+          "nOfRules": 511,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_11.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2100.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 264,
+          "nOfRules": 1687,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 154
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1110.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 275,
+          "nOfRules": 562,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_12.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2220.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 288,
+          "nOfRules": 1839,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 168
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1090.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 300,
+          "nOfRules": 613,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_13.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2300.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 312,
+          "nOfRules": 1991,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 182
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1190.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 325,
+          "nOfRules": 664,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_14.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2510.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 336,
+          "nOfRules": 2143,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 196
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1280.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 350,
+          "nOfRules": 715,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_15.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2600.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 360,
+          "nOfRules": 2295,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 210
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1300.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 375,
+          "nOfRules": 766,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_16.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2770.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 384,
+          "nOfRules": 2447,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 224
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1250.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 400,
+          "nOfRules": 817,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_17.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 3030.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 408,
+          "nOfRules": 2599,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 238
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1470.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 425,
+          "nOfRules": 868,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_18.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 3030.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 432,
+          "nOfRules": 2751,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 252
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1240.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 450,
+          "nOfRules": 919,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_19.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 3150.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 456,
+          "nOfRules": 2903,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 266
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1350.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 475,
+          "nOfRules": 970,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_2.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1440.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 48,
+          "nOfRules": 319,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 28
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 830.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 50,
+          "nOfRules": 103,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_20.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 3650.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 480,
+          "nOfRules": 3055,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 280
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1380.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 500,
+          "nOfRules": 1021,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_3.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1510.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 72,
+          "nOfRules": 471,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 42
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 890.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 75,
+          "nOfRules": 154,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_4.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1550.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 96,
+          "nOfRules": 623,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 56
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 870.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 100,
+          "nOfRules": 205,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_5.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1570.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 120,
+          "nOfRules": 775,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 70
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 990.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 125,
+          "nOfRules": 256,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_6.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1660.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 144,
+          "nOfRules": 927,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 84
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 940.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 150,
+          "nOfRules": 307,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_7.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1710.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 168,
+          "nOfRules": 1079,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 98
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 990.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 175,
+          "nOfRules": 358,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_8.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1870.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 192,
+          "nOfRules": 1231,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 112
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1030.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 200,
+          "nOfRules": 409,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "problem_9.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1930.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 216,
+          "nOfRules": 1383,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 126
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 950.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 225,
+          "nOfRules": 460,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    }
+  },
+  "temporal/cushing": {
+    "pfile1.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1510.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 98,
+          "nOfRules": 489,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 38
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 880.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 88,
+          "nOfRules": 159,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "pfile11.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 6860.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 588,
+          "nOfRules": 2859,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 228
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1780.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 528,
+          "nOfRules": 949,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "pfile12.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 9580.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 637,
+          "nOfRules": 3096,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 247
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1880.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 572,
+          "nOfRules": 1028,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "pfile14.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 13470.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 735,
+          "nOfRules": 3570,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 285
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2100.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 660,
+          "nOfRules": 1186,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "pfile16.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 16290.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 833,
+          "nOfRules": 4044,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 323
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2470.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 748,
+          "nOfRules": 1344,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "pfile19.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 41020.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 980,
+          "nOfRules": 4755,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 380
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2690.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 880,
+          "nOfRules": 1581,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "pfile3.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1880.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 196,
+          "nOfRules": 963,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 76
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1050.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 176,
+          "nOfRules": 317,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "pfile6.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 3520.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 343,
+          "nOfRules": 1674,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 133
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1290.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 308,
+          "nOfRules": 554,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "pfile7.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 3600.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 392,
+          "nOfRules": 1911,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 152
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1260.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 352,
+          "nOfRules": 633,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "pfile9.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 5630.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 490,
+          "nOfRules": 2385,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 190
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1600.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 440,
+          "nOfRules": 791,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    }
+  },
+  "temporal/majsp/anml": {
+    "instance_1_1_2_4.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 3900.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 170,
+          "nOfRules": 2066,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 79
+        }
+      ]
+    },
+    "instance_1_1_3_4.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 31210.0,
+          "bound": 7,
+          "planLength": 0.0,
+          "nOfVars": 501,
+          "nOfRules": 25949,
+          "lastSearchedBound": 7,
+          "lastCallsToSolver": 7,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 340
+        }
+      ]
+    },
+    "instance_1_1_4_4.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 6390.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 299,
+          "nOfRules": 4476,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 136
+        }
+      ]
+    },
+    "instance_1_1_5_4.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 9070.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 386,
+          "nOfRules": 7032,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 181
+        }
+      ]
+    },
+    "instance_1_1_6_4.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 1441,
+          "nOfRules": 230464,
+          "lastSearchedBound": 8,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 1133
+        }
+      ]
+    },
+    "instance_1_2_2_4.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 27360.0,
+          "bound": 9,
+          "planLength": 0.0,
+          "nOfVars": 310,
+          "nOfRules": 7432,
+          "lastSearchedBound": 9,
+          "lastCallsToSolver": 9,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 165
+        }
+      ]
+    },
+    "instance_1_2_3_4.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 38990.0,
+          "bound": 9,
+          "planLength": 0.0,
+          "nOfVars": 402,
+          "nOfRules": 10654,
+          "lastSearchedBound": 9,
+          "lastCallsToSolver": 9,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 213
+        }
+      ]
+    },
+    "instance_1_2_4_4.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 1497,
+          "nOfRules": 266851,
+          "lastSearchedBound": 13,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 1138
+        }
+      ]
+    },
+    "instance_1_2_5_4.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 1055,
+          "nOfRules": 103766,
+          "lastSearchedBound": 7,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 727
+        }
+      ]
+    },
+    "instance_1_2_6_4.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 1603,
+          "nOfRules": 260207,
+          "lastSearchedBound": 10,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 1187
+        }
+      ]
+    },
+    "instance_2_1_2_4.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 6260.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 252,
+          "nOfRules": 4245,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 137
+        }
+      ]
+    },
+    "instance_2_1_3_4.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 8270.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 342,
+          "nOfRules": 6153,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 191
+        }
+      ]
+    },
+    "instance_2_1_4_4.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 156470.0,
+          "bound": 6,
+          "planLength": 0.0,
+          "nOfVars": 923,
+          "nOfRules": 56919,
+          "lastSearchedBound": 6,
+          "lastCallsToSolver": 6,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 684
+        }
+      ]
+    },
+    "instance_2_1_5_4.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 87560.0,
+          "bound": 6,
+          "planLength": 0.0,
+          "nOfVars": 876,
+          "nOfRules": 42675,
+          "lastSearchedBound": 6,
+          "lastCallsToSolver": 6,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 619
+        }
+      ]
+    },
+    "instance_2_1_6_4.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 111350.0,
+          "bound": 5,
+          "planLength": 0.0,
+          "nOfVars": 1103,
+          "nOfRules": 65979,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": 5,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 796
+        }
+      ]
+    },
+    "instance_2_2_2_4.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 38130.0,
+          "bound": 7,
+          "planLength": 0.0,
+          "nOfVars": 452,
+          "nOfRules": 13612,
+          "lastSearchedBound": 7,
+          "lastCallsToSolver": 7,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 269
+        }
+      ]
+    },
+    "instance_2_2_3_4.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 24030.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 575,
+          "nOfRules": 17558,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 343
+        }
+      ]
+    },
+    "instance_2_2_4_4.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 39110.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 706,
+          "nOfRules": 23872,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 424
+        }
+      ]
+    },
+    "instance_2_2_5_4.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 69710.0,
+          "bound": 5,
+          "planLength": 0.0,
+          "nOfVars": 886,
+          "nOfRules": 34940,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": 5,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 551
+        }
+      ]
+    },
+    "instance_2_2_6_4.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 101710.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 1026,
+          "nOfRules": 44052,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 634
+        }
+      ]
+    }
+  },
+  "temporal/match-ac": {
+    "match-ac_2_10.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1830.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 109,
+          "nOfRules": 1176,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 45
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1120.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 134,
+          "nOfRules": 381,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ac_2_6.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1510.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 81,
+          "nOfRules": 688,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 33
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 930.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 82,
+          "nOfRules": 225,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ac_2_7.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1670.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 88,
+          "nOfRules": 798,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 36
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 940.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 95,
+          "nOfRules": 264,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ac_2_8.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1710.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 95,
+          "nOfRules": 916,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 39
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 970.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 113,
+          "nOfRules": 320,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ac_2_9.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1810.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 102,
+          "nOfRules": 1042,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 42
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 960.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 106,
+          "nOfRules": 291,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ac_3_10.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2910.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 134,
+          "nOfRules": 1716,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 56
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2460.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 192,
+          "nOfRules": 983,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ac_3_6.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2200.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 104,
+          "nOfRules": 1114,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 44
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1140.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 100,
+          "nOfRules": 354,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ac_3_7.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2500.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 113,
+          "nOfRules": 1254,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 47
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1230.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 113,
+          "nOfRules": 404,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ac_3_8.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2300.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 120,
+          "nOfRules": 1400,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 50
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1170.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 111,
+          "nOfRules": 389,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ac_3_9.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2820.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 127,
+          "nOfRules": 1554,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 53
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1890.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 174,
+          "nOfRules": 887,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ac_4_10.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 5530.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 159,
+          "nOfRules": 2368,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 67
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1970.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 160,
+          "nOfRules": 706,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ac_4_6.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 3510.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 129,
+          "nOfRules": 1654,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 55
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2520.0,
+          "bound": 5,
+          "planLength": 0.0,
+          "nOfVars": 158,
+          "nOfRules": 1002,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": 5,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ac_4_7.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 3850.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 134,
+          "nOfRules": 1818,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 58
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1670.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 131,
+          "nOfRules": 575,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ac_4_8.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 4820.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 145,
+          "nOfRules": 1996,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 61
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1900.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 124,
+          "nOfRules": 530,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ac_4_9.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 4890.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 150,
+          "nOfRules": 2176,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 64
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1970.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 152,
+          "nOfRules": 669,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ac_5_10.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 9430.0,
+          "bound": 5,
+          "planLength": 0.0,
+          "nOfVars": 175,
+          "nOfRules": 2917,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": 5,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 75
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 3330.0,
+          "bound": 5,
+          "planLength": 0.0,
+          "nOfVars": 158,
+          "nOfRules": 803,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": 5,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ac_5_6.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 5390.0,
+          "bound": 5,
+          "planLength": 0.0,
+          "nOfVars": 145,
+          "nOfRules": 2123,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": 5,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 63
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 4640.0,
+          "bound": 7,
+          "planLength": 0.0,
+          "nOfVars": 131,
+          "nOfRules": 675,
+          "lastSearchedBound": 7,
+          "lastCallsToSolver": 7,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ac_5_7.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 5650.0,
+          "bound": 5,
+          "planLength": 0.0,
+          "nOfVars": 147,
+          "nOfRules": 2130,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": 5,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 63
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2500.0,
+          "bound": 5,
+          "planLength": 0.0,
+          "nOfVars": 144,
+          "nOfRules": 748,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": 5,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ac_5_8.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 8180.0,
+          "bound": 5,
+          "planLength": 0.0,
+          "nOfVars": 164,
+          "nOfRules": 2698,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": 5,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 72
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 4920.0,
+          "bound": 6,
+          "planLength": 0.0,
+          "nOfVars": 157,
+          "nOfRules": 817,
+          "lastSearchedBound": 6,
+          "lastCallsToSolver": 6,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ac_5_9.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 11280.0,
+          "bound": 5,
+          "planLength": 0.0,
+          "nOfVars": 173,
+          "nOfRules": 2910,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": 5,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 75
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 5800.0,
+          "bound": 6,
+          "planLength": 0.0,
+          "nOfVars": 150,
+          "nOfRules": 761,
+          "lastSearchedBound": 6,
+          "lastCallsToSolver": 6,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    }
+  },
+  "temporal/match-ms": {
+    "match-ms_2_1.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1400.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 50,
+          "nOfRules": 246,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 18
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 900.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 36,
+          "nOfRules": 89,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_2_10.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1930.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 109,
+          "nOfRules": 1542,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 45
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 990.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 99,
+          "nOfRules": 251,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_2_2.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1380.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 53,
+          "nOfRules": 326,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 21
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 840.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 43,
+          "nOfRules": 107,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_2_3.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1460.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 60,
+          "nOfRules": 422,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 24
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 900.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 50,
+          "nOfRules": 125,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_2_4.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1500.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 67,
+          "nOfRules": 534,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 27
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 910.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 57,
+          "nOfRules": 143,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_2_5.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1500.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 74,
+          "nOfRules": 662,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 30
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 860.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 64,
+          "nOfRules": 161,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_2_6.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1620.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 81,
+          "nOfRules": 806,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 33
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 850.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 71,
+          "nOfRules": 179,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_2_7.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1720.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 88,
+          "nOfRules": 966,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 36
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 930.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 78,
+          "nOfRules": 197,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_2_8.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1710.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 95,
+          "nOfRules": 1142,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 39
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 890.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 85,
+          "nOfRules": 215,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_2_9.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1890.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 102,
+          "nOfRules": 1334,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 42
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1090.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 92,
+          "nOfRules": 233,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_3_1.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1410.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 62,
+          "nOfRules": 342,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 22
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 910.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 44,
+          "nOfRules": 119,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_3_10.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2840.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 134,
+          "nOfRules": 2108,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 56
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1170.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 112,
+          "nOfRules": 348,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_3_2.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1620.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 84,
+          "nOfRules": 636,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 32
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 910.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 56,
+          "nOfRules": 172,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_3_3.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1780.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 83,
+          "nOfRules": 762,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 35
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1070.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 93,
+          "nOfRules": 401,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_3_4.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1900.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 92,
+          "nOfRules": 908,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 38
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 920.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 70,
+          "nOfRules": 216,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_3_5.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2029.9999999999998,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 99,
+          "nOfRules": 1068,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 41
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1000.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 77,
+          "nOfRules": 238,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_3_6.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2250.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 104,
+          "nOfRules": 1242,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 44
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1030.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 84,
+          "nOfRules": 260,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_3_7.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2240.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 113,
+          "nOfRules": 1436,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 47
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1040.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 91,
+          "nOfRules": 282,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_3_8.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2470.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 120,
+          "nOfRules": 1644,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 50
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1430.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 153,
+          "nOfRules": 671,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_3_9.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2710.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 127,
+          "nOfRules": 1868,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 53
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1100.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 110,
+          "nOfRules": 346,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_4_1.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1470.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 74,
+          "nOfRules": 454,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 26
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 880.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 52,
+          "nOfRules": 153,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_4_10.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 5160.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 159,
+          "nOfRules": 2786,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 67
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1370.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 125,
+          "nOfRules": 461,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_4_2.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2240.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 102,
+          "nOfRules": 925,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 40
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1110.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 69,
+          "nOfRules": 253,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_4_3.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 3130.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 118,
+          "nOfRules": 1218,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 46
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1260.0,
+          "bound": 5,
+          "planLength": 0.0,
+          "nOfVars": 111,
+          "nOfRules": 587,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": 5,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_4_4.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 3090.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 117,
+          "nOfRules": 1394,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 49
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1110.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 83,
+          "nOfRules": 305,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_4_5.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 3160.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 122,
+          "nOfRules": 1584,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 52
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1310.0,
+          "bound": 5,
+          "planLength": 0.0,
+          "nOfVars": 135,
+          "nOfRules": 719,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": 5,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_4_6.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 3450.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 131,
+          "nOfRules": 1794,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 55
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1260.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 102,
+          "nOfRules": 381,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_4_7.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 3960.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 138,
+          "nOfRules": 2018,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 58
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1290.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 104,
+          "nOfRules": 383,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_4_8.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 3620.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 138,
+          "nOfRules": 2031,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 58
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1690.0,
+          "bound": 5,
+          "planLength": 0.0,
+          "nOfVars": 171,
+          "nOfRules": 917,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": 5,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_4_9.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 4680.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 152,
+          "nOfRules": 2514,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 64
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1290.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 123,
+          "nOfRules": 459,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_5_1.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1600.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 86,
+          "nOfRules": 582,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 30
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 880.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 60,
+          "nOfRules": 191,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_5_10.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 7430.0,
+          "bound": 5,
+          "planLength": 0.0,
+          "nOfVars": 175,
+          "nOfRules": 3283,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": 5,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 75
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1720.0,
+          "bound": 5,
+          "planLength": 0.0,
+          "nOfVars": 143,
+          "nOfRules": 618,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": 5,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_5_2.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1760.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 108,
+          "nOfRules": 940,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 40
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1580.0,
+          "bound": 6,
+          "planLength": 0.0,
+          "nOfVars": 87,
+          "nOfRules": 378,
+          "lastSearchedBound": 6,
+          "lastCallsToSolver": 6,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_5_3.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 3360.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 128,
+          "nOfRules": 1408,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 50
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1610.0,
+          "bound": 6,
+          "planLength": 0.0,
+          "nOfVars": 99,
+          "nOfRules": 436,
+          "lastSearchedBound": 6,
+          "lastCallsToSolver": 6,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_5_4.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 4090.0,
+          "bound": 5,
+          "planLength": 0.0,
+          "nOfVars": 135,
+          "nOfRules": 1797,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": 5,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 57
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1710.0,
+          "bound": 6,
+          "planLength": 0.0,
+          "nOfVars": 101,
+          "nOfRules": 438,
+          "lastSearchedBound": 6,
+          "lastCallsToSolver": 6,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_5_5.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 5610.0,
+          "bound": 5,
+          "planLength": 0.0,
+          "nOfVars": 147,
+          "nOfRules": 2214,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": 5,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 63
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1420.0,
+          "bound": 5,
+          "planLength": 0.0,
+          "nOfVars": 103,
+          "nOfRules": 440,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": 5,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_5_6.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 5490.0,
+          "bound": 5,
+          "planLength": 0.0,
+          "nOfVars": 147,
+          "nOfRules": 2227,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": 5,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 63
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1460.0,
+          "bound": 5,
+          "planLength": 0.0,
+          "nOfVars": 120,
+          "nOfRules": 526,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": 5,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_5_7.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 6370.0,
+          "bound": 5,
+          "planLength": 0.0,
+          "nOfVars": 159,
+          "nOfRules": 2708,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": 5,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 69
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1600.0,
+          "bound": 5,
+          "planLength": 0.0,
+          "nOfVars": 122,
+          "nOfRules": 528,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": 5,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_5_8.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 8140.000000000001,
+          "bound": 5,
+          "planLength": 0.0,
+          "nOfVars": 168,
+          "nOfRules": 2982,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": 5,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 72
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1630.0,
+          "bound": 5,
+          "planLength": 0.0,
+          "nOfVars": 124,
+          "nOfRules": 530,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": 5,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "match-ms_5_9.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 8020.0,
+          "bound": 5,
+          "planLength": 0.0,
+          "nOfVars": 175,
+          "nOfRules": 3270,
+          "lastSearchedBound": 5,
+          "lastCallsToSolver": 5,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 75
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 3050.0,
+          "bound": 7,
+          "planLength": 0.0,
+          "nOfVars": 136,
+          "nOfRules": 588,
+          "lastSearchedBound": 7,
+          "lastCallsToSolver": 7,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    }
+  },
+  "temporal/oversub": {
+    "problem.pddl": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 11360.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 319,
+          "nOfRules": 3382,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 92
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1200.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 94,
+          "nOfRules": 492,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 27
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1500.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 105,
+          "nOfRules": 552,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 30
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1510.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 111,
+          "nOfRules": 638,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 32
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1740.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 128,
+          "nOfRules": 802,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 37
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1810.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 129,
+          "nOfRules": 762,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 37
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1930.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 145,
+          "nOfRules": 984,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 42
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2040.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 133,
+          "nOfRules": 772,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 38
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2100.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 162,
+          "nOfRules": 1184,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 47
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2150.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 153,
+          "nOfRules": 1004,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 44
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2420.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 177,
+          "nOfRules": 1278,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 51
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2600.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 164,
+          "nOfRules": 1082,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 47
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2810.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 179,
+          "nOfRules": 1402,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 52
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 4170.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 201,
+          "nOfRules": 1584,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 58
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 4470.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 195,
+          "nOfRules": 1442,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 56
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 4490.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 225,
+          "nOfRules": 1922,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 65
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 4930.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 249,
+          "nOfRules": 2292,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 72
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 6030.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 257,
+          "nOfRules": 2312,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 74
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 7700.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 226,
+          "nOfRules": 1852,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 65
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 9730.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 288,
+          "nOfRules": 2822,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 83
+        }
+      ],
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1000.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 158,
+          "nOfRules": 268,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1020.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 128,
+          "nOfRules": 217,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1060.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 218,
+          "nOfRules": 370,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1070.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 176,
+          "nOfRules": 300,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1100.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 248,
+          "nOfRules": 423,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1110.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 200,
+          "nOfRules": 341,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1110.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 248,
+          "nOfRules": 421,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1110.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 278,
+          "nOfRules": 472,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1180.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 224,
+          "nOfRules": 382,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1210.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 308,
+          "nOfRules": 523,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 880.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 134,
+          "nOfRules": 230,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 910.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 104,
+          "nOfRules": 177,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 920.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 116,
+          "nOfRules": 199,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 920.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 98,
+          "nOfRules": 168,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 930.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 152,
+          "nOfRules": 261,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 950.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 188,
+          "nOfRules": 323,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 960.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 152,
+          "nOfRules": 259,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 970.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 170,
+          "nOfRules": 292,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 990.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 128,
+          "nOfRules": 218,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 990.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 188,
+          "nOfRules": 319,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    }
+  },
+  "temporal/painter/anml": {
+    "instance_10_2.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 5600.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 582,
+          "nOfRules": 4048,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 100
+        }
+      ]
+    },
+    "instance_10_3.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 71020.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 920,
+          "nOfRules": 21734,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 250
+        }
+      ]
+    },
+    "instance_11_2.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 6210.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 660,
+          "nOfRules": 4814,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 110
+        }
+      ]
+    },
+    "instance_11_3.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 112370.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 1031,
+          "nOfRules": 26119,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 275
+        }
+      ]
+    },
+    "instance_2_2.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2110.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 102,
+          "nOfRules": 296,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 20
+        }
+      ]
+    },
+    "instance_2_3.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2690.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 176,
+          "nOfRules": 1126,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 50
+        }
+      ]
+    },
+    "instance_3_2.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2320.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 148,
+          "nOfRules": 534,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 30
+        }
+      ]
+    },
+    "instance_3_3.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 4160.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 255,
+          "nOfRules": 2295,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 75
+        }
+      ]
+    },
+    "instance_4_2.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2600.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 198,
+          "nOfRules": 838,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 40
+        }
+      ]
+    },
+    "instance_4_3.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 6500.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 338,
+          "nOfRules": 3866,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 100
+        }
+      ]
+    },
+    "instance_5_2.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2920.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 252,
+          "nOfRules": 1208,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 50
+        }
+      ]
+    },
+    "instance_5_3.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 10010.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 425,
+          "nOfRules": 5839,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 125
+        }
+      ]
+    },
+    "instance_6_2.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 3300.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 310,
+          "nOfRules": 1644,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 60
+        }
+      ]
+    },
+    "instance_6_3.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 13330.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 516,
+          "nOfRules": 8214,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 150
+        }
+      ]
+    },
+    "instance_7_2.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 3840.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 372,
+          "nOfRules": 2146,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 70
+        }
+      ]
+    },
+    "instance_7_3.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 22100.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 611,
+          "nOfRules": 10991,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 175
+        }
+      ]
+    },
+    "instance_8_2.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 4400.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 438,
+          "nOfRules": 2714,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 80
+        }
+      ]
+    },
+    "instance_8_3.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 27940.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 710,
+          "nOfRules": 14170,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 200
+        }
+      ]
+    },
+    "instance_9_2.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 4590.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 508,
+          "nOfRules": 3348,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 90
+        }
+      ]
+    },
+    "instance_9_3.anml": {
+      "PATTY-ICES": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 41120.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 813,
+          "nOfRules": 17751,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 225
+        }
+      ]
+    }
+  },
+  "temporal/majsp": {
+    "instance_1_1_2_4.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 3850.0,
+          "bound": 8,
+          "planLength": 0.0,
+          "nOfVars": 317,
+          "nOfRules": 641,
+          "lastSearchedBound": 8,
+          "lastCallsToSolver": 8,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_1_1_3_4.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 5450.0,
+          "bound": 8,
+          "planLength": 0.0,
+          "nOfVars": 342,
+          "nOfRules": 726,
+          "lastSearchedBound": 8,
+          "lastCallsToSolver": 8,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_1_1_4_4.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 7110.0,
+          "bound": 8,
+          "planLength": 0.0,
+          "nOfVars": 379,
+          "nOfRules": 838,
+          "lastSearchedBound": 8,
+          "lastCallsToSolver": 8,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_1_1_5_4.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 9410.0,
+          "bound": 8,
+          "planLength": 0.0,
+          "nOfVars": 424,
+          "nOfRules": 967,
+          "lastSearchedBound": 8,
+          "lastCallsToSolver": 8,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_1_1_6_4.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 16800.0,
+          "bound": 8,
+          "planLength": 0.0,
+          "nOfVars": 479,
+          "nOfRules": 1123,
+          "lastSearchedBound": 8,
+          "lastCallsToSolver": 8,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_1_2_2_4.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 31440.0,
+          "bound": 17,
+          "planLength": 0.0,
+          "nOfVars": 640,
+          "nOfRules": 1302,
+          "lastSearchedBound": 17,
+          "lastCallsToSolver": 17,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_1_2_3_4.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 72950.0,
+          "bound": 17,
+          "planLength": 0.0,
+          "nOfVars": 676,
+          "nOfRules": 1444,
+          "lastSearchedBound": 17,
+          "lastCallsToSolver": 17,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_1_2_4_4.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_1_2_5_4.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_1_2_6_4.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_2_1_2_4.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 6950.0,
+          "bound": 8,
+          "planLength": 0.0,
+          "nOfVars": 400,
+          "nOfRules": 817,
+          "lastSearchedBound": 8,
+          "lastCallsToSolver": 8,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_2_1_3_4.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 9640.0,
+          "bound": 8,
+          "planLength": 0.0,
+          "nOfVars": 438,
+          "nOfRules": 933,
+          "lastSearchedBound": 8,
+          "lastCallsToSolver": 8,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_2_1_4_4.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 41680.0,
+          "bound": 10,
+          "planLength": 0.0,
+          "nOfVars": 863,
+          "nOfRules": 1907,
+          "lastSearchedBound": 10,
+          "lastCallsToSolver": 10,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_2_1_5_4.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 39170.0,
+          "bound": 9,
+          "planLength": 0.0,
+          "nOfVars": 824,
+          "nOfRules": 1868,
+          "lastSearchedBound": 9,
+          "lastCallsToSolver": 9,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_2_1_6_4.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 85170.0,
+          "bound": 9,
+          "planLength": 0.0,
+          "nOfVars": 918,
+          "nOfRules": 2133,
+          "lastSearchedBound": 9,
+          "lastCallsToSolver": 9,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_2_2_2_4.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 54100.0,
+          "bound": 16,
+          "planLength": 0.0,
+          "nOfVars": 796,
+          "nOfRules": 1634,
+          "lastSearchedBound": 16,
+          "lastCallsToSolver": 16,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_2_2_3_4.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 57060.0,
+          "bound": 10,
+          "planLength": 0.0,
+          "nOfVars": 852,
+          "nOfRules": 1821,
+          "lastSearchedBound": 10,
+          "lastCallsToSolver": 10,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_2_2_4_4.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 103810.0,
+          "bound": 11,
+          "planLength": 0.0,
+          "nOfVars": 1221,
+          "nOfRules": 2692,
+          "lastSearchedBound": 11,
+          "lastCallsToSolver": 11,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_2_2_5_4.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 73740.0,
+          "bound": 8,
+          "planLength": 0.0,
+          "nOfVars": 953,
+          "nOfRules": 2182,
+          "lastSearchedBound": 8,
+          "lastCallsToSolver": 8,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_2_2_6_4.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 292510.0,
+          "bound": 11,
+          "planLength": 0.0,
+          "nOfVars": 1491,
+          "nOfRules": 3448,
+          "lastSearchedBound": 11,
+          "lastCallsToSolver": 11,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    }
+  },
+  "temporal/painter": {
+    "instance_10_2.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_10_3.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_11_2.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_11_3.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_2_2.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1250.0,
+          "bound": 1,
+          "planLength": 0.0,
+          "nOfVars": 424,
+          "nOfRules": 893,
+          "lastSearchedBound": 1,
+          "lastCallsToSolver": 1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_2_3.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2440.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 733,
+          "nOfRules": 1628,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_3_2.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 4480.0,
+          "bound": 2,
+          "planLength": 0.0,
+          "nOfVars": 1268,
+          "nOfRules": 3074,
+          "lastSearchedBound": 2,
+          "lastCallsToSolver": 2,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_3_3.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 21540.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 2048,
+          "nOfRules": 5117,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_4_2.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 21100.0,
+          "bound": 3,
+          "planLength": 0.0,
+          "nOfVars": 2768,
+          "nOfRules": 7407,
+          "lastSearchedBound": 3,
+          "lastCallsToSolver": 3,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_4_3.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 154000.0,
+          "bound": 6,
+          "planLength": 0.0,
+          "nOfVars": 4347,
+          "nOfRules": 11882,
+          "lastSearchedBound": 6,
+          "lastCallsToSolver": 6,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_5_2.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 128930.0,
+          "bound": 4,
+          "planLength": 0.0,
+          "nOfVars": 5104,
+          "nOfRules": 14828,
+          "lastSearchedBound": 4,
+          "lastCallsToSolver": 4,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_5_3.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_6_2.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_6_3.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_7_2.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_7_3.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_8_2.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_8_3.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_9_2.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance_9_3.pddl": {
+      "PATTY-T-OR-ASTAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    }
+  }
+}

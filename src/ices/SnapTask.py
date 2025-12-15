@@ -27,23 +27,26 @@ class SnapTask(GroundedDomain):
         self.goal = copy.deepcopy(task.goal)
 
         self.execsAction: Dict[ICEAction, Dict[Happening, Literal]] = dict()
-        self.execsCEs = list()
 
         for b in task.actions:
             self.execsAction[b] = dict()
             AICEs = Happening.AICEs(b)
             for i, H in enumerate(AICEs):
-                prev = AICEs[i-1] if i > 0 else list()
+                prev = AICEs[i - 1] if i > 0 else list()
                 for h in H:
                     ex = Literal.freshSimple(f"exec({h.name})")
                     self.execsAction[b][h] = ex
                     actions.add(SnapHappeningAction.fromHappening(h, prev, self.execsAction[b]))
 
-        for i, h in enumerate(Happening.PICEs(task.conditions, task.effects)):
-            ex = Literal.freshSimple(f"exec({h.name})")
-            self.execsCEs.append(ex)
-            self.goal.addClause(ex)
-            actions.add(SnapHappeningAction.fromHappening(h, self.execsCEs, i))
+        PICEs = Happening.PICEs(task.conditions, task.effects)
+        self.execsCEs: Dict[Happening, Literal] = dict()
+        for i, H in enumerate(PICEs):
+            prev = PICEs[i - 1] if i > 0 else list()
+            for h in H:
+                ex = Literal.freshSimple(f"exec({h.name})")
+                self.execsCEs[h] = ex
+                self.goal.addClause(ex)
+                actions.add(SnapHappeningAction.fromHappening(h, prev, self.execsCEs))
 
         super().__init__("SnapPi", actions, set(), set(), set())
         self.computeLists()
