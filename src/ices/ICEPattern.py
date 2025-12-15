@@ -209,6 +209,6 @@ class ICEPattern:
     @classmethod
     def fromPlan(cls, plan) -> ICEPattern:
         # print(plan.timedHappenings)
-        pattern = ICEPattern.fromOrder([copy.copy(h) for (t, h, o, t_e) in sorted(plan.timedHappenings)])
-        ICEPattern.__setStartingAndEnding(pattern)
+        pattern = ICEPattern.fromOrder([copy.copy(h) for (t, o, h, t_e) in sorted(plan.timedHappenings)])
+        # ICEPattern.__setStartingAndEnding(pattern)
         return pattern

@@ -16,6 +16,7 @@ from src.pddl.Formula import Formula
 from src.pddl.Predicate import Predicate
 from src.pddl.State import State
 from src.plan.Encoding import Encoding
+from src.smt.SMTComment import SMTComment
 from src.smt.SMTConjunction import SMTConjunction
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTVariable import SMTVariable
@@ -71,9 +72,8 @@ class ICEEncoding(Encoding):
 
         self.rules = SMTConjunction()
         for (key, rules) in self.rulesBySet.items():
+            rules.insert(0, SMTComment(key))
             self.rules += rules
-
-        pass
 
     def __len__(self):
         return len(self.rules)
@@ -176,6 +176,9 @@ class ICEEncoding(Encoding):
 
         for b in self.task.actions:
 
+            if b.isSnap:
+                continue
+
             bCond: Set[Happening] = set()
             bEff: Set[Happening] = set()
 
@@ -205,6 +208,9 @@ class ICEEncoding(Encoding):
             h_q = hVars[pair.end]
             p = pair.startIndex
             q = pair.endIndex
+
+            if b.isSnap:
+                continue
 
             starting = []
             ices = []
@@ -269,6 +275,7 @@ class ICEEncoding(Encoding):
             if not isinstance(h, HappeningCondition):
                 continue
 
+            # if "clear-platform" not in h.name:
             rules.append((h_i > 0).implies(SMTExpression.fromPddl(h.condition.conditions, sigma_im1)))
 
             if not isinstance(h.parent, ICEAction) or not h.parent.isWellOrderable():
@@ -282,9 +289,6 @@ class ICEEncoding(Encoding):
 
             if rollingPsi:
                 rules.append((h_i > 1).implies(SMTExpression.bigand(rollingPsi)))
-
-        for r in rules:
-            print(r)
 
         return rules
 
@@ -309,6 +313,10 @@ class ICEEncoding(Encoding):
         piCond: List[HappeningCondition] = []
 
         for h in self.pattern:
+
+            if isinstance(h.parent, ICEAction) and h.parent.isSnap:
+                continue
+
             if isinstance(h, HappeningEffect) and isinstance(h.parent, PlanIntermediateEffect):
                 piEff.append(h)
             if isinstance(h, HappeningCondition) and isinstance(h.parent, PlanIntermediateCondition):
@@ -402,6 +410,9 @@ class ICEEncoding(Encoding):
 
             rules.append((h_i.equal(0)).implies((d_i.equal(0)) & (t_i.equal(0))))
             rules.append((h_i > 0).implies(d_i.equal(b.duration)))
+
+            if isinstance(h.parent, ICEAction) and h.parent.isSnap:
+                continue
 
             ending = [tVars[end].equal(t_i + d_i) for end in self.pattern[i + 1:] if end.ending == h.starting]
             rules.append((h_i > 0).implies(SMTExpression.bigor(ending)))

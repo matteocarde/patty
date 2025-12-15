@@ -193,7 +193,15 @@ class ICETransitionVariables:
     def __computeTimeVariables(self) -> Dict[Happening, SMTVariable]:
         variables: Dict[Happening, SMTVariable] = dict()
 
+        snapVariables: Dict[ICEAction, SMTVariable] = dict()
         for i, h in enumerate(self.pattern):
+
+            if isinstance(h.parent, ICEAction) and h.parent.isSnap:
+                b = h.parent
+                if h.starting:
+                    snapVariables[b] = SMTRealVariable(f"t_{str(h)}")
+                variables[h] = snapVariables[b]
+                continue
 
             if i > 0:
                 p = self.pattern[i - 1]

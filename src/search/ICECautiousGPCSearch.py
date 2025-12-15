@@ -7,6 +7,7 @@ from src.ices.ICETask import ICETask
 from src.pddl.Formula import Formula
 from src.pddl.Predicate import Predicate
 from src.pddl.State import State
+from src.smt.SMTSaver import SMTSaver
 from src.smt.SMTSolver import SMTSolver
 from src.utils.Arguments import Arguments
 from src.utils.LogPrint import LogPrintLevel, LogPrint
@@ -63,6 +64,9 @@ class ICECautiousGPCSearch:
             solution = solver.getSolution()
             solver.exit()
             self.ts.end(f"Solving Bound {bound}", console=self.console)
+
+            if self.args.saveSMT:
+                SMTSaver.save(encoding.rules, encoding.softRules, f"{self.args.saveSMT}-{callsToSolver}.smt")
 
             subgoalsAchievedNow = set()
             plan: ICEPlan = None

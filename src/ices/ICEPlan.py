@@ -29,7 +29,7 @@ class ICEPlan:
     timedHappenings: List[Tuple[float, Happening, int, float]]
 
     def __init__(self):
-        self.timedHappenings: List[Tuple[float, Happening, int, float]] = list()
+        self.timedHappenings: List[Tuple[float, int, Happening, float]] = list()
         self.timedActions = TimedICEActionList()
 
     @classmethod
@@ -48,14 +48,14 @@ class ICEPlan:
             mu_d_i: float = solution.getVariable(dVars[h_i]) if h_i.starting else "NA"
 
             if mu_h_i > 0:
-                print(h_i, f"x{mu_h_i}", f"t={mu_t_i}",
+                print(h_i, f"{hVars[h_i]}={mu_h_i}", f"{tVars[h_i]}=={mu_t_i}",
                       ("starts " + str(h_i.starting)) if h_i.starting else "",
                       ("ends " + str(h_i.ending)) if h_i.ending else "",
-                      f"d={mu_d_i}", f"t_end={mu_t_i_end}")
+                      f"d={mu_d_i}", f"{tEndVars[h_i] if h_i in tEndVars else 'NA'}={mu_t_i_end}")
 
             if mu_h_i:
                 order = 0 if isinstance(h_i, HappeningCondition) else 1
-                plan.timedHappenings.append((mu_t_i, h_i, order, mu_t_i_end))
+                plan.timedHappenings.append((mu_t_i, order, h_i, mu_t_i_end))
 
             if not h_i.starting:
                 continue
@@ -161,17 +161,20 @@ class ICEPlan:
 
                     # 2.a
                     if i == 0 and t_s == t:
-                        ValAssert(s.satisfies(cond), f"Rule 2.a - \n{s} [{t}] \nshould satisfy \n{cond} in [{t_s}, {t_e}]")
+                        ValAssert(s.satisfies(cond),
+                                  f"Rule 2.a - \n{s} [{t}] \nshould satisfy \n{cond} in [{t_s}, {t_e}]")
                         checked = True
 
                     # 2.b
                     if i < m and (t < t_s <= t_ or t < t_e <= t_):
-                        ValAssert(s.satisfies(cond), f"Rule 2.b - \n{s} [{t}] \nshould satisfy \n{cond} in [{t_s}, {t_e}]")
+                        ValAssert(s.satisfies(cond),
+                                  f"Rule 2.b - \n{s} [{t}] \nshould satisfy \n{cond} in [{t_s}, {t_e}]")
                         checked = True
 
                     # 2.c
                     if t_s < t < t_e:
-                        ValAssert(s.satisfies(cond), f"Rule 2.c - \n{s} [{t}] \nshould satisfy \n{cond} in [{t_s}, {t_e}]")
+                        ValAssert(s.satisfies(cond),
+                                  f"Rule 2.c - \n{s} [{t}] \nshould satisfy \n{cond} in [{t_s}, {t_e}]")
                         checked = True
 
                     # 2.d

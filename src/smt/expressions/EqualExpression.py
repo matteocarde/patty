@@ -6,6 +6,7 @@ from pysmt.shortcuts import Equals
 
 from src.smt.SMTBoolVariable import SMTBoolVariable
 from src.smt.SMTExpression import SMTExpression, NUMERIC, BOOLEAN
+from src.smt.SMTVariable import SMTVariable
 from src.smt.expressions.BinaryExpression import BinaryExpression
 from src.smt.expressions.ConstantExpression import ConstantExpression
 from src.smt.expressions.FalseExpression import FalseExpression
@@ -23,6 +24,8 @@ class EqualExpression(BinaryExpression):
     def simplify(cls, *xs):
         lhs = SMTExpression.numericConstant(xs[0])
         rhs = SMTExpression.numericConstant(xs[1])
+        if isinstance(lhs, SMTVariable) and isinstance(rhs, SMTVariable) and lhs == rhs:
+            return TrueExpression()
         if lhs.type == BOOLEAN:
             return IffExpression.simplify(lhs, rhs)
         if isinstance(lhs, ConstantExpression) and isinstance(rhs, ConstantExpression):
