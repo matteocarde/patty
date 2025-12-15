@@ -86,6 +86,7 @@ class Happening:
                 toJoin[t_start] = h
             elif t_start in toJoin:
                 h.snapConditions += toJoin[t_start].snapConditions
+            t_start = round(t_start)
             TH.setdefault(t_start, list())
             TH[t_start].append(h)
 

@@ -24,7 +24,7 @@ class RelativeTime:
         if self.k > 0:
             return f"{self.anchor.value} {sign} {self.k}"
         else:
-            return f"{self.anchor.value}"
+            return "AS" if self.anchor == ActionRelativeTimeAnchor.START else "ZE"
 
     def __eq__(self, other):
         if not isinstance(other, RelativeTime):
