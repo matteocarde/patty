@@ -114,15 +114,15 @@
 [start] timetable_T2 := false;
 [start] timetable_T3 := false;
 
-[start + 61] inFront_T1_01 := true;
-[start + 61] green_01 := true;
-[start + 514] timetable_T3 := true;
-[start + 40] timetable_T2 := true;
-[start + 348] inFront_T3_01 := true;
-[start + 348] green_01 := true;
-[start + 76] timetable_T1 := true;
-[start + 14] inFront_T2_03 := true;
-[start + 14] green_03 := true;
+[start + 751] timetable_T3 := true;
+[start + 722] inFront_T3_01 := true;
+[start + 722] green_01 := true;
+[start + 390] inFront_T1_01 := true;
+[start + 390] green_01 := true;
+[start + 433] timetable_T2 := true;
+[start + 417] inFront_T2_03 := true;
+[start + 417] green_03 := true;
+[start + 412] timetable_T1 := true;
 
 [start + 50, start + 65] occupied_102 == false;
 

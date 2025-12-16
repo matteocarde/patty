@@ -1,4 +1,5 @@
 import copy
+import math
 from typing import Set, Dict, List
 
 from src.ices.Happening import Happening
@@ -41,14 +42,16 @@ class SnapTask(GroundedDomain):
                     self.execsAction[b][h] = ex
                     actions.add(SnapHappeningAction.fromHappening(h, prev, self.execsAction[b]))
 
-        M = sum([c.toTime.k for c in task.conditions.icond] + [e.time.k for e in task.effects.ieff])
+        M = 2 * max([c.toTime.k for c in task.conditions.icond] + [e.time.k for e in task.effects.ieff])
 
         time = Literal.freshSimple(f"time_snap_patty")
 
-        for i in range(0, M + 1):
+        step = math.floor(math.sqrt(M))
+
+        for i in range(0, M + step, step):
             pre = Formula()
             if i > 0:
-                pre.addClause(BinaryPredicate.equality(time, float(i - 1)))
+                pre.addClause(BinaryPredicate.equality(time, float(i - step)))
             eff = Effects()
             eff.addEffect(BinaryPredicate.assign(time, i))
             a_i = SnapHappeningAction.fromProperties(f"time_flow_patty_{i}", [], pre, eff)

@@ -175,7 +175,7 @@ class ICEPattern:
         left: Set[SnapHappeningAction] = arpg.getUnusedActions()
 
         leftHappenings = dict([(aLeft.originatingHappening, aLeft) for aLeft in left])
-        actions: Set[ICEAction] = {aLeft.originatingHappening.parent for aLeft in left}
+        actions: Set[ICEAction] = {aLeft.originatingHappening.parent for aLeft in left if aLeft.originatingHappening}
         added: Set[Happening] = set()
 
         for b in sorted(actions):

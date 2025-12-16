@@ -133,7 +133,7 @@ class ICETask:
             lines.append(f"fluent integer {x.getSafeName()};")
 
         lines.append("")
-        for a in self.actions:
+        for a in sorted(self.actions):
             lines.append(a.toANML())
             lines.append("")
 
