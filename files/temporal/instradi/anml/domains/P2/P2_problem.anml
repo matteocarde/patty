@@ -2,16 +2,26 @@
 [start] exitCounter_02 := 0;
 [start] exitCounter_03 := 0;
 [start] exitCounter_04 := 0;
-[start] green_01 := false;
-[start] green_02 := false;
-[start] green_03 := false;
-[start] green_04 := false;
-[start] green_21 := false;
-[start] green_22 := false;
-[start] green_23 := false;
-[start] green_41 := false;
-[start] green_42 := false;
-[start] green_43 := false;
+[start] green_T1_01 := false;
+[start] green_T1_02 := false;
+[start] green_T1_03 := false;
+[start] green_T1_04 := false;
+[start] green_T1_21 := false;
+[start] green_T1_22 := false;
+[start] green_T1_23 := false;
+[start] green_T1_41 := false;
+[start] green_T1_42 := false;
+[start] green_T1_43 := false;
+[start] green_T2_01 := false;
+[start] green_T2_02 := false;
+[start] green_T2_03 := false;
+[start] green_T2_04 := false;
+[start] green_T2_21 := false;
+[start] green_T2_22 := false;
+[start] green_T2_23 := false;
+[start] green_T2_41 := false;
+[start] green_T2_42 := false;
+[start] green_T2_43 := false;
 [start] inFront_T1_01 := false;
 [start] inFront_T1_02 := false;
 [start] inFront_T1_03 := false;
@@ -94,12 +104,12 @@
 [start] timetable_T1 := false;
 [start] timetable_T2 := false;
 
-[start + 145] inFront_T1_03 := true;
-[start + 145] green_03 := true;
-[start + 599] timetable_T2 := true;
 [start + 578] inFront_T2_01 := true;
-[start + 578] green_01 := true;
+[start + 578] green_T2_01 := true;
+[start + 599] timetable_T2 := true;
 [start + 215] timetable_T1 := true;
+[start + 145] inFront_T1_03 := true;
+[start + 145] green_T1_03 := true;
 
 [start + 50, start + 65] occupied_102 == false;
 

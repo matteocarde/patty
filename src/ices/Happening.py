@@ -86,7 +86,7 @@ class Happening:
                 toJoin[t_start] = h
             elif t_start in toJoin:
                 h.snapConditions += toJoin[t_start].snapConditions
-            t_start = round(t_start)
+            t_start = t_start if t_start > EPSILON else 0
             TH.setdefault(t_start, list())
             TH[t_start].append(h)
 
@@ -110,6 +110,7 @@ class Happening:
     @staticmethod
     def PICEs(conditions: TimedConditions, effects: TimedEffects) -> List[List[Happening]]:
         return Happening.__ICEs(conditions, effects, None, 10000000)
+
     #
     # @classmethod
     # def PICEs(cls, conditions: TimedConditions, effects: TimedEffects) -> List[List[Happening]]:
