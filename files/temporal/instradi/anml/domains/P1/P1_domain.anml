@@ -52,6 +52,9 @@ fluent boolean occupied_122;
 fluent boolean occupied_123;
 fluent boolean occupied_124;
 fluent boolean stopped_T1;
+fluent boolean stoppedAtPlatform_T1_I;
+fluent boolean stoppedAtPlatform_T1_II;
+fluent boolean stoppedAtPlatform_T1_III;
 fluent boolean stopping_T1_I;
 fluent boolean stopping_T1_II;
 fluent boolean stopping_T1_III;
@@ -67,8 +70,9 @@ action depart_T1_I_41_04() {
 	duration := 10;
 	[start, start] inFront_T1_41 == true;
 	[start, start] stopped_T1 == true;
+	[start, start] stoppedAtPlatform_T1_I == true;
 	[start, start] timetable_T1 == true;
-	[start + 0.02, start + 0.02] moved_T1_41_04 == true;
+	[start + 0.002, start + 0.002] moved_T1_41_04 == true;
 
 	[start] green_41 := true;
 	[end] occupied_104 := false;
@@ -80,8 +84,9 @@ action depart_T1_II_42_04() {
 	duration := 10;
 	[start, start] inFront_T1_42 == true;
 	[start, start] stopped_T1 == true;
+	[start, start] stoppedAtPlatform_T1_II == true;
 	[start, start] timetable_T1 == true;
-	[start + 0.02, start + 0.02] moved_T1_42_04 == true;
+	[start + 0.002, start + 0.002] moved_T1_42_04 == true;
 
 	[start] green_42 := true;
 	[end] occupied_114 := false;
@@ -93,8 +98,9 @@ action depart_T1_III_43_04() {
 	duration := 10;
 	[start, start] inFront_T1_43 == true;
 	[start, start] stopped_T1 == true;
+	[start, start] stoppedAtPlatform_T1_III == true;
 	[start, start] timetable_T1 == true;
-	[start + 0.02, start + 0.02] moved_T1_43_04 == true;
+	[start + 0.002, start + 0.002] moved_T1_43_04 == true;
 
 	[start] green_43 := true;
 	[end] occupied_123 := false;
@@ -301,6 +307,7 @@ action stop_T1_41_I() {
 	[start] stopping_T1_I := true;
 	[end] stopping_T1_I := false;
 	[end] stopped_T1 := true;
+	[end] stoppedAtPlatform_T1_I := true;
 };
 
 action stop_T1_42_II() {
@@ -312,6 +319,7 @@ action stop_T1_42_II() {
 	[start] stopping_T1_II := true;
 	[end] stopping_T1_II := false;
 	[end] stopped_T1 := true;
+	[end] stoppedAtPlatform_T1_II := true;
 };
 
 action stop_T1_43_III() {
@@ -323,4 +331,5 @@ action stop_T1_43_III() {
 	[start] stopping_T1_III := true;
 	[end] stopping_T1_III := false;
 	[end] stopped_T1 := true;
+	[end] stoppedAtPlatform_T1_III := true;
 };

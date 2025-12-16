@@ -57,14 +57,17 @@
 [start] occupied_124 := false;
 [start] order_T1 := 0;
 [start] stopped_T1 := false;
+[start] stoppedAtPlatform_T1_I := false;
+[start] stoppedAtPlatform_T1_II := false;
+[start] stoppedAtPlatform_T1_III := false;
 [start] stopping_T1_I := false;
 [start] stopping_T1_II := false;
 [start] stopping_T1_III := false;
 [start] timetable_T1 := false;
 
-[start + 311] inFront_T1_01 := true;
-[start + 311] green_01 := true;
-[start + 330] timetable_T1 := true;
+[start + 24] inFront_T1_01 := true;
+[start + 24] green_01 := true;
+[start + 104] timetable_T1 := true;
 
 [start + 50, start + 65] occupied_102 == false;
 

@@ -50,18 +50,18 @@ fluent boolean left_T3_01;
 fluent boolean left_T3_02;
 fluent boolean left_T3_03;
 fluent boolean left_T3_04;
-fluent boolean moved_T1_01_41;
-fluent boolean moved_T1_01_42;
-fluent boolean moved_T1_01_43;
-fluent boolean moved_T1_41_04;
-fluent boolean moved_T1_42_04;
-fluent boolean moved_T1_43_04;
-fluent boolean moved_T2_03_21;
-fluent boolean moved_T2_03_22;
-fluent boolean moved_T2_03_23;
-fluent boolean moved_T2_21_02;
-fluent boolean moved_T2_22_02;
-fluent boolean moved_T2_23_02;
+fluent boolean moved_T1_03_21;
+fluent boolean moved_T1_03_22;
+fluent boolean moved_T1_03_23;
+fluent boolean moved_T1_21_02;
+fluent boolean moved_T1_22_02;
+fluent boolean moved_T1_23_02;
+fluent boolean moved_T2_01_41;
+fluent boolean moved_T2_01_42;
+fluent boolean moved_T2_01_43;
+fluent boolean moved_T2_41_04;
+fluent boolean moved_T2_42_04;
+fluent boolean moved_T2_43_04;
 fluent boolean moved_T3_01_41;
 fluent boolean moved_T3_01_42;
 fluent boolean moved_T3_01_43;
@@ -94,6 +94,15 @@ fluent boolean occupied_124;
 fluent boolean stopped_T1;
 fluent boolean stopped_T2;
 fluent boolean stopped_T3;
+fluent boolean stoppedAtPlatform_T1_I;
+fluent boolean stoppedAtPlatform_T1_II;
+fluent boolean stoppedAtPlatform_T1_III;
+fluent boolean stoppedAtPlatform_T2_I;
+fluent boolean stoppedAtPlatform_T2_II;
+fluent boolean stoppedAtPlatform_T2_III;
+fluent boolean stoppedAtPlatform_T3_I;
+fluent boolean stoppedAtPlatform_T3_II;
+fluent boolean stoppedAtPlatform_T3_III;
 fluent boolean stopping_T1_I;
 fluent boolean stopping_T1_II;
 fluent boolean stopping_T1_III;
@@ -115,49 +124,13 @@ fluent integer order_T1;
 fluent integer order_T2;
 fluent integer order_T3;
 
-action depart_T1_I_41_04() {
+action depart_T1_I_21_02() {
 	duration := 10;
-	[start, start] inFront_T1_41 == true;
+	[start, start] inFront_T1_21 == true;
 	[start, start] stopped_T1 == true;
+	[start, start] stoppedAtPlatform_T1_I == true;
 	[start, start] timetable_T1 == true;
-	[start + 0.02, start + 0.02] moved_T1_41_04 == true;
-
-	[start] green_41 := true;
-	[end] occupied_104 := false;
-	[end] occupied_105 := false;
-	[end] occupied_106 := false;
-};
-
-action depart_T1_II_42_04() {
-	duration := 10;
-	[start, start] inFront_T1_42 == true;
-	[start, start] stopped_T1 == true;
-	[start, start] timetable_T1 == true;
-	[start + 0.02, start + 0.02] moved_T1_42_04 == true;
-
-	[start] green_42 := true;
-	[end] occupied_114 := false;
-	[end] occupied_115 := false;
-	[end] occupied_116 := false;
-};
-
-action depart_T1_III_43_04() {
-	duration := 10;
-	[start, start] inFront_T1_43 == true;
-	[start, start] stopped_T1 == true;
-	[start, start] timetable_T1 == true;
-	[start + 0.02, start + 0.02] moved_T1_43_04 == true;
-
-	[start] green_43 := true;
-	[end] occupied_123 := false;
-};
-
-action depart_T2_I_21_02() {
-	duration := 10;
-	[start, start] inFront_T2_21 == true;
-	[start, start] stopped_T2 == true;
-	[start, start] timetable_T2 == true;
-	[start + 0.02, start + 0.02] moved_T2_21_02 == true;
+	[start + 0.002, start + 0.002] moved_T1_21_02 == true;
 
 	[start] green_21 := true;
 	[end] occupied_104 := false;
@@ -165,12 +138,13 @@ action depart_T2_I_21_02() {
 	[end] occupied_106 := false;
 };
 
-action depart_T2_II_22_02() {
+action depart_T1_II_22_02() {
 	duration := 10;
-	[start, start] inFront_T2_22 == true;
-	[start, start] stopped_T2 == true;
-	[start, start] timetable_T2 == true;
-	[start + 0.02, start + 0.02] moved_T2_22_02 == true;
+	[start, start] inFront_T1_22 == true;
+	[start, start] stopped_T1 == true;
+	[start, start] stoppedAtPlatform_T1_II == true;
+	[start, start] timetable_T1 == true;
+	[start + 0.002, start + 0.002] moved_T1_22_02 == true;
 
 	[start] green_22 := true;
 	[end] occupied_114 := false;
@@ -178,14 +152,55 @@ action depart_T2_II_22_02() {
 	[end] occupied_116 := false;
 };
 
-action depart_T2_III_23_02() {
+action depart_T1_III_23_02() {
 	duration := 10;
-	[start, start] inFront_T2_23 == true;
-	[start, start] stopped_T2 == true;
-	[start, start] timetable_T2 == true;
-	[start + 0.02, start + 0.02] moved_T2_23_02 == true;
+	[start, start] inFront_T1_23 == true;
+	[start, start] stopped_T1 == true;
+	[start, start] stoppedAtPlatform_T1_III == true;
+	[start, start] timetable_T1 == true;
+	[start + 0.002, start + 0.002] moved_T1_23_02 == true;
 
 	[start] green_23 := true;
+	[end] occupied_123 := false;
+};
+
+action depart_T2_I_41_04() {
+	duration := 10;
+	[start, start] inFront_T2_41 == true;
+	[start, start] stopped_T2 == true;
+	[start, start] stoppedAtPlatform_T2_I == true;
+	[start, start] timetable_T2 == true;
+	[start + 0.002, start + 0.002] moved_T2_41_04 == true;
+
+	[start] green_41 := true;
+	[end] occupied_104 := false;
+	[end] occupied_105 := false;
+	[end] occupied_106 := false;
+};
+
+action depart_T2_II_42_04() {
+	duration := 10;
+	[start, start] inFront_T2_42 == true;
+	[start, start] stopped_T2 == true;
+	[start, start] stoppedAtPlatform_T2_II == true;
+	[start, start] timetable_T2 == true;
+	[start + 0.002, start + 0.002] moved_T2_42_04 == true;
+
+	[start] green_42 := true;
+	[end] occupied_114 := false;
+	[end] occupied_115 := false;
+	[end] occupied_116 := false;
+};
+
+action depart_T2_III_43_04() {
+	duration := 10;
+	[start, start] inFront_T2_43 == true;
+	[start, start] stopped_T2 == true;
+	[start, start] stoppedAtPlatform_T2_III == true;
+	[start, start] timetable_T2 == true;
+	[start + 0.002, start + 0.002] moved_T2_43_04 == true;
+
+	[start] green_43 := true;
 	[end] occupied_123 := false;
 };
 
@@ -193,8 +208,9 @@ action depart_T3_I_41_04() {
 	duration := 10;
 	[start, start] inFront_T3_41 == true;
 	[start, start] stopped_T3 == true;
+	[start, start] stoppedAtPlatform_T3_I == true;
 	[start, start] timetable_T3 == true;
-	[start + 0.02, start + 0.02] moved_T3_41_04 == true;
+	[start + 0.002, start + 0.002] moved_T3_41_04 == true;
 
 	[start] green_41 := true;
 	[end] occupied_104 := false;
@@ -206,8 +222,9 @@ action depart_T3_II_42_04() {
 	duration := 10;
 	[start, start] inFront_T3_42 == true;
 	[start, start] stopped_T3 == true;
+	[start, start] stoppedAtPlatform_T3_II == true;
 	[start, start] timetable_T3 == true;
-	[start + 0.02, start + 0.02] moved_T3_42_04 == true;
+	[start + 0.002, start + 0.002] moved_T3_42_04 == true;
 
 	[start] green_42 := true;
 	[end] occupied_114 := false;
@@ -219,77 +236,78 @@ action depart_T3_III_43_04() {
 	duration := 10;
 	[start, start] inFront_T3_43 == true;
 	[start, start] stopped_T3 == true;
+	[start, start] stoppedAtPlatform_T3_III == true;
 	[start, start] timetable_T3 == true;
-	[start + 0.02, start + 0.02] moved_T3_43_04 == true;
+	[start + 0.002, start + 0.002] moved_T3_43_04 == true;
 
 	[start] green_43 := true;
 	[end] occupied_123 := false;
 };
 
-action exit_T1_41_04() {
+action exit_T1_21_02() {
 	duration := 1;
-	[start, start] inFront_T1_04 == true;
-	[start, start] exitCounter_04 == order_T1;
+	[start, start] inFront_T1_02 == true;
+	[start, start] exitCounter_02 == order_T1;
 
-	[start] left_T1_04 := true;
-	[start] inFront_T1_04 := false;
-	[start] occupied_120 := false;
-	[start] exitCounter_04 := exitCounter_04 + 1;
-};
-
-action exit_T1_42_04() {
-	duration := 1;
-	[start, start] inFront_T1_04 == true;
-	[start, start] exitCounter_04 == order_T1;
-
-	[start] left_T1_04 := true;
-	[start] inFront_T1_04 := false;
-	[start] occupied_120 := false;
-	[start] exitCounter_04 := exitCounter_04 + 1;
-};
-
-action exit_T1_43_04() {
-	duration := 1;
-	[start, start] inFront_T1_04 == true;
-	[start, start] exitCounter_04 == order_T1;
-
-	[start] left_T1_04 := true;
-	[start] inFront_T1_04 := false;
-	[start] occupied_120 := false;
-	[start] exitCounter_04 := exitCounter_04 + 1;
-};
-
-action exit_T2_21_02() {
-	duration := 1;
-	[start, start] inFront_T2_02 == true;
-	[start, start] exitCounter_02 == order_T2;
-
-	[start] left_T2_02 := true;
-	[start] inFront_T2_02 := false;
+	[start] left_T1_02 := true;
+	[start] inFront_T1_02 := false;
 	[start] occupied_101 := false;
 	[start] exitCounter_02 := exitCounter_02 + 1;
 };
 
-action exit_T2_22_02() {
+action exit_T1_22_02() {
 	duration := 1;
-	[start, start] inFront_T2_02 == true;
-	[start, start] exitCounter_02 == order_T2;
+	[start, start] inFront_T1_02 == true;
+	[start, start] exitCounter_02 == order_T1;
 
-	[start] left_T2_02 := true;
-	[start] inFront_T2_02 := false;
+	[start] left_T1_02 := true;
+	[start] inFront_T1_02 := false;
 	[start] occupied_101 := false;
 	[start] exitCounter_02 := exitCounter_02 + 1;
 };
 
-action exit_T2_23_02() {
+action exit_T1_23_02() {
 	duration := 1;
-	[start, start] inFront_T2_02 == true;
-	[start, start] exitCounter_02 == order_T2;
+	[start, start] inFront_T1_02 == true;
+	[start, start] exitCounter_02 == order_T1;
 
-	[start] left_T2_02 := true;
-	[start] inFront_T2_02 := false;
+	[start] left_T1_02 := true;
+	[start] inFront_T1_02 := false;
 	[start] occupied_101 := false;
 	[start] exitCounter_02 := exitCounter_02 + 1;
+};
+
+action exit_T2_41_04() {
+	duration := 1;
+	[start, start] inFront_T2_04 == true;
+	[start, start] exitCounter_04 == order_T2;
+
+	[start] left_T2_04 := true;
+	[start] inFront_T2_04 := false;
+	[start] occupied_120 := false;
+	[start] exitCounter_04 := exitCounter_04 + 1;
+};
+
+action exit_T2_42_04() {
+	duration := 1;
+	[start, start] inFront_T2_04 == true;
+	[start, start] exitCounter_04 == order_T2;
+
+	[start] left_T2_04 := true;
+	[start] inFront_T2_04 := false;
+	[start] occupied_120 := false;
+	[start] exitCounter_04 := exitCounter_04 + 1;
+};
+
+action exit_T2_43_04() {
+	duration := 1;
+	[start, start] inFront_T2_04 == true;
+	[start, start] exitCounter_04 == order_T2;
+
+	[start] left_T2_04 := true;
+	[start] inFront_T2_04 := false;
+	[start] occupied_120 := false;
+	[start] exitCounter_04 := exitCounter_04 + 1;
 };
 
 action exit_T3_41_04() {
@@ -325,168 +343,9 @@ action exit_T3_43_04() {
 	[start] exitCounter_04 := exitCounter_04 + 1;
 };
 
-action move_T1_01_41() {
-	duration := 40;
-	[start, start] inFront_T1_01 == true;
-	[start, start] green_01 == true;
-	[start, start] occupied_110 == false;
-	[start, start] occupied_111 == false;
-	[start, start] occupied_112 == false;
-	[start, start] occupied_113 == false;
-	[start, start] occupied_103 == false;
-	[start, start] occupied_104 == false;
-	[start, start] occupied_105 == false;
-	[start, start] occupied_106 == false;
-
-	[start] green_01 := false;
-	[start] inFront_T1_01 := false;
-	[start] moved_T1_01_41 := true;
-	[start] occupied_110 := true;
-	[start] occupied_111 := true;
-	[start] occupied_112 := true;
-	[start] occupied_113 := true;
-	[start] occupied_103 := true;
-	[start] occupied_104 := true;
-	[start] occupied_105 := true;
-	[start] occupied_106 := true;
-	[start + 5] occupied_110 := false;
-	[start + 10] occupied_111 := false;
-	[start + 15] occupied_112 := false;
-	[start + 20] occupied_113 := false;
-	[start + 25] occupied_103 := false;
-	[start + 30] occupied_104 := false;
-	[start + 35] occupied_105 := false;
-	[end] inFront_T1_41 := true;
-};
-
-action move_T1_01_42() {
-	duration := 35;
-	[start, start] inFront_T1_01 == true;
-	[start, start] green_01 == true;
-	[start, start] occupied_110 == false;
-	[start, start] occupied_111 == false;
-	[start, start] occupied_112 == false;
-	[start, start] occupied_113 == false;
-	[start, start] occupied_114 == false;
-	[start, start] occupied_114 == false;
-	[start, start] occupied_116 == false;
-
-	[start] green_01 := false;
-	[start] inFront_T1_01 := false;
-	[start] moved_T1_01_42 := true;
-	[start] occupied_110 := true;
-	[start] occupied_111 := true;
-	[start] occupied_112 := true;
-	[start] occupied_113 := true;
-	[start] occupied_114 := true;
-	[start] occupied_114 := true;
-	[start] occupied_116 := true;
-	[start + 5] occupied_110 := false;
-	[start + 10] occupied_111 := false;
-	[start + 15] occupied_112 := false;
-	[start + 20] occupied_113 := false;
-	[start + 25] occupied_114 := false;
-	[start + 30] occupied_114 := false;
-	[end] inFront_T1_42 := true;
-};
-
-action move_T1_01_43() {
-	duration := 25;
-	[start, start] inFront_T1_01 == true;
-	[start, start] green_01 == true;
-	[start, start] occupied_110 == false;
-	[start, start] occupied_111 == false;
-	[start, start] occupied_112 == false;
-	[start, start] occupied_122 == false;
-	[start, start] occupied_123 == false;
-
-	[start] green_01 := false;
-	[start] inFront_T1_01 := false;
-	[start] moved_T1_01_43 := true;
-	[start] occupied_110 := true;
-	[start] occupied_111 := true;
-	[start] occupied_112 := true;
-	[start] occupied_122 := true;
-	[start] occupied_123 := true;
-	[start + 5] occupied_110 := false;
-	[start + 10] occupied_111 := false;
-	[start + 15] occupied_112 := false;
-	[start + 20] occupied_122 := false;
-	[end] inFront_T1_43 := true;
-};
-
-action move_T1_41_04() {
-	duration := 25;
-	[start, start] inFront_T1_41 == true;
-	[start, start] green_41 == true;
-	[start, start] occupied_107 == false;
-	[start, start] occupied_117 == false;
-	[start, start] occupied_118 == false;
-	[start, start] occupied_119 == false;
-	[start, start] occupied_120 == false;
-
-	[start] green_41 := false;
-	[start] inFront_T1_41 := false;
-	[start] moved_T1_41_04 := true;
-	[start] occupied_107 := true;
-	[start] occupied_117 := true;
-	[start] occupied_118 := true;
-	[start] occupied_119 := true;
-	[start] occupied_120 := true;
-	[start + 5] occupied_107 := false;
-	[start + 10] occupied_117 := false;
-	[start + 15] occupied_118 := false;
-	[start + 20] occupied_119 := false;
-	[end] inFront_T1_04 := true;
-};
-
-action move_T1_42_04() {
-	duration := 20;
-	[start, start] inFront_T1_42 == true;
-	[start, start] green_42 == true;
-	[start, start] occupied_117 == false;
-	[start, start] occupied_118 == false;
-	[start, start] occupied_119 == false;
-	[start, start] occupied_120 == false;
-
-	[start] green_42 := false;
-	[start] inFront_T1_42 := false;
-	[start] moved_T1_42_04 := true;
-	[start] occupied_117 := true;
-	[start] occupied_118 := true;
-	[start] occupied_119 := true;
-	[start] occupied_120 := true;
-	[start + 5] occupied_117 := false;
-	[start + 10] occupied_118 := false;
-	[start + 15] occupied_119 := false;
-	[end] inFront_T1_04 := true;
-};
-
-action move_T1_43_04() {
-	duration := 20;
-	[start, start] inFront_T1_43 == true;
-	[start, start] green_43 == true;
-	[start, start] occupied_124 == false;
-	[start, start] occupied_118 == false;
-	[start, start] occupied_119 == false;
-	[start, start] occupied_120 == false;
-
-	[start] green_43 := false;
-	[start] inFront_T1_43 := false;
-	[start] moved_T1_43_04 := true;
-	[start] occupied_124 := true;
-	[start] occupied_118 := true;
-	[start] occupied_119 := true;
-	[start] occupied_120 := true;
-	[start + 5] occupied_124 := false;
-	[start + 10] occupied_118 := false;
-	[start + 15] occupied_119 := false;
-	[end] inFront_T1_04 := true;
-};
-
-action move_T2_03_21() {
+action move_T1_03_21() {
 	duration := 30;
-	[start, start] inFront_T2_03 == true;
+	[start, start] inFront_T1_03 == true;
 	[start, start] green_03 == true;
 	[start, start] occupied_109 == false;
 	[start, start] occupied_108 == false;
@@ -496,8 +355,8 @@ action move_T2_03_21() {
 	[start, start] occupied_104 == false;
 
 	[start] green_03 := false;
-	[start] inFront_T2_03 := false;
-	[start] moved_T2_03_21 := true;
+	[start] inFront_T1_03 := false;
+	[start] moved_T1_03_21 := true;
 	[start] occupied_109 := true;
 	[start] occupied_108 := true;
 	[start] occupied_107 := true;
@@ -509,12 +368,12 @@ action move_T2_03_21() {
 	[start + 15] occupied_107 := false;
 	[start + 20] occupied_106 := false;
 	[start + 25] occupied_105 := false;
-	[end] inFront_T2_21 := true;
+	[end] inFront_T1_21 := true;
 };
 
-action move_T2_03_22() {
+action move_T1_03_22() {
 	duration := 40;
-	[start, start] inFront_T2_03 == true;
+	[start, start] inFront_T1_03 == true;
 	[start, start] green_03 == true;
 	[start, start] occupied_109 == false;
 	[start, start] occupied_108 == false;
@@ -526,8 +385,8 @@ action move_T2_03_22() {
 	[start, start] occupied_114 == false;
 
 	[start] green_03 := false;
-	[start] inFront_T2_03 := false;
-	[start] moved_T2_03_22 := true;
+	[start] inFront_T1_03 := false;
+	[start] moved_T1_03_22 := true;
 	[start] occupied_109 := true;
 	[start] occupied_108 := true;
 	[start] occupied_119 := true;
@@ -543,12 +402,12 @@ action move_T2_03_22() {
 	[start + 25] occupied_117 := false;
 	[start + 30] occupied_116 := false;
 	[start + 35] occupied_115 := false;
-	[end] inFront_T2_22 := true;
+	[end] inFront_T1_22 := true;
 };
 
-action move_T2_03_23() {
+action move_T1_03_23() {
 	duration := 30;
-	[start, start] inFront_T2_03 == true;
+	[start, start] inFront_T1_03 == true;
 	[start, start] green_03 == true;
 	[start, start] occupied_109 == false;
 	[start, start] occupied_108 == false;
@@ -558,8 +417,8 @@ action move_T2_03_23() {
 	[start, start] occupied_123 == false;
 
 	[start] green_03 := false;
-	[start] inFront_T2_03 := false;
-	[start] moved_T2_03_23 := true;
+	[start] inFront_T1_03 := false;
+	[start] moved_T1_03_23 := true;
 	[start] occupied_109 := true;
 	[start] occupied_108 := true;
 	[start] occupied_119 := true;
@@ -571,31 +430,31 @@ action move_T2_03_23() {
 	[start + 15] occupied_119 := false;
 	[start + 20] occupied_118 := false;
 	[start + 25] occupied_124 := false;
-	[end] inFront_T2_23 := true;
+	[end] inFront_T1_23 := true;
 };
 
-action move_T2_21_02() {
+action move_T1_21_02() {
 	duration := 15;
-	[start, start] inFront_T2_21 == true;
+	[start, start] inFront_T1_21 == true;
 	[start, start] green_21 == true;
 	[start, start] occupied_103 == false;
 	[start, start] occupied_102 == false;
 	[start, start] occupied_101 == false;
 
 	[start] green_21 := false;
-	[start] inFront_T2_21 := false;
-	[start] moved_T2_21_02 := true;
+	[start] inFront_T1_21 := false;
+	[start] moved_T1_21_02 := true;
 	[start] occupied_103 := true;
 	[start] occupied_102 := true;
 	[start] occupied_101 := true;
 	[start + 5] occupied_103 := false;
 	[start + 10] occupied_102 := false;
-	[end] inFront_T2_02 := true;
+	[end] inFront_T1_02 := true;
 };
 
-action move_T2_22_02() {
+action move_T1_22_02() {
 	duration := 25;
-	[start, start] inFront_T2_22 == true;
+	[start, start] inFront_T1_22 == true;
 	[start, start] green_22 == true;
 	[start, start] occupied_113 == false;
 	[start, start] occupied_112 == false;
@@ -604,8 +463,8 @@ action move_T2_22_02() {
 	[start, start] occupied_101 == false;
 
 	[start] green_22 := false;
-	[start] inFront_T2_22 := false;
-	[start] moved_T2_22_02 := true;
+	[start] inFront_T1_22 := false;
+	[start] moved_T1_22_02 := true;
 	[start] occupied_113 := true;
 	[start] occupied_112 := true;
 	[start] occupied_111 := true;
@@ -615,12 +474,12 @@ action move_T2_22_02() {
 	[start + 10] occupied_112 := false;
 	[start + 15] occupied_111 := false;
 	[start + 20] occupied_102 := false;
-	[end] inFront_T2_02 := true;
+	[end] inFront_T1_02 := true;
 };
 
-action move_T2_23_02() {
+action move_T1_23_02() {
 	duration := 25;
-	[start, start] inFront_T2_23 == true;
+	[start, start] inFront_T1_23 == true;
 	[start, start] green_23 == true;
 	[start, start] occupied_122 == false;
 	[start, start] occupied_112 == false;
@@ -629,8 +488,8 @@ action move_T2_23_02() {
 	[start, start] occupied_101 == false;
 
 	[start] green_23 := false;
-	[start] inFront_T2_23 := false;
-	[start] moved_T2_23_02 := true;
+	[start] inFront_T1_23 := false;
+	[start] moved_T1_23_02 := true;
 	[start] occupied_122 := true;
 	[start] occupied_112 := true;
 	[start] occupied_111 := true;
@@ -640,7 +499,166 @@ action move_T2_23_02() {
 	[start + 10] occupied_112 := false;
 	[start + 15] occupied_111 := false;
 	[start + 20] occupied_102 := false;
-	[end] inFront_T2_02 := true;
+	[end] inFront_T1_02 := true;
+};
+
+action move_T2_01_41() {
+	duration := 40;
+	[start, start] inFront_T2_01 == true;
+	[start, start] green_01 == true;
+	[start, start] occupied_110 == false;
+	[start, start] occupied_111 == false;
+	[start, start] occupied_112 == false;
+	[start, start] occupied_113 == false;
+	[start, start] occupied_103 == false;
+	[start, start] occupied_104 == false;
+	[start, start] occupied_105 == false;
+	[start, start] occupied_106 == false;
+
+	[start] green_01 := false;
+	[start] inFront_T2_01 := false;
+	[start] moved_T2_01_41 := true;
+	[start] occupied_110 := true;
+	[start] occupied_111 := true;
+	[start] occupied_112 := true;
+	[start] occupied_113 := true;
+	[start] occupied_103 := true;
+	[start] occupied_104 := true;
+	[start] occupied_105 := true;
+	[start] occupied_106 := true;
+	[start + 5] occupied_110 := false;
+	[start + 10] occupied_111 := false;
+	[start + 15] occupied_112 := false;
+	[start + 20] occupied_113 := false;
+	[start + 25] occupied_103 := false;
+	[start + 30] occupied_104 := false;
+	[start + 35] occupied_105 := false;
+	[end] inFront_T2_41 := true;
+};
+
+action move_T2_01_42() {
+	duration := 35;
+	[start, start] inFront_T2_01 == true;
+	[start, start] green_01 == true;
+	[start, start] occupied_110 == false;
+	[start, start] occupied_111 == false;
+	[start, start] occupied_112 == false;
+	[start, start] occupied_113 == false;
+	[start, start] occupied_114 == false;
+	[start, start] occupied_114 == false;
+	[start, start] occupied_116 == false;
+
+	[start] green_01 := false;
+	[start] inFront_T2_01 := false;
+	[start] moved_T2_01_42 := true;
+	[start] occupied_110 := true;
+	[start] occupied_111 := true;
+	[start] occupied_112 := true;
+	[start] occupied_113 := true;
+	[start] occupied_114 := true;
+	[start] occupied_114 := true;
+	[start] occupied_116 := true;
+	[start + 5] occupied_110 := false;
+	[start + 10] occupied_111 := false;
+	[start + 15] occupied_112 := false;
+	[start + 20] occupied_113 := false;
+	[start + 25] occupied_114 := false;
+	[start + 30] occupied_114 := false;
+	[end] inFront_T2_42 := true;
+};
+
+action move_T2_01_43() {
+	duration := 25;
+	[start, start] inFront_T2_01 == true;
+	[start, start] green_01 == true;
+	[start, start] occupied_110 == false;
+	[start, start] occupied_111 == false;
+	[start, start] occupied_112 == false;
+	[start, start] occupied_122 == false;
+	[start, start] occupied_123 == false;
+
+	[start] green_01 := false;
+	[start] inFront_T2_01 := false;
+	[start] moved_T2_01_43 := true;
+	[start] occupied_110 := true;
+	[start] occupied_111 := true;
+	[start] occupied_112 := true;
+	[start] occupied_122 := true;
+	[start] occupied_123 := true;
+	[start + 5] occupied_110 := false;
+	[start + 10] occupied_111 := false;
+	[start + 15] occupied_112 := false;
+	[start + 20] occupied_122 := false;
+	[end] inFront_T2_43 := true;
+};
+
+action move_T2_41_04() {
+	duration := 25;
+	[start, start] inFront_T2_41 == true;
+	[start, start] green_41 == true;
+	[start, start] occupied_107 == false;
+	[start, start] occupied_117 == false;
+	[start, start] occupied_118 == false;
+	[start, start] occupied_119 == false;
+	[start, start] occupied_120 == false;
+
+	[start] green_41 := false;
+	[start] inFront_T2_41 := false;
+	[start] moved_T2_41_04 := true;
+	[start] occupied_107 := true;
+	[start] occupied_117 := true;
+	[start] occupied_118 := true;
+	[start] occupied_119 := true;
+	[start] occupied_120 := true;
+	[start + 5] occupied_107 := false;
+	[start + 10] occupied_117 := false;
+	[start + 15] occupied_118 := false;
+	[start + 20] occupied_119 := false;
+	[end] inFront_T2_04 := true;
+};
+
+action move_T2_42_04() {
+	duration := 20;
+	[start, start] inFront_T2_42 == true;
+	[start, start] green_42 == true;
+	[start, start] occupied_117 == false;
+	[start, start] occupied_118 == false;
+	[start, start] occupied_119 == false;
+	[start, start] occupied_120 == false;
+
+	[start] green_42 := false;
+	[start] inFront_T2_42 := false;
+	[start] moved_T2_42_04 := true;
+	[start] occupied_117 := true;
+	[start] occupied_118 := true;
+	[start] occupied_119 := true;
+	[start] occupied_120 := true;
+	[start + 5] occupied_117 := false;
+	[start + 10] occupied_118 := false;
+	[start + 15] occupied_119 := false;
+	[end] inFront_T2_04 := true;
+};
+
+action move_T2_43_04() {
+	duration := 20;
+	[start, start] inFront_T2_43 == true;
+	[start, start] green_43 == true;
+	[start, start] occupied_124 == false;
+	[start, start] occupied_118 == false;
+	[start, start] occupied_119 == false;
+	[start, start] occupied_120 == false;
+
+	[start] green_43 := false;
+	[start] inFront_T2_43 := false;
+	[start] moved_T2_43_04 := true;
+	[start] occupied_124 := true;
+	[start] occupied_118 := true;
+	[start] occupied_119 := true;
+	[start] occupied_120 := true;
+	[start + 5] occupied_124 := false;
+	[start + 10] occupied_118 := false;
+	[start + 15] occupied_119 := false;
+	[end] inFront_T2_04 := true;
 };
 
 action move_T3_01_41() {
@@ -802,70 +820,76 @@ action move_T3_43_04() {
 	[end] inFront_T3_04 := true;
 };
 
-action stop_T1_41_I() {
+action stop_T1_21_I() {
 	duration := 20;
-	[start, start] inFront_T1_41 == true;
+	[start, start] inFront_T1_21 == true;
 	[start, start] stopped_T1 == false;
 	[start, start] stopping_T1_I == false;
 
 	[start] stopping_T1_I := true;
 	[end] stopping_T1_I := false;
 	[end] stopped_T1 := true;
+	[end] stoppedAtPlatform_T1_I := true;
 };
 
-action stop_T1_42_II() {
+action stop_T1_22_II() {
 	duration := 20;
-	[start, start] inFront_T1_42 == true;
+	[start, start] inFront_T1_22 == true;
 	[start, start] stopped_T1 == false;
 	[start, start] stopping_T1_II == false;
 
 	[start] stopping_T1_II := true;
 	[end] stopping_T1_II := false;
 	[end] stopped_T1 := true;
+	[end] stoppedAtPlatform_T1_II := true;
 };
 
-action stop_T1_43_III() {
+action stop_T1_23_III() {
 	duration := 20;
-	[start, start] inFront_T1_43 == true;
+	[start, start] inFront_T1_23 == true;
 	[start, start] stopped_T1 == false;
 	[start, start] stopping_T1_III == false;
 
 	[start] stopping_T1_III := true;
 	[end] stopping_T1_III := false;
 	[end] stopped_T1 := true;
+	[end] stoppedAtPlatform_T1_III := true;
 };
 
-action stop_T2_21_I() {
+action stop_T2_41_I() {
 	duration := 20;
-	[start, start] inFront_T2_21 == true;
+	[start, start] inFront_T2_41 == true;
 	[start, start] stopped_T2 == false;
 	[start, start] stopping_T2_I == false;
 
 	[start] stopping_T2_I := true;
 	[end] stopping_T2_I := false;
 	[end] stopped_T2 := true;
+	[end] stoppedAtPlatform_T2_I := true;
 };
 
-action stop_T2_22_II() {
+action stop_T2_42_II() {
 	duration := 20;
-	[start, start] inFront_T2_22 == true;
+	[start, start] inFront_T2_42 == true;
 	[start, start] stopped_T2 == false;
 	[start, start] stopping_T2_II == false;
 
 	[start] stopping_T2_II := true;
 	[end] stopping_T2_II := false;
 	[end] stopped_T2 := true;
+	[end] stoppedAtPlatform_T2_II := true;
 };
 
-action stop_T2_23_III() {
+action stop_T2_43_III() {
 	duration := 20;
-	[start, start] inFront_T2_23 == true;
+	[start, start] inFront_T2_43 == true;
 	[start, start] stopped_T2 == false;
 	[start, start] stopping_T2_III == false;
 
 	[start] stopping_T2_III := true;
 	[end] stopping_T2_III := false;
 	[end] stopped_T2 := true;
+	[end] stoppedAtPlatform_T2_III := true;
 };
 
 action stop_T3_41_I() {
@@ -877,6 +901,7 @@ action stop_T3_41_I() {
 	[start] stopping_T3_I := true;
 	[end] stopping_T3_I := false;
 	[end] stopped_T3 := true;
+	[end] stoppedAtPlatform_T3_I := true;
 };
 
 action stop_T3_42_II() {
@@ -888,6 +913,7 @@ action stop_T3_42_II() {
 	[start] stopping_T3_II := true;
 	[end] stopping_T3_II := false;
 	[end] stopped_T3 := true;
+	[end] stoppedAtPlatform_T3_II := true;
 };
 
 action stop_T3_43_III() {
@@ -899,4 +925,5 @@ action stop_T3_43_III() {
 	[start] stopping_T3_III := true;
 	[end] stopping_T3_III := false;
 	[end] stopped_T3 := true;
+	[end] stoppedAtPlatform_T3_III := true;
 };
