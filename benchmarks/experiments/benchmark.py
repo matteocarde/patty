@@ -24,6 +24,7 @@ from classes.planners.Patty import Patty
 from classes.planners.Planner import Planner
 from classes.planners.SpringRoll import SpringRoll
 from classes.planners.TFD import TFD
+from classes.planners.Tamer import Tamer
 
 my_config = Config(
     region_name='eu-central-1',
@@ -93,6 +94,7 @@ PLANNERS: Dict[str, Planner] = {
     "OPTIC": Optic(),
     "ITSAT": ITSAT(),
     "ANMLSMT": AnmlSMT(),
+    "TAMER": Tamer(),
     "PATTY-ICES": Patty("PATTY-ICES", ices=True),
 }
 

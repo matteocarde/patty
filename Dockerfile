@@ -212,6 +212,11 @@ RUN ls -la pyeda/boolalg
 
 RUN pip install --pre unified-planning
 
+# Install Tamer
+COPY /benchmarks/planners/tamer /var/tamer
+ENV PATH /var/tamer/:${PATH}
+RUN chmod +x /var/tamer/tamer
+
 WORKDIR /project
 COPY . .
 #Authorizations
@@ -222,6 +227,9 @@ RUN rm -rf project/libs/pyeda
 RUN mv libs/pyeda project/libs/pyeda
 
 WORKDIR /project
+
+# RUN tamer --help
+#RUN tamer solve -e 0.001 -s -k -w 0.8 files/temporal/instradi/anml/domains/P1/P1_domain.anml files/temporal/instradi/anml/domains/P1/P1_problem.anml
 
 
 #Execution

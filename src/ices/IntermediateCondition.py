@@ -106,5 +106,9 @@ class IntermediateCondition(Tuplable):
             raise NotImplementedError("I cannot deal with disjunctions when converting to ANML")
         c: Predicate
         for c in self.conditions:
-            lines.append(f"[{self.fromTime.toANML()}, {self.toTime.toANML()}] {c.toANML('c')};")
+            assert isinstance(self.fromTime, RelativeTime) and isinstance(self.toTime, RelativeTime)
+            if self.fromTime.anchor == self.toTime.anchor and self.fromTime.k == 0 and self.toTime.k == 0:
+                lines.append(f"[{self.fromTime.toANML()}] {c.toANML('c')};")
+            else:
+                lines.append(f"[{self.fromTime.toANML()}, {self.toTime.toANML()}] {c.toANML('c')};")
         return lines

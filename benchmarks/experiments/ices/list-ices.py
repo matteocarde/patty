@@ -4,12 +4,13 @@ from typing import Tuple, List
 
 from natsort import natsort
 
-PLANNERS = [
-    "PATTY-ICES",
-]
-
 
 def main():
+    PLANNERS = [
+        "PATTY-ICES",
+        "TAMER"
+    ]
+
     domains = [
         "temporal/cushing",
         "temporal/majsp/anml",
@@ -50,7 +51,7 @@ def main():
                     if not os.path.exists(domainFile):
                         continue
                     problemList.append((domainFile, problemFile))
-        instances += [[planner, domain, domainFile, problemFile] for (domainFile, problemFile) in problemList]
+            instances += [[planner, domain, domainFile, problemFile] for (domainFile, problemFile) in problemList]
 
     random.shuffle(instances)
     print(f"Listing {len(instances)} instances")

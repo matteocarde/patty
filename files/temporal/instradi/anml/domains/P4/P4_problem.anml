@@ -182,25 +182,25 @@
 [start] timetable_T3 := false;
 [start] timetable_T4 := false;
 
-[start + 1357] inFront_T4_03 := true;
-[start + 1357] green_T4_03 := true;
-[start + 1048] timetable_T3 := true;
 [start + 959] inFront_T3_01 := true;
 [start + 959] green_T3_01 := true;
-[start + 148] inFront_T1_03 := true;
-[start + 148] green_T1_03 := true;
-[start + 192] timetable_T1 := true;
+[start + 1357] inFront_T4_03 := true;
+[start + 1357] green_T4_03 := true;
+[start + 569] timetable_T2 := true;
 [start + 552] inFront_T2_03 := true;
 [start + 552] green_T2_03 := true;
-[start + 569] timetable_T2 := true;
+[start + 192] timetable_T1 := true;
+[start + 1048] timetable_T3 := true;
+[start + 148] inFront_T1_03 := true;
+[start + 148] green_T1_03 := true;
 [start + 1408] timetable_T4 := true;
 
 [start + 50, start + 65] occupied_102 == false;
 
-[end] stopped_T4 == true;
-[end] left_T4_02 == true;
 [end] stopped_T3 == true;
 [end] left_T3_04 == true;
+[end] stopped_T4 == true;
+[end] left_T4_02 == true;
 [end] stopped_T2 == true;
 [end] left_T2_02 == true;
 [end] stopped_T1 == true;
