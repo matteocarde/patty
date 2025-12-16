@@ -33,7 +33,8 @@ class Supporter:
         pass
 
     def isSatisfiedBy(self, state) -> bool:
-        return state.satisfies(self.preconditions)
+        s = state.satisfies(self.preconditions)
+        return s
 
     def __str__(self):
         return f"<{self.preconditions}, {self.effect}, {self.originatingAction.name}>"
