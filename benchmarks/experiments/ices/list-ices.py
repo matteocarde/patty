@@ -7,7 +7,7 @@ from natsort import natsort
 
 def main():
     PLANNERS = [
-        "PATTY-ICES",
+        # "PATTY-ICES",
         "TAMER",
         "ANMLSMT"
     ]

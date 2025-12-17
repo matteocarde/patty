@@ -35,15 +35,15 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2025-12-16-ICES-REALLY-FINAL-v2"
+    exp = "2025-12-16-ICES-REALLY-FINAL-v3"
     joinWith = [
         (exp, [
             "PATTY-ICES",
-            "TAMER"
+            "TAMER",
+            "ANMLSMT",
         ]),
         ("2024-01-14-TOTAL-v1", [
             "PATTY-T-OR-ASTAR",
-            "ANMLSMT",
             "ITSAT",
             "LPG",
             "OPTIC",
@@ -82,10 +82,8 @@ def main():
                     continue
                 r = Result.fromCSVLine(line[0].split(","))
                 r.problem = r.problem[:-5]
-                if r.domain == "temporal/majsp/anml":
-                    r.domain = "temporal/majsp"
-                if r.domain == "temporal/painter/anml":
-                    r.domain = "temporal/painter"
+                if "/anml" in r.domain and "instradi" not in r.domain:
+                    r.domain = r.domain.replace("/anml", "")
                 aResults.append(r)
 
     folder = f'benchmarks/latex/{exp}'
@@ -137,6 +135,7 @@ def main():
                     continue
                 for problem in dOrig[domain][planner].keys():
                     if problem not in tDomain["instances"]:
+                        print(f"{problem} not in instances of {domain}")
                         continue
                     if len(d[domain][planner][problem]) > 1:
                         print(f"There are multiple problems {problem} for {domain} with {planner}. "

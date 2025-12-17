@@ -23,5 +23,8 @@ class Tamer(Planner):
         cmd = ["tamer", "solve", "-e", "0.001", "-s", "-k", "-w", "0.8"]
         if ".pddl" in domain:
             cmd += ["-P"]
-        cmd += [domain, problem]
+        if domain:
+            cmd += [domain]
+        if problem:
+            cmd += [problem]
         return cmd
