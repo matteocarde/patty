@@ -27,7 +27,7 @@ class AnmlSMT(Planner):
         return r
 
     def getCommand(self, domain: str, problem: str):
-        cmd = ["anmlsmt", "solve", "-l", "3", "-a", "smt-incr", "-q", "mathsat"]
+        cmd = ["anmlsmt", "solve", "-e", "0.001", "-l", "3", "-a", "smt-incr", "-q", "mathsat"]
         if domain:
             cmd += [domain]
         if problem:

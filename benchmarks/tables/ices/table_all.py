@@ -1,5 +1,16 @@
 from benchmarks.tables.ices.domains import ICES_DOMAINS
 
+TABLE_ICES_PLANNERS = {
+    "PATTY-ICES": {"type": "smt"},
+    "TAMER": {"type": "search"},
+    "PATTY-T-OR-ASTAR": {"type": "smt"},
+    "ANMLSMT": {"type": "smt"},
+    "ITSAT": {"type": "smt"},
+    "LPG": {"type": "search"},
+    "OPTIC": {"type": "search"},
+    "TFD": {"type": "search"},
+}
+
 ICES_ALL = {
     "name": "tab:results",
     "orientation": "landscape",
@@ -11,7 +22,8 @@ ICES_ALL = {
         "coverage": {
             "name": "Coverage (\%)",
             "winner": +1,
-            "avg": True
+            "avg": True,
+            "planners": TABLE_ICES_PLANNERS.keys()
         },
         # "quantity": {
         #     "name": "Solved (out of $20$)",
@@ -21,12 +33,14 @@ ICES_ALL = {
         "time": {
             "name": "Time (s)",
             "winner": -1,
-            "avg": True
+            "avg": True,
+            "planners": TABLE_ICES_PLANNERS.keys()
         },
         "bound": {
             "name": r"\textsc{smt} calls",
             "winner": -1,
-            "avg": True
+            "avg": True,
+            "planners": [key for (key, item) in TABLE_ICES_PLANNERS.items() if item["type"] == "smt"]
         },
         # "length": {
         #     "name": r"$|\pi|$",
@@ -43,11 +57,6 @@ ICES_ALL = {
         #     "stdev": False
         # },
     },
-    "planners": {
-        # "PATTY-FE": {},
-        "PATTY-ICES": {"type": "scalar"},
-        "PATTY-T-OR-ASTAR": {"type": "scalar"},
-        "TAMER": {"type": "scalar"}
-    },
+    "planners": TABLE_ICES_PLANNERS,
     "domains": ICES_DOMAINS
 }

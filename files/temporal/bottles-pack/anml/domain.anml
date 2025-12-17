@@ -12,7 +12,7 @@ action pack(bottle a) {
    [start] packed(a) == false;
    [start] packing(a) == false;
    [start] on_platform < 2;
-   [all] cleared == false;
+   [start + 0.001, end] cleared == false;
    [end] on_platform == 2;
 
    [start] is_packing := true;

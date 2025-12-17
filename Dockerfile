@@ -217,6 +217,50 @@ COPY /benchmarks/planners/tamer /var/tamer
 ENV PATH /var/tamer/:${PATH}
 RUN chmod +x /var/tamer/tamer
 
+
+# Install itsat
+COPY /benchmarks/planners/itsat /var/itsat
+WORKDIR /var/itsat
+RUN ./build
+RUN mv plan itsat
+RUN chmod +x /var/itsat/itsat
+ENV PATH /var/itsat/:${PATH}
+
+# Install optic
+COPY /benchmarks/planners/optic /var/optic
+WORKDIR /var/optic
+
+RUN apt-get install -y cmake coinor-libcbc-dev coinor-libclp-dev coinor-libcoinutils-dev libbz2-dev libgsl-dev
+RUN export CFLAGS=-m32
+RUN export CXXFLAGS=-m32
+RUN export LDFLAGS=-m32
+RUN ./run-cmake-debug
+RUN apt-get install -y zlib1g-dev
+RUN ./build-debug
+RUN ls -la debug/optic
+RUN cp debug/optic/optic-clp optic
+RUN chmod +x optic
+ENV PATH /var/optic/:${PATH}
+
+# Install tfd
+COPY /benchmarks/planners/tfd /var/tfd
+WORKDIR /var/tfd
+RUN ./build
+RUN chmod +x tfd
+ENV PATH /var/tfd/:${PATH}
+
+# Install lpg-td
+COPY /benchmarks/planners/lpg-td /var/lpg-td
+WORKDIR /var/lpg-td
+RUN chmod +x lpg-td
+ENV PATH /var/lpg-td/:${PATH}
+
+# Install ANMLSMT
+COPY /benchmarks/planners/anmlsmt /var/anmlsmt
+WORKDIR /var/anmlsmt
+RUN chmod +x anmlsmt
+ENV PATH /var/anmlsmt/:${PATH}
+
 WORKDIR /project
 COPY . .
 #Authorizations

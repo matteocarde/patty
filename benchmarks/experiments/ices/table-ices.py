@@ -35,13 +35,19 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2025-12-12-VARS-ICES-v7"
+    exp = "2025-12-16-ICES-REALLY-FINAL-v2"
     joinWith = [
         (exp, [
-            "PATTY-ICES"
+            "PATTY-ICES",
+            "TAMER"
         ]),
         ("2024-01-14-TOTAL-v1", [
-            "PATTY-T-OR-ASTAR"
+            "PATTY-T-OR-ASTAR",
+            "ANMLSMT",
+            "ITSAT",
+            "LPG",
+            "OPTIC",
+            "TFD",
         ])
     ]
 
@@ -74,7 +80,13 @@ def main():
             for i, line in enumerate(reader):
                 if not line:
                     continue
-                aResults.append(Result.fromCSVLine(line[0].split(",")))
+                r = Result.fromCSVLine(line[0].split(","))
+                r.problem = r.problem[:-5]
+                if r.domain == "temporal/majsp/anml":
+                    r.domain = "temporal/majsp"
+                if r.domain == "temporal/painter/anml":
+                    r.domain = "temporal/painter"
+                aResults.append(r)
 
     folder = f'benchmarks/latex/{exp}'
     if os.path.exists(folder):
@@ -117,13 +129,14 @@ def main():
         p: Dict[str, Dict[str, Dict[str, Result]]] = dict()
         for domain in domains:
             p[domain] = dict()
+            tDomain = table["domains"][domain]
             for planner in planners:
                 p[domain][planner] = dict()
                 problems = list()
                 if planner not in dOrig[domain]:
                     continue
                 for problem in dOrig[domain][planner].keys():
-                    if problem not in table["domains"][domain]["instances"]:
+                    if problem not in tDomain["instances"]:
                         continue
                     if len(d[domain][planner][problem]) > 1:
                         print(f"There are multiple problems {problem} for {domain} with {planner}. "
@@ -150,7 +163,6 @@ def main():
                 if planner not in d[domain]:
                     continue
                 solved = {r.problem for r in d[domain][planner] if r.solved}
-                print(domain, planner, solved, commonlySolved)
                 if commonlySolved is None and solved:
                     commonlySolved = solved
                     continue
@@ -163,23 +175,19 @@ def main():
                     continue
                 pResult = d[domain][planner]
 
-                instances = len(table["domains"][domain]["instances"])
-                if table["planners"][planner].get("isRandom"):
-                    instances = len(pResult)
-                if len(pResult) != instances:
-                    print(f"In {planner} the domain {domain} has {len(pResult)}/{instances} instances", file=sys.stderr)
+                nOfInstances = len(table["domains"][domain]["instances"])
 
                 hasCoverage = sum([r.solved for r in pResult]) > 0
                 hasCommonlySolved = bool([r for r in pResult if r.solved and r.problem in commonlySolved])
                 symb = "*" if not hasCommonlySolved and hasCoverage else "-"
-                t[domain]["coverage"][planner] = round(sum([r.solved for r in pResult]) / instances * 100, 0)
+                t[domain]["coverage"][planner] = round(sum([r.solved for r in pResult]) / nOfInstances * 100, 0)
                 t[domain]["coverage"][planner] = symb if not hasCoverage else t[domain]["coverage"][planner]
 
                 v = round(sum([r.solved for r in pResult]), 0)
                 t[domain]["quantity"][planner] = v if hasCoverage else symb
 
                 v = [r.time / 1000 if r.solved else time_limit / 1000 for r in pResult]
-                t[domain]["time"][planner] = rVec(v, 1) if hasCoverage and v else symb
+                t[domain]["time"][planner] = rVec(v, 2) if hasCoverage and v else symb
 
                 v = [r.bound for r in pResult if r.solved and r.problem in commonlySolved]
                 t[domain]["bound"][planner] = rVec(v, 1) if hasCoverage and v else symb
@@ -272,14 +280,8 @@ def main():
         for (column, columnInfos) in table["columns"].items():
             nCells = 0
             clString = []
-            for (planner, plannerInfo) in table["planners"].items():
-                if plannerInfo["type"] in {"stdev", "skip"}:
-                    continue
-                if plannerInfo["type"] in {"slashed"}:
-                    otherPlannerInfo = table["planners"][plannerInfo['slashedWith']]
-                    plannersHeader.append(f"{PLANNERS[planner]['name']}/{otherPlannerInfo['name']}")
-                else:
-                    plannersHeader.append(f"{PLANNERS[planner]['name']}")
+            for planner in columnInfos["planners"]:
+                plannersHeader.append(f"{PLANNERS[planner]['name']}")
                 nCells += 1
                 clString.append("c")
 
@@ -298,47 +300,28 @@ def main():
         for domain, domainInfo in table["domains"].items():
             row = [domainInfo["name"]]
             for (column, columnInfo) in table["columns"].items():
-                for (planner, plannerInfo) in table["planners"].items():
-                    if plannerInfo["type"] in {"stdev", "skip"}:
-                        continue
+                for planner in columnInfo["planners"]:
                     if planner not in t[domain][column]:
                         row.append("X")
                         continue
                     value = transformTextValue(t[domain][column][planner])
-                    if plannerInfo["type"] in {"slashed"} and not columnInfo.get("avoidSlashing"):
-                        otherPlanner = plannerInfo["slashedWith"]
-                        otherValue = t[domain][column][otherPlanner]
-                        left = value
-                        right = transformTextValue(otherValue)
-                        if planner in best[domain][column]:
-                            left = r"\textbf{" + left + "}"
-                        if otherPlanner in best[domain][column]:
-                            right = r"\textbf{" + right + "}"
-                        row.append(f"{left}/{right}")
-                        continue
-                    subvalue = ""
-                    if plannerInfo["type"] in {"avg"} and columnInfo["stdev"]:
-                        stdev = t[domain][column][plannerInfo["stdev"]]
-                        subvalue = rf"$\pm {stdev}$"
-                    if planner in best[domain][column]:
-                        row.append(r"\textbf{" + value + "}" + subvalue)
-                        continue
-                    row.append(value + subvalue)
+                    v = r"\textbf{" + value + "}" if planner in best[domain][column] else value
+                    row.append(v)
             rows.append("&".join(row))
 
         latexTable.append("\\\\\n".join(rows))
         latexTable.append(fr"\\\hline")
-        row = [r"\textit{Best}"]
-
-        for column, columnInfo in table["columns"].items():
-            for planner, plannerInfo in table["planners"].items():
-                if plannerInfo["type"] in {"stdev", "skip"}:
-                    continue
-                nOfWinning = 0
-                for domain, domainInfo in table["domains"].items():
-                    nOfWinning += winning[domain][column][planner]
-                row.append(r"\textbf{" + str(nOfWinning) + "}")
-        latexTable.append("&".join(row) + r"\\\hline")
+        # row = [r"\textit{Best}"]
+        #
+        # for column, columnInfo in table["columns"].items():
+        #     for planner, plannerInfo in table["planners"].items():
+        #         if plannerInfo["type"] in {"stdev", "skip"}:
+        #             continue
+        #         nOfWinning = 0
+        #         for domain, domainInfo in table["domains"].items():
+        #             nOfWinning += winning[domain][column][planner]
+        #         row.append(r"\textbf{" + str(nOfWinning) + "}")
+        # latexTable.append("&".join(row) + r"\\\hline")
 
         latexTable.append(r"""
         \end{tabular}}

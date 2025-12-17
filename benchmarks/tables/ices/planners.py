@@ -8,7 +8,27 @@ ICES_PLANNERS = {
         "style": "-"
     },
     "TAMER": {
-        "name": r"$\mathrm{Tamer}$",
+        "name": r"$\textsc{Tamer}$",
         "style": "-"
-    }
+    },
+    "ANMLSMT": {
+        "name": r"\textsc{anmlsmt}",
+        "style": "-"
+    },
+    "ITSAT": {
+        "name": r"\textsc{ITSat}",
+        "style": "-"
+    },
+    "LPG": {
+        "name": r"\textsc{LPG}",
+        "style": "-"
+    },
+    "OPTIC": {
+        "name": r"\textsc{Optic}",
+        "style": "-"
+    },
+    "TFD": {
+        "name": r"\textsc{TFD}",
+        "style": "-"
+    },
 }
