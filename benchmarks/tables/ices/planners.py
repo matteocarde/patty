@@ -1,6 +1,6 @@
 ICES_PLANNERS = {
     "PATTY-ICES": {
-        "name": r"$\mathrm{P}_{\textsc{ice}s}$",
+        "name": r"$\textsc{patty}$",
         "style": "-"
     },
     "PATTY-T-OR-ASTAR": {
@@ -8,7 +8,7 @@ ICES_PLANNERS = {
         "style": "-"
     },
     "TAMER": {
-        "name": r"$\textsc{Tamer}$",
+        "name": r"$\textsc{tamer}$",
         "style": "-"
     },
     "ANMLSMT": {
@@ -16,11 +16,11 @@ ICES_PLANNERS = {
         "style": "-"
     },
     "ITSAT": {
-        "name": r"\textsc{ITSat}",
+        "name": r"\textsc{itsat}",
         "style": "-"
     },
     "LPG": {
-        "name": r"\textsc{LPG}",
+        "name": r"\textsc{lpg}",
         "style": "-"
     },
     "OPTIC": {
@@ -28,7 +28,7 @@ ICES_PLANNERS = {
         "style": "-"
     },
     "TFD": {
-        "name": r"\textsc{TFD}",
+        "name": r"\textsc{tfd}",
         "style": "-"
     },
 }

@@ -7,22 +7,22 @@ from natsort import natsort
 
 def main():
     PLANNERS = [
-        # "PATTY-ICES",
-        "TAMER",
-        "ANMLSMT"
+        "PATTY-ICES",
+        # "TAMER",
+        # "ANMLSMT"
     ]
 
     domains = [
-        "temporal/cushing",
-        "temporal/majsp/anml",
-        "temporal/bottles-all",
+        # "temporal/cushing",
+        # "temporal/majsp/anml",
+        # "temporal/bottles-all",
         "temporal/bottles-pack",
-        "temporal/bottles-pour",
-        "temporal/bottles-shake",
-        "temporal/match-ms",
-        "temporal/oversub",
-        "temporal/instradi/anml",
-        "temporal/painter/anml"
+        # "temporal/bottles-pour",
+        # "temporal/bottles-shake",
+        # "temporal/match-ms",
+        # "temporal/oversub",
+        # "temporal/instradi/anml",
+        # "temporal/painter/anml"
     ]
 
     ANMLPLANNERS = {"ANMLSMT", "TAMER"}

@@ -3,7 +3,7 @@ from benchmarks.tables.ices.domains import ICES_DOMAINS
 TABLE_ICES_PLANNERS = {
     "PATTY-ICES": {"type": "smt"},
     "TAMER": {"type": "search"},
-    "PATTY-T-OR-ASTAR": {"type": "smt"},
+    # "PATTY-T-OR-ASTAR": {"type": "smt"},
     "ANMLSMT": {"type": "smt"},
     "ITSAT": {"type": "smt"},
     "LPG": {"type": "search"},

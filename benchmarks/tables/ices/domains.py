@@ -89,31 +89,31 @@ ICES_DOMAINS = {
             "problem_8"
         }
     },
-    "temporal/bottles-all": {
-        "name": r"\textsc{Bottles (t)}",
-        "instances": {
-            "problem_10",
-            "problem_12",
-            "problem_14",
-            "problem_16",
-            "problem_18",
-            "problem_2",
-            "problem_20",
-            "problem_22",
-            "problem_24",
-            "problem_26",
-            "problem_28",
-            "problem_30",
-            "problem_32",
-            "problem_34",
-            "problem_36",
-            "problem_38",
-            "problem_4",
-            "problem_40",
-            "problem_6",
-            "problem_8"
-        }
-    },
+    # "temporal/bottles-all": {
+    #     "name": r"\textsc{Bottles (t)}",
+    #     "instances": {
+    #         "problem_10",
+    #         "problem_12",
+    #         "problem_14",
+    #         "problem_16",
+    #         "problem_18",
+    #         "problem_2",
+    #         "problem_20",
+    #         "problem_22",
+    #         "problem_24",
+    #         "problem_26",
+    #         "problem_28",
+    #         "problem_30",
+    #         "problem_32",
+    #         "problem_34",
+    #         "problem_36",
+    #         "problem_38",
+    #         "problem_4",
+    #         "problem_40",
+    #         "problem_6",
+    #         "problem_8"
+    #     }
+    # },
     "temporal/match-ms": {
         "name": r"\textsc{Match (t)}",
         "instances": {
