@@ -1,0 +1,36 @@
+
+               \documentclass[11pt,landscape]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in,landscape]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||cccccccc||cccccccc||cccc||}
+\hline
+ & \multicolumn{8}{c||}{Coverage (\%)}&\multicolumn{8}{c||}{Time (s)}&\multicolumn{4}{c||}{\textsc{smt} calls}\\
+Domain & $\mathrm{P}_{\textsc{ice}s}$&$\textsc{Tamer}$&$\mathrm{P}_\textsc{t}$&\textsc{anmlsmt}&\textsc{ITSat}&\textsc{LPG}&\textsc{Optic}&\textsc{TFD}&$\mathrm{P}_{\textsc{ice}s}$&$\textsc{Tamer}$&$\mathrm{P}_\textsc{t}$&\textsc{anmlsmt}&\textsc{ITSat}&\textsc{LPG}&\textsc{Optic}&\textsc{TFD}&$\mathrm{P}_{\textsc{ice}s}$&$\mathrm{P}_\textsc{t}$&\textsc{anmlsmt}&\textsc{ITSat}\\
+\hline
+\textsc{Cushing (t)}&\textbf{100}&-&\textbf{100}&30&-&-&\textbf{100}&10&13.47&-&\textbf{1.70}&224.85&-&-&3.12&270.02&3.0&3.0&7.0&-\\
+\textsc{Pour (t)}&75&30&\textbf{95}&5&-&-&-&-&123.54&221.85&\textbf{46.51}&286.12&-&-&-&-&2.0&2.0&14.0&-\\
+\textsc{Shake (t)}&\textbf{100}&-&\textbf{100}&50&-&-&-&-&2.26&-&\textbf{1.11}&153.31&-&-&-&-&\textbf{2.0}&\textbf{2.0}&8.5&-\\
+\textsc{Pack (t)}&5&-&\textbf{60}&20&-&-&-&-&285.07&-&\textbf{154.72}&242.82&-&-&-&-&\textbf{1.0}&\textbf{1.0}&5.0&-\\
+\textsc{Bottles (t)}&-&-&\textbf{10}&5&-&-&-&-&-&-&\textbf{284.28}&287.85&-&-&-&-&-&\textbf{7.0}&17.0&-\\
+\textsc{Match-ac (t)}&\textbf{100}&-&\textbf{100}&\textbf{100}&\textbf{100}&-&\textbf{100}&-&3.96&-&2.20&0.37&0.71&-&\textbf{0.01}&-&3.5&3.9&9.0&4.0\\
+\textsc{Match-ms (t)}&\textbf{100}&-&\textbf{100}&\textbf{100}&\textbf{100}&-&\textbf{100}&-&3.10&-&1.22&0.36&0.68&-&\textbf{0.01}&-&3.2&3.6&9.0&4.0\\
+\textsc{Oversub (t)}&\textbf{100}&-&-&-&-&-&-&-&\textbf{4.36}&-&-&-&-&-&-&-&\textbf{1.0}&-&-&-\\
+\textsc{InSTraDi} (\textsc{ice}s)&\textbf{100}&20&X&10&X&X&X&X&\textbf{67.58}&247.38&X&278.25&X&X&X&X&1.0&X&20.5&X\\
+\textsc{Majsp} (\textsc{ice}s)&80&\textbf{95}&85&50&-&-&-&-&91.97&\textbf{30.04}&90.54&157.33&-&-&-&-&4.5&8.4&16.0&-\\
+\textsc{Painter} (\textsc{ice}s)&\textbf{100}&\textbf{100}&35&35&-&-&10&-&17.55&\textbf{0.05}&211.69&210.00&-&-&270.03&-&1.5&1.5&13.5&-
+\\\hline
+
+        \end{tabular}}
+        \caption{TODO}
+        \label{tab:results}
+        \end{table*}
+        
+\end{document}

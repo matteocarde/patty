@@ -34,6 +34,21 @@ instance variable var7;
 [start] target2(var7) := false;
 [start] target3(var7) := false;
 
+[start] condition1(var1) := false;
+[start] condition2(var1) := false;
+[start] condition1(var2) := false;
+[start] condition2(var2) := false;
+[start] condition1(var3) := false;
+[start] condition2(var3) := false;
+[start] condition1(var4) := false;
+[start] condition2(var4) := false;
+[start] condition1(var5) := false;
+[start] condition2(var5) := false;
+[start] condition1(var6) := false;
+[start] condition2(var6) := false;
+[start] condition1(var7) := false;
+[start] condition2(var7) := false;
+
 [end] target1(var1) == true;
 [end] target2(var1) == true;
 [end] target3(var1) == true;
