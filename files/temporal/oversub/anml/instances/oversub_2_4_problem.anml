@@ -14,61 +14,61 @@ fluent boolean g3;
 fluent boolean g4;
 
 
-action set_x11() ::("cost", 1) {
+action set_x11()  {
   duration := 1;
   [start] not x11;
   [start] x11 := true;
 };
 
-action set_x12() ::("cost", 1) {
+action set_x12()  {
   duration := 1;
   [start] not x12;
   [start] x12 := true;
 };
 
-action set_x21() ::("cost", 1) {
+action set_x21()  {
   duration := 1;
   [start] not x21;
   [start] x21 := true;
 };
 
-action set_x22() ::("cost", 1) {
+action set_x22()  {
   duration := 1;
   [start] not x22;
   [start] x22 := true;
 };
 
-action set_x31() ::("cost", 1) {
+action set_x31()  {
   duration := 1;
   [start] not x31;
   [start] x31 := true;
 };
 
-action set_x32() ::("cost", 1) {
+action set_x32()  {
   duration := 1;
   [start] not x32;
   [start] x32 := true;
 };
 
-action set_x41() ::("cost", 1) {
+action set_x41()  {
   duration := 1;
   [start] not x41;
   [start] x41 := true;
 };
 
-action set_x42() ::("cost", 1) {
+action set_x42()  {
   duration := 1;
   [start] not x42;
   [start] x42 := true;
 };
 
-action set_y() ::("cost", 1) {
+action set_y()  {
   duration := 1;
   [start] not y;
   [start] y := true;
 };
 
-action goal1() ::("cost", 1) {
+action goal1()  {
   duration := 1;
   [start] x11;
   [start] x12;
@@ -76,7 +76,7 @@ action goal1() ::("cost", 1) {
   [end] g1 := true;
 };
 
-action goal2() ::("cost", 1) {
+action goal2()  {
   duration := 1;
   [start] x21;
   [start] x22;
@@ -84,7 +84,7 @@ action goal2() ::("cost", 1) {
   [end] g2 := true;
 };
 
-action goal3() ::("cost", 1) {
+action goal3()  {
   duration := 1;
   [start] x31;
   [start] x32;
@@ -92,7 +92,7 @@ action goal3() ::("cost", 1) {
   [end] g3 := true;
 };
 
-action goal4() ::("cost", 1) {
+action goal4()  {
   duration := 1;
   [start] x41;
   [start] x42;
@@ -100,25 +100,25 @@ action goal4() ::("cost", 1) {
   [end] g4 := true;
 };
 
-action goal1_fake() ::("cost", 200) {
+action goal1_fake()  {
   duration := 1;
   [start] not g1;
   [end] g1 := true;
 };
 
-action goal2_fake() ::("cost", 200) {
+action goal2_fake()  {
   duration := 1;
   [start] not g2;
   [end] g2 := true;
 };
 
-action goal3_fake() ::("cost", 200) {
+action goal3_fake()  {
   duration := 1;
   [start] not g3;
   [end] g3 := true;
 };
 
-action goal4_fake() ::("cost", 200) {
+action goal4_fake()  {
   duration := 1;
   [start] not g4;
   [end] g4 := true;
@@ -145,4 +145,4 @@ action goal4_fake() ::("cost", 200) {
 [end] g3;
 [end] g4;
 
-::("metric", "minimize-action-cost", 0);
+

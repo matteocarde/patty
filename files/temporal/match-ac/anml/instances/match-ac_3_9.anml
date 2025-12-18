@@ -11,7 +11,7 @@ fluent boolean fuse_mended(Fuse f);
 fluent boolean light;
 
 
-action light_match(Match m) ::("cost", match_cost(m)) {
+action light_match(Match m) {
    duration := light_duration(m);
 
    [start] match_used(m) == false;
@@ -21,7 +21,7 @@ action light_match(Match m) ::("cost", match_cost(m)) {
    [end] light := false;
 };
 
-action mend_fuse(Fuse f) ::("cost", 1) {
+action mend_fuse(Fuse f)  {
    duration := mend_duration(f);
 
    [start] handfree == true;

@@ -114,33 +114,8 @@ ICES_DOMAINS = {
             "problem_8"
         }
     },
-    "temporal/match-ac": {
-        "name": r"\textsc{Match-ac (t)}",
-        "instances": {
-            "match-ac_2_10",
-            "match-ac_2_6",
-            "match-ac_2_7",
-            "match-ac_2_8",
-            "match-ac_2_9",
-            "match-ac_3_10",
-            "match-ac_3_6",
-            "match-ac_3_7",
-            "match-ac_3_8",
-            "match-ac_3_9",
-            "match-ac_4_10",
-            "match-ac_4_6",
-            "match-ac_4_7",
-            "match-ac_4_8",
-            "match-ac_4_9",
-            "match-ac_5_10",
-            "match-ac_5_6",
-            "match-ac_5_7",
-            "match-ac_5_8",
-            "match-ac_5_9"
-        }
-    },
     "temporal/match-ms": {
-        "name": r"\textsc{Match-ms (t)}",
+        "name": r"\textsc{Match (t)}",
         "instances": {
             "match-ms_2_1",
             "match-ms_2_10",

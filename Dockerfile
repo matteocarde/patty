@@ -273,7 +273,7 @@ RUN mv libs/pyeda project/libs/pyeda
 WORKDIR /project
 
 # RUN tamer --help
-RUN tamer solve -e 0.001 -s -k -w 0.8 files/temporal/bottles-pack/anml/domain.anml files/temporal/bottles-pack/anml/instances/problem_10.anml
+RUN tamer solve -e 0.001 -s -k -w 0.8 files/temporal/oversub/anml/domain.anml files/temporal/oversub/anml/instances/oversub_1_6_problem.anml
 
 
 #Execution

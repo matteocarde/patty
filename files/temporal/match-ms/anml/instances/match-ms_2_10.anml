@@ -71,4 +71,4 @@ mend_duration(f4) := 8;
 [end] fuse_mended(f1);
 [end] fuse_mended(f4);
 
-::("metric", "minimize-makespan");
+

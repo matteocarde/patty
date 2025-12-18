@@ -34,157 +34,157 @@ fluent boolean g7;
 fluent boolean g8;
 
 
-action set_x11() ::("cost", 1) {
+action set_x11()  {
   duration := 1;
   [start] not x11;
   [start] x11 := true;
 };
 
-action set_x12() ::("cost", 1) {
+action set_x12()  {
   duration := 1;
   [start] not x12;
   [start] x12 := true;
 };
 
-action set_x13() ::("cost", 1) {
+action set_x13()  {
   duration := 1;
   [start] not x13;
   [start] x13 := true;
 };
 
-action set_x21() ::("cost", 1) {
+action set_x21()  {
   duration := 1;
   [start] not x21;
   [start] x21 := true;
 };
 
-action set_x22() ::("cost", 1) {
+action set_x22()  {
   duration := 1;
   [start] not x22;
   [start] x22 := true;
 };
 
-action set_x23() ::("cost", 1) {
+action set_x23()  {
   duration := 1;
   [start] not x23;
   [start] x23 := true;
 };
 
-action set_x31() ::("cost", 1) {
+action set_x31()  {
   duration := 1;
   [start] not x31;
   [start] x31 := true;
 };
 
-action set_x32() ::("cost", 1) {
+action set_x32()  {
   duration := 1;
   [start] not x32;
   [start] x32 := true;
 };
 
-action set_x33() ::("cost", 1) {
+action set_x33()  {
   duration := 1;
   [start] not x33;
   [start] x33 := true;
 };
 
-action set_x41() ::("cost", 1) {
+action set_x41()  {
   duration := 1;
   [start] not x41;
   [start] x41 := true;
 };
 
-action set_x42() ::("cost", 1) {
+action set_x42()  {
   duration := 1;
   [start] not x42;
   [start] x42 := true;
 };
 
-action set_x43() ::("cost", 1) {
+action set_x43()  {
   duration := 1;
   [start] not x43;
   [start] x43 := true;
 };
 
-action set_x51() ::("cost", 1) {
+action set_x51()  {
   duration := 1;
   [start] not x51;
   [start] x51 := true;
 };
 
-action set_x52() ::("cost", 1) {
+action set_x52()  {
   duration := 1;
   [start] not x52;
   [start] x52 := true;
 };
 
-action set_x53() ::("cost", 1) {
+action set_x53()  {
   duration := 1;
   [start] not x53;
   [start] x53 := true;
 };
 
-action set_x61() ::("cost", 1) {
+action set_x61()  {
   duration := 1;
   [start] not x61;
   [start] x61 := true;
 };
 
-action set_x62() ::("cost", 1) {
+action set_x62()  {
   duration := 1;
   [start] not x62;
   [start] x62 := true;
 };
 
-action set_x63() ::("cost", 1) {
+action set_x63()  {
   duration := 1;
   [start] not x63;
   [start] x63 := true;
 };
 
-action set_x71() ::("cost", 1) {
+action set_x71()  {
   duration := 1;
   [start] not x71;
   [start] x71 := true;
 };
 
-action set_x72() ::("cost", 1) {
+action set_x72()  {
   duration := 1;
   [start] not x72;
   [start] x72 := true;
 };
 
-action set_x73() ::("cost", 1) {
+action set_x73()  {
   duration := 1;
   [start] not x73;
   [start] x73 := true;
 };
 
-action set_x81() ::("cost", 1) {
+action set_x81()  {
   duration := 1;
   [start] not x81;
   [start] x81 := true;
 };
 
-action set_x82() ::("cost", 1) {
+action set_x82()  {
   duration := 1;
   [start] not x82;
   [start] x82 := true;
 };
 
-action set_x83() ::("cost", 1) {
+action set_x83()  {
   duration := 1;
   [start] not x83;
   [start] x83 := true;
 };
 
-action set_y() ::("cost", 1) {
+action set_y()  {
   duration := 1;
   [start] not y;
   [start] y := true;
 };
 
-action goal1() ::("cost", 1) {
+action goal1()  {
   duration := 1;
   [start] x11;
   [start] x12;
@@ -193,7 +193,7 @@ action goal1() ::("cost", 1) {
   [end] g1 := true;
 };
 
-action goal2() ::("cost", 1) {
+action goal2()  {
   duration := 1;
   [start] x21;
   [start] x22;
@@ -202,7 +202,7 @@ action goal2() ::("cost", 1) {
   [end] g2 := true;
 };
 
-action goal3() ::("cost", 1) {
+action goal3()  {
   duration := 1;
   [start] x31;
   [start] x32;
@@ -211,7 +211,7 @@ action goal3() ::("cost", 1) {
   [end] g3 := true;
 };
 
-action goal4() ::("cost", 1) {
+action goal4()  {
   duration := 1;
   [start] x41;
   [start] x42;
@@ -220,7 +220,7 @@ action goal4() ::("cost", 1) {
   [end] g4 := true;
 };
 
-action goal5() ::("cost", 1) {
+action goal5()  {
   duration := 1;
   [start] x51;
   [start] x52;
@@ -229,7 +229,7 @@ action goal5() ::("cost", 1) {
   [end] g5 := true;
 };
 
-action goal6() ::("cost", 1) {
+action goal6()  {
   duration := 1;
   [start] x61;
   [start] x62;
@@ -238,7 +238,7 @@ action goal6() ::("cost", 1) {
   [end] g6 := true;
 };
 
-action goal7() ::("cost", 1) {
+action goal7()  {
   duration := 1;
   [start] x71;
   [start] x72;
@@ -247,7 +247,7 @@ action goal7() ::("cost", 1) {
   [end] g7 := true;
 };
 
-action goal8() ::("cost", 1) {
+action goal8()  {
   duration := 1;
   [start] x81;
   [start] x82;
@@ -256,49 +256,49 @@ action goal8() ::("cost", 1) {
   [end] g8 := true;
 };
 
-action goal1_fake() ::("cost", 200) {
+action goal1_fake()  {
   duration := 1;
   [start] not g1;
   [end] g1 := true;
 };
 
-action goal2_fake() ::("cost", 200) {
+action goal2_fake()  {
   duration := 1;
   [start] not g2;
   [end] g2 := true;
 };
 
-action goal3_fake() ::("cost", 200) {
+action goal3_fake()  {
   duration := 1;
   [start] not g3;
   [end] g3 := true;
 };
 
-action goal4_fake() ::("cost", 200) {
+action goal4_fake()  {
   duration := 1;
   [start] not g4;
   [end] g4 := true;
 };
 
-action goal5_fake() ::("cost", 200) {
+action goal5_fake()  {
   duration := 1;
   [start] not g5;
   [end] g5 := true;
 };
 
-action goal6_fake() ::("cost", 200) {
+action goal6_fake()  {
   duration := 1;
   [start] not g6;
   [end] g6 := true;
 };
 
-action goal7_fake() ::("cost", 200) {
+action goal7_fake()  {
   duration := 1;
   [start] not g7;
   [end] g7 := true;
 };
 
-action goal8_fake() ::("cost", 200) {
+action goal8_fake()  {
   duration := 1;
   [start] not g8;
   [end] g8 := true;
@@ -349,4 +349,4 @@ action goal8_fake() ::("cost", 200) {
 [end] g7;
 [end] g8;
 
-::("metric", "minimize-action-cost", 0);
+

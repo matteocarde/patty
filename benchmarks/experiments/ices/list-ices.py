@@ -19,7 +19,6 @@ def main():
         "temporal/bottles-pack",
         "temporal/bottles-pour",
         "temporal/bottles-shake",
-        "temporal/match-ac",
         "temporal/match-ms",
         "temporal/oversub",
         "temporal/instradi/anml",
