@@ -107,7 +107,7 @@ action depart_T1_III_43_04() {
 };
 
 action exit_T1_41_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T1_04 == true;
 	[start] exitCounter_04 == order_T1;
 
@@ -118,7 +118,7 @@ action exit_T1_41_04() {
 };
 
 action exit_T1_42_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T1_04 == true;
 	[start] exitCounter_04 == order_T1;
 
@@ -129,7 +129,7 @@ action exit_T1_42_04() {
 };
 
 action exit_T1_43_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T1_04 == true;
 	[start] exitCounter_04 == order_T1;
 

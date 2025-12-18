@@ -35,9 +35,12 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2025-12-16-ICES-REALLY-FINAL-v6"
+    exp = "2025-12-16-ICES-REALLY-FINAL-v7"
     joinWith = [
         (exp, [
+            "PATTY-ICES",
+        ]),
+        ("2025-12-16-ICES-REALLY-FINAL-v6", [
             "TAMER",
             "ANMLSMT",
         ]),
@@ -228,11 +231,11 @@ def main():
                 winner = statInfo["winner"]
                 better = set()
                 betterValue = float("-inf") if winner > 0 else float("+inf")
-                for planner, plannerInfo in table["planners"].items():
+                for planner in statInfo["planners"]:
                     if planner not in t[domain][column]:
                         continue
-                    if plannerInfo["type"] in {"stdev"}:
-                        continue
+                    # if plannerInfo["type"] in {"stdev"}:
+                    #     continue
                     value = t[domain][column][planner]
                     if value in {"-", "*", "G", "-1.00"}:
                         continue
@@ -249,13 +252,13 @@ def main():
             for column, statInfo in table["columns"].items():
                 winner = statInfo["winner"]
                 winning[domain][column] = dict()
-                for planner in planners:
+                for planner in statInfo["planners"]:
                     winning[domain][column][planner] = 0
 
                 for problem in domainInfo["instances"]:
                     betterValue = float("-inf") if winner > 0 else float("+inf")
                     better: Set[str] = set()
-                    for planner, plannerInfo in table["planners"].items():
+                    for planner in statInfo["planners"]:
                         if problem not in p[domain][planner]:
                             continue
                         result = p[domain][planner][problem]
@@ -267,7 +270,8 @@ def main():
                             better = {planner}
                         elif value and float(value) == betterValue:
                             better |= {planner}
-                    for planner in planners:
+                    # print(domain, column, problem, better)
+                    for planner in statInfo["planners"]:
                         winning[domain][column][planner] += 1 if planner in better else 0
         latexTable = list()
         latexTable.append(r"""
@@ -289,21 +293,21 @@ def main():
             cString += f"|{''.join(clString)}|"
             mString.append(r"\multicolumn{" + str(nCells) + "}{c||}{" + columnInfos["name"] + "}")
 
-        columns = f"|l|{cString}" + "|"
+        columns = f"|l|c|{cString}" + "|"
 
         latexTable.append(r"\begin{tabular}{" + columns + "}")
         latexTable.append(r"\hline")
-        latexTable.append(fr" & " + "&".join(mString) + r"\\")
-        latexTable.append(fr"Domain & " + "&".join(plannersHeader) + r"\\")
+        latexTable.append(r" & & " + "&".join(mString) + r"\\")
+        latexTable.append(fr"Domain & \# & " + "&".join(plannersHeader) + r"\\")
         latexTable.append(fr"\hline")
 
         rows = list()
         for domain, domainInfo in table["domains"].items():
-            row = [domainInfo["name"]]
+            row = [domainInfo["name"], str(len(domainInfo['instances']))]
             for (column, columnInfo) in table["columns"].items():
                 for planner in columnInfo["planners"]:
                     if planner not in t[domain][column]:
-                        row.append("X")
+                        row.append("-")
                         continue
                     value = transformTextValue(t[domain][column][planner])
                     v = r"\textbf{" + value + "}" if planner in best[domain][column] else value
@@ -312,17 +316,17 @@ def main():
 
         latexTable.append("\\\\\n".join(rows))
         latexTable.append(fr"\\\hline")
-        # row = [r"\textit{Best}"]
-        #
-        # for column, columnInfo in table["columns"].items():
-        #     for planner, plannerInfo in table["planners"].items():
-        #         if plannerInfo["type"] in {"stdev", "skip"}:
-        #             continue
-        #         nOfWinning = 0
-        #         for domain, domainInfo in table["domains"].items():
-        #             nOfWinning += winning[domain][column][planner]
-        #         row.append(r"\textbf{" + str(nOfWinning) + "}")
-        # latexTable.append("&".join(row) + r"\\\hline")
+        row = [r"\textit{Best}", str(sum([len(domainInfo['instances']) for domainInfo in table["domains"].values()]))]
+
+        for column, columnInfo in table["columns"].items():
+            for planner in columnInfo["planners"]:
+                # if plannerInfo["type"] in {"stdev", "skip"}:
+                #     continue
+                nOfWinning = 0
+                for domain, domainInfo in table["domains"].items():
+                    nOfWinning += winning[domain][column][planner]
+                row.append(r"\textbf{" + str(nOfWinning) + "}")
+        latexTable.append("&".join(row) + r"\\\hline")
 
         latexTable.append(r"""
         \end{tabular}}

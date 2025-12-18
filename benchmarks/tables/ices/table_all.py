@@ -19,17 +19,18 @@ ICES_ALL = {
     "keepAll": True,
     "caption": r"TODO",
     "columns": {
-        "coverage": {
-            "name": "Coverage (\%)",
+        # "coverage": {
+        #     "name": "Coverage (\%)",
+        #     "winner": +1,
+        #     "avg": True,
+        #     "planners": TABLE_ICES_PLANNERS.keys()
+        # },
+        "quantity": {
+            "name": "Solved",
             "winner": +1,
             "avg": True,
             "planners": TABLE_ICES_PLANNERS.keys()
         },
-        # "quantity": {
-        #     "name": "Solved (out of $20$)",
-        #     "winner": +1,
-        #     "avg": True
-        # },
         "time": {
             "name": "Time (s)",
             "winner": -1,

@@ -187,7 +187,7 @@ class ICEAction:
             ic = ActionIntermediateCondition.fake(START + 0, START + 0)
             iceAction.icond.append(ic)
 
-        if not hasEnd:
+        if not hasEnd and iceAction.duration > 0:
             ic = ActionIntermediateCondition.fake(END - 0, END - 0)
             iceAction.icond.append(ic)
 
