@@ -1,20 +1,20 @@
 from __future__ import annotations
+
 import copy
-from typing import List, Set, Tuple, Dict
+from typing import List, Dict
 
 from src.ices.ActionIntermediateCondition import ActionIntermediateCondition
 from src.ices.ActionIntermediateEffect import ActionIntermediateEffect
 from src.ices.ActionRelativeTime import ActionRelativeTimeAnchor
 from src.ices.ICEAction import ICEAction
+from src.ices.IntermediateCondition import IntermediateCondition
+from src.ices.IntermediateEffect import IntermediateEffect
 from src.ices.PlanIntermediateCondition import PlanIntermediateCondition
 from src.ices.PlanIntermediateEffect import PlanIntermediateEffect
 from src.ices.TimedConditions import TimedConditions
 from src.ices.TimedEffects import TimedEffects
-from src.ices.IntermediateCondition import IntermediateCondition
-from src.ices.IntermediateEffect import IntermediateEffect
 from src.pddl.Effects import Effects
 from src.pddl.Formula import Formula
-from src.pddl.Preconditions import Preconditions
 from src.utils.Constants import EPSILON
 
 ACTION_START = r"b^\vdash"
@@ -154,7 +154,7 @@ class HappeningAction(Happening):
     action: ICEAction
 
     def __init__(self, action: ICEAction):
-        super().__init__()
+        super().__init__(Formula(), Effects())
         self.action = action
 
 
@@ -236,7 +236,7 @@ class HappeningEffect(Happening):
                  effect: IntermediateEffect,
                  parent: ICEAction or TimedEffects,
                  index: int,
-                 condition: Formula):
+                 condition: Formula = Formula()):
         super().__init__(condition, effect.effects)
         self.effect = effect
         self.original = effect

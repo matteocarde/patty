@@ -210,24 +210,34 @@ class ARPG:
         cs = f"|{'|'.join('c' for i in range(columns))}|"
         print(r"\begin{tabular}{" + cs + "}")
 
-        printed = 0
+        layers = 0
         rows = []
-        while printed < len(self.layers):
+        while layers < len(self.layers):
             headers = []
             cells = []
-            for i in range(columns):
-                if printed + i < len(self.layers) and self.layers[printed + i]:
-                    headers.append(r"$\mathbf{A_{" + str(printed + i + 1) + "}}$")
-                    sortedLayers = PatternActionGraph(self.layers[printed + i]).getSorted()
+
+            i = 0
+            while i < columns:
+                if layers < len(self.layers) and self.layers[layers]:
+                    filtered = {l for l in self.layers[layers] if "time_flow_patty" not in l.name}
+                    if not filtered:
+                        layers += 1
+                        continue
+                    sortedLayers = PatternActionGraph(filtered).getSorted()
+                    headers.append(rf"$\ttt{{time}} = {str(layers)}$")
                     string = "\makecell{" + " \\\\ ".join([str(h) for h in sortedLayers]) + "}"
                     cells.append(string.replace("blue", "b")
                                  .replace("red", "r")
                                  .replace(" ", "")
-                                 .replace("0.02", "$2\epsilon$"))
+                                 .replace("0.002", "$2\epsilon$")
+                                 .replace("+0.000", "")
+                                 .replace("-0.000", "")
+                                 .replace("ZE", "E"))
                 else:
                     headers.append("")
                     cells.append("")
-            printed += columns
+                i += 1
+                layers += 1
             print(r"\hline")
             print("&".join(headers) + r"\\")
             print("&".join(cells) + r"\\\hline")

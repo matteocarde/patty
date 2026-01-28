@@ -5,9 +5,9 @@ TABLE_ICES_PLANNERS = {
     "TAMER": {"type": "search"},
     # "PATTY-T-OR-ASTAR": {"type": "smt"},
     "ANMLSMT": {"type": "smt"},
+    "OPTIC": {"type": "search"},
     "ITSAT": {"type": "smt"},
     "LPG": {"type": "search"},
-    "OPTIC": {"type": "search"},
     "TFD": {"type": "search"},
 }
 

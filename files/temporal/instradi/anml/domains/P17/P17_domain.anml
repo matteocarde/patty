@@ -1371,7 +1371,7 @@ action depart_T9_III_43_04() {
 };
 
 action exit_T1_21_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T1_02 == true;
 	[start] exitCounter_02 == order_T1;
 
@@ -1382,7 +1382,7 @@ action exit_T1_21_02() {
 };
 
 action exit_T1_22_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T1_02 == true;
 	[start] exitCounter_02 == order_T1;
 
@@ -1393,7 +1393,7 @@ action exit_T1_22_02() {
 };
 
 action exit_T1_23_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T1_02 == true;
 	[start] exitCounter_02 == order_T1;
 
@@ -1404,7 +1404,7 @@ action exit_T1_23_02() {
 };
 
 action exit_T10_21_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T10_02 == true;
 	[start] exitCounter_02 == order_T10;
 
@@ -1415,7 +1415,7 @@ action exit_T10_21_02() {
 };
 
 action exit_T10_22_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T10_02 == true;
 	[start] exitCounter_02 == order_T10;
 
@@ -1426,7 +1426,7 @@ action exit_T10_22_02() {
 };
 
 action exit_T10_23_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T10_02 == true;
 	[start] exitCounter_02 == order_T10;
 
@@ -1437,7 +1437,7 @@ action exit_T10_23_02() {
 };
 
 action exit_T11_21_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T11_02 == true;
 	[start] exitCounter_02 == order_T11;
 
@@ -1448,7 +1448,7 @@ action exit_T11_21_02() {
 };
 
 action exit_T11_22_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T11_02 == true;
 	[start] exitCounter_02 == order_T11;
 
@@ -1459,7 +1459,7 @@ action exit_T11_22_02() {
 };
 
 action exit_T11_23_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T11_02 == true;
 	[start] exitCounter_02 == order_T11;
 
@@ -1470,7 +1470,7 @@ action exit_T11_23_02() {
 };
 
 action exit_T12_41_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T12_04 == true;
 	[start] exitCounter_04 == order_T12;
 
@@ -1481,7 +1481,7 @@ action exit_T12_41_04() {
 };
 
 action exit_T12_42_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T12_04 == true;
 	[start] exitCounter_04 == order_T12;
 
@@ -1492,7 +1492,7 @@ action exit_T12_42_04() {
 };
 
 action exit_T12_43_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T12_04 == true;
 	[start] exitCounter_04 == order_T12;
 
@@ -1503,7 +1503,7 @@ action exit_T12_43_04() {
 };
 
 action exit_T13_21_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T13_02 == true;
 	[start] exitCounter_02 == order_T13;
 
@@ -1514,7 +1514,7 @@ action exit_T13_21_02() {
 };
 
 action exit_T13_22_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T13_02 == true;
 	[start] exitCounter_02 == order_T13;
 
@@ -1525,7 +1525,7 @@ action exit_T13_22_02() {
 };
 
 action exit_T13_23_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T13_02 == true;
 	[start] exitCounter_02 == order_T13;
 
@@ -1536,7 +1536,7 @@ action exit_T13_23_02() {
 };
 
 action exit_T14_41_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T14_04 == true;
 	[start] exitCounter_04 == order_T14;
 
@@ -1547,7 +1547,7 @@ action exit_T14_41_04() {
 };
 
 action exit_T14_42_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T14_04 == true;
 	[start] exitCounter_04 == order_T14;
 
@@ -1558,7 +1558,7 @@ action exit_T14_42_04() {
 };
 
 action exit_T14_43_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T14_04 == true;
 	[start] exitCounter_04 == order_T14;
 
@@ -1569,7 +1569,7 @@ action exit_T14_43_04() {
 };
 
 action exit_T15_41_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T15_04 == true;
 	[start] exitCounter_04 == order_T15;
 
@@ -1580,7 +1580,7 @@ action exit_T15_41_04() {
 };
 
 action exit_T15_42_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T15_04 == true;
 	[start] exitCounter_04 == order_T15;
 
@@ -1591,7 +1591,7 @@ action exit_T15_42_04() {
 };
 
 action exit_T15_43_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T15_04 == true;
 	[start] exitCounter_04 == order_T15;
 
@@ -1602,7 +1602,7 @@ action exit_T15_43_04() {
 };
 
 action exit_T16_41_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T16_04 == true;
 	[start] exitCounter_04 == order_T16;
 
@@ -1613,7 +1613,7 @@ action exit_T16_41_04() {
 };
 
 action exit_T16_42_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T16_04 == true;
 	[start] exitCounter_04 == order_T16;
 
@@ -1624,7 +1624,7 @@ action exit_T16_42_04() {
 };
 
 action exit_T16_43_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T16_04 == true;
 	[start] exitCounter_04 == order_T16;
 
@@ -1635,7 +1635,7 @@ action exit_T16_43_04() {
 };
 
 action exit_T17_41_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T17_04 == true;
 	[start] exitCounter_04 == order_T17;
 
@@ -1646,7 +1646,7 @@ action exit_T17_41_04() {
 };
 
 action exit_T17_42_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T17_04 == true;
 	[start] exitCounter_04 == order_T17;
 
@@ -1657,7 +1657,7 @@ action exit_T17_42_04() {
 };
 
 action exit_T17_43_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T17_04 == true;
 	[start] exitCounter_04 == order_T17;
 
@@ -1668,7 +1668,7 @@ action exit_T17_43_04() {
 };
 
 action exit_T2_41_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T2_04 == true;
 	[start] exitCounter_04 == order_T2;
 
@@ -1679,7 +1679,7 @@ action exit_T2_41_04() {
 };
 
 action exit_T2_42_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T2_04 == true;
 	[start] exitCounter_04 == order_T2;
 
@@ -1690,7 +1690,7 @@ action exit_T2_42_04() {
 };
 
 action exit_T2_43_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T2_04 == true;
 	[start] exitCounter_04 == order_T2;
 
@@ -1701,7 +1701,7 @@ action exit_T2_43_04() {
 };
 
 action exit_T3_41_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T3_04 == true;
 	[start] exitCounter_04 == order_T3;
 
@@ -1712,7 +1712,7 @@ action exit_T3_41_04() {
 };
 
 action exit_T3_42_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T3_04 == true;
 	[start] exitCounter_04 == order_T3;
 
@@ -1723,7 +1723,7 @@ action exit_T3_42_04() {
 };
 
 action exit_T3_43_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T3_04 == true;
 	[start] exitCounter_04 == order_T3;
 
@@ -1734,7 +1734,7 @@ action exit_T3_43_04() {
 };
 
 action exit_T4_41_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T4_04 == true;
 	[start] exitCounter_04 == order_T4;
 
@@ -1745,7 +1745,7 @@ action exit_T4_41_04() {
 };
 
 action exit_T4_42_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T4_04 == true;
 	[start] exitCounter_04 == order_T4;
 
@@ -1756,7 +1756,7 @@ action exit_T4_42_04() {
 };
 
 action exit_T4_43_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T4_04 == true;
 	[start] exitCounter_04 == order_T4;
 
@@ -1767,7 +1767,7 @@ action exit_T4_43_04() {
 };
 
 action exit_T5_21_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T5_02 == true;
 	[start] exitCounter_02 == order_T5;
 
@@ -1778,7 +1778,7 @@ action exit_T5_21_02() {
 };
 
 action exit_T5_22_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T5_02 == true;
 	[start] exitCounter_02 == order_T5;
 
@@ -1789,7 +1789,7 @@ action exit_T5_22_02() {
 };
 
 action exit_T5_23_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T5_02 == true;
 	[start] exitCounter_02 == order_T5;
 
@@ -1800,7 +1800,7 @@ action exit_T5_23_02() {
 };
 
 action exit_T6_21_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T6_02 == true;
 	[start] exitCounter_02 == order_T6;
 
@@ -1811,7 +1811,7 @@ action exit_T6_21_02() {
 };
 
 action exit_T6_22_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T6_02 == true;
 	[start] exitCounter_02 == order_T6;
 
@@ -1822,7 +1822,7 @@ action exit_T6_22_02() {
 };
 
 action exit_T6_23_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T6_02 == true;
 	[start] exitCounter_02 == order_T6;
 
@@ -1833,7 +1833,7 @@ action exit_T6_23_02() {
 };
 
 action exit_T7_41_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T7_04 == true;
 	[start] exitCounter_04 == order_T7;
 
@@ -1844,7 +1844,7 @@ action exit_T7_41_04() {
 };
 
 action exit_T7_42_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T7_04 == true;
 	[start] exitCounter_04 == order_T7;
 
@@ -1855,7 +1855,7 @@ action exit_T7_42_04() {
 };
 
 action exit_T7_43_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T7_04 == true;
 	[start] exitCounter_04 == order_T7;
 
@@ -1866,7 +1866,7 @@ action exit_T7_43_04() {
 };
 
 action exit_T8_21_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T8_02 == true;
 	[start] exitCounter_02 == order_T8;
 
@@ -1877,7 +1877,7 @@ action exit_T8_21_02() {
 };
 
 action exit_T8_22_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T8_02 == true;
 	[start] exitCounter_02 == order_T8;
 
@@ -1888,7 +1888,7 @@ action exit_T8_22_02() {
 };
 
 action exit_T8_23_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T8_02 == true;
 	[start] exitCounter_02 == order_T8;
 
@@ -1899,7 +1899,7 @@ action exit_T8_23_02() {
 };
 
 action exit_T9_41_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T9_04 == true;
 	[start] exitCounter_04 == order_T9;
 
@@ -1910,7 +1910,7 @@ action exit_T9_41_04() {
 };
 
 action exit_T9_42_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T9_04 == true;
 	[start] exitCounter_04 == order_T9;
 
@@ -1921,7 +1921,7 @@ action exit_T9_42_04() {
 };
 
 action exit_T9_43_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T9_04 == true;
 	[start] exitCounter_04 == order_T9;
 

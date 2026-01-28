@@ -6,6 +6,7 @@ from src.ices.Happening import Happening, HappeningActionStart, HappeningActionE
 from src.ices.ICEAction import ICEAction
 from src.ices.IntermediateCondition import IntermediateCondition
 from src.ices.IntermediateEffect import IntermediateEffect
+from src.pddl.Formula import Formula
 
 
 class ActionHappenings:

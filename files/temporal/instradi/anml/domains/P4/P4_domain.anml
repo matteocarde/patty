@@ -344,7 +344,7 @@ action depart_T4_III_23_02() {
 };
 
 action exit_T1_21_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T1_02 == true;
 	[start] exitCounter_02 == order_T1;
 
@@ -355,7 +355,7 @@ action exit_T1_21_02() {
 };
 
 action exit_T1_22_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T1_02 == true;
 	[start] exitCounter_02 == order_T1;
 
@@ -366,7 +366,7 @@ action exit_T1_22_02() {
 };
 
 action exit_T1_23_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T1_02 == true;
 	[start] exitCounter_02 == order_T1;
 
@@ -377,7 +377,7 @@ action exit_T1_23_02() {
 };
 
 action exit_T2_21_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T2_02 == true;
 	[start] exitCounter_02 == order_T2;
 
@@ -388,7 +388,7 @@ action exit_T2_21_02() {
 };
 
 action exit_T2_22_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T2_02 == true;
 	[start] exitCounter_02 == order_T2;
 
@@ -399,7 +399,7 @@ action exit_T2_22_02() {
 };
 
 action exit_T2_23_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T2_02 == true;
 	[start] exitCounter_02 == order_T2;
 
@@ -410,7 +410,7 @@ action exit_T2_23_02() {
 };
 
 action exit_T3_41_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T3_04 == true;
 	[start] exitCounter_04 == order_T3;
 
@@ -421,7 +421,7 @@ action exit_T3_41_04() {
 };
 
 action exit_T3_42_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T3_04 == true;
 	[start] exitCounter_04 == order_T3;
 
@@ -432,7 +432,7 @@ action exit_T3_42_04() {
 };
 
 action exit_T3_43_04() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T3_04 == true;
 	[start] exitCounter_04 == order_T3;
 
@@ -443,7 +443,7 @@ action exit_T3_43_04() {
 };
 
 action exit_T4_21_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T4_02 == true;
 	[start] exitCounter_02 == order_T4;
 
@@ -454,7 +454,7 @@ action exit_T4_21_02() {
 };
 
 action exit_T4_22_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T4_02 == true;
 	[start] exitCounter_02 == order_T4;
 
@@ -465,7 +465,7 @@ action exit_T4_22_02() {
 };
 
 action exit_T4_23_02() {
-	duration := 1;
+	duration := 0;
 	[start] inFront_T4_02 == true;
 	[start] exitCounter_02 == order_T4;
 

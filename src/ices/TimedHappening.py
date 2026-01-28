@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Set
 
-from classes.utils.Constants import EPSILON
+from src.goalFunctions.GoalFunctionClauses import EPSILON
 from src.ices.Happening import HappeningConditionStart, HappeningConditionEnd, HappeningEffect, Happening, ACTION_START, \
     ICOND_START, ICOND_END, IEFF, ACTION_END
 from src.ices.ICETask import ICETask

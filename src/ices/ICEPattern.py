@@ -187,7 +187,7 @@ class ICEPattern:
                         snapOrder.append(leftHappenings[h])
                         del leftHappenings[h]
 
-        snapOrder += [h for h in leftHappenings.keys()]
+        snapOrder += [h for h in leftHappenings.values()]
         pattern: ICEPattern = ICEPattern.fromOrder([aLeft.originatingHappening for aLeft in snapOrder if aLeft.originatingHappening])
 
         ICEPattern.__setStartingAndEnding(pattern)

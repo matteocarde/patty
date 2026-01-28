@@ -13,6 +13,20 @@ class PlanRelativeTime(RelativeTime):
     def __init__(self):
         super().__init__()
 
+    def __le__(self, other):
+        if not isinstance(other, PlanRelativeTime):
+            return False
+        if self.anchor != other.anchor:
+            return False
+        return self.k <= other.k
+
+    def __lt__(self, other):
+        if not isinstance(other, PlanRelativeTime):
+            return False
+        if self.anchor != other.anchor:
+            return False
+        return self.k < other.k
+
 
 class PlanRelativeTimeAnchor(RelativeTimeAnchor):
     BEGIN = "A"

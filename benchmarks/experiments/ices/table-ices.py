@@ -7,6 +7,7 @@ import statistics
 import sys
 from typing import Dict, List, Set
 
+from benchmarks.tables.ices.domains import ICES_DOMAINS
 from benchmarks.tables.ices.planners import ICES_PLANNERS
 from benchmarks.tables.ices.table_all import ICES_ALL
 from classes.CloudLogger import CloudLogger
@@ -78,10 +79,13 @@ def main():
     joinWith = [file]
     # joinWith = [file]
 
+    oversub_instances = list(ICES_DOMAINS["temporal/oversub"]["instances"])
+
     aResults: [Result] = []
     for fileJoin in joinWith:
         with open(fileJoin, "r") as f:
             reader = csv.reader(f, delimiter=",")
+            oversubIndex = dict()
             for i, line in enumerate(reader):
                 if not line:
                     continue
@@ -89,6 +93,12 @@ def main():
                 r.problem = r.problem[:-5]
                 if "/anml" in r.domain and "instradi" not in r.domain:
                     r.domain = r.domain.replace("/anml", "")
+                if r.domain == "temporal/oversub":
+                    oversubIndex.setdefault(r.solver, 0)
+                    if oversubIndex[r.solver] < len(oversub_instances):
+                        r.problem = oversub_instances[oversubIndex[r.solver]]
+                        oversubIndex[r.solver] += 1
+                    pass
                 aResults.append(r)
 
     folder = f'benchmarks/latex/{exp}'
