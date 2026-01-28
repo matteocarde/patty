@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import List, Set, Dict
 
-from classes.utils.Constants import EPSILON
+from src.utils.Constants import EPSILON
 from src.ices.Happening import HappeningActionStart
 from src.ices.ICEAction import BEGIN
 from src.ices.ICEEncoding import ICEEncoding
