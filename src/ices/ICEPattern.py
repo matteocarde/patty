@@ -17,6 +17,7 @@ from src.pddl.ARPG import ARPG
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.State import State
+from src.utils.TimeStat import TimeStat, TimeHolder
 
 
 class ICEPattern:
@@ -53,7 +54,7 @@ class ICEPattern:
     def fromOrder(cls, order: List[Happening]):
         p = cls()
         p.pattern = order
-
+        # ICEPattern.__setStartingAndEnding(p)
         return p
 
     def addPostfix(self, postfix: int or str):
@@ -75,7 +76,10 @@ class ICEPattern:
 
         return ICEPattern.fromOrder(order)
 
-    def getActionsStartEndPairs(self) -> List[ICEActionStartEndPair]:
+    def __pow__(self, power, modulo=None):
+        return self.multiply(power)
+
+    def getActionsStartEndPairs(self, unrepeatableActions) -> List[ICEActionStartEndPair]:
         pairs: List[ICEActionStartEndPair] = list()
 
         for i, h_i in enumerate(self.pattern):
@@ -85,10 +89,12 @@ class ICEPattern:
                 if j < i or h_i.starting != h_j.ending:
                     continue
                 pairs.append(ICEActionStartEndPair(h_i, i, h_j, j))
+                if unrepeatableActions:
+                    break
 
         return pairs
 
-    def getConditionsStartEndPairs(self) -> List[ICEConditionStartEndPair]:
+    def getConditionsStartEndPairs(self, unrepeatableActions) -> List[ICEConditionStartEndPair]:
         pairs: List[ICEConditionStartEndPair] = list()
 
         for i, h_i in enumerate(self.pattern):
@@ -98,6 +104,8 @@ class ICEPattern:
                 if not isinstance(h_j, HappeningConditionEnd) or h_i.condition != h_j.condition:
                     continue
                 pairs.append(ICEConditionStartEndPair(h_i, i, h_j, i + 1 + j))
+                if unrepeatableActions:
+                    break
 
         return pairs
 
@@ -106,15 +114,17 @@ class ICEPattern:
         fakeEff = PlanIntermediateEffect.fromProperties(BEGIN + 0)
         return HappeningEffect(fakeEff, None, "FAKE")
 
-    def getTouchedAtomsIndexes(self) -> Dict[Atom, List[int]]:
-        d: Dict[Atom, List[int]] = dict()
+    def getTouchedAtomsIndexes(self) -> Dict[Atom, Set[int]]:
+        d: Dict[Atom, Set[int]] = dict()
         for i, h_i in enumerate(self.pattern):
-            if not isinstance(h_i, HappeningEffect):
-                continue
-            for e in h_i.effect.effects:
-                v = e.getAtom()
-                d.setdefault(v, [])
-                d[v].append(i)
+            atoms = set()
+            if isinstance(h_i, HappeningCondition):
+                atoms = h_i.condition.conditions.getFunctions() | h_i.condition.conditions.getPredicates()
+            if isinstance(h_i, HappeningEffect):
+                atoms = h_i.effect.effects.getFunctions() | h_i.effect.effects.getPredicates()
+            for v in atoms:
+                d.setdefault(v, set())
+                d[v].add(i)
 
         return d
 
@@ -132,7 +142,9 @@ class ICEPattern:
 
     @staticmethod
     def getARPG(task: ICETask, state: State, avoidRaising=False):
+        t = TimeHolder("Computing SnapTask")
         snapDomain = SnapTask(task)
+        t.endHolder()
         return ARPG(snapDomain, state, snapDomain.goal, avoidRaising=avoidRaising)
 
     @classmethod
@@ -169,7 +181,10 @@ class ICEPattern:
 
     @classmethod
     def fromState(cls, s: State, task: ICETask) -> ICEPattern:
+
+        t = TimeStat.startHolder("Computing ARPG for Pattern")
         arpg: ARPG = ICEPattern.getARPG(task, s, avoidRaising=True)
+        t.endHolder()
 
         snapOrder: List[SnapHappeningAction] = arpg.getActionsOrderWithoutUnused(enhanced=False)
         left: Set[SnapHappeningAction] = arpg.getUnusedActions()
@@ -188,7 +203,8 @@ class ICEPattern:
                         del leftHappenings[h]
 
         snapOrder += [h for h in leftHappenings.values()]
-        pattern: ICEPattern = ICEPattern.fromOrder([aLeft.originatingHappening for aLeft in snapOrder if aLeft.originatingHappening])
+        pattern: ICEPattern = ICEPattern.fromOrder(
+            [aLeft.originatingHappening for aLeft in snapOrder if aLeft.originatingHappening])
 
         ICEPattern.__setStartingAndEnding(pattern)
 

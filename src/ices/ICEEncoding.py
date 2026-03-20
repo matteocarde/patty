@@ -32,29 +32,30 @@ class ICEEncoding(Encoding):
     rules: SMTConjunction
     actionsStartEndPairs: List[ICEActionStartEndPair]
 
-    def __init__(self, task: ICETask, pattern: ICEPattern, subgoalsAchieved: Set[Formula or Predicate] = None):
+    def __init__(self, task: ICETask, pattern: ICEPattern, subgoalsAchieved: Set[Formula or Predicate] = None,
+                 unrepeatableActions=False):
         super().__init__()
         self.task: ICETask = task
         self.pattern: ICEPattern = pattern
         self.subgoalsAchieved: Set[
             Formula or Predicate] = subgoalsAchieved if subgoalsAchieved is not None else set(self.task.goal.conditions)
+        self.unrepeatableActions = unrepeatableActions
 
         t = TimeStat.startHolder("Getting actions start and end pairs ")
-        self.actionsStartEndPairs = self.pattern.getActionsStartEndPairs()
+        self.actionsStartEndPairs = self.pattern.getActionsStartEndPairs(unrepeatableActions)
         t.endHolder()
         t = TimeStat.startHolder("Getting ICE transition variables")
-        self.transVars = ICETransitionVariables(task, pattern)
+        self.transVars = ICETransitionVariables(task, pattern, unrepeatableActions)
         t.endHolder()
 
         self.k = len(pattern)
         self.softRules: [SMTExpression] = []
         self.rulesBySet = dict()
 
-        t = TimeStat.startHolder("Getting touched atoms")
-        self.touchedAtomsIndexes: Dict[Atom, List[int]] = self.pattern.getTouchedAtomsIndexes()
-        t.endHolder()
+        self.__computeHelpers()
 
         self.rulesBySet["init"] = TimeStat.timeCall(self.__getInitRules)
+        self.rulesBySet["goal"] = TimeStat.timeCall(self.__getGoalRules)
 
         self.rulesBySet["domain"] = TimeStat.timeCall(self.__getDomainRules)
         self.rulesBySet["frame"] = self.__getFrameRules()
@@ -68,8 +69,6 @@ class ICEEncoding(Encoding):
         self.rulesBySet["epsilon-separation"] = TimeStat.timeCall(self.__getEpsilonSeparationRules)
         self.rulesBySet["no-overlap"] = TimeStat.timeCall(self.__getNoOverlapRules)
 
-        self.rulesBySet["goal"] = TimeStat.timeCall(self.__getGoalRules)
-
         self.rules = SMTConjunction()
         for (key, rules) in self.rulesBySet.items():
             rules.insert(0, SMTComment(key))
@@ -77,6 +76,22 @@ class ICEEncoding(Encoding):
 
     def __len__(self):
         return len(self.rules)
+
+    def __computeHelpers(self):
+
+        t = TimeStat.startHolder("Getting touched atoms")
+        self.touchedAtomsIndexes: Dict[Atom, Set[int]] = self.pattern.getTouchedAtomsIndexes()
+        t.endHolder()
+
+        self.parents: Dict[ICEAction, Set[Happening]] = dict()
+        self.originals: Dict[ICEAction, Set[Happening]] = dict()
+
+        for h in self.pattern:
+            self.parents.setdefault(h.parent, set())
+            self.parents[h.parent].add(h)
+
+            self.originals.setdefault(h.original, set())
+            self.originals[h.original].add(h)
 
     def __getInitRules(self) -> SMTConjunction:
         tVars = self.transVars
@@ -174,34 +189,29 @@ class ICEEncoding(Encoding):
         rules: SMTConjunction = SMTConjunction()
         hVars = self.transVars.happeningVariables
 
+        t = TimeStat.startHolder("__getActionIntermediateCausalRules 1)")
+
         for b in self.task.actions:
+
+            parents = self.parents[b]
 
             if b.isSnap:
                 continue
 
-            bCond: Set[Happening] = set()
-            bEff: Set[Happening] = set()
-
-            for h in self.pattern:
-                if isinstance(h, HappeningCondition) and h.parent == b:
-                    bCond.add(h)
-                if isinstance(h, HappeningEffect) and h.parent == b:
-                    bEff.add(h)
-
-            for a in bCond | bEff:
+            for a in parents:
 
                 h_i = hVars[a]
                 andRules = []
-                for b in bCond | bEff:
+                for b in parents:
                     orRules = []
-                    for c in self.pattern:
-                        if b.original != c.original:
-                            continue
+                    for c in self.originals[b.original]:
                         h_j = hVars[c]
                         orRules.append(h_i.equal(h_j))
                     andRules.append(SMTExpression.bigor(orRules))
                 rules.append(SMTExpression.bigand(andRules))
+        t.endHolder()
 
+        t = TimeStat.startHolder("__getActionIntermediateCausalRules 2)")
         for pair in self.actionsStartEndPairs:
             b = pair.action
             h_p = hVars[pair.start]
@@ -227,7 +237,9 @@ class ICEEncoding(Encoding):
                     (sum(starting) * nOfICES).equal(sum(ices))
                 )
             )
+        t.endHolder()
 
+        t = TimeStat.startHolder("__getActionIntermediateCausalRules 3)")
         for i, h_a in enumerate(self.pattern):
             h_i = hVars[h_a]
             bigor = []
@@ -237,6 +249,8 @@ class ICEEncoding(Encoding):
                         continue
                     h_j = hVars[h_b]
                     bigor.append(h_j.equal(h_i))
+                    if self.unrepeatableActions:
+                        break
 
             if h_a.ending:
                 for j, h_b in enumerate(self.pattern[:i]):
@@ -244,9 +258,12 @@ class ICEEncoding(Encoding):
                         continue
                     h_j = hVars[h_b]
                     bigor.append(h_j.equal(h_i))
+                    if self.unrepeatableActions:
+                        break
 
             if bigor:
                 rules.append((h_i > 0).implies(SMTExpression.bigor(bigor)))
+        t.endHolder()
 
         return rules
 
@@ -414,7 +431,12 @@ class ICEEncoding(Encoding):
             if isinstance(h.parent, ICEAction) and h.parent.isSnap:
                 continue
 
-            ending = [tVars[end].equal(t_i + d_i) for end in self.pattern[i + 1:] if end.ending == h.starting]
+            ending = []
+            for end in self.pattern[i + 1:]:
+                if end.ending == h.starting:
+                    ending.append(tVars[end].equal(t_i + d_i))
+                    if self.unrepeatableActions:
+                        break
             rules.append((h_i > 0).implies(SMTExpression.bigor(ending)))
 
         return rules
@@ -429,7 +451,25 @@ class ICEEncoding(Encoding):
 
         for i, h_a in enumerate(self.pattern):
             i = i + 1
-            for j, h_b in enumerate(self.pattern[i:]):
+
+            touchedAtoms = set()
+            if isinstance(h_a, HappeningCondition):
+                touchedAtoms = h_a.condition.conditions.getFunctions() | h_a.condition.conditions.getPredicates()
+            if isinstance(h_a, HappeningEffect):
+                touchedAtoms = h_a.effect.effects.getFunctions() | h_a.effect.effects.getPredicates()
+
+
+            possiblyInMutex = set()
+            for v in touchedAtoms:
+                possiblyInMutex |= self.touchedAtomsIndexes.get(v, set())
+            print(i, h_a, touchedAtoms, possiblyInMutex)
+
+            for j in possiblyInMutex:
+
+                if j < i:
+                    continue
+
+                h_b = self.pattern[j]
                 if not h_a.original.inMutexWith(h_b.original):
                     continue
 
@@ -455,7 +495,7 @@ class ICEEncoding(Encoding):
                         t_j >= t_i + EPSILON)
                     rules.append(r)
 
-                if isinstance(h_a.parent, ICEAction) and h_a.parent != h_b.parent:
+                if isinstance(h_a.parent, ICEAction) and h_a.parent != h_b.parent and not self.unrepeatableActions:
                     b = h_a.parent
                     d_i_b = deltas[i][b]
                     e_b = b.getEpsilonB()
@@ -484,7 +524,10 @@ class ICEEncoding(Encoding):
                     h_j = hVars[b]
                     t_j = tVars[b]
                     e_b = a.starting.getEpsilonB()
-                    rules.append(((h_i > 0) & (h_j > 0)).implies(t_j >= t_i + (d_i + e_b) * h_i))
+                    if not self.unrepeatableActions:
+                        rules.append(((h_i > 0) & (h_j > 0)).implies(t_j >= t_i + (d_i + e_b) * h_i))
+                    else:
+                        rules.append((h_i > 0).implies(h_j.equal(0)))
 
         return rules
 

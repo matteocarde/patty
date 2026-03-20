@@ -43,13 +43,13 @@ class SnapTask(GroundedDomain):
                     actions.add(SnapHappeningAction.fromHappening(h, prev, self.execsAction[b]))
 
         if task.conditions or task.effects:
-            M = max([c.toTime.k for c in task.conditions.icond] + [e.time.k for e in task.effects.ieff])
+            M = round(max([c.toTime.k for c in task.conditions.icond] + [e.time.k for e in task.effects.ieff]))
         else:
             M = 0
 
         time = Literal.freshSimple(f"time_snap_patty")
 
-        step = 1
+        step = min(1000, M)
 
         for i in range(0, M + step, step):
             pre = Formula()

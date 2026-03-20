@@ -161,3 +161,10 @@ class ICETask:
             df.write(self.getANMLDomain())
         with open(problemFile, "w") as pf:
             pf.write(self.getANMLProblem())
+
+    def allHappenings(self):
+        happ = list(self.conditions.icond) + list(self.effects.ieff)
+        for a in self.actions:
+            happ += a.icond
+            happ += a.ieff
+        return happ

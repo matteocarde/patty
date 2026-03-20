@@ -42,7 +42,7 @@ class IntermediateEffect(Tuplable):
         return str(self.effects)
 
     def __str__(self):
-        return f"<{self.time}, {self.effects}>"
+        return f"<{self.time}>"
 
     def toTuple(self) -> Tuple:
         return self.time, self.effects

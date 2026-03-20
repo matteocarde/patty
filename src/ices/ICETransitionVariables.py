@@ -1,3 +1,4 @@
+import copy
 from typing import Dict, List, Set
 
 from src.ices.Happening import Happening, HappeningActionStart, HappeningEffect, HappeningCondition
@@ -28,7 +29,7 @@ class ICETransitionVariables:
     deltaExpressions: Dict[int, Dict[ICEAction, SMTExpression or float]]
     makespan: SMTVariable
 
-    def __init__(self, task: ICETask, pattern: ICEPattern):
+    def __init__(self, task: ICETask, pattern: ICEPattern, unrepeatableActions=False):
         self.task = task
         self.pattern = pattern
 
@@ -52,7 +53,7 @@ class ICETransitionVariables:
         self.sigmaExpressions = self.__computeSigmaExpressions()
         t.endHolder()
         t = TimeStat.startHolder("Get delta expressions")
-        self.deltaExpressions = self.__computeDeltaExpressions()
+        self.deltaExpressions = self.__computeDeltaExpressions(unrepeatableActions)
         t.endHolder()
 
         self.makespan = SMTRealVariable(f"__makespan__")
@@ -64,8 +65,11 @@ class ICETransitionVariables:
 
         sigmas[0] = dict()
         trueAtoms: Set[Atom] = set()
-        for v in self.task.propVariables | self.task.numVariables:
-            sigmas[0][v] = self.currentVariables[v]
+        for v in self.task.propVariables:
+            sigmas[0][v] = TrueExpression() if self.task.init.getAssignment(v) else FalseExpression()
+
+        for v in self.task.numVariables:
+            sigmas[0][v] = self.task.init.getAssignment(v)
 
         for j, h in enumerate(self.pattern):
             i = j + 1
@@ -76,14 +80,14 @@ class ICETransitionVariables:
                 sigmas[i] = sigmas[i - 1]
                 continue
 
+            sigmas[i] = copy.copy(sigmas[i - 1])
+
             h_i = self.happeningVariables[h]
-            for v in self.task.propVariables:
-                if v in h.effect.atomsAdded:
-                    sigmas[i][v] = sigmas[i - 1][v] | (h_i > 0)
-                elif v in h.effect.atomsDeleted:
-                    sigmas[i][v] = sigmas[i - 1][v] & (h_i.equal(0))
-                else:
-                    sigmas[i][v] = sigmas[i - 1][v]
+            # for v in self.task.propVariables:
+            for v in h.effect.atomsAdded:
+                sigmas[i][v] = sigmas[i - 1][v] | (h_i > 0)
+            for v in h.effect.atomsDeleted:
+                sigmas[i][v] = sigmas[i - 1][v] & (h_i.equal(0))
 
             for v in self.task.numVariables:
                 if v not in h.effect.atomToEffect:
@@ -99,17 +103,21 @@ class ICETransitionVariables:
 
         return sigmas
 
-    def __computeDeltaExpressions(self) -> Dict[int, Dict[ICEAction, SMTExpression or float]]:
+    def __computeDeltaExpressions(self, unrepeatableActions=False) -> Dict[
+        int, Dict[ICEAction, SMTExpression or float]]:
         deltas: Dict[int, Dict[ICEAction, SMTExpression or float]] = dict()
 
         deltas[0] = dict()
-        trueAtoms: Set[Atom] = set()
         for b in self.task.actions:
             deltas[0][b] = 0
 
         h: Happening
         for j, h in enumerate(self.pattern):
             i = j + 1
+
+            if unrepeatableActions:
+                deltas[i] = deltas[i - 1]
+                continue
 
             deltas[i] = dict()
 

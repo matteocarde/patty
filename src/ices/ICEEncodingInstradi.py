@@ -1,37 +1,25 @@
 from typing import List, Dict, Set, Tuple
-import time
 
 from classes.instradi.Instradi import Instradi
 from classes.instradi.station.Route import Route
-from classes.planning.actions.DepartAction import DepartAction
-from classes.planning.actions.EnterAction import EnterAction
-from classes.planning.actions.ExitAction import ExitAction
-from classes.planning.actions.MoveAction import MoveAction
-from classes.planning.actions.OverlapAction import OverlapAction
-from classes.planning.actions.ReleaseAction import ReleaseAction
 from src.ices.Happening import HappeningActionStart, HappeningActionEnd, HappeningEffect, HappeningConditionStart, \
-    HappeningConditionEnd, HappeningAction, Happening
+    HappeningConditionEnd, Happening
 from src.ices.ICEAction import ICEAction
 from src.ices.ICEActionStartEndPair import ICEActionStartEndPair
 from src.ices.ICEConditionStartEndPair import ICEConditionStartEndPair
+from src.ices.ICEPattern import ICEPattern
 from src.ices.ICEPatternPrecedenceGraphInstradi import ICEPatternPrecedenceGraphInstradi
+from src.ices.ICETask import ICETask
 from src.ices.ICETransitionVariablesInstradi import ICETransitionVariablesInstradi
 from src.ices.PlanIntermediateEffect import PlanIntermediateEffect
 from src.ices.TimedConditions import TimedConditions
 from src.ices.TimedEffects import TimedEffects
-from src.ices.ICEPattern import ICEPattern
-from src.ices.ICEPatternPrecedenceGraph import ICEPatternPrecedenceGraph
-from src.ices.ICETask import ICETask
-from src.ices.ICETransitionVariables import ICETransitionVariables
 from src.pddl.Atom import Atom
 from src.pddl.BinaryPredicate import BinaryPredicate
-from src.pddl.Formula import Formula
 from src.pddl.Literal import Literal
 from src.plan.Encoding import Encoding
-from src.retrieve.InitialConditionRetriever import EPSILON
 from src.smt.SMTConjunction import SMTConjunction
 from src.smt.SMTExpression import SMTExpression
-from src.smt.expressions.FalseExpression import FalseExpression
 from src.utils.TimeStat import TimeStat
 
 
@@ -50,10 +38,10 @@ class ICEEncodingInstradi(Encoding):
         self.pattern: ICEPattern = pattern
         self.instradi: Instradi = instradi
         t = TimeStat.startHolder("Getting actions start and end pairs ")
-        self.actionsStartEndPairs = self.pattern.getActionsStartEndPairs()
+        self.actionsStartEndPairs = self.pattern.getActionsStartEndPairs(True)
         t.endHolder()
         t = TimeStat.startHolder("Getting condition start and end pairs ")
-        self.conditionsStartEndPairs = self.pattern.getConditionsStartEndPairs()
+        self.conditionsStartEndPairs = self.pattern.getConditionsStartEndPairs(True)
         t.endHolder()
         t = TimeStat.startHolder("Getting ICE transition variables")
         self.transVars = ICETransitionVariablesInstradi(task, pattern)
@@ -415,13 +403,13 @@ class ICEEncodingInstradi(Encoding):
 
         for pair in self.conditionsStartEndPairs:
             # 8.a
-            if pair.h_i.parent != pair.h_j.parent:
+            if pair.start.parent != pair.end.parent:
                 continue
 
-            h_i = hVars[pair.h_i]
+            h_i = hVars[pair.start]
             # h_j = hVars[pair.h_j]
-            i = pair.i
-            j = pair.j
+            i = pair.startIndex
+            j = pair.endIndex
             cond = pair.condition.conditions
             cond_i = SMTExpression.fromFormula(cond, sigma[i - 1])
             rule = (h_i).implies(cond_i)

@@ -107,6 +107,14 @@ class Happening:
     def AICEs(b: ICEAction) -> List[List[Happening]]:
         return Happening.__ICEs(b.icond, b.ieff, b, b.duration)
 
+    @classmethod
+    def AICEsLinearized(cls, b):
+        AICES = Happening.AICEs(b)
+        linearized = [h for H in AICES for h in H]
+        linearized[0].starting = b
+        linearized[-1].ending = b
+        return linearized
+
     @staticmethod
     def PICEs(conditions: TimedConditions, effects: TimedEffects) -> List[List[Happening]]:
         return Happening.__ICEs(conditions, effects, None, 10000000)
@@ -135,14 +143,14 @@ class Happening:
 
     @staticmethod
     def computeTime(h):
-        if isinstance(h.condition, ActionIntermediateCondition):
+        if isinstance(h, HappeningCondition) and isinstance(h.condition, ActionIntermediateCondition):
             assert isinstance(h.parent, ICEAction)
             cond = h.condition
             anchor = cond.fromTime.anchor if isinstance(h, HappeningConditionStart) else cond.toTime.anchor
             time = 0 if anchor == ActionRelativeTimeAnchor.START else h.parent.duration
             k = h.condition.fromTime.k
             return time + k
-        elif isinstance(h.effect, ActionIntermediateEffect):
+        elif isinstance(h, HappeningEffect) and isinstance(h.effect, ActionIntermediateEffect):
             assert isinstance(h.parent, ICEAction)
             time = 0 if h.effect.time.anchor == ActionRelativeTimeAnchor.START else h.parent.duration
             k = h.effect.time.k
