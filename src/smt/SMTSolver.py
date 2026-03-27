@@ -31,7 +31,12 @@ class SMTSolver:
 
         if self.encoding:
             t = TimeStat.startHolder("Adding assertions")
-            self.addAssertions(self.encoding.rules, solver=False, optimizer=True)
+            memodict = dict()
+            self.addAssertions(self.encoding.rules, solver=False, optimizer=True, memodict=memodict)
+            print(f"memodict size: {len(memodict)}")
+            # with open("./memodict.txt", "w") as f:
+            #     for k in memodict.keys():
+            #         f.write(str(k) + "\n")
             # self.addAssertions(self.encoding.rules, solver=True, optimizer=False)
             t.endHolder()
             self.addSoftAssertions(self.encoding.softRules)
@@ -41,18 +46,18 @@ class SMTSolver:
         # signal.signal(signal.SIGTERM, self.z3.exit)
         # signal.signal(signal.SIGINT, self.z3.exit)
 
-    def addAssertion(self, expr: SMTExpression, push=True, solver=True, optimizer=True):
+    def addAssertion(self, expr: SMTExpression, push=True, solver=True, optimizer=True, memodict=dict()):
         self.assertions.append(expr)
         self.variables |= expr.getVariables()
-        expr = expr.getExpression()
+        expr = expr.getExpression(memodict=memodict)
         self.solver.add(expr, solver=solver, optimizer=optimizer)
 
         if push:
             self.solver.push()
 
-    def addAssertions(self, exprs: [SMTExpression], push=True, solver=True, optimizer=True):
+    def addAssertions(self, exprs: [SMTExpression], push=True, solver=True, optimizer=True, memodict=dict()):
         for i, expr in enumerate(exprs):
-            self.addAssertion(expr, push=False, solver=solver, optimizer=optimizer)
+            self.addAssertion(expr, push=False, solver=solver, optimizer=optimizer, memodict=memodict)
 
         if push:
             self.solver.push()

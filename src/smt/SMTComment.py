@@ -17,7 +17,7 @@ class SMTComment(SMTExpression):
     def __str__(self):
         return ";" + self.comment
 
-    def getExpression(self) -> FNode:
+    def getExpression(self, memodict=dict()) -> FNode:
         return TRUE()
 
     def getVariables(self) -> Set:

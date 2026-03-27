@@ -23,8 +23,12 @@ class MaxExpression(NaryExpression):
     def toBDDExpression(self, map: Dict[SMTBoolVariable, BDDVariable]):
         raise NotImplementedError()
 
-    def getExpression(self) -> FNode:
-        return SMTMax([x.getExpression() for x in self.children])
+    def getExpression(self, memodict=dict()) -> FNode:
+        if self in memodict:
+            return memodict[self]
+        expr = SMTMax([x.getExpression(memodict=memodict) for x in self.children])
+        memodict[self] = expr
+        return expr
 
     @classmethod
     def fromBDDExpression(cls, bdd: AndOp, subs: Dict[str, SMTExpression]):

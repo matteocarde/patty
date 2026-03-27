@@ -49,7 +49,7 @@ class SnapTask(GroundedDomain):
 
         time = Literal.freshSimple(f"time_snap_patty")
 
-        step = min(1000, M)
+        step = max(min(100, M), 1)
 
         for i in range(0, M + step, step):
             pre = Formula()

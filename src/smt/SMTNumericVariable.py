@@ -16,11 +16,12 @@ class SMTNumericVariable(SMTVariable):
         self.varType = varType
         self.symbol = Symbol(self.name, self.varType)
         self.type = NUMERIC
+        self.variables = {self}
 
     def getVariables(self) -> Set:
         return {self}
 
-    def getExpression(self) -> FNode:
+    def getExpression(self, memodict=dict()) -> FNode:
         return self.symbol
 
     def __hash__(self):
@@ -31,7 +32,7 @@ class SMTIntVariable(SMTNumericVariable):
     def __init__(self, name: str):
         super().__init__(name, INT)
 
-    def getExpression(self) -> FNode:
+    def getExpression(self, memodict=dict()) -> FNode:
         return ToReal(super().getExpression())
 
 

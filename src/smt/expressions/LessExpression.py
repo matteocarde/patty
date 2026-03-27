@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, Tuple
 
 from libs.pyeda.pyeda.boolalg.bdd import BDDVariable
 from pysmt.fnode import FNode
@@ -11,6 +11,8 @@ from src.smt.expressions.ConstantExpression import ConstantExpression
 from src.smt.expressions.FalseExpression import FalseExpression
 from src.smt.expressions.IffExpression import IffExpression
 from src.smt.expressions.TrueExpression import TrueExpression
+
+LESS_CACHE: Dict[Tuple[SMTExpression, SMTExpression], SMTExpression] = dict()
 
 
 class LessExpression(BinaryExpression):
@@ -25,13 +27,20 @@ class LessExpression(BinaryExpression):
         rhs = SMTExpression.numericConstant(xs[1])
         if isinstance(lhs, ConstantExpression) and isinstance(rhs, ConstantExpression):
             return TrueExpression() if lhs.value < rhs.value else FalseExpression()
-        return cls(lhs, rhs)
+        if (lhs, rhs) in LESS_CACHE:
+            return LESS_CACHE[lhs, rhs]
+        LESS_CACHE[lhs, rhs] = cls(lhs, rhs)
+        return LESS_CACHE[lhs, rhs]
 
     def toBDDExpression(self, map: Dict[SMTBoolVariable, BDDVariable]):
         raise NotImplementedError()
 
-    def getExpression(self) -> FNode:
-        return LT(self.lhs.getExpression(), self.rhs.getExpression())
+    def getExpression(self, memodict=dict()) -> FNode:
+        if self in memodict:
+            return memodict[self]
+        expr = LT(self.lhs.getExpression(memodict=memodict), self.rhs.getExpression(memodict=memodict))
+        memodict[self] = expr
+        return expr
 
     def evaluate(self, solution):
         return self.lhs.evaluate(solution) < self.rhs.evaluate(solution)

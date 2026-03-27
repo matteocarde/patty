@@ -21,9 +21,9 @@ class MultiplyExpression(BinaryExpression):
         lhs = SMTExpression.numericConstant(xs[0])
         rhs = SMTExpression.numericConstant(xs[1])
         if isinstance(lhs, ConstantExpression) and lhs.value == 0:
-            return ConstantExpression(0)
+            return ConstantExpression.simplify(0)
         if isinstance(rhs, ConstantExpression) and rhs.value == 0:
-            return ConstantExpression(0)
+            return ConstantExpression.simplify(0)
         if isinstance(rhs, ConstantExpression) and rhs.value == 1:
             return lhs
         if isinstance(lhs, ConstantExpression) and lhs.value == 1:
@@ -35,8 +35,12 @@ class MultiplyExpression(BinaryExpression):
     def toBDDExpression(self, map: Dict[SMTBoolVariable, BDDVariable]):
         raise NotImplementedError()
 
-    def getExpression(self) -> FNode:
-        return Times(self.lhs.getExpression(), self.rhs.getExpression())
+    def getExpression(self, memodict=dict()) -> FNode:
+        if self in memodict:
+            return memodict[self]
+        expr = Times(self.lhs.getExpression(memodict=memodict), self.rhs.getExpression(memodict=memodict))
+        memodict[self] = expr
+        return expr
 
     def evaluate(self, solution):
         return self.lhs.evaluate(solution) * self.rhs.evaluate(solution)

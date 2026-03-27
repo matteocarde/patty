@@ -35,8 +35,12 @@ class NotEqualExpression(BinaryExpression):
     def toBDDExpression(self, map: Dict[SMTBoolVariable, BDDVariable]):
         raise NotImplementedError()
 
-    def getExpression(self) -> FNode:
-        return NotEquals(self.lhs.getExpression(), self.rhs.getExpression())
+    def getExpression(self, memodict=dict()) -> FNode:
+        if self in memodict:
+            return memodict[self]
+        expr = NotEquals(self.lhs.getExpression(memodict=memodict), self.rhs.getExpression(memodict=memodict))
+        memodict[self] = expr
+        return expr
 
     def evaluate(self, solution):
         return self.lhs.evaluate(solution) != self.rhs.evaluate(solution)

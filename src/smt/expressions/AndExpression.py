@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 from libs.pyeda.pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram
 from libs.pyeda.pyeda.boolalg.expr import AndOp, Variable, Complement, OrOp
@@ -10,6 +10,8 @@ from src.smt.SMTExpression import SMTExpression, BOOLEAN
 from src.smt.expressions.FalseExpression import FalseExpression
 from src.smt.expressions.NaryExpression import NaryExpression
 from src.smt.expressions.TrueExpression import TrueExpression
+
+AND_CACHE: Dict[Tuple[SMTExpression, SMTExpression], SMTExpression] = dict()
 
 
 class AndExpression(NaryExpression):
@@ -26,7 +28,10 @@ class AndExpression(NaryExpression):
             return rhs
         if isinstance(rhs, TrueExpression):
             return lhs
-        return cls(lhs, rhs)
+        if (lhs, rhs) in AND_CACHE:
+            return AND_CACHE[lhs, rhs]
+        AND_CACHE[lhs, rhs] = cls(lhs, rhs)
+        return AND_CACHE[lhs, rhs]
 
     def __andOfSubClauses(self, clauses):
         if len(clauses) == 1:
@@ -47,8 +52,12 @@ class AndExpression(NaryExpression):
         clauses: List[BinaryDecisionDiagram] = [e.toBDDExpression(map) for e in self.children]
         return self.__andOfSubClauses(clauses)
 
-    def getExpression(self) -> FNode:
-        return SMTAnd([x.getExpression() for x in self.children])
+    def getExpression(self, memodict=dict()) -> FNode:
+        if self in memodict:
+            return memodict[self]
+        expr = SMTAnd([x.getExpression(memodict=memodict) for x in self.children])
+        memodict[self] = expr
+        return expr
 
     @classmethod
     def fromBDDExpression(cls, bdd: AndOp, subs: Dict[str, SMTExpression]):

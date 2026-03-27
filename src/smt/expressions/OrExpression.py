@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 from pysmt.fnode import FNode
 from pysmt.shortcuts import Or as SMTOr
@@ -10,6 +10,8 @@ from src.smt.SMTExpression import SMTExpression, BOOLEAN
 from src.smt.expressions.FalseExpression import FalseExpression
 from src.smt.expressions.NaryExpression import NaryExpression
 from src.smt.expressions.TrueExpression import TrueExpression
+
+OR_CACHE: Dict[Tuple[SMTExpression, SMTExpression], SMTExpression] = dict()
 
 
 class OrExpression(NaryExpression):
@@ -26,7 +28,10 @@ class OrExpression(NaryExpression):
             return rhs
         if isinstance(rhs, FalseExpression):
             return lhs
-        return cls(lhs, rhs)
+        if (lhs, rhs) in OR_CACHE:
+            return OR_CACHE[lhs, rhs]
+        OR_CACHE[lhs, rhs] = cls(lhs, rhs)
+        return OR_CACHE[lhs, rhs]
 
     def __orOfSubClauses(self, clauses):
         if len(clauses) == 1:
@@ -47,8 +52,12 @@ class OrExpression(NaryExpression):
         clauses: List[BinaryDecisionDiagram] = [e.toBDDExpression(map) for e in self.children]
         return self.__orOfSubClauses(clauses)
 
-    def getExpression(self) -> FNode:
-        return SMTOr([x.getExpression() for x in self.children])
+    def getExpression(self, memodict=dict()) -> FNode:
+        if self in memodict:
+            return memodict[self]
+        expr = SMTOr([x.getExpression(memodict=memodict) for x in self.children])
+        memodict[self] = expr
+        return expr
 
     @classmethod
     def fromBDDExpression(cls, bdd: OrOp, subs: Dict[str, SMTExpression]):

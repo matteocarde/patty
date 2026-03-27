@@ -7,6 +7,8 @@ from pysmt.shortcuts import Real
 from src.smt.SMTBoolVariable import SMTBoolVariable
 from src.smt.SMTExpression import SMTExpression, NUMERIC
 
+CONSTANT_CACHE: Dict[float, SMTExpression] = dict()
+
 
 class ConstantExpression(SMTExpression):
 
@@ -14,14 +16,24 @@ class ConstantExpression(SMTExpression):
         super().__init__()
         self.value = value
         self.type = NUMERIC
-        self.depth = 1
-        self.size = 1
+        self.variables = set()
 
     def toBDDExpression(self, map: Dict[SMTBoolVariable, BDDVariable]):
         raise NotImplementedError()
 
-    def getExpression(self) -> FNode:
-        return Real(float(self.value))
+    @classmethod
+    def simplify(cls, value):
+        if value in CONSTANT_CACHE:
+            return CONSTANT_CACHE[value]
+        CONSTANT_CACHE[value] = cls(value)
+        return CONSTANT_CACHE[value]
+
+    def getExpression(self, memodict=dict()) -> FNode:
+        if self.value in memodict:
+            return memodict[self.value]
+        expr = Real(float(self.value))
+        memodict[self.value] = expr
+        return expr
 
     def getVariables(self) -> Set:
         return set()

@@ -13,6 +13,8 @@ from src.smt.expressions.FalseExpression import FalseExpression
 from src.smt.expressions.TrueExpression import TrueExpression
 from src.smt.expressions.UnaryExpression import UnaryExpression
 
+NOT_EXPRESSION_CACHE: Dict[SMTExpression, SMTExpression] = dict()
+
 
 class NotExpression(UnaryExpression):
 
@@ -30,10 +32,18 @@ class NotExpression(UnaryExpression):
             return FalseExpression()
         if isinstance(pos, FalseExpression):
             return TrueExpression()
-        return cls(pos)
+        if pos in NOT_EXPRESSION_CACHE:
+            return NOT_EXPRESSION_CACHE[pos]
+        expr = cls(pos)
+        NOT_EXPRESSION_CACHE[pos] = expr
+        return expr
 
-    def getExpression(self) -> FNode:
-        return SMTNot(self.positive.getExpression())
+    def getExpression(self, memodict=dict()) -> FNode:
+        if self in memodict:
+            return memodict[self]
+        expr = SMTNot(self.positive.getExpression(memodict=memodict))
+        memodict[self] = expr
+        return expr
 
     def toBDDExpression(self, map: Dict[SMTBoolVariable, BDDVariable]):
         x = self.positive.toBDDExpression(map)

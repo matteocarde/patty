@@ -17,12 +17,20 @@ from src.pddl.Predicate import Predicate
 NUMERIC = "N"
 BOOLEAN = "B"
 
+SMT_ID = 0
+
 
 class SMTExpression:
     type: str
     size: int
     variables: set
     depth: int
+    id: int
+
+    def __init__(self):
+        global SMT_ID
+        self.id = SMT_ID
+        SMT_ID += 1
 
     def __str__(self):
         return str(self.getExpression().serialize())
@@ -31,9 +39,9 @@ class SMTExpression:
         return str(self)
 
     def __hash__(self):
-        return hash(str(self))
+        return hash(self.id)
 
-    def getExpression(self) -> FNode:
+    def getExpression(self, memodict=dict()) -> FNode:
         raise NotImplementedError()
 
     def getVariables(self) -> Set:
@@ -98,7 +106,7 @@ class SMTExpression:
     def __neg__(self):
         from src.smt.expressions.SubtractExpression import SubtractExpression
         from src.smt.expressions.ConstantExpression import ConstantExpression
-        return SubtractExpression.simplify(ConstantExpression(0), self)
+        return SubtractExpression.simplify(ConstantExpression.simplify(0), self)
 
     def __rsub__(self, other: SMTExpression or float) -> SMTExpression:
         from src.smt.expressions.SubtractExpression import SubtractExpression
@@ -178,7 +186,7 @@ class SMTExpression:
             else:
                 return ~variables[atom]
         if isinstance(predicate, Constant):
-            return ConstantExpression(predicate.value)
+            return ConstantExpression.simplify(predicate.value)
         if isinstance(predicate, TruePredicate):
             return TrueExpression()
         if isinstance(predicate, FalsePredicate):
@@ -302,5 +310,5 @@ class SMTExpression:
     def numericConstant(el):
         if type(el) == float or type(el) == int:
             from src.smt.expressions.ConstantExpression import ConstantExpression
-            return ConstantExpression(el)
+            return ConstantExpression.simplify(el)
         return el

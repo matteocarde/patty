@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, Tuple
 
 from libs.pyeda.pyeda.boolalg.bdd import BDDVariable
 from pysmt.fnode import FNode
@@ -11,6 +11,8 @@ from src.smt.SMTExpression import SMTExpression, NUMERIC
 from src.smt.expressions.BinaryExpression import BinaryExpression
 from src.smt.expressions.ConstantExpression import ConstantExpression
 from src.smt.expressions.NaryExpression import NaryExpression
+
+ADD_CACHE: Dict[Tuple[SMTExpression, SMTExpression], SMTExpression] = dict()
 
 
 class AddExpression(NaryExpression):
@@ -28,20 +30,27 @@ class AddExpression(NaryExpression):
         if isinstance(rhs, ConstantExpression) and rhs.value == 0:
             return lhs
         if isinstance(lhs, ConstantExpression) and isinstance(rhs, ConstantExpression):
-            return ConstantExpression(lhs.value + rhs.value)
+            return ConstantExpression.simplify(lhs.value + rhs.value)
         if isinstance(lhs, AddExpression):
             children = lhs.children + [rhs]
             return AddExpression(*children)
         if isinstance(rhs, AddExpression):
             children = rhs.children + [lhs]
             return AddExpression(*children)
-        return cls(lhs, rhs)
+        if (lhs, rhs) in ADD_CACHE:
+            return ADD_CACHE[lhs, rhs]
+        ADD_CACHE[lhs, rhs] = cls(lhs, rhs)
+        return ADD_CACHE[lhs, rhs]
 
     def toBDDExpression(self, map: Dict[SMTBoolVariable, BDDVariable]):
         raise NotImplementedError()
 
-    def getExpression(self) -> FNode:
-        return Plus(*[c.getExpression() for c in self.children])
+    def getExpression(self, memodict=dict()) -> FNode:
+        if self in memodict:
+            return memodict[self]
+        expr = Plus(*[c.getExpression(memodict=memodict) for c in self.children])
+        memodict[self] = expr
+        return expr
 
     def evaluate(self, solution):
         return self.lhs.evaluate(solution) + self.rhs.evaluate(solution)

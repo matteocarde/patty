@@ -21,8 +21,7 @@ class SMTConjunction(List[SMTExpression]):
         if isinstance(expr, FalseExpression):
             raise Exception("Trying to append FALSE rule into conjunction")
         super().append(expr)
-        self.depth = max(expr.depth, self.depth) + 1
-        self.variables |= expr.getVariables()
+        self.variables |= expr.variables
 
     def __add__(self, other):
         if not type(other, list):

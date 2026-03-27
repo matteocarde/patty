@@ -33,8 +33,12 @@ class ImpliesExpression(BinaryExpression):
     def toBDDExpression(self, map: Dict[SMTBoolVariable, BDDVariable]):
         return ~self.lhs.toBDDExpression(map) | self.rhs.toBDDExpression(map)
 
-    def getExpression(self) -> FNode:
-        return Implies(self.lhs.getExpression(), self.rhs.getExpression())
+    def getExpression(self, memodict=dict()) -> FNode:
+        if self in memodict:
+            return memodict[self]
+        expr = Implies(self.lhs.getExpression(memodict=memodict), self.rhs.getExpression(memodict=memodict))
+        memodict[self] = expr
+        return expr
 
     def evaluate(self, solution):
         if not self.lhs.evaluate(solution):

@@ -31,8 +31,12 @@ class ITEExpression(NaryExpression):
     def toBDDExpression(self, map: Dict[SMTBoolVariable, BDDVariable]):
         raise NotImplemented()
 
-    def getExpression(self) -> FNode:
-        return Ite(self.c.getExpression(), self.t.getExpression(), self.e.getExpression())
+    def getExpression(self, memodict=dict()) -> FNode:
+        if self in memodict:
+            return memodict[self]
+        expr = Ite(self.c.getExpression(memodict=memodict), self.t.getExpression(memodict=memodict), self.e.getExpression(memodict=memodict))
+        memodict[self] = expr
+        return expr
 
     def evaluate(self, solution):
         if self.c.evaluate(solution):

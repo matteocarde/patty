@@ -15,6 +15,7 @@ class BinaryExpression(NaryExpression):
         super().__init__(*xs)
         self.lhs = xs[0]
         self.rhs = xs[1]
+        self.variables = self.lhs.variables | self.rhs.variables
 
     def getVariables(self) -> Set:
-        return self.lhs.getVariables() | self.rhs.getVariables()
+        return self.variables

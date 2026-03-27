@@ -68,6 +68,7 @@ class ICEEncoding(Encoding):
         self.rulesBySet["action-intermediate-temporal"] = TimeStat.timeCall(self.__getActionIntermediateTemporalRules)
         self.rulesBySet["epsilon-separation"] = TimeStat.timeCall(self.__getEpsilonSeparationRules)
         self.rulesBySet["no-overlap"] = TimeStat.timeCall(self.__getNoOverlapRules)
+        exit()
 
         self.rules = SMTConjunction()
         for (key, rules) in self.rulesBySet.items():
@@ -85,13 +86,20 @@ class ICEEncoding(Encoding):
 
         self.parents: Dict[ICEAction, Set[Happening]] = dict()
         self.originals: Dict[ICEAction, Set[Happening]] = dict()
+        self.notSmtConds: Dict[Formula, SMTExpression] = dict()
+        sigmas = self.transVars.sigmaExpressions
 
-        for h in self.pattern:
+        for i, h in enumerate(self.pattern):
             self.parents.setdefault(h.parent, set())
             self.parents[h.parent].add(h)
 
             self.originals.setdefault(h.original, set())
             self.originals[h.original].add(h)
+
+            sigmas_im1 = sigmas[i]
+            if isinstance(h, HappeningCondition):
+                cond = h.condition.conditions
+                self.notSmtConds[cond] = ~SMTExpression.fromFormula(cond, sigmas_im1)
 
     def __getInitRules(self) -> SMTConjunction:
         tVars = self.transVars
@@ -458,11 +466,10 @@ class ICEEncoding(Encoding):
             if isinstance(h_a, HappeningEffect):
                 touchedAtoms = h_a.effect.effects.getFunctions() | h_a.effect.effects.getPredicates()
 
-
             possiblyInMutex = set()
             for v in touchedAtoms:
                 possiblyInMutex |= self.touchedAtomsIndexes.get(v, set())
-            print(i, h_a, touchedAtoms, possiblyInMutex)
+            # print(i - 1, h_a, touchedAtoms, possiblyInMutex)
 
             for j in possiblyInMutex:
 
@@ -478,7 +485,6 @@ class ICEEncoding(Encoding):
 
                 h_i = hVars[h_a]
                 h_j = hVars[h_b]
-                sigmas_im1 = sigmas[i - 1]
                 t_i = tVars[h_a]
                 t_j = tVars[h_b]
 
@@ -491,11 +497,10 @@ class ICEEncoding(Encoding):
                     pass
                 if isinstance(h_a, HappeningEffect) and isinstance(h_b, HappeningCondition):
                     cond = h_b.condition.conditions
-                    r = ((h_i > 0) & (h_j > 0) & ~SMTExpression.fromFormula(cond, sigmas_im1)).implies(
-                        t_j >= t_i + EPSILON)
+                    r = ((h_i > 0) & (h_j > 0) & self.notSmtConds[cond]).implies(t_j >= t_i + EPSILON)
                     rules.append(r)
 
-                if isinstance(h_a.parent, ICEAction) and h_a.parent != h_b.parent and not self.unrepeatableActions:
+                if not self.unrepeatableActions and isinstance(h_a.parent, ICEAction) and h_a.parent != h_b.parent:
                     b = h_a.parent
                     d_i_b = deltas[i][b]
                     e_b = b.getEpsilonB()
