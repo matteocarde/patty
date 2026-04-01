@@ -47,11 +47,11 @@ class ICEPlan:
             mu_t_i_end: float = solution.getVariable(tEndVars[h_i]) if isinstance(h_i, HappeningCondition) else "NA"
             mu_d_i: float = solution.getVariable(dVars[h_i]) if h_i.starting else "NA"
 
-            if mu_h_i > 0:
-                print(h_i, f"{hVars[h_i]}={mu_h_i}", f"{tVars[h_i]}=={mu_t_i}",
-                      ("starts " + str(h_i.starting)) if h_i.starting else "",
-                      ("ends " + str(h_i.ending)) if h_i.ending else "",
-                      f"d={mu_d_i}", f"{tEndVars[h_i] if h_i in tEndVars else 'NA'}={mu_t_i_end}")
+            # if mu_h_i > 0:
+            #     print(h_i, f"{hVars[h_i]}={mu_h_i}", f"{tVars[h_i]}=={mu_t_i}",
+            #           ("starts " + str(h_i.starting)) if h_i.starting else "",
+            #           ("ends " + str(h_i.ending)) if h_i.ending else "",
+            #           f"d={mu_d_i}", f"{tEndVars[h_i] if h_i in tEndVars else 'NA'}={mu_t_i_end}")
 
             if mu_h_i:
                 order = 0 if isinstance(h_i, HappeningCondition) else 1
