@@ -1,4 +1,5 @@
 import datetime
+import traceback
 from typing import Set, List, Dict, Callable
 
 from pysmt.shortcuts import Portfolio
@@ -121,6 +122,8 @@ class SMTSolver:
         return self.solver.optimize(self.variables)
 
     def getSolution(self) -> SMTSolution or bool:
+        if self.onImprovedModel:
+            self.solver.setOnModel(self.__wrappedOnImprovedModel)
         if not self.trySoftAsHard:
             return self.solver.optimize(self.variables)
         else:
@@ -135,6 +138,7 @@ class SMTSolver:
             self.onImprovedModel(solution)
         except:
             print("ERROR ON IMPROVED MODEL")
+            print(traceback.format_exc())
 
     def solve(self, relaxed=False) -> Plan or bool:
 

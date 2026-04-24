@@ -24,6 +24,9 @@ class SMTNumericVariable(SMTVariable):
     def getExpression(self, memodict=dict()) -> FNode:
         return self.symbol
 
+    def evaluate(self, solution):
+        return solution.getVariable(self)
+
     def __hash__(self):
         return hash(self.name)
 

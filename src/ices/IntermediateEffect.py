@@ -18,6 +18,7 @@ from src.utils.Tuplable import Tuplable
 class IntermediateEffect(Tuplable):
     time: RelativeTime or float
     effects: Effects
+    name: str
 
     atoms: Set[Atom]
     atomsAdded: Set[Atom]
@@ -37,12 +38,13 @@ class IntermediateEffect(Tuplable):
         self.atomsDeleted = set()
         self.atomsAssigned = set()
         self.atomsNumeric = set()
+        self.name = "N/A"
 
     def __repr__(self):
         return str(self.effects)
 
     def __str__(self):
-        return f"<{self.time}>"
+        return f"<{self.time}: {self.name}>"
 
     def toTuple(self) -> Tuple:
         return self.time, self.effects
@@ -80,6 +82,7 @@ class IntermediateEffect(Tuplable):
         ie = self.__class__()
         ie.time = self.time.absolute(a, b)
         ie.effects = self.effects
+        ie.name = self.name
 
         ie.atomsAdded = self.atomsAdded
         ie.atomsDeleted = self.atomsDeleted

@@ -304,7 +304,7 @@ class SMTExpression:
         raise NotImplementedError()
 
     def evaluate(self, solution):
-        raise NotImplementedError
+        raise NotImplementedError(f"Evaluate not implemented for class {self.__class__}")
 
     @staticmethod
     def numericConstant(el):

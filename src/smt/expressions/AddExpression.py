@@ -53,7 +53,7 @@ class AddExpression(NaryExpression):
         return expr
 
     def evaluate(self, solution):
-        return self.lhs.evaluate(solution) + self.rhs.evaluate(solution)
+        return sum([c.evaluate(solution) for c in self.children])
 
     def replace(self, sub):
         pass

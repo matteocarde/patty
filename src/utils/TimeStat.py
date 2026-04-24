@@ -14,8 +14,11 @@ class TimeHolder:
     def endHolder(self):
         print(f"{self.__message}: {round(time.time() - self.__start, 2)}s")
 
+    def getCheckPointTime(self):
+        return round(time.time() - self.__start, 2)
+
     def endHolderMilliseconds(self):
-        val = (time.time() - self.__start)*1000
+        val = (time.time() - self.__start) * 1000
         print(f"{self.__message}: {round(val, 2)}ms")
         return val
 

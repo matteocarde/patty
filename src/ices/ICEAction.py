@@ -193,6 +193,15 @@ class ICEAction:
 
         return iceAction
 
+    def addIntermediateCondition(self, ic: ActionIntermediateCondition):
+        assert ic.fromTime.k <= self.duration
+        assert ic.toTime.k <= self.duration
+        self.icond.append(ic)
+
+    def addIntermediateEffect(self, ie: ActionIntermediateEffect):
+        assert ie.time.k <= self.duration
+        self.ieff.append(ie)
+
     def toANML(self):
         lines = list()
 

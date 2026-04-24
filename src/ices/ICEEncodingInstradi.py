@@ -1,8 +1,11 @@
-from typing import List, Dict, Set, Tuple
+from typing import List, Dict, Set
 
 from classes.instradi.Instradi import Instradi
 from classes.instradi.Train import Train
-from classes.planning.actions.InstradiAction import InstradiAction
+from classes.instradi.TrainTimetable import TrainTimetable
+from classes.planning.actions.EndAction import EndAction
+from classes.planning.actions.StopAction import StopAction
+from classes.utils.Enums import TrainUsage
 from src.ices.Happening import HappeningEffect, HappeningCondition, Happening
 from src.ices.ICEAction import ICEAction
 from src.ices.ICEActionStartEndPair import ICEActionStartEndPair
@@ -22,7 +25,9 @@ from src.plan.Encoding import Encoding
 from src.smt.SMTComment import SMTComment
 from src.smt.SMTConjunction import SMTConjunction
 from src.smt.SMTExpression import SMTExpression
+from src.smt.SMTNumericVariable import SMTRealVariable
 from src.smt.SMTVariable import SMTVariable
+from src.smt.expressions.ConstantExpression import ConstantExpression
 from src.utils.Constants import EPSILON
 from src.utils.TimeStat import TimeStat
 
@@ -60,8 +65,14 @@ class ICEEncodingInstradi(Encoding):
 
         self.__computeHelpers()
 
+        self.metricByTrain: Dict[Train, SMTExpression] = dict()
+
         self.rulesBySet["init"] = TimeStat.timeCall(self.__getInitRules)
         self.rulesBySet["goal"] = TimeStat.timeCall(self.__getGoalRules)
+
+        self.c = SMTRealVariable("instradiMetric")
+        self.minimize = TimeStat.timeCall(self.__getMinimize)
+        self.rulesBySet["metric"] = TimeStat.timeCall(self.__getMetricRules)
 
         self.rulesBySet["domain"] = TimeStat.timeCall(self.__getDomainRules)
         self.rulesBySet["frame"] = self.__getFrameRules()
@@ -82,6 +93,52 @@ class ICEEncodingInstradi(Encoding):
 
     def __len__(self):
         return len(self.rules)
+
+    def __getMinimize(self):
+        vars = self.__getMinVars()
+        if vars:
+            return [vars]
+        return []
+
+    def __getMinVars(self):
+        minVars: List[SMTVariable] = list()
+        self.metricByTrain = dict()
+        for h in self.pattern:
+            if isinstance(h.ending, ICEAction):
+                a = h.ending
+                if not isinstance(a, EndAction) and not isinstance(a, StopAction):
+                    continue
+
+                if a.train.type != TrainUsage.Passengers:
+                    continue
+
+                ttt = self.instradi.nominalTimetable.getTrainTimetableByTrain(a.train)
+                assert isinstance(ttt, TrainTimetable)
+                self.metricByTrain.setdefault(a.train, ConstantExpression(0))
+
+                if isinstance(a, EndAction):
+                    endMetric = (self.transVars.timeVariables[h] - ttt.depart)
+                    self.metricByTrain[a.train] += endMetric
+                    minVars.append(endMetric)
+                if isinstance(a, StopAction):
+                    k = 300
+                    if a.platform.sidewalkId == ttt.plat.sidewalkId:
+                        k = 150
+                    if a.platform == ttt.plat:
+                        k = 0
+                    stopMetric = (self.transVars.happeningVariables[h] * k)
+                    self.metricByTrain[a.train] += stopMetric
+                    minVars.append(stopMetric)
+
+        print(sum(minVars))
+        return sum(minVars)
+
+    def __getMetricRules(self) -> SMTConjunction:
+
+        rules = SMTConjunction()
+        rules.append(self.c.equal(self.__getMinVars()))
+
+        return rules
 
     def __computeHelpers(self):
 

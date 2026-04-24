@@ -12,6 +12,7 @@ from src.ices.ICETask import ICETask
 from src.ices.IntermediateCondition import IntermediateCondition
 from src.ices.IntermediateEffect import IntermediateEffect
 from src.ices.ParallelIntermediateEffects import ParallelIntermediateEffects
+from src.ices.PlanIntermediateEffect import PlanIntermediateEffect
 from src.ices.TimedICEAction import TimedICEAction, TimedICEActionList
 from src.pddl.State import State
 from src.pddl.TimedState import TimedState
@@ -91,10 +92,12 @@ class ICEPlan:
         return plan
 
     def print(self):
-        sortedPlan = sorted(self.timedActions)
+        actions = [(a.time, a.action.name, a.duration) for a in self.timedActions]
+        ieffs = [(ieff.time, ieff.name, 0) for ieff in self.ieffs if isinstance(ieff, PlanIntermediateEffect)]
+        sortedPlan = sorted(actions + ieffs)
         print("Found Plan:")
-        for ta in sortedPlan:
-            print(f"{ta.time}: {ta.action} [{ta.duration}]")
+        for time, name, dur in sortedPlan:
+            print(f"{time}: {name} [{dur}]")
 
     def getMakeSpan(self) -> float:
         ms = 0
