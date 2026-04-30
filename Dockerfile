@@ -52,129 +52,6 @@ WORKDIR /project
 RUN conda create --name patty
 SHELL ["conda", "run", "--no-capture-output", "-n", "patty", "/bin/bash", "-c"]
 
-## Install yices
-RUN pip install pysmt
-RUN add-apt-repository ppa:sri-csl/formal-methods
-RUN apt-get install -y swig autoconf gperf libgmp-dev
-
-# Install java
-RUN apt-get install -y openjdk-8-jdk ant ca-certificates-java
-RUN update-ca-certificates -f;
-
-RUN add-apt-repository ppa:linuxuprising/java
-ENV DEBIAN_FRONTEND noninteractive
-ENV DEBIAN_FRONTEND teletype
-RUN yes | apt-get install -y oracle-java17-installer --install-recommends
-
-## Install CPLEX
-#COPY benchmarks/planners/cplex/installer.bin /tmp/installer
-#COPY benchmarks/planners/cplex/install.properties /tmp/install.properties
-#WORKDIR /project/benchmarks/planners/cplex
-#RUN ls -la
-#
-#ARG COSDIR=/opt/CPLEX
-#ARG CPX_PYVERSION=3.8
-#RUN chmod u+x /tmp/installer
-#
-#RUN /tmp/installer -f /tmp/install.properties
-#RUN rm -f /tmp/installer /tmp/install.properties
-#
-#ENV PATH ${PATH}:${COSDIR}/cplex/bin/x86-64_linux
-#ENV PATH ${PATH}:${COSDIR}/cpoptimizer/bin/x86-64_linux
-#ENV PATH ${PATH}:${COSDIR}/opl/bin/x86-64_linux
-#ENV LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:${COSDIR}/cplex/bin/x86-64_linux
-#ENV LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:${COSDIR}/cpoptimizer/bin/x86-64_linux
-#ENV LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:${COSDIR}/opl/bin/x86-64_linux
-#
-#ENV DOWNWARD_CPLEX_ROOT=${COSDIR}/cplex
-#ENV DOWNWARD_CONCERT_ROOT=${COSDIR}/concert
-#
-## Installing OSI
-#WORKDIR /var
-#RUN apt-get install zlib1g-dev
-#RUN wget http://www.coin-or.org/download/source/Osi/Osi-0.107.9.tgz
-#RUN tar zxvf Osi-0.107.9.tgz
-#WORKDIR /var/Osi-0.107.9
-#RUN ls -la
-#RUN ./configure CC="gcc"  CFLAGS="-pthread -Wno-long-long" \
-#  CXX="g++" CXXFLAGS="-pthread -Wno-long-long" \
-#  LDFLAGS="-L$DOWNWARD_CPLEX_ROOT/lib/x86-64_linux/static_pic" \
-#  --without-lapack --enable-static=no \
-#  --prefix="$DOWNWARD_COIN_ROOT" \
-#  --disable-bzlib \
-#  --with-cplex-incdir=$DOWNWARD_CPLEX_ROOT/include/ilcplex \
-#  --with-cplex-lib="-lcplex -lm -ldl"
-#
-#RUN make
-#RUN make install
-#WORKDIR /var
-#RUN rm -rf Osi-0.107.9
-#RUN rm Osi-0.107.9.tgz
-
-# Install Springroll
-COPY /benchmarks/planners/springroll-planner /var/springroll
-ENV PATH /var/springroll/:${PATH}
-WORKDIR /var/springroll
-RUN ant dist
-RUN ./install
-RUN chmod +x /var/springroll/springroll
-
-# Install Metric FF
-COPY /benchmarks/planners/metric-ff /var/metric-ff
-WORKDIR /var/metric-ff
-RUN apt-get install -y bison flex
-RUN make
-ENV PATH /var/metric-ff/:${PATH}
-
-# Install ENHSP
-COPY /benchmarks/planners/enhsp /var/enhsp
-ENV PATH /var/enhsp/:${PATH}
-RUN chmod +x /var/enhsp/enhsp
-
-#RUN pysmt-install --check
-#RUN pysmt-install --yices --confirm-agreement
-#RUN pysmt-install --check
-
-# Install python 2.7
-RUN apt-get install python2.7 -y
-RUN which python2.7
-
-# Install Numeric Fast Downward
-#RUN apt-get install -y cmake
-#COPY /benchmarks/planners/nfd /var/nfd
-#WORKDIR /var/nfd/src/search/bliss-0.73
-#RUN make
-#WORKDIR /var/nfd
-#RUN ./build.py release64
-#ENV PATH /var/nfd/:${PATH}
-#RUN chmod +x /var/nfd/nfd
-
-# Install OMTPlan
-#COPY /benchmarks/planners/omtplan /var/omtplan
-#ENV PATH /var/omtplan/:${PATH}
-#RUN chmod +x /var/omtplan/omtplan
-
-# Install Madagascar
-COPY /benchmarks/planners/madagascar /var/madagascar
-ENV PATH /var/madagascar/:${PATH}
-RUN chmod +x /var/madagascar/madagascar
-
-# Install Lama
-RUN apt-get install git cmake -y
-COPY /benchmarks/planners/lama /var/lama
-WORKDIR /var/lama
-RUN chmod +x install.sh
-RUN ./install.sh
-RUN mv /var/lama/lama-planner/bin/lama-planner /var/lama/lama-planner/bin/lama
-ENV PATH /var/lama/lama-planner/bin/:${PATH}
-RUN chmod +x /var/lama/lama-planner/bin/lama
-
-# Install enhsp-socs
-COPY /benchmarks/planners/enhsp-socs /var/enhsp-socs
-ENV PATH /var/enhsp-socs/:${PATH}
-RUN chmod +x /var/enhsp-socs/enhsp-socs
-
-
 # Create conda env
 COPY environment.yml environment.yml
 RUN conda env update --file environment.yml
@@ -183,18 +60,18 @@ RUN conda env update --file environment.yml
 COPY /benchmarks/planners/patty /var/patty
 ENV PATH /var/patty/:${PATH}
 RUN chmod +x /var/patty/patty
-RUN apt-get install -y time
 RUN conda env export
 
-RUN pip install numpy networkx tarjan prettytable graphlib-backport pyeda
-RUN pip install boto3
+RUN apt-get update
+RUN apt-get install time -y
+RUN pip install boto3 numpy networkx tarjan prettytable graphlib-backport pyeda
+RUN pip install --pre unified-planning
 
 WORKDIR /project
 # Copying
 
 #Install local pyeda
 WORKDIR /
-RUN ls -la .
 #COPY src/ src/
 COPY libs/pyeda libs/pyeda
 WORKDIR libs/pyeda
@@ -203,63 +80,8 @@ RUN rm -rf build
 RUN rm -rf pyeda
 RUN mv pyeda_linux pyeda
 RUN python3.8 setup.py install
-RUN ls -la .
-RUN ls -la build
-RUN ls -la build/lib.linux-x86_64-cpython-38/pyeda/boolalg
-RUn rm -rf pyeda
+RUN rm -rf pyeda
 RUN mv build/lib.linux-x86_64-cpython-38/pyeda/ pyeda/
-RUN ls -la pyeda/boolalg
-
-RUN pip install --pre unified-planning
-
-# Install Tamer
-COPY /benchmarks/planners/tamer /var/tamer
-ENV PATH /var/tamer/:${PATH}
-RUN chmod +x /var/tamer/tamer
-
-
-# Install itsat
-COPY /benchmarks/planners/itsat /var/itsat
-WORKDIR /var/itsat
-RUN ./build
-RUN mv plan itsat
-RUN chmod +x /var/itsat/itsat
-ENV PATH /var/itsat/:${PATH}
-
-# Install optic
-COPY /benchmarks/planners/optic /var/optic
-WORKDIR /var/optic
-
-RUN apt-get install -y cmake coinor-libcbc-dev coinor-libclp-dev coinor-libcoinutils-dev libbz2-dev libgsl-dev
-RUN export CFLAGS=-m32
-RUN export CXXFLAGS=-m32
-RUN export LDFLAGS=-m32
-RUN ./run-cmake-debug
-RUN apt-get install -y zlib1g-dev
-RUN ./build-debug
-RUN ls -la debug/optic
-RUN cp debug/optic/optic-clp optic
-RUN chmod +x optic
-ENV PATH /var/optic/:${PATH}
-
-# Install tfd
-COPY /benchmarks/planners/tfd /var/tfd
-WORKDIR /var/tfd
-RUN ./build
-RUN chmod +x tfd
-ENV PATH /var/tfd/:${PATH}
-
-# Install lpg-td
-COPY /benchmarks/planners/lpg-td /var/lpg-td
-WORKDIR /var/lpg-td
-RUN chmod +x lpg-td
-ENV PATH /var/lpg-td/:${PATH}
-
-# Install ANMLSMT
-COPY /benchmarks/planners/anmlsmt /var/anmlsmt
-WORKDIR /var/anmlsmt
-RUN chmod +x anmlsmt
-ENV PATH /var/anmlsmt/:${PATH}
 
 WORKDIR /project
 COPY . .
@@ -271,10 +93,6 @@ RUN rm -rf project/libs/pyeda
 RUN mv libs/pyeda project/libs/pyeda
 
 WORKDIR /project
-
-# RUN tamer --help
-RUN tamer solve -e 0.001 -s -k -w 0.8 files/temporal/oversub/anml/domain.anml files/temporal/oversub/anml/instances/oversub_1_6_problem.anml
-
 
 #Execution
 ENTRYPOINT ["conda", "run", "--live-stream", "-n", "patty", "./exes/run.sh"]
