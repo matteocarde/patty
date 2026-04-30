@@ -38,7 +38,7 @@ class SMTSolver:
             # with open("./memodict.txt", "w") as f:
             #     for k in memodict.keys():
             #         f.write(str(k) + "\n")
-            # self.addAssertions(self.encoding.rules, solver=True, optimizer=False)
+            self.addAssertions(self.encoding.rules, solver=True, optimizer=False, memodict=memodict)
             t.endHolder()
             self.addSoftAssertions(self.encoding.softRules)
             self.setMinimize(self.encoding.minimize)
@@ -150,5 +150,7 @@ class SMTSolver:
             return False
         plan = self.encoding.getPlanFromSolution(solution, relaxed=relaxed)
         # plan.quality = plan.getMetric(self.encoding.problem)
+        if not plan:
+            raise Exception("Solution was found but conversion to plan failed")
 
         return plan

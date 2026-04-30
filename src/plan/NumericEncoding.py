@@ -31,8 +31,8 @@ class NumericEncoding(Encoding):
                  args: Arguments,
                  subgoalsAchieved=None,
                  state: State = None,
-                 minimizeGoalFunction = False,
-                 goalAsSoftAsserts = False,
+                 minimizeGoalFunction=False,
+                 goalAsSoftAsserts=False,
                  goalFunctionValue: float = 10000):
 
         super().__init__(domain, problem, pattern, bound)

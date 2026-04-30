@@ -1,13 +1,12 @@
-from benchmarks import AIJ_DOMAINS
-from benchmarks import AIJ_PLANNERS
+from benchmarks.tables.ipc.domains import IPC_DOMAINS
 
-JAIR_ABL_PATTERNH_STATIC = {
-    "name": "tab:abl-patternh-static",
-    "orientation": "landscape",
+IPC_TABLE = {
+    "name": "tab:ipc",
+    "orientation": "portrait",
     "type": "table*",
     "width": r"\textwidth",
     "keepAll": True,
-    "caption": r"Impact of a static pattern $\pattern_h$ computation on function on Cautious, Brave and Reckless \pattyd. Planner names are abbreviated.",
+    "caption": r"\textsc{ipc}-2023 testset",
     "columns": {
         "quantity": {
             "name": "Solved (out of $20$)",
@@ -21,13 +20,12 @@ JAIR_ABL_PATTERNH_STATIC = {
         }
     },
     "planners": {
+        # "PATTY-FE": {},
+        "PATTY-EO": {"type": "scalar"},
         "PATTY-C-npc": {"type": "scalar"},
         "PATTY-B-npc": {"type": "scalar"},
         "PATTY-R-nec": {"type": "scalar"},
         "PATTY-G-nei": {"type": "scalar"},
-        "PATTY-C-nps": {"type": "scalar"},
-        "PATTY-B-nps": {"type": "scalar"},
-        "PATTY-R-nes": {"type": "scalar"},
     },
-    "domains": AIJ_DOMAINS
+    "domains": IPC_DOMAINS
 }

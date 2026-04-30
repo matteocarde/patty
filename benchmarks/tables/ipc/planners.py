@@ -1,4 +1,4 @@
-JAIR_PLANNERS = {
+IPC_PLANNERS = {
     "PATTY-EO": {
         "name": r"$\mathrm{P}_\textsc{o}$",
         "style": "-"
