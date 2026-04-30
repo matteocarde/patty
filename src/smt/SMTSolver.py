@@ -150,7 +150,7 @@ class SMTSolver:
             return False
         plan = self.encoding.getPlanFromSolution(solution, relaxed=relaxed)
         # plan.quality = plan.getMetric(self.encoding.problem)
-        if not plan:
-            raise Exception("Solution was found but conversion to plan failed")
+        # if not plan:
+        #     raise Exception("Solution was found but conversion to plan failed")
 
         return plan

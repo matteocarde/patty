@@ -1,0 +1,48 @@
+
+               \documentclass[11pt]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||ccccc||ccccc||}
+\hline
+ & \multicolumn{5}{c||}{Solved (out of $20$)}&\multicolumn{5}{c||}{Time (s)}\\
+Domain & $\mathrm{P}_\textsc{o}$&$\mathrm{P}_\textsc{c}$&$\mathrm{P}_\textsc{b}$&$\mathrm{P}_\textsc{r}$&$\mathrm{P}_\textsc{g}$&$\mathrm{P}_\textsc{o}$&$\mathrm{P}_\textsc{c}$&$\mathrm{P}_\textsc{b}$&$\mathrm{P}_\textsc{r}$&$\mathrm{P}_\textsc{g}$\\
+\hline
+\textsc{BlGrp} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{2.1}&2.4&2.3&2.5&2.2\\
+\textsc{Cnt} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{1.4}&\textbf{1.4}&\textbf{1.4}&\textbf{1.4}&1.7\\
+\textsc{Cnt} (L)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{1.4}&\textbf{1.4}&1.5&\textbf{1.4}&\textbf{1.4}\\
+\textsc{Del} (S)&5&6&\textbf{7}&\textbf{7}&\textbf{7}&24.0&23.3&22.6&22.6&\textbf{22.1}\\
+\textsc{Drn} (S)&3&6&\textbf{7}&\textbf{7}&\textbf{7}&25.9&23.2&\textbf{22.2}&22.8&\textbf{22.2}\\
+\textsc{Exp} (S)&\textbf{3}&\textbf{3}&\textbf{3}&2&2&\textbf{26.1}&26.5&26.4&27.8&27.8\\
+\textsc{Farm} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&14&\textbf{1.3}&1.4&1.4&\textbf{1.3}&10.0\\
+\textsc{Farm} (L)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&17&4.2&\textbf{2.1}&2.2&\textbf{2.1}&6.4\\
+\textsc{HPwr} (S)&\textbf{20}&3&2&4&-&\textbf{12.4}&28.7&29.7&28.4&-\\
+\textsc{Mrkt} (L)&-&-&-&-&\textbf{20}&-&-&-&-&\textbf{5.3}\\
+\textsc{MPrime} (S)&-&-&-&-&-&-&-&-&-&-\\
+\textsc{PathM} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{4.6}&4.8&4.7&4.8&5.5\\
+\textsc{PlWat} (S)&5&17&18&\textbf{20}&\textbf{20}&23.4&16.3&14.0&\textbf{10.3}&11.6\\
+\textsc{Rvr} (S)&\textbf{11}&9&10&10&6&\textbf{16.7}&18.2&18.3&19.6&23.7\\
+\textsc{Sail} (S)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&1.6&\textbf{1.5}&\textbf{1.5}&\textbf{1.5}&\textbf{1.5}\\
+\textsc{Sail} (L)&18&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&6.3&1.4&\textbf{1.3}&1.4&1.4\\
+\textsc{Stlrs-C} (S)&\textbf{13}&\textbf{13}&12&\textbf{13}&\textbf{13}&15.8&16.2&16.1&15.8&\textbf{13.2}\\
+\textsc{Stlrs} (S)&-&-&-&-&-&-&-&-&-&-\\
+\textsc{Sgr} (S)&\textbf{18}&16&15&12&14&\textbf{7.2}&12.4&14.1&15.7&12.9\\
+\textsc{Tpp} (L)&\textbf{2}&\textbf{2}&\textbf{2}&\textbf{2}&1&27.4&27.5&27.4&\textbf{27.2}&28.7\\
+\textsc{Zeno} (S)&\textbf{11}&10&\textbf{11}&10&9&\textbf{16.1}&17.5&17.1&17.6&17.8\\
+\textsc{Line} (L)&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&-&\textbf{1.5}&2.1&2.1&1.9&-
+\\\hline
+\textit{Best}&\textbf{269}&\textbf{265}&\textbf{267}&\textbf{267}&\textbf{250}&\textbf{111}&\textbf{28}&\textbf{35}&\textbf{51}&\textbf{95}\\\hline
+
+        \end{tabular}}
+        \caption{\textsc{ipc}-2023 testset}
+        \label{tab:ipc}
+        \end{table*}
+        
+\end{document}
