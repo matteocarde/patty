@@ -19,7 +19,7 @@ class FalseExpression(SMTExpression):
     def __hash__(self):
         return hash(True)
 
-    def getExpression(self) -> FNode:
+    def getExpression(self, memodict=dict()) -> FNode:
         return FALSE()
 
     def getVariables(self) -> Set:
