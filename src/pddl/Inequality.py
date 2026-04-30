@@ -44,3 +44,10 @@ class Inequality(Predicate):
         a = sub[params.index(self.params[0])]
         b = sub[params.index(self.params[1])]
         return a != b
+
+    def isDynamicLifted(self, problem) -> bool:
+        return True
+
+    def canHappenLiftedPartial(self, item: Tuple, params: List[str], problem) -> bool:
+        return True
+
