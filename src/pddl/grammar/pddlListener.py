@@ -89,6 +89,42 @@ class pddlListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by pddlParser#constantType.
+    def enterConstantType(self, ctx:pddlParser.ConstantTypeContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#constantType.
+    def exitConstantType(self, ctx:pddlParser.ConstantTypeContext):
+        pass
+
+
+    # Enter a parse tree produced by pddlParser#constantName.
+    def enterConstantName(self, ctx:pddlParser.ConstantNameContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#constantName.
+    def exitConstantName(self, ctx:pddlParser.ConstantNameContext):
+        pass
+
+
+    # Enter a parse tree produced by pddlParser#pddlConstant.
+    def enterPddlConstant(self, ctx:pddlParser.PddlConstantContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#pddlConstant.
+    def exitPddlConstant(self, ctx:pddlParser.PddlConstantContext):
+        pass
+
+
+    # Enter a parse tree produced by pddlParser#constants.
+    def enterConstants(self, ctx:pddlParser.ConstantsContext):
+        pass
+
+    # Exit a parse tree produced by pddlParser#constants.
+    def exitConstants(self, ctx:pddlParser.ConstantsContext):
+        pass
+
+
     # Enter a parse tree produced by pddlParser#atomName.
     def enterAtomName(self, ctx:pddlParser.AtomNameContext):
         pass

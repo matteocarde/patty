@@ -2,7 +2,7 @@ from typing import Dict
 
 import time
 
-from src.utils.LogPrint import LogPrint, LogPrintLevel
+from src.utils.LogPrint import LogPrint, LogPrintLevel, console
 
 
 class TimeHolder:
@@ -12,14 +12,14 @@ class TimeHolder:
         self.__message = message
 
     def endHolder(self):
-        print(f"{self.__message}: {round(time.time() - self.__start, 2)}s")
+        console.log(f"{self.__message}: {round(time.time() - self.__start, 2)}s", LogPrintLevel.TIMES)
 
     def getCheckPointTime(self):
         return round(time.time() - self.__start, 2)
 
     def endHolderMilliseconds(self):
         val = (time.time() - self.__start) * 1000
-        print(f"{self.__message}: {round(val, 2)}ms")
+        console.log(f"{self.__message}: {round(val, 2)}ms", LogPrintLevel.TIMES)
         return val
 
 
@@ -39,7 +39,7 @@ class TimeStat:
         # print(f"Start {call.__name__}")
         x = call()
         b = time.time()
-        print(f"{call.__name__} = {b - a}s - {len(x)} rules")
+        console.log(f"{call.__name__} = {b - a}s - {len(x)} rules", LogPrintLevel.TIMES)
         return x
 
     @staticmethod
@@ -47,12 +47,12 @@ class TimeStat:
         # print("Starting", message)
         return TimeHolder(message)
 
-    def start(self, name: str, console: LogPrint or None = None):
+    def start(self, name: str):
         self.__timings[name] = TimeStat.now()
         if console:
             console.log(f"Started {name}", LogPrintLevel.STEPS)
 
-    def end(self, name: str, console: LogPrint or None = None):
+    def end(self, name: str):
         self.__results[name] = TimeStat.now() - self.__timings[name]
         if console:
             console.log(f"Ended {name}: {self.__results[name]}", LogPrintLevel.STEPS)

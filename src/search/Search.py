@@ -5,7 +5,7 @@ from src.plan.NumericEncoding import NumericEncoding
 from src.plan.Pattern import Pattern
 from src.smt.SMTSolution import SMTSolution
 from src.utils.Arguments import Arguments
-from src.utils.LogPrint import LogPrint, LogPrintLevel
+from src.utils.LogPrint import LogPrint, LogPrintLevel, console
 from src.utils.TimeStat import TimeStat
 
 
@@ -25,7 +25,6 @@ class Search:
         self.startBound = 1
         self.maxBound = args.bound if args.bound else 1000
 
-        self.console: LogPrint = LogPrint(self.args.verboseLevel)
         self.ts: TimeStat = TimeStat()
 
         self.finalPattern = None
@@ -39,7 +38,7 @@ class Search:
 
     def saveSMT(self, bound: int, pddl2smt: Encoding, callsToSolver=0):
         filename = f"{self.args.saveSMT}-{bound}-{callsToSolver}.smt"
-        self.console.log(f"Saving to {filename}", LogPrintLevel.STATS)
+        console.log(f"Saving to {filename}", LogPrintLevel.STATS)
         pddl2smt.writeSMTLIB(filename)
         # with open(f"{self.args.saveSMT}-{bound}.smt", "w") as f:
         #     f.write(str(pddl2smt))

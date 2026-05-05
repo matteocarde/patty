@@ -9,6 +9,7 @@ from src.plan.Encoding import Encoding
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTSolution import SMTSolution
 from src.smt.SMTVariable import SMTVariable
+from src.utils.LogPrint import console, LogPrintLevel
 from src.utils.TimeStat import TimeStat
 from src.z3.Z3SolverAndOptimizer import Z3SolverAndOptimizer
 
@@ -34,7 +35,7 @@ class SMTSolver:
             t = TimeStat.startHolder("Adding assertions")
             memodict = dict()
             self.addAssertions(self.encoding.rules, solver=False, optimizer=True, memodict=memodict)
-            print(f"memodict size: {len(memodict)}")
+            console.log(f"memodict size: {len(memodict)}", LogPrintLevel.STATS)
             # with open("./memodict.txt", "w") as f:
             #     for k in memodict.keys():
             #         f.write(str(k) + "\n")
@@ -76,7 +77,7 @@ class SMTSolver:
         if not expr:
             return
 
-        print(f"Adding minimize")
+        console.log(f"Adding minimize", LogPrintLevel.STATS)
 
         for e in expr:
             self.solver.minimize(e.getExpression())
@@ -85,7 +86,7 @@ class SMTSolver:
         if not exprs:
             return
 
-        print(f"Adding {len(exprs)} soft-assert")
+        console.log(f"Adding {len(exprs)} soft-assert", LogPrintLevel.STATS)
         for expr in exprs:
             self.addSoftAssertion(expr, push=False)
 
@@ -113,9 +114,9 @@ class SMTSolver:
         return solution
 
     def tryWithSoftAsHard(self):
-        print(f"Starting checking without constraints [{datetime.datetime.now()}]")
+        console.log(f"Starting checking without constraints [{datetime.datetime.now()}]", LogPrintLevel.TIMES)
         solveRes = self.solver.solve(self.variables)
-        print(f"Ended checking without constraints [{datetime.datetime.now()}]")
+        console.log(f"Ended checking without constraints [{datetime.datetime.now()}]", LogPrintLevel.TIMES)
         if solveRes:
             return solveRes
 

@@ -27,6 +27,7 @@ domain : LP
             domainName
             requirements?
             types?
+            constants?
             predicates?
             functions?
             (action | durativeAction | event | process)*
@@ -46,10 +47,16 @@ typeName: NAME;
 type: typeName+ parent=parentType*;
 types: LP ':types' type+ RP;
 
+//CONSTANTS
+constantType: '-' typeName;
+constantName: NAME;
+pddlConstant: constantName+ parent=constantType*;
+constants: LP ':constants' pddlConstant+ RP;
+
 //ATOM AND LITERALS
 atomName: NAME;
 groundAtomParameter: NAME;
-liftedAtomParameter: VAR;
+liftedAtomParameter: VAR | NAME;
 typedAtomParameter: liftedAtomParameter+ '-' atomsType=typeName;
 atomParameter: liftedAtomParameter | groundAtomParameter ;
 

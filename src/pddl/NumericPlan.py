@@ -101,6 +101,15 @@ class NumericPlan(Plan):
                 t += 1
         return string
 
+    def toIPCString(self):
+        string = ""
+        t = 0
+        for a in self.__plan:
+            for i in range(0, a[1]):
+                string += f"{a[0]}\n"
+                t += 1
+        return string
+
     def printWithRepetitions(self):
         print(self.toValString())
 

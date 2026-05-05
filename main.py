@@ -20,12 +20,14 @@ from src.search.PlanImproverPattern import PlanImproverPattern
 from src.search.Search import Search
 from src.search.StepSearch import StepSearch
 from src.utils.Arguments import Arguments
-from src.utils.LogPrint import LogPrint, LogPrintLevel
+from src.utils.LogPrint import LogPrint, LogPrintLevel, console
 from src.utils.TimeStat import TimeStat
 
 
 def main():
     args = Arguments()
+    console.setLogLevel(args.verboseLevel)
+
     if args.isHelp:
         exit(0)
 
@@ -34,20 +36,19 @@ def main():
         return
 
     try:
-        print(f"Using z3 version {z3.get_version_string()}")
-        console: LogPrint = LogPrint(args.verboseLevel)
+        console.log(f"Using z3 version {z3.get_version_string()}", LogPrintLevel.INFO)
         ts: TimeStat = TimeStat()
         ts.start("Overall")
         domain: Domain = Domain.fromFile(args.domain)
         problem: Problem = Problem.fromFile(args.problem)
 
-        ts.start("Quantifier Elimination", console=console)
+        ts.start("Quantifier Elimination")
         qeDomain: Domain = domain.eliminateQuantifiers(problem)
-        ts.end("Quantifier Elimination", console=console)
+        ts.end("Quantifier Elimination")
 
-        ts.start("Grounding", console=console)
-        gDomain: GroundedDomain = qeDomain.ground(problem, console=console)
-        ts.end("Grounding", console=console)
+        ts.start("Grounding")
+        gDomain: GroundedDomain = qeDomain.ground(problem)
+        ts.end("Grounding")
 
         isTemporal = len(gDomain.durativeActions) > 0
         solver: Search
@@ -71,7 +72,7 @@ def main():
         plan: Plan = solver.solve()
 
         if isinstance(plan, NumericPlan) and "improve" in args.quality:
-            ts.start("Improving Plan", console=console)
+            ts.start("Improving Plan")
             improver: Search
             if args.quality == "improve-plan":
                 improver = PlanImproverPattern(gDomain, problem, args, plan)
@@ -83,13 +84,13 @@ def main():
             else:
                 raise Exception("Unknown quality improver " + args.quality)
             improvedPlan = improver.solve()
-            ts.end("Improving Plan", console=console)
+            ts.end("Improving Plan")
             if improvedPlan:
-                console.log(f"First Plan Length: {len(plan)}", LogPrintLevel.PLAN)
-                console.log(f"Improved Plan Length: {len(improvedPlan)}", LogPrintLevel.PLAN)
+                console.log(f"First Plan Length: {len(plan)}", LogPrintLevel.STATS)
+                console.log(f"Improved Plan Length: {len(improvedPlan)}", LogPrintLevel.STATS)
                 plan = improvedPlan
 
-        console.log(plan.toValString(), LogPrintLevel.PLAN)
+        console.log(plan.toIPCString(), LogPrintLevel.PLAN)
         console.log("------", LogPrintLevel.STATS)
         console.log(f"Distinct Actions: {len(plan.getDistinctActions())}", LogPrintLevel.STATS)
         if isinstance(plan, NumericPlan):
@@ -98,7 +99,7 @@ def main():
         console.log("------", LogPrintLevel.STATS)
         isValid = plan.validate(problem, avoidRaising=True, logger=console)
         if isValid:
-            console.log("Plan is valid", LogPrintLevel.PLAN)
+            console.log("Plan is valid", LogPrintLevel.STATS)
             if args.savePlan:
                 fn = args.savePlan if args.savePlan != "PROBLEM" else args.problem + ".plan"
                 with open(fn, "w") as f:
