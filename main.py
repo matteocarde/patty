@@ -100,10 +100,9 @@ def main():
         isValid = plan.validate(problem, avoidRaising=True, logger=console)
         if isValid:
             console.log("Plan is valid", LogPrintLevel.STATS)
-            if args.savePlan:
-                fn = args.savePlan if args.savePlan != "PROBLEM" else args.problem + ".plan"
-                with open(fn, "w") as f:
-                    f.write(plan.toValString())
+            if args.plan is not None:
+                with open(args.plan, "w") as f:
+                    f.write(plan.toIPCString())
         else:
             console.log("Plan is NOT valid", LogPrintLevel.PLAN)
 

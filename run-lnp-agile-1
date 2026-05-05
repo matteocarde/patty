@@ -1,0 +1,17 @@
+#! /bin/bash
+
+DOMAIN=$1
+PROBLEM=$2
+PLAN=$3
+
+./patty.sif \
+ -o $DOMAIN \
+ -f $PROBLEM \
+ -sp $PLAN \
+ -s jair \
+ --pattern enhanced \
+ --quality none \
+ --jair-search-strategy C \
+ --jair-goal-function n \
+ --jair-pattern-g p \
+ --jair-pattern-h c

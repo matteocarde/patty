@@ -1,0 +1,92 @@
+Bootstrap: docker
+From: ubuntu:18.04
+
+%files
+    environment.yml /project/environment.yml
+    benchmarks/planners/patty /var/patty
+    libs/pyeda /libs/pyeda
+    main.py /project/main.py
+    main_ices.py /project/main_ices.py
+    files/ /project/files
+    src /project/src
+
+%environment
+    export NODE_VERSION=12.22.12
+    export NVM_DIR=/root/.nvm
+    export PATH="/root/.nvm/versions/node/v12.22.12/bin:/root/miniconda3/bin:/var/patty:/project/experiments/libs:$PATH"
+
+%post
+    set -e
+
+    apt-get update
+    apt-get install -y curl wget software-properties-common time
+
+    # Node via nvm
+    export NODE_VERSION=12.22.12
+    export NVM_DIR=/root/.nvm
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+    . "$NVM_DIR/nvm.sh"
+    nvm install "$NODE_VERSION"
+    nvm use "v$NODE_VERSION"
+    nvm alias default "v$NODE_VERSION"
+    export PATH="/root/.nvm/versions/node/v$NODE_VERSION/bin:$PATH"
+
+    node --version
+    npm --version
+
+    # Python 3.8
+    add-apt-repository -y ppa:deadsnakes/ppa
+    apt-get update
+    apt-get install -y python3.8 python3-pip
+    python3.8 -m pip install --upgrade pip
+
+    # Miniconda
+    export PATH="/root/miniconda3/bin:$PATH"
+    wget https://repo.anaconda.com/miniconda/Miniconda3-py311_25.7.0-2-Linux-aarch64.sh
+    mkdir -p /root/.conda
+    bash Miniconda3-py311_25.7.0-2-Linux-aarch64.sh -b -p /root/miniconda3
+    rm -f Miniconda3-py311_25.7.0-2-Linux-aarch64.sh
+
+    conda --version
+    conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main
+    conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r
+
+    # Project setup
+    cd /project
+
+    conda create --name patty -y
+    conda env update -n patty --file environment.yml
+
+    # Install patty
+    chmod +x /var/patty/patty
+    export PATH="/var/patty:$PATH"
+
+    conda env export -n patty
+
+    apt-get update
+    apt-get install -y time
+
+    conda run --no-capture-output -n patty python -m pip install \
+        boto3 numpy networkx tarjan prettytable graphlib-backport pyeda
+
+    conda run --no-capture-output -n patty python -m pip install --pre unified-planning
+
+    # Install local pyeda
+    cd /libs/pyeda
+    rm -rf dist build pyeda
+    mv pyeda_linux pyeda
+
+    conda run --no-capture-output -n patty python3.8 setup.py install
+
+    rm -rf pyeda
+    mv build/lib.linux-aarch64-cpython-38/pyeda/ pyeda/
+
+    cd /project
+
+    rm -rf /project/libs/pyeda
+    mkdir -p /project/libs
+    mv /libs/pyeda /project/libs/pyeda
+
+%runscript
+    cd /project
+    exec conda run --live-stream -n patty python main.py "$@"

@@ -9,6 +9,7 @@ class Arguments:
         parser = argparse.ArgumentParser(description='Patty - The Symbolic Numeric Planner using Patterns')
         parser.add_argument('-o', '--domain', dest='domain', help='The .pddl domain file', required=keepRequired)
         parser.add_argument('-f', '--problem', dest='problem', help='The .pddl problem file', required=keepRequired)
+        parser.add_argument('-sp', '--plan', dest='plan', help='Where the plan will be saved', default=None)
         parser.add_argument('-n', '--bound', help='The number of steps of the SMT encoding', type=int)
         parser.add_argument('-v', '--verboseLevel', help=f'The level of verbosity: {LogPrintLevel.getLevels()} ',
                             default=LogPrintLevel.getDefault(), type=int)
@@ -103,6 +104,7 @@ class Arguments:
         self.isHelp = "help" in args
         self.domain = args.domain
         self.problem = args.problem
+        self.plan = args.plan
         self.search = args.search
         self.bound = args.bound
         self.verboseLevel = LogPrintLevel(args.verboseLevel)
@@ -114,7 +116,6 @@ class Arguments:
         self.encoding = args.encoding
         self.saveSMT = args.save_smt
         self.maxClosureTime = args.max_closure_time
-        self.savePlan = args.save_plan
         self.binaryActions: int = int(args.binary_actions)
         self.hasEffectAxioms = args.effect_axioms
         self.rollBound = args.roll_bound

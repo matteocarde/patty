@@ -10,7 +10,7 @@ from src.search.Search import Search
 from src.smt.SMTSolution import SMTSolution
 from src.smt.SMTSolver import SMTSolver
 from src.utils.Arguments import Arguments
-from src.utils.LogPrint import LogPrintLevel
+from src.utils.LogPrint import LogPrintLevel, console
 
 
 class StepSearch(Search):
@@ -37,16 +37,16 @@ class StepSearch(Search):
         initialState: State = State.fromInitialCondition(self.problem.init)
 
         if self.args.printPattern:
-            self.console.log("Pattern: " + str(pattern), LogPrintLevel.PLAN)
+            console.log("Pattern: " + str(pattern), LogPrintLevel.STATS)
 
         if self.args.printARPG:
-            self.console.log(str(self.domain.arpg), LogPrintLevel.PLAN)
+            console.log(str(self.domain.arpg), LogPrintLevel.STATS)
 
         bound = self.startBound
 
         while bound <= self.maxBound:
 
-            self.ts.start(f"Conversion to SMT at bound {bound}", console=self.console)
+            self.ts.start(f"Conversion to SMT at bound {bound}")
             encoding: NumericEncoding = NumericEncoding(
                 domain=self.domain,
                 problem=self.problem,
@@ -54,22 +54,22 @@ class StepSearch(Search):
                 bound=bound,
                 args=self.args
             )
-            self.ts.end(f"Conversion to SMT at bound {bound}", console=self.console)
+            self.ts.end(f"Conversion to SMT at bound {bound}")
 
-            self.ts.start(f"Solving Bound {bound}", console=self.console)
+            self.ts.start(f"Solving Bound {bound}")
             solver: SMTSolver = SMTSolver(encoding)
 
             plan: NumericPlan
             solution = solver.getSolution()
             callsToSolver += 1
             solver.exit()
-            self.ts.end(f"Solving Bound {bound}", console=self.console)
+            self.ts.end(f"Solving Bound {bound}")
 
-            self.console.log(f"Bound {bound} - Vars = {encoding.getNVars()}", LogPrintLevel.STATS)
-            self.console.log(f"Bound {bound} - Rules = {encoding.getNRules()}", LogPrintLevel.STATS)
-            self.console.log(f"Bound {bound} - Avg Rule Length = {encoding.getAvgRuleLength()}", LogPrintLevel.STATS)
-            self.console.log(f"Bound {bound} - Pattern Length = {pattern.getLength()}", LogPrintLevel.STATS)
-            self.console.log(f"Calls to Solver: {callsToSolver}", LogPrintLevel.STATS)
+            console.log(f"Bound {bound} - Vars = {encoding.getNVars()}", LogPrintLevel.STATS)
+            console.log(f"Bound {bound} - Rules = {encoding.getNRules()}", LogPrintLevel.STATS)
+            console.log(f"Bound {bound} - Avg Rule Length = {encoding.getAvgRuleLength()}", LogPrintLevel.STATS)
+            console.log(f"Bound {bound} - Pattern Length = {pattern.getLength()}", LogPrintLevel.STATS)
+            console.log(f"Calls to Solver: {callsToSolver}", LogPrintLevel.STATS)
 
             if self.args.saveSMT:
                 self.saveSMT(bound, encoding)
@@ -79,12 +79,12 @@ class StepSearch(Search):
                 state = initialState.applyPlan(plan)
                 subgoalsAchieved = {g for g in self.problem.goal.conditions if state.satisfies(g)}
                 if len(subgoalsAchieved) == len(totalSubgoals):
-                    self.console.log(f"Bound: {bound}", LogPrintLevel.STATS)
+                    console.log(f"Bound: {bound}", LogPrintLevel.STATS)
                     self.finalBound = bound
                     self.finalPattern = pattern
                     return plan
 
-            self.console.log(f"NO SOLUTION: No solution with bound {bound}. Try to increase the bound",
+            console.log(f"NO SOLUTION: No solution with bound {bound}. Try to increase the bound",
                              LogPrintLevel.PLAN)
 
             bound += 1
