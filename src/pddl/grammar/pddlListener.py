@@ -89,30 +89,12 @@ class pddlListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by pddlParser#constantType.
-    def enterConstantType(self, ctx:pddlParser.ConstantTypeContext):
+    # Enter a parse tree produced by pddlParser#typedObjects.
+    def enterTypedObjects(self, ctx:pddlParser.TypedObjectsContext):
         pass
 
-    # Exit a parse tree produced by pddlParser#constantType.
-    def exitConstantType(self, ctx:pddlParser.ConstantTypeContext):
-        pass
-
-
-    # Enter a parse tree produced by pddlParser#constantName.
-    def enterConstantName(self, ctx:pddlParser.ConstantNameContext):
-        pass
-
-    # Exit a parse tree produced by pddlParser#constantName.
-    def exitConstantName(self, ctx:pddlParser.ConstantNameContext):
-        pass
-
-
-    # Enter a parse tree produced by pddlParser#pddlConstant.
-    def enterPddlConstant(self, ctx:pddlParser.PddlConstantContext):
-        pass
-
-    # Exit a parse tree produced by pddlParser#pddlConstant.
-    def exitPddlConstant(self, ctx:pddlParser.PddlConstantContext):
+    # Exit a parse tree produced by pddlParser#typedObjects.
+    def exitTypedObjects(self, ctx:pddlParser.TypedObjectsContext):
         pass
 
 
@@ -752,15 +734,6 @@ class pddlListener(ParseTreeListener):
 
     # Exit a parse tree produced by pddlParser#problemDomain.
     def exitProblemDomain(self, ctx:pddlParser.ProblemDomainContext):
-        pass
-
-
-    # Enter a parse tree produced by pddlParser#typedObjects.
-    def enterTypedObjects(self, ctx:pddlParser.TypedObjectsContext):
-        pass
-
-    # Exit a parse tree produced by pddlParser#typedObjects.
-    def exitTypedObjects(self, ctx:pddlParser.TypedObjectsContext):
         pass
 
 

@@ -40,7 +40,7 @@ def main():
         ts: TimeStat = TimeStat()
         ts.start("Overall")
         domain: Domain = Domain.fromFile(args.domain)
-        problem: Problem = Problem.fromFile(args.problem)
+        problem: Problem = Problem.fromFile(args.problem, domain=domain)
 
         ts.start("Quantifier Elimination")
         qeDomain: Domain = domain.eliminateQuantifiers(problem)

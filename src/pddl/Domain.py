@@ -27,11 +27,12 @@ class Domain:
     name = str
     requirements: List[str]
     types: Dict[str, Type]
-    predicates: set[TypedPredicate]
-    functions: set[TypedPredicate]
-    actions: set[Action]
-    events: set[Event]
-    processes: set[Process]
+    predicates: Set[TypedPredicate]
+    functions: Set[TypedPredicate]
+    actions: Set[Action]
+    events: Set[Event]
+    processes: Set[Process]
+    constantsByType: Dict[str, List[str]]
     constraints: Constraints
     __operationsDict: Dict[str, Operation]
 
@@ -47,6 +48,7 @@ class Domain:
         self.constants = set()
         self.constraints = Constraints()
         self.isPredicateStatic: Dict[str, bool] = dict()
+        self.constantsByType: Dict[str, List[str]] = dict()
         pass
 
     def __deepcopy__(self, m):
@@ -65,6 +67,7 @@ class Domain:
         domain.constants = copy.deepcopy(self.constants, m)
         domain.constraints = copy.deepcopy(self.constraints, m)
         domain.isPredicateStatic = copy.deepcopy(self.isPredicateStatic, m)
+        domain.constantsByType = copy.deepcopy(self.constantsByType)
         return domain
 
     def hasConditionalEffects(self) -> bool:
@@ -131,7 +134,6 @@ class Domain:
         gDomain.substitute(constants)
         problem.substitute(constants)
 
-
         actions = [a.substitute(constants) for a in gDomain.actions]  # if a in arpg.getUsefulActions()]
 
         gDomain.operations = set()
@@ -175,6 +177,8 @@ class Domain:
                 domain.__setRequirementsList(child)
             elif isinstance(child, pddlParser.TypesContext):
                 domain.__setTypesList(child)
+            elif isinstance(child, pddlParser.ConstantsContext):
+                domain.__setConstantsList(child)
             elif isinstance(child, pddlParser.PredicatesContext):
                 domain.__setPredicates(child)
             elif isinstance(child, pddlParser.FunctionsContext):
@@ -229,6 +233,20 @@ class Domain:
             if not isinstance(child, pddlParser.RequireKeyContext):
                 continue
             self.requirements.append(child.getText())
+
+    def __setConstantsList(self, node: pddlParser.ConstantsContext):
+        for typeNode in node.children:
+            if not isinstance(typeNode, pddlParser.TypedObjectsContext):
+                continue
+            typeStr: str = ""
+            objects = []
+            for child in typeNode.children:
+                if isinstance(child, pddlParser.GroundAtomParameterContext):
+                    objects.append(child.getText())
+                elif isinstance(child, pddlParser.TypeNameContext):
+                    typeStr = child.getText().lower()
+            self.constantsByType.setdefault(typeStr, [])
+            self.constantsByType[typeStr].extend(objects)
 
     def __setTypesList(self, node: pddlParser.TypesContext):
         for typeRows in node.children:

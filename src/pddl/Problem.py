@@ -100,14 +100,19 @@ class Problem:
             self.objectsByType[typeStr].extend(objects)
 
     @classmethod
-    def fromFile(cls, filename):
+    def fromFile(cls, filename, domain=None):
         f = open(filename, 'r')
         domainString = f.read()
         f.close()
         domainString = Utilities.removeComments(domainString)
 
         parseTree: pddlParser = Utilities.getParseTree(domainString)
-        return Problem.fromNode(parseTree.problem())
+        pb = Problem.fromNode(parseTree.problem())
+
+        if domain:
+            pb.objectsByType.update(domain.constantsByType)
+
+        return pb
 
     def __setMetric(self, node: pddlParser.MetricContext):
         return

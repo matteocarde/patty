@@ -48,10 +48,8 @@ type: typeName+ parent=parentType*;
 types: LP ':types' type+ RP;
 
 //CONSTANTS
-constantType: '-' typeName;
-constantName: NAME;
-pddlConstant: constantName+ parent=constantType*;
-constants: LP ':constants' pddlConstant+ RP;
+typedObjects: groundAtomParameter+ '-' typeName;
+constants: LP ':constants' typedObjects* RP;
 
 //ATOM AND LITERALS
 atomName: NAME;
@@ -182,7 +180,6 @@ problemName: LP 'problem' NAME RP;
 problemDomain: LP ':domain' NAME RP;
 
 //Objects
-typedObjects: groundAtomParameter+ '-' typeName;
 objects: LP ':objects' typedObjects* RP;
 
 //Init
