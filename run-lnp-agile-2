@@ -11,7 +11,7 @@ PLAN=$3
  -s jair \
  --pattern enhanced \
  --quality none \
- --jair-search-strategy B \
+ --jair-search-strategy G \
  --jair-goal-function n \
- --jair-pattern-g p \
- --jair-pattern-h c
+ --jair-pattern-g e \
+ --jair-pattern-h i

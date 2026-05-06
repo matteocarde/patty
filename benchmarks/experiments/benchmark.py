@@ -60,6 +60,29 @@ PLANNERS: Dict[str, Planner] = {
     "PATTY-GD": Patty("PATTY-GD", search="gd"),
     "PATTY-BDC": Patty("PATTY-BDC", search="bdc"),
 
+    "PATTY-C-npc": Patty("PATTY-C-npc", search="jair",
+                         jairSearchStrategy="C",
+                         jairGoalFunction="n",
+                         jairPatternG="p",
+                         jairPatternH="c"),
+    "PATTY-G-nei": Patty("PATTY-G-nei", search="jair",
+                         jairSearchStrategy="G",
+                         jairGoalFunction="n",
+                         jairPatternG="e",
+                         jairPatternH="i"),
+    "PATTY-C-npc-chrpa": Patty("PATTY-C-npc-chrpa", search="jair",
+                               jairSearchStrategy="C",
+                               jairGoalFunction="n",
+                               jairPatternG="p",
+                               jairPatternH="c",
+                               quality="improve-chrpa"),
+    "PATTY-G-nei-chrpa": Patty("PATTY-G-nei-chrpa", search="jair",
+                               jairSearchStrategy="G",
+                               jairGoalFunction="n",
+                               jairPatternG="e",
+                               jairPatternH="i",
+                               quality="improve-chrpa"),
+
     "PATTY-EF-NO-ORDER": Patty("PATTY-EF-NO-ORDER", search="astar", noCompression=False, dontKeepSubgoals=True),
     "PATTY-GD-NO-ORDER": Patty("PATTY-GD-NO-ORDER", search="gd", dontKeepSubgoals=True),
     "PATTY-BDC-NO-ORDER": Patty("PATTY-BDC-NO-ORDER", search="bdc", dontKeepSubgoals=True),
@@ -98,50 +121,51 @@ PLANNERS: Dict[str, Planner] = {
     "PATTY-ICES": Patty("PATTY-ICES", ices=True),
 }
 
-JAIR_VERSIONS = {
-    # Table 2
-    "Cnpc",
-    "Bnpc",
-    "Rnec",
-    "Gnei",
-    "Cgpc",
-    "Bgpc",
-    "Rgec",
-    "Ggei",
-    "Caes",
-    # Table 3
-    "Cnpc",
-    "Cnrc",
-    "Cnoc",
-    "Bnpc",
-    "Bnrc",
-    "Bnoc",
-    # Table 4
-    "Cnpc",
-    "Bnpc",
-    "Rnec",
-    "Gnec",
-    "Cnps",
-    "Bnps",
-    "Rnes",
-    "Gnes",
-    "Cnpi",
-    "Bnpi",
-}
 
-for v in JAIR_VERSIONS:
-    jairSearchStrategy = v[0]
-    jairGoalFunction = v[1]
-    jairPatternG = v[2]
-    jairPatternH = v[3]
-
-    name = f"PATTY-{jairSearchStrategy}-{jairGoalFunction}{jairPatternG}{jairPatternH}"
-
-    PLANNERS[name] = Patty(name, search="jair",
-                           jairSearchStrategy=jairSearchStrategy,
-                           jairGoalFunction=jairGoalFunction,
-                           jairPatternG=jairPatternG,
-                           jairPatternH=jairPatternH)
+# JAIR_VERSIONS = {
+#     # Table 2
+#     "Cnpc",
+#     "Bnpc",
+#     "Rnec",
+#     "Gnei",
+#     "Cgpc",
+#     "Bgpc",
+#     "Rgec",
+#     "Ggei",
+#     "Caes",
+#     # Table 3
+#     "Cnpc",
+#     "Cnrc",
+#     "Cnoc",
+#     "Bnpc",
+#     "Bnrc",
+#     "Bnoc",
+#     # Table 4
+#     "Cnpc",
+#     "Bnpc",
+#     "Rnec",
+#     "Gnec",
+#     "Cnps",
+#     "Bnps",
+#     "Rnes",
+#     "Gnes",
+#     "Cnpi",
+#     "Bnpi",
+# }
+#
+# for v in JAIR_VERSIONS:
+#     jairSearchStrategy = v[0]
+#     jairGoalFunction = v[1]
+#     jairPatternG = v[2]
+#     jairPatternH = v[3]
+#
+#     name = f"PATTY-{jairSearchStrategy}-{jairGoalFunction}{jairPatternG}{jairPatternH}"
+#
+#     PLANNERS[name] = Patty(name, search="jair",
+#                            jairSearchStrategy=jairSearchStrategy,
+#                            jairGoalFunction=jairGoalFunction,
+#                            jairPatternG=jairPatternG,
+#                            jairPatternH=jairPatternH)
 
 
 def main():

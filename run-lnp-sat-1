@@ -10,7 +10,7 @@ PLAN=$3
  -sp $PLAN \
  -s jair \
  --pattern enhanced \
- --quality none \
+ --quality improve-chrpa \
  --jair-search-strategy B \
  --jair-goal-function n \
  --jair-pattern-g p \

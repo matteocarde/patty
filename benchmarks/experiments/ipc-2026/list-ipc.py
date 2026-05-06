@@ -6,11 +6,10 @@ from natsort import natsort
 from benchmarks.tables.ipc.domains import IPC_DOMAINS
 
 PLANNERS = {
-    "PATTY-EO",
     "PATTY-C-npc",
-    "PATTY-B-npc",
-    "PATTY-R-nec",
-    "PATTY-G-nei"
+    "PATTY-G-nei",
+    "PATTY-C-npc-chrpa",
+    "PATTY-G-nei-chrpa"
 }
 RANDOM = 5
 NAME = "ipc.csv"
