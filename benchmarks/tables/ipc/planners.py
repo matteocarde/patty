@@ -1,22 +1,18 @@
 IPC_PLANNERS = {
-    "PATTY-EO": {
-        "name": r"$\mathrm{P}_\textsc{o}$",
-        "style": "-"
-    },
-    "PATTY-C-npc": {
-        "name": r"$\mathrm{P}_\textsc{c}$",
-        "style": "-"
-    },
     "PATTY-B-npc": {
-        "name": r"$\mathrm{P}_\textsc{b}$",
-        "style": "-"
-    },
-    "PATTY-R-nec": {
-        "name": r"$\mathrm{P}_\textsc{r}$",
+        "name": r"$\mathrm{P}_\textsc{b}^{agl}$",
         "style": "-"
     },
     "PATTY-G-nei": {
-        "name": r"$\mathrm{P}_\textsc{g}$",
+        "name": r"$\mathrm{P}_\textsc{g}^{agl}$",
+        "style": "-"
+    },
+    "PATTY-B-npc-chrpa": {
+        "name": r"$\mathrm{P}_\textsc{b}^{sat}$",
+        "style": "-"
+    },
+    "PATTY-G-nei-chrpa": {
+        "name": r"$\mathrm{P}_\textsc{g}^{sat}$",
         "style": "-"
     }
 }

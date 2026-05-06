@@ -35,14 +35,13 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2026-04-30-IPC-DOCKER-v4"
+    exp = "2026-04-30-IPC-DOCKER-v6"
     joinWith = [
         (exp, [
-            "PATTY-EO",
-            "PATTY-C-npc",
             "PATTY-B-npc",
-            "PATTY-R-nec",
-            "PATTY-G-nei"
+            "PATTY-G-nei",
+            "PATTY-B-npc-chrpa",
+            "PATTY-G-nei-chrpa"
         ])
     ]
 

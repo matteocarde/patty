@@ -21,11 +21,10 @@ IPC_TABLE = {
     },
     "planners": {
         # "PATTY-FE": {},
-        "PATTY-EO": {"type": "scalar"},
-        "PATTY-C-npc": {"type": "scalar"},
         "PATTY-B-npc": {"type": "scalar"},
-        "PATTY-R-nec": {"type": "scalar"},
         "PATTY-G-nei": {"type": "scalar"},
+        "PATTY-B-npc-chrpa": {"type": "scalar"},
+        "PATTY-G-nei-chrpa": {"type": "scalar"},
     },
     "domains": IPC_DOMAINS
 }

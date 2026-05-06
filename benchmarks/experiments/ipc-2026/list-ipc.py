@@ -6,9 +6,9 @@ from natsort import natsort
 from benchmarks.tables.ipc.domains import IPC_DOMAINS
 
 PLANNERS = {
-    "PATTY-C-npc",
+    "PATTY-B-npc",
     "PATTY-G-nei",
-    "PATTY-C-npc-chrpa",
+    "PATTY-B-npc-chrpa",
     "PATTY-G-nei-chrpa"
 }
 RANDOM = 5
