@@ -8,6 +8,7 @@ PLAN=$3
  -o $DOMAIN \
  -f $PROBLEM \
  -sp $PLAN \
+ -pp \
  -s jair \
  --pattern enhanced \
  --quality improve-chrpa \
