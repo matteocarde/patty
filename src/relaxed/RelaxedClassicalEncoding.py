@@ -1,14 +1,17 @@
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 from src.pddl.Atom import Atom
 from src.pddl.Domain import GroundedDomain
 from src.pddl.Literal import Literal
 from src.pddl.Problem import Problem
 from src.plan.Encoding import Encoding
+from src.plan.Pattern import Pattern
 from src.relaxed.ClassicalLevelVariables import ClassicalLevelVariables
 from src.smt.SMTConjunction import SMTConjunction
 from src.smt.SMTExpression import SMTExpression
+from src.smt.SMTSolution import SMTSolution
 from src.smt.SMTVariable import SMTVariable
+from src.smt.expressions.ITEExpression import ITEExpression
 from src.smt.expressions.MaxExpression import MaxExpression
 from src.smt.expressions.MinExpression import MinExpression
 
@@ -36,9 +39,27 @@ class RelaxedClassicalEncoding(Encoding):
 
         self.rules += self.__getEffRules()
         self.rules += self.__getPreRules()
-        self.rules += self.__getGoalRules()
+        self.rules += self.__getBoundRules()
+
+        self.minimize = self.__getMinimize()
 
         pass
+
+    def __getBoundRules(self) -> List[SMTExpression]:
+        rules = []
+        LA = self.levelVariables.actions
+        LC = self.levelVariables.literals
+        lg = self.levelVariables.goal
+
+        rules.append(lg <= self.infty)
+        rules.append(lg >= 0)
+        for a, la in LA.items():
+            rules.append(la <= self.infty)
+            rules.append(la >= 0)
+        for lit, lc in LC.items():
+            rules.append(lc <= self.infty)
+            rules.append(lc >= 0)
+        return rules
 
     def __getEffRules(self) -> List[SMTExpression]:
         rules = SMTConjunction()
@@ -57,22 +78,64 @@ class RelaxedClassicalEncoding(Encoding):
         return rules
 
     def __getPreRules(self) -> List[SMTExpression]:
-        if self.heuristic == "hmax":
-            return self.__getPreRulesHMAX()
-        if self.heuristic == "hadd":
-            return self.__getPreRulesHADD()
-        if self.heuristic == "h+":
-            return self.__getPreRulesHPLUS()
 
-    def __getPreRulesHMAX(self):
-        rules = SMTConjunction()
         LA = self.levelVariables.actions
         LC = self.levelVariables.literals
+        lg = self.levelVariables.goal
 
+        els: List[Tuple[SMTVariable, List[SMTVariable]]] = list()
         for a in self.domain.actions:
-            maxPrecondition = MaxExpression.fromList([LC[lit] for lit in a.preconditions if isinstance(lit, Literal)] + [0])
-            rules.append((LA[a] < self.infty).implies(LA[a].equal(maxPrecondition + 1)))
-            orPrecondition = SMTExpression.bigor([LA[a].equal(LC[lit]) for lit in a.preconditions if isinstance(lit, Literal)])
-            rules.append((LA[a] >= self.infty).implies(orPrecondition))
+            els.append((LA[a], [LC[lit] for lit in a.preconditions if isinstance(lit, Literal)]))
+        els.append((lg, [LC[lit] for lit in self.problem.goal if isinstance(lit, Literal)]))
+
+        if self.heuristic == "hmax":
+            return self.__getPreRulesHMAX(els)
+        if self.heuristic == "hadd":
+            return self.__getPreRulesHADD(els)
+        if self.heuristic == "h+":
+            return self.__getPreRulesHPLUS(els)
+
+    def __getPreRulesHMAX(self, els: List[Tuple[SMTVariable, List[SMTVariable]]]):
+        rules = SMTConjunction()
+
+        for (la, lcs) in els:
+            maxPrecondition = MaxExpression.fromList(lcs + [0]) + 1
+            rules.append((la < self.infty).implies(la.equal(maxPrecondition)))
+            orPrecondition = SMTExpression.bigor([la.equal(lc) for lc in lcs])
+            rules.append((la >= self.infty).implies(orPrecondition))
 
         return rules
+
+    def __getPreRulesHADD(self, els: List[Tuple[SMTVariable, List[SMTVariable]]]):
+        rules = SMTConjunction()
+
+        for (la, lcs) in els:
+            sumPrecondition = sum(lcs) + 1
+            rules.append((la < self.infty).implies(la.equal(sumPrecondition)))
+            orPrecondition = SMTExpression.bigor([la.equal(lc) for lc in lcs])
+            rules.append((la >= self.infty).implies(orPrecondition))
+
+        return rules
+
+    def __getPreRulesHPLUS(self, els: List[Tuple[SMTVariable, List[SMTVariable]]]):
+        rules = SMTConjunction()
+        lg = self.levelVariables.goal
+
+        for (la, lcs) in els:
+            maxPrecondition = MaxExpression.fromList(lcs) + 1
+            rules.append((la <= lg).implies(la.equal(maxPrecondition)))
+
+        return rules
+
+    def __getMinimize(self):
+        if self.heuristic != "h+":
+            return []
+        lg = self.levelVariables.goal
+        LA = self.levelVariables.actions
+        minimize = sum([ITEExpression(LA[a] < lg, 1, 0) for a in self.domain.actions])
+        return [minimize]
+
+    def getPattern(self, solution: SMTSolution) -> Pattern:
+        LA = self.levelVariables.actions
+        order = sorted([(solution.getVariable(LA[a]), a) for a in self.domain.actions])
+        return Pattern.fromOrder([a for (la, a) in order])

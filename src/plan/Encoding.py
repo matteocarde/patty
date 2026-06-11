@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+import itertools
 import statistics
 from typing import List, Pattern, Set
 
@@ -27,7 +30,7 @@ class Encoding:
         self.problem = problem
         self.pattern = pattern
         self.bound = bound
-        self.minimize = None
+        self.minimize = []
         self.rules = []
         self.softRules = []
         self.fullGoal = []
@@ -38,6 +41,20 @@ class Encoding:
         for rule in self.rules:
             string += str(rule) + "\n"
         return string
+
+    @classmethod
+    def join(cls, encodings: List[Encoding]):
+        assert len(encodings) > 0
+        joined = cls()
+        joined.domain = encodings[0].domain
+        joined.problem = encodings[0].problem
+        joined.pattern = encodings[0].pattern
+        joined.bound = encodings[0].bound
+        joined.minimize = sum([e.minimize for e in encodings], [])
+        joined.rules = sum([e.rules for e in encodings], [])
+        joined.softRules = sum([e.softRules for e in encodings], [])
+        joined.fullGoal = sum([e.fullGoal for e in encodings], [])
+        return joined
 
     def printRules(self):
         for rule in self.rules:
@@ -86,3 +103,4 @@ class Encoding:
 
     def getAvgRuleLength(self):
         return round(statistics.mean([len(r.getVariables()) for r in self.rules]), 2)
+

@@ -2,10 +2,13 @@ from src.pddl.Domain import GroundedDomain
 from src.pddl.Plan import Plan
 from src.pddl.Problem import Problem
 from src.pddl.State import State
+from src.plan.Encoding import Encoding
 from src.plan.NumericEncoding import NumericEncoding
 from src.plan.Pattern import Pattern
 from src.relaxed.RelaxedClassicalEncoding import RelaxedClassicalEncoding
 from src.search.Search import Search
+from src.smt.SMTSolution import SMTSolution
+from src.smt.SMTSolver import SMTSolver
 from src.utils.Arguments import Arguments
 
 
@@ -27,21 +30,30 @@ class HeuristicSearch(Search):
 
         self.initialState = I
         self.ts.start(f"Conversion to SMT at bound {bound}")
-        encoding: NumericEncoding = NumericEncoding(
+        hard: NumericEncoding = NumericEncoding(
             domain=self.domain,
             problem=self.problem,
             state=I,
             pattern=Pattern.empty(),
             goalFunctionValue=0,
             bound=1,
-            args=self.args
+            args=self.args,
+            skipGoal=True
         )
 
         relaxed: RelaxedClassicalEncoding = RelaxedClassicalEncoding(
             domain=self.domain,
             problem=self.problem,
             heuristic=self.args.heuristic,
-            stateVars=encoding.transitionVariables[-1].valueVariables
+            stateVars=hard.transitionVariables[-1].valueVariables
         )
+
+        joined = Encoding.join([hard, relaxed])
+
+        solver: SMTSolver = SMTSolver(joined)
+        solution: SMTSolution = solver.getSolution()
+
+        pattern = relaxed.getPattern(solution)
+
 
         pass

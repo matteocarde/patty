@@ -29,7 +29,7 @@ class SMTSolver:
         self.toMinimize: List[SMTExpression] = []
 
         self.solver = Z3SolverAndOptimizer()
-        self.maximize = self.encoding and (bool(self.encoding.softRules) or bool(self.encoding.minimize))
+        # self.maximize = self.encoding and (bool(self.encoding.softRules) or bool(self.encoding.minimize))
 
         if self.encoding:
             t = TimeStat.startHolder("Adding assertions")

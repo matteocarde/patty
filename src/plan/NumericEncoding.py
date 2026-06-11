@@ -33,7 +33,8 @@ class NumericEncoding(Encoding):
                  state: State = None,
                  minimizeGoalFunction=False,
                  goalAsSoftAsserts=False,
-                 goalFunctionValue: float = 10000):
+                 goalFunctionValue: float = 10000,
+                 skipGoal: bool = False):
 
         super().__init__(domain, problem, pattern, bound)
         self.domain = domain
@@ -78,7 +79,12 @@ class NumericEncoding(Encoding):
         self.goal: [SMTExpression] = self.getGoalExpression()
         self.fullGoal: [SMTExpression] = self.getFullGoalExpressions()
 
-        self.rules = self.initial + self.transitions + self.goal + self.getMinimizeParameter()
+        self.rules = []
+        self.rules += self.initial
+        self.rules += self.transitions
+        if not skipGoal:
+            self.rules += self.goal
+        self.rules += self.getMinimizeParameter()
 
         if self.minimizeGoalFunction:
             self.addGoalFunctionMinimization()
