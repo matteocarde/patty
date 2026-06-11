@@ -42,3 +42,7 @@ class MaxExpression(NaryExpression):
 
     def __str__(self):
         return f"max({','.join([str(c) for c in self.children])})"
+
+    @classmethod
+    def fromList(cls, param):
+        return MaxExpression(*param)

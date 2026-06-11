@@ -9,6 +9,7 @@ from src.pddl.Constraints import Constraints
 from src.pddl.DurativeAction import DurativeAction
 from src.pddl.Event import Event
 from src.pddl.Formula import Formula
+from src.pddl.Literal import Literal
 from src.pddl.Operation import Operation
 from src.pddl.PDDLWriter import PDDLWriter
 from src.pddl.Problem import Problem
@@ -427,3 +428,6 @@ class GroundedDomain(Domain):
         pw.write(f")")
 
         return pw
+
+    def getAllLiterals(self):
+        return [Literal.pos(v) for v in self.predicates] + [Literal.neg(v) for v in self.predicates]

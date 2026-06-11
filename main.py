@@ -13,6 +13,7 @@ from src.search.BDCSearch import BDCSearch
 from src.search.ChainSearch import ChainSearch
 from src.search.ChrpaImprover import ChrpaImprover
 from src.search.GDSearch import GDSearch
+from src.search.HeuristicSearch import HeuristicSearch
 from src.search.JairSearch import JairSearch
 from src.search.PASSearch import PASSearch
 from src.search.PlanImproverLess import PlanImproverLess
@@ -59,6 +60,8 @@ def main():
             solver = PASSearch(gDomain, problem, args, liftedDomain=domain)
         elif args.search == "astar":
             solver = AStarSearchMax(gDomain, problem, args)
+        elif args.search == "heuristic":
+            solver = HeuristicSearch(gDomain, problem, args)
         elif args.search == "jair":
             solver = JairSearch(gDomain, problem, args)
         elif args.search == "gd":

@@ -226,3 +226,6 @@ class Effects:
         for e in upeffs:
             effs.addEffect(Predicate.fromUnifiedPlanning(e, atomDict))
         return effs
+
+    def getLiterals(self):
+        return [lit for lit in self.assignments if isinstance(lit, Literal)]

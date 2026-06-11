@@ -99,6 +99,9 @@ class Arguments:
                             ''',
                             default="none",
                             choices={"none", "shortest-step", "improve-plan", "improve-less", "improve-chrpa"})
+        parser.add_argument('--heuristic',
+                            default="none",
+                            choices={"hmax", "hadd", "h+"})
 
         args = parser.parse_args()
         self.isHelp = "help" in args
@@ -137,3 +140,5 @@ class Arguments:
         self.jairPatternG = args.jair_pattern_g
         self.jairPatternH = args.jair_pattern_h
         self.jairGoalFunction = args.jair_goal_function
+
+        self.heuristic = args.heuristic

@@ -41,3 +41,7 @@ class MinExpression(NaryExpression):
 
     def evaluate(self, solution):
         raise NotImplementedError()
+
+    @classmethod
+    def fromList(cls, param):
+        return MinExpression(*param)
