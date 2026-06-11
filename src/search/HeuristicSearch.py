@@ -5,7 +5,8 @@ from src.pddl.State import State
 from src.plan.Encoding import Encoding
 from src.plan.NumericEncoding import NumericEncoding
 from src.plan.Pattern import Pattern
-from src.relaxed.RelaxedClassicalEncoding import RelaxedClassicalEncoding
+from src.relaxed.classical.RelaxedClassicalEncoding import RelaxedClassicalEncoding
+from src.relaxed.snp.RelaxedSimpleNumericEncoding import RelaxedSimpleNumericEncoding
 from src.search.Search import Search
 from src.smt.SMTSolution import SMTSolution
 from src.smt.SMTSolver import SMTSolver
@@ -41,12 +42,22 @@ class HeuristicSearch(Search):
             skipGoal=True
         )
 
-        relaxed: RelaxedClassicalEncoding = RelaxedClassicalEncoding(
-            domain=self.domain,
-            problem=self.problem,
-            heuristic=self.args.heuristic,
-            stateVars=hard.transitionVariables[-1].valueVariables
-        )
+        if self.domain.fragment == "CLASSICAL":
+            relaxed: RelaxedClassicalEncoding = RelaxedClassicalEncoding(
+                domain=self.domain,
+                problem=self.problem,
+                heuristic=self.args.heuristic,
+                stateVars=hard.transitionVariables[-1].valueVariables
+            )
+        elif self.domain.fragment == "SIMPLE-NUMERIC":
+            relaxed: RelaxedSimpleNumericEncoding = RelaxedSimpleNumericEncoding(
+                domain=self.domain,
+                problem=self.problem,
+                heuristic=self.args.heuristic,
+                stateVars=hard.transitionVariables[-1].valueVariables
+            )
+        else:
+            raise Exception("Not handled")
 
         joined = Encoding.join([hard, relaxed])
 
@@ -54,6 +65,5 @@ class HeuristicSearch(Search):
         solution: SMTSolution = solver.getSolution()
 
         pattern = relaxed.getPattern(solution)
-
 
         pass

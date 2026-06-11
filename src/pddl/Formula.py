@@ -374,6 +374,10 @@ class Formula:
                     f.addClause(c.rhs - c.lhs > 0)
                 elif c.operator == "<=":
                     f.addClause(c.rhs - c.lhs >= 0)
+                elif c.operator == ">":
+                    f.addClause(c.lhs - c.rhs > 0)
+                elif c.operator == ">=":
+                    f.addClause(c.lhs - c.rhs >= 0)
                 elif c.operator == "!=":
                     if f.type == "OR":
                         f.addClause(c.rhs - c.lhs > 0)

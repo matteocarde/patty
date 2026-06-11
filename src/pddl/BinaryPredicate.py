@@ -4,7 +4,8 @@ import copy
 from enum import Enum
 from typing import Dict, Set, Union
 
-from sympy import Expr, diff
+from boto3.dynamodb.conditions import GreaterThanEquals
+from sympy import Expr, diff, Symbol, GreaterThan, StrictGreaterThan
 from unified_planning.model import FNode, OperatorKind, EffectKind, Effect
 
 from src.pddl.Atom import Atom
@@ -434,3 +435,21 @@ class BinaryPredicate(Predicate):
             return f"{self.lhs.toANML()} := {self.lhs.toANML()} - {self.rhs.toANML()}"
         op = self.operator if self.operator not in ANMLOPERATORS else ANMLOPERATORS[self.operator]
         return f"{self.lhs.toANML()} {op} {self.rhs.toANML()}"
+
+    def getCoefficients(self) -> Dict[Atom, float]:
+        atom2symbol = dict()
+        symbol2atom = dict()
+        for atom in self.getFunctions():
+            symbol = Symbol(str(atom))
+            atom2symbol[atom] = symbol
+            symbol2atom[symbol] = atom
+
+        coefficients: Dict[Atom, float] = dict()
+        expr = self.expressify(atom2symbol)
+        for (atom, symbol) in atom2symbol.items():
+            assert isinstance(expr, GreaterThan) or isinstance(expr, StrictGreaterThan)
+            c = expr.lhs.coeff(symbol)
+            assert c.is_number
+            coefficients[atom] = float(c)
+
+        return coefficients

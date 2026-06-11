@@ -195,3 +195,4 @@ class Action(Operation):
             if isinstance(e, BinaryPredicate) and e.getFunctions() == {x} and e.operator in {"increase", "decrease"}:
                 return e
         return False
+

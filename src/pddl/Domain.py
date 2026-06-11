@@ -301,6 +301,7 @@ class GroundedDomain(Domain):
     addList: Dict[Atom, Set[Operation]]
     delList: Dict[Atom, Set[Operation]]
     assList: Dict[Atom, Set[Operation]]
+    fragment: str
 
     def __init__(self, name: str, actions: Set[Action], events: Set[Event], process: Set[Process],
                  durativeActions: Set[DurativeAction], affectedGraph=None):
@@ -364,6 +365,11 @@ class GroundedDomain(Domain):
             pass
 
         self.allAtoms = self.functions | self.predicates
+        if not self.functions:
+            self.fragment = "CLASSICAL"
+        else:
+            # todo: Add difference between SNP and LNP
+            self.fragment = "SIMPLE-NUMERIC"
 
     def getOperationByPlanName(self, planName) -> Operation:
         return self.__operationsDict[planName]

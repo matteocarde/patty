@@ -6,7 +6,7 @@ from src.pddl.Literal import Literal
 from src.pddl.Problem import Problem
 from src.plan.Encoding import Encoding
 from src.plan.Pattern import Pattern
-from src.relaxed.ClassicalLevelVariables import ClassicalLevelVariables
+from src.relaxed.classical.ClassicalLevelVariables import ClassicalLevelVariables
 from src.smt.SMTConjunction import SMTConjunction
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTSolution import SMTSolution
