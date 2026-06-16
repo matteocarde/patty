@@ -37,19 +37,25 @@ class RelaxedSimpleNumericEncoding(Encoding):
 
         self.rules = []
 
-        self.rules += self.__getEffRules()
-        self.rules += self.__getPreRules()
+        self.rules += self.__getCurrentRules()
         self.rules += self.__getBoundRules()
+        self.rules += self.__getPreRules()
 
         self.minimize = self.__getMinimize()
 
         pass
 
+    def __getCurrentRules(self) -> List[SMTExpression]:
+        rules = []
+        LA = self.levelVariables.actionsLevel
+        LC = self.levelVariables.conditionsLevel
+        lg = self.levelVariables.goalLevel
+
     def __getBoundRules(self) -> List[SMTExpression]:
         rules = []
-        LA = self.levelVariables.actions
-        LC = self.levelVariables.literals
-        lg = self.levelVariables.goal
+        LA = self.levelVariables.actionsLevel
+        LC = self.levelVariables.conditionsLevel
+        lg = self.levelVariables.goalLevel
 
         rules.append(lg <= self.infty)
         rules.append(lg >= 0)

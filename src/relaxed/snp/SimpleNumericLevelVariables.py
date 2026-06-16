@@ -12,17 +12,17 @@ LAMBDA = "λ"
 
 
 class SimpleNumericLevelVariables:
-    actions: Dict[Action, SMTIntVariable]
-    literals: Dict[Literal, SMTIntVariable]
+    actionsLevel: Dict[Action, SMTIntVariable]
+    conditionsLevel: Dict[Literal, SMTIntVariable]
     Ac_plus: Set[Tuple[Action, Atom, float]]
     Ac_minus: Set[Tuple[Action, Atom, float]]
-    goal: SMTIntVariable
+    goalLevel: SMTIntVariable
 
     def __init__(self, domain: GroundedDomain):
         self.actionsLevel = dict()
         self.actions = dict()
         self.conditionsLevel = dict()
-        self.goal = SMTIntVariable(f"λ(G)")
+        self.goalLevel = SMTIntVariable(f"λ(G)")
 
         conditions: List[BinaryPredicate] = list()
         self.Ac_plus = set()
