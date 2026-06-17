@@ -69,8 +69,8 @@ class Problem:
             if isinstance(node, pddlParser.MetricContext):
                 problem.__setMetric(node)
 
-        problem.functions = problem.init.functions
-        problem.predicates = problem.init.predicates
+        problem.functions = problem.init.functions | problem.goal.getFunctions()
+        problem.predicates = problem.init.predicates | problem.goal.getPredicates()
         problem.allAtoms = problem.init.allAtoms
 
         return problem
@@ -110,7 +110,9 @@ class Problem:
         pb = Problem.fromNode(parseTree.problem())
 
         if domain:
-            pb.objectsByType.update(domain.constantsByType)
+            for t, objects in pb.objectsByType.items():
+                if t in domain.constantsByType:
+                    pb.objectsByType[t] += domain.constantsByType[t]
 
         return pb
 

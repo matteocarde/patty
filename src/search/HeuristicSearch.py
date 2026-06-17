@@ -65,14 +65,16 @@ class HeuristicSearch(Search):
         print("RULES:", joined.getNRules())
 
         solver: SMTSolver = SMTSolver(joined)
-        print("Searching for relaxed solution")
+        th = self.ts.startHolder("Searching for relaxed solution")
         solution: SMTSolution = solver.getSolution()
         if not solution:
             raise Exception("It seems no plan exists")
-        print(solution.prettyString())
+        # print(solution.prettyString())
 
         pattern = relaxed.getPattern(solution, removeBeyondInfinite=True)
+        th.endHolder()
         print(pattern)
+        print(f"|<| = {len(pattern)}")
 
         exit()
 
