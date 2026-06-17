@@ -6,6 +6,7 @@ from src.plan.Encoding import Encoding
 from src.plan.NumericEncoding import NumericEncoding
 from src.plan.Pattern import Pattern
 from src.relaxed.classical.RelaxedClassicalEncoding import RelaxedClassicalEncoding
+from src.relaxed.classical.RelaxedClassicalEncodingDL import RelaxedClassicalEncodingDL
 from src.relaxed.snp.RelaxedSimpleNumericEncoding import RelaxedSimpleNumericEncoding
 from src.search.Search import Search
 from src.smt.SMTSolution import SMTSolution
@@ -43,7 +44,7 @@ class HeuristicSearch(Search):
         )
 
         if self.domain.fragment == "CLASSICAL":
-            relaxed: RelaxedClassicalEncoding = RelaxedClassicalEncoding(
+            relaxed: RelaxedClassicalEncodingDL = RelaxedClassicalEncodingDL(
                 domain=self.domain,
                 problem=self.problem,
                 heuristic=self.args.heuristic,
@@ -60,6 +61,8 @@ class HeuristicSearch(Search):
             raise Exception("Not handled")
 
         joined = Encoding.join([hard, relaxed])
+        print("VARS:", joined.getNVars())
+        print("RULES:", joined.getNRules())
 
         solver: SMTSolver = SMTSolver(joined)
         print("Searching for relaxed solution")

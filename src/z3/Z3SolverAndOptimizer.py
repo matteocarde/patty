@@ -1,6 +1,6 @@
 import uuid
 
-from pysmt.logics import QF_LRA
+from pysmt.logics import QF_LRA, QF_RDL
 from pysmt.shortcuts import Portfolio, Solver
 from z3 import Optimize, Bool
 
@@ -16,7 +16,7 @@ class Z3SolverAndOptimizer:
         # self.optimizer.set("opt.priority", "lex")
 
         self.solver: Solver = Solver("z3",
-                                     logic=QF_LRA,
+                                     logic=QF_RDL,
                                      incremental=True,
                                      generate_models=True)
 
