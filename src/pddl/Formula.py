@@ -193,7 +193,6 @@ class Formula:
             if not c.canHappenLiftedPartial(item, params, problem):
                 return False
         return True
-        pass
 
     def isDynamicLifted(self, problem):
         for c in self.conditions:

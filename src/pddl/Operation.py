@@ -186,7 +186,8 @@ class Operation:
 
         validCombinations: List[Dict[str, str]] = []
         for sub in combinations:
-            validCombinations.append(dict([(p.name, sub[i]) for i, p in enumerate(self.parameters)]))
+            c = dict([(p.name, sub[i]) for i, p in enumerate(self.parameters)])
+            validCombinations.append(c)
 
         gOperations = []
         for sub in validCombinations:

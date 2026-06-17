@@ -63,7 +63,13 @@ class HeuristicSearch(Search):
 
         solver: SMTSolver = SMTSolver(joined)
         solution: SMTSolution = solver.getSolution()
+        if not solution:
+            raise Exception("It seems no plan exists")
+        print(solution.prettyString())
 
         pattern = relaxed.getPattern(solution)
+        print(pattern)
+
+        exit()
 
         pass

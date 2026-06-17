@@ -195,6 +195,8 @@ class Literal(Predicate):
             return atomStr not in problem.canHappenValue
 
     def canHappenLiftedPartial(self, item: Tuple, params: List[str], problem) -> bool:
+
+
         if not problem.isPredicateStatic[self.atom.name]:
             return True
 
@@ -203,6 +205,9 @@ class Literal(Predicate):
 
         if not self.atom.name in problem.assignmentsTree:
             return False
+
+        if self.sign == "-":
+            return True
 
         from src.pddl.Problem import Problem
         problem: Problem

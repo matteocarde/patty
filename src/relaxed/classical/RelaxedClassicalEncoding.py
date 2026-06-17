@@ -30,7 +30,6 @@ class RelaxedClassicalEncoding(Encoding):
         self.heuristic = heuristic
         self.stateVars = stateVars
 
-        self.infty = 2 ** min(len(self.domain.actions), len(self.domain.predicates))
         self.literals = domain.getAllLiterals()
 
         self.levelVariables = ClassicalLevelVariables(self.domain)
@@ -40,6 +39,7 @@ class RelaxedClassicalEncoding(Encoding):
         self.rules += self.__getEffRules()
         self.rules += self.__getPreRules()
         self.rules += self.__getBoundRules()
+        self.rules += self.__getGoalRules()
 
         self.minimize = self.__getMinimize()
 
@@ -49,15 +49,13 @@ class RelaxedClassicalEncoding(Encoding):
         rules = []
         LA = self.levelVariables.actions
         LC = self.levelVariables.literals
-        lg = self.levelVariables.goal
+        linfty = self.levelVariables.infty
 
-        rules.append(lg <= self.infty)
-        rules.append(lg >= 0)
         for a, la in LA.items():
-            rules.append(la <= self.infty)
+            rules.append(la <= linfty)
             rules.append(la >= 0)
         for lit, lc in LC.items():
-            rules.append(lc <= self.infty)
+            rules.append(lc <= linfty)
             rules.append(lc >= 0)
         return rules
 
@@ -65,6 +63,7 @@ class RelaxedClassicalEncoding(Encoding):
         rules = SMTConjunction()
         LA = self.levelVariables.actions
         LC = self.levelVariables.literals
+        linfty = self.levelVariables.infty
 
         for lit in self.literals:
             affectingActions = [LA[a] for a in self.domain.actions if lit in a.effects.assignments]
@@ -72,7 +71,7 @@ class RelaxedClassicalEncoding(Encoding):
             falseLit = ~self.stateVars[lit.atom] if lit.sign == "+" else self.stateVars[lit.atom]
 
             rules.append(trueLit.implies(LC[lit].equal(0)))
-            minAffecting = MinExpression.fromList(affectingActions + [self.infty])
+            minAffecting = MinExpression.fromList(affectingActions + [linfty])
             rules.append(falseLit.implies(LC[lit].equal(minAffecting)))
 
         return rules
@@ -81,12 +80,10 @@ class RelaxedClassicalEncoding(Encoding):
 
         LA = self.levelVariables.actions
         LC = self.levelVariables.literals
-        lg = self.levelVariables.goal
 
         els: List[Tuple[SMTVariable, List[SMTVariable]]] = list()
         for a in self.domain.actions:
             els.append((LA[a], [LC[lit] for lit in a.preconditions if isinstance(lit, Literal)]))
-        els.append((lg, [LC[lit] for lit in self.problem.goal if isinstance(lit, Literal)]))
 
         if self.heuristic == "hmax":
             return self.__getPreRulesHMAX(els)
@@ -95,44 +92,58 @@ class RelaxedClassicalEncoding(Encoding):
         if self.heuristic == "h+":
             return self.__getPreRulesHPLUS(els)
 
+    def __getGoalRules(self) -> List[SMTExpression]:
+
+        rules = SMTConjunction()
+        LC = self.levelVariables.literals
+        linfty = self.levelVariables.infty
+
+        for c in self.problem.goal:
+            print(self.problem.goal, c)
+            rules.append(LC[c] < linfty)
+
+        return rules
+
     def __getPreRulesHMAX(self, els: List[Tuple[SMTVariable, List[SMTVariable]]]):
         rules = SMTConjunction()
+        linfty = self.levelVariables.infty
 
         for (la, lcs) in els:
             maxPrecondition = MaxExpression.fromList(lcs + [0]) + 1
-            rules.append((la < self.infty).implies(la.equal(maxPrecondition)))
+            rules.append((la < linfty).implies(la.equal(maxPrecondition)))
             orPrecondition = SMTExpression.bigor([la.equal(lc) for lc in lcs])
-            rules.append((la >= self.infty).implies(orPrecondition))
+            rules.append((la >= linfty).implies(orPrecondition))
 
         return rules
 
     def __getPreRulesHADD(self, els: List[Tuple[SMTVariable, List[SMTVariable]]]):
         rules = SMTConjunction()
+        linfty = self.levelVariables.infty
 
         for (la, lcs) in els:
             sumPrecondition = sum(lcs) + 1
-            rules.append((la < self.infty).implies(la.equal(sumPrecondition)))
+            rules.append((la < linfty).implies(la.equal(sumPrecondition)))
             orPrecondition = SMTExpression.bigor([la.equal(lc) for lc in lcs])
-            rules.append((la >= self.infty).implies(orPrecondition))
+            rules.append((la >= linfty).implies(orPrecondition))
 
         return rules
 
     def __getPreRulesHPLUS(self, els: List[Tuple[SMTVariable, List[SMTVariable]]]):
         rules = SMTConjunction()
-        lg = self.levelVariables.goal
+        linfty = self.levelVariables.infty
 
         for (la, lcs) in els:
             maxPrecondition = MaxExpression.fromList(lcs) + 1
-            rules.append((la <= lg).implies(la.equal(maxPrecondition)))
+            rules.append((la < linfty).implies(la.equal(maxPrecondition)))
 
         return rules
 
     def __getMinimize(self):
         if self.heuristic != "h+":
             return []
-        lg = self.levelVariables.goal
+        linfty = self.levelVariables.infty
         LA = self.levelVariables.actions
-        minimize = sum([ITEExpression(LA[a] < lg, 1, 0) for a in self.domain.actions])
+        minimize = sum([ITEExpression(LA[a] < linfty, 1, 0) for a in self.domain.actions])
         return [minimize]
 
     def getPattern(self, solution: SMTSolution) -> Pattern:

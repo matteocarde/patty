@@ -16,7 +16,8 @@ class ClassicalLevelVariables:
     def __init__(self, domain: GroundedDomain):
         self.actions = dict()
         self.literals = dict()
-        self.goal = SMTIntVariable(f"λ(G)")
+        # self.goal = SMTIntVariable(f"λ(G)")
+        self.infty = SMTIntVariable(f"λ(∞)")
 
         for a in domain.actions:
             self.actions[a] = SMTIntVariable(f"λ({a})")
