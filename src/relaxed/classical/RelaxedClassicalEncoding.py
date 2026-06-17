@@ -146,7 +146,10 @@ class RelaxedClassicalEncoding(Encoding):
         minimize = sum([ITEExpression(LA[a] < linfty, 1, 0) for a in self.domain.actions])
         return [minimize]
 
-    def getPattern(self, solution: SMTSolution) -> Pattern:
+    def getPattern(self, solution: SMTSolution, removeBeyondInfinite: bool = False) -> Pattern:
         LA = self.levelVariables.actions
+        linfty = self.levelVariables.infty
         order = sorted([(solution.getVariable(LA[a]), a) for a in self.domain.actions])
+        if removeBeyondInfinite:
+            order = [(la, a) for (la, a) in order if la < solution.getVariable(linfty)]
         return Pattern.fromOrder([a for (la, a) in order])

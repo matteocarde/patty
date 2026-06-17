@@ -21,7 +21,7 @@ from src.pddl.Type import Type
 from src.pddl.TypedPredicate import TypedPredicate
 from src.pddl.Utilities import Utilities
 from src.pddl.grammar.pddlParser import pddlParser
-from src.utils.LogPrint import LogPrint, LogPrintLevel
+from src.utils.LogPrint import LogPrint, LogPrintLevel, console
 
 
 class Domain:
@@ -92,7 +92,7 @@ class Domain:
                 return True
         return False
 
-    def ground(self, problem: Problem, avoidSimplification=False, console: LogPrint = None, delta=1) -> GroundedDomain:
+    def ground(self, problem: Problem, avoidSimplification=False) -> GroundedDomain:
 
         problem.computeWhatCanHappen(self)
         problem.propositional = set([p.name for p in self.predicates])

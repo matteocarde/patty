@@ -62,12 +62,13 @@ class HeuristicSearch(Search):
         joined = Encoding.join([hard, relaxed])
 
         solver: SMTSolver = SMTSolver(joined)
+        print("Searching for relaxed solution")
         solution: SMTSolution = solver.getSolution()
         if not solution:
             raise Exception("It seems no plan exists")
         print(solution.prettyString())
 
-        pattern = relaxed.getPattern(solution)
+        pattern = relaxed.getPattern(solution, removeBeyondInfinite=True)
         print(pattern)
 
         exit()
