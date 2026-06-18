@@ -76,14 +76,11 @@ class NumericEncoding(Encoding):
 
         self.c = SMTRealVariable("costFunctionPatty")
 
-        self.goal: [SMTExpression] = self.getGoalExpression()
-        self.fullGoal: [SMTExpression] = self.getFullGoalExpressions()
-
         self.rules = []
         self.rules += self.initial
         self.rules += self.transitions
         if not skipGoal:
-            self.rules += self.goal
+            self.rules += self.getGoalExpression()
         self.rules += self.getMinimizeParameter()
 
         if self.minimizeGoalFunction:

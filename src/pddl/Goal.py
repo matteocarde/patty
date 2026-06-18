@@ -2,11 +2,10 @@ from __future__ import annotations
 
 from typing import cast
 
-from src.pddl.BinaryPredicate import BinaryPredicate
 from src.pddl.PDDLWriter import PDDLWriter
+from src.pddl.Preconditions import Preconditions
 from src.pddl.Predicate import Predicate
 from src.pddl.grammar.pddlParser import pddlParser
-from src.pddl.Preconditions import Preconditions
 
 
 class Goal(Preconditions):

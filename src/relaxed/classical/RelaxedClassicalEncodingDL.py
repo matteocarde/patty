@@ -120,14 +120,13 @@ class RelaxedClassicalEncodingDL(Encoding):
         linfty = self.levelVariables.infty
 
         for c in self.problem.goal:
-            print(self.problem.goal, c)
             rules.append(LC[c] < linfty)
 
         return rules
 
     def __getMinimize(self):
-        if self.heuristic != "h+":
-            return []
+        # if self.heuristic != "h+":
+        #     return []
         linfty = self.levelVariables.infty
         LA = self.levelVariables.actions
         minimize = sum([ITEExpression(LA[a] < linfty, 1, 0) for a in self.domain.actions])
