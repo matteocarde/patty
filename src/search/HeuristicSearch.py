@@ -1,5 +1,4 @@
 from src.pddl.Domain import GroundedDomain
-from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Plan import Plan
 from src.pddl.Problem import Problem
 from src.pddl.State import State
@@ -7,7 +6,6 @@ from src.plan.Encoding import Encoding
 from src.plan.NumericEncoding import NumericEncoding
 from src.plan.Pattern import Pattern
 from src.relaxed.classical.RelaxedClassicalEncodingDL import RelaxedClassicalEncodingDL
-from src.relaxed.snp.RelaxedSimpleNumericEncoding import RelaxedSimpleNumericEncoding
 from src.search.Search import Search
 from src.smt.SMTSolution import SMTSolution
 from src.smt.SMTSolver import SMTSolver
@@ -26,17 +24,18 @@ class HeuristicSearch(Search):
         self.hasCheckedComplete = False
 
     def solve(self) -> Plan:
-        subgoalsAchieved = set()
 
         I: State = State.fromInitialCondition(self.problem.init)
 
         patG: Pattern = Pattern.empty()
         patH: Pattern = Pattern.empty()
 
-        # plan = NumericPlan.empty()
-        n = 0
+        n = 1
 
         while n <= self.maxBound:
+
+            console.log(f"Bound {n}: |<_g|: {len(patG)}", LogPrintLevel.STATS)
+            console.log(f"Bound {n}: |<_h|: {len(patH)}", LogPrintLevel.STATS)
 
             pat = patG + patH
             self.ts.start(f"Conversion to SMT at bound {n}")
@@ -61,7 +60,7 @@ class HeuristicSearch(Search):
             joined = Encoding.join([hard, relaxed])
             console.log(f"VARS: {joined.getNVars()}", LogPrintLevel.STATS)
             console.log(f"RULES: {joined.getNRules()}", LogPrintLevel.STATS)
-            joined.writeSMTLIB(f"{self.args.domain.replace('domain.pddl', '')}{n}.smt")
+            # joined.writeSMTLIB(f"{self.args.domain.replace('domain.pddl', '')}{n}.smt")
 
             solver: SMTSolver = SMTSolver(joined)
             th = self.ts.startHolder("Searching for relaxed solution")
@@ -78,11 +77,11 @@ class HeuristicSearch(Search):
                 th.endHolder()
                 return partialPlan
             patH_ = relaxed.getPattern(solution, removeBeyondInfinite=True)
-            if len(patH) == len(patH_):
-                patG = pat.addPostfix(n)
-                patH = patH_
-                console.log("Pattern stayed the same", LogPrintLevel.STATS)
-                continue
+            # if len(patH) == len(patH_):
+            #     patG = pat.addPostfix(n)
+            #     patH = patH_
+            #     console.log("Pattern stayed the same", LogPrintLevel.STATS)
+            #     continue
 
             patG = Pattern.fromPlan(partialPlan)
             patH = patH_
@@ -90,7 +89,5 @@ class HeuristicSearch(Search):
             print(patG)
             print(patH)
             th.endHolder()
-            console.log(f"|<_g|: {len(patG)}", LogPrintLevel.STATS)
-            console.log(f"|<_h|: {len(patH)}", LogPrintLevel.STATS)
 
         pass
