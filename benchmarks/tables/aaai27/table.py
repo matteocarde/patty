@@ -1,12 +1,12 @@
-from benchmarks.tables.ipc.domains import IPC_DOMAINS
+from benchmarks.tables.aaai27.domains import AAAI27_DOMAINS
 
-IPC_TABLE = {
+AAAI27_TABLE = {
     "name": "tab:ipc",
     "orientation": "portrait",
     "type": "table*",
     "width": r"\textwidth",
     "keepAll": True,
-    "caption": r"\textsc{ipc}-2023 testset",
+    "caption": r"Classic \textsc{ipc}-2014 testset",
     "columns": {
         "quantity": {
             "name": "Solved (out of $20$)",
@@ -23,8 +23,7 @@ IPC_TABLE = {
         # "PATTY-FE": {},
         "PATTY-B-npc": {"type": "scalar"},
         "PATTY-G-nei": {"type": "scalar"},
-        "PATTY-B-npc-chrpa": {"type": "scalar"},
-        "PATTY-G-nei-chrpa": {"type": "scalar"},
+        "PATTY-Hplus": {"type": "scalar"},
     },
-    "domains": IPC_DOMAINS
+    "domains": AAAI27_DOMAINS
 }

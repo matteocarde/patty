@@ -27,12 +27,6 @@
           (in-water)
      )
 
-     (:functions
-          (hiring-cost ?d - diver) - number
-          (other-cost) - number
-          (total-cost) - number
-     )
-
      (:action hire-diver
           :parameters (?d1 - diver)
           :precondition (and (available ?d1)

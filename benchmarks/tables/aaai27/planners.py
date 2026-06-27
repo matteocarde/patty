@@ -1,18 +1,14 @@
-IPC_PLANNERS = {
+AAAI27_PLANNERS = {
     "PATTY-B-npc": {
-        "name": r"$\mathrm{P}_\textsc{b}^{agl}$",
+        "name": r"$\mathrm{P}_\textsc{b}$",
         "style": "-"
     },
     "PATTY-G-nei": {
-        "name": r"$\mathrm{P}_\textsc{g}^{agl}$",
+        "name": r"$\mathrm{P}_\textsc{g}$",
         "style": "-"
     },
-    "PATTY-B-npc-chrpa": {
-        "name": r"$\mathrm{P}_\textsc{b}^{sat}$",
-        "style": "-"
-    },
-    "PATTY-G-nei-chrpa": {
-        "name": r"$\mathrm{P}_\textsc{g}^{sat}$",
+    "PATTY-Hplus": {
+        "name": r"$\mathrm{P}_{h^+}$",
         "style": "-"
     }
 }

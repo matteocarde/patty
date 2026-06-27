@@ -1,16 +1,18 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
 (define (domain thoughtful-typed)
 	(:requirements :typing)
-	(:types card colnum num suittype)
-	(:predicates (on ?c1 - card ?c2 - card)
+	(:types
+		card colnum num suittype
+	)
+	(:predicates
+		(on ?c1 - card ?c2 - card)
 		(ace ?c - card)
 		(king ?c - card)
 		(clear ?c - card)
 		(colspace ?n - colnum)
-  		(bottomtalon ?c - card)
+		(bottomtalon ?c - card)
 		(toptalon ?c - card)
 		(ontalon ?c1 - card ?c2 - card)
 		(talonplayable ?c - card)
@@ -23,17 +25,17 @@
 		(successor ?n1 - num ?n0 - num)
 		(canstack ?c1 - card ?c2 - card)
 		(colsuccessor ?n1 - colnum ?n0 - colnum)
-)
+	)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; Move card between columns.  
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;;;; Move card between columns.  
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; move card from one column to another
+	;; move card from one column to another
 
 	(:action move-col-to-col
 		:parameters (?card ?oldcard ?newcard - card)
-		:precondition (and 
+		:precondition (and
 			(faceup ?card)
 			(clear ?newcard)
 			(canstack ?card ?newcard)
@@ -43,27 +45,29 @@
 			(clear ?oldcard)
 			(faceup ?oldcard)
 			(not (on ?card ?oldcard))
-			(not (clear ?newcard))))
+			(not (clear ?newcard)))
+	)
 
-;; move card from one column to another - create an empty column
+	;; move card from one column to another - create an empty column
 
 	(:action move-col-to-col-b
 		:parameters (?card ?newcard - card ?cols ?ncols - colnum)
-		:precondition (and 
-				(faceup ?card)
-				(bottomcol ?card)
-				(clear ?newcard)
-				(canstack ?card ?newcard)
-				(colspace ?cols)
-				(colsuccessor ?ncols ?cols))
-		:effect (and 
+		:precondition (and
+			(faceup ?card)
+			(bottomcol ?card)
+			(clear ?newcard)
+			(canstack ?card ?newcard)
+			(colspace ?cols)
+			(colsuccessor ?ncols ?cols))
+		:effect (and
 			(on ?card ?newcard)
 			(colspace ?ncols)
 			(not (bottomcol ?card))
 			(not (clear ?newcard))
-			(not (colspace ?cols))))
+			(not (colspace ?cols)))
+	)
 
-;; send a king to an empty column
+	;; send a king to an empty column
 
 	(:action move-col-to-col-c
 		:parameters (?card ?oldcard - card ?cols ?ncols - colnum)
@@ -79,15 +83,15 @@
 			(faceup ?oldcard)
 			(colspace ?ncols)
 			(not (on ?card ?oldcard))
-			(not (colspace ?cols))))
+			(not (colspace ?cols)))
+	)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; Move card from column to home 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;;;; Move card from column to home 
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 	(:action col-to-home
-		:parameters (?card ?oldcard - card ?suit - suittype ?vcard - num
-				?homecard - card ?vhomecard - num)
+		:parameters (?card ?oldcard - card ?suit - suittype ?vcard - num ?homecard - card ?vhomecard - num)
 		:precondition (and
 			(clear ?card)
 			(on ?card ?oldcard)
@@ -105,13 +109,13 @@
 			(not (on ?card ?oldcard))
 			(not (home ?homecard))
 			(not (faceup ?card))
-			(not (clear ?card))))
+			(not (clear ?card)))
+	)
 
-;; Move card from column to home - create an empty column
+	;; Move card from column to home - create an empty column
 
 	(:action col-to-home-b
-		:parameters (?card ?homecard - card ?suit - suittype ?vcard - num 
-			?vhomecard - num ?cols ?ncols - colnum)
+		:parameters (?card ?homecard - card ?suit - suittype ?vcard - num ?vhomecard - num ?cols ?ncols - colnum)
 		:precondition (and
 			(clear ?card)
 			(bottomcol ?card)
@@ -130,12 +134,12 @@
 			(not (faceup ?card))
 			(not (clear ?card))
 			(not (bottomcol ?card))
-			(not (colspace ?cols))))
+			(not (colspace ?cols)))
+	)
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; Move card from talon to column 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;;;; Move card from talon to column 
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 	(:action tal-to-col
 		:parameters (?card ?oldcard ?newcard ?cardabove - card)
@@ -154,9 +158,10 @@
 			(not (clear ?newcard))
 			(not (talonplayable ?card))
 			(not (ontalon ?card ?oldcard))
-			(not (ontalon ?cardabove ?card))))
+			(not (ontalon ?cardabove ?card)))
+	)
 
-;; move card from talon to column - card is bottom card in talon
+	;; move card from talon to column - card is bottom card in talon
 
 	(:action tal-to-col-b
 		:parameters (?card ?newcard ?cardabove - card)
@@ -175,9 +180,10 @@
 			(not (bottomtalon ?card))
 			(not (talonplayable ?card))
 			(not (clear ?newcard))
-			(not (ontalon ?cardabove ?card))))
+			(not (ontalon ?cardabove ?card)))
+	)
 
-;; move card from talon to column - card is top card in talon
+	;; move card from talon to column - card is top card in talon
 
 	(:action tal-to-col-c
 		:parameters (?card ?newcard ?oldcard - card)
@@ -196,9 +202,10 @@
 			(not (clear ?newcard))
 			(not (toptalon ?card))
 			(not (talonplayable ?card))
-			(not (ontalon ?card ?oldcard))))
+			(not (ontalon ?card ?oldcard)))
+	)
 
-;; move card from talon to column - card is the only card in talon
+	;; move card from talon to column - card is the only card in talon
 
 	(:action tal-to-col-d
 		:parameters (?card ?newcard - card)
@@ -215,9 +222,10 @@
 			(not (clear ?newcard))
 			(not (toptalon ?card))
 			(not (talonplayable ?card))
-			(not (bottomtalon ?card))))
+			(not (bottomtalon ?card)))
+	)
 
-;; move king from talon to column
+	;; move king from talon to column
 
 	(:action tal-to-col-e
 		:parameters (?card ?oldcard ?cardabove - card ?cols ?ncols - colnum)
@@ -238,9 +246,10 @@
 			(not (colspace ?cols))
 			(not (talonplayable ?card))
 			(not (ontalon ?card ?oldcard))
-			(not (ontalon ?cardabove ?card))))
+			(not (ontalon ?cardabove ?card)))
+	)
 
-;; move king from talon to column - king is bottom card in talon
+	;; move king from talon to column - king is bottom card in talon
 
 	(:action tal-to-col-f
 		:parameters (?card ?cardabove - card ?cols ?ncols - colnum)
@@ -261,9 +270,10 @@
 			(not (colspace ?cols))
 			(not (bottomtalon ?card))
 			(not (talonplayable ?card))
-			(not (ontalon ?cardabove ?card))))
+			(not (ontalon ?cardabove ?card)))
+	)
 
-;; move king from talon to column - card is top card in talon
+	;; move king from talon to column - card is top card in talon
 
 	(:action tal-to-col-g
 		:parameters (?card ?oldcard - card ?cols ?ncols - colnum)
@@ -284,9 +294,10 @@
 			(not (colspace ?cols))
 			(not (toptalon ?card))
 			(not (talonplayable ?card))
-			(not (ontalon ?card ?oldcard))))
+			(not (ontalon ?card ?oldcard)))
+	)
 
-;; move king from talon to column - card is the only card in talon
+	;; move king from talon to column - card is the only card in talon
 
 	(:action tal-to-col-h
 		:parameters (?card - card ?cols ?ncols - colnum)
@@ -305,17 +316,17 @@
 			(not (colspace ?cols))
 			(not (toptalon ?card))
 			(not (talonplayable ?card))
-			(not (bottomtalon ?card))))
+			(not (bottomtalon ?card)))
+	)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; Move card from talon to home 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;;;; Move card from talon to home 
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; move card from talon to home
+	;; move card from talon to home
 
 	(:action tal-to-home
-		:parameters (?card ?cardabove ?cardbelow ?homecard - card ?cardsuit - suittype
-			?vcard ?vhomecard - num)
+		:parameters (?card ?cardabove ?cardbelow ?homecard - card ?cardsuit - suittype ?vcard ?vhomecard - num)
 		:precondition (and
 			(talonplayable ?card)
 			(ontalon ?cardabove ?card)
@@ -333,13 +344,13 @@
 			(not (ontalon ?cardabove ?card))
 			(not (ontalon ?card ?cardbelow))
 			(home ?card)
-			(not (home ?homecard))))
+			(not (home ?homecard)))
+	)
 
-;; move card from talon to home - card is bottom card in talon
+	;; move card from talon to home - card is bottom card in talon
 
 	(:action tal-to-home-b
-		:parameters (?card ?cardabove ?homecard  - card ?cardsuit - suittype
-			?vcard ?vhomecard - num)
+		:parameters (?card ?cardabove ?homecard - card ?cardsuit - suittype ?vcard ?vhomecard - num)
 		:precondition (and
 			(talonplayable ?card)
 			(ontalon ?cardabove ?card)
@@ -357,13 +368,13 @@
 			(not (bottomtalon ?card))
 			(not (talonplayable ?card))
 			(not (ontalon ?cardabove ?card))
-			(not (home ?homecard))))
+			(not (home ?homecard)))
+	)
 
-;; move card from talon to home - card is top card in talon
+	;; move card from talon to home - card is top card in talon
 
 	(:action tal-to-home-c
-		:parameters (?card ?cardbelow ?homecard - card ?cardsuit - suittype
-			?vcard ?vhomecard - num)
+		:parameters (?card ?cardbelow ?homecard - card ?cardsuit - suittype ?vcard ?vhomecard - num)
 		:precondition (and
 			(ontalon ?card ?cardbelow)
 			(talonplayable ?card)
@@ -381,13 +392,13 @@
 			(not (home ?homecard))
 			(not (toptalon ?card))
 			(not (talonplayable ?card))
-			(not (ontalon ?card ?cardbelow))))
+			(not (ontalon ?card ?cardbelow)))
+	)
 
-;; move card from talon to home - card is the only card in talon
+	;; move card from talon to home - card is the only card in talon
 
 	(:action tal-to-home-d
-		:parameters (?card ?homecard - card ?cardsuit - suittype
-			?vcard ?vhomecard - num)
+		:parameters (?card ?homecard - card ?cardsuit - suittype ?vcard ?vhomecard - num)
 		:precondition (and
 			(bottomtalon ?card)
 			(toptalon ?card)
@@ -403,18 +414,17 @@
 			(not (home ?homecard))
 			(not (toptalon ?card))
 			(not (talonplayable ?card))
-			(not (bottomtalon ?card))))
+			(not (bottomtalon ?card)))
+	)
 
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;;;; Move card from home to column (pointless to move aces from home)
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; Move card from home to column (pointless to move aces from home)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;; move card from home to column
 
-;; move card from home to column
-	
 	(:action home-to-col
-		:parameters (?card ?cardbelow ?newcard - card ?cardsuit - suittype
-			?vcard ?vcardbelow - num)
+		:parameters (?card ?cardbelow ?newcard - card ?cardsuit - suittype ?vcard ?vcardbelow - num)
 		:precondition (and
 			(home ?card)
 			(suit ?card ?cardsuit)
@@ -430,13 +440,13 @@
 			(home ?cardbelow)
 			(on ?card ?newcard)
 			(not (home ?card))
-			(not (clear ?newcard))))
+			(not (clear ?newcard)))
+	)
 
-;; move king from home to column
-	
+	;; move king from home to column
+
 	(:action home-to-col-a
-		:parameters (?card ?cardbelow - card ?cardsuit - suittype
-			?vcard ?vcardbelow - num ?cols ?ncols - colnum)
+		:parameters (?card ?cardbelow - card ?cardsuit - suittype ?vcard ?vcardbelow - num ?cols ?ncols - colnum)
 		:precondition (and
 			(home ?card)
 			(king ?card)
@@ -454,13 +464,14 @@
 			(faceup ?card)
 			(colspace ?ncols)
 			(not (colspace ?cols))
-			(not (home ?card))))
+			(not (home ?card)))
+	)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; Turn Deck
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-			
-;; turn deck
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;;;; Turn Deck
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+	;; turn deck
 
 	(:action turn-deck
 		:parameters (?card ?c1 - card)
@@ -469,9 +480,10 @@
 			(ontalon ?c1 ?card))
 		:effect (and
 			(talonplayable ?c1)
-			(not (talonplayable ?card))))
+			(not (talonplayable ?card)))
+	)
 
-;; turn deck - top talon card is currently talon playable	- at least 4 cards in talon
+	;; turn deck - top talon card is currently talon playable	- at least 4 cards in talon
 
 	(:action turn-deck-a
 		:parameters (?card ?c1 - card)
@@ -481,9 +493,8 @@
 			(bottomtalon ?c1))
 		:effect (and
 			(talonplayable ?c1)
-			(not (talonplayable ?card)))))
-			
+			(not (talonplayable ?card)))
+	)
+)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-

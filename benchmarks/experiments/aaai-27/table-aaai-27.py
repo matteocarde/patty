@@ -7,6 +7,8 @@ import statistics
 import sys
 from typing import Dict, List, Set
 
+from benchmarks.tables.aaai27.planners import AAAI27_PLANNERS
+from benchmarks.tables.aaai27.table import AAAI27_TABLE
 from benchmarks.tables.ipc.planners import IPC_PLANNERS
 from benchmarks.tables.ipc.table import IPC_TABLE
 from classes.CloudLogger import CloudLogger
@@ -35,13 +37,12 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2026-04-30-IPC-DOCKER-v6"
+    exp = "2026-06-18-AAAI-27-v1"
     joinWith = [
         (exp, [
+            "PATTY-Hplus",
             "PATTY-B-npc",
             "PATTY-G-nei",
-            "PATTY-B-npc-chrpa",
-            "PATTY-G-nei-chrpa"
         ])
     ]
 
@@ -59,10 +60,10 @@ def main():
         CloudLogger.appendLogs(exp2, file, keepSolvers)
 
     tables = [
-        ("ipc", IPC_TABLE),
+        ("aaai27", AAAI27_TABLE),
     ]
 
-    PLANNERS = IPC_PLANNERS
+    PLANNERS = AAAI27_PLANNERS
 
     joinWith = [file]
     # joinWith = [file]

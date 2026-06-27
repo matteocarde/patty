@@ -20,17 +20,25 @@ def main():
     instances = list()
 
     for domain in domains:
-        problems = natsort.natsorted(os.listdir(f"files/{domain}/instances"))
+        # problems = natsort.natsorted(os.listdir(f"files/{domain}/instances"))
         domainFile = f"files/{domain}/domain.pddl"
         problemFiles = set()
-        for problem in problems:
+        for problem in AAAI27_DOMAINS[domain]["instances"]:
             if type(problem) == tuple:
-                domainFile = f"files/{domain}/{problem[0]}"
+                domainFile = f"files/{domain}/domains/{problem[0]}"
                 problem = problem[1]
             if problem[-5:] != ".pddl":
                 continue
             problemFile = f"files/{domain}/instances/{problem}"
             problemFiles.add(problem)
+
+            if not os.path.exists(domainFile):
+                print(f"Domain file {domainFile} doesn't exist")
+                exit(1)
+
+            if not os.path.exists(problemFile):
+                print(f"Domain file {problemFile} doesn't exist")
+                exit(1)
 
             for planner in PLANNERS:
                 n = 1  # if "PATTY-R" not in planner else RANDOM
