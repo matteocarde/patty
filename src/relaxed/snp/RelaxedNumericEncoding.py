@@ -6,7 +6,7 @@ from src.pddl.Literal import Literal
 from src.pddl.Problem import Problem
 from src.plan.Encoding import Encoding
 from src.plan.Pattern import Pattern
-from src.relaxed.snp.SimpleNumericLevelVariables import SimpleNumericLevelVariables
+from src.relaxed.snp.NumericLevelVariables import NumericLevelVariables
 from src.smt.SMTConjunction import SMTConjunction
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTSolution import SMTSolution
@@ -16,7 +16,7 @@ from src.smt.expressions.MaxExpression import MaxExpression
 from src.smt.expressions.MinExpression import MinExpression
 
 
-class RelaxedSimpleNumericEncoding(Encoding):
+class RelaxedNumericEncoding(Encoding):
 
     def __init__(self,
                  domain: GroundedDomain,
@@ -33,7 +33,7 @@ class RelaxedSimpleNumericEncoding(Encoding):
         self.infty = 2 ** min(len(self.domain.actions), len(self.domain.predicates))
         self.literals = domain.getAllLiterals()
 
-        self.levelVariables = SimpleNumericLevelVariables(self.domain)
+        self.levelVariables = NumericLevelVariables(self.domain)
 
         self.rules = []
 

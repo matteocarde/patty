@@ -69,8 +69,7 @@ BENCHMARK_PLANNERS: Dict[str, Planner] = {
                                jairPatternH="i",
                                quality="improve-chrpa"),
 
-    "PATTY-Hplus": Patty("PATTY-Hplus", search="heuristic",
-                               heuristic="h+"),
+    "PATTY-Hplus": Patty("PATTY-Hplus", search="heuristic", heuristic="h+"),
 
     "PATTY-EF-NO-ORDER": Patty("PATTY-EF-NO-ORDER", search="astar", noCompression=False, dontKeepSubgoals=True),
     "PATTY-GD-NO-ORDER": Patty("PATTY-GD-NO-ORDER", search="gd", dontKeepSubgoals=True),

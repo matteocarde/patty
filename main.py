@@ -93,6 +93,7 @@ def main():
                 console.log(f"Improved Plan Length: {len(improvedPlan)}", LogPrintLevel.STATS)
                 plan = improvedPlan
 
+        console.log("Plan found:", LogPrintLevel.PLAN)
         console.log(plan.toIPCString(), LogPrintLevel.PLAN)
         console.log("------", LogPrintLevel.STATS)
         console.log(f"Distinct Actions: {len(plan.getDistinctActions())}", LogPrintLevel.STATS)

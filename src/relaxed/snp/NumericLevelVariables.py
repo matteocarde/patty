@@ -11,7 +11,7 @@ from src.smt.SMTNumericVariable import SMTIntVariable
 LAMBDA = "λ"
 
 
-class SimpleNumericLevelVariables:
+class NumericLevelVariables:
     actionsLevel: Dict[Action, SMTIntVariable]
     conditionsLevel: Dict[Literal, SMTIntVariable]
     Ac_plus: Set[Tuple[Action, Atom, float]]
@@ -33,11 +33,11 @@ class SimpleNumericLevelVariables:
             self.actions[a] = SMTIntVariable(f"r({a})")
             for c in a.preconditions.normalize():
                 self.conditionsLevel[c] = SMTIntVariable(f"λ({c})")
-                if not isinstance(c, BinaryPredicate):
-                    continue
                 conditions.append(c)
 
         for c in conditions:
+            if not isinstance(c, BinaryPredicate):
+                continue
             coeffs = c.getCoefficients()
             for (x, kx) in coeffs.items():
                 for a in domain.actions:

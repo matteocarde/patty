@@ -6,6 +6,7 @@ from src.plan.Encoding import Encoding
 from src.plan.NumericEncoding import NumericEncoding
 from src.plan.Pattern import Pattern
 from src.relaxed.classical.RelaxedClassicalEncodingDL import RelaxedClassicalEncodingDL
+from src.relaxed.snp.RelaxedNumericEncoding import RelaxedNumericEncoding
 from src.search.Search import Search
 from src.smt.SMTSolution import SMTSolution
 from src.smt.SMTSolver import SMTSolver
@@ -34,8 +35,11 @@ class HeuristicSearch(Search):
 
         while n <= self.maxBound:
 
+            console.log(f"----------- {n} -----------", LogPrintLevel.STATS)
             console.log(f"Bound {n}: |<_g|: {len(patG)}", LogPrintLevel.STATS)
+            # console.log(str(patG), LogPrintLevel.STATS)
             console.log(f"Bound {n}: |<_h|: {len(patH)}", LogPrintLevel.STATS)
+            # console.log(str(patH), LogPrintLevel.STATS)
 
             pat = patG + patH
             self.ts.start(f"Conversion to SMT at bound {n}")
@@ -45,7 +49,7 @@ class HeuristicSearch(Search):
                 state=I,
                 pattern=pat,
                 goalFunctionValue=0,
-                bound=n,
+                bound=1,
                 args=self.args,
                 skipGoal=True
             )
@@ -66,28 +70,28 @@ class HeuristicSearch(Search):
             th = self.ts.startHolder("Searching for relaxed solution")
             solution: SMTSolution = solver.getSolution()
             n += 1
-            if not solution:
-                th.endHolder()
-                patG = pat.addPostfix(n)
-                continue
 
             partialPlan = hard.getPlanFromSolution(solution)
+            # console.log(f"Bound {n}: PARTIAL PLAN FOUND", LogPrintLevel.STATS)
+            # partialPlan.print()
+            # console.log(f"---------------------", LogPrintLevel.STATS)
             S = I.applyPlan(partialPlan)
+            if len(partialPlan) > len(patG) + len(patH):
+                print("SOMETHING IS FISHY!")
+                print("--------- <_g ---------")
+                print(patG)
+                print("--------- <_h ---------")
+                print(patH)
+                print("--------- plan ---------")
+                print(partialPlan)
+                print("------------------")
             if S.satisfies(self.problem.goal):
                 th.endHolder()
                 return partialPlan
-            patH_ = relaxed.getPattern(solution, removeBeyondInfinite=True)
-            # if len(patH) == len(patH_):
-            #     patG = pat.addPostfix(n)
-            #     patH = patH_
-            #     console.log("Pattern stayed the same", LogPrintLevel.STATS)
-            #     continue
 
             patG = Pattern.fromPlan(partialPlan)
-            patH = patH_
+            patH = relaxed.getPattern(solution, removeBeyondInfinite=True)
 
-            print(patG)
-            print(patH)
             th.endHolder()
 
         pass
