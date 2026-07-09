@@ -17,8 +17,8 @@ class ClassicalLevelVariablesDL:
         self.actions = dict()
         self.usage = dict()
         self.literals = dict()
-        # self.goal = SMTIntVariable(f"λ(G)")
-        self.infty = SMTRealVariable(f"λ(∞)")
+        self.goal = SMTIntVariable(f"λ(G)")
+        # self.infty = SMTRealVariable(f"λ(∞)")
 
         for a in domain.actions:
             self.actions[a] = SMTRealVariable(f"λ({a})")

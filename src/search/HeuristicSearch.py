@@ -34,14 +34,15 @@ class HeuristicSearch(Search):
 
         n = 1
         c = float("inf")
-        minimize = True
+        minimize = False
 
         while n <= self.maxBound:
 
             console.log(f"----------- {n} -----------", LogPrintLevel.STATS)
-            console.log(f"Bound {n}: |<_g|: {len(patG)}", LogPrintLevel.STATS)
+            console.log(f"Bound {n}: |<_g|= {len(patG)}", LogPrintLevel.STATS)
             # console.log(str(patG), LogPrintLevel.STATS)
-            console.log(f"Bound {n}: |<_h|: {len(patH)}", LogPrintLevel.STATS)
+            console.log(f"Bound {n}: |<_h|= {len(patH)}", LogPrintLevel.STATS)
+            console.log(f"Cost {n}: c= {c}", LogPrintLevel.STATS)
             # console.log(str(patH), LogPrintLevel.STATS)
 
             pat = patG + patH
@@ -70,12 +71,13 @@ class HeuristicSearch(Search):
             joined = Encoding.join([hard, relaxed])
             console.log(f"VARS: {joined.getNVars()}", LogPrintLevel.STATS)
             console.log(f"RULES: {joined.getNRules()}", LogPrintLevel.STATS)
-            # joined.writeSMTLIB(f"{self.args.domain.replace('domain.pddl', '')}{n}.smt")
+            joined.writeSMTLIB(f"{self.args.domain.replace('domain.pddl', '')}{n}.smt")
 
             solver: SMTSolver = SMTSolver(joined)
 
             def onImprovedModel(solution: SMTSolution):
                 c = relaxed.getGoalValueFunction(solution)
+                # print(solution.prettyString())
                 console.log(f"[SMT] Intermediate relaxed plan found: c = {c} [{datetime.datetime.now()}]",
                             LogPrintLevel.STATS)
 
@@ -100,8 +102,7 @@ class HeuristicSearch(Search):
                 return partialPlan
 
             patG = Pattern.fromPlan(partialPlan)
-            patH = relaxed.getPatternGoal(solution)
+            patH = relaxed.getPattern(solution, incomplete=True)
             c = relaxed.getGoalValueFunction(solution)
-
 
         pass
