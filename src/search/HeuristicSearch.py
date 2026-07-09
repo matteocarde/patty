@@ -1,3 +1,5 @@
+import datetime
+
 from src.pddl.Domain import GroundedDomain
 from src.pddl.Plan import Plan
 from src.pddl.Problem import Problem
@@ -6,7 +8,6 @@ from src.plan.Encoding import Encoding
 from src.plan.NumericEncoding import NumericEncoding
 from src.plan.Pattern import Pattern
 from src.relaxed.classical.RelaxedClassicalEncodingDL import RelaxedClassicalEncodingDL
-from src.relaxed.snp.RelaxedNumericEncoding import RelaxedNumericEncoding
 from src.search.Search import Search
 from src.smt.SMTSolution import SMTSolution
 from src.smt.SMTSolver import SMTSolver
@@ -32,6 +33,8 @@ class HeuristicSearch(Search):
         patH: Pattern = Pattern.empty()
 
         n = 1
+        c = float("inf")
+        minimize = True
 
         while n <= self.maxBound:
 
@@ -58,8 +61,11 @@ class HeuristicSearch(Search):
                 domain=self.domain,
                 problem=self.problem,
                 heuristic=self.args.heuristic,
-                stateVars=hard.transitionVariables[-1].valueVariables
+                stateVars=hard.transitionVariables[-1].valueVariables,
+                minimize=minimize,
+                c=c
             )
+            # minimize = False
 
             joined = Encoding.join([hard, relaxed])
             console.log(f"VARS: {joined.getNVars()}", LogPrintLevel.STATS)
@@ -67,31 +73,35 @@ class HeuristicSearch(Search):
             # joined.writeSMTLIB(f"{self.args.domain.replace('domain.pddl', '')}{n}.smt")
 
             solver: SMTSolver = SMTSolver(joined)
-            th = self.ts.startHolder("Searching for relaxed solution")
+
+            def onImprovedModel(solution: SMTSolution):
+                c = relaxed.getGoalValueFunction(solution)
+                console.log(f"[SMT] Intermediate relaxed plan found: c = {c} [{datetime.datetime.now()}]",
+                            LogPrintLevel.STATS)
+
+            solver.registerOnImprovedModel(onImprovedModel)
+            th = self.ts.startHolder("Solving")
             solution: SMTSolution = solver.getSolution()
+            th.endHolder()
             n += 1
+
+            if not solution:
+                print("No solution was found")
+                patG = pat.addPostfix(n)
+                continue
 
             partialPlan = hard.getPlanFromSolution(solution)
             # console.log(f"Bound {n}: PARTIAL PLAN FOUND", LogPrintLevel.STATS)
             # partialPlan.print()
             # console.log(f"---------------------", LogPrintLevel.STATS)
             S = I.applyPlan(partialPlan)
-            if len(partialPlan) > len(patG) + len(patH):
-                print("SOMETHING IS FISHY!")
-                print("--------- <_g ---------")
-                print(patG)
-                print("--------- <_h ---------")
-                print(patH)
-                print("--------- plan ---------")
-                print(partialPlan)
-                print("------------------")
             if S.satisfies(self.problem.goal):
                 th.endHolder()
                 return partialPlan
 
             patG = Pattern.fromPlan(partialPlan)
-            patH = relaxed.getPattern(solution, removeBeyondInfinite=True)
+            patH = relaxed.getPatternGoal(solution)
+            c = relaxed.getGoalValueFunction(solution)
 
-            th.endHolder()
 
         pass
