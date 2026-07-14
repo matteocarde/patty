@@ -40,6 +40,9 @@ class Action(Operation):
     def __lt__(self, other):
         return self.name < other.name
 
+    def __le__(self, other):
+        return self.name <= other.name
+
     @classmethod
     def fromNode(cls, node: p.ActionContext, types: Dict[str, Type]):
         return super().fromNode(node, types)

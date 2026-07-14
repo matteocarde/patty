@@ -14,6 +14,7 @@ from src.pddl.SnapAction import SnapAction
 from src.pddl.State import State
 from src.pddl.Supporter import Supporter
 from src.pddl.TimePredicate import TimePredicateType
+from src.utils.TimeStat import TimeStat
 
 SEED = 0
 
@@ -95,19 +96,22 @@ class ARPG:
 
     def getActionsOrder(self, enhanced=False) -> List[Action] or bool:
 
+        t = TimeStat.startHolder("Initializing Layers")
         layers = copy.copy(self.layers)
         leftActions = set(self.actions) - self.usedActions
         layerInstant = {a for a in leftActions if not isinstance(a, SnapAction)}
         layerSnap = {a for a in leftActions if isinstance(a, SnapAction) and a.timeType != TimePredicateType.OVER_ALL}
         layers.append(layerInstant)
         layers.append(layerSnap)
+        t.endHolderMilliseconds()
 
         # print("Left actions", {a.name for a in leftActions})
 
         order = list()
         for i, layer in enumerate(layers):
             if enhanced:
-                sortedLayer = PatternActionGraph(layer).getSorted()
+                pag = PatternActionGraph(layer)
+                sortedLayer = pag.getSorted()
                 order += sortedLayer
             else:
                 order += sorted(layer)

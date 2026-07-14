@@ -15,6 +15,7 @@ from src.pddl.Goal import Goal
 from src.pddl.Plan import Plan
 from src.pddl.RelaxedIntervalState import RelaxedIntervalState
 from src.pddl.State import State
+from src.utils.TimeStat import TimeStat
 
 
 class Pattern:
