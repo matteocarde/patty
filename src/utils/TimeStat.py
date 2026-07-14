@@ -4,6 +4,8 @@ import time
 
 from src.utils.LogPrint import LogPrint, LogPrintLevel, console
 
+TIMINGS_GROUP = {}
+
 
 class TimeHolder:
 
@@ -17,9 +19,12 @@ class TimeHolder:
     def getCheckPointTime(self):
         return round(time.time() - self.__start, 2)
 
-    def endHolderMilliseconds(self):
+    def endHolderMilliseconds(self, group: str or None = None):
         val = (time.time() - self.__start) * 1000
-        console.log(f"{self.__message}: {round(val, 2)}ms", LogPrintLevel.TIMES)
+        console.log(f"Ended {self.__message}: {int(val)}", LogPrintLevel.TIMES)
+        if group:
+            TIMINGS_GROUP.setdefault(group, 0)
+            TIMINGS_GROUP[group] += val
         return val
 
 
@@ -52,10 +57,14 @@ class TimeStat:
         if console:
             console.log(f"Started {name}", LogPrintLevel.STEPS)
 
-    def end(self, name: str):
+    def end(self, name: str, group: str or None = None):
         self.__results[name] = TimeStat.now() - self.__timings[name]
         if console:
             console.log(f"Ended {name}: {self.__results[name]}", LogPrintLevel.STEPS)
+
+        if group:
+            TIMINGS_GROUP.setdefault(group, 0)
+            TIMINGS_GROUP[group] += self.__results[name]
 
     def get(self, name: str) -> int:
         return self.__results[name]
@@ -65,3 +74,7 @@ class TimeStat:
         for (key, value) in self.__results.items():
             str += f"{key}: {value}ms\n"
         return str
+
+    @staticmethod
+    def printGroups():
+        print(TIMINGS_GROUP)

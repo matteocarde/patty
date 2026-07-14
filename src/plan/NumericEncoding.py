@@ -13,7 +13,7 @@ from src.plan.Encoding import Encoding
 from src.plan.NumericTransitionVariables import NumericTransitionVariables
 from src.plan.Pattern import Pattern
 from src.smt.SMTExpression import SMTExpression
-from src.smt.SMTNumericVariable import SMTNumericVariable, SMTRealVariable
+from src.smt.SMTNumericVariable import SMTNumericVariable, SMTRealVariable, SMTIntVariable
 from src.smt.SMTSolution import SMTSolution
 from src.smt.expressions.FalseExpression import FalseExpression
 from src.utils.Arguments import Arguments
@@ -34,7 +34,8 @@ class NumericEncoding(Encoding):
                  minimizeGoalFunction=False,
                  goalAsSoftAsserts=False,
                  goalFunctionValue: float = 10000,
-                 skipGoal: bool = False):
+                 skipGoal: bool = False,
+                 booleanActions: bool = False):
 
         super().__init__(domain, problem, pattern, bound)
         self.domain = domain
@@ -51,6 +52,7 @@ class NumericEncoding(Encoding):
         self.goalAsSoftAsserts = goalAsSoftAsserts
         self.initState = State.fromInitialCondition(self.problem.init)
         self.state = state if state else self.initState
+        self.booleanActions = booleanActions
 
         self.transitionVariables: [NumericTransitionVariables] = list()
 
@@ -59,8 +61,13 @@ class NumericEncoding(Encoding):
         self.pattern = pattern
 
         for index in range(0, bound + 1):
-            var = NumericTransitionVariables(self.domain.predicates, self.domain.functions, self.domain.assList,
-                                             self.pattern, index, self.hasEffectAxioms)
+            var = NumericTransitionVariables(self.domain.predicates,
+                                             self.domain.functions,
+                                             self.domain.assList,
+                                             self.pattern,
+                                             index,
+                                             self.hasEffectAxioms,
+                                             booleanActions=self.booleanActions)
             self.transitionVariables.append(var)
             if index > 0:
                 self.actionVariables.update(var.actionVariables.values())
@@ -86,8 +93,8 @@ class NumericEncoding(Encoding):
         if self.minimizeGoalFunction:
             self.addGoalFunctionMinimization()
 
-        if self.goalAsSoftAsserts:
-            self.addGoalAsSoftRules()
+        # if self.goalAsSoftAsserts:
+        #     self.addGoalAsSoftRules()
 
         pass
 
@@ -210,6 +217,9 @@ class NumericEncoding(Encoding):
     def getAmoStepRules(self, stepVars: NumericTransitionVariables, n: int) -> List[SMTExpression]:
         rules: List[SMTExpression] = []
 
+        if self.booleanActions:
+            return rules
+
         for i, a in self.pattern.enumerate():
             a_n = stepVars.actionVariables[i]
             rules.append(a_n >= 0)
@@ -282,11 +292,12 @@ class NumericEncoding(Encoding):
             if preconditions0:
                 rules.append(lhs0.implies(preconditions0))
 
-            if preconditions1 and not isPre1Impossible:
-                rules.append(lhs1.implies(preconditions1))
+            if a.couldBeRepeated():
+                if preconditions1 and not isPre1Impossible:
+                    rules.append(lhs1.implies(preconditions1))
 
-            if isPre1Impossible:
-                rules.append(~lhs1)
+                if isPre1Impossible:
+                    rules.append(~lhs1)
 
         return rules
 
@@ -347,10 +358,10 @@ class NumericEncoding(Encoding):
             plan.actionRolling.setdefault(n, dict())
             stepVar = self.transitionVariables[n]
             for i, a in self.pattern.enumerate():
-                if not relaxed:
+                if isinstance(stepVar.actionVariables[i], SMTIntVariable):
                     repetitions = int(str(solution.getVariable(stepVar.actionVariables[i]))) * a.linearizationTimes
                 else:
-                    repetitions = 1 if float(str(solution.getVariable(stepVar.actionVariables[i]))) > 0 else 0
+                    repetitions = 1 if solution.getVariable(stepVar.actionVariables[i]) else 0
                 plan.actionRolling[n][a] = repetitions
                 if repetitions > 0:
                     plan.addRepeatedAction(a.linearizationOf, repetitions)

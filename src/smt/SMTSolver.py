@@ -32,15 +32,14 @@ class SMTSolver:
         # self.maximize = self.encoding and (bool(self.encoding.softRules) or bool(self.encoding.minimize))
 
         if self.encoding:
-            t = TimeStat.startHolder("Adding assertions")
             memodict = dict()
-            self.addAssertions(self.encoding.rules, solver=False, optimizer=True, memodict=memodict)
-            console.log(f"memodict size: {len(memodict)}", LogPrintLevel.STATS)
+            if self.encoding.softRules or self.encoding.minimize:
+                self.addAssertions(self.encoding.rules, solver=False, optimizer=True, memodict=memodict)
             # with open("./memodict.txt", "w") as f:
             #     for k in memodict.keys():
             #         f.write(str(k) + "\n")
             self.addAssertions(self.encoding.rules, solver=True, optimizer=False, memodict=memodict)
-            t.endHolder()
+            console.log(f"memodict size: {len(memodict)}", LogPrintLevel.STATS)
             self.addSoftAssertions(self.encoding.softRules)
             self.setMinimize(self.encoding.minimize)
             pass
@@ -126,7 +125,10 @@ class SMTSolver:
         if self.onImprovedModel:
             self.solver.setOnModel(self.__wrappedOnImprovedModel)
         if not self.trySoftAsHard:
-            return self.solver.optimize(self.variables)
+            if self.encoding.minimize or self.encoding.softRules:
+                return self.solver.optimize(self.variables)
+            else:
+                return self.solver.solve(self.variables)
         else:
             return self.tryWithSoftAsHard()
 

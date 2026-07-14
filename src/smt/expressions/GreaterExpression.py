@@ -9,6 +9,7 @@ from src.smt.SMTExpression import SMTExpression, NUMERIC
 from src.smt.expressions.BinaryExpression import BinaryExpression
 from src.smt.expressions.ConstantExpression import ConstantExpression
 from src.smt.expressions.FalseExpression import FalseExpression
+from src.smt.expressions.NotExpression import NotExpression
 from src.smt.expressions.TrueExpression import TrueExpression
 
 GREATER_CACHE: Dict[Tuple[SMTExpression, SMTExpression], SMTExpression] = dict()
@@ -22,6 +23,9 @@ class GreaterExpression(BinaryExpression):
 
     @classmethod
     def simplify(cls, *xs):
+        if isinstance(xs[0], SMTBoolVariable) and xs[1] == 0:
+            # "b > 0", with b boolean becomes just "b"
+            return xs[0]
         lhs = SMTExpression.numericConstant(xs[0])
         rhs = SMTExpression.numericConstant(xs[1])
         if isinstance(lhs, ConstantExpression) and isinstance(rhs, ConstantExpression):

@@ -35,8 +35,7 @@
   (:action paint-up
     :parameters (?r - robot ?y - tile ?x - tile ?c - color)
     :precondition (and (robot-has ?r ?c) (robot-at ?r ?x) (up ?y ?x) (clear ?y))
-    :effect (and (not (clear ?y)) (painted ?y ?c)
-      (increase (total-cost) 2))
+    :effect (and (not (clear ?y)) (painted ?y ?c))
   )
 
   (:action paint-down

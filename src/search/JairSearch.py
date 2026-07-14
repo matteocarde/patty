@@ -1,10 +1,7 @@
-import copy
 import datetime
-from typing import Type
 
 from src.goalFunctions.DeltaPlusClauses import DeltaPlusClauses
 from src.goalFunctions.DeltaSingle import DeltaSingle
-from src.goalFunctions.GoalFunction import GoalFunction
 from src.pddl.Domain import GroundedDomain
 from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Plan import Plan
@@ -31,6 +28,8 @@ class JairSearch(Search):
         self.hasCheckedComplete = False
 
     def solve(self) -> Plan:
+
+        self.ts.start(f"Initializing Solving Phase")
         callsToSolver = 0
 
         subgoalsAchieved = set()
@@ -56,6 +55,8 @@ class JairSearch(Search):
 
         unsatN = 0
 
+        self.ts.end(f"Initializing Solving Phase", group="PREPROCESSING")
+
         while bound <= self.maxBound:
 
             bound += 1
@@ -68,7 +69,7 @@ class JairSearch(Search):
 
             hasMinimize = self.problem.goal.hasOnlyOneNumericConditions() and self.args.jairGoalFunction == "n"
 
-            self.ts.start(f"Conversion to SMT at bound {bound}")
+            self.ts.start(f"Constructing Encoding at Bound {bound}")
             encoding: NumericEncoding = NumericEncoding(
                 domain=self.domain,
                 problem=self.problem,
@@ -77,19 +78,21 @@ class JairSearch(Search):
                 goalFunctionValue=c,
                 bound=1,
                 args=self.args,
+                booleanActions=True,
                 subgoalsAchieved=subgoalsAchieved,
                 minimizeGoalFunction=self.problem.goal.hasOnlyOneNumericConditions() and self.args.jairGoalFunction == "n",
                 goalAsSoftAsserts=(self.args.jairGoalFunction in {"n", "g"})
             )
 
-            self.ts.end(f"Conversion to SMT at bound {bound}")
+            self.ts.end(f"Constructing Encoding at Bound {bound}", group="PREPROCESSING")
             console.log(f"Bound {bound} - Vars = {encoding.getNVars()}", LogPrintLevel.STATS)
             console.log(f"Bound {bound} - Rules = {encoding.getNRules()}", LogPrintLevel.STATS)
             console.log(f"Bound {bound} - Avg Rule Length = {encoding.getAvgRuleLength()}", LogPrintLevel.STATS)
             console.log(f"Bound {bound} - Pattern Length = {pat.getLength()}", LogPrintLevel.STATS)
 
-            self.ts.start(f"Solving Bound {bound}")
+            self.ts.start(f"Constructing SMT-LIB Formulas: {bound}")
             solver: SMTSolver = SMTSolver(encoding, trySoftAsHard=hasMinimize)
+            self.ts.end(f"Constructing SMT-LIB Formulas: {bound}", group="PREPROCESSING")
             callsToSolver += 1
 
             def onImprovedModel(solution: SMTSolution):
@@ -97,12 +100,13 @@ class JairSearch(Search):
                 console.log(f"[SMT] Intermediate improved plan found: c = {c} [{datetime.datetime.now()}]",
                             LogPrintLevel.STATS)
 
-            if self.args.jairGoalFunction in {"n"}:
-                solver.registerOnImprovedModel(onImprovedModel)
+            # if self.args.jairGoalFunction in {"n"}:
+            #     solver.registerOnImprovedModel(onImprovedModel)
 
+            self.ts.start(f"Solving Bound {bound}")
             partialPlan: Plan = solver.solve()
             solver.exit()
-            self.ts.end(f"Solving Bound {bound}")
+            self.ts.end(f"Solving Bound {bound}", group="SOLVING")
 
             if self.args.saveSMT:
                 self.saveSMT(bound, encoding, callsToSolver=callsToSolver)
@@ -113,10 +117,12 @@ class JairSearch(Search):
                 console.log("-----------------", LogPrintLevel.STATS)
 
             if not isinstance(partialPlan, Plan):
+                self.ts.start(f"Computing Patterns When Unsatisfiable")
                 unsatN += 1
                 patG = self.computeS2Pn(patS, plan, unsatN, P).addPostfix(f"{bound}_g")
                 patH = self.computeP2Gn(I, P, unsatN).addPostfix(bound)
                 console.log(f"Bound {bound} - No improvement", LogPrintLevel.STATS)
+                self.ts.end(f"Computing Patterns When Unsatisfiable", group="PREPROCESSING")
                 continue
 
             unsatN = 0
@@ -131,11 +137,13 @@ class JairSearch(Search):
 
             subgoalsAchieved = {g for g in self.problem.goal if P.satisfies(g)}
             console.log(f"Bound {bound} - Improvement - {len(subgoalsAchieved)}/{len(self.problem.goal)} subgoals",
-                             LogPrintLevel.STATS)
+                        LogPrintLevel.STATS)
 
+            self.ts.start(f"Computing Patterns When Satisfiable")
             patG = self.computeS2P(patS, plan, P).addPostfix(f"{bound}_g")
             patH = self.computeP2G(I, P).addPostfix(bound)
             c = DeltaPlusClauses.compute(P, normalizedGoal, I)
+            self.ts.end(f"Computing Patterns When Satisfiable", group="PREPROCESSING")
 
         pass
 

@@ -1,5 +1,6 @@
 from typing import Dict
 
+from pysmt.fnode import FNode
 from pysmt.shortcuts import FALSE, TRUE
 from z3 import RatNumRef, is_false
 
@@ -17,7 +18,7 @@ class SMTSolution:
         self.__variables[var] = value
 
     def getVariable(self, var: SMTVariable, dec: int = 3) -> float or int or bool:
-        node = self.__variables[var]
+        node: FNode = self.__variables[var]
         if isinstance(var, SMTNumericVariable):
             if isinstance(node, RatNumRef):
                 return float(node.as_fraction())
@@ -28,7 +29,8 @@ class SMTSolution:
                 return float(n) / float(d)
             return float(str(node))
         if isinstance(var, SMTBoolVariable):
-            return False if is_false(node) else True
+            v = node.is_true()
+            return v
 
     def __str__(self):
         return str(self.__variables)

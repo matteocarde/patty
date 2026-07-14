@@ -45,11 +45,11 @@ def main():
 
         ts.start("Quantifier Elimination")
         qeDomain: Domain = domain.eliminateQuantifiers(problem)
-        ts.end("Quantifier Elimination")
+        ts.end("Quantifier Elimination", group="PREPROCESSING")
 
         ts.start("Grounding")
         gDomain: GroundedDomain = qeDomain.ground(problem)
-        ts.end("Grounding")
+        ts.end("Grounding", group="PREPROCESSING")
 
         isTemporal = len(gDomain.durativeActions) > 0
         solver: Search
@@ -87,7 +87,7 @@ def main():
             else:
                 raise Exception("Unknown quality improver " + args.quality)
             improvedPlan = improver.solve()
-            ts.end("Improving Plan")
+            ts.end("Improving Plan", group="POSTPROCESSING")
             if improvedPlan:
                 console.log(f"First Plan Length: {len(plan)}", LogPrintLevel.STATS)
                 console.log(f"Improved Plan Length: {len(improvedPlan)}", LogPrintLevel.STATS)
@@ -112,6 +112,8 @@ def main():
 
         ts.end("Overall")
         console.log(str(ts), LogPrintLevel.TIMES)
+
+        TimeStat.printGroups()
 
     except:
         print("Something went wrong.")

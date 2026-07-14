@@ -70,7 +70,7 @@ class RelaxedClassicalEncodingDL(Encoding):
         for lit in self.literals:
             affectingActions = [LA[a] for a in self.domain.actions if lit in a.effects.assignments]
             trueLit = self.stateVars[lit.atom] if lit.sign == "+" else ~self.stateVars[lit.atom]
-            effects = SMTExpression.bigor([la >= LC[lit] for la in affectingActions])
+            effects = SMTExpression.bigor([la.equal(LC[lit]) for la in affectingActions])
             r = (LC[lit] >= 1).implies(trueLit | effects)
             rules.append(r)
 
@@ -89,7 +89,9 @@ class RelaxedClassicalEncodingDL(Encoding):
         els.append((lg, [LC[lit] for lit in self.problem.goal if isinstance(lit, Literal)]))
 
         for la, preconditions in els:
-            r = (la >= 1).implies(SMTExpression.bigand([lv >= la + 1 for lv in preconditions]))
+            andGt = SMTExpression.bigand([lv >= la + 1 for lv in preconditions])
+            orEqual = SMTExpression.bigor([lv.equal(la + 1) for lv in preconditions])
+            r = (la >= 1).implies(andGt & orEqual)
             rules.append(r)
 
         return rules

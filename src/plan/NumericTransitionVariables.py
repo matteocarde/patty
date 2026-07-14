@@ -14,7 +14,8 @@ from src.smt.SMTVariable import SMTVariable
 class NumericTransitionVariables:
 
     def __init__(self, predicates: Set[Atom], functions: Set[Atom], assList: Dict[Atom, Set[Operation]],
-                 pattern: Pattern, index: int, hasPlaceholders: bool):
+                 pattern: Pattern, index: int, hasPlaceholders: bool, booleanActions: bool = False):
+
         self.functions: Set[Atom] = functions
         self.predicates: Set[Atom] = predicates
         self.assList: Dict[Atom, Set[Operation]] = assList
@@ -23,7 +24,7 @@ class NumericTransitionVariables:
         self.sigmaVariables: Dict[int, Dict[Atom, SMTExpression]] = self.__computeSigmaVariables(index,
                                                                                                  hasPlaceholders)
         if index > 0:
-            self.actionVariables: Dict[int, SMTVariable] = self.__computeActionVariables(index)
+            self.actionVariables: Dict[int, SMTVariable] = self.__computeActionVariables(index, booleanActions)
             # self.boolActionVariables: Dict[Action, SMTVariable] = self.__computeBoolActionVariables(index)
             self.auxVariables: Dict[int, Dict[Atom, SMTVariable]] = self.__computeAuxVariables(index)
 
@@ -37,11 +38,14 @@ class NumericTransitionVariables:
 
         return variables
 
-    def __computeActionVariables(self, index: int) -> Dict[int, SMTVariable]:
+    def __computeActionVariables(self, index: int, booleanActions: bool) -> Dict[int, SMTVariable]:
         variables: Dict[int, SMTVariable] = dict()
 
         for i, action in self.pattern.enumerate():
-            variables[i] = SMTIntVariable(f"{action.name}_{index}_int")
+            if not booleanActions:
+                variables[i] = SMTIntVariable(f"{action.name}_{index}_int")
+            else:
+                variables[i] = SMTBoolVariable(f"{action.name}_{index}_bool")
 
         return variables
 

@@ -77,7 +77,6 @@ class HeuristicSearch(Search):
 
             def onImprovedModel(solution: SMTSolution):
                 c = relaxed.getGoalValueFunction(solution)
-                # print(solution.prettyString())
                 console.log(f"[SMT] Intermediate relaxed plan found: c = {c} [{datetime.datetime.now()}]",
                             LogPrintLevel.STATS)
 
