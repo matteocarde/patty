@@ -1,3 +1,4 @@
+import copy
 import datetime
 
 from src.goalFunctions.DeltaPlusClauses import DeltaPlusClauses
@@ -43,6 +44,7 @@ class JairSearch(Search):
         patS: Pattern = Pattern.empty()
         patG: Pattern = Pattern.empty()
         patH: Pattern = self.computeP2G(I, P)
+        lastPatH: Pattern = copy.copy(patH)
 
         self.staticPattern = patH
 
@@ -119,7 +121,7 @@ class JairSearch(Search):
             if not isinstance(partialPlan, Plan):
                 unsatN += 1
                 patG = self.computeS2Pn(patS, plan, unsatN, P).addPostfix(f"{bound}_g")
-                patH = self.computeP2Gn(I, P, unsatN).addPostfix(bound)
+                patH = self.computeP2Gn(I, P, unsatN, lastPatH).addPostfix(bound)
                 console.log(f"Bound {bound} - No improvement", LogPrintLevel.STATS)
                 continue
 
@@ -139,6 +141,7 @@ class JairSearch(Search):
 
             patG = self.computeS2P(patS, plan, P).addPostfix(f"{bound}_g")
             patH = self.computeP2G(I, P).addPostfix(bound)
+            lastPatH = patH
             c = DeltaPlusClauses.compute(P, normalizedGoal, I)
 
         pass
@@ -189,13 +192,13 @@ class JairSearch(Search):
         self.ts.end(f"ComputeS2Pn", group="PREPROCESSING")
         return p
 
-    def computeP2Gn(self, I, P, n):
+    def computeP2Gn(self, I, P, n, patH):
         self.ts.start(f"computeP2Gn")
         pat = Pattern.empty()
         if self.args.jairPatternH == "s":
-            pat = Pattern.fromState(I, self.problem.goal, self.domain, self.enhanced).multiply(n)
+            pat = patH.multiply(n)
         elif self.args.jairPatternH == "c":
-            pat = Pattern.fromState(P, self.problem.goal, self.domain, self.enhanced).multiply(n)
+            pat = patH.multiply(n)
         elif self.args.jairPatternH == "i":
             if self.incompleteSaturationLevel > 1:
                 self.incompleteSaturationLevel += 1

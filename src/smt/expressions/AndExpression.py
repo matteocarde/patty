@@ -28,6 +28,10 @@ class AndExpression(NaryExpression):
             return rhs
         if isinstance(rhs, TrueExpression):
             return lhs
+        if isinstance(rhs, AndExpression) or isinstance(lhs, AndExpression):
+            rhsChildred = rhs.children if isinstance(rhs, AndExpression) else [rhs]
+            lhsChildred = lhs.children if isinstance(lhs, AndExpression) else [lhs]
+            return AndExpression(*(rhsChildred + lhsChildred))
         if (lhs, rhs) in AND_CACHE:
             return AND_CACHE[lhs, rhs]
         AND_CACHE[lhs, rhs] = cls(lhs, rhs)

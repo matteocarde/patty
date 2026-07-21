@@ -2,7 +2,7 @@ from typing import Dict
 
 from pysmt.fnode import FNode
 from pysmt.shortcuts import FALSE, TRUE
-from z3 import RatNumRef, is_false
+from z3 import RatNumRef, is_false, BoolRef, is_true
 
 from src.smt.SMTBoolVariable import SMTBoolVariable
 from src.smt.SMTNumericVariable import SMTNumericVariable, SMTIntVariable
@@ -28,8 +28,11 @@ class SMTSolution:
                 n, d = str(node).split("/")
                 return float(n) / float(d)
             return float(str(node))
-        if isinstance(var, SMTBoolVariable):
+        if isinstance(var, SMTBoolVariable) and isinstance(node, FNode):
             v = node.is_true()
+            return v
+        if isinstance(var, SMTBoolVariable) and isinstance(node, BoolRef):
+            v = is_true(node)
             return v
 
     def __str__(self):

@@ -28,6 +28,10 @@ class OrExpression(NaryExpression):
             return rhs
         if isinstance(rhs, FalseExpression):
             return lhs
+        if isinstance(rhs, OrExpression) or isinstance(lhs, OrExpression):
+            rhsChildred = rhs.children if isinstance(rhs, OrExpression) else [rhs]
+            lhsChildred = lhs.children if isinstance(lhs, OrExpression) else [lhs]
+            return OrExpression(*(rhsChildred + lhsChildred))
         if (lhs, rhs) in OR_CACHE:
             return OR_CACHE[lhs, rhs]
         OR_CACHE[lhs, rhs] = cls(lhs, rhs)

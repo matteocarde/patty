@@ -21,7 +21,7 @@ class TimeHolder:
 
     def endHolderMilliseconds(self, group: str or None = None):
         val = (time.time() - self.__start) * 1000
-        console.log(f"Ended {self.__message}: {int(val)}", LogPrintLevel.TIMES)
+        console.log(f"Ended {self.__message}: {val}", LogPrintLevel.TIMES)
         if group:
             TIMINGS_GROUP.setdefault(group, 0)
             TIMINGS_GROUP[group] += val
