@@ -207,7 +207,7 @@ class Pattern:
     def addPostfix(self, postfix: int or str):
         order = []
         for item in self.__order:
-            a = copy.deepcopy(item)
+            a = copy.copy(item)
             a.name = f"{a.name}_{postfix}"
             order.append(a)
         p = Pattern()

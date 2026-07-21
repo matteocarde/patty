@@ -38,7 +38,7 @@ class SMTSolver:
             # with open("./memodict.txt", "w") as f:
             #     for k in memodict.keys():
             #         f.write(str(k) + "\n")
-            self.addAssertions(self.encoding.rules, solver=True, optimizer=False, memodict=memodict)
+            # self.addAssertions(self.encoding.rules, solver=True, optimizer=False, memodict=memodict)
             console.log(f"memodict size: {len(memodict)}", LogPrintLevel.STATS)
             self.addSoftAssertions(self.encoding.softRules)
             self.setMinimize(self.encoding.minimize)

@@ -92,9 +92,9 @@ class JairSearch(Search):
             console.log(f"Bound {bound} - Avg Rule Length = {encoding.getAvgRuleLength()}", LogPrintLevel.STATS)
             console.log(f"Bound {bound} - Pattern Length = {pat.getLength()}", LogPrintLevel.STATS)
 
-            self.ts.start(f"Constructing SMT-LIB Formulas: {bound}")
+            self.ts.start(f"Constructing SMT-LIB Formulas - {bound}")
             solver: SMTSolver = SMTSolver(encoding, trySoftAsHard=hasMinimize)
-            self.ts.end(f"Constructing SMT-LIB Formulas: {bound}", group="PREPROCESSING")
+            self.ts.end(f"Constructing SMT-LIB Formulas - {bound}", group="PREPROCESSING")
             callsToSolver += 1
 
             def onImprovedModel(solution: SMTSolution):
@@ -121,7 +121,7 @@ class JairSearch(Search):
             if not isinstance(partialPlan, Plan):
                 unsatN += 1
                 patG = self.computeS2Pn(patS, plan, unsatN, P).addPostfix(f"{bound}_g")
-                patH = self.computeP2Gn(I, P, unsatN, lastPatH).addPostfix(bound)
+                patH = self.computeP2Gn(I, P, unsatN, lastPatH, patH).addPostfix(bound)
                 console.log(f"Bound {bound} - No improvement", LogPrintLevel.STATS)
                 continue
 
@@ -192,13 +192,13 @@ class JairSearch(Search):
         self.ts.end(f"ComputeS2Pn", group="PREPROCESSING")
         return p
 
-    def computeP2Gn(self, I, P, n, patH):
+    def computeP2Gn(self, I, P, n, lastPatH, patH):
         self.ts.start(f"computeP2Gn")
         pat = Pattern.empty()
         if self.args.jairPatternH == "s":
-            pat = patH.multiply(n)
+            pat = patH + lastPatH.addPostfix(n)
         elif self.args.jairPatternH == "c":
-            pat = patH.multiply(n)
+            pat = patH + lastPatH.addPostfix(n)
         elif self.args.jairPatternH == "i":
             if self.incompleteSaturationLevel > 1:
                 self.incompleteSaturationLevel += 1

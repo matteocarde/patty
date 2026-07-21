@@ -93,8 +93,8 @@ class NumericEncoding(Encoding):
         if self.minimizeGoalFunction:
             self.addGoalFunctionMinimization()
 
-        # if self.goalAsSoftAsserts:
-        #     self.addGoalAsSoftRules()
+        if self.goalAsSoftAsserts:
+            self.addGoalAsSoftRules()
 
         pass
 
