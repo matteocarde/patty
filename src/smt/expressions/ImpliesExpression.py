@@ -2,7 +2,8 @@ from typing import Dict
 
 from libs.pyeda.pyeda.boolalg.bdd import BDDVariable
 from pysmt.fnode import FNode
-from pysmt.shortcuts import Implies
+from pysmt.shortcuts import Implies as SMTImplies
+from pysat.formula import Implies as SATImplies, Formula
 
 from src.smt.SMTBoolVariable import SMTBoolVariable
 from src.smt.SMTExpression import SMTExpression, BOOLEAN
@@ -36,7 +37,16 @@ class ImpliesExpression(BinaryExpression):
     def getExpression(self, memodict=dict()) -> FNode:
         if self in memodict:
             return memodict[self]
-        expr = Implies(self.lhs.getExpression(memodict=memodict), self.rhs.getExpression(memodict=memodict))
+        expr = SMTImplies(self.lhs.getExpression(memodict=memodict), self.rhs.getExpression(memodict=memodict))
+        memodict[self] = expr
+        return expr
+
+    def getPropositionalFormula(self, memodict=dict()) -> Formula:
+        if self in memodict:
+            return memodict[self]
+        lhs = self.lhs.getPropositionalFormula(memodict)
+        rhs = self.rhs.getPropositionalFormula(memodict)
+        expr = SATImplies(lhs, rhs)
         memodict[self] = expr
         return expr
 

@@ -88,7 +88,7 @@ class NumericEncoding(Encoding):
         self.rules += self.transitions
         if not skipGoal:
             self.rules += self.getGoalExpression()
-        self.rules += self.getMinimizeParameter()
+        # self.rules += self.getMinimizeParameter()
 
         if self.minimizeGoalFunction:
             self.addGoalFunctionMinimization()

@@ -1,5 +1,6 @@
 from typing import Dict, List, Tuple
 
+from pysat.formula import Or as SATOr, Formula
 from pysmt.fnode import FNode
 from pysmt.shortcuts import Or as SMTOr
 
@@ -60,6 +61,13 @@ class OrExpression(NaryExpression):
         if self in memodict:
             return memodict[self]
         expr = SMTOr([x.getExpression(memodict=memodict) for x in self.children])
+        memodict[self] = expr
+        return expr
+
+    def getPropositionalFormula(self, memodict=dict()) -> Formula:
+        if self in memodict:
+            return memodict[self]
+        expr = SATOr(*[x.getPropositionalFormula(memodict=memodict) for x in self.children])
         memodict[self] = expr
         return expr
 

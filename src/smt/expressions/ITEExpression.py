@@ -1,5 +1,6 @@
 from typing import Dict
 
+from pysat.formula import ITE as SATITE, Formula
 from pysmt.fnode import FNode
 from pysmt.shortcuts import Ite
 
@@ -34,7 +35,18 @@ class ITEExpression(NaryExpression):
     def getExpression(self, memodict=dict()) -> FNode:
         if self in memodict:
             return memodict[self]
-        expr = Ite(self.c.getExpression(memodict=memodict), self.t.getExpression(memodict=memodict), self.e.getExpression(memodict=memodict))
+        expr = Ite(self.c.getExpression(memodict=memodict), self.t.getExpression(memodict=memodict),
+                   self.e.getExpression(memodict=memodict))
+        memodict[self] = expr
+        return expr
+
+    def getPropositionalFormula(self, memodict=dict()) -> Formula:
+        if self in memodict:
+            return memodict[self]
+        c = self.c.getPropositionalFormula(memodict)
+        t = self.t.getPropositionalFormula(memodict)
+        e = self.e.getPropositionalFormula(memodict)
+        expr = SATITE(c, t, e)
         memodict[self] = expr
         return expr
 

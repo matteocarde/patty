@@ -21,7 +21,7 @@ class TimeHolder:
 
     def endHolderMilliseconds(self, group: str or None = None):
         val = (time.time() - self.__start) * 1000
-        console.log(f"Ended {self.__message}: {val}", LogPrintLevel.TIMES)
+        console.log(f"Ended {self.__message}: {round(val, 2)}ms", LogPrintLevel.TIMES)
         if group:
             TIMINGS_GROUP.setdefault(group, 0)
             TIMINGS_GROUP[group] += val
@@ -60,7 +60,7 @@ class TimeStat:
     def end(self, name: str, group: str or None = None):
         self.__results[name] = TimeStat.now() - self.__timings[name]
         if console:
-            console.log(f"Ended {name}: {self.__results[name]}", LogPrintLevel.STEPS)
+            console.log(f"Ended {name}: {self.__results[name]}ms", LogPrintLevel.STEPS)
 
         if group:
             TIMINGS_GROUP.setdefault(group, 0)

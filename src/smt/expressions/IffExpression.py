@@ -2,9 +2,8 @@ from typing import Dict, Tuple
 
 from libs.pyeda.pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram
 from pysmt.fnode import FNode
-from pysmt.shortcuts import Iff
-from libs.pyeda.pyeda.boolalg.expr import Or as BDDOr
-from libs.pyeda.pyeda.boolalg.expr import And as BDDAnd
+from pysmt.shortcuts import Iff as SMTIff
+from pysat.formula import Formula, Equals as SATEquals
 
 from src.smt.SMTBoolVariable import SMTBoolVariable
 from src.smt.SMTExpression import SMTExpression, BOOLEAN
@@ -49,7 +48,16 @@ class IffExpression(BinaryExpression):
     def getExpression(self, memodict=dict()) -> FNode:
         if self in memodict:
             return memodict[self]
-        expr = Iff(self.lhs.getExpression(memodict=memodict), self.rhs.getExpression(memodict=memodict))
+        expr = SMTIff(self.lhs.getExpression(memodict=memodict), self.rhs.getExpression(memodict=memodict))
+        memodict[self] = expr
+        return expr
+
+    def getPropositionalFormula(self, memodict=dict()) -> Formula:
+        if self in memodict:
+            return memodict[self]
+        lhs = self.lhs.getPropositionalFormula(memodict)
+        rhs = self.rhs.getPropositionalFormula(memodict)
+        expr = SATEquals(lhs, rhs)
         memodict[self] = expr
         return expr
 

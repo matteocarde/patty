@@ -1,5 +1,7 @@
 from typing import Dict, Set
 
+from pysat.formula import Formula, PYSAT_TRUE
+
 from libs.pyeda.pyeda.boolalg.bdd import BDDVariable
 from pysmt.fnode import FNode
 from pysmt.shortcuts import TRUE
@@ -23,6 +25,9 @@ class TrueExpression(NaryExpression):
 
     def getExpression(self, memodict=dict()) -> FNode:
         return TRUE()
+
+    def getPropositionalFormula(self, memodict=dict()) -> Formula:
+        return PYSAT_TRUE
 
     def getVariables(self) -> Set:
         return set()

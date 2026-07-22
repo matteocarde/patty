@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import Dict
 
+from pysat.formula import Atom, Formula
+
 from libs.pyeda.pyeda.boolalg.bdd import BDDVariable
 from pysmt.fnode import FNode
 from pysmt.shortcuts import Symbol
@@ -17,6 +19,7 @@ class SMTBoolVariable(SMTVariable):
         self.name = name
         self.type = BOOLEAN
         self.symbol = Symbol(self.name)
+        self.atom = Atom(self.name)
         self.variables = {self}
 
     def __hash__(self):
@@ -24,6 +27,9 @@ class SMTBoolVariable(SMTVariable):
 
     def getExpression(self, memodict=dict()) -> FNode:
         return self.symbol
+
+    def getPropositionalFormula(self, memodict=dict()) -> Formula:
+        return self.atom
 
     def getVariables(self):
         return {self}

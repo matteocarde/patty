@@ -1,5 +1,7 @@
 from typing import Dict
 
+from pysat.formula import Formula, Neg
+
 from libs.pyeda.pyeda.boolalg.bdd import BDDVariable
 from libs.pyeda.pyeda.boolalg.expr import Not as BDDNot
 from pysmt.fnode import FNode
@@ -42,6 +44,13 @@ class NotExpression(UnaryExpression):
         if self in memodict:
             return memodict[self]
         expr = SMTNot(self.positive.getExpression(memodict=memodict))
+        memodict[self] = expr
+        return expr
+
+    def getPropositionalFormula(self, memodict=dict()) -> Formula:
+        if self in memodict:
+            return memodict[self]
+        expr = Neg(self.positive.getPropositionalFormula(memodict=memodict))
         memodict[self] = expr
         return expr
 

@@ -4,6 +4,7 @@ from libs.pyeda.pyeda.boolalg.bdd import BDDVariable, BinaryDecisionDiagram
 from libs.pyeda.pyeda.boolalg.expr import AndOp, Variable, Complement, OrOp
 from pysmt.fnode import FNode
 from pysmt.shortcuts import And as SMTAnd
+from pysat.formula import And as SATAnd, Formula
 
 from src.smt.SMTBoolVariable import SMTBoolVariable
 from src.smt.SMTExpression import SMTExpression, BOOLEAN
@@ -60,6 +61,13 @@ class AndExpression(NaryExpression):
         if self in memodict:
             return memodict[self]
         expr = SMTAnd([x.getExpression(memodict=memodict) for x in self.children])
+        memodict[self] = expr
+        return expr
+
+    def getPropositionalFormula(self, memodict=dict()) -> Formula:
+        if self in memodict:
+            return memodict[self]
+        expr = SATAnd(*[x.getPropositionalFormula(memodict=memodict) for x in self.children])
         memodict[self] = expr
         return expr
 

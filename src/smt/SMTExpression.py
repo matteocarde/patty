@@ -44,6 +44,9 @@ class SMTExpression:
     def getExpression(self, memodict=dict()) -> FNode:
         raise NotImplementedError()
 
+    def getPropositionalFormula(self, memodict=dict()) -> Formula:
+        raise NotImplementedError()
+
     def getVariables(self) -> Set:
         raise NotImplementedError()
 

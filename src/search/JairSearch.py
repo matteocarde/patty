@@ -10,6 +10,7 @@ from src.pddl.Problem import Problem
 from src.pddl.State import State
 from src.plan.NumericEncoding import NumericEncoding
 from src.plan.Pattern import Pattern
+from src.sat.SATSolver import SATSolver
 from src.search.ChrpaImprover import ChrpaImprover
 from src.search.Search import Search
 from src.smt.SMTSolution import SMTSolution
@@ -93,7 +94,7 @@ class JairSearch(Search):
             console.log(f"Bound {bound} - Pattern Length = {pat.getLength()}", LogPrintLevel.STATS)
 
             self.ts.start(f"Constructing SMT-LIB Formulas - {bound}")
-            solver: SMTSolver = SMTSolver(encoding, trySoftAsHard=hasMinimize)
+            solver: SATSolver = SATSolver(encoding)
             self.ts.end(f"Constructing SMT-LIB Formulas - {bound}", group="PREPROCESSING")
             callsToSolver += 1
 

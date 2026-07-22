@@ -1,3 +1,4 @@
+from pysat.formula import Atom
 from pysmt.fnode import FNode
 
 from src.smt.SMTExpression import SMTExpression
@@ -5,6 +6,7 @@ from src.smt.SMTExpression import SMTExpression
 
 class SMTVariable(SMTExpression):
     symbol: FNode
+    atom: Atom
     name: str
 
     def __init__(self):
