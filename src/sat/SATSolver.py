@@ -23,18 +23,6 @@ class SATSolver:
         self.assertions = list()
         self.variables = set()
         self.addAssertions(self.encoding.rules)
-
-        self.cnf = []
-        t = TimeStat.startHolder("Converting formula into CNF")
-        for assertion in self.assertions:
-            if assertion == PYSAT_TRUE:
-                pass
-            elif assertion == PYSAT_FALSE:
-                self.cnf.append([])
-            else:
-                assertion.clausify()
-                self.cnf += assertion.clauses
-        t.endHolderMilliseconds(group="PREPROCESSING")
         pass
 
     def addAssertion(self, expr: SMTExpression):
@@ -46,16 +34,27 @@ class SATSolver:
         for i, expr in enumerate(exprs):
             self.addAssertion(expr)
 
+    @staticmethod
+    def satisfies_cnf(cnf, model) -> bool:
+        model_set = set(model)
+
+        return all(
+            any(literal in model_set for literal in clause)
+            for clause in cnf
+        )
+
     def getSolution(self) -> SMTSolution or bool:
-        with Solver(name='cadical195', bootstrap_with=self.cnf) as s:
+        formula = And(*self.assertions, merge=True)
+        with Solver(name='glucose4', bootstrap_with=formula) as s:
             if not s.solve():
                 return False
             model = s.get_model()
             solution = SMTSolution()
             vpool: IDPool = Formula.export_vpool()
+            assignment = dict([(abs(lit), lit > 0) for lit in model])
             for v in self.variables:
                 r = vpool.obj2id[v.atom]
-                solution.addVariable(v, model[r] > 0)
+                solution.addVariable(v, assignment[r])
             return solution
 
     def solve(self) -> Plan or bool:
@@ -69,3 +68,6 @@ class SATSolver:
             raise Exception("Solution was found but conversion to plan failed")
 
         return plan
+
+    def exit(self):
+        Formula.cleanup()

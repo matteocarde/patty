@@ -34,6 +34,9 @@ class SMTSolution:
         if isinstance(var, SMTBoolVariable) and isinstance(node, BoolRef):
             v = is_true(node)
             return v
+        if type(node) == bool:
+            return node
+        raise NotImplementedError("I don't know how to deal with this type of variable")
 
     def __str__(self):
         return str(self.__variables)
