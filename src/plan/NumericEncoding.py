@@ -154,7 +154,7 @@ class NumericEncoding(Encoding):
 
     def addGoalAsSoftRules(self):
         # vars = self.transitionVariables[-1].sigmaVariables[self.k
-        v = self.transitionVariables[-1].sigmaVariables[self.k]
+        v = self.transitionVariables[-1].valueVariables
 
         for g in self.problem.goal:
             if g not in self.subgoalsAchieved:

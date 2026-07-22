@@ -106,10 +106,10 @@ class JairSearch(Search):
             # if self.args.jairGoalFunction in {"n"}:
             #     solver.registerOnImprovedModel(onImprovedModel)
 
-            self.ts.start(f"Solving Bound {bound}")
+            t = self.ts.startHolder(f"Solving Bound {bound}")
             partialPlan: Plan = solver.solve()
+            t.endHolderMilliseconds()
             solver.exit()
-            self.ts.end(f"Solving Bound {bound}", group="SOLVING")
 
             if self.args.saveSMT:
                 self.saveSMT(bound, encoding, callsToSolver=callsToSolver)
@@ -197,9 +197,9 @@ class JairSearch(Search):
         self.ts.start(f"computeP2Gn")
         pat = Pattern.empty()
         if self.args.jairPatternH == "s":
-            pat = patH + lastPatH.addPostfix(n)
+            pat = patH + patH.addPostfix(n)
         elif self.args.jairPatternH == "c":
-            pat = patH + lastPatH.addPostfix(n)
+            pat = patH + patH.addPostfix(n)
         elif self.args.jairPatternH == "i":
             if self.incompleteSaturationLevel > 1:
                 self.incompleteSaturationLevel += 1
