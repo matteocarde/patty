@@ -341,7 +341,7 @@ class NumericEncoding(Encoding):
         rules += self.getAmoStepRules(stepVars, index)
         rules += self.getPreStepRules(stepVars)
         rules += self.getEffStepRules(stepVars)
-        rules += self.getFrameStepRules(stepVars)
+        # rules += self.getFrameStepRules(stepVars)
 
         return rules
 

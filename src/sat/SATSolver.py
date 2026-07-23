@@ -28,11 +28,11 @@ class SATSolver:
         self.variables = set()
         self.phases = list()
         self.addAssertions(self.encoding.rules)
-        if self.encoding.softRules:
-            for g in self.encoding.softRules:
-                if not isinstance(g, SMTBoolVariable):
-                    raise Exception(f"I cannot deal with a conjunction of formulae in the goal like {g}")
-                self.phases.append(g)
+        # if self.encoding.softRules:
+        #     for g in self.encoding.softRules:
+        #         if not isinstance(g, SMTBoolVariable):
+        #             raise Exception(f"I cannot deal with a conjunction of formulae in the goal like {g}")
+        #         self.phases.append(g)
         pass
 
     def addAssertion(self, expr: SMTExpression):

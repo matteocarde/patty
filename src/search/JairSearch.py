@@ -8,6 +8,7 @@ from src.pddl.NumericPlan import NumericPlan
 from src.pddl.Plan import Plan
 from src.pddl.Problem import Problem
 from src.pddl.State import State
+from src.plan.ClassicEncoding import ClassicEncoding
 from src.plan.NumericEncoding import NumericEncoding
 from src.plan.Pattern import Pattern
 from src.sat.SATSolver import SATSolver
@@ -73,19 +74,30 @@ class JairSearch(Search):
             hasMinimize = self.problem.goal.hasOnlyOneNumericConditions() and self.args.jairGoalFunction == "n"
 
             self.ts.start(f"Constructing Encoding at Bound {bound}")
-            encoding: NumericEncoding = NumericEncoding(
-                domain=self.domain,
-                problem=self.problem,
-                state=S,
-                pattern=pat,
-                goalFunctionValue=c,
-                bound=1,
-                args=self.args,
-                booleanActions=True,
-                subgoalsAchieved=subgoalsAchieved,
-                minimizeGoalFunction=self.problem.goal.hasOnlyOneNumericConditions() and self.args.jairGoalFunction == "n",
-                goalAsSoftAsserts=(self.args.jairGoalFunction in {"n", "g"})
-            )
+            if self.domain.fragment == "CLASSICAL":
+                encoding: ClassicEncoding = ClassicEncoding(
+                    domain=self.domain,
+                    problem=self.problem,
+                    state=S,
+                    pattern=pat,
+                    args=self.args,
+                    subgoalsAchieved=subgoalsAchieved,
+                    goalAsSoftAsserts=(self.args.jairGoalFunction in {"n", "g"})
+                )
+            else:
+                encoding: NumericEncoding = NumericEncoding(
+                    domain=self.domain,
+                    problem=self.problem,
+                    state=S,
+                    pattern=pat,
+                    goalFunctionValue=c,
+                    bound=1,
+                    args=self.args,
+                    booleanActions=True,
+                    subgoalsAchieved=subgoalsAchieved,
+                    minimizeGoalFunction=self.problem.goal.hasOnlyOneNumericConditions() and self.args.jairGoalFunction == "n",
+                    goalAsSoftAsserts=(self.args.jairGoalFunction in {"n", "g"})
+                )
 
             self.ts.end(f"Constructing Encoding at Bound {bound}", group="PREPROCESSING")
             console.log(f"Bound {bound} - Vars = {encoding.getNVars()}", LogPrintLevel.STATS)
