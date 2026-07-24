@@ -11,6 +11,7 @@ from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTSolution import SMTSolution
 from src.smt.SMTVariable import SMTVariable
 from src.smt.expressions.TrueExpression import TrueExpression
+from src.utils.LogPrint import LogPrint, LogPrintLevel, console
 from src.utils.TimeStat import TimeStat
 
 
@@ -99,9 +100,21 @@ class SATSolver:
     #
     #         return solution
 
+    @staticmethod
+    def printFormulaStats(f: Formula):
+        before = len(f.atoms())
+
+        f.clausify()
+
+        vpool = Formula.export_vpool()
+        after = vpool.top
+
+        console.log(f"Variables Before CNF: {before}", LogPrintLevel.STATS)
+        console.log(f"Variables After CNF: {after}", LogPrintLevel.STATS)
+
     def getSolution(self) -> SMTSolution or bool:
         formula: Formula = And(*self.assertions, merge=True)
-        vpool = Formula.export_vpool()
+        SATSolver.printFormulaStats(formula)
         t = TimeStat.startHolder("Constructing solver formula")
         with Solver(name='kissat', bootstrap_with=formula) as s:
             # phases = [vpool.obj2id[p.atom] for p in self.phases]
@@ -112,6 +125,7 @@ class SATSolver:
             t.endHolderMilliseconds()
 
             t = TimeStat.startHolder("Retrieving solution")
+            vpool = Formula.export_vpool()
             if not res:
                 return False
             model = s.get_model()

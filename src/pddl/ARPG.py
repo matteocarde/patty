@@ -2,6 +2,8 @@ import copy
 import itertools
 from typing import Set, List, Dict
 
+from src.pattern.BooleanPatternActionGraph import BooleanPatternActionGraph
+from src.pattern.NumericPatternActionGraph import NumericPatternActionGraph
 from src.pattern.PatternActionGraph import PatternActionGraph
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
@@ -94,7 +96,7 @@ class ARPG:
                 usefulActions.add(supporter.originatingAction)
         return usefulActions
 
-    def getActionsOrder(self, enhanced=False) -> List[Action] or bool:
+    def getActionsOrder(self, enhanced=False, boolean=False) -> List[Action] or bool:
 
         t = TimeStat.startHolder("Initializing Layers")
         layers = copy.copy(self.layers)
@@ -110,8 +112,12 @@ class ARPG:
         order = list()
         for i, layer in enumerate(layers):
             if enhanced:
-                pag = PatternActionGraph(layer)
+                t = TimeStat.startHolder(f"Constructing PatternActionGraph {i}")
+                pag = NumericPatternActionGraph(layer) if not boolean else BooleanPatternActionGraph(layer)
+                t.endHolderMilliseconds()
+                t = TimeStat.startHolder(f"Getting sorted list from PatternActionGraph {i}")
                 sortedLayer = pag.getSorted()
+                t.endHolderMilliseconds()
                 order += sortedLayer
             else:
                 order += sorted(layer)

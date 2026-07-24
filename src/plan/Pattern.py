@@ -108,9 +108,9 @@ class Pattern:
         return Pattern.fromOrder(order)
 
     @classmethod
-    def fromState(cls, state: State, goal: Goal, domain: GroundedDomain, enhanced=False):
+    def fromState(cls, state: State, goal: Goal, domain: GroundedDomain, enhanced=False, boolean=False):
         arpg: ARPG = ARPG(domain, state, goal, avoidRaising=True)
-        order = arpg.getActionsOrder(enhanced)
+        order = arpg.getActionsOrder(enhanced, boolean=boolean)
         return order and Pattern.fromOrder(order)
 
     @classmethod

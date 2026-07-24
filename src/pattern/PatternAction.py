@@ -56,6 +56,9 @@ class PatternAction(Action):
         a = self
         a_ = other
 
+        if a.name == "shake cocktail3 ingredient1 ingredient4 shaker1 left right" and a_.name== "pour-shot-to-used-shaker shot14 ingredient4 shaker1 left l0 l1":
+            print("Here")
+
         if isinstance(a.original, SnapAction) and isinstance(a_.original, SnapAction):
             sa = a.original
             sa_ = a_.original
@@ -68,6 +71,7 @@ class PatternAction(Action):
         #     assert
         #     if a.durativeAction == a_.durativeAction and a.timeType == TimePredicateType.AT_START
 
+        assert not a.interferesWithEffects(a_)
         if a.interferesWithEffects(a_) and a_.interferesWithEffects(a):
             return 0
         if a.blocks(a_) and a_.blocks(a):
@@ -77,9 +81,9 @@ class PatternAction(Action):
             return +1
         if a_.blocks(a):
             return -1
-        if a.supports(a_) and not a_.interferes(a):
+        if a.supports(a_) and not a_.original.interferes(a.original):
             return -1
-        if a_.supports(a) and not a.interferes(a_):
+        if a_.supports(a) and not a.original.interferes(a_.original):
             return +1
 
         return 0
@@ -89,6 +93,8 @@ class PatternAction(Action):
 
     def __notInterferesWithEffects(self, a_: PatternAction) -> bool:
         a: PatternAction = self
+        assert a.simpleAssignedAtoms == a.assignedAtoms
+        assert a_.simpleAssignedAtoms == a_.assignedAtoms
         for x in self.assignedAtoms:
             res = x not in a_.assignedAtoms or \
                   (x in a.linearlyIncrementedAtoms and x in a_.linearlyIncrementedAtoms) or \

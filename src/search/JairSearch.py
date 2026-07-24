@@ -29,6 +29,7 @@ class JairSearch(Search):
         self.enhanced = (self.args.pattern == "enhanced")
         self.incompleteSaturationLevel = 1
         self.hasCheckedComplete = False
+        self.classical = (self.domain.fragment == "CLASSICAL")
 
     def solve(self) -> Plan:
 
@@ -74,7 +75,7 @@ class JairSearch(Search):
             hasMinimize = self.problem.goal.hasOnlyOneNumericConditions() and self.args.jairGoalFunction == "n"
 
             self.ts.start(f"Constructing Encoding at Bound {bound}")
-            if self.domain.fragment == "CLASSICAL":
+            if self.classical:
                 encoding: ClassicEncoding = ClassicEncoding(
                     domain=self.domain,
                     problem=self.problem,
@@ -182,9 +183,9 @@ class JairSearch(Search):
         self.ts.start(f"computeP2G")
         pat = Pattern.empty()
         if self.args.jairPatternH == "s":
-            pat = Pattern.fromState(I, self.problem.goal, self.domain, self.enhanced)
+            pat = Pattern.fromState(I, self.problem.goal, self.domain, self.enhanced, boolean=self.classical)
         elif self.args.jairPatternH == "c":
-            pat = Pattern.fromState(P, self.problem.goal, self.domain, self.enhanced)
+            pat = Pattern.fromState(P, self.problem.goal, self.domain, self.enhanced, boolean=self.classical)
         elif self.args.jairPatternH == "i":
             p = Pattern.fromStateGreedy(P, self.problem.goal, self.domain, 1)
             if not p:

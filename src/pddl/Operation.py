@@ -42,6 +42,8 @@ class Operation:
         self.predicates = set()
         self.preB = set()
         self.preN = set()
+        self.prePos: Set[Atom] = set()
+        self.preNeg: Set[Atom] = set()
         self.addList = set()
         self.delList = set()
         self.assList = set()
@@ -77,6 +79,8 @@ class Operation:
         a.predicates = copy.deepcopy(self.predicates, m)
         a.preB = copy.deepcopy(self.preB, m)
         a.preN = copy.deepcopy(self.preN, m)
+        a.prePos = copy.deepcopy(self.prePos, m)
+        a.preNeg = copy.deepcopy(self.preNeg, m)
         a.addList = copy.deepcopy(self.addList, m)
         a.delList = copy.deepcopy(self.delList, m)
         a.assList = copy.deepcopy(self.assList, m)
@@ -274,6 +278,18 @@ class Operation:
     def __getPreB(self) -> Set[Atom]:
         return self.__getPreconditionAtoms(Literal)
 
+    def __getPreAtoms(self) -> Tuple[Set[Atom], Set[Atom]]:
+        pos = set()
+        neg = set()
+        for pre in self.preconditions:
+            if not isinstance(pre, Literal):
+                continue
+            if pre.sign == "+":
+                pos.add(pre.getAtom())
+            else:
+                neg.add(pre.getAtom())
+        return pos, neg
+
     def __getPreN(self) -> Set[Atom]:
         return self.preconditions.getFunctions()
 
@@ -370,6 +386,7 @@ class Operation:
         self.predicates = self.__getPredicates()
         self.preB = self.__getPreB()
         self.preN = self.__getPreN()
+        self.prePos, self.preNeg = self.__getPreAtoms()
         self.effN = self.__getEffectFunctions()
         self.addList = self.__getAddList()
         self.delList = self.__getDelList()
