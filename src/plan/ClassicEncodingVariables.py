@@ -52,7 +52,6 @@ class ClassicEncodingVariables:
 
     def __computeAddDeleteSequences(self):
 
-        j = 1
         currentSign: Dict[Atom, str] = dict()
         lastAdd: Dict[Atom, Set[SMTBoolActionVariable]] = dict()
         lastDelete: Dict[Atom, Set[SMTBoolActionVariable]] = dict()
@@ -79,7 +78,7 @@ class ClassicEncodingVariables:
                 assert isinstance(eff, Literal)
                 v = eff.atom
                 cs = currentSign[v]
-                nowIndex = len(deleteSequence[v])
+                nowIndex = len(deleteSequence[v]) + 1
                 PI2SI[v].update({index: nowIndex for index in range(lastIndex[v], i + 1)})
                 lastIndex[v] = i + 1
                 if eff.sign == "+":
@@ -95,13 +94,13 @@ class ClassicEncodingVariables:
                 currentSign[v] = eff.sign
 
         for v in self.domain.predicates:
-            PI2SI[v].update({index: len(deleteSequence[v]) for index in range(lastIndex[v], len(self.pattern) + 1)})
+            PI2SI[v].update({index: len(deleteSequence[v]) + 1 for index in range(lastIndex[v], len(self.pattern) + 1)})
             if lastAdd[v]:
                 addSequence[v].append(lastAdd[v])
             deleteSequence[v].append(lastDelete[v])
             assert len(addSequence[v]) == len(deleteSequence[v])
             m[v] = len(addSequence[v])
-            for i in range(-1, len(addSequence[v]) + 1):
+            for i in range(-1, len(addSequence[v])):
                 cnfPosVars[v][i] = SMTBoolVariable(f"cnfpos({v},{i})")
                 cnfNegVars[v][i] = SMTBoolVariable(f"cnfneg({v},{i})")
 

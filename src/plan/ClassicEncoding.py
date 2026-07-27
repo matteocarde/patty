@@ -68,6 +68,8 @@ class ClassicEncoding(Encoding):
         for v in self.domain.predicates - seenAtoms:
             rules.append(~X[v])
 
+        print(rules)
+
         return rules
 
     def getGoalExpression(self) -> [SMTExpression]:
@@ -84,9 +86,9 @@ class ClassicEncoding(Encoding):
                 x = self.vars.cnfPosVars[v]
                 x_ = self.vars.cnfNegVars[v]
                 if g.sign == "+":
-                    cnfVars.append(x[m])
+                    cnfVars.append(x[m - 1])
                 if g.sign == "-":
-                    cnfVars.append(x_[m])
+                    cnfVars.append(x_[m - 1])
             return cnfVars
 
         return getCNFVars(P) + [SMTExpression.bigor(getCNFVars(GmP))]
@@ -97,10 +99,10 @@ class ClassicEncoding(Encoding):
         for v in self.domain.predicates:
 
             x = self.vars.cnfPosVars[v]
-            x_ = self.vars.cnfNegVars[v]
             m = self.vars.m[v]
             # Positive
             rules.append(~current[v] | x[-1])
+            rules.append(current[v] | ~x[-1])
             for j in range(m):
                 A_jx = self.vars.addSequence[v][j]
                 D_jx = self.vars.deleteSequence[v][j]
@@ -109,17 +111,17 @@ class ClassicEncoding(Encoding):
                     rules.append(~x[j] | ~d)
 
             # Negative
-            rules.append(~x_[-1] | ~x[-1])
+            del x
+            x_ = self.vars.cnfNegVars[v]
             rules.append(current[v] | x_[-1])
-            A_1x = self.vars.addSequence[v][0]
-            for a in A_1x:
-                rules.append(~x_[-1] | ~a)
+            rules.append(~current[v] | ~x_[-1])
             for j in range(m):
-                A_jx = self.vars.addSequence[v][j + 1] if j + 1 in self.vars.addSequence[v] else set()
+                A_jx = self.vars.addSequence[v][j]
                 D_jx = self.vars.deleteSequence[v][j]
-                rules.append(~x_[j] | x_[j - 1] | SMTExpression.bigor(D_jx))
+                bigor = SMTExpression.bigor(D_jx)
+                rules.append(~x_[j] | x_[j - 1] | bigor)
                 for a in A_jx:
-                    rules.append(~x_[j] | ~a)
+                    rules.append(~x_[j] | ~a | bigor)
 
         return rules
 
@@ -130,6 +132,9 @@ class ClassicEncoding(Encoding):
         for i, action in self.pattern.enumerate():
             a_i = actions[action]
 
+            # if i == 25:
+            #     rules.append(a_i)
+
             for pre in action.preconditions:
                 if isinstance(pre, TruePredicate):
                     continue
@@ -139,17 +144,19 @@ class ClassicEncoding(Encoding):
                 x = self.vars.cnfPosVars[v]
                 x_ = self.vars.cnfNegVars[v]
 
-                A_xmi = self.vars.getBoolActionsBeforeIndex(self.vars.addSequence[v][m], i)
-                D_xmi = self.vars.getBoolActionsBeforeIndex(self.vars.deleteSequence[v][m], i)
+                A_xmi = self.vars.getBoolActionsBeforeIndex(self.vars.addSequence[v][m - 1], i)
+                D_xmi = self.vars.getBoolActionsBeforeIndex(self.vars.deleteSequence[v][m - 1], i)
 
                 if pre.sign == "+":
-                    rules.append(~a_i | x[m - 1] | SMTExpression.bigor(A_xmi))
+                    rules.append(~a_i | x[m - 2] | SMTExpression.bigor(A_xmi))
                     for d in D_xmi:
                         rules.append(~a_i | ~d)
+
                 else:
-                    rules.append(~a_i | x_[m - 1] | SMTExpression.bigor(D_xmi))
-                    for a in A_xmi:
-                        rules.append(~a_i | ~a | SMTExpression.bigor(D_xmi))
+                    raise ("To be implemented")
+                    rules.append(~a_i | x_[m - 2] | SMTExpression.bigor(D_xmi))
+                    # for a in A_xmi:
+                    #     rules.append(~a_i | ~a | SMTExpression.bigor(D_xmi))
 
         return rules
 
