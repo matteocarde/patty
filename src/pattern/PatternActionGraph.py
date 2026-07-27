@@ -51,9 +51,9 @@ class PatternActionGraph:
             while stack:
                 node, predecessors = stack[-1]
 
-                try:
-                    predecessor = next(predecessors)
-                except StopIteration:
+                predecessor = next(predecessors, None)
+
+                if predecessor is None:
                     stack.pop()
                     state[node] = VISITED
                     order.append(node)

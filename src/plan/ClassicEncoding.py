@@ -83,12 +83,14 @@ class ClassicEncoding(Encoding):
 
     def getAddDeleteSequenceVariableRules(self) -> List[SMTExpression]:
         rules = []
+        current = self.vars.currentState
         for v in self.domain.predicates:
 
             x = self.vars.cnfPosVars[v]
             x_ = self.vars.cnfNegVars[v]
 
             # Positive
+            rules.append(current[v] | x[0])
             for j in range(self.vars.m[v] - 1):
                 A_jx = self.vars.addSequence[v][j]
                 D_jx = self.vars.deleteSequence[v][j]
@@ -118,6 +120,8 @@ class ClassicEncoding(Encoding):
             a_i = actions[action]
 
             for pre in action.preconditions:
+                if isinstance(pre, TruePredicate):
+                    continue
                 assert isinstance(pre, Literal)
                 v = pre.atom
                 m = self.vars.PI2SI[v][i]
@@ -128,7 +132,7 @@ class ClassicEncoding(Encoding):
                 D_xmi = self.vars.getBoolActionsBeforeIndex(self.vars.deleteSequence[v][m], i)
 
                 if pre.sign == "+":
-                    rules.append(~a_i | x[m - 1] | SMTExpression.bigor([A_xmi]))
+                    rules.append(~a_i | x[m - 1] | SMTExpression.bigor(A_xmi))
                     for d in D_xmi:
                         rules.append(~a_i | ~d)
                 else:

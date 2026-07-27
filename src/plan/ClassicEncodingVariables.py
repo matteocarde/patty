@@ -61,6 +61,7 @@ class ClassicEncodingVariables:
         PI2SI: Dict[Atom, Dict[int, int]] = dict()
         cnfPosVars: Dict[Atom, Dict[int, SMTBoolVariable]] = dict()
         cnfNegVars: Dict[Atom, Dict[int, SMTBoolVariable]] = dict()
+        lastIndex: Dict[Atom, int] = dict()
         m: Dict[Atom, int] = dict()
         for v in self.domain.predicates:
             currentSign[v] = "+"
@@ -71,27 +72,30 @@ class ClassicEncodingVariables:
             PI2SI[v] = dict()
             cnfPosVars[v] = dict()
             cnfNegVars[v] = dict()
+            lastIndex[v] = 0
 
         for i, a in self.pattern.enumerate():
             for eff in a.effects:
                 assert isinstance(eff, Literal)
                 v = eff.atom
                 cs = currentSign[v]
+                nowIndex = len(deleteSequence[v])
+                PI2SI[v].update({index: nowIndex for index in range(lastIndex[v], i + 1)})
+                lastIndex[v] = i + 1
                 if eff.sign == "+":
                     lastAdd[v].add(self.action[a])
-                    PI2SI[v][i] = len(addSequence)
                     if cs != eff.sign:
                         deleteSequence[v].append(lastDelete[v])
                         lastDelete[v] = set()
                 else:
                     lastDelete[v].add(self.action[a])
-                    PI2SI[v][i] = len(deleteSequence)
                     if cs != eff.sign:
                         addSequence[v].append(lastAdd[v])
                         lastAdd[v] = set()
                 currentSign[v] = eff.sign
 
         for v in self.domain.predicates:
+            PI2SI[v].update({index: len(deleteSequence[v]) for index in range(lastIndex[v], len(self.pattern) + 1)})
             if lastAdd[v]:
                 addSequence[v].append(lastAdd[v])
             deleteSequence[v].append(lastDelete[v])
