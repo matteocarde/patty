@@ -142,6 +142,7 @@ class JairSearch(Search):
             unsatN = 0
             plan = partialPlan if S == I else plan + partialPlan
             patS = pat.addPostfix(bound) if S == I else (patS + pat).addPostfix(bound)
+            partialPlan.print()
             P = S.applyPlan(partialPlan)
 
             if P.satisfies(self.problem.goal):

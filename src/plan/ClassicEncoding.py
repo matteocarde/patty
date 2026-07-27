@@ -71,15 +71,25 @@ class ClassicEncoding(Encoding):
         return rules
 
     def getGoalExpression(self) -> [SMTExpression]:
-        sigmas = self.vars.sigma[self.k]
-        if self.goalAsSoftAsserts:
-            P = [g for g in self.problem.goal if g in self.subgoalsAchieved]
-            GmP = [g for g in self.problem.goal if g not in self.subgoalsAchieved]
-            andGoal = [SMTExpression.fromFormula(g, sigmas) for g in P]
-            orGoal = [SMTExpression.fromFormula(g, sigmas) for g in GmP]
-            return [SMTExpression.bigand(andGoal), SMTExpression.bigor(orGoal)]
 
-        return [SMTExpression.fromFormula(self.problem.goal, sigmas)]
+        P = [g for g in self.problem.goal if g in self.subgoalsAchieved]
+        GmP = [g for g in self.problem.goal if g not in self.subgoalsAchieved]
+
+        def getCNFVars(subgoals: List[Literal]):
+            cnfVars = []
+            for g in subgoals:
+                assert isinstance(g, Literal)
+                v = g.atom
+                m = self.vars.m[v]
+                x = self.vars.cnfPosVars[v]
+                x_ = self.vars.cnfNegVars[v]
+                if g.sign == "+":
+                    cnfVars.append(x[m])
+                if g.sign == "-":
+                    cnfVars.append(x_[m])
+            return cnfVars
+
+        return getCNFVars(P) + [SMTExpression.bigor(getCNFVars(GmP))]
 
     def getAddDeleteSequenceVariableRules(self) -> List[SMTExpression]:
         rules = []
@@ -88,10 +98,10 @@ class ClassicEncoding(Encoding):
 
             x = self.vars.cnfPosVars[v]
             x_ = self.vars.cnfNegVars[v]
-
+            m = self.vars.m[v]
             # Positive
-            rules.append(current[v] | x[0])
-            for j in range(self.vars.m[v] - 1):
+            rules.append(~current[v] | x[-1])
+            for j in range(m):
                 A_jx = self.vars.addSequence[v][j]
                 D_jx = self.vars.deleteSequence[v][j]
                 rules.append(~x[j] | x[j - 1] | SMTExpression.bigor(A_jx))
@@ -100,11 +110,12 @@ class ClassicEncoding(Encoding):
 
             # Negative
             rules.append(~x_[-1] | ~x[-1])
+            rules.append(current[v] | x_[-1])
             A_1x = self.vars.addSequence[v][0]
             for a in A_1x:
                 rules.append(~x_[-1] | ~a)
-            for j in range(self.vars.m[v] - 1):
-                A_jx = self.vars.addSequence[v][j + 1]
+            for j in range(m):
+                A_jx = self.vars.addSequence[v][j + 1] if j + 1 in self.vars.addSequence[v] else set()
                 D_jx = self.vars.deleteSequence[v][j]
                 rules.append(~x_[j] | x_[j - 1] | SMTExpression.bigor(D_jx))
                 for a in A_jx:
