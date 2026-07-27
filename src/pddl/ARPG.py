@@ -112,12 +112,8 @@ class ARPG:
         order = list()
         for i, layer in enumerate(layers):
             if enhanced:
-                t = TimeStat.startHolder(f"Constructing PatternActionGraph {i}")
                 pag = NumericPatternActionGraph(layer) if not boolean else BooleanPatternActionGraph(layer)
-                t.endHolderMilliseconds()
-                t = TimeStat.startHolder(f"Getting sorted list from PatternActionGraph {i}")
                 sortedLayer = pag.getSorted()
-                t.endHolderMilliseconds()
                 order += sortedLayer
             else:
                 order += sorted(layer)

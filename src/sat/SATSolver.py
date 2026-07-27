@@ -100,23 +100,21 @@ class SATSolver:
     #
     #         return solution
 
-    @staticmethod
-    def printFormulaStats(f: Formula):
-        before = len(f.atoms())
-
-        f.clausify()
-
-        vpool = Formula.export_vpool()
-        after = vpool.top
-
-        console.log(f"Variables Before CNF: {before}", LogPrintLevel.STATS)
-        console.log(f"Variables After CNF: {after}", LogPrintLevel.STATS)
-
     def getSolution(self) -> SMTSolution or bool:
         formula: Formula = And(*self.assertions, merge=True)
-        SATSolver.printFormulaStats(formula)
-        t = TimeStat.startHolder("Constructing solver formula")
-        with Solver(name='kissat', bootstrap_with=formula) as s:
+
+        t = TimeStat.startHolder("Converting to CNF")
+        formula.clausify()
+        t.endHolderMilliseconds()
+
+        t = TimeStat.startHolder("Passing the formula to kissat solver")
+        t = TimeStat.startHolder("Materialising")
+        clauses = list(formula)
+        t.endHolderMilliseconds()
+
+        t = TimeStat.startHolder("Loading materialised clauses")
+        with Solver(name="kissat", bootstrap_with=clauses) as s:
+            t.endHolderMilliseconds()
             # phases = [vpool.obj2id[p.atom] for p in self.phases]
             # s.set_phases(phases)
             t.endHolderMilliseconds()

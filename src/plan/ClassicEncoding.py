@@ -43,6 +43,7 @@ class ClassicEncoding(Encoding):
 
         self.rules = []
         self.rules += self.getInitialExpression()
+        self.rules += self.getAddDeleteSequenceVariableRules()
         self.rules += self.getPreRules()
         self.rules += self.getGoalExpression()
 
@@ -80,25 +81,60 @@ class ClassicEncoding(Encoding):
 
         return [SMTExpression.fromFormula(self.problem.goal, sigmas)]
 
+    def getAddDeleteSequenceVariableRules(self) -> List[SMTExpression]:
+        rules = []
+        for v in self.domain.predicates:
+
+            x = self.vars.cnfPosVars[v]
+            x_ = self.vars.cnfNegVars[v]
+
+            # Positive
+            for j in range(self.vars.m[v] - 1):
+                A_jx = self.vars.addSequence[v][j]
+                D_jx = self.vars.deleteSequence[v][j]
+                rules.append(~x[j] | x[j - 1] | SMTExpression.bigor(A_jx))
+                for d in D_jx:
+                    rules.append(~x[j] | ~d)
+
+            # Negative
+            rules.append(~x_[-1] | ~x[-1])
+            A_1x = self.vars.addSequence[v][0]
+            for a in A_1x:
+                rules.append(~x_[-1] | ~a)
+            for j in range(self.vars.m[v] - 1):
+                A_jx = self.vars.addSequence[v][j + 1]
+                D_jx = self.vars.deleteSequence[v][j]
+                rules.append(~x_[j] | x_[j - 1] | SMTExpression.bigor(D_jx))
+                for a in A_jx:
+                    rules.append(~x_[j] | ~a)
+
+        return rules
+
     def getPreRules(self) -> List[SMTExpression]:
         rules: List[SMTExpression] = []
         actions = self.vars.action
 
-        for i, a in self.pattern.enumerate():
+        for i, action in self.pattern.enumerate():
+            a_i = actions[action]
 
-            sigma = self.vars.sigma[i - 1]
+            for pre in action.preconditions:
+                assert isinstance(pre, Literal)
+                v = pre.atom
+                m = self.vars.PI2SI[v][i]
+                x = self.vars.cnfPosVars[v]
+                x_ = self.vars.cnfNegVars[v]
 
-            if a.preconditions.type == "OR":
-                raise Exception("Cannot deal with disjunctive preconditions")
+                A_xmi = self.vars.getBoolActionsBeforeIndex(self.vars.addSequence[v][m], i)
+                D_xmi = self.vars.getBoolActionsBeforeIndex(self.vars.deleteSequence[v][m], i)
 
-            for pre in a.preconditions:
-                if isinstance(pre, TruePredicate):
-                    continue
-                if not isinstance(pre, Literal):
-                    raise Exception("Cannot deal with preconditions not being literals")
-                v = pre.getAtom()
-                sigma_v = sigma[v] if pre.sign == "+" else ~sigma[v]
-                rules.append(actions[i].implies(sigma_v))
+                if pre.sign == "+":
+                    rules.append(~a_i | x[m - 1] | SMTExpression.bigor([A_xmi]))
+                    for d in D_xmi:
+                        rules.append(~a_i | ~d)
+                else:
+                    rules.append(~a_i | x_[m - 1] | SMTExpression.bigor(D_xmi))
+                    for a in A_xmi:
+                        rules.append(~a_i | ~a | SMTExpression.bigor(D_xmi))
 
         return rules
 
@@ -112,7 +148,7 @@ class ClassicEncoding(Encoding):
         plan.actionRolling = dict()
 
         for i, a in self.pattern.enumerate():
-            if solution.getVariable(self.vars.action[i]):
+            if solution.getVariable(self.vars.action[a]):
                 plan.addAction(a)
 
         return plan

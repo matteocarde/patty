@@ -2,8 +2,6 @@ from typing import List, Dict, Set, Tuple, Iterator
 
 from src.pattern.PatternAction import PatternAction
 from src.pddl.Action import Action
-from src.pddl.Atom import Atom
-from src.utils.TimeStat import TimeStat
 
 
 class PatternActionGraph:
