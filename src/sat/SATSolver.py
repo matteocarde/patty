@@ -25,15 +25,14 @@ class SATSolver:
         self.cnf = self.encoding.cnf
 
     def getSolution(self) -> SMTSolution or bool:
-        t = TimeStat.startHolder("Loading clauses to kissat")
-        with Solver(name="kissat", bootstrap_with=self.cnf.clauses) as s:
-            t.endHolderMilliseconds()
-            # phases = [vpool.obj2id[p.atom] for p in self.phases]
-            # s.set_phases(phases)
+        t = TimeStat.startHolder("Loading clauses to PYSAT solver")
+        with Solver(name="g42", bootstrap_with=self.cnf.clauses) as s:
+            if self.encoding.phases:
+                s.set_phases(self.encoding.phases)
             t.endHolderMilliseconds()
             t = TimeStat.startHolder("Actual SAT Solving time")
             res = s.solve()
-            t.endHolderMilliseconds()
+            t.endHolderMilliseconds(group="SOlVING")
 
             t = TimeStat.startHolder("Retrieving solution")
             if not res:
@@ -44,7 +43,7 @@ class SATSolver:
             for varId, value in assignment.items():
                 var = CNFVariable.ID2VAR[varId]
                 solution.addVariable(var, value)
-            t.endHolderMilliseconds()
+            t.endHolderMilliseconds(group="POSTPROCESSING")
             return solution
 
     def solve(self) -> Plan or bool:

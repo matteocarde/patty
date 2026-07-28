@@ -63,6 +63,9 @@ class JairSearch(Search):
 
         self.ts.end(f"Initializing Solving Phase", group="PREPROCESSING")
 
+        if self.classical:
+            invariants = Invariants(self.domain, self.problem)
+
         while bound <= self.maxBound:
 
             bound += 1
@@ -77,7 +80,6 @@ class JairSearch(Search):
 
             self.ts.start(f"Constructing Encoding at Bound {bound}")
             if self.classical:
-                invariants = Invariants(self.domain, self.problem)
                 encoding: ClassicEncoding = ClassicEncoding(
                     domain=self.domain,
                     problem=self.problem,
@@ -102,7 +104,7 @@ class JairSearch(Search):
                     goalAsSoftAsserts=(self.args.jairGoalFunction in {"n", "g"})
                 )
 
-            self.ts.end(f"Constructing Encoding at Bound {bound}", group="PREPROCESSING")
+            self.ts.end(f"Constructing Encoding at Bound {bound}", group="ENCODING")
             console.log(f"Bound {bound} - Vars = {encoding.getNVars()}", LogPrintLevel.STATS)
             console.log(f"Bound {bound} - Rules = {encoding.getNRules()}", LogPrintLevel.STATS)
             console.log(f"Bound {bound} - Avg Rule Length = {encoding.getAvgRuleLength()}", LogPrintLevel.STATS)

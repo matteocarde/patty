@@ -40,6 +40,7 @@ class ClassicEncoding(Encoding):
         self.subgoalsAchieved = subgoalsAchieved
         self.initState = State.fromInitialCondition(self.problem.init)
         self.state = state if state else self.initState
+        self.phases = []
 
         self.pattern = pattern
 
@@ -94,6 +95,8 @@ class ClassicEncoding(Encoding):
 
         for p in getCNFVars(P):
             cnf.addClause([p])
+        GmPvars = getCNFVars(GmP)
+        self.phases = [v.id for v in GmPvars]
         cnf.addClause(getCNFVars(GmP))
 
     def addInvariants(self, cnf: CNF, invariants: Invariants or None):

@@ -34,7 +34,7 @@ class ClassicEncodingVariables:
 
         t = TimeStat.startHolder("Computing Add-Delete Sequences")
         self.__computeAddDeleteSequences()
-        t.endHolderMilliseconds()
+        t.endHolderMilliseconds(group="ADD-DELETE-SEQUENCE")
 
     def __computeValueVariables(self) -> Dict[Atom, CNFVariable]:
         variables: Dict[Atom, CNFVariable] = dict()
@@ -77,7 +77,6 @@ class ClassicEncodingVariables:
 
         for i, a in self.pattern.enumerate():
             for eff in a.effects:
-                assert isinstance(eff, Literal)
                 v = eff.atom
                 cs = currentSign[v]
                 nowIndex = len(deleteSequence[v]) + 1
