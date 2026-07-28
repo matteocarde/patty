@@ -5,19 +5,21 @@ from src.pddl.Atom import Atom
 from src.pddl.Domain import GroundedDomain
 from src.pddl.Literal import Literal
 from src.plan.Pattern import Pattern
-from src.smt.SMTBoolActionVariable import SMTBoolActionVariable
-from src.smt.SMTBoolVariable import SMTBoolVariable
+from src.sat.CNFVariable import CNFActionVariable
+from src.sat.CNFVariable import CNFVariable
+
+from src.sat.CNFVariable import CNFActionVariable
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTVariable import SMTVariable
 from src.utils.TimeStat import TimeStat
 
 
 class ClassicEncodingVariables:
-    action: Dict[Action, SMTBoolActionVariable]
+    action: Dict[Action, CNFActionVariable]
     currentState: Dict[Atom, SMTVariable]
     sigma: Dict[int, Dict[Atom, SMTExpression]]
-    addSequence: Dict[Atom, List[Set[SMTBoolActionVariable]]]
-    deleteSequence: Dict[Atom, List[Set[SMTBoolActionVariable]]]
+    addSequence: Dict[Atom, List[Set[CNFActionVariable]]]
+    deleteSequence: Dict[Atom, List[Set[CNFActionVariable]]]
     PI2I: Dict[Atom, Dict[int, int]]
 
     def __init__(self, domain: GroundedDomain, pattern: Pattern):
@@ -26,40 +28,40 @@ class ClassicEncodingVariables:
         self.domain = domain
         self.pattern: Pattern = pattern
         self.__actionToIndexPattern: Dict[Action, int] = dict([(a, i) for (i, a) in self.pattern.enumerate()])
-        self.action: Dict[Action, SMTBoolActionVariable] = self.__computeActionVariables()
-        self.currentState: Dict[Atom, SMTBoolVariable] = self.__computeValueVariables()
+        self.action: Dict[Action, CNFActionVariable] = self.__computeActionVariables()
+        self.currentState: Dict[Atom, CNFVariable] = self.__computeValueVariables()
         # self.sigma: Dict[int, Dict[Atom, SMTExpression]] = self.__computeSigmaVariables()
 
         t = TimeStat.startHolder("Computing Add-Delete Sequences")
         self.__computeAddDeleteSequences()
         t.endHolderMilliseconds()
 
-    def __computeValueVariables(self) -> Dict[Atom, SMTBoolVariable]:
-        variables: Dict[Atom, SMTBoolVariable] = dict()
+    def __computeValueVariables(self) -> Dict[Atom, CNFVariable]:
+        variables: Dict[Atom, CNFVariable] = dict()
 
         for atom in self.atoms:
-            variables[atom] = SMTBoolVariable(f"{atom}")
+            variables[atom] = CNFVariable(f"{atom}")
 
         return variables
 
-    def __computeActionVariables(self) -> Dict[Action, SMTBoolActionVariable]:
-        variables: Dict[Action, SMTBoolActionVariable] = dict()
+    def __computeActionVariables(self) -> Dict[Action, CNFActionVariable]:
+        variables: Dict[Action, CNFActionVariable] = dict()
 
         for i, action in self.pattern.enumerate():
-            variables[action] = SMTBoolActionVariable(f"{action.name}", action)
+            variables[action] = CNFActionVariable(f"{action.name}", action)
 
         return variables
 
     def __computeAddDeleteSequences(self):
 
         currentSign: Dict[Atom, str] = dict()
-        lastAdd: Dict[Atom, Set[SMTBoolActionVariable]] = dict()
-        lastDelete: Dict[Atom, Set[SMTBoolActionVariable]] = dict()
-        addSequence: Dict[Atom, List[Set[SMTBoolActionVariable]]] = dict()
-        deleteSequence: Dict[Atom, List[Set[SMTBoolActionVariable]]] = dict()
+        lastAdd: Dict[Atom, Set[CNFActionVariable]] = dict()
+        lastDelete: Dict[Atom, Set[CNFActionVariable]] = dict()
+        addSequence: Dict[Atom, List[Set[CNFActionVariable]]] = dict()
+        deleteSequence: Dict[Atom, List[Set[CNFActionVariable]]] = dict()
         PI2SI: Dict[Atom, Dict[int, int]] = dict()
-        cnfPosVars: Dict[Atom, Dict[int, SMTBoolVariable]] = dict()
-        cnfNegVars: Dict[Atom, Dict[int, SMTBoolVariable]] = dict()
+        cnfPosVars: Dict[Atom, Dict[int, CNFVariable]] = dict()
+        cnfNegVars: Dict[Atom, Dict[int, CNFVariable]] = dict()
         lastIndex: Dict[Atom, int] = dict()
         m: Dict[Atom, int] = dict()
         for v in self.domain.predicates:
@@ -101,8 +103,8 @@ class ClassicEncodingVariables:
             assert len(addSequence[v]) == len(deleteSequence[v])
             m[v] = len(addSequence[v])
             for i in range(-1, len(addSequence[v])):
-                cnfPosVars[v][i] = SMTBoolVariable(f"cnfpos({v},{i})")
-                cnfNegVars[v][i] = SMTBoolVariable(f"cnfneg({v},{i})")
+                cnfPosVars[v][i] = CNFVariable(f"cnfpos({v},{i})")
+                cnfNegVars[v][i] = CNFVariable(f"cnfneg({v},{i})")
 
         self.addSequence = addSequence
         self.deleteSequence = deleteSequence
@@ -111,5 +113,5 @@ class ClassicEncodingVariables:
         self.cnfNegVars = cnfNegVars
         self.m = m
 
-    def getBoolActionsBeforeIndex(self, boolActions: Set[SMTBoolActionVariable], i: int) -> Set[SMTBoolActionVariable]:
+    def getBoolActionsBeforeIndex(self, boolActions: Set[CNFActionVariable], i: int) -> Set[CNFActionVariable]:
         return {a for a in boolActions if self.__actionToIndexPattern[a.action] < i}

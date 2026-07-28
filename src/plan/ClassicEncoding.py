@@ -10,6 +10,7 @@ from src.pddl.TruePredicate import TruePredicate
 from src.plan.ClassicEncodingVariables import ClassicEncodingVariables
 from src.plan.Encoding import Encoding
 from src.plan.Pattern import Pattern
+from src.sat.CNF import CNF
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTSolution import SMTSolution
 from src.utils.Arguments import Arguments
@@ -41,17 +42,16 @@ class ClassicEncoding(Encoding):
         self.k = len(self.pattern)
         self.vars: ClassicEncodingVariables = ClassicEncodingVariables(self.domain, self.pattern)
 
-        self.rules = []
-        self.rules += self.getInitialExpression()
-        self.rules += self.getAddDeleteSequenceVariableRules()
-        self.rules += self.getPreRules()
-        self.rules += self.getGoalExpression()
+        self.cnf = CNF()
+        self.addInitialExpression(self.cnf)
+        self.addSequenceRules(self.cnf)
+        self.addPreRules(self.cnf)
+        self.addGoalExpression(self.cnf)
 
         pass
 
-    def getInitialExpression(self) -> List[SMTExpression]:
+    def addInitialExpression(self, cnf: CNF):
         X = self.vars.currentState
-        rules: [SMTExpression] = []
 
         seenAtoms: Set[Atom] = set()
         for (v, value) in self.state:
@@ -61,18 +61,14 @@ class ClassicEncoding(Encoding):
 
             seenAtoms.add(v)
             if value:
-                rules.append(X[v])
+                cnf.addClause([X[v]])
             else:
-                rules.append(~X[v])
+                cnf.addClause([~X[v]])
 
         for v in self.domain.predicates - seenAtoms:
-            rules.append(~X[v])
+            cnf.addClause([~X[v]])
 
-        print(rules)
-
-        return rules
-
-    def getGoalExpression(self) -> [SMTExpression]:
+    def addGoalExpression(self, cnf: CNF):
 
         P = [g for g in self.problem.goal if g in self.subgoalsAchieved]
         GmP = [g for g in self.problem.goal if g not in self.subgoalsAchieved]
@@ -91,41 +87,39 @@ class ClassicEncoding(Encoding):
                     cnfVars.append(x_[m - 1])
             return cnfVars
 
-        return getCNFVars(P) + [SMTExpression.bigor(getCNFVars(GmP))]
+        for p in getCNFVars(P):
+            cnf.addClause(p)
+        cnf.addClause(getCNFVars(GmP))
 
-    def getAddDeleteSequenceVariableRules(self) -> List[SMTExpression]:
-        rules = []
+    def addSequenceRules(self, cnf: CNF):
         current = self.vars.currentState
         for v in self.domain.predicates:
 
             x = self.vars.cnfPosVars[v]
             m = self.vars.m[v]
             # Positive
-            rules.append(~current[v] | x[-1])
-            rules.append(current[v] | ~x[-1])
+            cnf.addClause([~current[v], x[-1]])
+            cnf.addClause([current[v], ~x[-1]])
             for j in range(m):
                 A_jx = self.vars.addSequence[v][j]
                 D_jx = self.vars.deleteSequence[v][j]
-                rules.append(~x[j] | x[j - 1] | SMTExpression.bigor(A_jx))
+                cnf.addClause([~x[j], x[j - 1]] + list(A_jx))
                 for d in D_jx:
-                    rules.append(~x[j] | ~d)
+                    cnf.addClause([~x[j], ~d])
 
             # Negative
             del x
             x_ = self.vars.cnfNegVars[v]
-            rules.append(current[v] | x_[-1])
-            rules.append(~current[v] | ~x_[-1])
+            cnf.addClause([current[v], x_[-1]])
+            cnf.addClause([~current[v], ~x_[-1]])
             for j in range(m):
                 A_jx = self.vars.addSequence[v][j]
                 D_jx = self.vars.deleteSequence[v][j]
-                bigor = SMTExpression.bigor(D_jx)
-                rules.append(~x_[j] | x_[j - 1] | bigor)
+                cnf.addClause([~x_[j], x_[j - 1]] + list(D_jx))
                 for a in A_jx:
-                    rules.append(~x_[j] | ~a | bigor)
+                    cnf.addClause([~x_[j], ~a] + list(D_jx))
 
-        return rules
-
-    def getPreRules(self) -> List[SMTExpression]:
+    def addPreRules(self, cnf: CNF) -> List[SMTExpression]:
         rules: List[SMTExpression] = []
         actions = self.vars.action
 
@@ -148,13 +142,13 @@ class ClassicEncoding(Encoding):
                 D_xmi = self.vars.getBoolActionsBeforeIndex(self.vars.deleteSequence[v][m - 1], i)
 
                 if pre.sign == "+":
-                    rules.append(~a_i | x[m - 2] | SMTExpression.bigor(A_xmi))
+                    cnf.addClause([~a_i, x[m - 2]] + list(A_xmi))
                     for d in D_xmi:
-                        rules.append(~a_i | ~d)
+                        cnf.addClause([~a_i, ~d])
 
                 else:
                     raise ("To be implemented")
-                    rules.append(~a_i | x_[m - 2] | SMTExpression.bigor(D_xmi))
+                    cnf.addClause([~a_i, x_[m - 2]] + list(D_xmi))
                     # for a in A_xmi:
                     #     rules.append(~a_i | ~a | SMTExpression.bigor(D_xmi))
 
