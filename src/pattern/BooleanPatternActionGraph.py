@@ -78,7 +78,7 @@ class BooleanPatternActionGraph(PatternActionGraph):
                     self.graphDict[pb].append(pa)
                 if comp > 0:
                     self.graphDict[pa].append(pb)
-        print(f"--- Number of compares: {cu}/{c}")
+        # print(f"--- Number of compares: {cu}/{c}")
 
         for a in patternActions:
             self.graphDict[a] = sorted(self.graphDict[a])

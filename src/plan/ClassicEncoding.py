@@ -1,3 +1,4 @@
+import statistics
 from typing import List, Set
 
 from src.pddl.Atom import Atom
@@ -11,6 +12,8 @@ from src.plan.ClassicEncodingVariables import ClassicEncodingVariables
 from src.plan.Encoding import Encoding
 from src.plan.Pattern import Pattern
 from src.sat.CNF import CNF
+from src.sat.CNFVariable import CNFVariable
+from src.sat.SATSolution import SATSolution
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTSolution import SMTSolution
 from src.utils.Arguments import Arguments
@@ -19,6 +22,7 @@ from src.utils.Arguments import Arguments
 class ClassicEncoding(Encoding):
     domain: GroundedDomain
     problem: Problem
+    cnf: CNF
 
     def __init__(self, domain: GroundedDomain,
                  problem: Problem,
@@ -88,7 +92,7 @@ class ClassicEncoding(Encoding):
             return cnfVars
 
         for p in getCNFVars(P):
-            cnf.addClause(p)
+            cnf.addClause([p])
         cnf.addClause(getCNFVars(GmP))
 
     def addSequenceRules(self, cnf: CNF):
@@ -154,9 +158,17 @@ class ClassicEncoding(Encoding):
 
         return rules
 
-    def getPlanFromSolution(self, solution: SMTSolution, relaxed=False) -> NumericPlan:
+    def getNVars(self):
+        return CNFVariable.CNF_ID - 1
+
+    def getNRules(self):
+        return len(self.cnf.clauses)
+
+    def getAvgRuleLength(self):
+        return round(statistics.mean([len(c) for c in self.cnf.clauses]), 2)
+
+    def getPlanFromSolution(self, solution: SATSolution or bool) -> NumericPlan:
         plan = NumericPlan()
-        plan.solution = solution
 
         if not solution:
             return plan
