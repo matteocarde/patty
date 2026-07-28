@@ -163,7 +163,7 @@ class ClassicEncoding(Encoding):
                     continue
                 assert isinstance(pre, Literal)
                 v = pre.atom
-                m = self.vars.PI2SI[v][i]
+                m = self.vars.getPI2SI(v, i)
                 x = self.vars.cnfPosVars[v]
                 x_ = self.vars.cnfNegVars[v]
 
