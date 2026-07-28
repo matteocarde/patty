@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import Dict
+
 from src.pddl.Action import Action
 
 
@@ -18,6 +19,9 @@ class CNFVariable:
         CNFVariable.ID2VAR[self.id] = self
 
     def __int__(self):
+        return self.id
+
+    def __repr__(self):
         return self.id
 
     def __invert__(self):

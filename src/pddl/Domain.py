@@ -25,7 +25,8 @@ from src.utils.LogPrint import LogPrint, LogPrintLevel, console
 
 
 class Domain:
-    name = str
+    name: str
+    path: str
     requirements: List[str]
     types: Dict[str, Type]
     predicates: Set[TypedPredicate]
@@ -56,7 +57,7 @@ class Domain:
         m = {} if m is None else m
         domain = Domain()
         domain.name = self.name
-
+        domain.path = self.path
         domain.requirements = copy.deepcopy(self.requirements, m)
         domain.types = copy.deepcopy(self.requirements, m)
         domain.predicates = copy.deepcopy(self.predicates, m)
@@ -105,6 +106,7 @@ class Domain:
             [g for dAction in self.durativeActions for g in dAction.ground(problem)])
 
         gDomain = GroundedDomain(self.name, gActions, gEvents, gProcess, gDurativeActions)
+        gDomain.path = self.path
         gDomain.lifted = self
         gDomain.constraints = self.constraints.ground(problem)
         gDomain.computeLists()
@@ -224,7 +226,9 @@ class Domain:
         domainString = Utilities.removeComments(domainString)
 
         parseTree: pddlParser = Utilities.getParseTree(domainString)
-        return cls.fromNode(parseTree.domain())
+        d = cls.fromNode(parseTree.domain())
+        d.path = filename
+        return d
 
     def __setDomainName(self, node: pddlParser.DomainNameContext):
         self.name = node.getChild(2).getText()

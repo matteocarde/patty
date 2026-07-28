@@ -17,6 +17,7 @@ from src.pddl.grammar.pddlParser import pddlParser
 
 class Problem:
     name: str
+    path: str
     domainName: str
     objectsByType: Dict[str, List[str]]
     init: InitialCondition
@@ -39,6 +40,7 @@ class Problem:
     def __deepcopy__(self, m):
         cp = Problem()
         cp.name = self.name
+        cp.path = self.path
         cp.domainName = self.domainName
         cp.objectsByType = copy.deepcopy(self.objectsByType, m)
         cp.init = copy.deepcopy(self.init, m)
@@ -113,7 +115,7 @@ class Problem:
             for t, objects in pb.objectsByType.items():
                 if t in domain.constantsByType:
                     pb.objectsByType[t] += domain.constantsByType[t]
-
+        pb.path = filename
         return pb
 
     def __setMetric(self, node: pddlParser.MetricContext):

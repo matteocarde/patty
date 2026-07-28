@@ -13,6 +13,7 @@ from src.plan.Encoding import Encoding
 from src.plan.Pattern import Pattern
 from src.sat.CNF import CNF
 from src.sat.CNFVariable import CNFVariable
+from src.sat.Invariants import Invariants
 from src.sat.SATSolution import SATSolution
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTSolution import SMTSolution
@@ -30,14 +31,13 @@ class ClassicEncoding(Encoding):
                  args: Arguments,
                  subgoalsAchieved=None,
                  state: State = None,
-                 goalAsSoftAsserts=False):
+                 invariants: Invariants = None):
 
         super().__init__(domain, problem, pattern, 1)
         self.domain = domain
         self.problem = problem
 
         self.subgoalsAchieved = subgoalsAchieved
-        self.goalAsSoftAsserts = goalAsSoftAsserts
         self.initState = State.fromInitialCondition(self.problem.init)
         self.state = state if state else self.initState
 
@@ -51,6 +51,7 @@ class ClassicEncoding(Encoding):
         self.addSequenceRules(self.cnf)
         self.addPreRules(self.cnf)
         self.addGoalExpression(self.cnf)
+        self.addInvariants(self.cnf, invariants)
 
         pass
 
@@ -94,6 +95,27 @@ class ClassicEncoding(Encoding):
         for p in getCNFVars(P):
             cnf.addClause([p])
         cnf.addClause(getCNFVars(GmP))
+
+    def addInvariants(self, cnf: CNF, invariants: Invariants or None):
+        if not invariants:
+            return
+
+        left: Literal
+        right: Literal
+
+        def getXm(l):
+            v = l.atom
+            m = self.vars.m[v]
+            x = self.vars.cnfPosVars[v]
+            x_ = self.vars.cnfNegVars[v]
+            if l.sign == "+":
+                return x[m - 1]
+            if l.sign == "-":
+                return x_[m - 1]
+
+        for (left, right) in invariants:
+            c = [getXm(left), getXm(right)]
+            cnf.addClause(c)
 
     def addSequenceRules(self, cnf: CNF):
         current = self.vars.currentState

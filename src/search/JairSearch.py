@@ -11,6 +11,7 @@ from src.pddl.State import State
 from src.plan.ClassicEncoding import ClassicEncoding
 from src.plan.NumericEncoding import NumericEncoding
 from src.plan.Pattern import Pattern
+from src.sat.Invariants import Invariants
 from src.sat.SATSolver import SATSolver
 from src.search.ChrpaImprover import ChrpaImprover
 from src.search.Search import Search
@@ -76,6 +77,7 @@ class JairSearch(Search):
 
             self.ts.start(f"Constructing Encoding at Bound {bound}")
             if self.classical:
+                invariants = Invariants(self.domain, self.problem)
                 encoding: ClassicEncoding = ClassicEncoding(
                     domain=self.domain,
                     problem=self.problem,
@@ -83,7 +85,7 @@ class JairSearch(Search):
                     pattern=pat,
                     args=self.args,
                     subgoalsAchieved=subgoalsAchieved,
-                    goalAsSoftAsserts=(self.args.jairGoalFunction in {"n", "g"})
+                    invariants=invariants
                 )
             else:
                 encoding: NumericEncoding = NumericEncoding(
