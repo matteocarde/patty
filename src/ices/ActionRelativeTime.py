@@ -1,9 +1,5 @@
 from __future__ import annotations
 
-from enum import Enum
-
-from unified_planning.model import Timing, TimepointKind
-
 from src.ices.RelativeTime import RelativeTime
 from src.ices.RelativeTimeAnchor import RelativeTimeAnchor
 

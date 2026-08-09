@@ -104,7 +104,7 @@ class JairSearch(Search):
                     goalAsSoftAsserts=(self.args.jairGoalFunction in {"n", "g"})
                 )
 
-            self.ts.end(f"Constructing Encoding at Bound {bound}", group="ENCODING")
+            self.ts.end(f"Constructing Encoding at Bound {bound}", group="PREPROCESSING")
             console.log(f"Bound {bound} - Vars = {encoding.getNVars()}", LogPrintLevel.STATS)
             console.log(f"Bound {bound} - Rules = {encoding.getNRules()}", LogPrintLevel.STATS)
             console.log(f"Bound {bound} - Avg Rule Length = {encoding.getAvgRuleLength()}", LogPrintLevel.STATS)

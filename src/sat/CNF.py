@@ -10,4 +10,4 @@ class CNF:
         self.clauses = []
 
     def addClause(self, clause: List[int or CNFVariable]):
-        self.clauses += [[int(l) for l in clause]]
+        self.clauses.append([int(l) for l in clause])

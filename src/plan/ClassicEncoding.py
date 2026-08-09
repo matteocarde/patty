@@ -15,8 +15,6 @@ from src.sat.CNF import CNF
 from src.sat.CNFVariable import CNFVariable
 from src.sat.Invariants import Invariants
 from src.sat.SATSolution import SATSolution
-from src.smt.SMTExpression import SMTExpression
-from src.smt.SMTSolution import SMTSolution
 from src.utils.Arguments import Arguments
 
 
@@ -97,7 +95,7 @@ class ClassicEncoding(Encoding):
             cnf.addClause([p])
         GmPvars = getCNFVars(GmP)
         self.phases = [v.id for v in GmPvars]
-        cnf.addClause(getCNFVars(GmP))
+        cnf.addClause(GmPvars)
 
     def addInvariants(self, cnf: CNF, invariants: Invariants or None):
         if not invariants:
@@ -132,7 +130,7 @@ class ClassicEncoding(Encoding):
             for j in range(m):
                 A_jx = self.vars.addSequence[v][j]
                 D_jx = self.vars.deleteSequence[v][j]
-                cnf.addClause([~x[j], x[j - 1]] + list(A_jx))
+                cnf.addClause([~x[j], x[j - 1], *A_jx])
                 for d in D_jx:
                     cnf.addClause([~x[j], ~d])
 
@@ -144,44 +142,38 @@ class ClassicEncoding(Encoding):
             for j in range(m):
                 A_jx = self.vars.addSequence[v][j]
                 D_jx = self.vars.deleteSequence[v][j]
-                cnf.addClause([~x_[j], x_[j - 1]] + list(D_jx))
+                cnf.addClause([~x_[j], x_[j - 1], *D_jx])
                 for a in A_jx:
-                    cnf.addClause([~x_[j], ~a] + list(D_jx))
+                    cnf.addClause([~x_[j], ~a, *D_jx])
 
-    def addPreRules(self, cnf: CNF) -> List[SMTExpression]:
-        rules: List[SMTExpression] = []
+    def addPreRules(self, cnf: CNF):
         actions = self.vars.action
 
         for i, action in self.pattern.enumerate():
             a_i = actions[action]
-
-            # if i == 25:
-            #     rules.append(a_i)
+            neg_a_i = ~a_i
 
             for pre in action.preconditions:
                 if isinstance(pre, TruePredicate):
                     continue
-                assert isinstance(pre, Literal)
                 v = pre.atom
                 m = self.vars.getPI2SI(v, i)
                 x = self.vars.cnfPosVars[v]
-                x_ = self.vars.cnfNegVars[v]
+                # x_ = self.vars.cnfNegVars[v]
 
                 A_xmi = self.vars.getBoolActionsBeforeIndex(self.vars.addSequence[v][m - 1], i)
                 D_xmi = self.vars.getBoolActionsBeforeIndex(self.vars.deleteSequence[v][m - 1], i)
 
                 if pre.sign == "+":
-                    cnf.addClause([~a_i, x[m - 2]] + list(A_xmi))
+                    cnf.addClause([neg_a_i, x[m - 2], *A_xmi])
                     for d in D_xmi:
-                        cnf.addClause([~a_i, ~d])
+                        cnf.addClause([neg_a_i, ~d])
 
                 else:
-                    raise ("To be implemented")
-                    cnf.addClause([~a_i, x_[m - 2]] + list(D_xmi))
+                    raise Exception("To be implemented")
+                    cnf.addClause([neg_a_i, x_[m - 2]] + list(D_xmi))
                     # for a in A_xmi:
                     #     rules.append(~a_i | ~a | SMTExpression.bigor(D_xmi))
-
-        return rules
 
     def getNVars(self):
         return CNFVariable.CNF_ID - 1
@@ -190,7 +182,7 @@ class ClassicEncoding(Encoding):
         return len(self.cnf.clauses)
 
     def getAvgRuleLength(self):
-        return round(statistics.mean([len(c) for c in self.cnf.clauses]), 2)
+        return round(statistics.fmean(len(c) for c in self.cnf.clauses), 2)
 
     def getPlanFromSolution(self, solution: SATSolution or bool) -> NumericPlan:
         plan = NumericPlan()

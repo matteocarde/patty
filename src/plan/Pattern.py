@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 import random
-from typing import List, Dict, Tuple, Set, Type
+from typing import List, Dict, Tuple, Set, Type, Iterator
 
 from src.goalFunctions.GoalFunction import GoalFunction
 from src.pddl.ARPG import ARPG
@@ -237,8 +237,8 @@ class Pattern:
     def getLength(self):
         return len(self)
 
-    def enumerate(self) -> List[Tuple[int, Action]]:
-        return [(i + 1, a) for (i, a) in enumerate(self.__order)]
+    def enumerate(self) -> Iterator[Tuple[int, Action]]:
+        return enumerate(self.__order, start=1)
 
     @classmethod
     def empty(cls):
