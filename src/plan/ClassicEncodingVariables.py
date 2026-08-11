@@ -104,5 +104,5 @@ class ClassicEncodingVariables:
             if i <= pi:
                 return si
 
-    def getBoolActionsBeforeIndex(self, boolActions: Set[CNFActionVariable], i: int) -> Set[CNFActionVariable]:
-        return {a for a in boolActions if self.__actionToIndexPattern[a.action] < i}
+    def getBoolActionsBeforeIndex(self, boolActions: Set[CNFActionVariable], i: int) -> List[CNFActionVariable]:
+        return [a for a in boolActions if self.__actionToIndexPattern[a.action] < i]

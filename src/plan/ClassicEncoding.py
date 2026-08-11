@@ -1,5 +1,6 @@
+import itertools
 import statistics
-from typing import List, Set
+from typing import List, Set, Tuple
 
 from src.pddl.Atom import Atom
 from src.pddl.Domain import GroundedDomain
@@ -16,6 +17,7 @@ from src.sat.CNFVariable import CNFVariable
 from src.sat.Invariants import Invariants
 from src.sat.SATSolution import SATSolution
 from src.utils.Arguments import Arguments
+from src.utils.TimeStat import TimeStat
 
 
 class ClassicEncoding(Encoding):
@@ -50,7 +52,12 @@ class ClassicEncoding(Encoding):
         self.addSequenceRules(self.cnf)
         self.addPreRules(self.cnf)
         self.addGoalExpression(self.cnf)
-        self.addInvariants(self.cnf, invariants)
+        t = TimeStat.startHolder("Adding Invariants to Goal")
+        self.addInvariantsInGoal(self.cnf, invariants)
+        t.endHolderMilliseconds()
+        # t = TimeStat.startHolder("Adding Invariants to Sequence")
+        # self.addInvariantsInSequence(self.cnf, invariants)
+        # t.endHolderMilliseconds()
 
         pass
 
@@ -97,7 +104,7 @@ class ClassicEncoding(Encoding):
         self.phases = [v.id for v in GmPvars]
         cnf.addClause(GmPvars)
 
-    def addInvariants(self, cnf: CNF, invariants: Invariants or None):
+    def addInvariantsInGoal(self, cnf: CNF, invariants: Invariants or None):
         if not invariants:
             return
 
@@ -114,29 +121,100 @@ class ClassicEncoding(Encoding):
             if l.sign == "-":
                 return x_[m - 1]
 
-        def getXi(i, l):
-            v = l.atom
-            m = self.vars.getPI2SI(v, i)
-            x = self.vars.cnfPosVars[v]
-            x_ = self.vars.cnfNegVars[v]
-            if l.sign == "+":
-                return x[m - 1]
-            if l.sign == "-":
-                return x_[m - 1]
-
         for (left, right) in invariants:
             c = [getXm(left), getXm(right)]
             cnf.addClause(c)
 
-        # for i, a in self.pattern.enumerate():
-        #     for l in a.effects:
-        #         assert isinstance(l, Literal)
-        #         v = l.atom
-        #         invs = invariants.getInvariantsConcerningAtom(v)
-        #         for (left, right) in invs:
-        #             c = [getXi(i, left), getXi(i, right)]
-        #             print(c)
-        #             cnf.addClause(c)
+    def addInvariantsInSequence(self, cnf: CNF, invariants: Invariants or None):
+        if not invariants:
+            return
+
+        self.invStats = {
+            "POSPOS": 0,
+            "POSNEG": 0,
+            "NEGNEG": 0
+        }
+
+        for i, a in self.pattern.enumerate():
+
+            if i == len(self.pattern):
+                continue
+
+            invs: Set[Tuple[Literal, Literal]] = set()
+            for l in a.effects:
+                assert isinstance(l, Literal)
+                v = l.atom
+                invs |= invariants.getInvariantsConcerningAtom(v)
+
+            left: Literal
+            right: Literal
+            for (left, right) in invs:
+                if left.sign == "+" and right.sign == "+":
+                    self.__addInvariantsInSequencePosPos(cnf, i, left, right)
+                if left.sign == "+" and right.sign == "-":
+                    self.__addInvariantsInSequencePosNeg(cnf, i, left, right)
+                if left.sign == "-" and right.sign == "+":
+                    self.__addInvariantsInSequencePosNeg(cnf, i, right, left)
+                if left.sign == "-" and right.sign == "-":
+                    self.__addInvariantsInSequenceNegNeg(cnf, i, left, right)
+
+        print(self.invStats)
+
+    def __addInvariantsInSequencePosPos(self, cnf: CNF, i: int, left: Literal, right: Literal):
+
+        self.invStats["POSPOS"] += 1
+        mx = self.vars.getPI2SI(left.atom, i)
+        my = self.vars.getPI2SI(right.atom, i)
+        x = self.vars.cnfPosVars[left.atom][mx - 2]
+        y = self.vars.cnfPosVars[right.atom][my - 2]
+
+        A_xmi = self.vars.getBoolActionsBeforeIndex(self.vars.addSequence[left.atom][mx - 1], i)
+        D_xmi = self.vars.getBoolActionsBeforeIndex(self.vars.deleteSequence[left.atom][mx - 1], i)
+        A_ymi = self.vars.getBoolActionsBeforeIndex(self.vars.addSequence[right.atom][my - 1], i)
+        D_ymi = self.vars.getBoolActionsBeforeIndex(self.vars.deleteSequence[right.atom][my - 1], i)
+
+        cnf.addClause([x, y] + A_xmi + A_ymi)
+        for dy in D_ymi:
+            cnf.addClause([x, ~dy] + A_xmi)
+        for dx in D_xmi:
+            cnf.addClause([y, ~dx] + A_ymi)
+        for (dx, dy) in itertools.product(D_xmi, D_ymi):
+            cnf.addClause([~dx, ~dy])
+
+        pass
+
+    def __addInvariantsInSequencePosNeg(self, cnf: CNF, i: int, left: Literal, right: Literal):
+
+        self.invStats["POSNEG"] += 1
+        mx = self.vars.getPI2SI(left.atom, i)
+        my = self.vars.getPI2SI(right.atom, i)
+        x = self.vars.cnfPosVars[left.atom][mx - 2]
+        y_ = self.vars.cnfNegVars[right.atom][my - 2]
+
+        A_xmi = self.vars.getBoolActionsBeforeIndex(self.vars.addSequence[left.atom][mx - 1], i)
+        D_xmi = self.vars.getBoolActionsBeforeIndex(self.vars.deleteSequence[left.atom][mx - 1], i)
+        D_ymi = self.vars.getBoolActionsBeforeIndex(self.vars.deleteSequence[right.atom][my - 1], i)
+
+        cnf.addClause([x, y_] + A_xmi + D_xmi)
+        for dx in D_xmi:
+            cnf.addClause([y_, ~dx] + D_ymi)
+
+        pass
+
+    def __addInvariantsInSequenceNegNeg(self, cnf: CNF, i: int, left: Literal, right: Literal):
+
+        self.invStats["NEGNEG"] += 1
+        mx = self.vars.getPI2SI(left.atom, i)
+        my = self.vars.getPI2SI(right.atom, i)
+        x_ = self.vars.cnfNegVars[left.atom][mx - 2]
+        y_ = self.vars.cnfNegVars[right.atom][my - 2]
+
+        D_xmi = self.vars.getBoolActionsBeforeIndex(self.vars.deleteSequence[left.atom][mx - 1], i)
+        D_ymi = self.vars.getBoolActionsBeforeIndex(self.vars.deleteSequence[right.atom][my - 1], i)
+
+        cnf.addClause([x_, y_] + D_xmi + D_ymi)
+
+        pass
 
     def addSequenceRules(self, cnf: CNF):
         current = self.vars.currentState
