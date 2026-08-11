@@ -84,8 +84,18 @@ RUN rm -rf pyeda
 RUN mv build/lib.linux-x86_64-cpython-38/pyeda/ pyeda/
 
 #Install madagascar
-COPY /benchmarks/planners/madagascar /var/madagascar
-ENV PATH /var/madagascar/:${PATH}
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    bison \
+    flex \
+ && rm -rf /var/lib/apt/lists/*
+
+COPY benchmarks/planners/madagascar /var/madagascar
+WORKDIR /var/madagascar
+RUN make CC=gcc ARCHFLAGS= WARNINGFLAGS=-w
+RUN test -x /var/madagascar/madagascar
+
+ENV PATH="/var/madagascar:${PATH}"
 
 #Install PySAT
 RUN pip install 'python-sat[aiger,approxmc,cryptosat,pblib]'

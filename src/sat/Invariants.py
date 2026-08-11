@@ -2,7 +2,7 @@ import re
 import subprocess
 from typing import List, Tuple, Dict, Set
 
-from pyeda_linux.boolalg.expr import Atom
+from src.pddl.Atom import Atom
 from src.pddl.Domain import GroundedDomain
 from src.pddl.Literal import Literal
 from src.pddl.Problem import Problem

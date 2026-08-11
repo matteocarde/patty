@@ -24,7 +24,7 @@ def main():
     if envs.isInsideAWS:
         time.sleep(envs.index / 4)
     else:
-        envs.file = "benchmarks/instances/classical.csv"
+        envs.file = "benchmarks/instances/jair-classical.csv"
 
     logger = CloudLogger(envs.experiment)
 
