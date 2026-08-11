@@ -114,9 +114,29 @@ class ClassicEncoding(Encoding):
             if l.sign == "-":
                 return x_[m - 1]
 
+        def getXi(i, l):
+            v = l.atom
+            m = self.vars.getPI2SI(v, i)
+            x = self.vars.cnfPosVars[v]
+            x_ = self.vars.cnfNegVars[v]
+            if l.sign == "+":
+                return x[m - 1]
+            if l.sign == "-":
+                return x_[m - 1]
+
         for (left, right) in invariants:
             c = [getXm(left), getXm(right)]
             cnf.addClause(c)
+
+        # for i, a in self.pattern.enumerate():
+        #     for l in a.effects:
+        #         assert isinstance(l, Literal)
+        #         v = l.atom
+        #         invs = invariants.getInvariantsConcerningAtom(v)
+        #         for (left, right) in invs:
+        #             c = [getXi(i, left), getXi(i, right)]
+        #             print(c)
+        #             cnf.addClause(c)
 
     def addSequenceRules(self, cnf: CNF):
         current = self.vars.currentState

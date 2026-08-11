@@ -3,12 +3,9 @@ from typing import Dict, Set, List
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
 from src.pddl.Domain import GroundedDomain
-from src.pddl.Literal import Literal
 from src.plan.Pattern import Pattern
 from src.sat.CNFVariable import CNFActionVariable
 from src.sat.CNFVariable import CNFVariable
-
-from src.sat.CNFVariable import CNFActionVariable
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTVariable import SMTVariable
 from src.utils.TimeStat import TimeStat

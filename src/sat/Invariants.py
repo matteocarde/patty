@@ -1,7 +1,8 @@
 import re
 import subprocess
-from typing import List
+from typing import List, Tuple, Dict
 
+from pyeda_linux.boolalg.expr import Atom
 from src.pddl.Domain import GroundedDomain
 from src.pddl.Literal import Literal
 from src.pddl.Problem import Problem
@@ -9,7 +10,8 @@ from src.utils.TimeStat import TimeStat
 
 
 class Invariants:
-    __invariants: List[List[Literal]]
+    __invariants: List[Tuple[Literal, Literal]]
+    __invariantsByAtom: Dict[Atom, List[Tuple[Literal, Literal]]]
 
     def __init__(self, domain: GroundedDomain, problem: Problem):
         t = TimeStat.startHolder("Computing Invariants with Madagascar")
@@ -20,6 +22,7 @@ class Invariants:
 
         pattern = re.compile(r"^(~?)(.*?) OR (~?)(.*?)$")
         self.__invariants = []
+        self.__invariantsByAtom = dict()
 
         for line in invariantsText.splitlines():
             match = pattern.fullmatch(line.strip())
@@ -30,13 +33,23 @@ class Invariants:
                 posRight = match.group(3) != "~"
                 rightAtom = name2Var[match.group(4)]
 
-                left = Literal.pos(leftAtom) if posLeft else Literal.neg(leftAtom)
-                right = Literal.pos(rightAtom) if posRight else Literal.neg(rightAtom)
+                left: Literal = Literal.pos(leftAtom) if posLeft else Literal.neg(leftAtom)
+                right: Literal = Literal.pos(rightAtom) if posRight else Literal.neg(rightAtom)
 
-                self.__invariants.append([left, right])
+                inv: Tuple[Literal, Literal] = (left, right)
+
+                self.__invariantsByAtom.setdefault(left.atom, list())
+                self.__invariantsByAtom[left.atom].append(inv)
+                self.__invariantsByAtom.setdefault(right.atom, list())
+                self.__invariantsByAtom[right.atom].append(inv)
+
+                self.__invariants.append(inv)
 
     def __iter__(self):
         return iter(self.__invariants)
+
+    def getInvariantsConcerningAtom(self, v: Atom) -> List[Tuple[Literal, Literal]]:
+        return self.__invariantsByAtom.get(v, list())
 
     @staticmethod
     def __run_madagascar(domain_file, instance_file) -> str:

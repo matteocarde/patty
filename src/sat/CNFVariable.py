@@ -22,7 +22,10 @@ class CNFVariable:
         return self.id
 
     def __repr__(self):
-        return self.id
+        return self.name
+
+    def __str__(self):
+        return self.name
 
     def __invert__(self):
         return -self.id
