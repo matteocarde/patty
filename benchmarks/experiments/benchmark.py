@@ -24,7 +24,7 @@ def main():
     if envs.isInsideAWS:
         time.sleep(envs.index / 4)
     else:
-        envs.file = "benchmarks/instances/ces.csv"
+        envs.file = "benchmarks/instances/classical.csv"
 
     logger = CloudLogger(envs.experiment)
 

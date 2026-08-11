@@ -1,0 +1,27 @@
+
+2010-2023 (C) Jussi Rintanen
+
+
+Compilation:
+   Choose between M, Mp and MpC by commenting/uncommenting the lines for
+   VERSION and EXECUTABLE in Makefile
+   make
+
+We recommend usign the the planner first with default settings ( = only the input files
+on the command line). They often work best.
+
+The command line for the executables consist of a number of options and
+the names of input file names. With an empty command line you get the list
+of options together with information on the default configuration.
+
+MpC often consumes all available memory, so it is critical to make sure that
+-m N flag is set sensibly. Too high values lead to paging, and too low values
+may mean that plans are not found. The default can be adjusted in main.c as
+the default value of the flagMemoryLimit variable.
+
+The DIMACS output file obtained with the -O option includes symbol table
+information, to map each propositional variable to a time point and
+action or state variable name. The Perl script KISSATSOLVE uses this
+information to call the KisSAT solver to solve and output a solution
+(in case the formula is satisfiable.) The Perl scrip SHOWDIMACS outputs
+the DIMACS CNF file with literals in symbolic form.

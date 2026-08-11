@@ -83,6 +83,13 @@ RUN python3.8 setup.py install
 RUN rm -rf pyeda
 RUN mv build/lib.linux-x86_64-cpython-38/pyeda/ pyeda/
 
+#Install madagascar
+COPY /benchmarks/planners/madagascar /var/madagascar
+ENV PATH /var/madagascar/:${PATH}
+
+#Install PySAT
+RUN pip install 'python-sat[aiger,approxmc,cryptosat,pblib]'
+
 WORKDIR /project
 COPY . .
 #Authorizations

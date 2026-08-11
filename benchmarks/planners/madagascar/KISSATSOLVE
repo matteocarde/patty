@@ -1,0 +1,106 @@
+#!/usr/bin/env perl
+# Jussi Rintanen (C) 2023
+#
+# Run KisSAT with a DIMACS CNF file produced by Madagascar,
+# and if the formula is satisfiable, then display the plan.
+# Note that for E-step plans the ordering of the actions
+# at each step follows the numbering of the actions, and
+# the actions might not be executable in that order.
+# However, the encoding for E-step plans in Madagascar
+# guarantees that there is at least one ordering of the
+# actions for each step that is correctly executable.
+
+use IO::Handle;
+
+if(($ARGV[0] cmp "") != 0) {
+	if(($ARGV[0] cmp "") != 0) {
+		    $dimacsfile = $ARGV[0];
+	}
+} else {
+	printf("usage: KISSATSOLVE [DIMACS filename]\n");
+	exit(0);
+}
+
+@file = `cat $dimacsfile`;
+
+$lasttime = 0;
+$lastaction = 0;
+
+for(@file) {
+    if(/c action ([\d]+) ([\d]+) (.+)/) {
+	$actionname[$1] = $3;
+	$actiontime[$1] = $2;
+	if($2 > $lasttime) {
+	    $lasttime = $2;
+	}
+	if($1 > $lastaction) {
+	    $lastaction = $1;
+	}
+    }
+}
+
+$lastvartime = 0;
+$lastvar = 0;
+
+for(@file) {
+    if(/c var ([\d]+) ([\d]+) (.+)/) {
+	$varname[$1] = $3;
+	$vartime[$1] = $2;
+	if($2 > $lastvartime) {
+	    $lastvartime = $2;
+	}
+	if($1 > $lastvar) {
+	    $lastvar = $1;
+	}
+    }
+}
+
+my $valuation;
+
+@solveroutput = `./kissat $dimacsfile`;
+
+for(@solveroutput) {
+    if(/c process-time:[\s]+[\d]*m?[\s]+[\d]+s[\s]+([\d]+).([\d]+) seconds/) {
+        $runtime = "$1.$2";
+    }
+    if(/s UNSATISFIABLE/) {
+        $unsatisfiable = 1;
+    }
+    if(/s SATISFIABLE/) {
+        $satisfiable = 1;
+    }
+    if(/v(( -?[\d]+)*)/) {
+	my @values;
+	@values=split(' ',$1);
+	# Record positive values.
+	foreach (@values) {
+	    if($_ > 0) {
+		$valuation[$_] = 1;
+	    }
+	}
+    }
+}
+
+if($satisfiable) {
+    print("Formula is SATISFIABLE\n");
+    printf("PLAN:\n");
+    for($k=0;$k<=$lasttime;$k++) {
+	printf("TIME %i:\n",$k);
+	for($j=0;$j<$lastaction;$j++) {
+	    if(($valuation[$j] == 1) && (length($actionname[$j]) > 0) && ($actiontime[$j] == $k)) {
+		printf("  %s\n",$actionname[$j]);
+	    }
+	}
+    }
+#    printf("STATE SEQUENCE:\n");
+#    for($k=0;$k<=$lastvartime;$k++) {
+#	printf("TIME %i:\n",$k);
+#	for($j=0;$j<$lastvar;$j++) {
+#	    if(($valuation[$j] == 1) && (length($varname[$j]) > 0) && ($vartime[$j] == $k)) {
+#		printf("  %s\n",$varname[$j]);
+#	    }
+#	}
+#    }
+} else {
+    print("Formula is UNSATISFIABLE\n");
+}

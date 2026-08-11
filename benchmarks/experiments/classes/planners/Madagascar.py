@@ -27,4 +27,4 @@ class Madagascar(Planner):
         return r
 
     def getCommand(self, domain: str, problem: str):
-        return ["madagascar", domain, problem, "-A", "1", "-S", "1", "-Q"]
+        return ["madagascar", domain, problem, "-S", "1", "-M", "1", "-Q"]
