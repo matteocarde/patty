@@ -45,9 +45,15 @@ class SATSolver:
         t = TimeStat.startHolder("Loading clauses to RC2 MaxSAT solver")
 
         # RC2 uses an internal SAT solver. "g42" preserves your previous choice.
-        with RC2(wcnf, solver="g42") as maxsat:
+        with RC2(wcnf, solver="g42", adapt=True, exhaust=True, incr=False, minz=True) as maxsat:
             t.endHolderMilliseconds()
-
+            maxsat.oracle.configure({
+                "rnd-seed": 20121996,
+                "rnd-freq": 0,
+                "rnd-init-act": False,
+                "rnd-pol": False,
+                "rnd-first-descent": False
+            })
             t = TimeStat.startHolder("Actual MaxSAT solving time")
             model = maxsat.compute()
             t.endHolderMilliseconds(group="SOLVING")
@@ -81,6 +87,13 @@ class SATSolver:
         with Solver(name="g42", bootstrap_with=self.cnf.clauses) as s:
             if self.encoding.phases:
                 s.set_phases(self.encoding.phases)
+            s.configure({
+                "rnd-seed": 20121996,
+                "rnd-freq": 0,
+                "rnd-init-act": False,
+                "rnd-pol": False,
+                "rnd-first-descent": False
+            })
             t.endHolderMilliseconds()
             t = TimeStat.startHolder("Actual SAT Solving time")
             res = s.solve()
@@ -99,7 +112,7 @@ class SATSolver:
             return solution
 
     def getSolution(self):
-        return self.__getSolutionMAXSAT()
+        return self.__getSolutionSAT()
 
     def solve(self) -> Plan or bool:
 

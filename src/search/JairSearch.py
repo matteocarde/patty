@@ -131,17 +131,17 @@ class JairSearch(Search):
             if self.args.saveSMT:
                 self.saveSMT(bound, encoding, callsToSolver=callsToSolver)
 
-            if self.args.printPartialPlan:
-                console.log("--Partial Plan---", LogPrintLevel.STATS)
-                console.log(partialPlan.toValString(), LogPrintLevel.STATS)
-                console.log("-----------------", LogPrintLevel.STATS)
-
             if not isinstance(partialPlan, Plan):
                 unsatN += 1
                 patG = self.computeS2Pn(patS, plan, unsatN, P).addPostfix(f"{bound}_g")
                 patH = self.computeP2Gn(I, P, unsatN, lastPatH, patH).addPostfix(bound)
                 console.log(f"Bound {bound} - No improvement", LogPrintLevel.STATS)
                 continue
+
+            if self.args.printPartialPlan:
+                console.log("--Partial Plan---", LogPrintLevel.STATS)
+                console.log(partialPlan.toValString(), LogPrintLevel.STATS)
+                console.log("-----------------", LogPrintLevel.STATS)
 
             unsatN = 0
             plan = partialPlan if S == I else plan + partialPlan
@@ -154,7 +154,7 @@ class JairSearch(Search):
                 return plan
 
             subgoalsAchieved = {g for g in self.problem.goal if P.satisfies(g)}
-            console.log(f"Bound {bound} - Improvement - {len(subgoalsAchieved)}/{len(self.problem.goal)} subgoals",
+            console.log(f"Bound {bound} - Improvement - {len(subgoalsAchieved)}/{len(self.problem.goal)} subgoals: {subgoalsAchieved}",
                         LogPrintLevel.STATS)
 
             patG = self.computeS2P(patS, plan, P).addPostfix(f"{bound}_g")
