@@ -55,7 +55,7 @@ class Invariants:
     def __run_madagascar(domain_file, instance_file) -> str:
         result = subprocess.run(
             [
-                "/Users/carde/Bin/madagascar/madagascar",
+                "./benchmarks/planners/madagascar/madagascar",
                 domain_file,
                 instance_file,
                 "-I",
