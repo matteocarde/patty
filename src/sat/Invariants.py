@@ -1,3 +1,4 @@
+import os
 import re
 import subprocess
 from typing import List, Tuple, Dict, Set
@@ -53,9 +54,12 @@ class Invariants:
 
     @staticmethod
     def __run_madagascar(domain_file, instance_file) -> str:
+        if "MADAGASCAR_HOME" not in os.environ:
+            raise Exception("Madagascar should be installed and saved in MADAGASCAR_HOME environmental variable")
+        print("Using Madagascar: ", os.environ["MADAGASCAR_HOME"])
         result = subprocess.run(
             [
-                "./benchmarks/planners/madagascar/madagascar",
+                os.environ["MADAGASCAR_HOME"],
                 domain_file,
                 instance_file,
                 "-I",
