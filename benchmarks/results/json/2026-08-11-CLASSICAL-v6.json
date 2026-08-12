@@ -1,0 +1,6962 @@
+{
+  "classic/ipc-2014/barman": {
+    "instance-1.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 4292,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 39813,
+          "nOfRules": 3459297,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 27271
+        }
+      ]
+    },
+    "instance-10.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 4292,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 75815,
+          "nOfRules": 7565175,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 54375
+        }
+      ]
+    },
+    "instance-11.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 4774,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 44520,
+          "nOfRules": 3669939,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 30381
+        }
+      ]
+    },
+    "instance-12.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 5080,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 46508,
+          "nOfRules": 5043969,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 32340
+        }
+      ]
+    },
+    "instance-13.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 5386,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 49403,
+          "nOfRules": 5573386,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 34326
+        }
+      ]
+    },
+    "instance-14.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 4018,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 71022,
+          "nOfRules": 6779347,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 50869
+        }
+      ]
+    },
+    "instance-15.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 4292,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 39909,
+          "nOfRules": 3150020,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 27255
+        }
+      ]
+    },
+    "instance-16.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 4774,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 44229,
+          "nOfRules": 4173466,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 30418
+        }
+      ]
+    },
+    "instance-17.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 3574,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 63379,
+          "nOfRules": 5497789,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 45138
+        }
+      ]
+    },
+    "instance-18.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 4292,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 40114,
+          "nOfRules": 3138125,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 27284
+        }
+      ]
+    },
+    "instance-19.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 4774,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 43964,
+          "nOfRules": 4193777,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 30405
+        }
+      ]
+    },
+    "instance-2.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 4774,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 44194,
+          "nOfRules": 3927134,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 30371
+        }
+      ]
+    },
+    "instance-20.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 5080,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 46221,
+          "nOfRules": 5042101,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 32345
+        }
+      ]
+    },
+    "instance-3.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 5080,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 46903,
+          "nOfRules": 4550618,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 32361
+        }
+      ]
+    },
+    "instance-4.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 3574,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 64125,
+          "nOfRules": 4995624,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 45170
+        }
+      ]
+    },
+    "instance-5.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 4292,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 39642,
+          "nOfRules": 3704486,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 27284
+        }
+      ]
+    },
+    "instance-6.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 4774,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 44112,
+          "nOfRules": 4105183,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 30401
+        }
+      ]
+    },
+    "instance-7.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 5080,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 46908,
+          "nOfRules": 4712102,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 32346
+        }
+      ]
+    },
+    "instance-8.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 5386,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 49042,
+          "nOfRules": 5035030,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 34285
+        }
+      ]
+    },
+    "instance-9.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 3574,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        },
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 3574,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 63493,
+          "nOfRules": 5450084,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 45158
+        }
+      ]
+    }
+  },
+  "classic/ipc-2014/child-snack": {
+    "instance-1.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 40.0,
+          "bound": 3,
+          "planLength": 33.0,
+          "nOfVars": 6704,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 15040.0,
+          "bound": 8,
+          "planLength": 0.0,
+          "nOfVars": 4936,
+          "nOfRules": 1320900,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 8,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 4032
+        }
+      ]
+    },
+    "instance-10.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 22600,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 137360.0,
+          "bound": 14,
+          "planLength": 0.0,
+          "nOfVars": 13783,
+          "nOfRules": 10311674,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 14,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 12528
+        }
+      ]
+    },
+    "instance-11.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 26332,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 15870,
+          "nOfRules": 13351071,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 14570
+        }
+      ]
+    },
+    "instance-12.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 26395,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 199270.0,
+          "bound": 16,
+          "planLength": 0.0,
+          "nOfVars": 15932,
+          "nOfRules": 13351866,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 16,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 14592
+        }
+      ]
+    },
+    "instance-13.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 32647,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 260730.00000000003,
+          "bound": 16,
+          "planLength": 0.0,
+          "nOfVars": 20122,
+          "nOfRules": 18472905,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 16,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 18480
+        }
+      ]
+    },
+    "instance-14.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 38672,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 12084,
+          "nOfRules": 6319988,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 10840
+        }
+      ]
+    },
+    "instance-15.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 38864,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 12088,
+          "nOfRules": 6320015,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 10840
+        }
+      ]
+    },
+    "instance-16.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 44281,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 26475,
+          "nOfRules": 31295478,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 24715
+        }
+      ]
+    },
+    "instance-17.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 52186,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 15660,
+          "nOfRules": 10385346,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 14312
+        }
+      ]
+    },
+    "instance-18.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 61568,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        },
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 61568,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 83720.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 18099,
+          "nOfRules": 13459278,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 16668
+        }
+      ]
+    },
+    "instance-19.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 89936,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 122180.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 25904,
+          "nOfRules": 25964145,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 24288
+        }
+      ]
+    },
+    "instance-2.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 50.0,
+          "bound": 3,
+          "planLength": 33.0,
+          "nOfVars": 6704,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 22270.0,
+          "bound": 11,
+          "planLength": 0.0,
+          "nOfVars": 4918,
+          "nOfRules": 1320973,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 11,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 4026
+        }
+      ]
+    },
+    "instance-20.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 90064,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 124270.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 25904,
+          "nOfRules": 25964657,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 24288
+        }
+      ]
+    },
+    "instance-3.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 90.0,
+          "bound": 3,
+          "planLength": 36.0,
+          "nOfVars": 9029,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 30390.0,
+          "bound": 12,
+          "planLength": 0.0,
+          "nOfVars": 6302,
+          "nOfRules": 2182514,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 12,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 5335
+        }
+      ]
+    },
+    "instance-4.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 90.0,
+          "bound": 3,
+          "planLength": 39.0,
+          "nOfVars": 11148,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 45200.0,
+          "bound": 15,
+          "planLength": 0.0,
+          "nOfVars": 7567,
+          "nOfRules": 3105404,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 15,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 6525
+        }
+      ]
+    },
+    "instance-5.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 14205,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 52640.0,
+          "bound": 12,
+          "planLength": 0.0,
+          "nOfVars": 9322,
+          "nOfRules": 4788671,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 12,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 8197
+        }
+      ]
+    },
+    "instance-6.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2510.0,
+          "bound": 3,
+          "planLength": 42.0,
+          "nOfVars": 14205,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 73920.0,
+          "bound": 14,
+          "planLength": 0.0,
+          "nOfVars": 9295,
+          "nOfRules": 4788626,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 14,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 8188
+        }
+      ]
+    },
+    "instance-7.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 200.0,
+          "bound": 3,
+          "planLength": 45.0,
+          "nOfVars": 17976,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 73310.0,
+          "bound": 11,
+          "planLength": 0.0,
+          "nOfVars": 11513,
+          "nOfRules": 7101785,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 11,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 10287
+        }
+      ]
+    },
+    "instance-8.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 17976,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 99710.0,
+          "bound": 14,
+          "planLength": 0.0,
+          "nOfVars": 11477,
+          "nOfRules": 7101674,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 14,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 10275
+        }
+      ]
+    },
+    "instance-9.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 22540,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 129840.0,
+          "bound": 11,
+          "planLength": 0.0,
+          "nOfVars": 13789,
+          "nOfRules": 10311743,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 11,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 12530
+        }
+      ]
+    }
+  },
+  "classic/ipc-2014/floor-tile": {
+    "instance-1.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 0.0,
+          "bound": 8,
+          "planLength": 38.0,
+          "nOfVars": 346,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1990.0,
+          "bound": 18,
+          "planLength": 0.0,
+          "nOfVars": 2256,
+          "nOfRules": 8147,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 18,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 805
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1990.0,
+          "bound": 18,
+          "planLength": 0.0,
+          "nOfVars": 2330,
+          "nOfRules": 8294,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 18,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 821
+        }
+      ]
+    },
+    "instance-10.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 11640.0,
+          "bound": 12,
+          "planLength": 91.0,
+          "nOfVars": 1146,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 15590.0,
+          "bound": 51,
+          "planLength": 0.0,
+          "nOfVars": 14725,
+          "nOfRules": 59395,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 51,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 5895
+        }
+      ]
+    },
+    "instance-11.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2770.0,
+          "bound": 16,
+          "planLength": 78.0,
+          "nOfVars": 664,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 5880.0,
+          "bound": 39,
+          "planLength": 0.0,
+          "nOfVars": 8175,
+          "nOfRules": 29588,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 39,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 3155
+        }
+      ]
+    },
+    "instance-12.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 834,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 16550.0,
+          "bound": 53,
+          "planLength": 0.0,
+          "nOfVars": 10484,
+          "nOfRules": 38344,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 53,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 4013
+        }
+      ]
+    },
+    "instance-13.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1090.0,
+          "bound": 13,
+          "planLength": 95.0,
+          "nOfVars": 1146,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 11730.0,
+          "bound": 48,
+          "planLength": 0.0,
+          "nOfVars": 14972,
+          "nOfRules": 60117,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 48,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 5954
+        }
+      ]
+    },
+    "instance-14.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 710.0,
+          "bound": 14,
+          "planLength": 65.0,
+          "nOfVars": 564,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 3590.0,
+          "bound": 31,
+          "planLength": 0.0,
+          "nOfVars": 6925,
+          "nOfRules": 25488,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 31,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 2653
+        }
+      ]
+    },
+    "instance-15.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 94530.0,
+          "bound": 17,
+          "planLength": 83.0,
+          "nOfVars": 708,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 11250.0,
+          "bound": 41,
+          "planLength": 0.0,
+          "nOfVars": 8847,
+          "nOfRules": 32556,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 41,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 3355
+        }
+      ]
+    },
+    "instance-16.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 834,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 16140.0,
+          "bound": 55,
+          "planLength": 0.0,
+          "nOfVars": 10325,
+          "nOfRules": 38425,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 55,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 3990
+        }
+      ]
+    },
+    "instance-17.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 300.0,
+          "bound": 12,
+          "planLength": 91.0,
+          "nOfVars": 1146,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 11530.0,
+          "bound": 47,
+          "planLength": 0.0,
+          "nOfVars": 14706,
+          "nOfRules": 59486,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 47,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 5890
+        }
+      ]
+    },
+    "instance-18.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 0.0,
+          "bound": 7,
+          "planLength": 36.0,
+          "nOfVars": 346,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1990.0,
+          "bound": 19,
+          "planLength": 0.0,
+          "nOfVars": 2375,
+          "nOfRules": 8373,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 19,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 826
+        }
+      ]
+    },
+    "instance-19.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 834,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 10900.0,
+          "bound": 55,
+          "planLength": 0.0,
+          "nOfVars": 10480,
+          "nOfRules": 38265,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 55,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 4001
+        }
+      ]
+    },
+    "instance-2.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 470.0,
+          "bound": 13,
+          "planLength": 61.0,
+          "nOfVars": 564,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 4300.0,
+          "bound": 29,
+          "planLength": 0.0,
+          "nOfVars": 6965,
+          "nOfRules": 25630,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 29,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 2667
+        }
+      ]
+    },
+    "instance-20.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1430.0,
+          "bound": 13,
+          "planLength": 93.0,
+          "nOfVars": 1146,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 17020.0,
+          "bound": 45,
+          "planLength": 0.0,
+          "nOfVars": 14837,
+          "nOfRules": 58913,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 45,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 5905
+        }
+      ]
+    },
+    "instance-3.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 11430.0,
+          "bound": 15,
+          "planLength": 76.0,
+          "nOfVars": 708,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 6040.0,
+          "bound": 41,
+          "planLength": 0.0,
+          "nOfVars": 8821,
+          "nOfRules": 32430,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 41,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 3351
+        }
+      ]
+    },
+    "instance-4.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 910.0,
+          "bound": 14,
+          "planLength": 72.0,
+          "nOfVars": 664,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 7840.0,
+          "bound": 40,
+          "planLength": 0.0,
+          "nOfVars": 8284,
+          "nOfRules": 30830,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 40,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 3178
+        }
+      ]
+    },
+    "instance-5.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 834,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 10590.0,
+          "bound": 47,
+          "planLength": 0.0,
+          "nOfVars": 10275,
+          "nOfRules": 37895,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 47,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 3982
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 7790.0,
+          "bound": 49,
+          "planLength": 0.0,
+          "nOfVars": 5814,
+          "nOfRules": 22087,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 49,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 2053
+        }
+      ]
+    },
+    "instance-6.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 27260.0,
+          "bound": 12,
+          "planLength": 91.0,
+          "nOfVars": 1146,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 15330.0,
+          "bound": 46,
+          "planLength": 0.0,
+          "nOfVars": 14953,
+          "nOfRules": 60198,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 46,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 5939
+        }
+      ]
+    },
+    "instance-7.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 520.0,
+          "bound": 14,
+          "planLength": 66.0,
+          "nOfVars": 564,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 5260.0,
+          "bound": 34,
+          "planLength": 0.0,
+          "nOfVars": 3887,
+          "nOfRules": 14201,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 34,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 1373
+        }
+      ]
+    },
+    "instance-8.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1470.0,
+          "bound": 15,
+          "planLength": 77.0,
+          "nOfVars": 664,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 8160.0,
+          "bound": 42,
+          "planLength": 0.0,
+          "nOfVars": 8221,
+          "nOfRules": 29952,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 42,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 3163
+        }
+      ]
+    },
+    "instance-9.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 834,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 8000.0,
+          "bound": 49,
+          "planLength": 0.0,
+          "nOfVars": 10420,
+          "nOfRules": 38592,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 49,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 3987
+        }
+      ]
+    }
+  },
+  "classic/ipc-2014/genome-edit": {
+    "instance-1.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 7702,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 36511,
+          "nOfRules": 7279069,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 21987
+        }
+      ]
+    },
+    "instance-10.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 7702,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 36651,
+          "nOfRules": 7279288,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 22015
+        }
+      ]
+    },
+    "instance-11.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 0.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 2,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 1600.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-12.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 8566,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 40827,
+          "nOfRules": 8974345,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 24574
+        }
+      ]
+    },
+    "instance-13.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 12482,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 18260,
+          "nOfRules": 4845136,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 8947
+        }
+      ]
+    },
+    "instance-14.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 13576,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 20302,
+          "nOfRules": 4291275,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 9744
+        }
+      ]
+    },
+    "instance-15.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 14716,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 21194,
+          "nOfRules": 6755512,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 10575
+        }
+      ]
+    },
+    "instance-16.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 12482,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 18502,
+          "nOfRules": 4534989,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 8947
+        }
+      ]
+    },
+    "instance-17.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 13576,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 19698,
+          "nOfRules": 5740809,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 9744
+        }
+      ]
+    },
+    "instance-18.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 15902,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 22850,
+          "nOfRules": 7866026,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 11440
+        }
+      ]
+    },
+    "instance-19.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 15902,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 22802,
+          "nOfRules": 7882827,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 11440
+        }
+      ]
+    },
+    "instance-2.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 8566,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 40470,
+          "nOfRules": 8998845,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 24533
+        }
+      ]
+    },
+    "instance-20.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 8566,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 191050.0,
+          "bound": 25,
+          "planLength": 0.0,
+          "nOfVars": 12888,
+          "nOfRules": 2293177,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 25,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 6099
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 198320.0,
+          "bound": 27,
+          "planLength": 0.0,
+          "nOfVars": 12888,
+          "nOfRules": 2293177,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 27,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 6099
+        }
+      ]
+    },
+    "instance-3.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 6884,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 106590.0,
+          "bound": 22,
+          "planLength": 0.0,
+          "nOfVars": 10540,
+          "nOfRules": 1487578,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 22,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 4879
+        }
+      ]
+    },
+    "instance-4.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 6884,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 268270.0,
+          "bound": 27,
+          "planLength": 0.0,
+          "nOfVars": 32921,
+          "nOfRules": 5820090,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 27,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 19622
+        }
+      ]
+    },
+    "instance-5.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 7702,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 36468,
+          "nOfRules": 7279175,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 21994
+        }
+      ]
+    },
+    "instance-6.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 6884,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 271040.0,
+          "bound": 26,
+          "planLength": 0.0,
+          "nOfVars": 10540,
+          "nOfRules": 1487595,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 26,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 4879
+        }
+      ]
+    },
+    "instance-7.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 10432,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 15406,
+          "nOfRules": 3400078,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 7455
+        }
+      ]
+    },
+    "instance-8.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 10432,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 27093,
+          "nOfRules": 6696382,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 15062
+        }
+      ]
+    },
+    "instance-9.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 7702,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 202590.0,
+          "bound": 25,
+          "planLength": 0.0,
+          "nOfVars": 11688,
+          "nOfRules": 1857545,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 25,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 5472
+        }
+      ]
+    }
+  },
+  "classic/ipc-2014/hiking": {
+    "instance-1.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 470.0,
+          "bound": 5,
+          "planLength": 16.0,
+          "nOfVars": 16116,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 660.0,
+          "bound": 5,
+          "planLength": 16.0,
+          "nOfVars": 16116,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 40000.0,
+          "bound": 5,
+          "planLength": 0.0,
+          "nOfVars": 21026,
+          "nOfRules": 282485,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": 5,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": 5310
+        }
+      ]
+    },
+    "instance-10.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 150533,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        },
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-11.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 225526,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-12.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 315479,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-13.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 420392,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-14.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 540265,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-15.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 22490.0,
+          "bound": 5,
+          "planLength": 27.0,
+          "nOfVars": 103073,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-16.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 38670.0,
+          "bound": 6,
+          "planLength": 32.0,
+          "nOfVars": 205609,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-17.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 243290.0,
+          "bound": 7,
+          "planLength": 38.0,
+          "nOfVars": 342225,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-18.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 512921,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-19.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 717697,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-2.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 39820.0,
+          "bound": 7,
+          "planLength": 23.0,
+          "nOfVars": 32053,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 70450,
+          "nOfRules": 750549,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 18812
+        }
+      ]
+    },
+    "instance-20.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 956553,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-3.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 53270,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 84092,
+          "nOfRules": 2043158,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 29232
+        }
+      ]
+    },
+    "instance-4.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 79767,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 111770,
+          "nOfRules": 3454304,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 41994
+        }
+      ]
+    },
+    "instance-5.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 111544,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 136168,
+          "nOfRules": 5764764,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 57060
+        }
+      ]
+    },
+    "instance-6.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 148601,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 82885,
+          "nOfRules": 4406648,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 37215
+        }
+      ]
+    },
+    "instance-7.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 190938,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-8.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2840.0,
+          "bound": 5,
+          "planLength": 23.0,
+          "nOfVars": 45427,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        },
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 2860.0,
+          "bound": 5,
+          "planLength": 23.0,
+          "nOfVars": 45427,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 58577,
+          "nOfRules": 859844,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 14624
+        }
+      ]
+    },
+    "instance-9.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 29030.0,
+          "bound": 6,
+          "planLength": 26.0,
+          "nOfVars": 90500,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 161424,
+          "nOfRules": 5807051,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 51808
+        }
+      ]
+    }
+  },
+  "classic/ipc-2014/parking": {
+    "instance-1.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 51186,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-10.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 91020,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-11.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 91020,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-12.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-13.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-14.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-15.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-16.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 126656,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-17.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-18.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-19.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-2.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 51186,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        },
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-20.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-3.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 62792,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-4.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 62792,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-5.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 62792,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-6.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 76034,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-7.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 76034,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-8.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 76034,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-9.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    }
+  },
+  "classic/ipc-2014/tetris": {
+    "instance-1.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 0.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-10.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 48650.0,
+          "bound": 7,
+          "planLength": 58.0,
+          "nOfVars": 41384,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-11.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 144870.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-12.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 85728,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-13.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 160220.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-14.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 161740.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 279350.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-15.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 234670.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-16.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 185620.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        },
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-17.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 51084,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-18.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 165970.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 264230.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-19.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 136530.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-2.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 123950.0,
+          "bound": 8,
+          "planLength": 48.0,
+          "nOfVars": 106872,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 281340.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-20.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 282010.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-3.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 236810.0,
+          "bound": 8,
+          "planLength": 47.0,
+          "nOfVars": 71808,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-4.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 124590.0,
+          "bound": 9,
+          "planLength": 55.0,
+          "nOfVars": 73072,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 178430.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-5.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 95350.0,
+          "bound": 9,
+          "planLength": 63.0,
+          "nOfVars": 105160,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 170120.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-6.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 75750.0,
+          "bound": 7,
+          "planLength": 46.0,
+          "nOfVars": 39288,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-7.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 191340.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-8.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 134040.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 273060.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-9.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 188300.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 295340.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    }
+  },
+  "classic/ipc-2014/thoughtful": {
+    "instance-1.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 5950.0,
+          "bound": 18,
+          "planLength": 35.0,
+          "nOfVars": 3980,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-10.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 42358,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 56890.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-11.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 42466,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 53650.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-12.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 41789,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 62290.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-13.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 44693,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 57890.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-14.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 39657,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 67160.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-15.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 41302,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 82040.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-16.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 37528,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 58960.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-17.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 45234,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 78870.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-18.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 37603,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 57910.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-19.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 39760,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 82440.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-2.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1150.0,
+          "bound": 15,
+          "planLength": 29.0,
+          "nOfVars": 3739,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 2260.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-20.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 34858,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 67550.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-3.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 1740.0,
+          "bound": 16,
+          "planLength": 39.0,
+          "nOfVars": 3721,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 3360.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-4.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 840.0,
+          "bound": 16,
+          "planLength": 35.0,
+          "nOfVars": 3965,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 2000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-5.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": true,
+          "timeout": false,
+          "time": 3000.0,
+          "bound": 19,
+          "planLength": 42.0,
+          "nOfVars": 3298,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 1,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 2560.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-6.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 39285,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 29130.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-7.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 35915,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 23910.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-8.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 38853,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 29390.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-9.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 275210.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 43572,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 83490.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    }
+  },
+  "classic/ipc-2014/transport": {
+    "instance-1.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 82340,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 64532,
+          "nOfRules": 6816615,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 40800
+        }
+      ]
+    },
+    "instance-10.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 166150.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-11.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 122690,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 93348,
+          "nOfRules": 12560873,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 61190
+        }
+      ]
+    },
+    "instance-12.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 124524,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 287780.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 98996,
+          "nOfRules": 14992094,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 61496
+        }
+      ]
+    },
+    "instance-13.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 78558,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 112942,
+          "nOfRules": 14032570,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 38562
+        }
+      ]
+    },
+    "instance-14.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 244970,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-15.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 244824,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-16.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 154448,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 122900,
+          "nOfRules": 27560803,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 75900
+        }
+      ]
+    },
+    "instance-17.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 153640.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-18.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 294950.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-19.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-2.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 104796,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 81888,
+          "nOfRules": 10468006,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 51728
+        }
+      ]
+    },
+    "instance-20.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 140960.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-3.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 87266,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 131187,
+          "nOfRules": 15826226,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 86496
+        }
+      ]
+    },
+    "instance-4.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 223424,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-5.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 288740.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 264528,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-6.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 223424,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-7.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 139090.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-8.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-9.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": false,
+          "time": 174810.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    }
+  },
+  "classic/ipc-2014/visit-all": {
+    "instance-1.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 7078,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 14272,
+          "nOfRules": 844395,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 3480
+        }
+      ]
+    },
+    "instance-10.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-11.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-12.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-13.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-14.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-15.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-16.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-17.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-18.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-19.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-2.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 7562,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 15244,
+          "nOfRules": 960256,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 3720
+        }
+      ]
+    },
+    "instance-20.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-3.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 8062,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 16248,
+          "nOfRules": 1087740,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 3968
+        }
+      ]
+    },
+    "instance-4.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 8578,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": 17284,
+          "nOfRules": 1227561,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": 4224
+        }
+      ]
+    },
+    "instance-5.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-6.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-7.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-8.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    },
+    "instance-9.pddl": {
+      "MADAGASCAR": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ],
+      "PATTY-B-npc": [
+        {
+          "solved": false,
+          "timeout": true,
+          "time": 300000.0,
+          "bound": -1,
+          "planLength": 0.0,
+          "nOfVars": -1,
+          "nOfRules": -1,
+          "lastSearchedBound": -1,
+          "lastCallsToSolver": -1,
+          "quantity": 0,
+          "transitiveClosureSize": -1,
+          "patternLength": -1
+        }
+      ]
+    }
+  }
+}

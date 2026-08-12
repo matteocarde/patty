@@ -23,7 +23,7 @@ JAIR_CLASSICAL_TABLE = {
     "planners": {
         # "PATTY-FE": {},
         "PATTY-B-npc": {"type": "scalar"},
-        "PATTY-G-nei": {"type": "scalar"},
+        # "PATTY-G-nei": {"type": "scalar"},
         "MADAGASCAR": {"type": "scalar"},
     },
     "domains": JAIR_CLASSICAL_DOMAINS
