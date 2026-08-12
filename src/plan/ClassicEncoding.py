@@ -263,10 +263,10 @@ class ClassicEncoding(Encoding):
                 v = pre.atom
                 m = self.vars.getPI2SI(v, i)
                 x = self.vars.cnfPosVars[v]
-                # x_ = self.vars.cnfNegVars[v]
 
                 A_xmi = self.vars.getBoolActionsBeforeIndex(self.vars.addSequence[v][m - 1], i)
                 D_xmi = self.vars.getBoolActionsBeforeIndex(self.vars.deleteSequence[v][m - 1], i)
+                # print(action, v, len(A_xmi), len(D_xmi))
 
                 if pre.sign == "+":
                     cnf.addClause([neg_a_i, x[m - 2], *A_xmi])

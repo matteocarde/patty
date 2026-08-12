@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 import random
-from typing import List, Dict, Tuple, Set, Type, Iterator
+from typing import List, Dict, Tuple, Set, Type, Iterator, Literal
 
 from src.goalFunctions.GoalFunction import GoalFunction
 from src.pddl.ARPG import ARPG
@@ -133,7 +133,60 @@ class Pattern:
         return order and Pattern.fromOrder(order)
 
     @classmethod
+    def fromStateGreedyBoolean(cls, state: State, goal: Goal, domain: GroundedDomain, p: int):
+
+        t = TimeStat.startHolder("fromStateGreedy boolean")
+        arpg: ARPGJair = ARPGJair.compute(domain, state, goal)
+        i = len(arpg.actionLevels) - 1
+
+        gamma: Set[Literal] = goal.conditions
+        newArpg = ARPGJair()
+        while i > 0:
+            s: Set[Literal] = arpg.stateLevels[i - 1].boolean
+            Ai: List[Action] = list(arpg.actionLevels[i])
+
+            s_: Set[Literal] = arpg.stateLevels[i].boolean
+            unsatGamma: Set[Literal] = set()
+            satGamma: Set[Literal] = set()
+            for g in gamma:
+                if g in s:
+                    satGamma.add(g)
+                else:
+                    unsatGamma.add(g)
+
+            if not unsatGamma:
+                i -= 1
+                continue
+            gamma = unsatGamma
+            Agamma = set()
+            newGamma = satGamma
+            for g in gamma:
+                Ag = set()
+                for a in Ai:
+                    s_a = s | set(a.effects.assignments)
+                    if s_a != s_ and g in s_a:
+                        Ag.add(a)
+                        newGamma.update(a.preconditions.conditions)
+                    if len(Ag) >= p:
+                        break
+                Agamma |= Ag
+            if not Agamma:
+                i -= 1
+                continue
+            gamma = newGamma
+            newArpg.actionLevels = [Agamma] + newArpg.actionLevels
+            i -= 1
+
+        order = newArpg.getActionsOrder(boolean=True)
+        t.endHolderMilliseconds()
+        return Pattern.fromOrder(order)
+
+    @classmethod
     def fromStateGreedy(cls, state: State, goal: Goal, domain: GroundedDomain, p: int, boolean=False):
+        if boolean:
+            return Pattern.fromStateGreedyBoolean(state, goal, domain, p)
+
+        t = TimeStat.startHolder("fromStateGreedy numeric")
         arpg: ARPGJair = ARPGJair.compute(domain, state, goal)
         i = len(arpg.actionLevels) - 1
 
@@ -168,6 +221,7 @@ class Pattern:
             i -= 1
 
         order = newArpg.getActionsOrder(boolean=boolean)
+        t.endHolderMilliseconds()
         return Pattern.fromOrder(order)
 
     @staticmethod

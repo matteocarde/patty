@@ -19,6 +19,7 @@ from src.smt.SMTSolution import SMTSolution
 from src.smt.SMTSolver import SMTSolver
 from src.utils.Arguments import Arguments
 from src.utils.LogPrint import LogPrintLevel, console
+from src.utils.TimeStat import TimeStat
 
 
 class JairSearch(Search):
@@ -135,6 +136,7 @@ class JairSearch(Search):
                 unsatN += 1
                 patG = self.computeS2Pn(patS, plan, unsatN, P).addPostfix(f"{bound}_g")
                 patH = self.computeP2Gn(I, P, unsatN, lastPatH, patH).addPostfix(bound)
+                lastPatH = patH
                 console.log(f"Bound {bound} - No improvement", LogPrintLevel.STATS)
                 continue
 
@@ -221,16 +223,16 @@ class JairSearch(Search):
         elif self.args.jairPatternH == "i":
             if self.incompleteSaturationLevel > 1:
                 self.incompleteSaturationLevel += 1
-                n = self.incompleteSaturationLevel
-                pat = Pattern.fromState(P, self.problem.goal, self.domain, self.enhanced,
-                                        boolean=self.classical).multiply(n)
+                print(f"Incomplete Pattern n={n}, reached saturation level {self.incompleteSaturationLevel}")
+                pat = patH + lastPatH.addPostfix(n)
             else:
                 p = Pattern.fromStateGreedy(P, self.problem.goal, self.domain, 2 ** n, boolean=self.classical)
-                p_ = Pattern.fromStateGreedy(P, self.problem.goal, self.domain, 2 ** (n - 1), boolean=self.classical)
-                if len(p) == len(p_):
+                # p_ = Pattern.fromStateGreedy(P, self.problem.goal, self.domain, 2 ** (n - 1), boolean=self.classical)
+                print(f"Incomplete Pattern n={n}: |p|={len(p)}, |p'|={len(patH)}")
+                if len(p) == len(patH) or not p:
                     self.incompleteSaturationLevel += 1
                     pat = Pattern.fromState(P, self.problem.goal, self.domain, self.enhanced,
-                                            boolean=self.classical).multiply(self.incompleteSaturationLevel)
+                                            boolean=self.classical)
                 else:
                     pat = p
         self.ts.end(f"computeP2Gn", group="PREPROCESSING")
