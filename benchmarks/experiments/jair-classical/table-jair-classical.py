@@ -39,14 +39,12 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2026-08-11-CLASSICAL-v3"
+    exp = "2026-08-11-CLASSICAL-v4"
     joinWith = [
         (exp, [
             "PATTY-B-npc",
             "PATTY-G-nei",
-        ]),
-        ("2026-08-11-CLASSICAL-v1", [
-            "MADAGASCAR",
+            "MADAGASCAR"
         ])
     ]
 

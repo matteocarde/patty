@@ -24,58 +24,8 @@ JAIR_CLASSICAL_DOMAINS = {
             "instance-20.pddl"
         }
     },
-    "classic/ipc-2014/cave-diving": {
-        "name": r"\textsc{CaveDiving}",
-        "instances": {
-            "instance-1.pddl",
-            "instance-2.pddl",
-            "instance-3.pddl",
-            "instance-4.pddl",
-            "instance-5.pddl",
-            "instance-6.pddl",
-            "instance-7.pddl",
-            "instance-8.pddl",
-            "instance-9.pddl",
-            "instance-10.pddl",
-            "instance-11.pddl",
-            "instance-12.pddl",
-            "instance-13.pddl",
-            "instance-14.pddl",
-            "instance-15.pddl",
-            "instance-16.pddl",
-            "instance-17.pddl",
-            "instance-18.pddl",
-            "instance-19.pddl",
-            "instance-20.pddl"
-        }
-    },
     "classic/ipc-2014/child-snack": {
         "name": r"\textsc{ChildSnack}",
-        "instances": {
-            "instance-1.pddl",
-            "instance-2.pddl",
-            "instance-3.pddl",
-            "instance-4.pddl",
-            "instance-5.pddl",
-            "instance-6.pddl",
-            "instance-7.pddl",
-            "instance-8.pddl",
-            "instance-9.pddl",
-            "instance-10.pddl",
-            "instance-11.pddl",
-            "instance-12.pddl",
-            "instance-13.pddl",
-            "instance-14.pddl",
-            "instance-15.pddl",
-            "instance-16.pddl",
-            "instance-17.pddl",
-            "instance-18.pddl",
-            "instance-19.pddl",
-            "instance-20.pddl"
-        }
-    },
-    "classic/ipc-2014/city-car": {
-        "name": r"\textsc{CityCar}",
         "instances": {
             "instance-1.pddl",
             "instance-2.pddl",
@@ -174,31 +124,6 @@ JAIR_CLASSICAL_DOMAINS = {
             "instance-20.pddl"
         }
     },
-    "classic/ipc-2014/maintenance": {
-        "name": r"\textsc{Maintenance}",
-        "instances": {
-            "instance-1.pddl",
-            "instance-2.pddl",
-            "instance-3.pddl",
-            "instance-4.pddl",
-            "instance-5.pddl",
-            "instance-6.pddl",
-            "instance-7.pddl",
-            "instance-8.pddl",
-            "instance-9.pddl",
-            "instance-10.pddl",
-            "instance-11.pddl",
-            "instance-12.pddl",
-            "instance-13.pddl",
-            "instance-14.pddl",
-            "instance-15.pddl",
-            "instance-16.pddl",
-            "instance-17.pddl",
-            "instance-18.pddl",
-            "instance-19.pddl",
-            "instance-20.pddl"
-        }
-    },
     "classic/ipc-2014/parking": {
         "name": r"\textsc{Parking}",
         "instances": {
@@ -222,31 +147,6 @@ JAIR_CLASSICAL_DOMAINS = {
             "instance-18.pddl",
             "instance-19.pddl",
             "instance-20.pddl"
-        }
-    },
-    "classic/ipc-2014/openstacks": {
-        "name": r"\textsc{OpenStacks}",
-        "instances": {
-            ("domain-1.pddl", "instance-1.pddl"),
-            ("domain-2.pddl", "instance-2.pddl"),
-            ("domain-3.pddl", "instance-3.pddl"),
-            ("domain-4.pddl", "instance-4.pddl"),
-            ("domain-5.pddl", "instance-5.pddl"),
-            ("domain-6.pddl", "instance-6.pddl"),
-            ("domain-7.pddl", "instance-7.pddl"),
-            ("domain-8.pddl", "instance-8.pddl"),
-            ("domain-9.pddl", "instance-9.pddl"),
-            ("domain-10.pddl", "instance-10.pddl"),
-            ("domain-11.pddl", "instance-11.pddl"),
-            ("domain-12.pddl", "instance-12.pddl"),
-            ("domain-13.pddl", "instance-13.pddl"),
-            ("domain-14.pddl", "instance-14.pddl"),
-            ("domain-15.pddl", "instance-15.pddl"),
-            ("domain-16.pddl", "instance-16.pddl"),
-            ("domain-17.pddl", "instance-17.pddl"),
-            ("domain-18.pddl", "instance-18.pddl"),
-            ("domain-19.pddl", "instance-19.pddl"),
-            ("domain-20.pddl", "instance-20.pddl"),
         }
     },
     "classic/ipc-2014/tetris": {

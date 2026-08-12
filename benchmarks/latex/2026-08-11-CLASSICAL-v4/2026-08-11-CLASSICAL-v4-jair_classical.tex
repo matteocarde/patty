@@ -1,0 +1,36 @@
+
+               \documentclass[11pt]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l||ccc||ccc||}
+\hline
+ & \multicolumn{3}{c||}{Solved (out of $20$)}&\multicolumn{3}{c||}{Time (s)}\\
+Domain & $\mathrm{P}_\textsc{b}$&$\mathrm{P}_\textsc{g}$&$\mathrm{M}$&$\mathrm{P}_\textsc{b}$&$\mathrm{P}_\textsc{g}$&$\mathrm{M}$\\
+\hline
+\textsc{Barman}&-&-&-&-&-&-\\
+\textsc{ChildSnack}&2&-&\textbf{6}&29.2&-&\textbf{21.2}\\
+\textsc{FloorTile}&\textbf{20}&-&13&\textbf{8.0}&-&12.4\\
+\textsc{GenomeEdit}&-&-&-&-&-&-\\
+\textsc{Hiking}&-&-&\textbf{4}&-&-&\textbf{26.3}\\
+\textsc{Parking}&-&-&-&-&-&-\\
+\textsc{Tetris}&-&-&-&-&-&-\\
+\textsc{Thoughtful}&-&-&\textbf{5}&-&-&\textbf{23.1}\\
+\textsc{Transport}&-&-&-&-&-&-\\
+\textsc{VisitAll}&-&-&-&-&-&-
+\\\hline
+\textit{Best}&\textbf{22}&\textbf{0}&\textbf{28}&\textbf{9}&\textbf{0}&\textbf{26}\\\hline
+
+        \end{tabular}}
+        \caption{Classic \textsc{ipc}-2014 testset}
+        \label{tab:CLASSICAL}
+        \end{table*}
+        
+\end{document}

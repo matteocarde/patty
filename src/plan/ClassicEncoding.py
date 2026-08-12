@@ -45,12 +45,18 @@ class ClassicEncoding(Encoding):
         self.pattern = pattern
 
         self.k = len(self.pattern)
+        t = TimeStat.startHolder("Constructing ClassicEncodingVariables")
         self.vars: ClassicEncodingVariables = ClassicEncodingVariables(self.domain, self.pattern)
+        t.endHolderMilliseconds()
 
         self.cnf = CNF()
         self.addInitialExpression(self.cnf)
+        t = TimeStat.startHolder("Adding Sequence Rules")
         self.addSequenceRules(self.cnf)
+        t.endHolderMilliseconds()
+        t = TimeStat.startHolder("Adding Pre Rules")
         self.addPreRules(self.cnf)
+        t.endHolderMilliseconds()
         self.addGoalExpression(self.cnf)
         t = TimeStat.startHolder("Adding Invariants to Goal")
         self.addInvariantsInGoal(self.cnf, invariants)
@@ -266,12 +272,9 @@ class ClassicEncoding(Encoding):
                     cnf.addClause([neg_a_i, x[m - 2], *A_xmi])
                     for d in D_xmi:
                         cnf.addClause([neg_a_i, ~d])
-
                 else:
                     raise Exception("To be implemented")
-                    cnf.addClause([neg_a_i, x_[m - 2]] + list(D_xmi))
-                    # for a in A_xmi:
-                    #     rules.append(~a_i | ~a | SMTExpression.bigor(D_xmi))
+        pass
 
     def getNVars(self):
         return CNFVariable.CNF_ID - 1

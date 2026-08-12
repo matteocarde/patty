@@ -15,8 +15,8 @@ class ClassicEncodingVariables:
     action: Dict[Action, CNFActionVariable]
     currentState: Dict[Atom, SMTVariable]
     sigma: Dict[int, Dict[Atom, SMTExpression]]
-    addSequence: Dict[Atom, List[Set[CNFActionVariable]]]
-    deleteSequence: Dict[Atom, List[Set[CNFActionVariable]]]
+    addSequence: Dict[Atom, List[List[CNFActionVariable]]]
+    deleteSequence: Dict[Atom, List[List[CNFActionVariable]]]
     __PI2I: Dict[Atom, Dict[int, int]]
 
     def __init__(self, domain: GroundedDomain, pattern: Pattern):
@@ -54,10 +54,10 @@ class ClassicEncodingVariables:
         m: Dict[Atom, int] = dict()
 
         currentSign: Dict[Atom, str] = {v: "+" for v in self.domain.predicates}
-        lastAdd: Dict[Atom, Set[CNFActionVariable]] = {v: set() for v in self.domain.predicates}
-        lastDelete: Dict[Atom, Set[CNFActionVariable]] = {v: set() for v in self.domain.predicates}
-        addSequence: Dict[Atom, List[Set[CNFActionVariable]]] = {v: [] for v in self.domain.predicates}
-        deleteSequence: Dict[Atom, List[Set[CNFActionVariable]]] = {v: [] for v in self.domain.predicates}
+        lastAdd: Dict[Atom, List[CNFActionVariable]] = {v: list() for v in self.domain.predicates}
+        lastDelete: Dict[Atom, List[CNFActionVariable]] = {v: list() for v in self.domain.predicates}
+        addSequence: Dict[Atom, List[List[CNFActionVariable]]] = {v: [] for v in self.domain.predicates}
+        deleteSequence: Dict[Atom, List[List[CNFActionVariable]]] = {v: [] for v in self.domain.predicates}
         PI2SI: Dict[Atom, Dict[int, int]] = {v: {} for v in self.domain.predicates}
         cnfPosVars: Dict[Atom, Dict[int, CNFVariable]] = {v: {} for v in self.domain.predicates}
         cnfNegVars: Dict[Atom, Dict[int, CNFVariable]] = {v: {} for v in self.domain.predicates}
@@ -70,15 +70,15 @@ class ClassicEncodingVariables:
                 if cs == "-" and eff.sign == "+":
                     PI2SI[v][i] = len(deleteSequence[v]) + 1
                 if eff.sign == "+":
-                    lastAdd[v].add(action)
+                    lastAdd[v].append(action)
                     if cs != eff.sign:
                         deleteSequence[v].append(lastDelete[v])
-                        lastDelete[v] = set()
+                        lastDelete[v] = list()
                 else:
-                    lastDelete[v].add(action)
+                    lastDelete[v].append(action)
                     if cs != eff.sign:
                         addSequence[v].append(lastAdd[v])
-                        lastAdd[v] = set()
+                        lastAdd[v] = list()
                 currentSign[v] = eff.sign
 
         for v in self.domain.predicates:
@@ -104,5 +104,15 @@ class ClassicEncodingVariables:
             if i <= pi:
                 return si
 
-    def getBoolActionsBeforeIndex(self, boolActions: Set[CNFActionVariable], i: int) -> List[CNFActionVariable]:
-        return [a for a in boolActions if self.__actionToIndexPattern[a.action] < i]
+    def getBoolActionsBeforeIndex(self, boolActions: List[CNFActionVariable], i: int) -> List[CNFActionVariable]:
+        left = 0
+        right = len(boolActions)
+        while left < right:
+            middle = (left + right) // 2
+            actionIndex = self.__actionToIndexPattern[boolActions[middle].action]
+            if actionIndex < i:
+                left = middle + 1
+            else:
+                right = middle
+
+        return boolActions[:left]
