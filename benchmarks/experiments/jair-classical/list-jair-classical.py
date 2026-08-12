@@ -7,7 +7,7 @@ from benchmarks.tables.aaai27.domains import AAAI27_DOMAINS
 
 PLANNERS = {
     "MADAGASCAR",
-    "PATTY-G-nei",
+    # "PATTY-G-nei",
     "PATTY-B-npc"
 }
 RANDOM = 5
