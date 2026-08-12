@@ -6,6 +6,10 @@
 ;; parameters from three to only two.
 
 (define (domain genome-edit-distance)
+  (:requirements :typing :action-costs)
+  (:types
+    object
+  )
   (:predicates
     ;; Static predicate, identifies duplicate copies of genes.
     ;; The "duplicate" relation is symmetric; "swappable" is an
@@ -15,8 +19,8 @@
     ;; Note: These predicates are not used in the domain version
     ;; with ITT operations only. They are declared only for
     ;; interoperability with problem files that use them.
-    (duplicate ?x ?y)
-    (swappable ?x ?y)
+    (duplicate ?x - object ?y - object)
+    (swappable ?x - object ?y - object)
 
     ;; Genome representation: The genome is a cycle, represented
     ;; by the relation cw ("clockwise"). Each gene in the genome
@@ -30,34 +34,34 @@
     ;; operations (i.e., no insertions or deletions), all genes are
     ;; present from the beginning and will remain so in every
     ;; reachable state.
-    (cw ?x ?y)
-    (free ?x)
-    (gone ?x)
-    (present ?x)
-    (normal ?x)
-    (inverted ?x)
+    (cw ?x - object ?y - object)
+    (free ?x - object)
+    (gone ?x - object)
+    (present ?x - object)
+    (normal ?x - object)
+    (inverted ?x - object)
 
     ;; Operation sequencing: See ged3-itt.pddl for explanation.
     (idle)
     (cutting)
     (have-cut)
     (splicing)
-    (splice-next ?x)
+    (splice-next ?x - object)
     (splicing-last)
     (inverse-splicing)
-    (inverse-splice-next ?x)
+    (inverse-splice-next ?x - object)
     (inverse-splicing-last)
     (finished)
 
     ;; Auxiliary predicates: See ged3-itt.pddl for explanation.
-    (cut-point-1 ?x)
-    (cut-point-2 ?x)
-    (last-cut-point ?x)
-    (splice-point-1 ?x)
-    (splice-point-2 ?x)
-    (s-first ?x)
-    (s-next ?x ?y)
-    (s-last ?x)
+    (cut-point-1 ?x - object)
+    (cut-point-2 ?x - object)
+    (last-cut-point ?x - object)
+    (splice-point-1 ?x - object)
+    (splice-point-2 ?x - object)
+    (s-first ?x - object)
+    (s-next ?x - object ?y - object)
+    (s-last ?x - object)
   )
 
   ;; Cutting.
@@ -66,7 +70,7 @@
   ;;  begin-cut (continue-cut)* end-cut-1 end-cut-2
 
   (:action begin-cut
-    :parameters (?x ?y)
+    :parameters (?x - object ?y - object)
     :precondition (and (not (= ?x ?y))
       (idle)
       (cw ?x ?y))
@@ -80,7 +84,7 @@
   )
 
   (:action continue-cut
-    :parameters (?x ?y)
+    :parameters (?x - object ?y - object)
     :precondition (and (not (= ?x ?y))
       (cutting)
       (s-last ?x)
@@ -92,7 +96,7 @@
   )
 
   (:action end-cut-1
-    :parameters (?x ?y)
+    :parameters (?x - object ?y - object)
     :precondition (and (not (= ?x ?y))
       (cutting)
       (s-last ?x)
@@ -102,7 +106,7 @@
   )
 
   (:action end-cut-2
-    :parameters (?x ?y)
+    :parameters (?x - object ?y - object)
     :precondition (and (cutting)
       (cut-point-1 ?x)
       (cut-point-2 ?y))
@@ -120,7 +124,7 @@
   ;;   end-splice-1 end-splice-2
 
   (:action begin-transpose-splice
-    :parameters (?x ?y)
+    :parameters (?x - object ?y - object)
     :precondition (and (not (= ?x ?y))
       (have-cut)
       (cw ?x ?y))
@@ -128,12 +132,11 @@
       (not (cw ?x ?y))
       (splicing)
       (splice-point-1 ?x)
-      (splice-point-2 ?y)
-      (increase (total-cost) 2))
+      (splice-point-2 ?y))
   )
 
   (:action continue-splice-1
-    :parameters (?x ?y)
+    :parameters (?x - object ?y - object)
     :precondition (and (splicing)
       (s-first ?x)
       (s-next ?x ?y))
@@ -145,7 +148,7 @@
   )
 
   (:action continue-splice-2
-    :parameters (?x ?y)
+    :parameters (?x - object ?y - object)
     :precondition (and (splice-next ?x)
       (splice-point-1 ?y))
     :effect (and (not (splice-point-1 ?y))
@@ -156,7 +159,7 @@
   )
 
   (:action end-splice-1
-    :parameters (?x ?y)
+    :parameters (?x - object ?y - object)
     :precondition (and (splicing)
       (splice-point-1 ?y)
       (s-first ?x)
@@ -171,7 +174,7 @@
   )
 
   (:action end-splice-2
-    :parameters (?x ?y)
+    :parameters (?x - object ?y - object)
     :precondition (and (splicing-last)
       (splice-point-1 ?x)
       (splice-point-2 ?y))
@@ -190,7 +193,7 @@
   ;;   end-inverse-splice-1A|-1B end-inverse-splice-2
 
   (:action begin-transverse-splice
-    :parameters (?x ?y)
+    :parameters (?x - object ?y - object)
     :precondition (and (not (= ?x ?y))
       (have-cut)
       (cw ?x ?y))
@@ -198,12 +201,11 @@
       (not (cw ?x ?y))
       (inverse-splicing)
       (splice-point-1 ?x)
-      (splice-point-2 ?y)
-      (increase (total-cost) 2))
+      (splice-point-2 ?y))
   )
 
   (:action begin-inverse-splice
-    :parameters (?x ?y)
+    :parameters (?x - object ?y - object)
     :precondition (and (not (= ?x ?y))
       (have-cut)
       (cw ?x ?y)
@@ -220,7 +222,7 @@
   ;; but ?x have been cut); in this case, we should not delete (cw ?x ?x)
 
   (:action begin-inverse-splice-special-case
-    :parameters (?x)
+    :parameters (?x - object)
     :precondition (and (have-cut)
       (cw ?x ?x)
       (last-cut-point ?x))
@@ -233,7 +235,7 @@
   )
 
   (:action continue-inverse-splice-1A
-    :parameters (?x ?y)
+    :parameters (?x - object ?y - object)
     :precondition (and (inverse-splicing)
       (normal ?x)
       (s-last ?x)
@@ -248,7 +250,7 @@
   )
 
   (:action continue-inverse-splice-1B
-    :parameters (?x ?y)
+    :parameters (?x - object ?y - object)
     :precondition (and (inverse-splicing)
       (inverted ?x)
       (s-last ?x)
@@ -263,7 +265,7 @@
   )
 
   (:action continue-inverse-splice-2
-    :parameters (?x ?y)
+    :parameters (?x - object ?y - object)
     :precondition (and (inverse-splice-next ?x)
       (splice-point-1 ?y))
     :effect (and (not (inverse-splice-next ?x))
@@ -274,7 +276,7 @@
   )
 
   (:action end-inverse-splice-1A
-    :parameters (?x ?y)
+    :parameters (?x - object ?y - object)
     :precondition (and (inverse-splicing)
       (normal ?x)
       (splice-point-1 ?y)
@@ -292,7 +294,7 @@
   )
 
   (:action end-inverse-splice-1B
-    :parameters (?x ?y)
+    :parameters (?x - object ?y - object)
     :precondition (and (inverse-splicing)
       (inverted ?x)
       (splice-point-1 ?y)
@@ -310,7 +312,7 @@
   )
 
   (:action end-inverse-splice-2
-    :parameters (?x ?y)
+    :parameters (?x - object ?y - object)
     :precondition (and (inverse-splicing-last)
       (splice-point-1 ?x)
       (splice-point-2 ?y))
@@ -324,7 +326,7 @@
   ;; Special actions for inverting a single gene.
 
   (:action invert-single-gene-A
-    :parameters (?x)
+    :parameters (?x - object)
     :precondition (and (idle)
       (normal ?x))
     :effect (and (not (normal ?x))
@@ -333,7 +335,7 @@
   )
 
   (:action invert-single-gene-B
-    :parameters (?x)
+    :parameters (?x - object)
     :precondition (and (idle)
       (inverted ?x))
     :effect (and (not (inverted ?x))
@@ -345,7 +347,7 @@
   ;; Its only purpose is to "forget" the last-cut-point.
 
   (:action reset-1
-    :parameters (?x)
+    :parameters (?x - object)
     :precondition (and (finished)
       (last-cut-point ?x))
     :effect (and (not (last-cut-point ?x))

@@ -6,8 +6,8 @@ from natsort import natsort
 from benchmarks.tables.aaai27.domains import AAAI27_DOMAINS
 
 PLANNERS = {
-    # "MADAGASCAR",
-    # "PATTY-G-nei",
+    "MADAGASCAR",
+    "PATTY-G-nei",
     "PATTY-B-npc"
 }
 RANDOM = 5

@@ -1,0 +1,14 @@
+barman          OK
+cave-diving     CONDITIONAL-EFFECTS
+child-snack     OK
+city-car        CONDITIONAL-EFFECTS
+floor-tile      OK
+genome-edit     OK
+hiking          OK
+maintenance     CONDITIONAL-EFFECTS
+openstacks      TOOBIG and MADAGASCAR DOESN'T SOLVE IT
+parking         OK
+tetris          OK (TOOBIG)
+thoughtful      OK (TOOBIG)
+transport       OK
+visit-all       OK

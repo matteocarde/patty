@@ -11,6 +11,8 @@ from benchmarks.tables.aaai27.planners import AAAI27_PLANNERS
 from benchmarks.tables.aaai27.table import AAAI27_TABLE
 from benchmarks.tables.ipc.planners import IPC_PLANNERS
 from benchmarks.tables.ipc.table import IPC_TABLE
+from benchmarks.tables.jair_classical.planners import JAIR_CLASSICAL_PLANNERS
+from benchmarks.tables.jair_classical.table import JAIR_CLASSICAL_TABLE
 from classes.CloudLogger import CloudLogger
 from classes.Result import Result
 
@@ -37,12 +39,14 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2026-06-18-AAAI-27-v1"
+    exp = "2026-08-11-CLASSICAL-v3"
     joinWith = [
         (exp, [
-            "PATTY-Hplus",
             "PATTY-B-npc",
             "PATTY-G-nei",
+        ]),
+        ("2026-08-11-CLASSICAL-v1", [
+            "MADAGASCAR",
         ])
     ]
 
@@ -60,10 +64,10 @@ def main():
         CloudLogger.appendLogs(exp2, file, keepSolvers)
 
     tables = [
-        ("aaai27", AAAI27_TABLE),
+        ("jair_classical", JAIR_CLASSICAL_TABLE),
     ]
 
-    PLANNERS = AAAI27_PLANNERS
+    PLANNERS = JAIR_CLASSICAL_PLANNERS
 
     joinWith = [file]
     # joinWith = [file]

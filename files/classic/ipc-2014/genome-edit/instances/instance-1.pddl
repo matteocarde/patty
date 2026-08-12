@@ -10,7 +10,7 @@
 (define (problem adenophora-to-asyneuma)
     (:domain genome-edit-distance)
     (:objects
-        sub12 sub11 sub10 sub9 sub8 sub7 sub6 sub5 sub4 sub3 sub2 sub1 g97 g90 g56 g53 g40 g35
+        sub12 sub11 sub10 sub9 sub8 sub7 sub6 sub5 sub4 sub3 sub2 sub1 g97 g90 g56 g53 g40 g35 - object
     )
     (:init
         (normal sub1)

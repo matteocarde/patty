@@ -133,7 +133,7 @@ class Pattern:
         return order and Pattern.fromOrder(order)
 
     @classmethod
-    def fromStateGreedy(cls, state: State, goal: Goal, domain: GroundedDomain, p: int):
+    def fromStateGreedy(cls, state: State, goal: Goal, domain: GroundedDomain, p: int, boolean=False):
         arpg: ARPGJair = ARPGJair.compute(domain, state, goal)
         i = len(arpg.actionLevels) - 1
 
@@ -167,7 +167,7 @@ class Pattern:
             newArpg.actionLevels = [Agamma] + newArpg.actionLevels
             i -= 1
 
-        order = newArpg.getActionsOrder()
+        order = newArpg.getActionsOrder(boolean=boolean)
         return Pattern.fromOrder(order)
 
     @staticmethod

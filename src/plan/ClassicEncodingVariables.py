@@ -83,7 +83,7 @@ class ClassicEncodingVariables:
 
         for v in self.domain.predicates:
             PI2SI[v][len(self.pattern)] = len(deleteSequence[v]) + 1
-            if lastAdd[v]:
+            if lastAdd[v] or not lastDelete[v]:
                 addSequence[v].append(lastAdd[v])
             deleteSequence[v].append(lastDelete[v])
             assert len(addSequence[v]) == len(deleteSequence[v])

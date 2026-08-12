@@ -69,7 +69,7 @@ class Atom:
         self.__string = " ".join(parts)
         self.__hash = hash(self.__string)
         parameters = ','.join([a for a in self.attributes])
-        parenthesis = f"({parameters})" if self.attributes else ""
+        parenthesis = f"({parameters})"
         name = self.name
         self.__functionName = f"{name}{parenthesis}"
         self.__alphaFunctionName = f"\\alpha_{{{name + parenthesis}}}"

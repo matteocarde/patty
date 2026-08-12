@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import Set, List, Tuple
 
+from src.pattern.BooleanPatternActionGraph import BooleanPatternActionGraph
+from src.pattern.NumericPatternActionGraph import NumericPatternActionGraph
 from src.pattern.PatternActionGraph import PatternActionGraph
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
@@ -55,14 +57,14 @@ class ARPGJair:
 
         return arpg
 
-    def getActionsOrder(self, enhanced=True) -> List[Action]:
+    def getActionsOrder(self, enhanced=True, boolean=False) -> List[Action]:
         order = []
-        for actionSet in self.actionLevels:
+        for layer in self.actionLevels:
             if enhanced:
-                sortedLayer = PatternActionGraph(actionSet).getSorted()
-                order += sortedLayer
+                pag = NumericPatternActionGraph(layer) if not boolean else BooleanPatternActionGraph(layer)
+                order += pag.getSorted()
             else:
-                order += sorted(actionSet)
+                order += sorted(layer)
         return order
 
     def getSortedActionLevel(self, i: int, goal: Goal):
