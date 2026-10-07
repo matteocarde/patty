@@ -1,0 +1,24 @@
+fluent boolean charging;
+
+fluent integer x;
+fluent integer battery;
+
+action right() {
+	duration := 1;
+	[start] charging == false;
+	[start, end] charging == false;
+	[start] battery > 20;
+
+	[end] x := x + 1;
+	[end] battery := battery - 1;
+};
+
+action charge() {
+	duration := 1;
+	[start] battery <= 99;
+
+	[start] charging := true;
+	[end] charging := false;
+	[end] battery := battery + 1;
+};
+
