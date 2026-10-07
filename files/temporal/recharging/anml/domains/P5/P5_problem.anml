@@ -2,4 +2,4 @@
 [start] x := 0;
 [start] charging := false;
 
-[end] x == 200;
+[end] x == 100;

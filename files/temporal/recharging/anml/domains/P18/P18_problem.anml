@@ -2,4 +2,4 @@
 [start] x := 0;
 [start] charging := false;
 
-[end] x == 720;
+[end] x == 360;
