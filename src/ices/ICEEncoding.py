@@ -463,7 +463,7 @@ class ICEEncoding(Encoding):
                         t_i_end = tEndVars[h_a]
                         rules.append(((h_i > 1) & (h_j > 0)).implies(t_j >= t_i_end + (d_i_b + e_b) * (h_i - 1)))
                     if isinstance(h_a, HappeningEffect) and isinstance(h_b, HappeningEffect):
-                        rules.append(((h_i > 1) & (h_j > 0)).implies(t_j >= t_i + (d_i_b + e_b) * (h_i - 1) + EPSILON))
+                        rules.append(((h_i > 1) & (h_j > 0)).implies(t_j >= t_i + (d_i_b + e_b) * h_i + EPSILON))
                     if isinstance(h_a, HappeningEffect) and isinstance(h_b, HappeningCondition):
                         rules.append(((h_i > 0) & (h_j > 1)).implies(t_j >= t_i + EPSILON))
 

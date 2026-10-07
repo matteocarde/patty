@@ -1,0 +1,5 @@
+[start] battery := 100;
+[start] x := 0;
+[start] charging := false;
+
+[end] x == 50;
