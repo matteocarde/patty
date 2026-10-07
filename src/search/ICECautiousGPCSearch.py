@@ -49,6 +49,7 @@ class ICECautiousGPCSearch:
             encoding: ICEEncoding = ICEEncoding(
                 task=self.task,
                 pattern=patF,
+                args=self.args,
                 subgoalsAchieved=subgoalsAchieved
             )
 

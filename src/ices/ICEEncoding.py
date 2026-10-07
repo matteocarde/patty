@@ -20,6 +20,7 @@ from src.smt.SMTComment import SMTComment
 from src.smt.SMTConjunction import SMTConjunction
 from src.smt.SMTExpression import SMTExpression
 from src.smt.SMTVariable import SMTVariable
+from src.utils.Arguments import Arguments
 from src.utils.Constants import EPSILON
 from src.utils.TimeStat import TimeStat
 
@@ -32,10 +33,15 @@ class ICEEncoding(Encoding):
     rules: SMTConjunction
     actionsStartEndPairs: List[ICEActionStartEndPair]
 
-    def __init__(self, task: ICETask, pattern: ICEPattern, subgoalsAchieved: Set[Formula or Predicate] = None):
+    def __init__(self,
+                 task: ICETask,
+                 pattern: ICEPattern,
+                 args: Arguments,
+                 subgoalsAchieved: Set[Formula or Predicate] = None):
         super().__init__()
         self.task: ICETask = task
         self.pattern: ICEPattern = pattern
+        self.args = args
         self.subgoalsAchieved: Set[
             Formula or Predicate] = subgoalsAchieved if subgoalsAchieved is not None else set(self.task.goal.conditions)
 
@@ -259,6 +265,8 @@ class ICEEncoding(Encoding):
             if isinstance(h.starting, ICEAction) and (
                     not h.starting.isEligibleForRolling() or not h.starting.isWellOrderable()):
                 rules.append(h_i <= 1)
+            if isinstance(h.starting, ICEAction) and self.args.rollBound > 0:
+                rules.append(h_i <= self.args.rollBound)
 
         return rules
 

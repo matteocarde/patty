@@ -8,15 +8,17 @@ from natsort import natsort
 def main():
     PLANNERS = [
         "PATTY-ICES",
-        # "TAMER",
-        # "ANMLSMT"
+        "PATTY-ICES-NO-ROLLING",
+        "TAMER",
+        "ANMLSMT"
     ]
 
     domains = [
         # "temporal/cushing",
         # "temporal/majsp/anml",
         # "temporal/bottles-all",
-        "temporal/bottles-pack",
+        # "temporal/bottles-pack",
+        "temporal/recharging",
         # "temporal/bottles-pour",
         # "temporal/bottles-shake",
         # "temporal/match-ms",
@@ -25,7 +27,7 @@ def main():
         # "temporal/painter/anml"
     ]
 
-    ANMLPLANNERS = {"ANMLSMT", "TAMER"}
+    ANMLPLANNERS = {"ANMLSMT", "TAMER", "PATTY-ICES", "PATTY-ICES-NO-ROLLING"}
 
     instances = list()
 

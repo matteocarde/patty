@@ -96,6 +96,7 @@ PLANNERS: Dict[str, Planner] = {
     "ANMLSMT": AnmlSMT(),
     "TAMER": Tamer(),
     "PATTY-ICES": Patty("PATTY-ICES", ices=True),
+    "PATTY-ICES-NO-ROLLING": Patty("PATTY-ICES", ices=True, rollBound=1),
 }
 
 JAIR_VERSIONS = {
