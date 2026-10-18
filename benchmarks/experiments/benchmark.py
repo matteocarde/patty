@@ -97,6 +97,12 @@ PLANNERS: Dict[str, Planner] = {
     "TAMER": Tamer(),
     "PATTY-ICES": Patty("PATTY-ICES", ices=True),
     "PATTY-ICES-NO-ROLLING": Patty("PATTY-ICES-NO-ROLLING", ices=True, rollBound=1),
+    "PATTY-ICES-PATTERN-RANDOM-ACTION": Patty("PATTY-ICES-PATTERN-RANDOM-ACTION", ices=True,
+                                              pattern="ice-random-action"),
+    "PATTY-ICES-PATTERN-RANDOM-TIME": Patty("PATTY-ICES-PATTERN-RANDOM-TIME", ices=True,
+                                            pattern="ice-random-time"),
+    "PATTY-ICES-PATTERN-GOAL-COUNTING": Patty("PATTY-ICES-PATTERN-GOAL-COUNTING", ices=True,
+                                              goalCounting=True),
 }
 
 JAIR_VERSIONS = {

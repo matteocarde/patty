@@ -9,31 +9,41 @@ def main():
     PLANNERS = [
         "PATTY-ICES",
         "PATTY-ICES-NO-ROLLING",
-        "TAMER",
-        "ANMLSMT"
+        "PATTY-ICES-PATTERN-RANDOM-ACTION",
+        "PATTY-ICES-PATTERN-RANDOM-TIME",
+        "PATTY-ICES-PATTERN-GOAL-COUNTING",
     ]
 
     domains = [
-        # "temporal/cushing",
-        # "temporal/majsp/anml",
-        # "temporal/bottles-all",
-        # "temporal/bottles-pack",
-        "temporal/recharging",
-        # "temporal/bottles-pour",
-        # "temporal/bottles-shake",
-        # "temporal/match-ms",
-        # "temporal/oversub",
-        # "temporal/instradi/anml",
-        # "temporal/painter/anml"
+        "temporal/cushing",
+        "temporal/majsp/anml",
+        "temporal/bottles-all",
+        "temporal/bottles-pack",
+        # "temporal/recharging",
+        "temporal/bottles-pour",
+        "temporal/bottles-shake",
+        "temporal/match-ms",
+        "temporal/oversub",
+        "temporal/instradi/anml",
+        "temporal/painter/anml"
     ]
 
-    ANMLPLANNERS = {"ANMLSMT", "TAMER", "PATTY-ICES", "PATTY-ICES-NO-ROLLING"}
+    ANMLPLANNERS = {"ANMLSMT",
+                    "TAMER",
+                    "PATTY-ICES",
+                    "PATTY-ICES-NO-ROLLING",
+                    "PATTY-ICES-PATTERN-RANDOM-ACTION",
+                    "PATTY-ICES-PATTERN-RANDOM-TIME",
+                    "PATTY-ICES-PATTERN-GOAL-COUNTING"}
 
     instances = list()
+
+    RANDOM_INSTANCES = 5
 
     for domainOrig in domains:
         for planner in PLANNERS:
 
+            times = RANDOM_INSTANCES if "RANDOM" in planner else 1
             domain = domainOrig
             if planner in ANMLPLANNERS and "/anml" not in domain:
                 domain += "/anml"
@@ -53,7 +63,8 @@ def main():
                     assert os.path.exists(problemFile), problemFile
                     if not os.path.exists(domainFile):
                         continue
-                    problemList.append((domainFile, problemFile))
+                    for _ in range(times):
+                        problemList.append((domainFile, problemFile))
             else:
                 if os.path.exists(f"files/{domain}/instances"):
                     problems = natsort.natsorted(os.listdir(f"files/{domain}/instances"))
@@ -74,7 +85,8 @@ def main():
                         problemFile = f"files/{domain}/{problem}"
                     assert not domainFile or os.path.exists(domainFile), domainFile
                     assert os.path.exists(problemFile), problemFile
-                    problemList.append((domainFile, problemFile))
+                    for _ in range(times):
+                        problemList.append((domainFile, problemFile))
 
             instances += [[planner, domain, domainFile, problemFile] for (domainFile, problemFile) in problemList]
 
