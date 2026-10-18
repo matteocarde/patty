@@ -36,7 +36,7 @@ class ICECautiousGPCSearch:
         s: State = State.fromInitialCondition(self.task.init)
 
         patG: ICEPattern = ICEPattern.empty()
-        patH: ICEPattern = ICEPattern.fromState(s, self.task)
+        patH: ICEPattern = ICEPattern.fromState(s, self.task, self.args.pattern)
 
         while bound <= self.maxBound:
 
@@ -91,7 +91,7 @@ class ICECautiousGPCSearch:
                     LogPrintLevel.STATS)
                 patG = ICEPattern.fromPlan(plan)
                 patG.addPostfix("G")
-                patH = ICEPattern.fromState(s, self.task)
+                patH = ICEPattern.fromState(s, self.task, self.args.pattern)
                 pass
             else:
                 patF.addPostfix(bound)

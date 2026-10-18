@@ -13,7 +13,8 @@ class Arguments:
         parser.add_argument('-v', '--verboseLevel', help=f'The level of verbosity: {LogPrintLevel.getLevels()} ',
                             default=LogPrintLevel.getDefault(), type=int)
         parser.add_argument('--pattern', default="enhanced",
-                            help="Method too compute the pattern: arpg, enhanced, random")
+                            help="Method too compute the pattern: arpg, enhanced, random, ices-random-action, "
+                                 "ices-random-time")
         parser.add_argument('--solver', default="z3",
                             help="The solver used to compute a solution: yices, z3")
         parser.add_argument('-s', '--search', default="step",
@@ -57,6 +58,8 @@ class Arguments:
                             action="store_true", default=False)
         parser.add_argument('--temporal-constraints', help="'numerical' or 'logical' following IJCAI-24",
                             default='numerical')
+        parser.add_argument('--goal-counting', help="Instead of soft-asserts, it maximize the goal-counting",
+                            action="store_true", default=False)
         parser.add_argument('--jair-search-strategy',
                             help="See JAIR",
                             choices={"C", "B", "R", "G"},

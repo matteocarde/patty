@@ -47,7 +47,6 @@ def main_ices(args):
             task: ICETask = ICETask.fromTemporalNoICEs(gDomain, problem)
             th.endHolder()
 
-
         solver = ICECautiousGPCSearch(task, args)
         plan: ICEPlan = solver.solve()
 

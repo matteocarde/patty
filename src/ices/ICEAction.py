@@ -5,6 +5,7 @@ from typing import List, Set, Tuple, Dict
 from unified_planning.model.action import DurativeAction as UPDurativeAction
 
 from src.pddl.Action import Action
+from src.smt.SMTExpression import SMTExpression
 from src.utils.Constants import EPSILON
 from src.ices.ActionIntermediateCondition import ActionIntermediateCondition
 from src.ices.ActionIntermediateEffect import ActionIntermediateEffect
@@ -137,7 +138,7 @@ class ICEAction:
 
         return iceAction
 
-    def getEpsilonB(self) -> float:
+    def getEpsilonB(self, eps: SMTExpression) -> float or SMTExpression:
         start = ({c for c in self.icond if c.fromTime.anchor == START and c.fromTime.k == 0} |
                  {e for e in self.ieff if e.time.anchor == START and e.time.k == 0})
         end = ({c for c in self.icond if c.fromTime.anchor == END and c.fromTime.k == 0} |
@@ -145,7 +146,7 @@ class ICEAction:
         for s in start:
             for e in end:
                 if s.inMutexWith(e):
-                    return EPSILON
+                    return eps
         return 0
 
     @classmethod

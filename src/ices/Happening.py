@@ -149,6 +149,12 @@ class Happening:
             return time + k
         return None
 
+    def getAbsoluteTime(self, start: float, end: float) -> float:
+        if isinstance(self, HappeningCondition):
+            return self.condition.fromTime.absolute(start, end)
+        if isinstance(self, HappeningEffect):
+            return self.effect.time.absolute(start, end)
+
 
 class HappeningAction(Happening):
     action: ICEAction

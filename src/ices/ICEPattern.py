@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import random
 from typing import List, Iterable, Dict, Set, Tuple
 
 from src.ices.Happening import Happening, HappeningActionStart, HappeningActionEnd, HappeningConditionStart, \
@@ -13,6 +14,8 @@ from src.ices.PlanIntermediateEffect import PlanIntermediateEffect
 from src.ices.SnapHappeningAction import SnapHappeningAction
 
 from src.ices.SnapTask import SnapTask
+from src.ices.TimedConditions import TimedConditions
+from src.ices.TimedEffects import TimedEffects
 from src.pddl.ARPG import ARPG
 from src.pddl.Action import Action
 from src.pddl.Atom import Atom
@@ -168,7 +171,7 @@ class ICEPattern:
         return
 
     @classmethod
-    def fromState(cls, s: State, task: ICETask) -> ICEPattern:
+    def fromStateARPG(cls, s: State, task: ICETask) -> ICEPattern:
         arpg: ARPG = ICEPattern.getARPG(task, s, avoidRaising=True)
 
         snapOrder: List[SnapHappeningAction] = arpg.getActionsOrderWithoutUnused(enhanced=False)
@@ -188,11 +191,60 @@ class ICEPattern:
                         del leftHappenings[h]
 
         snapOrder += [h for h in leftHappenings.values()]
-        pattern: ICEPattern = ICEPattern.fromOrder([aLeft.originatingHappening for aLeft in snapOrder if aLeft.originatingHappening])
+        pattern: ICEPattern = ICEPattern.fromOrder(
+            [aLeft.originatingHappening for aLeft in snapOrder if aLeft.originatingHappening])
 
         ICEPattern.__setStartingAndEnding(pattern)
 
         return pattern
+
+    @classmethod
+    def fromStateRandomAction(cls, s: State, task: ICETask) -> ICEPattern:
+        actionsList = list(task.actions)
+        random.shuffle(actionsList)
+
+        order = list()
+        for H in Happening.PICEs(task.conditions, task.effects):
+            order += H
+        for b in actionsList:
+            for H in Happening.AICEs(b):
+                order += H
+
+        pattern = ICEPattern.fromOrder(order)
+        ICEPattern.__setStartingAndEnding(pattern)
+        return pattern
+
+    @classmethod
+    def fromStateRandomTime(cls, s: State, task: ICETask) -> ICEPattern:
+
+        ms = sum([a.duration for a in task.actions])
+        timesheet: Dict[float, List[Happening]] = dict()
+        for H in Happening.PICEs(task.conditions, task.effects):
+            for h in H:
+                t = h.getAbsoluteTime(0, ms)
+                timesheet.setdefault(t, [])
+                timesheet[t].append(h)
+        for b in task.actions:
+            start = random.random() * ms
+            for H in Happening.AICEs(b):
+                for h in H:
+                    t = h.getAbsoluteTime(start, start + b.duration)
+                    timesheet.setdefault(t, [])
+                    timesheet[t].append(h)
+
+        ordered: List[Tuple[float, List[Happening]]] = sorted(timesheet.items())
+        pattern = ICEPattern.fromOrder([h for (t, H) in ordered for h in H])
+        ICEPattern.__setStartingAndEnding(pattern)
+        return pattern
+
+    @classmethod
+    def fromState(cls, s: State, task: ICETask, patternType: str) -> ICEPattern:
+        if patternType == "ice-random-action":
+            return ICEPattern.fromStateRandomAction(s, task)
+        elif patternType == "ice-random-time":
+            return ICEPattern.fromStateRandomTime(s, task)
+        else:
+            return ICEPattern.fromStateARPG(s, task)
 
     def print(self):
         print("----- Pattern -----")

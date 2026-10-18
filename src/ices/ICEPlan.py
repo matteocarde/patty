@@ -16,6 +16,7 @@ from src.ices.TimedICEAction import TimedICEAction, TimedICEActionList
 from src.pddl.State import State
 from src.pddl.TimedState import TimedState
 from src.smt.SMTSolution import SMTSolution
+from src.smt.SMTVariable import SMTVariable
 from src.utils.Constants import EPSILON, EPSILON_DECIMALS
 from src.utils.ValAssert import ValAssert, ValidationError
 
@@ -63,7 +64,8 @@ class ICEPlan:
             b: ICEAction = h_i.starting
             assert (mu_h_i == 0 and mu_d_i == 0) or (mu_h_i > 0)
 
-            e_b = b.getEpsilonB()
+            e_b = b.getEpsilonB(encoding.eps)
+            e_b = solution.getVariable(e_b) if isinstance(e_b, SMTVariable) else e_b
             if mu_h_i > 0:
                 for r in range(1, mu_h_i + 1):
                     time = mu_t_i + (r - 1) * (mu_d_i + e_b)

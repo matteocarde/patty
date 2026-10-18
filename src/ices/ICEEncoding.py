@@ -19,6 +19,7 @@ from src.plan.Encoding import Encoding
 from src.smt.SMTComment import SMTComment
 from src.smt.SMTConjunction import SMTConjunction
 from src.smt.SMTExpression import SMTExpression
+from src.smt.SMTNumericVariable import SMTRealVariable
 from src.smt.SMTVariable import SMTVariable
 from src.utils.Arguments import Arguments
 from src.utils.Constants import EPSILON
@@ -55,6 +56,7 @@ class ICEEncoding(Encoding):
         self.k = len(pattern)
         self.softRules: [SMTExpression] = []
         self.rulesBySet = dict()
+        self.eps = SMTRealVariable("ϵ")
 
         t = TimeStat.startHolder("Getting touched atoms")
         self.touchedAtomsIndexes: Dict[Atom, List[int]] = self.pattern.getTouchedAtomsIndexes()
@@ -91,6 +93,7 @@ class ICEEncoding(Encoding):
 
         s = State.fromInitialCondition(self.task.init)
         rules.append(SMTExpression.fromState(s, current))
+        rules.append(self.eps.equal(EPSILON))
 
         return rules
 
@@ -441,6 +444,8 @@ class ICEEncoding(Encoding):
                 if not h_a.original.inMutexWith(h_b.original):
                     continue
 
+                print(h_a, "in mutex with", h_b)
+
                 if h_a.parent == h_b.parent:
                     continue
 
@@ -455,25 +460,28 @@ class ICEEncoding(Encoding):
                     rules.append(((h_i > 0) & (h_j > 0)).implies(t_j >= t_i_end))
                     pass
                 if isinstance(h_a, HappeningEffect) and isinstance(h_b, HappeningEffect):
-                    rules.append(((h_i > 0) & (h_j > 0)).implies(t_j >= t_i + EPSILON))
+                    rules.append(((h_i > 0) & (h_j > 0)).implies(t_j >= t_i + self.eps))
                     pass
                 if isinstance(h_a, HappeningEffect) and isinstance(h_b, HappeningCondition):
                     cond = h_b.condition.conditions
                     r = ((h_i > 0) & (h_j > 0) & ~SMTExpression.fromFormula(cond, sigmas_im1)).implies(
-                        t_j >= t_i + EPSILON)
+                        t_j >= t_i + self.eps)
                     rules.append(r)
 
                 if isinstance(h_a.parent, ICEAction) and h_a.parent != h_b.parent:
                     b = h_a.parent
                     d_i_b = deltas[i][b]
-                    e_b = b.getEpsilonB()
+                    e_b = b.getEpsilonB(self.eps)
                     if isinstance(h_a, HappeningCondition):
                         t_i_end = tEndVars[h_a]
-                        rules.append(((h_i > 1) & (h_j > 0)).implies(t_j >= t_i_end + (d_i_b + e_b) * (h_i - 1)))
-                    if isinstance(h_a, HappeningEffect) and isinstance(h_b, HappeningEffect):
-                        rules.append(((h_i > 1) & (h_j > 0)).implies(t_j >= t_i + (d_i_b + e_b) * h_i + EPSILON))
+                        r = ((h_i > 1) & (h_j > 0)).implies(t_j >= t_i_end + (d_i_b + e_b) * (h_i - 1))
+                        rules.append(r)
+                    if isinstance(h_a, HappeningEffect):
+                        r = ((h_i > 1) & (h_j > 0)).implies(t_j >= t_i + (d_i_b + e_b) * (h_i - 1) + self.eps)
+                        rules.append(r)
                     if isinstance(h_a, HappeningEffect) and isinstance(h_b, HappeningCondition):
-                        rules.append(((h_i > 0) & (h_j > 1)).implies(t_j >= t_i + EPSILON))
+                        r = ((h_i > 0) & (h_j > 1)).implies(t_j >= t_i + self.eps)
+                        rules.append(r)
 
         return rules
 
@@ -491,7 +499,7 @@ class ICEEncoding(Encoding):
                     d_i = dVars[a]
                     h_j = hVars[b]
                     t_j = tVars[b]
-                    e_b = a.starting.getEpsilonB()
+                    e_b = a.starting.getEpsilonB(self.eps)
                     rules.append(((h_i > 0) & (h_j > 0)).implies(t_j >= t_i + (d_i + e_b) * h_i))
 
         return rules
