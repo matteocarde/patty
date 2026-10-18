@@ -134,6 +134,7 @@ class Arguments:
         self.minimizeGoalFunction = args.minimize_goal_function
         self.greedyLevel = args.greedy_level
         self.ices = args.ices
+        self.goalCounting = args.goal_counting
 
         self.jairSearchStrategy = args.jair_search_strategy
         self.jairPatternG = args.jair_pattern_g

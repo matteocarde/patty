@@ -19,8 +19,9 @@ from src.plan.Encoding import Encoding
 from src.smt.SMTComment import SMTComment
 from src.smt.SMTConjunction import SMTConjunction
 from src.smt.SMTExpression import SMTExpression
-from src.smt.SMTNumericVariable import SMTRealVariable
+from src.smt.SMTNumericVariable import SMTRealVariable, SMTNumericVariable, SMTIntVariable
 from src.smt.SMTVariable import SMTVariable
+from src.smt.expressions.ITEExpression import ITEExpression
 from src.utils.Arguments import Arguments
 from src.utils.Constants import EPSILON
 from src.utils.TimeStat import TimeStat
@@ -102,19 +103,26 @@ class ICEEncoding(Encoding):
         rules = SMTConjunction()
         next = tVars.nextVariables
 
-        for goal in self.subgoalsAchieved:
-            rules.append(SMTExpression.fromFormula(goal, next))
+        if not self.args.goalCounting:
+            for goal in self.subgoalsAchieved:
+                rules.append(SMTExpression.fromFormula(goal, next))
 
-        orGoals = []
-        for g in self.task.goal:
-            if g in self.subgoalsAchieved:
-                continue
-            gf = SMTExpression.fromFormula(g, next)
-            orGoals.append(gf)
-            self.softRules.append(gf)
+            orGoals = []
+            for g in self.task.goal:
+                if g in self.subgoalsAchieved:
+                    continue
+                gf = SMTExpression.fromFormula(g, next)
+                orGoals.append(gf)
+                self.softRules.append(gf)
 
-        if orGoals:
-            rules.append(SMTExpression.bigor(orGoals))
+            if orGoals:
+                rules.append(SMTExpression.bigor(orGoals))
+        else:
+            self.gc = SMTIntVariable("gc")
+            rules.append(
+                self.gc.equal(sum([ITEExpression(SMTExpression.fromFormula(g, next), 1, 0) for g in self.task.goal])))
+            rules.append(self.gc > len(self.subgoalsAchieved))
+            self.minimize = [-self.gc]
 
         return rules
 
