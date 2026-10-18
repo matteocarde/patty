@@ -185,6 +185,7 @@ def main():
         benchmark = el[1]
         domainFile = el[2]
         problemFile = el[3]
+        repetition = "" if len(el) <= 4 or el[4] == "0" else el[4]
 
         if hasattr(planner, "tcTime"):
             planner.tcTime = envs.tcTime
@@ -199,8 +200,13 @@ def main():
                 print(r.stdout)
 
             logger.log(r.toCSV())
+            s3Filename = [r.problem]
+            if repetition:
+                s3Filename.append(repetition)
+            if not r.solved:
+                s3Filename.append("unsolved")
             s3.put_object(
-                Key=f"{envs.experiment}/{r.solver}/{r.domain}/plans/{r.problem}{'-unsolved' if not r.solved else ''}.txt",
+                Key=f"{envs.experiment}/{r.solver}/{r.domain}/plans/{'-'.join(s3Filename)}.txt",
                 Bucket="patty-benchmarks",
                 Body=bytes(r.stdout, 'utf-8'),
                 ContentType='text/plain'

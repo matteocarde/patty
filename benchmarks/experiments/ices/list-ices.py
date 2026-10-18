@@ -29,12 +29,7 @@ def main():
     ]
 
     ANMLPLANNERS = {"ANMLSMT",
-                    "TAMER",
-                    "PATTY-ICES",
-                    "PATTY-ICES-NO-ROLLING",
-                    "PATTY-ICES-PATTERN-RANDOM-ACTION",
-                    "PATTY-ICES-PATTERN-RANDOM-TIME",
-                    "PATTY-ICES-PATTERN-GOAL-COUNTING"}
+                    "TAMER"}
 
     instances = list()
 
@@ -50,7 +45,7 @@ def main():
 
             ext = "anml" if "/anml" in domain else "pddl"
 
-            problemList: List[Tuple[str, str]] = list()
+            problemList: List[Tuple[str, str, int]] = list()
 
             if os.path.exists(f"files/{domain}/domains"):
                 folders = natsort.natsorted(os.listdir(f"files/{domain}/domains"))
@@ -63,8 +58,8 @@ def main():
                     assert os.path.exists(problemFile), problemFile
                     if not os.path.exists(domainFile):
                         continue
-                    for _ in range(times):
-                        problemList.append((domainFile, problemFile))
+                    for i in range(times):
+                        problemList.append((domainFile, problemFile, i))
             else:
                 if os.path.exists(f"files/{domain}/instances"):
                     problems = natsort.natsorted(os.listdir(f"files/{domain}/instances"))
@@ -85,10 +80,11 @@ def main():
                         problemFile = f"files/{domain}/{problem}"
                     assert not domainFile or os.path.exists(domainFile), domainFile
                     assert os.path.exists(problemFile), problemFile
-                    for _ in range(times):
-                        problemList.append((domainFile, problemFile))
+                    for i in range(times):
+                        problemList.append((domainFile, problemFile, i))
 
-            instances += [[planner, domain, domainFile, problemFile] for (domainFile, problemFile) in problemList]
+            instances += [[planner, domain, domainFile, problemFile, str(rep)] for (domainFile, problemFile, rep) in
+                          problemList]
 
     random.shuffle(instances)
     print(f"Listing {len(instances)} instances")
