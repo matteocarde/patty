@@ -17,18 +17,18 @@ def main():
     ]
 
     domains = [
-        "temporal/cushing",
-        "temporal/majsp/anml",
-        "temporal/bottles-all",
-        "temporal/bottles-pack",
-        "temporal/recharging/anml",
-        "temporal/bottles-pour",
-        "temporal/bottles-shake",
-        "temporal/match-ms",
-        "temporal/oversub",
+        # "temporal/cushing",
+        # "temporal/majsp/anml",
+        # "temporal/bottles-all",
+        # "temporal/bottles-pack",
+        # "temporal/recharging/anml",
+        # "temporal/bottles-pour",
+        # "temporal/bottles-shake",
+        # "temporal/match-ms",
+        # "temporal/oversub",
         "temporal/instradi/anml",
-        "temporal/instradi-deadline/anml",
-        "temporal/painter/anml"
+        # "temporal/instradi-deadline/anml",
+        # "temporal/painter/anml"
     ]
 
     ANMLPLANNERS = {"ANMLSMT",
