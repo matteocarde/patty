@@ -16,13 +16,18 @@ class AnmlSMT(Planner):
         r.time = Result.parseTime(stdout)
         reBound = re.findall(r"INFO: \[SMTPlanner\] h: (.*?)$", stdout, re.MULTILINE)
         r.bound = -1 if not reBound else int(reBound[-1])
-        r.plan = re.findall(r"^[.\d]*?: (.*?) \[(.*?)]", stdout, re.MULTILINE)
+        r.plan = re.findall(r"^([\d.]*?): (.*?)(?:\[(.*?)\])?$", stdout, re.MULTILINE)
         r.planLength = len(r.plan)
 
         reNOfVars = re.findall(r".*? Number of variables: (.*?)$", stdout, re.MULTILINE)
         r.nOfVars = -1 if not reNOfVars else int(reNOfVars[0])
         reNOfRules = re.findall(r".*? Number of assertions: (.*?)$", stdout, re.MULTILINE)
         r.nOfRules = -1 if not reNOfRules else int(reNOfRules[0])
+
+        for tup in r.plan:
+            if len(tup) < 3:
+                continue
+            r.makespan = max([r.makespan, float(tup[0]) + float(tup[2])])
 
         return r
 

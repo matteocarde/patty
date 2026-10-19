@@ -14,8 +14,13 @@ class Tamer(Planner):
     def parseOutput(r: Result, stdout: str):
         r.solved = len(re.findall(r";; A plan has been found:", stdout)) > 0
         r.time = Result.parseTime(stdout)
-        r.plan = re.findall(r"^[.\d]*?: (.*?) \[(.*?)]", stdout, re.MULTILINE)
+        r.plan = re.findall(r"^([\d.]*?): (.*?)(?:\[(.*?)\])?$", stdout, re.MULTILINE)
         r.planLength = len(r.plan)
+
+        for tup in r.plan:
+            if len(tup) < 3:
+                continue
+            r.makespan = max([r.makespan, float(tup[0]) + float(tup[2])])
 
         return r
 

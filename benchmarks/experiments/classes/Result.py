@@ -37,6 +37,7 @@ class Result(dict):
     rolledActionsInPlan: int = -1
     transitiveClosureTime: int = -1
     transitiveClosureSize: int = -1
+    makespan: int = -1
 
     def __init__(self, domain: str, problem: str):
         super().__init__()
@@ -74,6 +75,8 @@ class Result(dict):
             r.transitiveClosureTime = int(csvLine[20])
         if len(csvLine) > 21:
             r.transitiveClosureSize = int(csvLine[21])
+        if len(csvLine) > 22:
+            r.makespan = int(csvLine[22])
         r.__setDict()
         return r
 
@@ -121,6 +124,7 @@ class Result(dict):
             (str(self.rolledActionsInPlan), 5),
             (str(self.transitiveClosureTime), 5),
             (str(self.transitiveClosureSize), 5),
+            (str(self.makespan), 5),
         ]
 
         string = "|" + "|".join(["{:^" + str(n[1]) + "}" for n in row]) + "|"
@@ -150,7 +154,8 @@ class Result(dict):
             str(self.avgVarsInRules),
             str(self.rolledActionsInPlan),
             str(self.transitiveClosureTime),
-            str(self.transitiveClosureSize)
+            str(self.transitiveClosureSize),
+            str(self.makespan)
         ])
 
     @classmethod
@@ -177,6 +182,7 @@ class Result(dict):
             r.distinctActionsInPlan = statistics.mean([e.distinctActionsInPlan for e in results if e.solved])
             r.avgVarsInRules = statistics.mean([e.avgVarsInRules for e in results if e.solved])
             r.rolledActionsInPlan = statistics.mean([e.rolledActionsInPlan for e in results if e.solved])
+            r.makespan = statistics.mean([e.makespan for e in results if e.solved])
         r.__setDict()
         return r
 

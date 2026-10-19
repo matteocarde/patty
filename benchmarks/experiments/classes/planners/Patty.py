@@ -61,7 +61,7 @@ class Patty(Planner):
         r.time = Result.parseTime(stdout)
         reBound = re.findall(r"^Bound: (\d*?)$", stdout, re.MULTILINE)
         r.bound = -1 if not reBound else int(reBound[0])
-        r.plan = re.findall(r"^\d*?: (\(.*?\))$", stdout, re.MULTILINE)
+        r.plan = re.findall(r"^([\d.]*?): (.*?)(?:\[(.*?)\])?$", stdout, re.MULTILINE)
         r.planLength = len(r.plan)
         reNOfVars = re.findall(r"Bound .*? - Vars = (.*?)$", stdout, re.MULTILINE)
         r.nOfVars = -1 if not reNOfVars else int(reNOfVars[-1])
@@ -102,6 +102,11 @@ class Patty(Planner):
 
         rolledActionsInPlan = re.findall(r"Rolled Actions: (.*?)$", stdout, re.MULTILINE)
         r.rolledActionsInPlan = -1 if not rolledActionsInPlan else int(rolledActionsInPlan[0])
+
+        for tup in r.plan:
+            if len(tup) < 3:
+                continue
+            r.makespan = max([r.makespan, float(tup[0]) + float(tup[2])])
 
         return r
 

@@ -10,7 +10,7 @@ action right() {
 	[start] battery > 20;
 
 	[end] x := x + 1;
-	[end] battery := battery - 5;
+	[end] battery := battery - 1;
 };
 
 action charge() {
@@ -19,5 +19,5 @@ action charge() {
 
 	[start] charging := true;
 	[end] charging := false;
-	[end] battery := battery + 5;
+	[end] battery := battery + 1;
 };

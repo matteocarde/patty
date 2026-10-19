@@ -59,7 +59,7 @@ def main():
 
     file = f"benchmarks/results/csv/{exp}.csv"
 
-    folder = f'benchmarks/latex/{exp}'
+    folder = f'benchmarks/latex/{exp}-recharging'
     if os.path.exists(folder):
         shutil.rmtree(folder)
     os.mkdir(folder)
