@@ -8,14 +8,14 @@ import boto3
 from botocore.config import Config
 
 from classes.CloudLogger import CloudLogger
-from classes.planners.Madagascar import Madagascar
-from classes.planners.AnmlSMT import AnmlSMT
-from classes.planners.ENHSP import ENHSP
 from classes.Envs import Envs
 from classes.Result import Result
+from classes.planners.AnmlSMT import AnmlSMT
+from classes.planners.ENHSP import ENHSP
 from classes.planners.ENHSP_SOCS import ENHSP_SOCS
 from classes.planners.ITSAT import ITSAT
 from classes.planners.LPG import LPG
+from classes.planners.Madagascar import Madagascar
 from classes.planners.MetricFF import MetricFF
 from classes.planners.NFD import NFD
 from classes.planners.OMT import OMT

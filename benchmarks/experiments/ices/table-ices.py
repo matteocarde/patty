@@ -9,6 +9,7 @@ from typing import Dict, List, Set
 
 from benchmarks.tables.ices.domains import ICES_DOMAINS
 from benchmarks.tables.ices.planners import ICES_PLANNERS
+from benchmarks.tables.ices.table_ablation_all import TABLE_ABLATION_ALL, TABLE_ABLATION_ALL_PLANNERS
 from benchmarks.tables.ices.table_all import ICES_ALL
 from classes.CloudLogger import CloudLogger
 from classes.Result import Result
@@ -36,24 +37,14 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2025-12-16-ICES-REALLY-FINAL-v7"
+    exp = "2026-10-18-ABLATIONS-AIJ-v2"
     joinWith = [
         (exp, [
             "PATTY-ICES",
-        ]),
-        ("2025-12-16-ICES-REALLY-FINAL-v6", [
-            "TAMER",
-            "ANMLSMT",
-        ]),
-        ("2025-12-16-ICES-REALLY-FINAL-v4", [
-            "PATTY-ICES",
-        ]),
-        ("2024-01-14-TOTAL-v1", [
-            "PATTY-T-OR-ASTAR",
-            "ITSAT",
-            "LPG",
-            "OPTIC",
-            "TFD",
+            "PATTY-ICES-PATTERN-RANDOM-TIME",
+            "PATTY-ICES-PATTERN-RANDOM-ACTION",
+            "PATTY-ICES-PATTERN-GOAL-COUNTING",
+            "PATTY-ICES-NO-ROLLING"  #
         ])
     ]
 
@@ -71,7 +62,7 @@ def main():
         CloudLogger.appendLogs(exp2, file, keepSolvers)
 
     tables = [
-        ("all", ICES_ALL)
+        ("all", TABLE_ABLATION_ALL)
     ]
 
     PLANNERS = ICES_PLANNERS
@@ -112,7 +103,8 @@ def main():
         "ENHSP-SAT-AIBR": "ENHSP",
         "ENHSP-SAT-HMRP": "ENHSP",
     })
-    results = Result.splitRandom(results, "PATTY-R")
+    results = Result.splitRandom(results, "PATTY-ICES-PATTERN-RANDOM-TIME")
+    results = Result.splitRandom(results, "PATTY-ICES-PATTERN-RANDOM-ACTION")
 
     dOrig = dict()
     dView = dict()

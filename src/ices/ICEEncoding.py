@@ -452,8 +452,6 @@ class ICEEncoding(Encoding):
                 if not h_a.original.inMutexWith(h_b.original):
                     continue
 
-                print(h_a, "in mutex with", h_b)
-
                 if h_a.parent == h_b.parent:
                     continue
 
