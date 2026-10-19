@@ -1,0 +1,35 @@
+
+               \documentclass[11pt,landscape]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in,landscape]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l|c||cc||cc||cc||}
+\hline
+ & & \multicolumn{2}{c||}{Solved}&\multicolumn{2}{c||}{Time (s)}&\multicolumn{2}{c||}{\textsc{smt} calls}\\
+Domain & \# & $\textsc{p}$&$\textsc{p}_\textsc{gc}$&$\textsc{p}$&$\textsc{p}_\textsc{gc}$&$\textsc{p}$&$\textsc{p}_\textsc{gc}$\\
+\hline
+\textsc{Cushing (t)}&10&\textbf{10}&9&\textbf{18.72}&74.22&\textbf{3.0}&\textbf{3.0}\\
+\textsc{Pour (t)}&20&\textbf{15}&\textbf{15}&152.80&\textbf{140.81}&\textbf{3.1}&\textbf{3.1}\\
+\textsc{Shake (t)}&20&\textbf{20}&\textbf{20}&\textbf{2.88}&3.37&\textbf{2.0}&\textbf{2.0}\\
+\textsc{Pack (t)}&20&\textbf{1}&\textbf{1}&285.07&\textbf{285.06}&\textbf{1.0}&\textbf{1.0}\\
+\textsc{Match (t)}&40&\textbf{40}&\textbf{40}&\textbf{3.11}&3.30&\textbf{3.3}&\textbf{3.3}\\
+\textsc{Oversub (t)}&20&\textbf{20}&\textbf{20}&\textbf{4.08}&4.41&\textbf{1.0}&\textbf{1.0}\\
+\textsc{InSTraDi} (\textsc{ice}s)&20&\textbf{20}&17&\textbf{58.52}&113.40&\textbf{1.0}&\textbf{1.0}\\
+\textsc{Majsp} (\textsc{ice}s)&20&\textbf{17}&16&98.23&\textbf{91.94}&5.2&\textbf{5.1}\\
+\textsc{Painter} (\textsc{ice}s)&20&\textbf{20}&\textbf{20}&\textbf{25.34}&27.18&\textbf{1.5}&\textbf{1.5}
+\\\hline
+\textit{Best}&190&\textbf{163}&\textbf{158}&\textbf{97}&\textbf{69}&\textbf{155}&\textbf{154}\\\hline
+
+        \end{tabular}}
+        \caption{TODO}
+        \label{tab:ablation-goal-counting}
+        \end{table*}
+        
+\end{document}
