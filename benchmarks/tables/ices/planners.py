@@ -1,38 +1,38 @@
 ICES_PLANNERS = {
     "PATTY-ICES": {
-        "name": r"$\textsc{P}$",
+        "name": r"$\textsc{p}$",
         "style": "-"
     },
     "PATTY-ICES-PATTERN-RANDOM-TIME-MIN": {
-        "name": r"$\textsc{P}_\textsc{rt}^{min}$",
+        "name": r"$\textsc{p}_\textsc{rt}^{min}$",
         "style": "-"
     },
     "PATTY-ICES-PATTERN-RANDOM-TIME-MED": {
-        "name": r"$\textsc{P}_\textsc{rt}^{med}$",
+        "name": r"$\textsc{p}_\textsc{rt}^{med}$",
         "style": "-"
     },
     "PATTY-ICES-PATTERN-RANDOM-TIME-MAX": {
-        "name": r"$\textsc{P}_\textsc{rt}^{max}$",
+        "name": r"$\textsc{p}_\textsc{rt}^{max}$",
         "style": "-"
     },
     "PATTY-ICES-PATTERN-RANDOM-ACTION-MIN": {
-        "name": r"$\textsc{P}_\textsc{ra}^{min}$",
+        "name": r"$\textsc{p}_\textsc{ra}^{min}$",
         "style": "-"
     },
     "PATTY-ICES-PATTERN-RANDOM-ACTION-MED": {
-        "name": r"$\textsc{P}_\textsc{ra}^{med}$",
+        "name": r"$\textsc{p}_\textsc{ra}^{med}$",
         "style": "-"
     },
     "PATTY-ICES-PATTERN-RANDOM-ACTION-MAX": {
-        "name": r"$\textsc{P}_\textsc{ra}^{max}$",
+        "name": r"$\textsc{p}_\textsc{ra}^{max}$",
         "style": "-"
     },
     "PATTY-ICES-PATTERN-GOAL-COUNTING": {
-        "name": r"$\textsc{patty}_\textsc{gc}$",
+        "name": r"$\textsc{p}_\textsc{gc}$",
         "style": "-"
     },
     "PATTY-ICES-NO-ROLLING": {
-        "name": r"$\textsc{patty}_\textsc{nr}$",
+        "name": r"$\textsc{p}_\textsc{nr}$",
         "style": "-"
     },
     "PATTY-T-OR-ASTAR": {

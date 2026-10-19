@@ -21,7 +21,7 @@ def main():
         "temporal/majsp/anml",
         "temporal/bottles-all",
         "temporal/bottles-pack",
-        "temporal/recharging",
+        "temporal/recharging/anml",
         "temporal/bottles-pour",
         "temporal/bottles-shake",
         "temporal/match-ms",

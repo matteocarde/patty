@@ -11,20 +11,16 @@ TABLE_ICES_PLANNERS = {
     "TFD": {"type": "search"},
 }
 
-ICES_ALL = {
-    "name": "tab:results",
+ICES_ALL_SOLVED_TIME = {
+    "name": "tab:results-solved-time",
     "orientation": "landscape",
     "type": "table*",
     "width": r"\textwidth",
     "keepAll": True,
-    "caption": r"TODO",
+    "caption": r"Comparative analysis over all solver consider the number of solved instances and the time it took to "
+               r"solve them. "
+               r"A “-” indicates that no result was obtained in our 5min time limit. The best results are in bold.",
     "columns": {
-        # "coverage": {
-        #     "name": "Coverage (\%)",
-        #     "winner": +1,
-        #     "avg": True,
-        #     "planners": TABLE_ICES_PLANNERS.keys()
-        # },
         "quantity": {
             "name": "Solved",
             "winner": +1,
@@ -37,12 +33,12 @@ ICES_ALL = {
             "avg": True,
             "planners": TABLE_ICES_PLANNERS.keys()
         },
-        "bound": {
-            "name": r"\textsc{smt} calls",
-            "winner": -1,
-            "avg": True,
-            "planners": [key for (key, item) in TABLE_ICES_PLANNERS.items() if item["type"] == "smt"]
-        },
+        # "bound": {
+        #     "name": r"\textsc{smt} calls",
+        #     "winner": -1,
+        #     "avg": True,
+        #     "planners": [key for (key, item) in TABLE_ICES_PLANNERS.items() if item["type"] == "smt"]
+        # },
         # "length": {
         #     "name": r"$|\pi|$",
         #     "winner": -1
@@ -57,6 +53,44 @@ ICES_ALL = {
         #     "winner": -1,
         #     "stdev": False
         # },
+    },
+    "planners": TABLE_ICES_PLANNERS,
+    "domains": ICES_DOMAINS
+}
+
+ICES_ALL_BOUND_MAKESPAN = {
+    "name": "tab:results-bound-makespan",
+    "orientation": "landscape",
+    "type": "table*",
+    "width": r"\textwidth",
+    "keepAll": True,
+    "caption": r"Comparative analysis. A “-” indicates that no result was obtained in our 5min time limit. "
+               r"The best results are in bold.",
+    "columns": {
+        # "quantity": {
+        #     "name": "Solved",
+        #     "winner": +1,
+        #     "avg": True,
+        #     "planners": TABLE_ICES_PLANNERS.keys()
+        # },
+        # "time": {
+        #     "name": "Time (s)",
+        #     "winner": -1,
+        #     "avg": True,
+        #     "planners": TABLE_ICES_PLANNERS.keys()
+        # },
+        "bound": {
+            "name": r"\textsc{smt} calls",
+            "winner": -1,
+            "avg": True,
+            "planners": [key for (key, item) in TABLE_ICES_PLANNERS.items() if item["type"] == "smt"]
+        },
+        "makespan": {
+            "name": r"$ms(\pi)$",
+            "winner": -1,
+            "avg": True,
+            "planners": TABLE_ICES_PLANNERS.keys()
+        }
     },
     "planners": TABLE_ICES_PLANNERS,
     "domains": ICES_DOMAINS

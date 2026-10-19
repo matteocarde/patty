@@ -37,7 +37,7 @@ class Result(dict):
     rolledActionsInPlan: int = -1
     transitiveClosureTime: int = -1
     transitiveClosureSize: int = -1
-    makespan: int = -1
+    makespan: float = -1
 
     def __init__(self, domain: str, problem: str):
         super().__init__()
@@ -76,7 +76,7 @@ class Result(dict):
         if len(csvLine) > 21:
             r.transitiveClosureSize = int(csvLine[21])
         if len(csvLine) > 22:
-            r.makespan = int(csvLine[22])
+            r.makespan = float(csvLine[22])
         r.__setDict()
         return r
 

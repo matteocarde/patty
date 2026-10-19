@@ -21,7 +21,7 @@ PLANNERS = {
     "TAMER": r"\textsc{Tamer}",
 }
 
-DOMAINS = {"temporal/charging"}
+DOMAINS = {"temporal/recharging/anml"}
 TIMEOUT = 300 * 1000
 
 
@@ -47,7 +47,7 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2026-10-07-ICES-REBUTTAL-v1"
+    exp = "2026-10-18-ABLATIONS-AIJ-v4"
     joinWith = [
         (exp, [
             "PATTY-ICES",
@@ -58,11 +58,6 @@ def main():
     ]
 
     file = f"benchmarks/results/csv/{exp}.csv"
-
-    folder = f'benchmarks/latex/{exp}-recharging'
-    if os.path.exists(folder):
-        shutil.rmtree(folder)
-    os.mkdir(folder)
 
     if os.path.exists(file):
         os.remove(file)
@@ -81,6 +76,9 @@ def main():
                     continue
                 r = Result.fromCSVLine(line[0].split(","))
                 r.problem = r.problem[:-5]
+                if r.domain not in DOMAINS:
+                    print(r.domain)
+                    continue
                 aResults.append(r)
 
     resultsByPlanner = dict()
@@ -105,7 +103,7 @@ def main():
         "yLim": 300
     }]
 
-    folder = f"benchmarks/figures/{exp}"
+    folder = f"benchmarks/figures/{exp}-recharging"
     if os.path.exists(folder):
         shutil.rmtree(folder)
     os.mkdir(folder)

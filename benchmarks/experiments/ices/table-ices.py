@@ -9,8 +9,10 @@ from typing import Dict, List, Set
 
 from benchmarks.tables.ices.domains import ICES_DOMAINS
 from benchmarks.tables.ices.planners import ICES_PLANNERS
-from benchmarks.tables.ices.table_ablation_all import TABLE_ABLATION_ALL, TABLE_ABLATION_ALL_PLANNERS
-from benchmarks.tables.ices.table_all import ICES_ALL
+from benchmarks.tables.ices.table_ablation_all import TABLE_ABLATION_NO_ROLLING, \
+    TABLE_ABLATION_PATTERN_RANDOM_ACTION, TABLE_ABLATION_PATTERN_RANDOM_TIME, \
+    TABLE_ABLATION_GOAL_COUNTING
+from benchmarks.tables.ices.table_all import ICES_ALL_SOLVED_TIME, ICES_ALL_BOUND_MAKESPAN
 from classes.CloudLogger import CloudLogger
 from classes.Result import Result
 
@@ -37,15 +39,27 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2026-10-18-ABLATIONS-AIJ-v2"
+    exp = "2026-10-18-ABLATIONS-AIJ-v4"
     joinWith = [
         (exp, [
+            "TAMER",
+            "OPTIC",
+            "ITSAT",
+            "TFD",
+            "ANMLSMT",
             "PATTY-ICES",
             "PATTY-ICES-PATTERN-RANDOM-TIME",
             "PATTY-ICES-PATTERN-RANDOM-ACTION",
             "PATTY-ICES-PATTERN-GOAL-COUNTING",
             "PATTY-ICES-NO-ROLLING"  #
-        ])
+        ]),
+        ("2024-01-14-TOTAL-v1", [
+            "PATTY-T-OR-ASTAR",
+            "ITSAT",
+            "LPG",
+            "OPTIC",
+            "TFD"]
+         )
     ]
 
     file = f"benchmarks/results/csv/{exp}.csv"
@@ -62,7 +76,12 @@ def main():
         CloudLogger.appendLogs(exp2, file, keepSolvers)
 
     tables = [
-        ("all", TABLE_ABLATION_ALL)
+        ("all-solved-time", ICES_ALL_SOLVED_TIME),
+        ("all-bound-makespan", ICES_ALL_BOUND_MAKESPAN),
+        ("ablation-no-rolling", TABLE_ABLATION_NO_ROLLING),
+        ("ablation-pattern-random-action", TABLE_ABLATION_PATTERN_RANDOM_ACTION),
+        ("ablation-pattern-random-time", TABLE_ABLATION_PATTERN_RANDOM_TIME),
+        ("ablation-goal-counting", TABLE_ABLATION_GOAL_COUNTING)
     ]
 
     PLANNERS = ICES_PLANNERS
@@ -125,7 +144,7 @@ def main():
         f.write(json.dumps(dView, indent=2))
 
     for tableName, table in tables:
-
+        print("Creating", tableName)
         planners: List[str] = list(table["planners"].keys())
         domains: List[str] = list(table["domains"].keys())
         domains.sort()
@@ -163,6 +182,7 @@ def main():
                 "nOfRules": dict(),
                 "patternLength": dict(),
                 "lastCallsToSolver": dict(),
+                "makespan": dict(),
             }
             commonlySolved = None
             for planner in table["planners"].keys():
@@ -213,6 +233,9 @@ def main():
                 v = [r.lastCallsToSolver for r in pResult if r.lastCallsToSolver > 0 and r.problem in commonlySolved]
                 t[domain]["lastCallsToSolver"][planner] = rVec(v, 2) if hasCoverage and v else symb
 
+                v = [r.makespan for r in pResult if r.makespan > 0 and r.problem in commonlySolved]
+                t[domain]["makespan"][planner] = rVec(v, 2) if hasCoverage and v else symb
+
         latex = list()
         orientation = ",landscape" if table["orientation"] == "landscape" else ""
         latex.append(r"""
@@ -261,6 +284,8 @@ def main():
                     betterValue = float("-inf") if winner > 0 else float("+inf")
                     better: Set[str] = set()
                     for planner in statInfo["planners"]:
+                        if planner not in p[domain]:
+                            continue
                         if problem not in p[domain][planner]:
                             continue
                         result = p[domain][planner][problem]
@@ -288,6 +313,8 @@ def main():
             nCells = 0
             clString = []
             for planner in columnInfos["planners"]:
+                if planner not in table["planners"]:
+                    continue
                 plannersHeader.append(f"{PLANNERS[planner]['name']}")
                 nCells += 1
                 clString.append("c")
@@ -308,6 +335,8 @@ def main():
             row = [domainInfo["name"], str(len(domainInfo['instances']))]
             for (column, columnInfo) in table["columns"].items():
                 for planner in columnInfo["planners"]:
+                    if planner not in table["planners"]:
+                        continue
                     if planner not in t[domain][column]:
                         row.append("-")
                         continue
@@ -322,6 +351,8 @@ def main():
 
         for column, columnInfo in table["columns"].items():
             for planner in columnInfo["planners"]:
+                if planner not in table["planners"]:
+                    continue
                 # if plannerInfo["type"] in {"stdev", "skip"}:
                 #     continue
                 nOfWinning = 0
