@@ -167,17 +167,20 @@ class ICEEncoding(Encoding):
         piEff: List[SMTVariable] = []
         piCond: List[SMTVariable] = []
 
+        parents = dict()
+
         for h in self.pattern:
             if isinstance(h, HappeningEffect) and isinstance(h.parent, PlanIntermediateEffect):
+                parents.setdefault(h.parent, [])
+                parents[h.parent].append(hVars[h])
                 piEff.append(hVars[h])
             if isinstance(h, HappeningCondition) and isinstance(h.parent, PlanIntermediateCondition):
+                parents.setdefault(h.parent, [])
+                parents[h.parent].append(hVars[h])
                 piCond.append(hVars[h])
 
-        for h_i in piCond:
-            rules.append(h_i <= 1)
-
-        for h_i in piEff:
-            rules.append(h_i <= 1)
+        for parent, happenings in parents.items():
+            rules.append(sum(happenings) <= 1)
 
         if piCond:
             rules.append(sum(piCond).equal(len(self.task.conditions)))
@@ -185,6 +188,8 @@ class ICEEncoding(Encoding):
         if piEff:
             rules.append(sum(piEff).equal(len(self.task.effects)))
 
+        for r in rules:
+            print(r)
         return rules
 
     def __getActionIntermediateCausalRules(self) -> SMTConjunction:
