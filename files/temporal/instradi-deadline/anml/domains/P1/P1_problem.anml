@@ -3,6 +3,7 @@
 [start] exitCounter_03 := 0;
 [start] exitCounter_04 := 0;
 [start] green_T1_01 := false;
+[start] deadline := false;
 [start] green_T1_02 := false;
 [start] green_T1_03 := false;
 [start] green_T1_04 := false;
@@ -152,8 +153,7 @@
 [start + 280] timetable_T3 := true;
 [start + 200] inFront_T2_01 := true;
 [start + 200] green_T2_01 := true;
-
-[start + 50, start + 65] occupied_102 == false;
+[start + 300] deadline := true;
 
 [end] stopped_T2 == true;
 [end] left_T2_04 == true;

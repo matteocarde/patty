@@ -1,3 +1,4 @@
+fluent boolean deadline;
 fluent boolean green_T1_01;
 fluent boolean green_T1_02;
 fluent boolean green_T1_03;
@@ -146,6 +147,7 @@ fluent integer order_T3;
 
 action depart_T1_I_21_02() {
 	duration := 10;
+	[start] deadline == false;
 	[start] inFront_T1_21 == true;
 	[start] stopped_T1 == true;
 	[start] stoppedAtPlatform_T1_I == true;
@@ -160,6 +162,7 @@ action depart_T1_I_21_02() {
 
 action depart_T1_II_22_02() {
 	duration := 10;
+	[start] deadline == false;
 	[start] inFront_T1_22 == true;
 	[start] stopped_T1 == true;
 	[start] stoppedAtPlatform_T1_II == true;
@@ -174,6 +177,7 @@ action depart_T1_II_22_02() {
 
 action depart_T1_III_23_02() {
 	duration := 10;
+	[start] deadline == false;
 	[start] inFront_T1_23 == true;
 	[start] stopped_T1 == true;
 	[start] stoppedAtPlatform_T1_III == true;
@@ -186,6 +190,7 @@ action depart_T1_III_23_02() {
 
 action depart_T2_I_41_04() {
 	duration := 10;
+	[start] deadline == false;
 	[start] inFront_T2_41 == true;
 	[start] stopped_T2 == true;
 	[start] stoppedAtPlatform_T2_I == true;
@@ -200,6 +205,7 @@ action depart_T2_I_41_04() {
 
 action depart_T2_II_42_04() {
 	duration := 10;
+	[start] deadline == false;
 	[start] inFront_T2_42 == true;
 	[start] stopped_T2 == true;
 	[start] stoppedAtPlatform_T2_II == true;
@@ -214,6 +220,7 @@ action depart_T2_II_42_04() {
 
 action depart_T2_III_43_04() {
 	duration := 10;
+	[start] deadline == false;
 	[start] inFront_T2_43 == true;
 	[start] stopped_T2 == true;
 	[start] stoppedAtPlatform_T2_III == true;
@@ -226,6 +233,7 @@ action depart_T2_III_43_04() {
 
 action depart_T3_I_41_04() {
 	duration := 10;
+	[start] deadline == false;
 	[start] inFront_T3_41 == true;
 	[start] stopped_T3 == true;
 	[start] stoppedAtPlatform_T3_I == true;
@@ -240,6 +248,7 @@ action depart_T3_I_41_04() {
 
 action depart_T3_II_42_04() {
 	duration := 10;
+	[start] deadline == false;
 	[start] inFront_T3_42 == true;
 	[start] stopped_T3 == true;
 	[start] stoppedAtPlatform_T3_II == true;
@@ -254,6 +263,7 @@ action depart_T3_II_42_04() {
 
 action depart_T3_III_43_04() {
 	duration := 10;
+	[start] deadline == false;
 	[start] inFront_T3_43 == true;
 	[start] stopped_T3 == true;
 	[start] stoppedAtPlatform_T3_III == true;
@@ -266,6 +276,7 @@ action depart_T3_III_43_04() {
 
 action exit_T1_21_02() {
 	duration := 0;
+	[start] deadline == false;
 	[start] inFront_T1_02 == true;
 	[start] exitCounter_02 == order_T1;
 
@@ -277,6 +288,7 @@ action exit_T1_21_02() {
 
 action exit_T1_22_02() {
 	duration := 0;
+	[start] deadline == false;
 	[start] inFront_T1_02 == true;
 	[start] exitCounter_02 == order_T1;
 
@@ -288,6 +300,7 @@ action exit_T1_22_02() {
 
 action exit_T1_23_02() {
 	duration := 0;
+	[start] deadline == false;
 	[start] inFront_T1_02 == true;
 	[start] exitCounter_02 == order_T1;
 
@@ -299,6 +312,7 @@ action exit_T1_23_02() {
 
 action exit_T2_41_04() {
 	duration := 0;
+	[start] deadline == false;
 	[start] inFront_T2_04 == true;
 	[start] exitCounter_04 == order_T2;
 
@@ -310,6 +324,7 @@ action exit_T2_41_04() {
 
 action exit_T2_42_04() {
 	duration := 0;
+	[start] deadline == false;
 	[start] inFront_T2_04 == true;
 	[start] exitCounter_04 == order_T2;
 
@@ -321,6 +336,7 @@ action exit_T2_42_04() {
 
 action exit_T2_43_04() {
 	duration := 0;
+	[start] deadline == false;
 	[start] inFront_T2_04 == true;
 	[start] exitCounter_04 == order_T2;
 
@@ -332,6 +348,7 @@ action exit_T2_43_04() {
 
 action exit_T3_41_04() {
 	duration := 0;
+	[start] deadline == false;
 	[start] inFront_T3_04 == true;
 	[start] exitCounter_04 == order_T3;
 
@@ -343,6 +360,7 @@ action exit_T3_41_04() {
 
 action exit_T3_42_04() {
 	duration := 0;
+	[start] deadline == false;
 	[start] inFront_T3_04 == true;
 	[start] exitCounter_04 == order_T3;
 
@@ -354,6 +372,7 @@ action exit_T3_42_04() {
 
 action exit_T3_43_04() {
 	duration := 0;
+	[start] deadline == false;
 	[start] inFront_T3_04 == true;
 	[start] exitCounter_04 == order_T3;
 
@@ -365,6 +384,7 @@ action exit_T3_43_04() {
 
 action move_T1_03_21() {
 	duration := 30;
+	[start] deadline == false;
 	[start] inFront_T1_03 == true;
 	[start] green_T1_03 == true;
 	[start] occupied_109 == false;
@@ -393,6 +413,7 @@ action move_T1_03_21() {
 
 action move_T1_03_22() {
 	duration := 40;
+	[start] deadline == false;
 	[start] inFront_T1_03 == true;
 	[start] green_T1_03 == true;
 	[start] occupied_109 == false;
@@ -427,6 +448,7 @@ action move_T1_03_22() {
 
 action move_T1_03_23() {
 	duration := 30;
+	[start] deadline == false;
 	[start] inFront_T1_03 == true;
 	[start] green_T1_03 == true;
 	[start] occupied_109 == false;
@@ -455,6 +477,7 @@ action move_T1_03_23() {
 
 action move_T1_21_02() {
 	duration := 15;
+	[start] deadline == false;
 	[start] inFront_T1_21 == true;
 	[start] green_T1_21 == true;
 	[start] occupied_103 == false;
@@ -474,6 +497,7 @@ action move_T1_21_02() {
 
 action move_T1_22_02() {
 	duration := 25;
+	[start] deadline == false;
 	[start] inFront_T1_22 == true;
 	[start] green_T1_22 == true;
 	[start] occupied_113 == false;
@@ -499,6 +523,7 @@ action move_T1_22_02() {
 
 action move_T1_23_02() {
 	duration := 25;
+	[start] deadline == false;
 	[start] inFront_T1_23 == true;
 	[start] green_T1_23 == true;
 	[start] occupied_122 == false;
@@ -524,6 +549,7 @@ action move_T1_23_02() {
 
 action move_T2_01_41() {
 	duration := 40;
+	[start] deadline == false;
 	[start] inFront_T2_01 == true;
 	[start] green_T2_01 == true;
 	[start] occupied_110 == false;
@@ -558,6 +584,7 @@ action move_T2_01_41() {
 
 action move_T2_01_42() {
 	duration := 35;
+	[start] deadline == false;
 	[start] inFront_T2_01 == true;
 	[start] green_T2_01 == true;
 	[start] occupied_110 == false;
@@ -589,6 +616,7 @@ action move_T2_01_42() {
 
 action move_T2_01_43() {
 	duration := 25;
+	[start] deadline == false;
 	[start] inFront_T2_01 == true;
 	[start] green_T2_01 == true;
 	[start] occupied_110 == false;
@@ -614,6 +642,7 @@ action move_T2_01_43() {
 
 action move_T2_41_04() {
 	duration := 25;
+	[start] deadline == false;
 	[start] inFront_T2_41 == true;
 	[start] green_T2_41 == true;
 	[start] occupied_107 == false;
@@ -639,6 +668,7 @@ action move_T2_41_04() {
 
 action move_T2_42_04() {
 	duration := 20;
+	[start] deadline == false;
 	[start] inFront_T2_42 == true;
 	[start] green_T2_42 == true;
 	[start] occupied_117 == false;
@@ -661,6 +691,7 @@ action move_T2_42_04() {
 
 action move_T2_43_04() {
 	duration := 20;
+	[start] deadline == false;
 	[start] inFront_T2_43 == true;
 	[start] green_T2_43 == true;
 	[start] occupied_124 == false;
@@ -683,6 +714,7 @@ action move_T2_43_04() {
 
 action move_T3_01_41() {
 	duration := 40;
+	[start] deadline == false;
 	[start] inFront_T3_01 == true;
 	[start] green_T3_01 == true;
 	[start] occupied_110 == false;
@@ -717,6 +749,7 @@ action move_T3_01_41() {
 
 action move_T3_01_42() {
 	duration := 35;
+	[start] deadline == false;
 	[start] inFront_T3_01 == true;
 	[start] green_T3_01 == true;
 	[start] occupied_110 == false;
@@ -748,6 +781,7 @@ action move_T3_01_42() {
 
 action move_T3_01_43() {
 	duration := 25;
+	[start] deadline == false;
 	[start] inFront_T3_01 == true;
 	[start] green_T3_01 == true;
 	[start] occupied_110 == false;
@@ -773,6 +807,7 @@ action move_T3_01_43() {
 
 action move_T3_41_04() {
 	duration := 25;
+	[start] deadline == false;
 	[start] inFront_T3_41 == true;
 	[start] green_T3_41 == true;
 	[start] occupied_107 == false;
@@ -798,6 +833,7 @@ action move_T3_41_04() {
 
 action move_T3_42_04() {
 	duration := 20;
+	[start] deadline == false;
 	[start] inFront_T3_42 == true;
 	[start] green_T3_42 == true;
 	[start] occupied_117 == false;
@@ -820,6 +856,7 @@ action move_T3_42_04() {
 
 action move_T3_43_04() {
 	duration := 20;
+	[start] deadline == false;
 	[start] inFront_T3_43 == true;
 	[start] green_T3_43 == true;
 	[start] occupied_124 == false;
@@ -842,6 +879,7 @@ action move_T3_43_04() {
 
 action stop_T1_21_I() {
 	duration := 30;
+	[start] deadline == false;
 	[start] inFront_T1_21 == true;
 	[start] stopped_T1 == false;
 	[start] stopping_T1_I == false;
@@ -854,6 +892,7 @@ action stop_T1_21_I() {
 
 action stop_T1_22_II() {
 	duration := 30;
+	[start] deadline == false;
 	[start] inFront_T1_22 == true;
 	[start] stopped_T1 == false;
 	[start] stopping_T1_II == false;
@@ -866,6 +905,7 @@ action stop_T1_22_II() {
 
 action stop_T1_23_III() {
 	duration := 30;
+	[start] deadline == false;
 	[start] inFront_T1_23 == true;
 	[start] stopped_T1 == false;
 	[start] stopping_T1_III == false;
@@ -878,6 +918,7 @@ action stop_T1_23_III() {
 
 action stop_T2_41_I() {
 	duration := 30;
+	[start] deadline == false;
 	[start] inFront_T2_41 == true;
 	[start] stopped_T2 == false;
 	[start] stopping_T2_I == false;
@@ -890,6 +931,7 @@ action stop_T2_41_I() {
 
 action stop_T2_42_II() {
 	duration := 30;
+	[start] deadline == false;
 	[start] inFront_T2_42 == true;
 	[start] stopped_T2 == false;
 	[start] stopping_T2_II == false;
@@ -902,6 +944,7 @@ action stop_T2_42_II() {
 
 action stop_T2_43_III() {
 	duration := 30;
+	[start] deadline == false;
 	[start] inFront_T2_43 == true;
 	[start] stopped_T2 == false;
 	[start] stopping_T2_III == false;
@@ -914,6 +957,7 @@ action stop_T2_43_III() {
 
 action stop_T3_41_I() {
 	duration := 30;
+	[start] deadline == false;
 	[start] inFront_T3_41 == true;
 	[start] stopped_T3 == false;
 	[start] stopping_T3_I == false;
@@ -926,6 +970,7 @@ action stop_T3_41_I() {
 
 action stop_T3_42_II() {
 	duration := 30;
+	[start] deadline == false;
 	[start] inFront_T3_42 == true;
 	[start] stopped_T3 == false;
 	[start] stopping_T3_II == false;
@@ -938,6 +983,7 @@ action stop_T3_42_II() {
 
 action stop_T3_43_III() {
 	duration := 30;
+	[start] deadline == false;
 	[start] inFront_T3_43 == true;
 	[start] stopped_T3 == false;
 	[start] stopping_T3_III == false;
