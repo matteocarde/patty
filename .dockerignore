@@ -1,0 +1,17 @@
+.git
+.idea
+.codex_tmp
+.DS_Store
+**/.DS_Store
+**/__pycache__
+*.py[cod]
+venv
+outputs
+target
+
+# Generated research artifacts are not needed by the runtime image.
+benchmarks/figures
+benchmarks/latex
+benchmarks/results
+benchmarks/stats
+benchmarks/tables

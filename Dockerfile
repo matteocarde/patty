@@ -262,13 +262,21 @@ RUN chmod +x anmlsmt
 ENV PATH /var/anmlsmt/:${PATH}
 
 WORKDIR /project
-COPY . .
+
+# Keep the frequently changing application layer small. In particular, do not
+# copy .git, build outputs, research results, or a second copy of every planner
+# into /project; the planners were installed in /var above.
+RUN mkdir -p libs && mv /libs/pyeda libs/pyeda
+COPY src/ src/
+COPY grammar/ grammar/
+COPY benchmarks/experiments/ benchmarks/experiments/
+COPY benchmarks/instances/ benchmarks/instances/
+COPY exes/ exes/
+COPY main.py main_ices.py icr.py tools.py ./
+COPY patty patty-tools icr ./
+COPY files/ files/
 #Authorizations
 RUN chmod +x exes/*
-
-WORKDIR /
-RUN rm -rf project/libs/pyeda
-RUN mv libs/pyeda project/libs/pyeda
 
 WORKDIR /project
 
