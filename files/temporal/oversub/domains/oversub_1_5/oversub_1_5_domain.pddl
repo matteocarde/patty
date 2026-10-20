@@ -25,7 +25,6 @@
         :effect
             (and
                 (at start (x1))
-                (at end (increase (total-cost) 1))
             )
     )
 
@@ -35,7 +34,6 @@
         :effect
             (and
                 (at start (x2))
-                (at end (increase (total-cost) 1))
             )
     )
 
@@ -45,7 +43,6 @@
         :effect
             (and
                 (at start (x3))
-                (at end (increase (total-cost) 1))
             )
     )
 
@@ -55,7 +52,6 @@
         :effect
             (and
                 (at start (x4))
-                (at end (increase (total-cost) 1))
             )
     )
 
@@ -65,7 +61,6 @@
         :effect
             (and
                 (at start (x5))
-                (at end (increase (total-cost) 1))
             )
     )
 
@@ -75,7 +70,6 @@
         :effect
             (and
                 (at start (y))
-                (at end (increase (total-cost) 1))
             )
     )
 
@@ -89,7 +83,6 @@
         :effect
             (and
                 (at end (g1))
-                (at end (increase (total-cost) 1))
             )
     )
 
@@ -103,7 +96,6 @@
         :effect
             (and
                 (at end (g2))
-                (at end (increase (total-cost) 1))
             )
     )
 
@@ -117,7 +109,6 @@
         :effect
             (and
                 (at end (g3))
-                (at end (increase (total-cost) 1))
             )
     )
 
@@ -131,7 +122,6 @@
         :effect
             (and
                 (at end (g4))
-                (at end (increase (total-cost) 1))
             )
     )
 
@@ -145,7 +135,6 @@
         :effect
             (and
                 (at end (g5))
-                (at end (increase (total-cost) 1))
             )
     )
 
@@ -155,7 +144,6 @@
         :effect
             (and
                 (at end (g1))
-                (at end (increase (total-cost) 200))
             )
     )
 
@@ -165,7 +153,6 @@
         :effect
             (and
                 (at end (g2))
-                (at end (increase (total-cost) 200))
             )
     )
 
@@ -175,7 +162,6 @@
         :effect
             (and
                 (at end (g3))
-                (at end (increase (total-cost) 200))
             )
     )
 
@@ -185,7 +171,6 @@
         :effect
             (and
                 (at end (g4))
-                (at end (increase (total-cost) 200))
             )
     )
 
@@ -195,7 +180,6 @@
         :effect
             (and
                 (at end (g5))
-                (at end (increase (total-cost) 200))
             )
     )
 )

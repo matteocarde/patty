@@ -93,6 +93,7 @@ class Result(dict):
         self["quantity"] = 1 if self.solved else 0
         self["transitiveClosureSize"] = self.transitiveClosureSize
         self["patternLength"] = self.patternLength
+        self["makespan"] = self.makespan
 
     @classmethod
     def parseTime(cls, stdout):
