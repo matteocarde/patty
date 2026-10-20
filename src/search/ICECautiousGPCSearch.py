@@ -33,10 +33,11 @@ class ICECautiousGPCSearch:
         subgoalsAchieved: Set[Formula or Predicate] = set()
 
         bound = self.startBound
-        s: State = State.fromInitialCondition(self.task.init)
 
+        I: State = State.fromInitialCondition(self.task.init)
+        s: State = I
         patG: ICEPattern = ICEPattern.empty()
-        patH: ICEPattern = ICEPattern.fromState(s, self.task, self.args.pattern)
+        patH: ICEPattern = ICEPattern.fromState(State.fromInitialCondition(self.task.init), self.task, self.args.pattern)
 
         while bound <= self.maxBound:
 
@@ -91,7 +92,10 @@ class ICECautiousGPCSearch:
                     LogPrintLevel.STATS)
                 patG = ICEPattern.fromPlan(plan)
                 patG.addPostfix("G")
-                patH = ICEPattern.fromState(s, self.task, self.args.pattern)
+                if self.args.icesKeepPattern:
+                    patH = ICEPattern.fromState(I, self.task, self.args.pattern)
+                else:
+                    patH = ICEPattern.fromState(s, self.task, self.args.pattern)
                 pass
             else:
                 patF.addPostfix(bound)

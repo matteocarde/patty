@@ -39,20 +39,22 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2026-10-19-ABLATIONS-AIJ-FINAL-v8"
+    exp = "2026-10-19-ABLATIONS-AIJ-FINAL-v9"
     joinWith = [
         (exp, [
+            "PATTY-ICES",
+            "PATTY-ICES-PATTERN-RANDOM-TIME",
+            "PATTY-ICES-PATTERN-RANDOM-ACTION",
+            "PATTY-ICES-PATTERN-GOAL-COUNTING",
+            "PATTY-ICES-NO-ROLLING"
+        ]),
+        ("2026-10-19-ABLATIONS-AIJ-FINAL-v8", [
             "ITSAT",
             "LPG",
             "OPTIC",
             "TFD",
             "TAMER",
             "ANMLSMT",
-            "PATTY-ICES",
-            "PATTY-ICES-PATTERN-RANDOM-TIME",
-            "PATTY-ICES-PATTERN-RANDOM-ACTION",
-            "PATTY-ICES-PATTERN-GOAL-COUNTING",
-            "PATTY-ICES-NO-ROLLING"
         ]),
         ("2026-10-19-ABLATIONS-AIJ-FINAL-v7", [
             "ITSAT",
@@ -103,12 +105,12 @@ def main():
         CloudLogger.appendLogs(exp2, file, keepSolvers)
 
     tables = [
-        # ("all-solved-time", ICES_ALL_SOLVED_TIME),
+        ("all-solved-time", ICES_ALL_SOLVED_TIME),
         ("all-bound-makespan", ICES_ALL_BOUND_MAKESPAN),
-        # ("ablation-no-rolling", TABLE_ABLATION_NO_ROLLING),
-        # ("ablation-pattern-random-action", TABLE_ABLATION_PATTERN_RANDOM_ACTION),
-        # ("ablation-pattern-random-time", TABLE_ABLATION_PATTERN_RANDOM_TIME),
-        # ("ablation-goal-counting", TABLE_ABLATION_GOAL_COUNTING)
+        ("ablation-no-rolling", TABLE_ABLATION_NO_ROLLING),
+        ("ablation-pattern-random-action", TABLE_ABLATION_PATTERN_RANDOM_ACTION),
+        ("ablation-pattern-random-time", TABLE_ABLATION_PATTERN_RANDOM_TIME),
+        ("ablation-goal-counting", TABLE_ABLATION_GOAL_COUNTING)
     ]
 
     PLANNERS = ICES_PLANNERS

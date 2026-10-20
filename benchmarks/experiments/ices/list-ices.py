@@ -13,27 +13,28 @@ def main():
         # "TFD",
         # "ANMLSMT",
         # "TAMER",
-        "PATTY-ICES",
-        "PATTY-ICES-NO-ROLLING",
-        "PATTY-ICES-PATTERN-RANDOM-ACTION",
-        "PATTY-ICES-PATTERN-RANDOM-TIME",
-        "PATTY-ICES-PATTERN-GOAL-COUNTING",
+        # "PATTY-ICES",
+        # "PATTY-ICES-NO-ROLLING",
+        # "PATTY-ICES-PATTERN-RANDOM-ACTION",
+        # "PATTY-ICES-PATTERN-RANDOM-TIME",
+        # "PATTY-ICES-PATTERN-GOAL-COUNTING",
+        "PATTY-ICES-KEEP-PATTERN"
     ]
 
     domains = [
-        # "temporal/cushing",
-        # "temporal/majsp/anml",
-        # "temporal/bottles-all",
-        # "temporal/bottles-pack",
-        # "temporal/recharging/anml",
-        # "temporal/bottles-pour",
-        # "temporal/bottles-shake",
-        # "temporal/match-ms",
+        "temporal/cushing",
+        "temporal/majsp/anml",
+        "temporal/bottles-all",
+        "temporal/bottles-pack",
+        "temporal/bottles-pour",
+        "temporal/bottles-shake",
+        "temporal/match-ms",
         "temporal/oversub",
-        # "temporal/instradi/anml",
+        "temporal/instradi/anml",
+        "temporal/painter/anml"
+        # "temporal/recharging/anml",
         # "temporal/instradi-deadline/anml",
         # "temporal/majsp-deadline/anml",
-        # "temporal/painter/anml"
     ]
 
     ANMLPLANNERS = {"ANMLSMT",
