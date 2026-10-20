@@ -140,7 +140,7 @@ def main():
 
         ax.legend(loc="upper right", fontsize="10")
 
-        filename = f"{exp}-{p['key']}-deadline.pdf"
+        filename = f"{exp}-{p['key']}-instradi-deadline.pdf"
         plt.savefig(f'{folder}/{filename}', bbox_inches='tight', pad_inches=0.01)
         # plt.show()
         os.system(f"open {folder}/{filename}")

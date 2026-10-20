@@ -2,6 +2,8 @@ import copy
 import math
 from typing import Set, Dict, List
 
+import numpy as np
+
 from src.ices.Happening import Happening
 from src.ices.ICEAction import ICEAction
 from src.ices.ICETask import ICETask
@@ -49,9 +51,9 @@ class SnapTask(GroundedDomain):
 
         time = Literal.freshSimple(f"time_snap_patty")
 
-        step = 10
+        step = 1
 
-        for i in range(0, M + step, step):
+        for i in np.linspace(0, M, round(M/step)):
             pre = Formula()
             if i > 0:
                 pre.addClause(BinaryPredicate.equality(time, float(i - step)))

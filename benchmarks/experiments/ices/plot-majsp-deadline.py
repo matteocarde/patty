@@ -17,7 +17,7 @@ PLANNERS = {
     "PATTY-ICES": r"\textsc{Patty}",
     # "PATTY-ICES-NO-ROLLING": r"\textsc{Patty}_\textsc{nr}",
     # "PATTY-T-SIGMA-ASTAR": r"\textsc{Patty}_\Sigma",
-    "ANMLSMT": r"\textsc{AnmlSMT}",
+    # "ANMLSMT": r"\textsc{AnmlSMT}",
     "TAMER": r"\textsc{Tamer}",
 }
 
@@ -47,7 +47,7 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2026-10-19-ABLATIONS-AIJ-FINAL-v4"
+    exp = "2026-10-19-ABLATIONS-AIJ-FINAL-v5"
     joinWith = [
         (exp, [
             "PATTY-ICES",
@@ -86,7 +86,7 @@ def main():
     maxX = 0
     for r in aResults:
         resultsByPlanner[r.solver] = resultsByPlanner.setdefault(r.solver, dict())
-        i = int(r.problem[1:].replace("_problem", ""))
+        i = int(r.problem[1:].replace("P", ""))
         minX = min(minX, i)
         maxX = max(maxX, i)
         resultsByPlanner[r.solver][i] = r
@@ -110,9 +110,9 @@ def main():
     for i, p in enumerate(plots):
         arrayByPlanner: Dict[str, np.ndarray] = dict()
         for planner, results in resultsByPlanner.items():
-            arrayByPlanner[planner] = np.array([results[i].time for i in range(minX, maxX + 1, 5)])
+            arrayByPlanner[planner] = np.array([results[i].time for i in range(minX, maxX + 1, 1)])
 
-        X = np.linspace(minX, maxX, 21)
+        X = np.linspace(minX, maxX, 11)
         plt.rcParams.update({
             "text.usetex": True,
             "figure.figsize": [12.50, 4],
@@ -128,7 +128,7 @@ def main():
         ax.set_ylim([0, p["yLim"]])
         ax.set_ylabel(p["yLabel"])
         ax.set_yscale(p["yScale"])
-        ax.set_xticks(np.linspace(minX, maxX, 21))
+        ax.set_xticks(np.linspace(minX, maxX, 11))
         ax.tick_params(axis="x", labelsize=14)
         ax.tick_params(axis="y", labelsize=14)
 
@@ -141,7 +141,7 @@ def main():
 
         ax.legend(loc="upper right", fontsize="10")
 
-        filename = f"{exp}-{p['key']}-deadline.pdf"
+        filename = f"{exp}-{p['key']}-majsp-deadline.pdf"
         plt.savefig(f'{folder}/{filename}', bbox_inches='tight', pad_inches=0.01)
         # plt.show()
         os.system(f"open {folder}/{filename}")

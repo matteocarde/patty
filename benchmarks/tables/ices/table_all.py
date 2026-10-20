@@ -17,9 +17,8 @@ ICES_ALL_SOLVED_TIME = {
     "type": "table*",
     "width": r"\textwidth",
     "keepAll": True,
-    "caption": r"Comparative analysis over all solver consider the number of solved instances and the time it took to "
-               r"solve them. "
-               r"A “-” indicates that no result was obtained in our 5min time limit. The best results are in bold.",
+    "caption": r"Comparative analysis over all solver considering $(i)$ the number of solved instances and $(ii)$ the average time it took to "
+               r"solve them. A “-” indicates that no result was obtained in our 5min time limit. The best results are in bold.",
     "columns": {
         "quantity": {
             "name": "Solved",
@@ -64,8 +63,8 @@ ICES_ALL_BOUND_MAKESPAN = {
     "type": "table*",
     "width": r"\textwidth",
     "keepAll": True,
-    "caption": r"Comparative analysis. A “-” indicates that no result was obtained in our 5min time limit. "
-               r"The best results are in bold.",
+    "caption": r"Comparative analysis over all solvers and all domains considering $(i)$ for Planning as Satisfiability approaches, the average number of steps required to find a solution, and $(ii)$ the average makespan of the plans returned. "
+               r"A “-” indicates that no result was obtained in our 5min time limit. The best results are in bold.",
     "columns": {
         # "quantity": {
         #     "name": "Solved",
