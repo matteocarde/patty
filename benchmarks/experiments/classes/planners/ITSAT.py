@@ -22,6 +22,11 @@ class ITSAT(Planner):
         reBound = re.findall(r"^A plan found with layers = (.*?)$", stdout, re.MULTILINE)
         r.bound = -1 if not reBound else int(reBound[-1])
 
+        for tup in r.plan:
+            if len(tup) < 3:
+                continue
+            r.makespan = max([r.makespan, float(tup[0]) + float(tup[2])])
+
         return r
 
     def getCommand(self, domain: str, problem: str):

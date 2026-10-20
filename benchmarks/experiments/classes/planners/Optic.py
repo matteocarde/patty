@@ -17,6 +17,10 @@ class Optic(Planner):
         r.plan = re.findall(r"^(\d.*?.\d.*?): \((.*?)\)  \[(.*?)\]", stdout, re.MULTILINE)
         r.planLength = len(r.plan)
 
+        for tup in r.plan:
+            if len(tup) < 3:
+                continue
+            r.makespan = max([r.makespan, float(tup[0]) + float(tup[2])])
         return r
 
     def getCommand(self, domain: str, problem: str):
