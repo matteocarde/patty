@@ -11,29 +11,29 @@ def main():
         "ITSAT",
         "LPG",
         "TFD",
-        # "PATTY-ICES",
-        # "ANMLSMT",
-        # "TAMER",
-        # "PATTY-ICES-NO-ROLLING",
-        # "PATTY-ICES-PATTERN-RANDOM-ACTION",
-        # "PATTY-ICES-PATTERN-RANDOM-TIME",
-        # "PATTY-ICES-PATTERN-GOAL-COUNTING",
+        "PATTY-ICES",
+        "ANMLSMT",
+        "TAMER",
+        "PATTY-ICES-NO-ROLLING",
+        "PATTY-ICES-PATTERN-RANDOM-ACTION",
+        "PATTY-ICES-PATTERN-RANDOM-TIME",
+        "PATTY-ICES-PATTERN-GOAL-COUNTING",
     ]
 
     domains = [
-        "temporal/cushing",
+        # "temporal/cushing",
         # "temporal/majsp/anml",
         # "temporal/bottles-all",
         # "temporal/bottles-pack",
         # "temporal/recharging/anml",
         # "temporal/bottles-pour",
         # "temporal/bottles-shake",
-        "temporal/match-ms",
+        # "temporal/match-ms",
         "temporal/oversub",
         # "temporal/instradi/anml",
         # "temporal/instradi-deadline/anml",
         # "temporal/majsp-deadline/anml",
-        "temporal/painter/anml"
+        # "temporal/painter/anml"
     ]
 
     ANMLPLANNERS = {"ANMLSMT",
