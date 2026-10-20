@@ -10,17 +10,17 @@ def main():
         "PATTY-ICES",
         "ANMLSMT",
         "TAMER",
-        "PATTY-ICES-NO-ROLLING",
-        "PATTY-ICES-PATTERN-RANDOM-ACTION",
-        "PATTY-ICES-PATTERN-RANDOM-TIME",
-        "PATTY-ICES-PATTERN-GOAL-COUNTING",
+        # "PATTY-ICES-NO-ROLLING",
+        # "PATTY-ICES-PATTERN-RANDOM-ACTION",
+        # "PATTY-ICES-PATTERN-RANDOM-TIME",
+        # "PATTY-ICES-PATTERN-GOAL-COUNTING",
     ]
 
     domains = [
         # "temporal/cushing",
         # "temporal/majsp/anml",
         # "temporal/bottles-all",
-        "temporal/bottles-pack",
+        # "temporal/bottles-pack",
         # "temporal/recharging/anml",
         # "temporal/bottles-pour",
         # "temporal/bottles-shake",
@@ -28,6 +28,7 @@ def main():
         # "temporal/oversub",
         # "temporal/instradi/anml",
         # "temporal/instradi-deadline/anml",
+        "temporal/majsp-deadline/anml",
         # "temporal/painter/anml"
     ]
 

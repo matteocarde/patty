@@ -1,0 +1,35 @@
+
+               \documentclass[11pt,landscape]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in,landscape]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l|c||cccc||cccc||cccc||}
+\hline
+ & & \multicolumn{4}{c||}{Solved}&\multicolumn{4}{c||}{Time (s)}&\multicolumn{4}{c||}{\textsc{smt} calls}\\
+Domain & \# & $\textsc{p}$&$\textsc{p}_\textsc{ra}^{min}$&$\textsc{p}_\textsc{ra}^{med}$&$\textsc{p}_\textsc{ra}^{max}$&$\textsc{p}$&$\textsc{p}_\textsc{ra}^{min}$&$\textsc{p}_\textsc{ra}^{med}$&$\textsc{p}_\textsc{ra}^{max}$&$\textsc{p}$&$\textsc{p}_\textsc{ra}^{min}$&$\textsc{p}_\textsc{ra}^{med}$&$\textsc{p}_\textsc{ra}^{max}$\\
+\hline
+\textsc{Cushing (t)}&10&\textbf{10}&\textbf{10}&8&2&\textbf{18.72}&49.16&88.63&243.31&\textbf{3.0}&4.5&6.0&5.5\\
+\textsc{Pour (t)}&20&\textbf{15}&7&7&4&\textbf{152.80}&225.50&236.42&249.63&\textbf{2.5}&5.0&5.2&5.2\\
+\textsc{Shake (t)}&20&\textbf{20}&\textbf{20}&\textbf{20}&15&\textbf{2.88}&23.40&49.83&136.88&\textbf{2.0}&3.9&4.3&5.3\\
+\textsc{Pack (t)}&20&\textbf{8}&4&1&1&\textbf{198.44}&242.93&285.06&285.08&\textbf{1.0}&2.0&2.0&2.0\\
+\textsc{Match (t)}&40&\textbf{40}&\textbf{40}&\textbf{40}&\textbf{40}&\textbf{3.11}&6.45&8.06&10.32&3.3&\textbf{2.0}&\textbf{2.0}&\textbf{2.0}\\
+\textsc{Oversub (t)}&20&\textbf{20}&\textbf{20}&16&10&\textbf{4.08}&18.21&102.01&198.96&\textbf{1.0}&2.3&2.3&2.9\\
+\textsc{InSTraDi} (\textsc{ice}s)&20&\textbf{20}&3&3&2&\textbf{58.52}&258.16&267.62&271.89&\textbf{1.0}&3.0&3.0&3.0\\
+\textsc{Majsp} (\textsc{ice}s)&20&\textbf{17}&10&1&-&\textbf{98.23}&189.54&286.22&-&\textbf{5.0}&\textbf{5.0}&8.0&-\\
+\textsc{Painter} (\textsc{ice}s)&20&\textbf{20}&4&2&2&\textbf{25.34}&240.85&270.38&270.49&\textbf{1.5}&3.0&4.0&5.0
+\\\hline
+\textit{Best}&190&\textbf{170}&\textbf{118}&\textbf{98}&\textbf{76}&\textbf{152}&\textbf{18}&\textbf{0}&\textbf{0}&\textbf{142}&\textbf{44}&\textbf{42}&\textbf{41}\\\hline
+
+        \end{tabular}}
+        \caption{TODO}
+        \label{tab:ablation-pattern-random-action}
+        \end{table*}
+        
+\end{document}

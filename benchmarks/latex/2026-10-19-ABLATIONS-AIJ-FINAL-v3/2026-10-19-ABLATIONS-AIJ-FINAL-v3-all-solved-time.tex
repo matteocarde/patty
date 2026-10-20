@@ -1,0 +1,35 @@
+
+               \documentclass[11pt,landscape]{article}
+               \usepackage{graphicx}
+               \usepackage{lscape}
+               \usepackage{multirow}
+               \usepackage[a4paper,margin=1in,landscape]{geometry}
+    
+               \begin{document}
+
+            \begin{table*}[tb]
+            \centering
+            \resizebox{\textwidth}{!}{
+\begin{tabular}{|l|c||ccccccc||ccccccc||}
+\hline
+ & & \multicolumn{7}{c||}{Solved}&\multicolumn{7}{c||}{Time (s)}\\
+Domain & \# & $\textsc{p}$&$\textsc{tamer}$&\textsc{anmlsmt}&\textsc{Optic}&\textsc{itsat}&\textsc{lpg}&\textsc{tfd}&$\textsc{p}$&$\textsc{tamer}$&\textsc{anmlsmt}&\textsc{Optic}&\textsc{itsat}&\textsc{lpg}&\textsc{tfd}\\
+\hline
+\textsc{Cushing (t)}&10&\textbf{10}&2&4&\textbf{10}&-&-&1&18.72&240.12&192.66&\textbf{3.12}&-&-&270.02\\
+\textsc{Pour (t)}&20&\textbf{15}&6&1&-&-&-&-&\textbf{152.80}&220.01&286.21&-&-&-&-\\
+\textsc{Shake (t)}&20&\textbf{20}&-&10&-&-&-&-&\textbf{2.88}&-&153.34&-&-&-&-\\
+\textsc{Pack (t)}&20&8&\textbf{20}&4&-&-&-&-&198.44&\textbf{18.84}&242.61&-&-&-&-\\
+\textsc{Match (t)}&40&\textbf{40}&\textbf{40}&\textbf{40}&\textbf{40}&\textbf{40}&-&-&3.11&\textbf{0.00}&0.32&0.01&0.68&-&-\\
+\textsc{Oversub (t)}&20&\textbf{20}&\textbf{20}&\textbf{20}&\textbf{20}&-&\textbf{20}&-&4.08&7.23&0.03&\textbf{0.01}&-&0.08&-\\
+\textsc{InSTraDi} (\textsc{ice}s)&20&\textbf{20}&4&2&-&-&-&-&\textbf{58.52}&247.29&276.68&-&-&-&-\\
+\textsc{Majsp} (\textsc{ice}s)&20&17&\textbf{19}&10&-&-&-&-&98.23&\textbf{28.81}&156.53&-&-&-&-\\
+\textsc{Painter} (\textsc{ice}s)&20&\textbf{20}&\textbf{20}&7&2&-&-&-&25.34&\textbf{0.04}&208.32&270.03&-&-&-
+\\\hline
+\textit{Best}&190&\textbf{170}&\textbf{131}&\textbf{98}&\textbf{72}&\textbf{40}&\textbf{20}&\textbf{1}&\textbf{43}&\textbf{71}&\textbf{11}&\textbf{70}&\textbf{0}&\textbf{0}&\textbf{0}\\\hline
+
+        \end{tabular}}
+        \caption{Comparative analysis over all solver consider the number of solved instances and the time it took to solve them. A “-” indicates that no result was obtained in our 5min time limit. The best results are in bold.}
+        \label{tab:results-solved-time}
+        \end{table*}
+        
+\end{document}
