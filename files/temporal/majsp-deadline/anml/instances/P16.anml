@@ -52,7 +52,7 @@ instance Treatment t0, t1, t2, t3;
 [start] ready(b1, p1, t2) := false;
 [start] ready(b1, p1, t3) := false;
 [start] deadline := false;
-[start + 16] deadline := false;
+[start + 16] deadline := true;
 
 is_depot(p0) := false;
 is_depot(p1) := true;
