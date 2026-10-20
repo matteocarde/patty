@@ -39,9 +39,22 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2026-10-19-ABLATIONS-AIJ-FINAL-v7"
+    exp = "2026-10-19-ABLATIONS-AIJ-FINAL-v8"
     joinWith = [
         (exp, [
+            "ITSAT",
+            "LPG",
+            "OPTIC",
+            "TFD",
+            "TAMER",
+            "ANMLSMT",
+            "PATTY-ICES",
+            "PATTY-ICES-PATTERN-RANDOM-TIME",
+            "PATTY-ICES-PATTERN-RANDOM-ACTION",
+            "PATTY-ICES-PATTERN-GOAL-COUNTING",
+            "PATTY-ICES-NO-ROLLING"
+        ]),
+        ("2026-10-19-ABLATIONS-AIJ-FINAL-v7", [
             "ITSAT",
             "LPG",
             "OPTIC",

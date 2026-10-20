@@ -43,6 +43,7 @@
         :effect
             (and
                 (at start (x11))
+                (at end (x11))
             )
     )
 
@@ -52,6 +53,7 @@
         :effect
             (and
                 (at start (x12))
+                (at end (x12))
             )
     )
 
@@ -61,6 +63,7 @@
         :effect
             (and
                 (at start (x13))
+                (at end (x13))
             )
     )
 
@@ -70,6 +73,7 @@
         :effect
             (and
                 (at start (x21))
+                (at end (x21))
             )
     )
 
@@ -79,6 +83,7 @@
         :effect
             (and
                 (at start (x22))
+                (at end (x22))
             )
     )
 
@@ -88,6 +93,7 @@
         :effect
             (and
                 (at start (x23))
+                (at end (x23))
             )
     )
 
@@ -97,6 +103,7 @@
         :effect
             (and
                 (at start (x31))
+                (at end (x31))
             )
     )
 
@@ -106,6 +113,7 @@
         :effect
             (and
                 (at start (x32))
+                (at end (x32))
             )
     )
 
@@ -115,6 +123,7 @@
         :effect
             (and
                 (at start (x33))
+                (at end (x33))
             )
     )
 
@@ -124,6 +133,7 @@
         :effect
             (and
                 (at start (x41))
+                (at end (x41))
             )
     )
 
@@ -133,6 +143,7 @@
         :effect
             (and
                 (at start (x42))
+                (at end (x42))
             )
     )
 
@@ -142,6 +153,7 @@
         :effect
             (and
                 (at start (x43))
+                (at end (x43))
             )
     )
 
@@ -151,6 +163,7 @@
         :effect
             (and
                 (at start (x51))
+                (at end (x51))
             )
     )
 
@@ -160,6 +173,7 @@
         :effect
             (and
                 (at start (x52))
+                (at end (x52))
             )
     )
 
@@ -169,6 +183,7 @@
         :effect
             (and
                 (at start (x53))
+                (at end (x53))
             )
     )
 
@@ -178,6 +193,7 @@
         :effect
             (and
                 (at start (x61))
+                (at end (x61))
             )
     )
 
@@ -187,6 +203,7 @@
         :effect
             (and
                 (at start (x62))
+                (at end (x62))
             )
     )
 
@@ -196,6 +213,7 @@
         :effect
             (and
                 (at start (x63))
+                (at end (x63))
             )
     )
 
@@ -205,6 +223,7 @@
         :effect
             (and
                 (at start (x71))
+                (at end (x71))
             )
     )
 
@@ -214,6 +233,7 @@
         :effect
             (and
                 (at start (x72))
+                (at end (x72))
             )
     )
 
@@ -223,6 +243,7 @@
         :effect
             (and
                 (at start (x73))
+                (at end (x73))
             )
     )
 
@@ -232,6 +253,7 @@
         :effect
             (and
                 (at start (y))
+                (at end (y))
             )
     )
 
@@ -345,6 +367,7 @@
         :duration (= ?duration 1)
         :effect
             (and
+                (at start (g1))
                 (at end (g1))
             )
     )
@@ -354,6 +377,7 @@
         :duration (= ?duration 1)
         :effect
             (and
+                (at start (g2))
                 (at end (g2))
             )
     )
@@ -363,6 +387,7 @@
         :duration (= ?duration 1)
         :effect
             (and
+                (at start (g3))
                 (at end (g3))
             )
     )
@@ -372,6 +397,7 @@
         :duration (= ?duration 1)
         :effect
             (and
+                (at start (g4))
                 (at end (g4))
             )
     )
@@ -381,6 +407,7 @@
         :duration (= ?duration 1)
         :effect
             (and
+                (at start (g5))
                 (at end (g5))
             )
     )
@@ -390,6 +417,7 @@
         :duration (= ?duration 1)
         :effect
             (and
+                (at start (g6))
                 (at end (g6))
             )
     )
@@ -399,6 +427,7 @@
         :duration (= ?duration 1)
         :effect
             (and
+                (at start (g7))
                 (at end (g7))
             )
     )

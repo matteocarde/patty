@@ -13,7 +13,7 @@ from sympy.physics.continuum_mechanics.beam import numpy
 
 from benchmarks.tables.ices.domains import ICES_DOMAINS
 from benchmarks.tables.ices.planners import ICES_PLANNERS
-from benchmarks.tables.ices.table_all import ICES_ALL, TABLE_ICES_PLANNERS
+from benchmarks.tables.ices.table_all import TABLE_ICES_PLANNERS
 from classes.CloudLogger import CloudLogger
 from classes.Result import Result
 
@@ -66,24 +66,40 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2025-12-16-ICES-REALLY-FINAL-v7"
+    exp = "2026-10-19-ABLATIONS-AIJ-FINAL-v7"
     joinWith = [
         (exp, [
-            "PATTY-ICES",
-        ]),
-        ("2025-12-16-ICES-REALLY-FINAL-v6", [
-            "TAMER",
-            "ANMLSMT",
-        ]),
-        ("2025-12-16-ICES-REALLY-FINAL-v4", [
-            "PATTY-ICES",
-        ]),
-        ("2024-01-14-TOTAL-v1", [
-            "PATTY-T-OR-ASTAR",
             "ITSAT",
             "LPG",
             "OPTIC",
-            "TFD",
+            "TFD"
+        ]),
+        ("2026-10-19-ABLATIONS-AIJ-FINAL-v3", [
+            "TAMER",
+            "ANMLSMT",
+            "PATTY-ICES",
+            "PATTY-ICES-PATTERN-RANDOM-TIME",
+            "PATTY-ICES-PATTERN-RANDOM-ACTION",
+            "PATTY-ICES-PATTERN-GOAL-COUNTING",
+            "PATTY-ICES-NO-ROLLING"  #
+        ]),
+        ("2026-10-19-ABLATIONS-AIJ-FINAL-v2", [
+            "TAMER",
+            "ANMLSMT",
+            "PATTY-ICES",
+            "PATTY-ICES-PATTERN-RANDOM-TIME",
+            "PATTY-ICES-PATTERN-RANDOM-ACTION",
+            "PATTY-ICES-PATTERN-GOAL-COUNTING",
+            "PATTY-ICES-NO-ROLLING"  #
+        ]),
+        ("2026-10-19-ABLATIONS-AIJ-FINAL-v1", [
+            "TAMER",
+            "ANMLSMT",
+            "PATTY-ICES",
+            "PATTY-ICES-PATTERN-RANDOM-TIME",
+            "PATTY-ICES-PATTERN-RANDOM-ACTION",
+            "PATTY-ICES-PATTERN-GOAL-COUNTING",
+            "PATTY-ICES-NO-ROLLING"  #
         ])
     ]
 
@@ -99,12 +115,6 @@ def main():
 
     for (exp2, keepSolvers) in joinWith:
         CloudLogger.appendLogs(exp2, file, keepSolvers)
-
-    tables = [
-        ("all", ICES_ALL)
-    ]
-
-    PLANNERS = ICES_PLANNERS
 
     joinWith = [file]
     # joinWith = [file]

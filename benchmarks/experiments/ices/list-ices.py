@@ -7,13 +7,13 @@ from natsort import natsort
 
 def main():
     PLANNERS = [
-        "OPTIC",
-        "ITSAT",
-        "LPG",
-        "TFD",
+        # "OPTIC",
+        # "ITSAT",
+        # "LPG",
+        # "TFD",
+        # "ANMLSMT",
+        # "TAMER",
         "PATTY-ICES",
-        "ANMLSMT",
-        "TAMER",
         "PATTY-ICES-NO-ROLLING",
         "PATTY-ICES-PATTERN-RANDOM-ACTION",
         "PATTY-ICES-PATTERN-RANDOM-TIME",
