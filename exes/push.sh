@@ -10,7 +10,9 @@ fi
 aws ecr get-login-password --region eu-south-1 | docker login --username AWS --password-stdin 775013819650.dkr.ecr.eu-south-1.amazonaws.com
 docker buildx build \
   --platform linux/amd64 \
-  --progress=plain \
+  --progress=auto \
+  --tag patty:latest \
   --tag "$IMAGE" \
-  --push \
+  --load \
   .
+docker push "$IMAGE"

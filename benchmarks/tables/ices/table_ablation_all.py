@@ -9,6 +9,7 @@ TABLE_ABLATION_ALL_PLANNERS = {
     "PATTY-ICES-PATTERN-RANDOM-ACTION-MED": {"type": "smt"},
     "PATTY-ICES-PATTERN-RANDOM-ACTION-MAX": {"type": "smt"},
     "PATTY-ICES-PATTERN-GOAL-COUNTING": {"type": "smt"},
+    "PATTY-ICES-KEEP-PATTERN": {"type": "smt"},
     "PATTY-ICES-NO-ROLLING": {"type": "smt"},
 }
 
@@ -178,6 +179,46 @@ TABLE_ABLATION_GOAL_COUNTING = {
     "planners": {
         "PATTY-ICES": {"type": "smt"},
         "PATTY-ICES-PATTERN-GOAL-COUNTING": {"type": "smt"}
+    },
+    "domains": ICES_DOMAINS
+}
+
+TABLE_ABLATION_KEEP_FIXED = {
+    "name": "tab:ablation-keep-fixed",
+    "orientation": "landscape",
+    "type": "table*",
+    "width": r"\textwidth",
+    "keepAll": True,
+    "caption": r"TODO",
+    "columns": {
+        # "coverage": {
+        #     "name": "Coverage (\%)",
+        #     "winner": +1,
+        #     "avg": True,
+        #     "planners": TABLE_ABLATION_ALL_PLANNERS.keys()
+        # },
+        "quantity": {
+            "name": "Solved",
+            "winner": +1,
+            "avg": True,
+            "planners": TABLE_ABLATION_ALL_PLANNERS.keys()
+        },
+        "time": {
+            "name": "Time (s)",
+            "winner": -1,
+            "avg": True,
+            "planners": TABLE_ABLATION_ALL_PLANNERS.keys()
+        },
+        "bound": {
+            "name": r"\textsc{smt} calls",
+            "winner": -1,
+            "avg": True,
+            "planners": [key for (key, item) in TABLE_ABLATION_ALL_PLANNERS.items() if item["type"] == "smt"]
+        },
+    },
+    "planners": {
+        "PATTY-ICES": {"type": "smt"},
+        "PATTY-ICES-KEEP-PATTERN": {"type": "smt"}
     },
     "domains": ICES_DOMAINS
 }

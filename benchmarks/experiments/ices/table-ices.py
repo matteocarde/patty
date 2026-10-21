@@ -11,7 +11,7 @@ from benchmarks.tables.ices.domains import ICES_DOMAINS
 from benchmarks.tables.ices.planners import ICES_PLANNERS
 from benchmarks.tables.ices.table_ablation_all import TABLE_ABLATION_NO_ROLLING, \
     TABLE_ABLATION_PATTERN_RANDOM_ACTION, TABLE_ABLATION_PATTERN_RANDOM_TIME, \
-    TABLE_ABLATION_GOAL_COUNTING
+    TABLE_ABLATION_GOAL_COUNTING, TABLE_ABLATION_KEEP_FIXED
 from benchmarks.tables.ices.table_all import ICES_ALL_SOLVED_TIME, ICES_ALL_BOUND_MAKESPAN
 from classes.CloudLogger import CloudLogger
 from classes.Result import Result
@@ -39,9 +39,12 @@ def transformTextValue(v):
 
 def main():
     # Parsing the results
-    exp = "2026-10-19-ABLATIONS-AIJ-FINAL-v9"
+    exp = "2026-10-19-ABLATIONS-AIJ-FINAL-v10"
     joinWith = [
         (exp, [
+            "PATTY-ICES-KEEP-PATTERN",
+        ]),
+        ("2026-10-19-ABLATIONS-AIJ-FINAL-v9", [
             "PATTY-ICES",
             "PATTY-ICES-PATTERN-RANDOM-TIME",
             "PATTY-ICES-PATTERN-RANDOM-ACTION",
@@ -105,12 +108,13 @@ def main():
         CloudLogger.appendLogs(exp2, file, keepSolvers)
 
     tables = [
-        ("all-solved-time", ICES_ALL_SOLVED_TIME),
-        ("all-bound-makespan", ICES_ALL_BOUND_MAKESPAN),
-        ("ablation-no-rolling", TABLE_ABLATION_NO_ROLLING),
-        ("ablation-pattern-random-action", TABLE_ABLATION_PATTERN_RANDOM_ACTION),
-        ("ablation-pattern-random-time", TABLE_ABLATION_PATTERN_RANDOM_TIME),
-        ("ablation-goal-counting", TABLE_ABLATION_GOAL_COUNTING)
+        # ("all-solved-time", ICES_ALL_SOLVED_TIME),
+        # ("all-bound-makespan", ICES_ALL_BOUND_MAKESPAN),
+        # ("ablation-no-rolling", TABLE_ABLATION_NO_ROLLING),
+        # ("ablation-pattern-random-action", TABLE_ABLATION_PATTERN_RANDOM_ACTION),
+        # ("ablation-pattern-random-time", TABLE_ABLATION_PATTERN_RANDOM_TIME),
+        # ("ablation-goal-counting", TABLE_ABLATION_GOAL_COUNTING),
+        ("ablation-keep-fixed", TABLE_ABLATION_KEEP_FIXED)
     ]
 
     PLANNERS = ICES_PLANNERS

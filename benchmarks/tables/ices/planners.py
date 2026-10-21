@@ -11,6 +11,10 @@ ICES_PLANNERS = {
         "name": r"$\textsc{p}_\textsc{rt}^{med}$",
         "style": "-"
     },
+    "PATTY-ICES-KEEP-PATTERN": {
+        "name": r"$\textsc{p}_\textsc{kf}$",
+        "style": "-"
+    },
     "PATTY-ICES-PATTERN-RANDOM-TIME-MAX": {
         "name": r"$\textsc{p}_\textsc{rt}^{max}$",
         "style": "-"
