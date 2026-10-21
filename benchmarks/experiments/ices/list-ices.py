@@ -18,7 +18,8 @@ def main():
         # "PATTY-ICES-PATTERN-RANDOM-ACTION",
         # "PATTY-ICES-PATTERN-RANDOM-TIME",
         # "PATTY-ICES-PATTERN-GOAL-COUNTING",
-        "PATTY-ICES-KEEP-PATTERN"
+        "PATTY-ICES-S",
+        "PATTY-ICES-D"
     ]
 
     domains = [

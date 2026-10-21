@@ -90,7 +90,10 @@ class ICECautiousGPCSearch:
                 self.console.log(
                     f"Subgoals achieved at bound {bound}: {len(subgoalsAchieved)}/{len(totalSubgoals)}: {subgoalsAchieved}",
                     LogPrintLevel.STATS)
-                patG = ICEPattern.fromPlan(plan)
+                if self.args.icesNoCompression:
+                    patG = patF
+                else:
+                    patG = ICEPattern.fromPlan(plan)
                 patG.addPostfix("G")
                 if self.args.icesKeepPattern:
                     patH = ICEPattern.fromState(I, self.task, self.args.pattern)

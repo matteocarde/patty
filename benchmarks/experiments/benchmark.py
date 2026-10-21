@@ -103,8 +103,14 @@ PLANNERS: Dict[str, Planner] = {
                                             pattern="ice-random-time"),
     "PATTY-ICES-PATTERN-GOAL-COUNTING": Patty("PATTY-ICES-PATTERN-GOAL-COUNTING", ices=True,
                                               goalCounting=True),
-    "PATTY-ICES-KEEP-PATTERN": Patty("PATTY-ICES-KEEP-PATTERN", ices=True,
-                                              goalCounting=True, icesKeepPattern=True),
+    "PATTY-ICES-S": Patty("PATTY-ICES-S", ices=True,
+                          goalCounting=True,
+                          icesKeepPattern=True,
+                          icesNoCompression=True),
+    "PATTY-ICES-D": Patty("PATTY-ICES-S", ices=True,
+                          goalCounting=True,
+                          icesKeepPattern=False,
+                          icesNoCompression=True),
 }
 
 JAIR_VERSIONS = {

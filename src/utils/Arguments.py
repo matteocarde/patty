@@ -82,6 +82,8 @@ class Arguments:
                             type=int, default=4)
         parser.add_argument('--ices-keep-pattern', help="See AIJ ICEs",
                             action="store_true", default=False)
+        parser.add_argument('--ices-no-compression', help="See AIJ ICEs",
+                            action="store_true", default=False)
         parser.add_argument('--quality',
                             help='''The type of metric used for quality: none, shortest-step where:\n
                             none:               The quality of the plan is not optimized\n
@@ -138,6 +140,7 @@ class Arguments:
         self.ices = args.ices
         self.goalCounting = args.goal_counting
         self.icesKeepPattern = args.ices_keep_pattern
+        self.icesNoCompression = args.ices_no_compression
 
         self.jairSearchStrategy = args.jair_search_strategy
         self.jairPatternG = args.jair_pattern_g

@@ -30,7 +30,8 @@ class Patty(Planner):
                  jairPatternH=False,
                  ices=False,
                  goalCounting=False,
-                 icesKeepPattern=False
+                 icesKeepPattern=False,
+                 icesNoCompression=False
                  ):
         self.search = search
         self.maximize = maximize
@@ -55,6 +56,7 @@ class Patty(Planner):
         self.ices = ices
         self.goalCounting = goalCounting
         self.icesKeepPattern = icesKeepPattern
+        self.icesNoCompression = icesNoCompression
         super().__init__()
 
     @staticmethod
@@ -154,6 +156,8 @@ class Patty(Planner):
             cmd += ["--goal-counting"]
         if self.icesKeepPattern:
             cmd += ["--ices-keep-pattern"]
+        if self.icesNoCompression:
+            cmd += ["--ices-no-compression"]
         if self.search == "jair":
             cmd += [
                 "--jair-search-strategy", self.jairSearchStrategy,
